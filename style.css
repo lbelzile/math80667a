@@ -1,0 +1,90 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+
+.yourturn {
+    padding: 1em;
+    margin: 1em 0;
+    padding-left: 100px;
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    min-height: 120px;
+    color: #FFFFFF;
+    background-color: #9678D3;
+    border: dashed 5px #FFFFFF;
+    background-image: url("figures/yourturn.png") 
+ }
+  
+  
+.keyidea {
+   padding: 1em;
+    margin: 1em 0;
+    padding-left: 100px;
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    min-height: 120px;
+    color: #FFFFFF;
+    background-color: #3DB5E6;
+    border: dashed 5px #FFFFFF;
+    background-image: url("figures/list.png")
+  }
+.codingex{
+    padding: 1em;
+    margin: 1em 0;
+    padding-left: 100px;
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    min-height: 120px;
+    color: #000000;
+    background-color: #FFD200;
+    background-image: url("figures/code.png") 
+}
+
+.outsidethebox{
+    padding: 1em;
+    margin: 1em 0;
+    padding-left: 100px;
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    min-height: 120px;
+    color: #FFFFFF;
+    background-color: #005EB8;
+    background-image: url("figures/box.png") 
+}
+
+.pitfall{
+    padding: 1em;
+    margin: 1em 0;
+    padding-left: 100px;
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    min-height: 120px;
+    color: #FFFFFF;
+    background-color: #D40F7D;
+    border: dashed 5px #FFFFFF;
+    background-image: url("figures/important.png") 
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

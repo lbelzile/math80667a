@@ -1,0 +1,23 @@
+---
+knit: "bookdown::render_book"
+title: "Experimental Design and Statistical Methods"
+author: "Léo Belzile"
+site: bookdown::bookdown_site
+bibliography: ["MATH80667A.bib"]
+biblio-style: "apalike"
+link-citations: true
+description: "This book is a web complement to MATH 80667A *Experimental Designs and Statistical Methods for Quantitative Research in Management*, a graduate course offered in the joint Ph.D. program in Management at HEC Montréal."
+---
+
+
+# Preliminary remarks {-}
+
+
+These notes are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/) and were last compiled on `r Sys.Date()`.
+
+:::codingex
+
+Download and install [**R** (current version `r version$major`.`r version$minor`, nicknamed "`r version$nickname`")](https://cran.r-project.org/) and an integrated development environment such as [**RStudio**](https://www.rstudio.com/products/rstudio/download/#download).
+
+
+:::

@@ -1,0 +1,21 @@
+
+Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution. The latter can be represented graphically using an histogram or a density plot if the data are continuous, or a bar plot for discrete or categorical measurements.
+
+```{r distributionplot, fig.cap = "Graphical representation of the distribution of outcomes for continuous (left) and discrete (right) data."}
+set.seed(1234)
+samp1 <- c(round(TruncatedNormal::rtmvt(n = 100, 
+                                mu = 80, 
+                                sigma = matrix(20),
+                                df = 2,
+                                lb = 0, ub = 100)))
+ggplot(data = data.frame(samp1)) + 
+  geom_histogram(aes(x=samp1, y = ..density..))
+
+```
+
+
+Many technical statistics terms are sometimes encountered in discussions. For example,
+
+- The sample mean is an **unbiased estimator**, meaning that its expectation ('theoretical' average) is the true mean $\mu$ regardless of the sample size $n$ (it is not systematically off).
+- The sample mean is also a **consistent** estimator. This means that, if we had an infinite number of observations, we would observe $\mu$ to arbitrary precision and would know its exact value.
+

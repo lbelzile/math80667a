@@ -1,0 +1,5 @@
+bookdown::bs4_book:
+  theme:
+    primary: "#003C71"
+  repo: https://github.com/lbelzile/math80667a
+  css: style.css

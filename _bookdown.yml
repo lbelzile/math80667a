@@ -1,0 +1,18 @@
+book_filename: "MATH80667A-EDSM"
+repo: https://github.com/lbelzile/math80667a
+output_dir: docs
+language:
+  ui:
+    chapter_name: ""
+delete_merged_file: true
+
+before_chapter_script: "_common.R"
+new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+  "01-hypothesis_testing.Rmd",
+  "02-one-way_ANOVA.Rmd",
+  "references.Rmd"
+]
+
