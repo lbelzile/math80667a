@@ -12,7 +12,7 @@ new_session: yes
 rmd_files: [
   "index.Rmd",
   "01-hypothesis_testing.Rmd",
-  "02-one-way_ANOVA.Rmd",
+  "10-reproducibility_crisis.Rmd",
   "references.Rmd"
 ]
 

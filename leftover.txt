@@ -1,4 +1,16 @@
 
+
+```{r flowcharttests, echo = FALSE, fig.cap = "Flowchart of statistical tests (Figure 1.1 from @McElreath:2020)."}
+knitr::include_graphics("figures/flowchart_stat_tests_McElreath.png")
+```
+
+Richard McElreath in the [first chapter](http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf) of his book [@McElreath:2020] draws a parallel between statistical tests and golems (i.e., robots): neither
+
+> discern when the context is inapropriate for its answers. It just knows its own procedure [...] It just does as it's told.
+
+The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations: most common research questions cannot be answered by simple tools. Researchers wishing to perform innovative methodological research should contact experts and consult with statisticians **before** they collect their data to get information on how best to proceed for what they have in mind so as to avoid the risk of making misleading and false claims based on incorrect analysis or data collection.
+
+
 Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution. The latter can be represented graphically using an histogram or a density plot if the data are continuous, or a bar plot for discrete or categorical measurements.
 
 ```{r distributionplot, fig.cap = "Graphical representation of the distribution of outcomes for continuous (left) and discrete (right) data."}

@@ -1,112 +1,36 @@
 # Introduction {#introduction}
 
-In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute
-to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework and the prevalence of $p$-values in journal articles, despite the fact that falsification of a null hypothesis is not enough to provide substantive findings for a theory.
+In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework. One important aspect of the reproducibility crisis is the misuse of $p$-values in journal articles: falsification of a null hypothesis is not enough to provide substantive findings for a theory.
 
-Because introductory statistics course often present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery.
+  
+Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.
 
-My objective is to teach you basic principles of experimental designs and statistical inference for data obtained from those designs using the **R** programming language. We will pay particular attention to the correct reporting and interpretation of results and learn how to review critically scientific papers using experimental designs.
 
-## Experimental designs {experimental-intro}
 
-The field of causal inference is concerned with inferring the effect of a treatment variable (or independent variable) on a response variable (dependent variable). In its simplest form, an experimental design is a comparison of two or more treatments (experimental conditions).
+## Experimental designs {#experimental-intro}
 
-- The subjects (or experimental units) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. 
-- The experimental treatments or conditions (also called factor, or independent variable), are manipulated and controlled by the researcher. 
+The field of causal inference is concerned with inferring the effect of a treatment variable (sometimes called independent variable) on a response variable (dependent variable). 
+
+In its simplest form, an experimental design is a comparison of two or more treatments (experimental conditions):
+
+- The subjects (or **experimental units**) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. 
+- The **experimental treatments** or conditions (also called **factor**, or independent variable), are *manipulated and controlled* by the researcher. 
 - After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject. 
-- Observed difference in the outcome variable between the experimental conditions (treatments) is called the treatment effect (or effect size). Because everything else is the same in a well controlled experiment, any treatment effect must be caused by the experimental treatments.
+- Observed differences in the outcome variable between the experimental conditions (treatments) is called the treatment effect (or **effect size**). Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the factor.
 
+We contrast experimental and observational settings: in the latter, the researcher cannot intervene. For example, an economist studying the impact of interest rates on the price of housing can only look at historical records with observed differences. Most surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to establish existence of a causal relationship.
 
-
-
-Richard McElreath in the [first chapter](http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf) of his book [@McElreath:2020] draws a parallel between statistical tests and golems (i.e., robots): neither
-
-> discern when the context is inapropriate for its answers. It just knows its own procedure [...] It just does as it's told.
-
-The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations: most common research questions cannot be answered by simple tools. Researchers wishing to perform innovative methodological research should contact experts and consult with statisticians **before** they collect their data to get information on how best to proceed for what they have in mind so as to avoid the risk of making misleading and false claims based on incorrect analysis or data collection.
-
-
-
-## The reproducibility crisis {#reproducibility-crisis}
-
-:::keyidea
-
-* Defining replicability and reproducibility
-* Understanding the scale of the reproducibility crisis
-* Recognizing common statistical fallacies
-* Listing strategies for enhancing reproducibility
-
-:::
-
-A study is said to be **reproducible** if an external person with the same data and enough indications about the procedure (for example, by providing the code and indications about software versions, etc.) can obtain consistent results that match those of a paper. A related scientific matter is **replicability**, which is the process by which new data are collected to test the same hypothesis, potentially using different methodology.
-
-
-In a thought provoking paper, @Ioannidis:2005 claimed that most research findings are wrong. The abstract of his paper stated
-
-> There is increasing concern that most current published research findings are false. [...] In this framework, a research finding is less likely to be true when the studies conducted in a field are smaller; when effect sizes are smaller; when there is a greater number and lesser preselection of tested relationships; where there is greater flexibility in designs, definitions, outcomes, and analytical modes; when there is greater financial and other interest and prejudice; and when more teams are involved in a scientific field in chase of statistical significance. 
-
-Since its publication, collaborative efforts have tried to assess the scale of the reproducibility problem by reanalysing data and trying to replicate the findings of  published research. For example, the "Reproducibility Project: Psychology" [@Nosek:2015]
-
-> conducted replications of 100 experimental and correlational studies published in three psychology journals using high powered designs and original materials when available. Replication effects were half the magnitude of original effects, representing a substantial decline. Ninety seven percent of original studies had significant results. Thirty six percent of replications had significant results; 47% of original effect sizes were in the 95% confidence interval of the replication effect size; 39% of effects were subjectively rated to have replicated the original result; and, if no bias in original results is assumed, combining original and replication results left 68% with significant effects. [...]
-
-A large share of findings in the review were not replicable or the effects were much smaller than claimed, as shown by [Figure 2 from the study](https://osf.io/447b3/).
-Such findings show that the peer-review procedure is not foolproof: the "publish-or-perish" mindset in academia is leading many researchers to try and achieve statistical significance at all costs to meet the statistically significant at the 5% level criterion, whether involuntarily or not. This problem has many names: $p$-hacking, harking or to paraphrase a [story of Jorge Luis Borges](https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths), the garden of forking paths. There are many degrees of freedom in the analysis for researchers to refine their hypothesis after viewing the data, conducting many unplanned comparisons and reporting selected results.
-
-<div class="figure" style="text-align: center">
-<img src="figures/RPP_psycho_repro.png" alt="Figure 2 from @Nosek:2015, showing scatterplot of effect sizes for the original and the replication study by power, with rugs and density plots by significance at the 5% level." width="85%" />
-<p class="caption">(\#fig:repropvaluescorr)Figure 2 from @Nosek:2015, showing scatterplot of effect sizes for the original and the replication study by power, with rugs and density plots by significance at the 5% level.</p>
-</div>
-
-Another problem is selective reporting. Because a large emphasis is placed on statistical significance, many studies that find small effects are never published, resulting in a gap. Figure \@ref(fig:reprozscores) from @vanZwet:2021 shows $z$-scores obtained by transforming confidence intervals reported in @Barnett:2019, They used data mining techniques to extract confidence intervals from abstracts of nearly one million publication in Medline published between 1976 and 2019. 
-If each finding was published, the $z$-scores should be normally distributed, but Figure \@ref(fig:reprozscores) shows a big gap in the bell curve between approximately $-2$ and $2$. 
-
-<div class="figure" style="text-align: center">
-<img src="figures/vanZwet_Cator-zvalues.png" alt="Figure from @vanZwet:2021 based on results of @Barnett:2019; histogram of $z$-scores from one million studies from Medline." width="85%" />
-<p class="caption">(\#fig:reprozscores)Figure from @vanZwet:2021 based on results of @Barnett:2019; histogram of $z$-scores from one million studies from Medline.</p>
-</div>
-
-The ongoing debate surrounding the reproducibility crisis has sparked dramatic changes in the academic landscape: to enhance the quality of studies published, many journal now require authors to provide their code and data, to pre-register their studies, etc. Teams lead effort (e.g., the [Experimental Economics Replication Project](https://experimentaleconreplications.com/studies.html)) try to replicate studies, with mitigate success. This [inside recollection](https://devonprice.medium.com/questionable-research-practices-ive-taken-part-in-754b74dcaa51) by a graduate student shows the extent of the problem.
-
-This course will place a strong emphasis on identifying and avoiding statistical fallacies and showcasing methods than enhance reproducibility. How can reproducible research enhance your work? For one thing, this workflow facilitates the publication of negative research, forces researchers to think ahead of time (and receive feedback). Reproducible research and data availability also leads to additional citations and increased credibility as a scientist.
-
-Among good practices are
-
-- pre-registration of experiments and use of a logbook.
-- version control systems (e.g., Git) that track changes to files and records.
-- archival of raw data in a proper format with accompanying documentation.
-
-
-Keeping a logbook and documenting your progress helps your collaborators, reviewers and your future-self understand decisions which may seem unclear and arbitrary in the future, even if they were the result of a careful thought process at the time you made them. Given the pervasiveness of the garden of forking paths, pre-registration helps you prevents harking because it limits selective reporting and unplanned tests, but it is not a panacea. Critics often object to pre-registration claiming that it binds people. This is a misleading claim in my view: pre-registration doesn't mean that you must stick with the plan exactly, but merely requires to explain what did not go as planned.
-
-Version control keeps records of changes to your file and can help you retrieve former versions if you make mistakes at some point.
-
-
-<div class="figure" style="text-align: center">
-<img src="figures/reproducibility.png" alt="Tweet showing widespread problems related to unintentional changes to raw data by software." width="85%" />
-<p class="caption">(\#fig:reprotweetexcelgenes)Tweet showing widespread problems related to unintentional changes to raw data by software.</p>
-</div>
-
-Archival of data helps to avoid unintentional and irreversible manipulations of the original data, examples of which can have large scale consequences as illustrated in Figure \@ref(fig:reprotweetexcelgenes) [@Ziemann:2016], who report flaws in genetic journals due to the automatic conversion of gene names to dates. These problems are [far from unique](https://www.theguardian.com/politics/2020/oct/05/how-excel-may-have-caused-loss-of-16000-covid-tests-in-england) While sensible data cannot be shared "as is" because of confidentiality issues, in many instances the data can and should be made available with a licence and a DOI to allow people to reuse, cite and credit your work.
-
-
-Operating in an open-science environment should be seen as an opportunity to make better science, offer more opportunities to increase your impact and increase the publication of work regardless of whether the results turn out to be negative. It is the right thing to do and it increases the quality of research produced, with collateral benefits because it forces researchers to validate their methodology before, to double-check their data and their analysis and to adopt good practice.
-
-
-
-::: outsidethebox
-
-Reflect on your workflow as applied researcher when designing and undertaking experiments. Which practical aspects could you improve upon to improve the reproducibility of your study?
-
-:::
+There is another aspect related to the generalization of the conclusion of a study: only for well-designed sampling schemes does result generalize beyond the group observed. It is thus of paramount importance to define the objective and the population of interest should we want to make conclusions.
 
 ## Planning of experiments  {#planning-experiments}
 
 We outline the various steps a research must undertake in an experimental setting.
 
+TODO
 
 ## Population and samples {#population-sample}
 
-Generally, we will seek to estimate characteristics of a population using only a sample (a sub-group of the population of smaller size). The **population of interest** is a collection of individuals which the study targets. For example, the Labour Force Survey (LFS) is a monthly study conducted by Statistics Canada, who define the target population as "all members of the selected household who are 15 years old and older, whether they work or not." Asking every Canadian meeting this definition would be costly and the process would be long: the characteristic of interest (employment) is also a snapshot in time and can vary when the person leaves a job, enters the job market or become unemployed.
+Generally, we will seek to estimate characteristics of a population using only a sample (a sub-group of the population of smaller size). The **population of interest** is a collection of individuals which the study targets. For example, the Labour Force Survey (LFS) is a monthly study conducted by Statistics Canada, who define the target population as "all members of the selected household who are 15 years old and older, whether they work or not." Asking every Canadian meeting this definition would be costly and the process would be long: the characteristic of interest (employment) is also a snapshot in time and can vary when the person leaves a job, enters the job market or become unemployed. In this observational study, collecting a census would be impossible.
 
 In general, we therefore consider only **samples** to gather the information we seek to obtain. The purpose of **statistical inference** is to draw conclusions about the population, but using only a share of the latter and accounting for sources of variability. The pollster George Gallup made this great analogy between sample and population:
 
@@ -122,18 +46,20 @@ Because the individuals are selected at **random** to be part of the sample, the
 
 Because sampling is costly, we can only collect limited information about the variable of interest. Experimental design revolves in large part in understanding how best to allocate our resources to attain a specified goal.
 
+## Distributions
+
+
+
 ## Sources of variability
 
-We call summaries $T$ of the data **statistics**, as they compress the information contained in a sample into summary. For example, the sample mean $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$ is a function of the data and an estimator of the population mean $\mu$. Because the inputs of the function $\overline{Y}$ are random, the resulting estimator is also random and we illustrate this point below.
-
-Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$.
+We call numerical summaries of the data **statistics**. For example, the sample mean $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$ is a summary of the data and an estimator of the population mean $\mu$. Because the inputs of the function $\overline{Y}$ are random, the resulting estimator is also random. Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$.
 
 <div class="figure" style="text-align: center">
 <img src="01-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%" />
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will also notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on multiple observations and information accumulates.
+We can clearly see from Figure \@ref(fig:samplevar) that the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will also notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on many observations, so there is more information available.
 
 Simply looking at the values of the sample mean does not tell the whole picture: we must also consider its variability. The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which $Y$ is drawn. One can show that the standard error of the sample mean is $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance.
 
@@ -209,7 +135,7 @@ S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
 
 Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data. For example, the sample mean $\bar{X}$ is an estimator of the population mean $\mu$. Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value.  In other words,
 
-- an estimator is the procedure or formula telling us how to use sample data to compute an estimate. Its a random variable since it depends on the sample.
+- an estimator is the procedure or formula telling us how to use sample data to compute an estimate. An estimator is random since it depends on the sample.
 - an estimate is the numerical value obtained once we apply the formula to observed data
 
 ### Null distribution and _p_-value
@@ -263,7 +189,7 @@ Do not mix up level of the test (probability fixed beforehand by the researcher)
 
 There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false.
 
-Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true corresponds to the definition of type II error, the probability of which is $1-\gamma$, say. The **power of a test** is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
+Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is $1-\gamma$, say. The **power of a test** is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
 \begin{align*}
 \gamma = \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
 \end{align*}
@@ -285,15 +211,15 @@ Depending on the alternative models, it is more or less easy to detect that the 
 <p class="caption">(\#fig:power3)Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.</p>
 </div>
 
-We want a test to have high power, i.e., that $\gamma$ be as close to 1 as possible. Minimally, the power of the test should be $\alpha$ because we reject the null hypothesis $\alpha$ fraction of the time even when $\mathscr{H}_0$ is true. Power depends on many criteria, notably
+We want to choose an experimental design and a test statistic that leads to high power, so that $\gamma$ is as close as possible to one. Minimally, the power of the test should be $\alpha$ because we reject the null hypothesis $\alpha$ fraction of the time even when $\mathscr{H}_0$ is true. Power depends on many criteria, notably
 
-- the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behavior, the easier it is to detect it.
+- the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behaviour, the easier it is to departures from $\theta_0$.
 (Figure \@ref(fig:power3));
 - variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure \@ref(fig:power2) shows);
-- the sample size: the more observation, the higher our ability to detect significative differences because the standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase.
-- the choice of test statistic: for example, rank-based statistics discard information about the actual values and care only about relative ranking. Resulting tests are less powerful, but are typically more robust to model misspecification and outliers. The statistics we will choose are standard and amongst the most powerful: as such, we won't dwell on this factor.
+- the sample size: the more observation, the higher our ability to detect significative differences because the standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase. In experimental designs, power may be maximized by specifying different sample size in each group
+- the choice of test statistic: for example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. While the resulting tests are typically less powerful, they are more robust to model misspecification and outliers. 
 
-To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible: for example, the one-sample *t*-test statistic $T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}$ for a normal sample follows a noncentral Student-$t$ distribution with noncentrality parameter $\Delta$ if the expectation of the population is $\Delta + \mu_0$. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. For a given alternative, we simulate repeatedly samples from the model, compute the test statistic on these new samples and the associated *p*-values based on the postulated null hypothesis. We can then calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
+To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible: for example, the one-sample *t*-test statistic $T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}$ for a normal sample follows a noncentral Student-$t$ distribution with noncentrality parameter $\Delta$ if the expectation of the population is $\Delta + \mu_0$. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. For a given alternative, we simulate repeatedly samples from the model, compute the test statistic for each of these new samples and the associated *p*-values based on the postulated null hypothesis. We can then calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
 
 
 
@@ -309,7 +235,7 @@ where $\mathfrak{q}_{\alpha/2}$ is the $1-\alpha/2$ quantile of the null distrib
 \begin{align*}
 T =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 \end{align*}
-and where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$ are random variables: their values depend on the sample, and will vary from one sample to another.
+and where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random variables: their values will vary from one sample to the next.
 
 
 For example, for a random sample $X_1, \ldots, X_n$ from a normal distribution $\mathsf{No}(\mu, \sigma)$, the ($1-\alpha$) confidence interval for the population mean $\mu$ is
@@ -345,3 +271,16 @@ where $\overline{X}_i$ is the sample mean, $S_i^2$ is the unbiased variance esti
 The third step consists in obtaining a benchmark to determine if our result is extreme or unusual. To make comparisons easier, we standardize the statistic so its has mean zero and variance one under the null hypothesis $\mu_1=\mu_2$, so as to obtain a dimensionless measure whose behaviour we know for large sample. The (mathematical) derivation of the null distribution is beyond the scope of this course, and will be given in all cases. Asymptotically, $T$ follows a standard normal distribution $\mathsf{No}(0, 1)$, but there exists a better finite-sample approximation when $n_1$ or $n_2$ is small; we use @Satterthwaite:1946 and a Student-$t$ distribution as null distribution.
 
 It only remains to compute the *p*-value. If the null distribution is well-specified and $\mathscr{H}_0$ is true, then the random variable $P$ is uniform on $[0, 1]$; we thus expect to obtain under the null something larger than 0.95 only 5\% of the time for our one-sided alternative since we consider under $\mathscr{H}_0$ the event $\mathsf{Pr}(T > t)$. The $p$-value is $1$ and, at level 5\%, we reject the null hypothesis to conclude that millenials spend significantly than previous generation for monthly online purchases, with an estimated average difference of -16.49.
+
+::: yourturn
+
+- Define the following terms in your own word: experimental unit, factor, effect size
+- What is the main benefit of experimental studies over observational studies?
+- List the four pillars of experimental design and briefly describe them.
+- Box, Hunter and Hunter (1978, p. 103) write:
+
+> Block what you can and randomize what you cannot.
+
+Explain the benefit of blocking for confounding variables (when possible) over randomization.
+
+:::

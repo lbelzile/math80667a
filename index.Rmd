@@ -15,9 +15,36 @@ description: "This book is a web complement to MATH 80667A *Experimental Designs
 
 These notes are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/) and were last compiled on `r Sys.Date()`.
 
-:::codingex
-
-Download and install [**R** (current version `r version$major`.`r version$minor`, nicknamed "`r version$nickname`")](https://cran.r-project.org/) and an integrated development environment such as [**RStudio**](https://www.rstudio.com/products/rstudio/download/#download).
+The objective of the course is to teach you basic principles of experimental designs and statistical inference for the latter using the **R** programming language. We will pay particular attention to the correct reporting and interpretation of results and learn how to review critically scientific papers using experimental designs.
 
 
-:::
+```{r echo = FALSE}
+library(knitr)
+library(kableExtra)
+
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  cache = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  echo = FALSE,
+  out.width = "85%",
+  fig.align = 'center',
+  fig.width = 8,
+  fig.asp = 0.618,  # 1 / phi
+  fig.show = "hold"
+)
+options(knitr.graphics.auto_pdf = TRUE)
+options(scipen = 1, digits = 3)
+library(viridis, warn.conflicts = FALSE, quietly = TRUE)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
+# library(tidyverse)
+scale_colour_discrete <- viridis::scale_color_viridis(option="turbo")
+scale_fill_discrete <- viridis::scale_fill_viridis(option="turbo")
+options(ggplot2.continuous.colour = "turbo",
+        ggplot2.continuous.fill = "turbo")
+
+theme_set(theme_minimal())
+```
+
