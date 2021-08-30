@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>1 Introduction | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
-<meta name="description" content="In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in...">
+<meta name="description" content="Learning the terminology associated to experiments. Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population....">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="1 Introduction | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
-<meta property="og:description" content="In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in...">
+<meta property="og:description" content="Learning the terminology associated to experiments. Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population....">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1 Introduction | Experimental Design and Statistical Methods">
-<meta name="twitter:description" content="In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in...">
+<meta name="twitter:description" content="Learning the terminology associated to experiments. Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population....">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -41,7 +41,8 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preliminary remarks</a></li>
 <li><a class="active" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">2</span> Reproducibility crisis</a></li>
+<li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
+<li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">3</span> Reproducibility crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -54,271 +55,276 @@
 <h1>
 <span class="header-section-number">1</span> Introduction<a class="anchor" aria-label="anchor" href="#introduction"><i class="fas fa-link"></i></a>
 </h1>
-<p>In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework. One important aspect of the reproducibility crisis is the misuse of <span class="math inline">\(p\)</span>-values in journal articles: falsification of a null hypothesis is not enough to provide substantive findings for a theory.</p>
-<p>Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.</p>
-<div id="experimental-intro" class="section level2" number="1.1">
-<h2>
-<span class="header-section-number">1.1</span> Experimental designs<a class="anchor" aria-label="anchor" href="#experimental-intro"><i class="fas fa-link"></i></a>
-</h2>
-<p>The field of causal inference is concerned with inferring the effect of a treatment variable (sometimes called independent variable) on a response variable (dependent variable).</p>
-<p>In its simplest form, an experimental design is a comparison of two or more treatments (experimental conditions):</p>
+<div class="keyidea">
 <ul>
-<li>The subjects (or <strong>experimental units</strong>) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving.</li>
-<li>The <strong>experimental treatments</strong> or conditions (also called <strong>factor</strong>, or independent variable), are <em>manipulated and controlled</em> by the researcher.</li>
-<li>After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject.</li>
-<li>Observed differences in the outcome variable between the experimental conditions (treatments) is called the treatment effect (or <strong>effect size</strong>). Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the factor.</li>
+<li>Learning the terminology associated to experiments.</li>
+<li>Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population.</li>
+<li>Distinguishing between observational and experimental studies</li>
+<li>Describing in your own words the four pillars of experimental designs.</li>
+<li>Understanding the rationale behind the requirements for good experimental studies and how it translates into model assumptions.</li>
 </ul>
-<p>We contrast experimental and observational settings: in the latter, the researcher cannot intervene. For example, an economist studying the impact of interest rates on the price of housing can only look at historical records with observed differences. Most surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to establish existence of a causal relationship.</p>
-<p>There is another aspect related to the generalization of the conclusion of a study: only for well-designed sampling schemes does result generalize beyond the group observed. It is thus of paramount importance to define the objective and the population of interest should we want to make conclusions.</p>
 </div>
-<div id="planning-experiments" class="section level2" number="1.2">
+<p>The field of causal inference is concerned with inferring the effect of a treatment variable (sometimes called independent variable) on a response variable (dependent variable). In general, however <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span></p>
+<blockquote>
+<p>effects under investigation tend to be masked by fluctuations outside the experimenter’s control.</p>
+</blockquote>
+<p>The purpose of experiments is to arrange data collection so as to be capable of disentangling the differences due to treatment from those due to the (often large) intrinsic variation of the measurements. We typically expect differences between treatments (and thus the effect) to be <em>comparatively stable</em> relative to the measurement variation.</p>
+<div id="terminology" class="section level2" number="1.1">
 <h2>
-<span class="header-section-number">1.2</span> Planning of experiments<a class="anchor" aria-label="anchor" href="#planning-experiments"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.1</span> Terminology<a class="anchor" aria-label="anchor" href="#terminology"><i class="fas fa-link"></i></a>
 </h2>
-<p>We outline the various steps a research must undertake in an experimental setting.</p>
-<p>TODO</p>
+<p>In its simplest form, an <strong>experimental design</strong> is a comparison of two or more treatments (experimental conditions):</p>
+<ul>
+<li>The subjects (or <strong>experimental units</strong>) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.</li>
+<li>The <strong>observational unit</strong> is the smallest level (time point, individual) at which measurement are recorded.</li>
+<li>The <strong>experimental treatments</strong> or conditions (also called <strong>factor</strong>, or independent variable), are <em>manipulated and controlled</em> by the researcher. Oftentimes, there is a <strong>control</strong> or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).</li>
+<li>Additional explanatories that are intrinsic to the experimental (sub-)units are termed <strong>blocking factors</strong>. Controlling for these allows to reduce the variability of measurements, typically leading to improved inferences.</li>
+<li>After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject.</li>
+<li>Observed differences in the outcome variable between the experimental conditions (treatments) is called the treatment effect (or <strong>effect size</strong>).</li>
+</ul>
+<div class="example">
+<p><span id="exm:experimentdefinitions" class="example"><strong>Example 1.1  (Pedagogical experience) </strong></span>Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observations units are the individual students.</p>
+<p>The treatment is the teaching method (traditional teaching versus flipped classroom).</p>
+<p>Potential blocking factors for this experiment include the strength of individuals, which reflects their prior exposure to the topic, knowledge, maturity, etc. This could be measured using a preliminary exam before assignment of students to class groups is completed. Additional factors worth controlling for include timing of the classroom (morning, afternoon, evening classes) and instructors.</p>
 </div>
-<div id="population-sample" class="section level2" number="1.3">
+<div class="yourturn">
+<p>The marketing department wants to know the value of its brand by determining how much more customers are willing to pay for their product relative to the cheaper generic product offered by the store. Economic theory suggests a substitution effect: while customers may prefer the brand product, they will switch to the generic version if the price tag is too high. To check this theory, one could design an experiment.</p>
+<p>As a researcher, how would you conduct this study? Identify a specific product. For the latter, define</p>
+<ul>
+<li>an adequate response variable</li>
+<li>the experimental and observational units</li>
+<li>potential confounding variables that would need to be accounted for.</li>
+</ul>
+</div>
+</div>
+<div id="review-of-basic-concepts" class="section level2" number="1.2">
 <h2>
-<span class="header-section-number">1.3</span> Population and samples<a class="anchor" aria-label="anchor" href="#population-sample"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2</span> Review of basic concepts<a class="anchor" aria-label="anchor" href="#review-of-basic-concepts"><i class="fas fa-link"></i></a>
 </h2>
-<p>Generally, we will seek to estimate characteristics of a population using only a sample (a sub-group of the population of smaller size). The <strong>population of interest</strong> is a collection of individuals which the study targets. For example, the Labour Force Survey (LFS) is a monthly study conducted by Statistics Canada, who define the target population as “all members of the selected household who are 15 years old and older, whether they work or not.” Asking every Canadian meeting this definition would be costly and the process would be long: the characteristic of interest (employment) is also a snapshot in time and can vary when the person leaves a job, enters the job market or become unemployed. In this observational study, collecting a census would be impossible.</p>
+<div id="variables" class="section level3" number="1.2.1">
+<h3>
+<span class="header-section-number">1.2.1</span> Variables<a class="anchor" aria-label="anchor" href="#variables"><i class="fas fa-link"></i></a>
+</h3>
+<p>The choice of statistical model and test depends on the underlying type of the data collected. There are many choices: quantitative (discrete or continuous) if the variables are numeric, or qualitative (binary, nominal, ordinal) if they can be described using an adjective; I prefer the term categorical, which is more evocative. The choice of graphical representation for data is contingent on variable type. Specifically,</p>
+<ul>
+<li>a <strong>variable</strong> represents a characteristic of the population, for example the sex of an individual, the price of an item, etc.</li>
+<li>an <strong>observation</strong> is a set of measures (variables) collected under identical conditions for an individual or at a given time.</li>
+</ul>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:variablesquanti"></span>
+<img src="figures/continuous_discrete.png" alt="Artwork by Allison Horst of continuous (left) and discrete variables (right)." width="85%"><p class="caption">
+Figure 1.1: Artwork by Allison Horst of continuous (left) and discrete variables (right).
+</p>
+</div>
+<p>Most of the models we will deal with are so-called regression models, in which the mean of a quantitative variable is a function of other variables, termed explanatories. There are two types of numerical variables</p>
+<ul>
+<li>a discrete variable takes a countable number of values, prime examples being binary variables or count variables.</li>
+<li>a continuous variable can take (in theory) an infinite possible number of values, even when measurements are rounded or measured with a limited precision (time, width, mass). In many case, we could also consider discrete variables as continuous if they take enough values (e.g., money).</li>
+</ul>
+<p>Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using arbitrary encoding for the levels: for modelling, these variables taking <span class="math inline">\(K\)</span> possible values (or levels) must be transformed into a set of <span class="math inline">\(K-1\)</span> binary 0/1 variables, the omitted level corresponding to a baseline. Failing to declare categorical variables in your favourite software is a common mistake, especially when these are saved in the database using integers rather than strings.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:variablescateg"></span>
+<img src="figures/nominal_ordinal_binary.png" alt="Artwork by Allison Horst with examples of categorical variables: nominal (left), ordinal (middle) and binary (right)." width="85%"><p class="caption">
+Figure 1.2: Artwork by Allison Horst with examples of categorical variables: nominal (left), ordinal (middle) and binary (right).
+</p>
+</div>
+</div>
+<div id="population-sample" class="section level3" number="1.2.2">
+<h3>
+<span class="header-section-number">1.2.2</span> Population and samples<a class="anchor" aria-label="anchor" href="#population-sample"><i class="fas fa-link"></i></a>
+</h3>
+<p>Only for well-designed sampling schemes does results generalize beyond the group observed. It is thus of paramount importance to define the objective and the population of interest should we want to make conclusions.</p>
+<p>Generally, we will seek to estimate characteristics of a population using only a sample (a sub-group of the population of smaller size). The <strong>population of interest</strong> is a collection of individuals which the study targets. For example, the Labour Force Survey (LFS) is a monthly study conducted by Statistics Canada, who define the target population as “all members of the selected household who are 15 years old and older, whether they work or not.” Asking every Canadian meeting this definition would be costly and the process would be long: the characteristic of interest (employment) is also a snapshot in time and can vary when the person leaves a job, enters the job market or become unemployed. In this example, collecting a census would be impossible and too costly.</p>
 <p>In general, we therefore consider only <strong>samples</strong> to gather the information we seek to obtain. The purpose of <strong>statistical inference</strong> is to draw conclusions about the population, but using only a share of the latter and accounting for sources of variability. The pollster George Gallup made this great analogy between sample and population:</p>
 <blockquote>
 <p>One spoonful can reflect the taste of the whole pot, if the soup is well-stirred</p>
 </blockquote>
 <p>A <strong>sample</strong> is a sub-group of individuals drawn at random from the population. We won’t focus on data collection, but keep in mind the following information: for a sample to be good, it must be representative of the population under study.</p>
+<div class="yourturn" name="Confounding">
+<p>The <a href="https://www.hec.ca/etudiants/mon-programme/baa/cohorte-agir/index.html">Parcours AGIR</a> at HEC Montréal is a pilot project for Bachelor in Administration students that was initiated to study the impact of flipped classroom and active learning on performance.</p>
+<p>Do you think we can draw conclusions about the efficacy of this teaching method by comparing the results of the students with those of the rest of the bachelor program? List potential issues with this approach addressing the internal and external validity, generalizability, effect of lurking variables, etc.</p>
+</div>
 <p>Because the individuals are selected at <strong>random</strong> to be part of the sample, the measurement of the characteristic of interest will also be random and change from one sample to the next. While larger samples typically carry more information, sample size is not a guarantee of quality, as the following example demonstrates.</p>
-<p>Because sampling is costly, we can only collect limited information about the variable of interest. Experimental design revolves in large part in understanding how best to allocate our resources to attain a specified goal.</p>
+<div class="example">
+<p><span id="exm:Galluppoll" class="example"><strong>Example 1.2  (Polling for the 1936 USA Presidential Election) </strong></span><em>The Literary Digest</em> surveyed 10 millions people by mail to know voting preferences for the 1936 USA Presidential Election. A sizeable share, 2.4 millions answered, giving Alf Landon (57%) over incumbent President Franklin D. Roosevelt (43%). The latter nevertheless won in a landslide election with 62% of votes cast, a 19% forecast error. <a href="https://www.jstor.org/stable/2749114">Biased sampling and differential non-response are mostly responsible for the error:</a> the sampling frame was built using ``phone number directories, drivers’ registrations, club memberships, etc.’’, all of which skewed the sample towards rich upper class white people more susceptible to vote for the GOP.</p>
+<p>In contrast, Gallup correctly predicted the outcome by polling (only) 50K inhabitants. <a href="https://medium.com/@ozanozbey/how-not-to-sample-11579793dac">Read the full story here.</a></p>
 </div>
-<div id="distributions" class="section level2" number="1.4">
+<div class="outsidethebox">
+<p>What are the considerations that could guide you in determining the population of interest for your study?</p>
+</div>
+</div>
+<div id="sampling" class="section level3" number="1.2.3">
+<h3>
+<span class="header-section-number">1.2.3</span> Sampling<a class="anchor" aria-label="anchor" href="#sampling"><i class="fas fa-link"></i></a>
+</h3>
+<p>Because sampling is costly, we can only collect limited information about the variable of interest, drawing from the population through a sampling frame (phone books, population register, etc.) Good sampling frames can be purchased from sampling firms.</p>
+<p>In general, <em>randomization</em> is necessary in order to obtain a <strong>representative</strong> sample<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note this randomization is different from the one in assigning treatments to experimental units!&lt;/p&gt;"><sup>1</sup></a>, one that match the characteristics of the population. Failing to randomize leads to introduction of bias and generally the conclusions drawn from a study won’t be generalizable.</p>
+<p>Even when observational units are selected at random to participate, there may be <strong>bias</strong> introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.</p>
+<div class="outsidethebox">
+<p>Reflect on the choice of platform used to collect answers and think about how it could influence the composition of the sample returned or affect non-response in a systematic way.</p>
+</div>
+<p>Before examining problems related to sampling, we review the main random sampling methods. The simplest is simple random sampling, whereby <span class="math inline">\(n\)</span> units are drawn completely at random (uniformly) from the <span class="math inline">\(N\)</span> elements of the sampling frame. The second most common scheme is stratified sampling, whereby a certain numbers of units are drawn uniformly from strata, namely subgroups (e.g., gender). Finally, cluster sampling consists in sampling only from some of these subgroups.</p>
+<p>::: {.example name=“Illustration of sampling schemes”}
+Suppose we wish to look at student satisfaction regarding the material taught in an introductory statistics course offered to multiple sections. The population consists of all students enrolled in the course in a given semester and this list provides the sampling frame. We can define strata to consist of class group. A simple random sample would be obtaining by sampling randomly abstracting from class groups, a stratified sample by drawing randomly a number from each class group and a cluster sampling by drawing all students from selected class groups. Cluster sampling is only mostly useful if all groups are similar and if the costs associated to sampling from multiple strata are expensive.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:sampling"></span>
+<img src="01-introduction_files/figure-html/sampling-1.png" alt="Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right)." width="85%"><p class="caption">
+Figure 1.3: Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right).
+</p>
+</div>
+<p>Stratified sampling is typically superior if we care about having similar proportions of sampled in each group and is useful for reweighting: in <a href="introduction.html#fig:sampling">1.3</a>, the true proportion of sampled is 1/3, with the simple random sampling having a range of [0.22, 0.39] among the strata, compared to [0.32, 0.34] for the stratified sample.</p>
+<div class="outsidethebox">
+<p>The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?</p>
+</div>
+<p>In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon’s Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review <span class="citation">(<a href="references.html#ref-Aguinis:2021" role="doc-biblioref">Aguinis, Villamor, and Ramani 2021</a>)</span>. These samples are subject to self-selection bias and should be read with skepticism. I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is relatively unimportant. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the repartition of individuals with the composition obtained from the census.</p>
+</div>
+<div id="study-type" class="section level3" number="1.2.4">
+<h3>
+<span class="header-section-number">1.2.4</span> Study type<a class="anchor" aria-label="anchor" href="#study-type"><i class="fas fa-link"></i></a>
+</h3>
+<p>There are two categories of studies: observational and experimental. The main difference between the two is that researchers that collect the data for observational studies do intervene in treatment assignment and how the data are created, whereas the assignment mechanism is fully determined by the experimenter in the latter case.
+For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to <em>directly</em> establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the factor.</p>
+<p>The preceding paragraph shouldn’t be taken to mean that one cannot get meaningful conclusions from observational studies. Rather, I wish to highlight that controlling for the non-random allocation and potential confounding is much more complicated, requires practitioners to make stronger (and sometimes unverifiable) assumptions and requires using a different toolbox (including, but not limited to differences in differences, propensity score weighting, instrumental variables).</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:openintrograph"></span>
+<img src="figures/random_sample_assignment.png" alt="Two by two classification matrix for experiments based on sampling and study type. Material from Mine Çetinkaya-Rundel and OpenIntro distributed under the CC BY-SA license." width="85%"><p class="caption">
+Figure 1.4: Two by two classification matrix for experiments based on sampling and study type. Material from Mine Çetinkaya-Rundel and OpenIntro distributed under the CC BY-SA license.
+</p>
+</div>
+<p>Figure <a href="introduction.html#fig:openintrograph">1.4</a> summarizes the two preceding sections. Random allocation of both observational units and assignment to treatment leads to ideal studies, but may be impossible due to ethical considerations.</p>
+</div>
+</div>
+<div id="examples-of-experimental-designs" class="section level2" number="1.3">
 <h2>
-<span class="header-section-number">1.4</span> Distributions<a class="anchor" aria-label="anchor" href="#distributions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.3</span> Examples of experimental designs<a class="anchor" aria-label="anchor" href="#examples-of-experimental-designs"><i class="fas fa-link"></i></a>
 </h2>
+<p>One of the earliest example of statistical experiment is in agricultural field trial: in fact, experiments have been ongoing since 1841 at the Rothamsted Experimental Station, where R. A. Fisher worked for 14 years and developed much of the early theory; <span class="citation">Yates (<a href="references.html#ref-Yates:1964" role="doc-biblioref">1964</a>)</span> details his contribution to the field of design of experiments.</p>
+<p>Section 1.4 of <span class="citation">Berger, Maurer, and Celli (<a href="references.html#ref-Berger:2018" role="doc-biblioref">2018</a>)</span> lists various applications of experimental designs in a variety of fields.</p>
+<div class="outsidethebox">
+<p>Find an example of a scientific paper in your research field in which an experimental study is conducted.
+- Provide a citation for the latter
+- Briefly describe the experiment (you can simply quote the description of the database).
+- Based on the information provided, identify the experimental units and the treatments.</p>
 </div>
-<div id="sources-of-variability" class="section level2" number="1.5">
+<div class="example">
+<p><span id="exm:experimentalexample1" class="example"><strong>Example 1.3  (Modern experiments and A/B testing) </strong></span>Most modern experiments happen online, with tech companies running thousands of experiments on an ongoing basis in order to discover improvement to their interfaces that lead to increased profits. An <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">Harvard Business Review article</a> <span class="citation">(<a href="references.html#ref-HBR2017" role="doc-biblioref">Kohavi and Thomke 2017</a>)</span> details how small tweaks to the display of advertisements in the Microsoft Bing search engine landing page lead to a whooping 12% increase in revenues. Such randomized control trials, termed A/B experiments, involve splitting incoming traffic into separate groups; each group will see different views of the webpage that differ only ever slightly. The experimenters then compare traffic and click revenues. At large scale, even small effects can have major financial consequences and can be learned despite the large variability in customer behaviour.</p>
+</div>
+<div id="evidence-based-policies" class="section level3" number="1.3.1">
+<h3>
+<span class="header-section-number">1.3.1</span> Evidence-based policies<a class="anchor" aria-label="anchor" href="#evidence-based-policies"><i class="fas fa-link"></i></a>
+</h3>
+<p>Experimental design revolves in large part in understanding how best to allocate our resources and choosing the most effective treatment of the lot. There are multiple examples of randomized control experiments used for policy making. Examples include</p>
+<ul>
+<li>Tennessee’s Student Teacher Achievement Ratio (STAR) project <span class="citation">(<a href="references.html#ref-STAR2008" role="doc-biblioref">Achilles et al. 2008</a>)</span>: this study looked at the effect of student to teacher ratio and conclude that smaller class sizes lead to better outcomes.</li>
+</ul>
+<blockquote>
+<p>Four-year longitudinal class-size study funded by the Tennessee General Assembly and conducted by the State Department of Education. Over 7,000 students in 79 schools were randomly assigned into one of 3 interventions: small class (13 to 17 students per teacher), regular class (22 to 25 students per teacher), and regular-with-aide class (22 to 25 students with a full-time teacher’s aide). Classroom teachers were also randomly assigned to the classes they would teach. The interventions were initiated as the students entered school in kindergarten and continued through third grade.</p>
+</blockquote>
+<ul>
+<li>RAND’s Health Insurance Experiment <span class="citation">(<a href="references.html#ref-RANDHIE" role="doc-biblioref">Brook et al. 2006</a>)</span>: this study concluded that that cost sharing reduced “inappropriate or unnecessary” medical care (overutilization), but also lead to to areduction in “appropriate or needed” medical care.</li>
+</ul>
+<blockquote>
+<p>The HIE was a large-scale, randomized experiment conducted between 1971 and 1982. For the study, RAND recruited 2,750 families encompassing more than 7,700 individuals, all of whom were under the age of 65. They were chosen from six sites across the United States to provide a regional and urban/rural balance. Participants were randomly assigned to one of five types of health insurance plans created specifically for the experiment. There were four basic types of fee-for-service plans: One type offered free care; the other three types involved varying levels of cost sharing — 25 percent, 50 percent, or 95 percent coinsurance (the percentage of medical charges that the consumer must pay). The fifth type of health insurance plan was a nonprofit, HMO-style group cooperative. Those assigned to the HMO received their care free of charge. For poorer families in plans that involved cost sharing, the amount of cost sharing was income-adjusted to one of three levels: 5, 10, or 15 percent of income. Out-of-pocket spending was capped at these percentages of income or at $1,000 annually (roughly $3,000 annually if adjusted from 1977 to 2005 levels), whichever was lower.</p>
+</blockquote>
+<blockquote>
+<p>Families participated in the experiment for 3–5 years. The upper age limit for adults at the time of enrollment was 61, so that no participants would become eligible for Medicare before the experiment ended. To assess participant service use, costs, and quality of care, RAND served as the families’ insurer and processed their claims. To assess participant health, RAND administered surveys at the beginning and end of the experiment and also conducted comprehensive physical exams. Sixty percent of participants were randomly chosen to receive exams at the beginning of the study, and all received physicals at the end. The random use of physicals at the beginning was intended to control for possible health effects that might be stimulated by the physical exam alone, independent of further participation in the experiment.</p>
+</blockquote>
+<ul>
+<li>
+<a href="https://www.povertyactionlab.org/evaluation/oregon-health-insurance-experiment-united-states">Oregon Health Insurance Experiment</a> <span class="citation">(<a href="references.html#ref-Baicker2013" role="doc-biblioref">Baicker et al. 2013</a>)</span>: this study is described at length in <a href="https://www.tellingstorieswithdata.com/hunt-data.html#case-study---the-oregon-health-insurance-experiment">Section 9.5 of Telling stories with data by Rohan Alexander</a> <span class="citation">(<a href="references.html#ref-Alexander2021" role="doc-biblioref">Alexander 2022</a>)</span>.</li>
+</ul>
+</div>
+</div>
+<div id="planning-experiments" class="section level2" number="1.4">
 <h2>
-<span class="header-section-number">1.5</span> Sources of variability<a class="anchor" aria-label="anchor" href="#sources-of-variability"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.4</span> Planning of experiments<a class="anchor" aria-label="anchor" href="#planning-experiments"><i class="fas fa-link"></i></a>
 </h2>
-<p>We call numerical summaries of the data <strong>statistics</strong>. For example, the sample mean <span class="math inline">\(\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)\)</span> is a summary of the data and an estimator of the population mean <span class="math inline">\(\mu\)</span>. Because the inputs of the function <span class="math inline">\(\overline{Y}\)</span> are random, the resulting estimator is also random. Figure <a href="introduction.html#fig:samplevar">1.1</a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.</p>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:samplevar"></span>
-<img src="01-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%"><p class="caption">
-Figure 1.1: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.
-</p>
+<p>There are four pillars in experimental designs;</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Control</strong>: in an experiment, the allocation to treatment is controlled by the experimenter, allowing direct comparisons between groups.</li>
+<li>
+<strong>Randomization</strong>: to prevent lurking variables and confounders from impacting the conclusions, observational units are randomly allocated to treatment groups so that any estimate of the effect has a causal interpretation.</li>
+<li>
+<strong>Replication</strong>: having multiple observations for each treatment allocation is necessary to both estimate the variability of the measurements and increase the precision of the average measurement.</li>
+<li>
+<strong>Blocking</strong>: a technique that allows experimenters to control the variability between experimental units by dividing them into blocks so that those in the same blocks are similar. This allows us to separate the variability due to differences between levels of the blocking variable from the overall variability, leading to precision gains.</li>
+</ol>
+<p>Underlying the design of experiments is use of techniques that eliminate as much as possible the variability and detecting cause and effects with the least amount of resources by allocating them wisely.</p>
 </div>
-<p>We can clearly see from Figure <a href="introduction.html#fig:samplevar">1.1</a> that the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will also notice that the sample means are less dispersed around <span class="math inline">\(\mu\)</span> than the individual measurements. This is because the sample mean <span class="math inline">\(\overline{Y}\)</span> is based on many observations, so there is more information available.</p>
-<p>Simply looking at the values of the sample mean does not tell the whole picture: we must also consider its variability. The square root of the variance of a statistic is termed <strong>standard error</strong>; it should not be confused with the standard deviation <span class="math inline">\(\sigma\)</span> of the population from which <span class="math inline">\(Y\)</span> is drawn. One can show that the standard error of the sample mean is <span class="math inline">\(\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}\)</span>. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance.</p>
-<p>In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
-</div>
-<div id="tests" class="section level2" number="1.6">
+<div id="requirements-for-good-experiments" class="section level2" number="1.5">
 <h2>
-<span class="header-section-number">1.6</span> Hypothesis testing<a class="anchor" aria-label="anchor" href="#tests"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5</span> Requirements for good experiments<a class="anchor" aria-label="anchor" href="#requirements-for-good-experiments"><i class="fas fa-link"></i></a>
 </h2>
-<p>An hypothesis test is a binary decision rule used to evaluate the statistical evidence provided by a sample to make a decision regarding the underlying population. The main steps involved are:</p>
-<ul>
-<li>define the model parameters</li>
-<li>formulate the alternative and null hypothesis</li>
-<li>choose and calculate the test statistic</li>
-<li>obtain the null distribution describing the behaviour of the test statistic under <span class="math inline">\(\mathscr{H}_0\)</span>
-</li>
-<li>calculate the <em>p</em>-value</li>
-<li>conclude (reject or fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>) in the context of the problem.</li>
-</ul>
-<p>A good analogy for hypothesis tests is a trial for murder on which you are appointed juror.</p>
-<ul>
-<li>The judge lets you choose between two mutually exclusive outcome, guilty or not guilty, based on the evidence presented in court.</li>
-<li>The presumption of innocence applies and evidences are judged under this optic: are evidence remotely plausible if the person was innocent? The burden of the proof lies with the prosecution to avoid as much as possible judicial errors. The null hypothesis <span class="math inline">\(\mathscr{H}_0\)</span> is <em>not guilty</em>, whereas the alternative <span class="math inline">\(\mathscr{H}_a\)</span> is <em>guilty</em>. If there is a reasonable doubt, the verdict of the trial will be not guilty.</li>
-<li>The test statistic (and the choice of test) represents the summary of the proof. The more overwhelming the evidence, the higher the chance the accused will be declared guilty. The prosecutor chooses the proof so as to best outline this: the choice of evidence (statistic) ultimately will maximize the evidence, which parallels the power of the test.</li>
-<li>The null distribution is the benchmark against which to judge the evidence (jurisprudence). Given the proof, what are the odds assuming the person is innocent?</li>
-<li>The final step is the verdict. This is a binary decision, guilty or not guilty. For an hypothesis test performed at level <span class="math inline">\(\alpha\)</span>, one would reject (guilty) if the <em>p</em>-value is less than <span class="math inline">\(\alpha\)</span>. Even if we declare the person not guilty, this doesn’t mean the defendant is innocent and vice-versa.</li>
-</ul>
-<div id="hypothesis" class="section level3" number="1.6.1">
+<p>Section 1.2 of <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> describes the various requirements that are necessary for experiments to be useful. These are</p>
+<ol style="list-style-type: decimal">
+<li>absence of systematic error</li>
+<li>precision</li>
+<li>range of validity</li>
+<li>simplicity</li>
+</ol>
+<p>We review each in turn.</p>
+<div id="absence-of-systematic-error" class="section level3" number="1.5.1">
 <h3>
-<span class="header-section-number">1.6.1</span> Hypothesis<a class="anchor" aria-label="anchor" href="#hypothesis"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5.1</span> Absence of systematic error<a class="anchor" aria-label="anchor" href="#absence-of-systematic-error"><i class="fas fa-link"></i></a>
 </h3>
-<p>In statistical tests we have two hypotheses: the null hypothesis (<span class="math inline">\(\mathscr{H}_0\)</span>) and the alternative hypothesis (<span class="math inline">\(\mathscr{H}_1\)</span>). Usually, the null hypothesis is a single numerical value (the ‘status quo’) and the alternative is what we’re really interested in testing. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> in favour of <span class="math inline">\(\mathscr{H}_1\)</span>, subject to some pre-specified risk of error. Usually, hypothesis tests involve a parameter, say <span class="math inline">\(\theta\)</span>, which characterizes the underlying distribution at the population level ans whose value is unknown. A two-sided hypothesis test regarding a parameter <span class="math inline">\(\theta\)</span> has the form
-<span class="math display">\[\begin{align*}
-\mathscr{H}_0: \theta=\theta_0 \qquad \text{versus} \qquad \mathscr{H}_a:\theta \neq \theta_0.
-\end{align*}\]</span>
-We are testing whether or not <span class="math inline">\(\theta\)</span> is precisely equal to the value <span class="math inline">\(\theta_0\)</span>.</p>
-<p>In completely randomized experiments with a single factor, we will be testing whether the mean of <span class="math inline">\(K\)</span> different sub-populations are equal. Let <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> denote the expectation or theoretical mean of each of the <span class="math inline">\(K\)</span> sub-populations. Equality of means translates into
-<span class="math display">\[\begin{align*}
-\mathscr{H}_0:&amp; \mu_1 = \cdots = \mu_K
-\mathscr{H}_a:&amp; \text{at least two means are different, }\mu_i \neq \mu_j (1 \leq i &lt; j \leq K).
-\end{align*}\]</span>
-Note that the null hypothesis is a single value, whereas the alternative is the complement, i.e. all potential scenarios for which not all expectations are equal.</p>
-<p>One slight complication arising from the above is that the expectations <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> are unknown. We can assess this by comparing the sample means in each group. These are noisy estimates of the expectation: it is this inherent variability that limits our ability to detect differences in mean.</p>
+<p>This point requires careful planning and listing potential confounding variables that could affect the response.</p>
+<div class="example" title="Systematic error">
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 1.4  </strong></span>Suppose we wish to consider the differences in student performance between two instructors. If the first teaches only morning classes, while the second only teaches in the evening, it will be impossible to disentangle the effect of timing with that of instructor performance. Such comparisons should only be undertaken if there is compelling prior evidence that timing does not impact the outcome of interest.</p>
 </div>
-<div id="test-statistic" class="section level3" number="1.6.2">
-<h3>
-<span class="header-section-number">1.6.2</span> Test statistic<a class="anchor" aria-label="anchor" href="#test-statistic"><i class="fas fa-link"></i></a>
-</h3>
-<p>A test statistic <span class="math inline">\(T\)</span> is a function of the data that summarize the information contained in the sample for <span class="math inline">\(\theta\)</span>. The form of the test statistic is chosen such that we know its underlying distribution under <span class="math inline">\(\mathscr{H}_0\)</span>, that is, the potential values taken by <span class="math inline">\(T\)</span> and their relative probability if <span class="math inline">\(\mathscr{H}_0\)</span> is true. Indeed, <span class="math inline">\(Y\)</span> is a random variable and its value change from one sample to the next.
-This allows us to determine what values of <span class="math inline">\(T\)</span> are likely if <span class="math inline">\(\mathscr{H}_0\)</span> is true. Many statistics we will consider are <strong>Wald statistic</strong>, of the form
-<span class="math display">\[\begin{align*}
-T = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
-\end{align*}\]</span>
-where <span class="math inline">\(\widehat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\theta_0\)</span> is the postulated value of the parameter and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span> is an estimator of the standard deviation of the test statistic <span class="math inline">\(\widehat{\theta}\)</span>.</p>
-<p>For example, to test whether the mean of a population is zero, we set
-<span class="math display">\[\begin{align*}
-\mathscr{H}_0: \mu=0, \qquad  \mathscr{H}_a:\mu \neq 0,
-\end{align*}\]</span>
-and the Wald statistic is
-<span class="math display">\[\begin{align*}
-T &amp;= \frac{\overline{X}-0}{S_n/\sqrt{n}}
-\end{align*}\]</span>
-where <span class="math inline">\(\overline{X}\)</span> is the sample mean of <span class="math inline">\(X_1, \ldots, X_n\)</span>,
-<span class="math display">\[\begin{align*}
-\overline{X} &amp;= \frac{1}{n} \sum_{i=1}^n X_i = \frac{X_1+ \cdots + X_n}{n}
-\end{align*}\]</span>
-and the standard error (of the mean) <span class="math inline">\(\overline{X}\)</span> is <span class="math inline">\(S_n/\sqrt{n}\)</span>; the sample variance <span class="math inline">\(S_n\)</span> is an estimator of the standard deviation <span class="math inline">\(\sigma\)</span>,
-<span class="math display">\[\begin{align*}
-S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
-\end{align*}\]</span></p>
-<p>Its important to distinguish between procedures/formulas and their numerical values. An <strong>estimator</strong> is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data. For example, the sample mean <span class="math inline">\(\bar{X}\)</span> is an estimator of the population mean <span class="math inline">\(\mu\)</span>. Once we have observed data we can actually compute the sample mean, that is, we have an estimate — an actual value. In other words,</p>
-<ul>
-<li>an estimator is the procedure or formula telling us how to use sample data to compute an estimate. An estimator is random since it depends on the sample.</li>
-<li>an estimate is the numerical value obtained once we apply the formula to observed data</li>
-</ul>
+<p>The first point raised by Cox is thus that we
+&gt; ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.</p>
+<p>This point also motivates use of <strong>double-blind</strong> procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo and control groups.</p>
+<p>Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corolary.</p>
 </div>
-<div id="null-distribution-and-p-value" class="section level3" number="1.6.3">
+<div id="variability" class="section level3" number="1.5.2">
 <h3>
-<span class="header-section-number">1.6.3</span> Null distribution and <em>p</em>-value<a class="anchor" aria-label="anchor" href="#null-distribution-and-p-value"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5.2</span> Variability<a class="anchor" aria-label="anchor" href="#variability"><i class="fas fa-link"></i></a>
 </h3>
-<p>The <em>p</em>-value allows us to decide whether the observed value of the test statistic <span class="math inline">\(T\)</span> is plausible under <span class="math inline">\(\mathscr{H}_0\)</span>. Specifically, the <em>p</em>-value is the probability that the test statistic is equal or more extreme to the estimate computed from the data, assuming <span class="math inline">\(\mathscr{H}_0\)</span> is true. Suppose that based on a random sample <span class="math inline">\(X_1, \ldots, X_n\)</span> we obtain a statistic whose value <span class="math inline">\(T=t\)</span>. For a two-sided test <span class="math inline">\(\mathscr{H}_0:\theta=\theta_0\)</span> vs. <span class="math inline">\(\mathscr{H}_a:\theta \neq \theta_0\)</span>, the <em>p</em>-value is <span class="math inline">\(\mathsf{Pr}_0(|T| \geq |t|)\)</span>. If the distribution of <span class="math inline">\(T\)</span> is symmetric around zero, the <em>p</em>-value is
-<span class="math display">\[\begin{align*}
-p = 2 \times \mathsf{Pr}_0(T \geq |t|).
-\end{align*}\]</span></p>
-<p>Consider the example of a two-sided test involving the population mean <span class="math inline">\(\mathscr{H}_0:\mu=0\)</span> against the alternative <span class="math inline">\(\mathscr{H}_1:\mu \neq 0\)</span>. Assuming the random sample comes from a normal (population) <span class="math inline">\(\mathsf{No}(\mu, \sigma^2)\)</span>, it can be shown that if <span class="math inline">\(\mathscr{H}_0\)</span> is true (that is, if <span class="math inline">\(\mu=0\)</span>), the test statistic
-<span class="math display">\[\begin{align*}
-T = \frac{\overline{X}}{S/\sqrt{n}}
-\end{align*}\]</span>
-follows a Student-<em>t</em> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom, denoted <span class="math inline">\(\mathsf{St}_{n-1}\)</span>. This allows us to calculate the <em>p</em>-value (either from a table, or using some statistical software). The Student-<em>t</em> distribution is symmetric about zero, so the <em>p</em>-value is <span class="math inline">\(P = 2\times\mathsf{Pr}(T_{n-1} &gt; |t|)\)</span>, where <span class="math inline">\(T \sim \mathsf{St}_{n-1}\)</span>.</p>
+<p>The second point listed by <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> is that of the variability of estimator. Much of the precision can be captured by the signal to noise ratio, in which the effect size is divided by its standard error. The latter is a function of
+(a) the accuracy of the experimental work and measurements apparatus and the intrinsic variability of the phenomenon under study, (b) the number of experimental and observational units, i.e., the sample size and (c) the choice of design and statistical procedures.</p>
+<p>Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is oftentimes standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.</p>
 </div>
-<div id="conclusion" class="section level3" number="1.6.4">
+<div id="generalizability" class="section level3" number="1.5.3">
 <h3>
-<span class="header-section-number">1.6.4</span> Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5.3</span> Generalizability<a class="anchor" aria-label="anchor" href="#generalizability"><i class="fas fa-link"></i></a>
 </h3>
-<p>The <em>p</em>-value allows us to make a decision about the null hypothesis. If <span class="math inline">\(\mathscr{H}_0\)</span> is true, the <em>p</em>-value follows a uniform distribution. <a href="https://xkcd.com/1478/">Thus, if the <em>p</em>-value is small</a>, this means observing an outcome more extreme than <span class="math inline">\(T=t\)</span> is unlikely, and so we’re inclined to think that <span class="math inline">\(\mathscr{H}_0\)</span> is not true. There’s always some underlying risk that we’re making a mistake when we make a decision. In statistic, there are <a href="https://xkcd.com/2303/">two type of errors</a>:</p>
-<ul>
-<li>type I error: we reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is true,</li>
-<li>type II error: we fail to reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is false.</li>
-</ul>
-<p>These hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, <span class="math inline">\(\alpha\)</span>, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test <span class="math inline">\(\alpha\)</span>, the more often we will reject the null hypothesis when the latter is true. The value of <span class="math inline">\(\alpha \in (0, 1)\)</span> is the probability of rejecting <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is in fact true,
-<span class="math display">\[\begin{align*}
-\alpha = \mathsf{Pr}_0\left(\text{ reject } \mathscr{H}_0\right).
-\end{align*}\]</span>
-The level <span class="math inline">\(\alpha\)</span> is fixed beforehand, typically <span class="math inline">\(1\)</span>%, <span class="math inline">\(5\)</span>% or <span class="math inline">\(10\)</span>%. Keep in mind that the probability of type I error is <span class="math inline">\(\alpha\)</span> only if the null model for <span class="math inline">\(\mathscr{H}_0\)</span> is correct (sic) and correspond to the data generating mechanism.</p>
-<p>The focus on type I error is best understood by thinking about costs of moving away from the status quo: a new website design or branding will be costly to implement, so you want to make sure there are enough evidence this is the better alternative.</p>
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left">
-<strong>Decision</strong> \ <strong>true model</strong>
-</th>
-<th align="center"><span class="math inline">\(\mathscr{H}_0\)</span></th>
-<th align="center"><span class="math inline">\(\mathscr{H}_a\)</span></th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>
-</td>
-<td align="center"><span class="math inline">\(\checkmark\)</span></td>
-<td align="center">type II error</td>
-</tr>
-<tr class="even">
-<td align="left">reject <span class="math inline">\(\mathscr{H}_0\)</span>
-</td>
-<td align="center">type I error</td>
-<td align="center"><span class="math inline">\(\checkmark\)</span></td>
-</tr>
-</tbody>
-</table></div>
-<p>To make a decision, we compare our <em>p</em>-value <span class="math inline">\(P\)</span> with the level of the test <span class="math inline">\(\alpha\)</span>:</p>
-<ul>
-<li>if <span class="math inline">\(P &lt; \alpha\)</span>, we reject <span class="math inline">\(\mathscr{H}_0\)</span>;</li>
-<li>if <span class="math inline">\(P \geq \alpha\)</span>, we fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>.</li>
-</ul>
-<p>Do not mix up level of the test (probability fixed beforehand by the researcher) and the <em>p</em>-value. If you do a test at level 5%, the probability of type I error is by definition <span class="math inline">\(\alpha\)</span> and does not depend on the <em>p</em>-value. The latter is conditional probability of observing a more extreme likelihood given the null distribution <span class="math inline">\(\mathscr{H}_0\)</span> is true.</p>
-</div>
-<div id="power" class="section level3" number="1.6.5">
-<h3>
-<span class="header-section-number">1.6.5</span> Power<a class="anchor" aria-label="anchor" href="#power"><i class="fas fa-link"></i></a>
-</h3>
-<p>There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject <span class="math inline">\(\mathscr{H}_0\)</span> when the latter is false.</p>
-<p>Failing to reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_a\)</span> is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is <span class="math inline">\(1-\gamma\)</span>, say. The <strong>power of a test</strong> is the probability of rejecting <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is false, i.e.,
-<span class="math display">\[\begin{align*}
-\gamma = \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
-\end{align*}\]</span>
-Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favor of an alternative.</p>
+<p>Most studies are done with an objective of generalizing the findings beyond the particular units analyzed. The range of validity thus crucially depends with the choice of population from which a sample is drawn and the particular sampling scheme. Non-random sampling severely limits the extrapolation of the results to more general settings. This leads Cox to advocate having
+&gt; not just empirical knowledge about what the treatment differences are, but also some understanding of the reasons for the differences.</p>
+<p>Even if we believe a factor to have no effect, it may be wise to introduce it in the experiment to check this assumption: if it is not a source of variability, it shouldn’t impact the findings and at the same time would provide some more robustness.</p>
+<p>If we look at a continuous treatment, than it is probably only safe to draw conclusions within the range of doses administered. Comic in <a href="introduction.html#fig:xkcd605">1.5</a> is absurd, but makes this point.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:power1"></span>
-<img src="01-hypothesis_testing_files/figure-html/power1-1.png" alt="Comparison between null distribution (full curve) and a specific alternative for a *t*-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white)." width="85%"><p class="caption">
-Figure 1.2: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).
+<span style="display:block;" id="fig:xkcd605"></span>
+<img src="figures/xkcd605_extrapolating.png" alt="xkcd comic [645 (Extrapolating) by Randall Munroe](https://xkcd.com/645/). Alt text: By the third trimester, there will be thousands of babies inside you." width="50%"><p class="caption">
+Figure 1.5: xkcd comic <a href="https://xkcd.com/645/">645 (Extrapolating) by Randall Munroe</a>. Alt text: By the third trimester, there will be thousands of babies inside you.
 </p>
 </div>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:power2"></span>
-<img src="01-hypothesis_testing_files/figure-html/power2-1.png" alt="Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line)." width="85%"><p class="caption">
-Figure 1.3: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).
-</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-2" class="example"><strong>Example 1.5  (Generalizability) </strong></span>Replication studies done in university often draw participants from students enrolled in the institutions. The findings are thus not necessarily robust if extrapolated to the whole population if there are characteristics for which they have strong (familiarity to technology, acquaintance with administrative system, political views, etc). These samples are often <strong>convenience samples</strong>.</p>
 </div>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:power3"></span>
-<img src="01-hypothesis_testing_files/figure-html/power3-1.png" alt="Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size." width="85%"><p class="caption">
-Figure 1.4: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.
-</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-3" class="example"><strong>Example 1.6  (Spratt-Archer barley in Ireland) </strong></span>Example 1.9 in <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> mentions recollections of ``Student’’ on Spratt-Archer barley, a new variety of barley that performed well in experiments and which the Irish Department of Agriculture encouraged to have introduced elsewhere. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley was experimented in well-farmed areas.</p>
 </div>
-<p>We want to choose an experimental design and a test statistic that leads to high power, so that <span class="math inline">\(\gamma\)</span> is as close as possible to one. Minimally, the power of the test should be <span class="math inline">\(\alpha\)</span> because we reject the null hypothesis <span class="math inline">\(\alpha\)</span> fraction of the time even when <span class="math inline">\(\mathscr{H}_0\)</span> is true. Power depends on many criteria, notably</p>
-<ul>
-<li>the effect size: the bigger the difference between the postulated value for <span class="math inline">\(\theta_0\)</span> under <span class="math inline">\(\mathscr{H}_0\)</span> and the observed behaviour, the easier it is to departures from <span class="math inline">\(\theta_0\)</span>.
-(Figure <a href="introduction.html#fig:power3">1.4</a>);</li>
-<li>variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure <a href="introduction.html#fig:power2">1.3</a> shows);</li>
-<li>the sample size: the more observation, the higher our ability to detect significative differences because the standard error decreases with sample size <span class="math inline">\(n\)</span> at a rate (typically) of <span class="math inline">\(n^{-1/2}\)</span>. The null distribution also becomes more concentrated as the sample size increase. In experimental designs, power may be maximized by specifying different sample size in each group</li>
-<li>the choice of test statistic: for example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. While the resulting tests are typically less powerful, they are more robust to model misspecification and outliers.</li>
-</ul>
-<p>To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible: for example, the one-sample <em>t</em>-test statistic <span class="math inline">\(T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}\)</span> for a normal sample follows a noncentral Student-<span class="math inline">\(t\)</span> distribution with noncentrality parameter <span class="math inline">\(\Delta\)</span> if the expectation of the population is <span class="math inline">\(\Delta + \mu_0\)</span>. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. For a given alternative, we simulate repeatedly samples from the model, compute the test statistic for each of these new samples and the associated <em>p</em>-values based on the postulated null hypothesis. We can then calculate the proportion of tests that lead to a rejection of the null hypothesis at level <span class="math inline">\(\alpha\)</span>, namely the percentage of <em>p</em>-values smaller than <span class="math inline">\(\alpha\)</span>.</p>
 </div>
-<div id="confidence-interval" class="section level3" number="1.6.6">
+<div id="simplicity" class="section level3" number="1.5.4">
 <h3>
-<span class="header-section-number">1.6.6</span> Confidence interval<a class="anchor" aria-label="anchor" href="#confidence-interval"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5.4</span> Simplicity<a class="anchor" aria-label="anchor" href="#simplicity"><i class="fas fa-link"></i></a>
 </h3>
-<p>A <strong>confidence interval</strong> is an alternative way to present the conclusions of an hypothesis test performed at significance level <span class="math inline">\(\alpha\)</span>. It is often combined with a point estimator <span class="math inline">\(\hat{\theta}\)</span> to give an indication of the variability of the estimation procedure. Wald-based <span class="math inline">\((1-\alpha)\)</span> confidence intervals for a parameter <span class="math inline">\(\theta\)</span> are of the form
-<span class="math display">\[\begin{align*}
-\widehat{\theta} \pm \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta})
-\end{align*}\]</span>
-where <span class="math inline">\(\mathfrak{q}_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of the null distribution of the Wald statistic
-<span class="math display">\[\begin{align*}
-T =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
-\end{align*}\]</span>
-and where <span class="math inline">\(\theta\)</span> represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, <span class="math inline">\(\widehat{\theta}\)</span> and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span>, are random variables: their values will vary from one sample to the next.</p>
-<p>For example, for a random sample <span class="math inline">\(X_1, \ldots, X_n\)</span> from a normal distribution <span class="math inline">\(\mathsf{No}(\mu, \sigma)\)</span>, the (<span class="math inline">\(1-\alpha\)</span>) confidence interval for the population mean <span class="math inline">\(\mu\)</span> is
-<span class="math display">\[\begin{align*}
-\overline{X} \pm t_{n-1, \alpha/2} \frac{S}{\sqrt{n}}
-\end{align*}\]</span>
-where <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a Student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
-<p>Before the interval is calculated, there is a <span class="math inline">\(1-\alpha\)</span> probability that <span class="math inline">\(\theta\)</span> is contained in the <strong>random</strong> interval <span class="math inline">\((\widehat{\theta} - \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}), \widehat{\theta} + \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}))\)</span>, where <span class="math inline">\(\widehat{\theta}\)</span> denotes the estimator. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter <span class="math inline">\(\theta\)</span> is either in the confidence interval or not. We can interpret confidence interval’s as follows: if we were to repeat the experiment multiple times, and calculate a <span class="math inline">\(1-\alpha\)</span> confidence interval each time, then roughly <span class="math inline">\(1-\alpha\)</span> of the calculated confidence intervals would contain the true value of <span class="math inline">\(\theta\)</span> in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the <em>procedure</em> we use to calculate confidence intervals and not in the actual values we obtain from a sample.</p>
+<p>The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. <a href="introduction.html#fig:xkcd2400">1.6</a> shows an <a href="https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png">hypothetical graph</a> on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.</p>
+<p>Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:intconf"></span>
-<img src="01-hypothesis_testing_files/figure-html/intconf-1.png" alt="95\% confidence intervals for the mean of a standard normal population $\mathsf{No}(0,1)$, with 100 random samples. On average, 5\% of these intervals fail to include the true mean value of zero (in red)." width="85%"><p class="caption">
-Figure 1.5: 95% confidence intervals for the mean of a standard normal population <span class="math inline">\(\mathsf{No}(0,1)\)</span>, with 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).
+<span style="display:block;" id="fig:xkcd2400"></span>
+<img src="figures/xkcd2400_statistics.png" alt="xkcd comic [2400 (Statistics) by Randall Munroe](https://xkcd.com/2400/). Alt text: We reject the null hypothesis based on the 'hot damn, check out this chart' test." width="40%"><p class="caption">
+Figure 1.6: xkcd comic <a href="https://xkcd.com/2400/">2400 (Statistics) by Randall Munroe</a>. Alt text: We reject the null hypothesis based on the ‘hot damn, check out this chart’ test.
 </p>
 </div>
-<p>If we are only interested in the binary decision rule reject/fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>, the confidence interval is equivalent to a <em>p</em>-value since it leads to the same conclusion. Whereas the <span class="math inline">\(1-\alpha\)</span> confidence interval gives the set of all values for which the test statistic doesn’t provide enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> at level <span class="math inline">\(\alpha\)</span>, the <em>p</em>-value gives the probability under the null of obtaning a result more extreme than the postulated value and so is more precise for this particular value. If the <em>p</em>-value is smaller than <span class="math inline">\(\alpha\)</span>, our null value <span class="math inline">\(\theta\)</span> will be outside of the confidence interval and vice-versa.</p>
-<p>In this example, we consider the difference between the average amount spent by Y members and those of previous generations: the mean difference in the samples is -16.49 dollars and thus millenials spend more. However, this in itself is not enough to conclude that the different is significative, nor can we say it is meaningful. The amount spent online varies from one individual to the next (and plausibly from month to month), and so different random samples would yield different mean differences.</p>
-<p>The first step of our analysis is defining the parameters corresponding to quantities of interest and formulating the null and alternative hypothesis as a function of these parameters. We will consider a test for the difference in mean of the two populations, say <span class="math inline">\(\mu_1\)</span> for the expected amount spent by generation Y and <span class="math inline">\(\mu_2\)</span> for older generations, with respective standard errors <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span>. We next write down our hypothesis: the researcher is interested in whether millenials spend more, so this is the alternative hypothesis, <span class="math inline">\(\mathscr{H}_a: \mu_1 &gt; \mu_2\)</span>. The null consists of all other values <span class="math inline">\(\mathscr{H}_0: \mu_1 \leq \mu_2\)</span>, but only <span class="math inline">\(\mu_1=\mu_2\)</span> matters for the purpose of testing (why?)</p>
-<p>The second step is the choice of test statistic. We consider the <span class="citation">Welch (<a href="references.html#ref-Welch:1947" role="doc-biblioref">1947</a>)</span> statistic for a difference in mean between two samples,
-<span class="math display">\[\begin{align*}
-T = \frac{\overline{X}_1 - \overline{X}_2}{\left(\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2} \right)^{1/2}}, \end{align*}\]</span>
-where <span class="math inline">\(\overline{X}_i\)</span> is the sample mean, <span class="math inline">\(S_i^2\)</span> is the unbiased variance estimator and <span class="math inline">\(n_i\)</span> is the sample size for group <span class="math inline">\(i\)</span> (<span class="math inline">\(i=1, 2\)</span>). If the mean difference between the two samples is zero, then <span class="math inline">\(\overline{X}_1-\overline{X}_2\)</span> has mean zero and the difference has variance <span class="math inline">\(\sigma^2_1/n_1+\sigma^2_2/n_2\)</span>. For our sample, the value of statistic is <span class="math inline">\(T=-2.76\)</span> Since the value changes from one sample to the next, we need to determine if this value is compatible with the null hypothesis by comparing it to the null distribution of <span class="math inline">\(T\)</span> (when <span class="math inline">\(\mathscr{H}_0\)</span> is true and <span class="math inline">\(\mu_1-\mu_2=0\)</span>). We perform the test at level <span class="math inline">\(\alpha=0.05\)</span>.</p>
-<p>The third step consists in obtaining a benchmark to determine if our result is extreme or unusual. To make comparisons easier, we standardize the statistic so its has mean zero and variance one under the null hypothesis <span class="math inline">\(\mu_1=\mu_2\)</span>, so as to obtain a dimensionless measure whose behaviour we know for large sample. The (mathematical) derivation of the null distribution is beyond the scope of this course, and will be given in all cases. Asymptotically, <span class="math inline">\(T\)</span> follows a standard normal distribution <span class="math inline">\(\mathsf{No}(0, 1)\)</span>, but there exists a better finite-sample approximation when <span class="math inline">\(n_1\)</span> or <span class="math inline">\(n_2\)</span> is small; we use <span class="citation">Satterthwaite (<a href="references.html#ref-Satterthwaite:1946" role="doc-biblioref">1946</a>)</span> and a Student-<span class="math inline">\(t\)</span> distribution as null distribution.</p>
-<p>It only remains to compute the <em>p</em>-value. If the null distribution is well-specified and <span class="math inline">\(\mathscr{H}_0\)</span> is true, then the random variable <span class="math inline">\(P\)</span> is uniform on <span class="math inline">\([0, 1]\)</span>; we thus expect to obtain under the null something larger than 0.95 only 5% of the time for our one-sided alternative since we consider under <span class="math inline">\(\mathscr{H}_0\)</span> the event <span class="math inline">\(\mathsf{Pr}(T &gt; t)\)</span>. The <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1\)</span> and, at level 5%, we reject the null hypothesis to conclude that millenials spend significantly than previous generation for monthly online purchases, with an estimated average difference of -16.49.</p>
 <div class="yourturn">
 <ul>
 <li>Define the following terms in your own word: experimental unit, factor, effect size</li>
 <li>What is the main benefit of experimental studies over observational studies?</li>
 <li>List the four pillars of experimental design and briefly describe them.</li>
-<li>Box, Hunter and Hunter (1978, p. 103) write:</li>
+<li>
+<span class="citation">Box, Hunter, and Hunter (<a href="references.html#ref-Box:1978" role="doc-biblioref">1978</a>)</span> write in page 103:</li>
 </ul>
 <blockquote>
 <p>Block what you can and randomize what you cannot.</p>
@@ -329,34 +335,41 @@ where <span class="math inline">\(\overline{X}_i\)</span> is the sample mean, <s
 </div>
 </div>
 </div>
+
   <div class="chapter-nav">
 <div class="prev"><a href="index.html">Preliminary remarks</a></div>
-<div class="next"><a href="reproducibility-crisis.html"><span class="header-section-number">2</span> Reproducibility crisis</a></div>
+<div class="next"><a href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="nav-link" href="#experimental-intro"><span class="header-section-number">1.1</span> Experimental designs</a></li>
-<li><a class="nav-link" href="#planning-experiments"><span class="header-section-number">1.2</span> Planning of experiments</a></li>
-<li><a class="nav-link" href="#population-sample"><span class="header-section-number">1.3</span> Population and samples</a></li>
-<li><a class="nav-link" href="#distributions"><span class="header-section-number">1.4</span> Distributions</a></li>
-<li><a class="nav-link" href="#sources-of-variability"><span class="header-section-number">1.5</span> Sources of variability</a></li>
+<li><a class="nav-link" href="#terminology"><span class="header-section-number">1.1</span> Terminology</a></li>
 <li>
-<a class="nav-link" href="#tests"><span class="header-section-number">1.6</span> Hypothesis testing</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#hypothesis"><span class="header-section-number">1.6.1</span> Hypothesis</a></li>
-<li><a class="nav-link" href="#test-statistic"><span class="header-section-number">1.6.2</span> Test statistic</a></li>
-<li><a class="nav-link" href="#null-distribution-and-p-value"><span class="header-section-number">1.6.3</span> Null distribution and p-value</a></li>
-<li><a class="nav-link" href="#conclusion"><span class="header-section-number">1.6.4</span> Conclusion</a></li>
-<li><a class="nav-link" href="#power"><span class="header-section-number">1.6.5</span> Power</a></li>
-<li><a class="nav-link" href="#confidence-interval"><span class="header-section-number">1.6.6</span> Confidence interval</a></li>
+<a class="nav-link" href="#review-of-basic-concepts"><span class="header-section-number">1.2</span> Review of basic concepts</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#variables"><span class="header-section-number">1.2.1</span> Variables</a></li>
+<li><a class="nav-link" href="#population-sample"><span class="header-section-number">1.2.2</span> Population and samples</a></li>
+<li><a class="nav-link" href="#sampling"><span class="header-section-number">1.2.3</span> Sampling</a></li>
+<li><a class="nav-link" href="#study-type"><span class="header-section-number">1.2.4</span> Study type</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#examples-of-experimental-designs"><span class="header-section-number">1.3</span> Examples of experimental designs</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#evidence-based-policies"><span class="header-section-number">1.3.1</span> Evidence-based policies</a></li></ul>
+</li>
+<li><a class="nav-link" href="#planning-experiments"><span class="header-section-number">1.4</span> Planning of experiments</a></li>
+<li>
+<a class="nav-link" href="#requirements-for-good-experiments"><span class="header-section-number">1.5</span> Requirements for good experiments</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#absence-of-systematic-error"><span class="header-section-number">1.5.1</span> Absence of systematic error</a></li>
+<li><a class="nav-link" href="#variability"><span class="header-section-number">1.5.2</span> Variability</a></li>
+<li><a class="nav-link" href="#generalizability"><span class="header-section-number">1.5.3</span> Generalizability</a></li>
+<li><a class="nav-link" href="#simplicity"><span class="header-section-number">1.5.4</span> Simplicity</a></li>
 </ul>
 </li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/01-hypothesis_testing.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/01-hypothesis_testing.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/01-introduction.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/01-introduction.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

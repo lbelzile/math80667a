@@ -40,16 +40,9 @@ Lawson (2014), Section 1.6
 Preliminary runs and how to make sense of them
 
 
-The marketing department wants to know the value of its brand by determining how much more customers are willing to pay for their product relative to the cheaper generic product offered by the store. Economic theory suggests a substitution effect: while customers may prefer the brand  product, they will switch to the generic version if the price tag is too high. To check this theory, one could design an experiment.
 
-:::yourturn
 
-As a researcher, how would you conduct this study? Identify a specific product. For the latter, define
 
-- an adequate response variable
-- the experimental unit
-- potential confounding variables that would need to be accounted for.
-:::
 
 
 

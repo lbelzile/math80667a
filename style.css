@@ -52,6 +52,7 @@ pre code {
     min-height: 120px;
     color: #000000;
     background-color: #FFD200;
+    border: dashed 5px #FFFFFF;
     background-image: url("figures/code.png") 
 }
 
@@ -65,6 +66,7 @@ pre code {
     min-height: 120px;
     color: #FFFFFF;
     background-color: #005EB8;
+    border: dashed 5px #FFFFFF;
     background-image: url("figures/box.png") 
 }
 

@@ -1,0 +1,30 @@
+# A primer on causal inference
+
+Causal inference is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit. Such action may be conceptual: we can imagine for example looking at student's success (as measured by their grades) by comparing two policies: giving them encouragement and praise in their work or simply grading without feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as **potential outcomes**. The fundamental problem of causal inference is that while we would like to study the action on our response, we can only effectively measure it in one of the two scenarios.
+
+As @Rubin:1975 (p.238) says,
+> no causation without manipulation
+
+In an experiment, we can manipulate assignment to treatment $a$ and randomize units to each value of the treatment to avoid undue effects from other variables. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid a)$ for different values of the action set $a$. We talk about causation when for treatments ($a=1$) and control ($a=0$), the distributions $(Y \mid a=1) \neq (Y \mid a=0)$. The most commonly used measure of causation is the **average treatment effect**, which is difference between the population averages of  treated and control groups,
+\begin{align*}
+\textsf{ATE} = \mathsf{E}(Y \mid a=1) - \mathsf{E}(Y \mid a=0)
+\end{align*}
+
+A pet peeve of statisticians is to state that correlation (or association) between two phenomena is not the same as causation.
+
+For example, weather forecasts of rain and the number of people carrying umbrellas in the streets are positively correlated, but the relationship is asymmetrical: if I intervene as an experimenter and force everyone to carry umbrellas, it won't impact weather forecasts nor the weather itself.
+
+TODO add plot of X and Y with causal graph
+
+
+## Potential outcomes
+
+## Assumptions
+
+### Stable unit treatment value allocation (SUTVA)
+
+## Average treatment effect 
+## Data generating mechanisms
+
+### Directed acyclic graphs
+### Ignorable assignment

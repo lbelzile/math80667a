@@ -11,7 +11,8 @@ new_session: yes
 
 rmd_files: [
   "index.Rmd",
-  "01-hypothesis_testing.Rmd",
+  "01-introduction.Rmd",
+  "02-hypothesis_testing.Rmd",
   "10-reproducibility_crisis.Rmd",
   "references.Rmd"
 ]

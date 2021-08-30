@@ -3,10 +3,10 @@
 
 :::keyidea
 
-* Defining replicability and reproducibility
-* Understanding the scale of the reproducibility crisis
-* Recognizing common statistical fallacies
-* Listing strategies for enhancing reproducibility
+* Defining replicability and reproducibility.
+* Understanding the scale of the reproducibility crisis.
+* Recognizing common statistical fallacies.
+* Listing strategies for enhancing reproducibility.
 
 :::
 

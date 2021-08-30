@@ -23,7 +23,7 @@ scale_colour_discrete <- viridis::scale_color_viridis(option="turbo")
 scale_fill_discrete <- viridis::scale_fill_viridis(option="turbo")
 options(ggplot2.continuous.colour = "turbo",
         ggplot2.continuous.fill = "turbo")
-
+library(patchwork)
 theme_set(theme_minimal())
 hecblue <- rgb(red = 0, green = 60, blue = 113, max = 255)
 heccyan <- rgb(red = 0, green = 159, blue = 223, max = 255)

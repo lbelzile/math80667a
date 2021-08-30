@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 Hypothesis testing | Experimental Design and Statistical Methods</title>
+<meta name="author" content="Léo Belzile">
+<meta name="description" content="In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="2 Hypothesis testing | Experimental Design and Statistical Methods">
+<meta property="og:type" content="book">
+<meta property="og:description" content="In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 Hypothesis testing | Experimental Design and Statistical Methods">
+<meta name="twitter:description" content="In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Experimental Design and Statistical Methods</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preliminary remarks</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="active" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
+<li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">3</span> Reproducibility crisis</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/lbelzile/math80667a">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="hypothesis-testing" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Hypothesis testing<a class="anchor" aria-label="anchor" href="#hypothesis-testing"><i class="fas fa-link"></i></a>
+</h1>
+<p>In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework. One important aspect of the reproducibility crisis is the misuse of <span class="math inline">\(p\)</span>-values in journal articles: falsification of a null hypothesis is not enough to provide substantive findings for a theory.</p>
+<p>Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.</p>
+<div id="distributions" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Distributions<a class="anchor" aria-label="anchor" href="#distributions"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="sources-of-variability" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Sources of variability<a class="anchor" aria-label="anchor" href="#sources-of-variability"><i class="fas fa-link"></i></a>
+</h2>
+<p>We call numerical summaries of the data <strong>statistics</strong>. Its important to distinguish between procedures/formulas and their numerical values. An <strong>estimator</strong> is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe). Once we have observed data we can actually compute the sample mean, that is, we have an estimate — an actual value. In other words,</p>
+<ul>
+<li>an estimator is the procedure or formula telling us how to use sample data to compute an estimate. An estimator is random since it depends on the sample.</li>
+<li>an estimate is the numerical value obtained once we apply the formula to observed data.</li>
+</ul>
+<p>For example, the sample mean <span class="math inline">\(\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)\)</span> is a summary of the data. Because the inputs of the function <span class="math inline">\(\overline{Y}\)</span> are random, the estimator is also random. To illustrate this point, Figure <a href="hypothesis-testing.html#fig:samplevar">2.1</a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:samplevar"></span>
+<img src="02-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%"><p class="caption">
+Figure 2.1: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.
+</p>
+</div>
+<p>We can clearly see from Figure <a href="hypothesis-testing.html#fig:samplevar">2.1</a> that, while <span class="math inline">\(\mu\)</span> is constant, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will notice that the sample means are less dispersed around <span class="math inline">\(\mu\)</span> than the individual measurements. This is because the sample mean <span class="math inline">\(\overline{Y}\)</span> is based on many observations, so there is more information available.</p>
+<p>Simply looking at the values of the sample mean does not tell the whole picture: we must also consider its variability. The square root of the variance of a statistic is termed <strong>standard error</strong>; it should not be confused with the standard deviation <span class="math inline">\(\sigma\)</span> of the population from which <span class="math inline">\(Y\)</span> is drawn. One can show that the standard error of the sample mean is <span class="math inline">\(\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}\)</span>. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance.</p>
+<p>In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
+</div>
+<div id="tests" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Hypothesis testing<a class="anchor" aria-label="anchor" href="#tests"><i class="fas fa-link"></i></a>
+</h2>
+<p>An hypothesis test is a binary decision rule used to evaluate the statistical evidence provided by a sample to make a decision regarding the underlying population. The main steps involved are:</p>
+<ul>
+<li>define the model parameters</li>
+<li>formulate the alternative and null hypothesis</li>
+<li>choose and calculate the test statistic</li>
+<li>obtain the null distribution describing the behaviour of the test statistic under <span class="math inline">\(\mathscr{H}_0\)</span>
+</li>
+<li>calculate the <em>p</em>-value</li>
+<li>conclude (reject or fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>) in the context of the problem.</li>
+</ul>
+<p>A good analogy for hypothesis tests is a trial for murder on which you are appointed juror.</p>
+<ul>
+<li>The judge lets you choose between two mutually exclusive outcome, guilty or not guilty, based on the evidence presented in court.</li>
+<li>The presumption of innocence applies and evidences are judged under this optic: are evidence remotely plausible if the person was innocent? The burden of the proof lies with the prosecution to avoid as much as possible judicial errors. The null hypothesis <span class="math inline">\(\mathscr{H}_0\)</span> is <em>not guilty</em>, whereas the alternative <span class="math inline">\(\mathscr{H}_a\)</span> is <em>guilty</em>. If there is a reasonable doubt, the verdict of the trial will be not guilty.</li>
+<li>The test statistic (and the choice of test) represents the summary of the proof. The more overwhelming the evidence, the higher the chance the accused will be declared guilty. The prosecutor chooses the proof so as to best outline this: the choice of evidence (statistic) ultimately will maximize the evidence, which parallels the power of the test.</li>
+<li>The null distribution is the benchmark against which to judge the evidence (jurisprudence). Given the proof, what are the odds assuming the person is innocent?</li>
+<li>The final step is the verdict. This is a binary decision, guilty or not guilty. For an hypothesis test performed at level <span class="math inline">\(\alpha\)</span>, one would reject (guilty) if the <em>p</em>-value is less than <span class="math inline">\(\alpha\)</span>. Even if we declare the person not guilty, this doesn’t mean the defendant is innocent and vice-versa.</li>
+</ul>
+<div id="hypothesis" class="section level3" number="2.3.1">
+<h3>
+<span class="header-section-number">2.3.1</span> Hypothesis<a class="anchor" aria-label="anchor" href="#hypothesis"><i class="fas fa-link"></i></a>
+</h3>
+<p>In statistical tests we have two hypotheses: the null hypothesis (<span class="math inline">\(\mathscr{H}_0\)</span>) and the alternative hypothesis (<span class="math inline">\(\mathscr{H}_1\)</span>). Usually, the null hypothesis is a single numerical value (the ‘status quo’) and the alternative is what we’re really interested in testing. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> in favour of <span class="math inline">\(\mathscr{H}_1\)</span>, subject to some pre-specified risk of error. Usually, hypothesis tests involve a parameter, say <span class="math inline">\(\theta\)</span>, which characterizes the underlying distribution at the population level ans whose value is unknown. A two-sided hypothesis test regarding a parameter <span class="math inline">\(\theta\)</span> has the form
+<span class="math display">\[\begin{align*}
+\mathscr{H}_0: \theta=\theta_0 \qquad \text{versus} \qquad \mathscr{H}_a:\theta \neq \theta_0.
+\end{align*}\]</span>
+We are testing whether or not <span class="math inline">\(\theta\)</span> is precisely equal to the value <span class="math inline">\(\theta_0\)</span>.</p>
+<p>In completely randomized experiments with a single factor, we will be testing whether the mean of <span class="math inline">\(K\)</span> different sub-populations are equal. Let <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> denote the expectation or theoretical mean of each of the <span class="math inline">\(K\)</span> sub-populations. Equality of means translates into
+<span class="math display">\[\begin{align*}
+\mathscr{H}_0:&amp; \mu_1 = \cdots = \mu_K
+\mathscr{H}_a:&amp; \text{at least two means are different, }\mu_i \neq \mu_j (1 \leq i &lt; j \leq K).
+\end{align*}\]</span>
+Note that the null hypothesis is a single value, whereas the alternative is the complement, i.e. all potential scenarios for which not all expectations are equal.</p>
+<p>One slight complication arising from the above is that the expectations <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> are unknown. We can assess this by comparing the sample means in each group. These are noisy estimates of the expectation: it is this inherent variability that limits our ability to detect differences in mean.</p>
+</div>
+<div id="test-statistic" class="section level3" number="2.3.2">
+<h3>
+<span class="header-section-number">2.3.2</span> Test statistic<a class="anchor" aria-label="anchor" href="#test-statistic"><i class="fas fa-link"></i></a>
+</h3>
+<p>A test statistic <span class="math inline">\(T\)</span> is a function of the data that summarize the information contained in the sample for <span class="math inline">\(\theta\)</span>. The form of the test statistic is chosen such that we know its underlying distribution under <span class="math inline">\(\mathscr{H}_0\)</span>, that is, the potential values taken by <span class="math inline">\(T\)</span> and their relative probability if <span class="math inline">\(\mathscr{H}_0\)</span> is true. Indeed, <span class="math inline">\(Y\)</span> is a random variable and its value change from one sample to the next.
+This allows us to determine what values of <span class="math inline">\(T\)</span> are likely if <span class="math inline">\(\mathscr{H}_0\)</span> is true. Many statistics we will consider are <strong>Wald statistic</strong>, of the form
+<span class="math display">\[\begin{align*}
+T = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
+\end{align*}\]</span>
+where <span class="math inline">\(\widehat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\theta_0\)</span> is the postulated value of the parameter and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span> is an estimator of the standard deviation of the test statistic <span class="math inline">\(\widehat{\theta}\)</span>.</p>
+<p>For example, to test whether the mean of a population is zero, we set
+<span class="math display">\[\begin{align*}
+\mathscr{H}_0: \mu=0, \qquad  \mathscr{H}_a:\mu \neq 0,
+\end{align*}\]</span>
+and the Wald statistic is
+<span class="math display">\[\begin{align*}
+T &amp;= \frac{\overline{X}-0}{S_n/\sqrt{n}}
+\end{align*}\]</span>
+where <span class="math inline">\(\overline{X}\)</span> is the sample mean of <span class="math inline">\(X_1, \ldots, X_n\)</span>,
+<span class="math display">\[\begin{align*}
+\overline{X} &amp;= \frac{1}{n} \sum_{i=1}^n X_i = \frac{X_1+ \cdots + X_n}{n}
+\end{align*}\]</span>
+and the standard error (of the mean) <span class="math inline">\(\overline{X}\)</span> is <span class="math inline">\(S_n/\sqrt{n}\)</span>; the sample variance <span class="math inline">\(S_n\)</span> is an estimator of the standard deviation <span class="math inline">\(\sigma\)</span>,
+<span class="math display">\[\begin{align*}
+S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
+\end{align*}\]</span></p>
+</div>
+<div id="null-distribution-and-p-value" class="section level3" number="2.3.3">
+<h3>
+<span class="header-section-number">2.3.3</span> Null distribution and <em>p</em>-value<a class="anchor" aria-label="anchor" href="#null-distribution-and-p-value"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <em>p</em>-value allows us to decide whether the observed value of the test statistic <span class="math inline">\(T\)</span> is plausible under <span class="math inline">\(\mathscr{H}_0\)</span>. Specifically, the <em>p</em>-value is the probability that the test statistic is equal or more extreme to the estimate computed from the data, assuming <span class="math inline">\(\mathscr{H}_0\)</span> is true. Suppose that based on a random sample <span class="math inline">\(X_1, \ldots, X_n\)</span> we obtain a statistic whose value <span class="math inline">\(T=t\)</span>. For a two-sided test <span class="math inline">\(\mathscr{H}_0:\theta=\theta_0\)</span> vs. <span class="math inline">\(\mathscr{H}_a:\theta \neq \theta_0\)</span>, the <em>p</em>-value is <span class="math inline">\(\mathsf{Pr}_0(|T| \geq |t|)\)</span>. If the distribution of <span class="math inline">\(T\)</span> is symmetric around zero, the <em>p</em>-value is
+<span class="math display">\[\begin{align*}
+p = 2 \times \mathsf{Pr}_0(T \geq |t|).
+\end{align*}\]</span></p>
+<p>Consider the example of a two-sided test involving the population mean <span class="math inline">\(\mathscr{H}_0:\mu=0\)</span> against the alternative <span class="math inline">\(\mathscr{H}_1:\mu \neq 0\)</span>. Assuming the random sample comes from a normal (population) <span class="math inline">\(\mathsf{No}(\mu, \sigma^2)\)</span>, it can be shown that if <span class="math inline">\(\mathscr{H}_0\)</span> is true (that is, if <span class="math inline">\(\mu=0\)</span>), the test statistic
+<span class="math display">\[\begin{align*}
+T = \frac{\overline{X}}{S/\sqrt{n}}
+\end{align*}\]</span>
+follows a Student-<em>t</em> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom, denoted <span class="math inline">\(\mathsf{St}_{n-1}\)</span>. This allows us to calculate the <em>p</em>-value (either from a table, or using some statistical software). The Student-<em>t</em> distribution is symmetric about zero, so the <em>p</em>-value is <span class="math inline">\(P = 2\times\mathsf{Pr}(T_{n-1} &gt; |t|)\)</span>, where <span class="math inline">\(T \sim \mathsf{St}_{n-1}\)</span>.</p>
+</div>
+<div id="conclusion" class="section level3" number="2.3.4">
+<h3>
+<span class="header-section-number">2.3.4</span> Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <em>p</em>-value allows us to make a decision about the null hypothesis. If <span class="math inline">\(\mathscr{H}_0\)</span> is true, the <em>p</em>-value follows a uniform distribution. <a href="https://xkcd.com/1478/">Thus, if the <em>p</em>-value is small</a>, this means observing an outcome more extreme than <span class="math inline">\(T=t\)</span> is unlikely, and so we’re inclined to think that <span class="math inline">\(\mathscr{H}_0\)</span> is not true. There’s always some underlying risk that we’re making a mistake when we make a decision. In statistic, there are <a href="https://xkcd.com/2303/">two type of errors</a>:</p>
+<ul>
+<li>type I error: we reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is true,</li>
+<li>type II error: we fail to reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is false.</li>
+</ul>
+<p>These hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, <span class="math inline">\(\alpha\)</span>, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test <span class="math inline">\(\alpha\)</span>, the more often we will reject the null hypothesis when the latter is true. The value of <span class="math inline">\(\alpha \in (0, 1)\)</span> is the probability of rejecting <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is in fact true,
+<span class="math display">\[\begin{align*}
+\alpha = \mathsf{Pr}_0\left(\text{ reject } \mathscr{H}_0\right).
+\end{align*}\]</span>
+The level <span class="math inline">\(\alpha\)</span> is fixed beforehand, typically <span class="math inline">\(1\)</span>%, <span class="math inline">\(5\)</span>% or <span class="math inline">\(10\)</span>%. Keep in mind that the probability of type I error is <span class="math inline">\(\alpha\)</span> only if the null model for <span class="math inline">\(\mathscr{H}_0\)</span> is correct (sic) and correspond to the data generating mechanism.</p>
+<p>The focus on type I error is best understood by thinking about costs of moving away from the status quo: a new website design or branding will be costly to implement, so you want to make sure there are enough evidence this is the better alternative.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">
+<strong>Decision</strong> \ <strong>true model</strong>
+</th>
+<th align="center"><span class="math inline">\(\mathscr{H}_0\)</span></th>
+<th align="center"><span class="math inline">\(\mathscr{H}_a\)</span></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>
+</td>
+<td align="center"><span class="math inline">\(\checkmark\)</span></td>
+<td align="center">type II error</td>
+</tr>
+<tr class="even">
+<td align="left">reject <span class="math inline">\(\mathscr{H}_0\)</span>
+</td>
+<td align="center">type I error</td>
+<td align="center"><span class="math inline">\(\checkmark\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<p>To make a decision, we compare our <em>p</em>-value <span class="math inline">\(P\)</span> with the level of the test <span class="math inline">\(\alpha\)</span>:</p>
+<ul>
+<li>if <span class="math inline">\(P &lt; \alpha\)</span>, we reject <span class="math inline">\(\mathscr{H}_0\)</span>;</li>
+<li>if <span class="math inline">\(P \geq \alpha\)</span>, we fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>.</li>
+</ul>
+<p>Do not mix up level of the test (probability fixed beforehand by the researcher) and the <em>p</em>-value. If you do a test at level 5%, the probability of type I error is by definition <span class="math inline">\(\alpha\)</span> and does not depend on the <em>p</em>-value. The latter is conditional probability of observing a more extreme likelihood given the null distribution <span class="math inline">\(\mathscr{H}_0\)</span> is true.</p>
+</div>
+<div id="power" class="section level3" number="2.3.5">
+<h3>
+<span class="header-section-number">2.3.5</span> Power<a class="anchor" aria-label="anchor" href="#power"><i class="fas fa-link"></i></a>
+</h3>
+<p>There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject <span class="math inline">\(\mathscr{H}_0\)</span> when the latter is false.</p>
+<p>Failing to reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_a\)</span> is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is <span class="math inline">\(1-\gamma\)</span>, say. The <strong>power of a test</strong> is the probability of rejecting <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is false, i.e.,
+<span class="math display">\[\begin{align*}
+\gamma = \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
+\end{align*}\]</span>
+Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favor of an alternative.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:power1"></span>
+<img src="02-hypothesis_testing_files/figure-html/power1-1.png" alt="Comparison between null distribution (full curve) and a specific alternative for a *t*-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white)." width="85%"><p class="caption">
+Figure 2.2: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:power2"></span>
+<img src="02-hypothesis_testing_files/figure-html/power2-1.png" alt="Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line)." width="85%"><p class="caption">
+Figure 2.3: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).
+</p>
+</div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:power3"></span>
+<img src="02-hypothesis_testing_files/figure-html/power3-1.png" alt="Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size." width="85%"><p class="caption">
+Figure 2.4: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.
+</p>
+</div>
+<p>We want to choose an experimental design and a test statistic that leads to high power, so that <span class="math inline">\(\gamma\)</span> is as close as possible to one. Minimally, the power of the test should be <span class="math inline">\(\alpha\)</span> because we reject the null hypothesis <span class="math inline">\(\alpha\)</span> fraction of the time even when <span class="math inline">\(\mathscr{H}_0\)</span> is true. Power depends on many criteria, notably</p>
+<ul>
+<li>the effect size: the bigger the difference between the postulated value for <span class="math inline">\(\theta_0\)</span> under <span class="math inline">\(\mathscr{H}_0\)</span> and the observed behaviour, the easier it is to departures from <span class="math inline">\(\theta_0\)</span>.
+(Figure <a href="hypothesis-testing.html#fig:power3">2.4</a>);</li>
+<li>variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure <a href="hypothesis-testing.html#fig:power2">2.3</a> shows);</li>
+<li>the sample size: the more observation, the higher our ability to detect significative differences because the standard error decreases with sample size <span class="math inline">\(n\)</span> at a rate (typically) of <span class="math inline">\(n^{-1/2}\)</span>. The null distribution also becomes more concentrated as the sample size increase. In experimental designs, power may be maximized by specifying different sample size in each group</li>
+<li>the choice of test statistic: for example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. While the resulting tests are typically less powerful, they are more robust to model misspecification and outliers.</li>
+</ul>
+<p>To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible: for example, the one-sample <em>t</em>-test statistic <span class="math inline">\(T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}\)</span> for a normal sample follows a noncentral Student-<span class="math inline">\(t\)</span> distribution with noncentrality parameter <span class="math inline">\(\Delta\)</span> if the expectation of the population is <span class="math inline">\(\Delta + \mu_0\)</span>. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. For a given alternative, we simulate repeatedly samples from the model, compute the test statistic for each of these new samples and the associated <em>p</em>-values based on the postulated null hypothesis. We can then calculate the proportion of tests that lead to a rejection of the null hypothesis at level <span class="math inline">\(\alpha\)</span>, namely the percentage of <em>p</em>-values smaller than <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+<div id="confidence-interval" class="section level3" number="2.3.6">
+<h3>
+<span class="header-section-number">2.3.6</span> Confidence interval<a class="anchor" aria-label="anchor" href="#confidence-interval"><i class="fas fa-link"></i></a>
+</h3>
+<p>A <strong>confidence interval</strong> is an alternative way to present the conclusions of an hypothesis test performed at significance level <span class="math inline">\(\alpha\)</span>. It is often combined with a point estimator <span class="math inline">\(\hat{\theta}\)</span> to give an indication of the variability of the estimation procedure. Wald-based <span class="math inline">\((1-\alpha)\)</span> confidence intervals for a parameter <span class="math inline">\(\theta\)</span> are of the form
+<span class="math display">\[\begin{align*}
+\widehat{\theta} \pm \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta})
+\end{align*}\]</span>
+where <span class="math inline">\(\mathfrak{q}_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of the null distribution of the Wald statistic
+<span class="math display">\[\begin{align*}
+T =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
+\end{align*}\]</span>
+and where <span class="math inline">\(\theta\)</span> represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, <span class="math inline">\(\widehat{\theta}\)</span> and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span>, are random variables: their values will vary from one sample to the next.</p>
+<p>For example, for a random sample <span class="math inline">\(X_1, \ldots, X_n\)</span> from a normal distribution <span class="math inline">\(\mathsf{No}(\mu, \sigma)\)</span>, the (<span class="math inline">\(1-\alpha\)</span>) confidence interval for the population mean <span class="math inline">\(\mu\)</span> is
+<span class="math display">\[\begin{align*}
+\overline{X} \pm t_{n-1, \alpha/2} \frac{S}{\sqrt{n}}
+\end{align*}\]</span>
+where <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span> quantile of a Student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+<p>Before the interval is calculated, there is a <span class="math inline">\(1-\alpha\)</span> probability that <span class="math inline">\(\theta\)</span> is contained in the <strong>random</strong> interval <span class="math inline">\((\widehat{\theta} - \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}), \widehat{\theta} + \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}))\)</span>, where <span class="math inline">\(\widehat{\theta}\)</span> denotes the estimator. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter <span class="math inline">\(\theta\)</span> is either in the confidence interval or not. We can interpret confidence interval’s as follows: if we were to repeat the experiment multiple times, and calculate a <span class="math inline">\(1-\alpha\)</span> confidence interval each time, then roughly <span class="math inline">\(1-\alpha\)</span> of the calculated confidence intervals would contain the true value of <span class="math inline">\(\theta\)</span> in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the <em>procedure</em> we use to calculate confidence intervals and not in the actual values we obtain from a sample.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:intconf"></span>
+<img src="02-hypothesis_testing_files/figure-html/intconf-1.png" alt="95\% confidence intervals for the mean of a standard normal population $\mathsf{No}(0,1)$, with 100 random samples. On average, 5\% of these intervals fail to include the true mean value of zero (in red)." width="85%"><p class="caption">
+Figure 2.5: 95% confidence intervals for the mean of a standard normal population <span class="math inline">\(\mathsf{No}(0,1)\)</span>, with 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).
+</p>
+</div>
+<p>If we are only interested in the binary decision rule reject/fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>, the confidence interval is equivalent to a <em>p</em>-value since it leads to the same conclusion. Whereas the <span class="math inline">\(1-\alpha\)</span> confidence interval gives the set of all values for which the test statistic doesn’t provide enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> at level <span class="math inline">\(\alpha\)</span>, the <em>p</em>-value gives the probability under the null of obtaning a result more extreme than the postulated value and so is more precise for this particular value. If the <em>p</em>-value is smaller than <span class="math inline">\(\alpha\)</span>, our null value <span class="math inline">\(\theta\)</span> will be outside of the confidence interval and vice-versa.</p>
+<p>In this example, we consider the difference between the average amount spent by Y members and those of previous generations: the mean difference in the samples is -16.49 dollars and thus millenials spend more. However, this in itself is not enough to conclude that the different is significative, nor can we say it is meaningful. The amount spent online varies from one individual to the next (and plausibly from month to month), and so different random samples would yield different mean differences.</p>
+<p>The first step of our analysis is defining the parameters corresponding to quantities of interest and formulating the null and alternative hypothesis as a function of these parameters. We will consider a test for the difference in mean of the two populations, say <span class="math inline">\(\mu_1\)</span> for the expected amount spent by generation Y and <span class="math inline">\(\mu_2\)</span> for older generations, with respective standard errors <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span>. We next write down our hypothesis: the researcher is interested in whether millenials spend more, so this is the alternative hypothesis, <span class="math inline">\(\mathscr{H}_a: \mu_1 &gt; \mu_2\)</span>. The null consists of all other values <span class="math inline">\(\mathscr{H}_0: \mu_1 \leq \mu_2\)</span>, but only <span class="math inline">\(\mu_1=\mu_2\)</span> matters for the purpose of testing (why?)</p>
+<p>The second step is the choice of test statistic. We consider the <span class="citation">Welch (<a href="references.html#ref-Welch:1947" role="doc-biblioref">1947</a>)</span> statistic for a difference in mean between two samples,
+<span class="math display">\[\begin{align*}
+T = \frac{\overline{X}_1 - \overline{X}_2}{\left(\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2} \right)^{1/2}}, \end{align*}\]</span>
+where <span class="math inline">\(\overline{X}_i\)</span> is the sample mean, <span class="math inline">\(S_i^2\)</span> is the unbiased variance estimator and <span class="math inline">\(n_i\)</span> is the sample size for group <span class="math inline">\(i\)</span> (<span class="math inline">\(i=1, 2\)</span>). If the mean difference between the two samples is zero, then <span class="math inline">\(\overline{X}_1-\overline{X}_2\)</span> has mean zero and the difference has variance <span class="math inline">\(\sigma^2_1/n_1+\sigma^2_2/n_2\)</span>. For our sample, the value of statistic is <span class="math inline">\(T=-2.76\)</span> Since the value changes from one sample to the next, we need to determine if this value is compatible with the null hypothesis by comparing it to the null distribution of <span class="math inline">\(T\)</span> (when <span class="math inline">\(\mathscr{H}_0\)</span> is true and <span class="math inline">\(\mu_1-\mu_2=0\)</span>). We perform the test at level <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<p>The third step consists in obtaining a benchmark to determine if our result is extreme or unusual. To make comparisons easier, we standardize the statistic so its has mean zero and variance one under the null hypothesis <span class="math inline">\(\mu_1=\mu_2\)</span>, so as to obtain a dimensionless measure whose behaviour we know for large sample. The (mathematical) derivation of the null distribution is beyond the scope of this course, and will be given in all cases. Asymptotically, <span class="math inline">\(T\)</span> follows a standard normal distribution <span class="math inline">\(\mathsf{No}(0, 1)\)</span>, but there exists a better finite-sample approximation when <span class="math inline">\(n_1\)</span> or <span class="math inline">\(n_2\)</span> is small; we use <span class="citation">Satterthwaite (<a href="references.html#ref-Satterthwaite:1946" role="doc-biblioref">1946</a>)</span> and a Student-<span class="math inline">\(t\)</span> distribution as null distribution.</p>
+<p>It only remains to compute the <em>p</em>-value. If the null distribution is well-specified and <span class="math inline">\(\mathscr{H}_0\)</span> is true, then the random variable <span class="math inline">\(P\)</span> is uniform on <span class="math inline">\([0, 1]\)</span>; we thus expect to obtain under the null something larger than 0.95 only 5% of the time for our one-sided alternative since we consider under <span class="math inline">\(\mathscr{H}_0\)</span> the event <span class="math inline">\(\mathsf{Pr}(T &gt; t)\)</span>. The <span class="math inline">\(p\)</span>-value is <span class="math inline">\(1\)</span> and, at level 5%, we reject the null hypothesis to conclude that millenials spend significantly than previous generation for monthly online purchases, with an estimated average difference of -16.49.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="introduction.html"><span class="header-section-number">1</span> Introduction</a></div>
+<div class="next"><a href="reproducibility-crisis.html"><span class="header-section-number">3</span> Reproducibility crisis</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#hypothesis-testing"><span class="header-section-number">2</span> Hypothesis testing</a></li>
+<li><a class="nav-link" href="#distributions"><span class="header-section-number">2.1</span> Distributions</a></li>
+<li><a class="nav-link" href="#sources-of-variability"><span class="header-section-number">2.2</span> Sources of variability</a></li>
+<li>
+<a class="nav-link" href="#tests"><span class="header-section-number">2.3</span> Hypothesis testing</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#hypothesis"><span class="header-section-number">2.3.1</span> Hypothesis</a></li>
+<li><a class="nav-link" href="#test-statistic"><span class="header-section-number">2.3.2</span> Test statistic</a></li>
+<li><a class="nav-link" href="#null-distribution-and-p-value"><span class="header-section-number">2.3.3</span> Null distribution and p-value</a></li>
+<li><a class="nav-link" href="#conclusion"><span class="header-section-number">2.3.4</span> Conclusion</a></li>
+<li><a class="nav-link" href="#power"><span class="header-section-number">2.3.5</span> Power</a></li>
+<li><a class="nav-link" href="#confidence-interval"><span class="header-section-number">2.3.6</span> Confidence interval</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/02-hypothesis_testing.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/02-hypothesis_testing.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Experimental Design and Statistical Methods</strong>" was written by Léo Belzile. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
