@@ -2,13 +2,14 @@ exm:experimentdefinitions
 fig:variablesquanti
 fig:variablescateg
 exm:Galluppoll
+exm:unlabeled-div-1
 fig:sampling
 fig:openintrograph
 exm:experimentalexample1
-exm:unlabeled-div-1
-fig:xkcd605
 exm:unlabeled-div-2
+fig:xkcd605
 exm:unlabeled-div-3
+exm:unlabeled-div-4
 fig:xkcd2400
 fig:samplevar
 fig:power1

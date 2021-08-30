@@ -132,7 +132,7 @@ Reflect on the choice of platform used to collect answers and think about how it
 
 Before examining problems related to sampling, we review the main random sampling methods. The simplest is simple random sampling, whereby $n$ units are drawn completely at random (uniformly) from the $N$ elements of the sampling frame. The second most common scheme is stratified sampling, whereby a certain numbers of units are drawn uniformly from strata, namely subgroups (e.g., gender). Finally, cluster sampling consists in sampling only from some of these subgroups. 
 
-::: {.example name="Illustration of sampling schemes"}
+::: { .example name="Illustration of sampling schemes"}
 Suppose we wish to look at student satisfaction regarding the material taught in an introductory statistics course offered to multiple sections. The population consists of all students enrolled in the course in a given semester and this list provides the sampling frame. We can define strata to consist of class group. A simple random sample would be obtaining by sampling randomly abstracting from class groups, a stratified sample by drawing randomly a number from each class group and a cluster sampling by drawing all students from selected class groups. Cluster sampling is only mostly useful if all groups are similar and if the costs associated to sampling from multiple strata are expensive. 
 
 
@@ -206,12 +206,15 @@ dispersion_2 <- data_samp %>% group_by(group) %>% summarize(mean = mean(stratifi
 
 Stratified sampling is typically superior if we care about having similar proportions of sampled in each group and is useful for reweighting: in \@ref(fig:sampling), the true proportion of sampled is 1/3, with the simple random sampling having a range of [`r round(min(dispersion_1$mean),2)`, `r round(max(dispersion_1$mean),2)`] among the strata, compared to [`r round(min(dispersion_2$mean),2)`, `r  round(max(dispersion_2$mean),2)`] for the stratified sample.
 
+:::
 
 ::: outsidethebox
 
 The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?
 
 :::
+
+There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.
 
 In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon's Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review [@Aguinis:2021]. These samples are subject to self-selection bias and should be read with skepticism. I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is relatively unimportant. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the repartition of individuals with the composition obtained from the census. 
 
@@ -302,6 +305,7 @@ Suppose we wish to consider the differences in student performance between two i
 :::
 
 The first point raised by Cox is thus that we
+
 > ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.
 
 This point also motivates use of **double-blind** procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo and control groups. 
@@ -318,6 +322,7 @@ Point (a) typically cannot be influenced by the experimenter outside of choosing
 ### Generalizability
 
 Most studies are done with an objective of generalizing the findings beyond the particular units analyzed. The range of validity thus crucially depends with the choice of population from which a sample is drawn and the particular sampling scheme. Non-random sampling severely limits the extrapolation of the results to more general settings. This leads Cox to advocate having
+
 > not just empirical  knowledge about what the treatment differences are, but also some understanding of the reasons for the differences.
 
 Even if we believe a factor to have no effect, it may be wise to introduce it in the experiment to check this assumption: if it is not a source of variability, it shouldn't impact the findings and at the same time would provide some more robustness.
