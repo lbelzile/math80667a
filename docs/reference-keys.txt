@@ -12,6 +12,8 @@ exm:unlabeled-div-3
 exm:unlabeled-div-4
 fig:xkcd2400
 fig:samplevar
+exm:unlabeled-div-5
+tab:rosen-table1
 fig:power1
 fig:power2
 fig:power3
@@ -36,7 +38,6 @@ variability
 generalizability
 simplicity
 hypothesis-testing
-distributions
 sources-of-variability
 tests
 hypothesis

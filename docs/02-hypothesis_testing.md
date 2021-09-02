@@ -6,30 +6,31 @@ In most applied domains, empirical evidences drive the advancement of the field 
 Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.
 
 
-
-## Distributions
-
-
-
 ## Sources of variability
 
-We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value.  In other words,
+We are typically interested in some characteristic of the population, oftentimes the (conditional) theoretical average of a continuous response variable, denoted $\mu$. This quantity exists, but is unknown to us so the best we can do is estimate it using random samples that are drawn from the population. 
 
-- an estimator is the procedure or formula telling us how to use sample data to compute an estimate. An estimator is random since it depends on the sample.
+We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe for cake). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value (the cake).  In other words,
+
+- an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary. Its output is random: even if you repeat a recipe, you won't get the same exact output everytime.
 - an estimate is the numerical value obtained once we apply the formula to observed data.
 
 
-For example, the sample mean $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$ is a summary of the data. Because the inputs of the function $\overline{Y}$ are random, the estimator is also random. To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$.
+For example, the sample mean of a sample of size $n$ is $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$. Because the inputs of the function $\overline{Y}$ are random, the estimator $\overline{Y}$ is also random. To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$.
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%" />
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that, while $\mu$ is constant, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on many observations, so there is more information available.
+We can clearly see from Figure \@ref(fig:samplevar) that, even with a common value of $\mu$ for all models, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on many observations, so there is more information available.
 
-Simply looking at the values of the sample mean does not tell the whole picture: we must also consider its variability. The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which $Y$ is drawn. One can show that the standard error of the sample mean is $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance.
+Values of the sample mean don't tell the whole picture: we must also consider their variability. The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where \begin{align*}
+S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
+\end{align*}
+The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which the sample observations $Y_1, \ldots$ are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.
 
+We have seen so far that 
 In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.
 
 ## Hypothesis testing {#tests}
@@ -48,8 +49,8 @@ A good analogy for hypothesis tests is a trial for murder on which you are appoi
 - The judge lets you choose between two mutually exclusive outcome, guilty or not guilty, based on the evidence presented in court.
 - The presumption of innocence applies and evidences are judged under this optic: are evidence remotely plausible if the person was innocent?  The burden of the proof lies with the prosecution to avoid as much as possible judicial errors. The null hypothesis $\mathscr{H}_0$ is *not guilty*, whereas the alternative $\mathscr{H}_a$ is *guilty*. If there is a reasonable doubt, the verdict of the trial will be not guilty.
 - The test statistic (and the choice of test) represents the summary of the proof. The more overwhelming the evidence, the higher the chance the accused will be declared guilty. The prosecutor chooses the proof so as to best outline this: the choice of evidence (statistic) ultimately will maximize the evidence, which parallels the power of the test.
-- The null distribution is the benchmark against which to judge the evidence (jurisprudence). Given the proof, what are the odds assuming the person is innocent? 
-- The final step is the verdict. This is a binary decision, guilty or not guilty. For an hypothesis test performed at level $\alpha$, one would reject (guilty) if the _p_-value is less than $\alpha$. Even if we declare the person not guilty, this doesn't mean the defendant is innocent and vice-versa.
+- The null distribution is the benchmark against which to judge the evidence (jurisprudence). Given the proof, what are the odds assuming the person is innocent? Since this is possibly different for every test, it is common to report instead a _p_-value, which gives the level of evidence on a uniform scale which is most easily interpreted.
+- The final step is the verdict, a binary decision with outcomes: guilty or not guilty. For an hypothesis test performed at level $\alpha$, one would reject (guilty) if the _p_-value is less than $\alpha$. Even if we declare the person not guilty, this doesn't mean the defendant is innocent and vice-versa.
 
 
 ### Hypothesis
@@ -61,27 +62,15 @@ In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0
 \end{align*}
 We are testing whether or not $\theta$ is precisely equal to the value $\theta_0$. 
 
-In completely randomized experiments with a single factor, we will be testing whether the mean of $K$ different sub-populations are equal. Let $\mu_1, \ldots, \mu_K$ denote the expectation or theoretical mean of each of the $K$ sub-populations. Equality of means translates into 
-\begin{align*}
-\mathscr{H}_0:& \mu_1 = \cdots = \mu_K
-\mathscr{H}_a:& \text{at least two means are different, }\mu_i \neq \mu_j (1 \leq i < j \leq K).
-\end{align*}
-Note that the null hypothesis is a single value, whereas the alternative is the complement, i.e. all potential scenarios for which not all expectations are equal.
-
-
-
-One slight complication arising from the above is that the expectations $\mu_1, \ldots, \mu_K$ are unknown.  We can assess this by comparing the sample means in each group. These are noisy estimates of the expectation: it is this inherent variability that limits our ability to detect differences in mean.
-
 
 
 ### Test statistic
 
-A test statistic $T$ is a function of the data that summarize the information contained in the sample for $\theta$. The form of the test statistic is chosen such that we know its underlying distribution under $\mathscr{H}_0$, that is, the potential values taken by $T$ and their relative probability if $\mathscr{H}_0$ is true. Indeed, $Y$ is a random variable and its value change from one sample to the next.
-This allows us to determine what values of $T$ are likely if $\mathscr{H}_0$ is true. Many statistics we will consider are **Wald statistic**, of the form
+A test statistic $T$ is a function of the data that summarize the information contained in the sample for $\theta$. The form of the test statistic is chosen such that we know its underlying distribution under $\mathscr{H}_0$, that is, the potential values taken by $T$ and their relative probability if $\mathscr{H}_0$ is true. This allows us to determine what values of $T$ are likely if $\mathscr{H}_0$ is true. Many statistics we will consider are of the form^[This class of statistic, which includes $t$-tests, are Wald statistics.]
 \begin{align*}
 T = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
 \end{align*}
-where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$.
+where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$. For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_1$ and $\mu_0$, then $\theta = \mu_0-\mu_1$ and  $\mathscr{H}_0: \mu_0 = \mu_1$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. 
 
 For example, to test whether the mean of a population is zero, we set
 \begin{align*}
@@ -91,15 +80,8 @@ and the Wald statistic is
 \begin{align*}
 T &= \frac{\overline{X}-0}{S_n/\sqrt{n}}
 \end{align*}
-where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$,
-\begin{align*}
-\overline{X} &= \frac{1}{n} \sum_{i=1}^n X_i = \frac{X_1+ \cdots + X_n}{n}
-\end{align*}
-and the standard error (of the mean) $\overline{X}$ is $S_n/\sqrt{n}$; the sample variance $S_n$ is an estimator of the standard deviation $\sigma$,
-\begin{align*}
-S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
-\end{align*}
-
+where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$.
+The denominator is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. Note that the precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance, whereas we recover the Welch test if we estimate the variance separately for each treatment.
 
 ### Null distribution and _p_-value
 
@@ -107,6 +89,8 @@ The _p_-value allows us to decide whether the observed value of the test statist
 \begin{align*}
 p = 2 \times \mathsf{Pr}_0(T \geq |t|).
 \end{align*}
+
+How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the tell us that the sample mean behaves like a normal random variable with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$ for $n$ large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use toderive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student's $t$, $\chi^2$ and $F$ distributions are the reference distributions that arise the most often. 
 
 
 
@@ -123,16 +107,16 @@ The *p*-value allows us to make a decision about the null hypothesis. If $\maths
 
 
 - type I error: we reject $\mathscr{H}_0$ when $\mathscr{H}_0$ is true,
-- type II error: we fail to reject $\mathscr{H}_0$ when $\mathscr{H}_0$ is  false.
+- type II error: we fail to reject $\mathscr{H}_0$ when $\mathscr{H}_0$.
 
-These hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, $\alpha$, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test $\alpha$, the more often we will reject the null hypothesis when the latter is true. The value of $\alpha \in (0, 1)$ is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is in fact true,
+The two hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, $\alpha$, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test $\alpha$, the more often we will reject the null hypothesis when the latter is true. The value of $\alpha \in (0, 1)$ is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is in fact true,
 \begin{align*}
 \alpha = \mathsf{Pr}_0\left(\text{ reject } \mathscr{H}_0\right).
 \end{align*}
 The level $\alpha$ is fixed beforehand, typically $1$\%, $5$\% or $10$\%. Keep in mind that the probability of type I error is $\alpha$ only if the null model for $\mathscr{H}_0$ is correct (sic) and correspond to the data generating mechanism.
 
 
-The focus on type I error is best understood by thinking about costs of moving away from the status quo: a new website design or branding will be costly to implement, so you want to make sure there are enough evidence this is the better alternative.
+The focus on type I error is best understood by thinking about costs of moving away from the status quo: a new website design or branding will be costly to implement, so you want to make sure there are enough evidence that the proposal is the better alternative and will lead to increased traffic or revenues.
 
 
 | **Decision** \\ **true model** | $\mathscr{H}_0$ | $\mathscr{H}_a$ |
@@ -145,19 +129,70 @@ To make a decision, we compare our *p*-value $P$ with the level of the test $\al
 - if $P < \alpha$, we reject $\mathscr{H}_0$;
 - if $P \geq \alpha$, we fail to reject $\mathscr{H}_0$.
 
-Do not mix up level of the test (probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error is by definition $\alpha$ and does not depend on the *p*-value. The latter is conditional probability of observing a more extreme likelihood given the null distribution $\mathscr{H}_0$ is true.
+Do not mix up level of the test (probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error is by definition $\alpha$ and does not depend on the *p*-value. The latter is conditional probability of observing a more extreme statistic given the null distribution $\mathscr{H}_0$ is true.
+
+::: { .example name="Gender inequality and permutation tests"}
+
+We consider data from @Rosen:1974, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided. Managers were presented different profiles which differed only in the sex of the individual.
+
+We are interested in Experiment 1 related to promotion of employees: managers were requested to decide on whether or not to promote an employee to become branch manager based on recommendations, rating on potential for customer and employee relations. 
+
+The authors played with two factors: nature (complexity) of the manager's job (either simple or complex) and the sex of the candidate (male or female): all files were similar otherwise.
+
+We consider for simplicity only sex as a factor and aggregate over job for the $n=93$ replies. Table \@ref(tab:rosen-table1) shows the counts for each possibility.
+
+<table>
+<caption>(\#tab:rosen-table1)Promotion recommandation to branch manager based on sex of the applicant.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> male </th>
+   <th style="text-align:right;"> female </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> promote </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 19 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hold file </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+</tbody>
+</table>
+
+```
+
+The null hypothesis of interest here that sex has no impact, so the probability of promotion is the same for men and women. Let $p_{\text{m}}$ and $p_{\text{w}}$ denote these respective probabilities; we can thus write mathematically the null hypothesis $\mathscr{H}_0: p_{\text{m}} = p_{\text{w}}$ against the alternative $\mathscr{H}_0: p_{\text{m}} \neq p_{\text{w}}$.
+
+The test statistic typically employed for two by two contingency tables is a chi-square test, which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/50 = 64\%, compared to 19/49 or ~49\% for female --- note that these are sample averages if we set `promote=1` and `hold file=0`. While it seems that this difference of 16\% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2\% for male and 3.4\% for female.
+
+
+
+The subjects were asked to provide ratings on a six-point Likert scale, with (1) denoted extremely unfavorable and (6) extremely favorable.
+
+
+
+The article concluded that
+
+> Results confirmed the hypothesis that male administrators tend to discriminate against female employees in personnel decisions involving promotion, development, and supervision.
+
+:::
 
 
 ### Power
 
-There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false.
+There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false. The power summarizes the level of evidence for various combination of parameters (effect size, variability, sample size).
 
-Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is $1-\gamma$, say. The **power of a test** is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
+Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is $1-\gamma$, say. The **power of a test** is the probability of **correctly** rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
 \begin{align*}
 \gamma = \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
 \end{align*}
 Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favor of an alternative.
-
+Power is thus a measure of our ability to detect real effects.
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/power1-1.png" alt="Comparison between null distribution (full curve) and a specific alternative for a *t*-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white)." width="85%" />
