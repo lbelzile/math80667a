@@ -6,29 +6,30 @@ In most applied domains, empirical evidences drive the advancement of the field 
 Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.
 
 
-
-## Distributions
-
-
-
 ## Sources of variability
 
-We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value.  In other words,
+We are typically interested in some characteristic of the population, oftentimes the (conditional) theoretical average of a continuous response variable, denoted $\mu$. This quantity exists, but is unknown to us so the best we can do is estimate it using random samples that are drawn from the population. 
 
-- an estimator is the procedure or formula telling us how to use sample data to compute an estimate. An estimator is random since it depends on the sample.
+We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe for cake). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value (the cake).  In other words,
+
+- an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary. Its output is random: even if you repeat a recipe, you won't get the same exact output everytime.
 - an estimate is the numerical value obtained once we apply the formula to observed data.
 
 
-For example, the sample mean $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$ is a summary of the data. Because the inputs of the function $\overline{Y}$ are random, the estimator is also random. To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$.
+For example, the sample mean of a sample of size $n$ is $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$. Because the inputs of the function $\overline{Y}$ are random, the estimator $\overline{Y}$ is also random. To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$.
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%" />
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that, while $\mu$ is constant, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on many observations, so there is more information available.
+We can clearly see from Figure \@ref(fig:samplevar) that, even with a common value of $\mu$ for all models, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on many observations, so there is more information available.
 
-Simply looking at the values of the sample mean does not tell the whole picture: we must also consider its variability. The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which $Y$ is drawn. One can show that the standard error of the sample mean is $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance.
+Values of the sample mean don't tell the whole picture: we must also consider their variability. The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where \begin{align*}
+S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
+\end{align*}
+
+The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which the sample observations $Y_1, \ldots$ are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.
 
 In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.
 
@@ -48,8 +49,8 @@ A good analogy for hypothesis tests is a trial for murder on which you are appoi
 - The judge lets you choose between two mutually exclusive outcome, guilty or not guilty, based on the evidence presented in court.
 - The presumption of innocence applies and evidences are judged under this optic: are evidence remotely plausible if the person was innocent?  The burden of the proof lies with the prosecution to avoid as much as possible judicial errors. The null hypothesis $\mathscr{H}_0$ is *not guilty*, whereas the alternative $\mathscr{H}_a$ is *guilty*. If there is a reasonable doubt, the verdict of the trial will be not guilty.
 - The test statistic (and the choice of test) represents the summary of the proof. The more overwhelming the evidence, the higher the chance the accused will be declared guilty. The prosecutor chooses the proof so as to best outline this: the choice of evidence (statistic) ultimately will maximize the evidence, which parallels the power of the test.
-- The null distribution is the benchmark against which to judge the evidence (jurisprudence). Given the proof, what are the odds assuming the person is innocent? 
-- The final step is the verdict. This is a binary decision, guilty or not guilty. For an hypothesis test performed at level $\alpha$, one would reject (guilty) if the _p_-value is less than $\alpha$. Even if we declare the person not guilty, this doesn't mean the defendant is innocent and vice-versa.
+- The null distribution is the benchmark against which to judge the evidence (jurisprudence). Given the proof, what are the odds assuming the person is innocent? Since this is possibly different for every test, it is common to report instead a _p_-value, which gives the level of evidence on a uniform scale which is most easily interpreted.
+- The final step is the verdict, a binary decision with outcomes: guilty or not guilty. For an hypothesis test performed at level $\alpha$, one would reject (guilty) if the _p_-value is less than $\alpha$. Even if we declare the person not guilty, this doesn't mean the defendant is innocent and vice-versa.
 
 
 ### Hypothesis
@@ -59,29 +60,15 @@ In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0
 \begin{align*}
 \mathscr{H}_0: \theta=\theta_0 \qquad \text{versus} \qquad \mathscr{H}_a:\theta \neq \theta_0.
 \end{align*}
-We are testing whether or not $\theta$ is precisely equal to the value $\theta_0$. 
-
-In completely randomized experiments with a single factor, we will be testing whether the mean of $K$ different sub-populations are equal. Let $\mu_1, \ldots, \mu_K$ denote the expectation or theoretical mean of each of the $K$ sub-populations. Equality of means translates into 
-\begin{align*}
-\mathscr{H}_0:& \mu_1 = \cdots = \mu_K
-\mathscr{H}_a:& \text{at least two means are different, }\mu_i \neq \mu_j (1 \leq i < j \leq K).
-\end{align*}
-Note that the null hypothesis is a single value, whereas the alternative is the complement, i.e. all potential scenarios for which not all expectations are equal.
-
-
-
-One slight complication arising from the above is that the expectations $\mu_1, \ldots, \mu_K$ are unknown.  We can assess this by comparing the sample means in each group. These are noisy estimates of the expectation: it is this inherent variability that limits our ability to detect differences in mean.
-
-
+We are testing whether or not $\theta$ is precisely equal to the value $\theta_0$. Oftentimes 
 
 ### Test statistic
 
-A test statistic $T$ is a function of the data that summarize the information contained in the sample for $\theta$. The form of the test statistic is chosen such that we know its underlying distribution under $\mathscr{H}_0$, that is, the potential values taken by $T$ and their relative probability if $\mathscr{H}_0$ is true. Indeed, $Y$ is a random variable and its value change from one sample to the next.
-This allows us to determine what values of $T$ are likely if $\mathscr{H}_0$ is true. Many statistics we will consider are **Wald statistic**, of the form
+A test statistic $T$ is a function of the data that summarize the information contained in the sample for $\theta$. The form of the test statistic is chosen such that we know its underlying distribution under $\mathscr{H}_0$, that is, the potential values taken by $T$ and their relative probability if $\mathscr{H}_0$ is true. This allows us to determine what values of $T$ are likely if $\mathscr{H}_0$ is true. Many statistics we will consider are of the form^[This class of statistic, which includes $t$-tests, are Wald statistics.]
 \begin{align*}
 T = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
 \end{align*}
-where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$.
+where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$. For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_1$ and $\mu_0$, then $\theta = \mu_0-\mu_1$ and  $\mathscr{H}_0: \mu_0 = \mu_1$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. 
 
 For example, to test whether the mean of a population is zero, we set
 \begin{align*}
@@ -91,14 +78,7 @@ and the Wald statistic is
 \begin{align*}
 T &= \frac{\overline{X}-0}{S_n/\sqrt{n}}
 \end{align*}
-where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$,
-\begin{align*}
-\overline{X} &= \frac{1}{n} \sum_{i=1}^n X_i = \frac{X_1+ \cdots + X_n}{n}
-\end{align*}
-and the standard error (of the mean) $\overline{X}$ is $S_n/\sqrt{n}$; the sample variance $S_n$ is an estimator of the standard deviation $\sigma$,
-\begin{align*}
-S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
-\end{align*}
+where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$. The denominator is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. Note that the precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance, whereas we recover the Welch test if we estimate the variance separately for each treatment.
 
 
 ### Null distribution and _p_-value
@@ -108,6 +88,8 @@ The _p_-value allows us to decide whether the observed value of the test statist
 p = 2 \times \mathsf{Pr}_0(T \geq |t|).
 \end{align*}
 
+How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the tell us that the sample mean behaves like a normal random variable with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$ for $n$ large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use toderive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student's $t$, $\chi^2$ and $F$ distributions are the reference distributions that arise the most often. 
+
 
 
 Consider the example of a two-sided test involving the population mean $\mathscr{H}_0:\mu=0$ against the alternative $\mathscr{H}_1:\mu \neq 0$. Assuming the random sample comes from a normal (population) $\mathsf{No}(\mu, \sigma^2)$, it can be shown that if $\mathscr{H}_0$ is true (that is, if $\mu=0$), the test statistic
@@ -116,6 +98,14 @@ T = \frac{\overline{X}}{S/\sqrt{n}}
 \end{align*}
 follows a Student-*t* distribution with $n-1$ degrees of freedom, denoted $\mathsf{St}_{n-1}$. This allows us to calculate the *p*-value (either from a table, or using some statistical software). The Student-*t* distribution is symmetric about zero, so the _p_-value is $P = 2\times\mathsf{Pr}(T_{n-1} > |t|)$, where $T \sim \mathsf{St}_{n-1}$.
 
+There are generally three ways of obtaining null distributions for assessing the degree of evidence against the null hypothesis
+
+- exact calculations
+- large sample theory (aka asymptotics)
+- simulation
+
+While desirable, the first method is only applicable in simple cases. The second is most commonly used due to its generality and ease of use (particularly in older times where computing power was scarce), but fares poorly in some settings with small sample sizes. The last approach can be used to approximate the null distribution in many scenarios, but adds a layer of randomness and the extra computations costs sometimes are not worth it. 
+
 ### Conclusion
 
 
@@ -123,16 +113,16 @@ The *p*-value allows us to make a decision about the null hypothesis. If $\maths
 
 
 - type I error: we reject $\mathscr{H}_0$ when $\mathscr{H}_0$ is true,
-- type II error: we fail to reject $\mathscr{H}_0$ when $\mathscr{H}_0$ is  false.
+- type II error: we fail to reject $\mathscr{H}_0$ when $\mathscr{H}_0$.
 
-These hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, $\alpha$, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test $\alpha$, the more often we will reject the null hypothesis when the latter is true. The value of $\alpha \in (0, 1)$ is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is in fact true,
+The two hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, $\alpha$, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test $\alpha$, the more often we will reject the null hypothesis when the latter is true. The value of $\alpha \in (0, 1)$ is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is in fact true,
 \begin{align*}
 \alpha = \mathsf{Pr}_0\left(\text{ reject } \mathscr{H}_0\right).
 \end{align*}
 The level $\alpha$ is fixed beforehand, typically $1$\%, $5$\% or $10$\%. Keep in mind that the probability of type I error is $\alpha$ only if the null model for $\mathscr{H}_0$ is correct (sic) and correspond to the data generating mechanism.
 
 
-The focus on type I error is best understood by thinking about costs of moving away from the status quo: a new website design or branding will be costly to implement, so you want to make sure there are enough evidence this is the better alternative.
+The focus on type I error is best understood by thinking about costs of moving away from the status quo: a new website design or branding will be costly to implement, so you want to make sure there are enough evidence that the proposal is the better alternative and will lead to increased traffic or revenues.
 
 
 | **Decision** \\ **true model** | $\mathscr{H}_0$ | $\mathscr{H}_a$ |
@@ -145,19 +135,216 @@ To make a decision, we compare our *p*-value $P$ with the level of the test $\al
 - if $P < \alpha$, we reject $\mathscr{H}_0$;
 - if $P \geq \alpha$, we fail to reject $\mathscr{H}_0$.
 
-Do not mix up level of the test (probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error is by definition $\alpha$ and does not depend on the *p*-value. The latter is conditional probability of observing a more extreme likelihood given the null distribution $\mathscr{H}_0$ is true.
+Do not mix up level of the test (probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error is by definition $\alpha$ and does not depend on the *p*-value. The latter is conditional probability of observing a more extreme statistic given the null distribution $\mathscr{H}_0$ is true.
 
+
+::: { .example name="Gender inequality and permutation tests"}
+
+We consider data from @Rosen:1974, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided. 
+
+We are interested in Experiment 1 related to promotion of employees: managers were requested to decide on whether or not to promote an employee to become branch manager based on recommendations and ratings on potential for customer and employee relations. The authors intervention focused on the description of the nature (complexity) of the manager's job (either simple or complex) and the sex of the candidate (male or female): all files were similar otherwise.
+
+The authors played with two factors: nature (complexity) of the manager's job (either simple or complex) and the sex of the candidate (male or female): all files were similar otherwise.
+
+We consider for simplicity only sex as a factor and aggregate over job for the $n=93$ replies. Table \@ref(tab:rosen-table1) shows the counts for each possibility.
+
+<table>
+<caption>(\#tab:rosen-table1)Promotion recommandation to branch manager based on sex of the applicant.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> male </th>
+   <th style="text-align:right;"> female </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> promote </td>
+   <td style="text-align:right;"> 32 </td>
+   <td style="text-align:right;"> 19 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hold file </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+</tbody>
+</table>
+
+
+The null hypothesis of interest here that sex has no impact, so the probability of promotion is the same for men and women. Let $p_{\text{m}}$ and $p_{\text{w}}$ denote these respective probabilities; we can thus write mathematically the null hypothesis as $\mathscr{H}_0: p_{\text{m}} = p_{\text{w}}$ against the alternative $\mathscr{H}_a: p_{\text{m}} \neq p_{\text{w}}$.
+
+The test statistic typically employed for two by two contingency tables is a chi-square test^[If you have taken advanced modelling courses, this is a score test obtained by fitting a Poisson regression with `sex` and `action` as covariates; the null hypothesis corresponding to lack of interaction term between the two.], which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76\%, compared to 19/49 or ~49\% for female --- note that these are sample averages if we set `promote=1` and `hold file=0`. While it seems that this difference of 16\% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2\% for male and 3.4\% for female. 
+
+If there was no discrimination based on sex, we would expect the proportion of people promoted to be the same overall; this is 51/93 =0.55 for the pooled sample. We could simply do a test for the mean difference, but rely instead on the chi-square test, which compares the expected counts (based on equal promotion rates) to the observed counts, suitably standardized. If the discrepancy is large between expected and observed, than this casts doubt on the validity of the null hypothesis.
+
+
+```r
+## Create a 2x2 matrix (contingency table) with the counts
+dat_exper1 <- matrix(c(32L, 12L, 19L, 30L), ncol = 2, nrow = 2, byrow = TRUE)
+# Calculate the statistic on data
+obs_stat <- chisq.test(x = dat_exper1, correct = FALSE)
+# Tidy output to get a tibble
+test_res <- broom::tidy(obs_stat)
+```
+
+<table>
+<caption>(\#tab:print-tab-example-chisq-test-rosen)Chi-square test for experiment 1 of Rosen and Jerdee (1974)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+   <th style="text-align:right;"> parameter </th>
+   <th style="text-align:left;"> method </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 10.8 </td>
+   <td style="text-align:right;"> 0.001 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> Pearson's Chi-squared test </td>
+  </tr>
+</tbody>
+</table>
+
+
+If the counts of each cell are large, the null distribution of the chi-square test is well approximated by a $\chi^2$ distribution. The output of the test includes the value of the statistic, the degrees of freedom of the $\chi^2$ approximation and the _p_-value, which gives the probability that a random draw from a $\chi^2_1$ distribution is larger than the observed test statistic **assuming the null hypothesis is true**. The _p_-value is very small, 0.001, which means such a result is quite unlikely to happen by chance if there was no sex-discrimination.
+
+
+There are alternative test statistics that could be used, among which the odds ratio. The odds of an event is the ratio of the number of success over failure: in our example, this would be the number of promoted over held files. The odds of promotion for male is 32/12, whereas that of female is 19/30. The odds ratio for male versus female is thus $\mathsf{OR}=$ (32/12) / (19/30)= 4.21. Under the null hypothesis, $\mathscr{H}_0: \mathsf{OR}=$ 1 (same probability of being promoted) (why?)
+
+Fisher's test assumes that the row and sum totals are fixed (that is, the number of promoted/withheld files and male/female are fixed at the design stage) and uses this to derive the exact probability of observing this particular configuration if the proportion of success was the same. The test statistic for Fisher's exact test, obtained by running `fisher.test(dat_exper1)`, is different but so is the null distribution^[The null distribution for Fisher's exact test is hypergeometric. This fact is well known in combinatorics, also known as the art of counting marbles.]. On the contrary, the _p_-value is very close to the one reported for the $\chi^2$ test in Table \@ref(tab:print-tab-example-chisq-test-rosen).
+
+
+<table>
+<caption>(\#tab:print-tab-example-fisher-test-rosen)Fisher's exact test for experiment 1 of Rosen and Jerdee (1974)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> p.value </th>
+   <th style="text-align:left;"> method </th>
+   <th style="text-align:left;"> alternative </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 4.1 </td>
+   <td style="text-align:right;"> 0.0016 </td>
+   <td style="text-align:left;"> Fisher's Exact Test for Count Data </td>
+   <td style="text-align:left;"> two.sided </td>
+  </tr>
+</tbody>
+</table>
+
+Yet another alternative to obtain a benchmark to assess the outlyingness of the observed odds ratio is to use simulations. Consider a database containing the raw data with 93 rows, one for each manager, with for each an indicator of `action` and the `sex` of the hypothetical employee presented in the task.
+
+
+
+<table>
+<caption>(\#tab:dat-long-test-rosen-print)First five rows of the database in long format for experiment 1 of Rosen and Jerdee.</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> action </th>
+   <th style="text-align:left;"> sex </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> promote </td>
+   <td style="text-align:left;"> male </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hold file </td>
+   <td style="text-align:left;"> male </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> promote </td>
+   <td style="text-align:left;"> male </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> promote </td>
+   <td style="text-align:left;"> male </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hold file </td>
+   <td style="text-align:left;"> male </td>
+  </tr>
+</tbody>
+</table>
+
+Under the null hypothesis, sex has no incidence on the action of the manager. This means we could get an idea of the "what-if" world by shuffling the sex labels repeatedly. Thus, we could obtain a benchmark by repeating the following steps multiple times:
+
+1. permute the labels for `sex`,
+2. recreate a contingency table by aggregating counts, 
+3. calculate the odds ratio for the simulated table.
+
+
+```r
+library(infer)
+# Calculate the odds ratio for the sample
+obs_stat <- dat_exper1_long %>%
+  specify(response = action, explanatory = sex, success = "promote") %>%
+  calculate(stat = "odds ratio", order = c("male", "female"))
+# Approximate the null distribution using a permutation test  
+set.seed(2021) # set random seed
+null_dist <- dat_exper1_long %>%
+    specify(response = action, explanatory = sex, success = "promote") %>%
+    hypothesize(null = "independence") %>% 
+    generate(reps = 9999, type = "permute") %>%
+    calculate(stat = "odds ratio", order = c("male", "female"))
+# Visualize the null distribution
+ggplot(data = null_dist, 
+       mapping = aes(x = stat)) +
+  geom_bar() + # bar plot b/c data are discrete
+  labs(x = "odds ratio") +
+  geom_vline(data = obs_stat, 
+             mapping = aes(xintercept = stat), 
+             color = "red")
+# Obtain the p-value
+null_dist %>%
+  get_p_value(obs_stat = obs_stat, direction = "two-sided")
+#> # A tibble: 1 × 1
+#>   p_value
+#>     <dbl>
+#> 1 0.00240
+```
+
+<div class="figure" style="text-align: center">
+<img src="02-hypothesis_testing_files/figure-html/infer-odds-ratio-permutation-1.png" alt="Histogram of the simulated null distribution obtained using a permutation test; the vertical red line indicates the sample odds ratio." width="85%" />
+<p class="caption">(\#fig:infer-odds-ratio-permutation)Histogram of the simulated null distribution obtained using a permutation test; the vertical red line indicates the sample odds ratio.</p>
+</div>
+
+Reassuringly, we again get roughly the same _p_-value. The histogram in \@ref(fig:infer-odds-ratio-permutation) shows the distribution of 
+
+The article concluded (in light of the above and further experiments)
+
+> Results confirmed the hypothesis that male administrators tend to discriminate against female employees in personnel decisions involving promotion, development, and supervision.
+
+:::
+
+:::pitfall
+
+In the first experiment, managers were also asked to rank applications on their potential for both employee and customer relations using a Likert scale of six items ranging from (1) extremely unfavorable to (6) extremely favorable. However, only the averages are reported in Table 1 along with [@Rosen:1974]
+
+> Mean rating for the male candidate was 4.73 compared to a mean rating of 4.25 for the female candidate ($F=4.76, \text{df} = 1/80, p < .05$)
+
+In itself, this information isn't sufficient: we don't know the test used, and more importantly the degrees of freedom (80) are much too few compared to the number of observations, implying non-response that isn't discussed elsewhere.
+
+Partial or selective reporting of statistical procedures hinders reproducibility. There are many improvements that would have possible in the presentation, including explicitly stating which test statistic is employed (the $\chi^2$ value seemingly doesn't correspond to the chi-square test or is incorrectly reported), providing the sample size, means variance estimates, the null distribution and its parameters, if any. Without these, we are left to speculate.
+
+:::
 
 ### Power
 
-There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false.
+There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false. The power summarizes the level of evidence for various combination of parameters (effect size, variability, sample size).
 
-Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is $1-\gamma$, say. The **power of a test** is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
+Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true (not guilty verdict of a criminal) corresponds to the definition of type II error, the probability of which is $1-\gamma$, say. The **power of a test** is the probability of **correctly** rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
 \begin{align*}
 \gamma = \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
 \end{align*}
 Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favor of an alternative.
-
+Power is thus a measure of our ability to detect real effects.
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/power1-1.png" alt="Comparison between null distribution (full curve) and a specific alternative for a *t*-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white)." width="85%" />
@@ -216,22 +403,4 @@ Before the interval is calculated, there is a $1-\alpha$ probability that $\thet
 <p class="caption">(\#fig:intconf)95\% confidence intervals for the mean of a standard normal population $\mathsf{No}(0,1)$, with 100 random samples. On average, 5\% of these intervals fail to include the true mean value of zero (in red).</p>
 </div>
 
-If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaning a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.
-
-
-
-
-
-In this example, we consider the difference between the average amount spent by Y members and those of previous generations: the mean difference in the samples is -16.49 dollars and thus millenials spend more. However, this in itself is not enough to conclude that the different is significative, nor can we say it is meaningful. The amount spent online varies from one individual to the next (and plausibly from month to month), and so different random samples would yield different mean differences.
-
-The first step of our analysis is defining the parameters corresponding to quantities of interest and formulating the null and alternative hypothesis as a function of these parameters. We will consider a test for the difference in mean of the two populations, say $\mu_1$ for the expected amount spent by generation Y and $\mu_2$ for older generations, with respective standard errors $\sigma_1$ and $\sigma_2$. We next write down our hypothesis: the researcher is interested in whether millenials spend more, so this is the alternative hypothesis, $\mathscr{H}_a: \mu_1 > \mu_2$. The null consists of all other values $\mathscr{H}_0: \mu_1 \leq \mu_2$, but only $\mu_1=\mu_2$ matters for the purpose of testing (why?)
-
-The second step is the choice of test statistic. We consider the @Welch:1947 statistic for a difference in mean between two samples,
-\begin{align*}
-T = \frac{\overline{X}_1 - \overline{X}_2}{\left(\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2} \right)^{1/2}}, \end{align*}
-where $\overline{X}_i$ is the sample mean, $S_i^2$ is the unbiased variance estimator and $n_i$ is the sample size for group $i$ ($i=1, 2$). If the mean difference between the two samples is zero, then $\overline{X}_1-\overline{X}_2$ has mean zero and the difference has variance $\sigma^2_1/n_1+\sigma^2_2/n_2$. For our sample, the value of statistic is $T=-2.76$ Since the value changes from one sample to the next, we need to determine if this value is compatible with the null hypothesis by comparing it to the null distribution of $T$ (when $\mathscr{H}_0$ is true and $\mu_1-\mu_2=0$). We perform the test at level $\alpha=0.05$.
-
-The third step consists in obtaining a benchmark to determine if our result is extreme or unusual. To make comparisons easier, we standardize the statistic so its has mean zero and variance one under the null hypothesis $\mu_1=\mu_2$, so as to obtain a dimensionless measure whose behaviour we know for large sample. The (mathematical) derivation of the null distribution is beyond the scope of this course, and will be given in all cases. Asymptotically, $T$ follows a standard normal distribution $\mathsf{No}(0, 1)$, but there exists a better finite-sample approximation when $n_1$ or $n_2$ is small; we use @Satterthwaite:1946 and a Student-$t$ distribution as null distribution.
-
-It only remains to compute the *p*-value. If the null distribution is well-specified and $\mathscr{H}_0$ is true, then the random variable $P$ is uniform on $[0, 1]$; we thus expect to obtain under the null something larger than 0.95 only 5\% of the time for our one-sided alternative since we consider under $\mathscr{H}_0$ the event $\mathsf{Pr}(T > t)$. The $p$-value is $1$ and, at level 5\%, we reject the null hypothesis to conclude that millenials spend significantly than previous generation for monthly online purchases, with an estimated average difference of -16.49.
-
+If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.

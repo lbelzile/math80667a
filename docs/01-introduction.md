@@ -182,15 +182,6 @@ One of the earliest example of statistical experiment is in agricultural field t
 
 Section 1.4 of @Berger:2018 lists various applications of experimental designs in a variety of fields.
 
-::: outsidethebox
-
-Find an example of a scientific paper in your research field in which an experimental study is conducted. 
-	- Provide a citation for the latter
-	- Briefly describe the experiment (you can simply quote the description of the database). 
- 	- Based on the information provided, identify the experimental units and the treatments.
- 	
-:::
-
 ::: {.example #experimentalexample1 name="Modern experiments and A/B testing"}
 Most modern experiments happen online, with tech companies running thousands of experiments on an ongoing basis in order to discover improvement to their interfaces that lead to increased profits. An [Harvard Business Review article](https://hbr.org/2017/09/the-surprising-power-of-online-experiments) [@HBR2017] details how small tweaks to the display of advertisements in the Microsoft Bing search engine landing page lead to a whooping 12\% increase in revenues. Such randomized control trials, termed A/B experiments, involve splitting incoming traffic into separate groups; each group will see different views of the webpage that differ only ever slightly. The experimenters then compare traffic and click revenues. At large scale, even small effects can have major financial consequences and can be learned despite the large variability in customer behaviour.
 :::
