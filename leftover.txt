@@ -31,3 +31,21 @@ Many technical statistics terms are sometimes encountered in discussions. For ex
 - The sample mean is an **unbiased estimator**, meaning that its expectation ('theoretical' average) is the true mean $\mu$ regardless of the sample size $n$ (it is not systematically off).
 - The sample mean is also a **consistent** estimator. This means that, if we had an infinite number of observations, we would observe $\mu$ to arbitrary precision and would know its exact value.
 
+
+---------------------------
+
+Usually, hypothesis tests involve a parameter, say $\theta$, which characterizes the underlying distribution at the population level and whose value is unknown. A two-sided hypothesis test regarding a parameter $\theta$ has the form $\mathscr{H}_0: \theta$ equals some postulated values
+\begin{align*}
+\mathscr{H}_0: \theta=\theta_0 \qquad \text{versus} \qquad \mathscr{H}_a:\theta \neq \theta_0.
+\end{align*}
+We are testing whether or not $\theta$ is precisely equal to the numerical value $\theta_0$. 
+
+Consider the example of a two-sided test involving the population mean $\mathscr{H}_0:\mu=0$ against the alternative $\mathscr{H}_1:\mu \neq 0$. Assuming the random sample comes from a normal (population) $\mathsf{No}(\mu, \sigma^2)$, it can be shown that if $\mathscr{H}_0$ is true (that is, if $\mu=0$), the test statistic
+\begin{align*}
+T = \frac{\overline{X}}{S/\sqrt{n}}
+\end{align*}
+follows a Student-*t* distribution with $n-1$ degrees of freedom, denoted $\mathsf{St}_{n-1}$. This allows us to calculate the *p*-value (either from a table, or using some statistical software). The Student-*t* distribution is symmetric about zero, so the _p_-value is $P = 2\times\mathsf{Pr}(T_{n-1} > |t|)$, where $T \sim \mathsf{St}_{n-1}$.
+
+
+
+To calculate the power of a test, we need to single out a specific alternative hypothesis: for example, the one-sample *t*-test statistic $T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}$ for a normal sample follows a noncentral Student-$t$ distribution with noncentrality parameter $\Delta$ if the expectation of the population is $\Delta + \mu_0$. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. 

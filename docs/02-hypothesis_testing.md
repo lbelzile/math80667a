@@ -6,7 +6,7 @@ In most applied domains, empirical evidences drive the advancement of the field 
 Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.
 
 
-## Sources of variability
+## Sampling variability
 
 We are typically interested in some characteristic of the population, oftentimes the (conditional) theoretical average of a continuous response variable, denoted $\mu$. This quantity exists, but is unknown to us so the best we can do is estimate it using random samples that are drawn from the population. 
 
@@ -23,13 +23,13 @@ For example, the sample mean of a sample of size $n$ is $\overline{Y}=n^{-1}(Y_1
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that, even with a common value of $\mu$ for all models, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on many observations, so there is more information available.
+We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will also notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on multiple observations, so there is more information available.
 
 Values of the sample mean don't tell the whole picture: we must also consider their variability. The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where \begin{align*}
 S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
-\end{align*}
-
+\end{align*} 
 The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which the sample observations $Y_1, \ldots$ are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.
+
 
 In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.
 
@@ -55,30 +55,27 @@ A good analogy for hypothesis tests is a trial for murder on which you are appoi
 
 ### Hypothesis
 
-
-In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0$) and the alternative hypothesis ($\mathscr{H}_1$). Usually, the null hypothesis is a single numerical value (the 'status quo') and the alternative is what we're really interested in testing. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject $\mathscr{H}_0$ in favour of $\mathscr{H}_1$, subject to some pre-specified risk of error. Usually, hypothesis tests involve a parameter, say $\theta$, which characterizes the underlying distribution at the population level ans whose value is unknown. A two-sided hypothesis test regarding a parameter $\theta$ has the form
-\begin{align*}
-\mathscr{H}_0: \theta=\theta_0 \qquad \text{versus} \qquad \mathscr{H}_a:\theta \neq \theta_0.
-\end{align*}
-We are testing whether or not $\theta$ is precisely equal to the value $\theta_0$. Oftentimes 
+In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0$) and the alternative hypothesis ($\mathscr{H}_1$). Usually, the null hypothesis (the 'status quo') is a single numerical value. The alternative is what we're really interested in testing. In \@ref(fig:samplevar), we could consider whether all five groups have the same mean $\mathscr{H}_0: \mu_1 = \mu_2 = \cdots = \mu_5$ against the alternative that at least two of them are different. These two outcomes are mutually exclusive and cover all possible cases. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject $\mathscr{H}_0$ in favor of $\mathscr{H}_1$, subject to some pre-specified risk of error: while we know that the differences are just due to sampling variability in \@ref(fig:samplevar) because the data is fake, in practice we need to assess the evidence using a numerical summary. 
 
 ### Test statistic
 
-A test statistic $T$ is a function of the data that summarize the information contained in the sample for $\theta$. The form of the test statistic is chosen such that we know its underlying distribution under $\mathscr{H}_0$, that is, the potential values taken by $T$ and their relative probability if $\mathscr{H}_0$ is true. This allows us to determine what values of $T$ are likely if $\mathscr{H}_0$ is true. Many statistics we will consider are of the form^[This class of statistic, which includes $t$-tests, are Wald statistics.]
+A test statistic $T$ is a function of the data which takes the data as input and outputs a summary of the information contained in the sample for a characteristic of interest, say the population mean. The form of the test statistic is chosen such that we know how it behaves if the null hypothesis is true (e.g., no difference in the overall means of the different groups). In order to assess whether the numerical value for $T$ is unusual, we need to know what are the potential values taken by $T$ and their relative probability if $\mathscr{H}_0$ is true. This allows us to determine what values of $T$ are likely if $\mathscr{H}_0$ is true. Many statistics we will consider are of the form^[This class of statistic, which includes $t$-tests, are Wald statistics.]
 \begin{align*}
-T = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
+T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated effect variability}} = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
 \end{align*}
-where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$. For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_1$ and $\mu_0$, then $\theta = \mu_0-\mu_1$ and  $\mathscr{H}_0: \mu_0 = \mu_1$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. 
+where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$. For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_1$ and $\mu_0$, then $\theta = \mu_0-\mu_1$ and  $\mathscr{H}_0: \mu_0 = \mu_1$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. The numerator would thus consist of the difference in sample means and the denominator the standard error of that quantity, calculated using a software.
+
+
 
 For example, to test whether the mean of a population is zero, we set
 \begin{align*}
 \mathscr{H}_0: \mu=0, \qquad  \mathscr{H}_a:\mu \neq 0,
 \end{align*}
-and the Wald statistic is
-\begin{align*}
-T &= \frac{\overline{X}-0}{S_n/\sqrt{n}}
-\end{align*}
-where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$. The denominator is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. Note that the precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance, whereas we recover the Welch test if we estimate the variance separately for each treatment.
+and the usual $t$-statistic is
+\begin{align}
+T &= \frac{\overline{X}-0}{S_n/\sqrt{n}} \label{ttest}
+\end{align}
+where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$ and the denominator of \@ref(eq:ttest) is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. The precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance.
 
 
 ### Null distribution and _p_-value
@@ -88,28 +85,29 @@ The _p_-value allows us to decide whether the observed value of the test statist
 p = 2 \times \mathsf{Pr}_0(T \geq |t|).
 \end{align*}
 
-How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the tell us that the sample mean behaves like a normal random variable with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$ for $n$ large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use toderive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student's $t$, $\chi^2$ and $F$ distributions are the reference distributions that arise the most often. 
+How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the tell us that the sample mean behaves like a normal random variable with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$ for $n$ large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use to derive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student's $t$, $\chi^2$ and $F$ distributions are the reference distributions that arise the most often. 
 
 
+<div class="figure" style="text-align: center">
+<img src="02-hypothesis_testing_files/figure-html/power-plots-1.png" alt="Density of _p_-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right). The probability of rejection $\mathscr{H}_0$ is 0.1, the area under the curve between zero and $\alpha=0.1$. Under the null, the density is uniform (flat rectangle of height 1) and all values in the unit interval are equally likely. Under the alternative, the _p_-values cluster towards zero and the probability of rejecting the null hypothesis increases together with the signal-to-noise (approximately 0.22 for the alternative)." width="85%" />
+<p class="caption">(\#fig:power-plots)Density of _p_-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right). The probability of rejection $\mathscr{H}_0$ is 0.1, the area under the curve between zero and $\alpha=0.1$. Under the null, the density is uniform (flat rectangle of height 1) and all values in the unit interval are equally likely. Under the alternative, the _p_-values cluster towards zero and the probability of rejecting the null hypothesis increases together with the signal-to-noise (approximately 0.22 for the alternative).</p>
+</div>
 
-Consider the example of a two-sided test involving the population mean $\mathscr{H}_0:\mu=0$ against the alternative $\mathscr{H}_1:\mu \neq 0$. Assuming the random sample comes from a normal (population) $\mathsf{No}(\mu, \sigma^2)$, it can be shown that if $\mathscr{H}_0$ is true (that is, if $\mu=0$), the test statistic
-\begin{align*}
-T = \frac{\overline{X}}{S/\sqrt{n}}
-\end{align*}
-follows a Student-*t* distribution with $n-1$ degrees of freedom, denoted $\mathsf{St}_{n-1}$. This allows us to calculate the *p*-value (either from a table, or using some statistical software). The Student-*t* distribution is symmetric about zero, so the _p_-value is $P = 2\times\mathsf{Pr}(T_{n-1} > |t|)$, where $T \sim \mathsf{St}_{n-1}$.
 
 There are generally three ways of obtaining null distributions for assessing the degree of evidence against the null hypothesis
 
 - exact calculations
-- large sample theory (aka asymptotics)
+- large sample theory (aka 'asymptotics' in statistical lingo)
 - simulation
 
-While desirable, the first method is only applicable in simple cases. The second is most commonly used due to its generality and ease of use (particularly in older times where computing power was scarce), but fares poorly in some settings with small sample sizes. The last approach can be used to approximate the null distribution in many scenarios, but adds a layer of randomness and the extra computations costs sometimes are not worth it. 
+While desirable, the first method is only applicable in simple cases (such as counting the probability of getting two six if you throw two fair die). The second method is most commonly used due to its generality and ease of use (particularly in older times where computing power was scarce), but fares poorly with small sample sizes (where 'too small' is context and test-dependent). The last approach can be used to approximate the null distribution in many scenarios, but adds a layer of randomness and the extra computations costs sometimes are not worth it. 
 
 ### Conclusion
 
 
-The *p*-value allows us to make a decision about the null hypothesis. If $\mathscr{H}_0$ is true, the *p*-value follows a uniform distribution. [Thus, if the *p*-value is small](https://xkcd.com/1478/), this means observing an outcome more extreme than $T=t$ is unlikely, and so we're inclined to think that $\mathscr{H}_0$ is not true. There's always some underlying risk that we're making a mistake when we make a decision. In statistic, there are [two type of errors](https://xkcd.com/2303/):
+
+
+The *p*-value allows us to make a decision about the null hypothesis. If $\mathscr{H}_0$ is true, the *p*-value follows a uniform distribution, as shown in Figure \@ref(fig:power-plots). [Thus, if the *p*-value is small](https://xkcd.com/1478/), this means observing an outcome more extreme than $T=t$ is unlikely, and so we're inclined to think that $\mathscr{H}_0$ is not true. There's always some underlying risk that we're making a mistake when we make a decision. In statistic, there are [two type of errors](https://xkcd.com/2303/):
 
 
 - type I error: we reject $\mathscr{H}_0$ when $\mathscr{H}_0$ is true,
@@ -290,17 +288,17 @@ obs_stat <- dat_exper1_long %>%
 set.seed(2021) # set random seed
 null_dist <- dat_exper1_long %>%
     specify(response = action, explanatory = sex, success = "promote") %>%
-    hypothesize(null = "independence") %>% 
-    generate(reps = 9999, type = "permute") %>%
-    calculate(stat = "odds ratio", order = c("male", "female"))
+    hypothesize(null = "independence") %>% # sex doesn't impact decision
+    generate(reps = 9999, type = "permute") %>% # shuffle sex
+    calculate(stat = "odds ratio", order = c("male", "female")) 
 # Visualize the null distribution
-ggplot(data = null_dist, 
-       mapping = aes(x = stat)) +
-  geom_bar() + # bar plot b/c data are discrete
-  labs(x = "odds ratio") +
-  geom_vline(data = obs_stat, 
-             mapping = aes(xintercept = stat), 
-             color = "red")
+ggplot(data = null_dist, # a tibble with a single variable, 'stat'
+       mapping = aes(x = stat)) + # map 'stat' to the x-axis
+  geom_bar() + # bar plot b/c data are discrete (few combinations)
+  labs(x = "odds ratio") + # give meaningful label
+  geom_vline(data = obs_stat, # add vertical line
+             mapping = aes(xintercept = stat), # position on x-axis of line
+             color = "red") # color
 # Obtain the p-value
 null_dist %>%
   get_p_value(obs_stat = obs_stat, direction = "two-sided")
@@ -364,12 +362,18 @@ Power is thus a measure of our ability to detect real effects.
 We want to choose an experimental design and a test statistic that leads to high power, so that $\gamma$ is as close as possible to one. Minimally, the power of the test should be $\alpha$ because we reject the null hypothesis $\alpha$ fraction of the time even when $\mathscr{H}_0$ is true. Power depends on many criteria, notably
 
 - the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behaviour, the easier it is to departures from $\theta_0$.
-(Figure \@ref(fig:power3));
+(Figure \@ref(fig:power3)); it's easier to spot an elephant in a room than a mouse.
 - variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure \@ref(fig:power2) shows);
 - the sample size: the more observation, the higher our ability to detect significative differences because the standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase. In experimental designs, power may be maximized by specifying different sample size in each group
 - the choice of test statistic: for example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. While the resulting tests are typically less powerful, they are more robust to model misspecification and outliers. 
 
-To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible: for example, the one-sample *t*-test statistic $T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}$ for a normal sample follows a noncentral Student-$t$ distribution with noncentrality parameter $\Delta$ if the expectation of the population is $\Delta + \mu_0$. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. For a given alternative, we simulate repeatedly samples from the model, compute the test statistic for each of these new samples and the associated *p*-values based on the postulated null hypothesis. We can then calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
+To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible. For a given alternative, we 
+
+- simulate repeatedly samples from the model from the hypothetical alternative world
+- we compute the test statistic for each of these new samples
+- we transform these to the associated *p*-values based on the postulated null hypothesis.
+
+At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
 
 
 

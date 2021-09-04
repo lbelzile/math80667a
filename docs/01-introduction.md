@@ -72,7 +72,7 @@ Most of the models we will deal with are so-called regression models, in which t
 - a discrete variable takes a countable number of values, prime examples being binary variables or count variables.
 - a continuous variable can take (in theory) an infinite possible number of values, even when measurements are rounded or measured with a limited precision (time, width, mass). In many case, we could also consider discrete variables as continuous if they take enough values (e.g., money).
 
-Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using  arbitrary encoding for the levels: for modelling, these variables taking $K$ possible values (or levels) must be transformed into a set of $K-1$ binary 0/1 variables, the omitted level corresponding to a baseline. Failing to declare categorical variables in your favourite software is a common mistake, especially when these are saved in the database using integers rather than strings.
+Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using  arbitrary encoding for the levels: for modelling, these variables taking $K$ possible values (or levels) must be transformed into a set of $K-1$ binary variables $T_1, \ldots, T_K$, each of which corresponds to the logical group $k$ (yes = 1, no = 0), the omitted level corresponding to a baseline when all of the $K-1$ indicators are zero. Failing to declare categorical variables in your software is a common mistake, especially when these are saved in the database using integers (1,2, $\ldots$) rather than as text (Monday, Tuesday, $\ldots$).
 
 <div class="figure" style="text-align: center">
 <img src="figures/nominal_ordinal_binary.png" alt="Artwork by Allison Horst with examples of categorical variables: nominal (left), ordinal (middle) and binary (right)." width="85%" />
@@ -140,8 +140,8 @@ Suppose we wish to look at student satisfaction regarding the material taught in
 
 
 <div class="figure" style="text-align: center">
-<img src="01-introduction_files/figure-html/sampling-1.png" alt="Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right)." width="85%" />
-<p class="caption">(\#fig:sampling)Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right).</p>
+<img src="01-introduction_files/figure-html/sampling-1.png" alt="Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right). In the middle, the grouping corresponds to stratum (e.g., age groups) whereas the right contains cluster (e.g., villages)" width="85%" />
+<p class="caption">(\#fig:sampling)Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right). In the middle, the grouping corresponds to stratum (e.g., age groups) whereas the right contains cluster (e.g., villages)</p>
 </div>
 
 Stratified sampling is typically superior if we care about having similar proportions of sampled in each group and is useful for reweighting: in \@ref(fig:sampling), the true proportion of sampled is 1/3, with the simple random sampling having a range of [0.22, 0.39] among the strata, compared to [0.32, 0.34] for the stratified sample.
@@ -240,9 +240,9 @@ The first point raised by Cox is thus that we
 
 > ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.
 
-This point also motivates use of **double-blind** procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo and control groups. 
+This point also motivates use of **double-blind** procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof participants).
 
-Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corolary.
+Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.
 
 ### Variability 
 
@@ -295,10 +295,5 @@ Randomization justifies the use of the statistical tools we will use under very 
 - Define the following terms in your own word: experimental unit, factor, effect size
 - What is the main benefit of experimental studies over observational studies?
 - List the four pillars of experimental design and briefly describe them.
-- @Box:1978 write in page 103:
-
-> Block what you can and randomize what you cannot.
-
-Explain the benefit of blocking for confounding variables (when possible) over randomization.
 
 :::

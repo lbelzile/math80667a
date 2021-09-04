@@ -1,0 +1,64 @@
+
+
+> This study investigated the effectiveness of explicit instruction in think aloud as a means to promote elementary students' comprehension monitoring abilities. Sixty-six fourth-grade students were randomly assigned to one of three experimental groups: (a) a Think-Aloud (TA) group, in which students were taught various comprehension monitoring strategies for reading stories (e.g., self-questioning, prediction, retelling, rereading) through the medium of thinking aloud; (b) a Directed Reading-Thinking Activity (DRTA) group, in which students were taught a predict-verify strategy for reading and responding to stories; or (c) a Directed Reading Activity (DRA) group, an instructed control, in which students engaged in a noninteractive, guided reading of stories. The primary quantitative analyses involved two planned orthogonal contrasts—effect of instruction (TA + DRTA vs. 2 x DRA) and intensity of instruction (TA vs. DRTA)—for three whole-sample dependent measures: (a) an error detection test, (b) a comprehension monitoring questionnaire, and (c) a modified cloze test. Results of effect of instruction contrasts revealed that TA and DRTA students were more skillful at comprehension monitoring than DRA students (TA + DRTA>DRA for all three measures). Results of intensity of instruction contrasts indicated that although TA-trained students had greater awareness of comprehension monitoring abilities (TA>DRTA for the questionnaire), DRTA students' performance equaled (TA = DRTA for the cloze test) or exceeded (TA<DRTA for the error detection test) that of the TA students. Qualitative data from student interviews, however, revealed that TA students both reported and demonstrated using a greater depth and breadth of comprehension monitoring abilities than either DRTA or DRA students. It was concluded that both TA and DRTA strategies are effective for enhancing elementary students' comprehension monitoring abilities but that additional research is needed to determine the relative effectiveness of TA and DRTA approaches.
+    
+    
+Example of application + citation
+
+Thinking outside the box: 
+
+- potential confounders?
+- to extrapolate to the population, we potentially need to reweigth using demographic information
+- blocking
+
+
+The global null hypothesis of the one-way analysis of variance (ANOVA) problem is $\mathscr{H}_0: \mu_1 = \mu_2 = \mu_3$, where $\mu_i$ $(i=1, \ldots, 3)$ is the expectation of group $i$.
+
+Homogeneity
+
+Null hypothesis and comparing means of multiple groups
+Assumptions
+Plot your data
+Data compression: what you need to report?
+EXPERT TIPS: visualisation tools, histograms and line charts for ordered factors.
+
+Reminder: must be handling the confounding via randomization or blocking (explicitly)
+
+Where do we get our power from? Decomposition of the sum of squares TOTAL = BETWEEN + WITHIN
+
+Anova table
+What happens under the null
+What happens under the alternative: some illustrations with simulated data
+
+Potential ways of assessing the null hypothesis
+
+- what assumptions are we making in the process? 
+- where do we draw our power from
+- Alternative test statistics: Welch and permutation (and their validity)
+- Power considerations: choosing the sample size
+- estimate of effect size, type I error, number of levels (subsample size), variability
+- Careful with observed power (using the observed effect size in the calculation)
+- Practical significance versus statistical significance
+
+
+- Thinking outside the box: how to allocate sample sizes when we do not have equal variance
+
+-What about unbalanced experiments? An example of what can go WRONG?
+- The experiment is not properly conducted; see S 2.4.6 in Lawson (2014)
+- lurking variables: effective teaching methods, confounded with instructor/class time/voluntary participation
+-> independence of errors to unit
+-> measurements are not normal (or continuous)
+- need experimental units and large enough sample sizes
+- Example with variance increasing together with the level of the response
+
+## Contrasts and pairwise tests
+
+Reparametrizing the model
+Statistical fallacy: data dredging
+Multiple comparisons and family-wise error rates
+  Preplanned experiments: why penalie large studies
+  How much data do you need to reliably estimate
+Methods for controlling multiplicity
+
+Thinking outside the box: no free lunch.
+

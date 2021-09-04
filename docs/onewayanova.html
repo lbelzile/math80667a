@@ -4,12 +4,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>2 Completely randomized designs with one factor | Experimental Design and Statistical Methods</title>
+<title>3 Completely randomized designs with one factor | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, the with...">
+<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta property="og:title" content="3 Completely randomized designs with one factor | Experimental Design and Statistical Methods">
+<meta property="og:type" content="book">
+<meta property="og:description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, the with...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 Completely randomized designs with one factor | Experimental Design and Statistical Methods">
+<meta name="twitter:description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, the with...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -33,7 +41,9 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preliminary remarks</a></li>
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
-<li><a class="active" href="onewayanova.html"><span class="header-section-number">2</span> Completely randomized designs with one factor</a></li>
+<li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
+<li><a class="active" href="onewayanova.html"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
+<li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -42,74 +52,45 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="onewayanova" class="section level1" number="2">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="onewayanova" class="section level1" number="3">
 <h1>
-<span class="header-section-number">2</span> Completely randomized designs with one factor<a class="anchor" aria-label="anchor" href="#onewayanova"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3</span> Completely randomized designs with one factor<a class="anchor" aria-label="anchor" href="#onewayanova"><i class="fas fa-link"></i></a>
 </h1>
-<p>Example of application + citation</p>
-<p>Thinking outside the box:</p>
-<ul>
-<li>potential confounders?</li>
-<li>reweighting using demographic information</li>
-<li>
-<li>
-</ul>
-<p>The null hypothesis of the one-way analysis of variance (ANOVA) problem is <span class="math inline">\(\mathscr{H}_0: \mu_1 = \mu_2 = \mu_3\)</span>, where <span class="math inline">\(\mu_i\)</span> <span class="math inline">\((i=1, \ldots, 3)\)</span> is the expectation of group <span class="math inline">\(i\)</span>.</p>
-<p>Homogeneity</p>
-<p>Null hypothesis and comparing means of multiple groups
-Assumptions
-Plot your data
-Data compression: what you need to report?
-EXPERT TIPS: visualisation tools, histograms and line charts for ordered factors.</p>
-<p>Reminder: must be handling the confounding via randomization or blocking (explicitly)</p>
-<p>Where do we get our power from? Decomposition of the sum of squares TOTAL = BETWEEN + WITHIN</p>
-<p>Anova table
-What happens under the null
-What happens under the alternative: some illustrations with simulated data</p>
-<p>Potential ways of assessing the null hypothesis
-- what assumptions are we making in the process? where do we draw our power from
-Alternative test statistics: Welch and permutation (and their validity)
-Power considerations: choosing the sample size
-- estimate of effect size, type I error, number of levels (subsample size), variability</p>
-<p>Careful with observed power (using the observed effect size in the calculation)
-Practical significance versus statistical significance</p>
-<p>Thinking outside the box: how to allocate sample sizes when we do not have equal variance</p>
-<p>What about unbalanced experiments?
-What can go WRONG?
-- The experiment is not properly conducted 2.4.6 in Lawson (2014)
-- lurking variables: effective teaching methods, confounded with instructor/class time/voluntary participation
--&gt; independence of errors to unit
--&gt; measurements are not normal (or continuous)
-- need experimental units and large enough sample sizes
-- Example with variance increasing together with the level of the response</p>
-<div id="contrasts-and-pairwise-tests" class="section level2" number="2.1">
-<h2>
-<span class="header-section-number">2.1</span> Contrasts and pairwise tests<a class="anchor" aria-label="anchor" href="#contrasts-and-pairwise-tests"><i class="fas fa-link"></i></a>
-</h2>
-<p>Reparametrizing the model
-Statistical fallacy: data dredging
-Multiple comparisons and family-wise error rates
-Preplanned experiments: why penalie large studies
-How much data do you need to reliably estimate
-Methods for controlling multiplicity</p>
-<p>Thinking outside the box: no free lunch.</p>
+<p>This chapter describes the most simply experiment, corresponding to comparing <span class="math inline">\(K\)</span> sub-populations which differ only in the treatment they received.</p>
+<p>In completely randomized experiments, the with a single treatment with <span class="math inline">\(K\)</span> levels, we are be interested in testing whether the mean of some outcome for <span class="math inline">\(K\)</span> different treatments sub-populations are equal.
+The basic assumption of most designs is that we can decompose the observation obtained into two components <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span>
+<span class="math display">\[\begin{align*}
+\begin{pmatrix} \text{quantity depending only } \\ 
+\text{on the particular unit} 
+\end{pmatrix} + 
+\begin{pmatrix} \text{quantity depending} \\
+ \text{on the treatment used}\end{pmatrix}
+\end{align*}\]</span>
+This <strong>additive</strong> decomposition further assumes that each unit is unaffected by (or independent of) the treatment of the other units and that the average effect of the treatment is constant.</p>
+<p>Let <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> denote the expectation (theoretical mean) of each of the <span class="math inline">\(K\)</span> sub-populations defined by the difference treatment. Lack of difference between treatments is equivalent to equality of means, which translates into the hypotheses
+<span class="math display">\[\begin{align*}
+\mathscr{H}_0: &amp; \mu_1 = \cdots = \mu_K \\
+\mathscr{H}_a: &amp; \text{at least two treatments have different averages, }
+\end{align*}\]</span>
+The null hypothesis is, as usual, a single numerical value. The null hypothesis imposes <span class="math inline">\(K-1\)</span> restrictions (the number of equality signs, with the value of the global mean <span class="math inline">\(\mu\)</span> left unspecified). The alternative is the complement of this event, i.e., all potential scenarios for which not all expectations are equal.</p>
+<p>A <strong>one-way analysis of variance</strong> consists in comparing the average of each treatment group <span class="math inline">\(T_1, \ldots, T_K\)</span>. Since we have <span class="math inline">\(K\)</span> groups, there will be <span class="math inline">\(K\)</span> averages (one per group) to estimate.
+One slight complication arising from the above is that the values of <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> are unknown. The (theoretical unknown) average in treatment <span class="math inline">\(T_j\)</span> is <span class="math inline">\(\mu_j\)</span> and this is perhaps the more natural parametrization, although it is ill-suited for hypothesis testing because none of the <span class="math inline">\(\mu_i\)</span> values are known in practice.</p>
+<p>An equivalent formulation writes for each treatment group the average as <span class="math inline">\(\mu_j = \mu + \delta_j\)</span>, where <span class="math inline">\(\delta_j\)</span> is the difference between the treatment average <span class="math inline">\(\mu_j\)</span> and the global average of all groups. This however requires imposing the constraint <span class="math inline">\(\delta_1 + \cdots + \delta_K=0\)</span> to ensure the average of effects equals <span class="math inline">\(\mu\)</span>.</p>
+<p>The most common parametrization is in terms of <strong>constrasts</strong>, namely differences between a reference group (say <span class="math inline">\(T_1\)</span>) and the group of interest. We thus have <span class="math inline">\(\mu_1\)</span> for the average of treatment <span class="math inline">\(T_1\)</span> and <span class="math inline">\(\mu_1 + a_i\)</span> for treatment <span class="math inline">\(T_i\)</span>, where <span class="math inline">\(a_i=0\)</span> for <span class="math inline">\(T_1\)</span> and <span class="math inline">\(a_i = \mu_i -\mu_1\)</span> otherwise.</p>
+<p>We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.</p>
 
 </div>
-</div>
   <div class="chapter-nav">
-<div class="prev"><a href="introduction.html"><span class="header-section-number">1</span> Introduction</a></div>
-<div class="next"><a href="references.html">References</a></div>
+<div class="prev"><a href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></div>
+<div class="next"><a href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#onewayanova"><span class="header-section-number">2</span> Completely randomized designs with one factor</a></li>
-<li><a class="nav-link" href="#contrasts-and-pairwise-tests"><span class="header-section-number">2.1</span> Contrasts and pairwise tests</a></li>
-</ul>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#onewayanova"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/02-one-way_ANOVA.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/02-one-way_ANOVA.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/03-completely_randomized_trials.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/03-completely_randomized_trials.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -141,6 +122,22 @@ Methods for controlling multiplicity</p>
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
 </html>

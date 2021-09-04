@@ -1,0 +1,9 @@
+
+
+::: yourturn
+
+- @Box:1978 write in page 103:
+
+> Block what you can and randomize what you cannot.
+
+Explain the main benefit of blocking for confounding variables (when possible) over randomization.

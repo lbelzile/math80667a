@@ -13,6 +13,7 @@ rmd_files: [
   "index.Rmd",
   "01-introduction.Rmd",
   "02-hypothesis_testing.Rmd",
+  "03-completely_randomized_trials.Rmd",
   "10-reproducibility_crisis.Rmd",
   "references.Rmd"
 ]

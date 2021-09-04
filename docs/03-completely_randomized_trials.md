@@ -31,20 +31,6 @@ The most common parametrization is in terms of **constrasts**, namely difference
 
 We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.
 
-```{r samplevar2, eval = FALSE, echo = FALSE, fig.cap = "Three samples from hypothetical populations with a common variance, but different means."}
-set.seed(1234)
-samp <- data.frame(dat = rep(c(2,10,5), each = 10) +  rt(n = 30, df = 4),
-                   group = factor(rep(1:3, each = 10L)))
-ggplot(data = samp,
-       aes(x = group, y = dat, col = group)) +
-  geom_point() +
-  geom_jitter() +
-  labs(col = "sample", y = "observations", x = "sample number") +
-  theme(legend.position = "none") +
-  stat_summary(fun = mean,
-               geom = "point",
-               shape = 95,
-               size = 20)
-```
 
-https://www.crumplab.com
+
+

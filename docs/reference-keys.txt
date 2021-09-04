@@ -12,6 +12,7 @@ exm:unlabeled-div-3
 exm:unlabeled-div-4
 fig:xkcd2400
 fig:samplevar
+fig:power-plots
 exm:unlabeled-div-5
 tab:rosen-table1
 tab:print-tab-example-chisq-test-rosen
@@ -42,7 +43,7 @@ variability
 generalizability
 simplicity
 hypothesis-testing
-sources-of-variability
+sampling-variability
 tests
 hypothesis
 test-statistic
@@ -50,4 +51,5 @@ null-distribution-and-p-value
 conclusion
 power
 confidence-interval
+onewayanova
 reproducibility-crisis

@@ -42,7 +42,8 @@
 <li><a class="" href="index.html">Preliminary remarks</a></li>
 <li><a class="active" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
-<li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">3</span> Reproducibility crisis</a></li>
+<li><a class="" href="onewayanova.html"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
+<li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -122,7 +123,7 @@ Figure 1.1: Artwork by Allison Horst of continuous (left) and discrete variables
 <li>a discrete variable takes a countable number of values, prime examples being binary variables or count variables.</li>
 <li>a continuous variable can take (in theory) an infinite possible number of values, even when measurements are rounded or measured with a limited precision (time, width, mass). In many case, we could also consider discrete variables as continuous if they take enough values (e.g., money).</li>
 </ul>
-<p>Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using arbitrary encoding for the levels: for modelling, these variables taking <span class="math inline">\(K\)</span> possible values (or levels) must be transformed into a set of <span class="math inline">\(K-1\)</span> binary 0/1 variables, the omitted level corresponding to a baseline. Failing to declare categorical variables in your favourite software is a common mistake, especially when these are saved in the database using integers rather than strings.</p>
+<p>Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using arbitrary encoding for the levels: for modelling, these variables taking <span class="math inline">\(K\)</span> possible values (or levels) must be transformed into a set of <span class="math inline">\(K-1\)</span> binary variables <span class="math inline">\(T_1, \ldots, T_K\)</span>, each of which corresponds to the logical group <span class="math inline">\(k\)</span> (yes = 1, no = 0), the omitted level corresponding to a baseline when all of the <span class="math inline">\(K-1\)</span> indicators are zero. Failing to declare categorical variables in your software is a common mistake, especially when these are saved in the database using integers (1,2, <span class="math inline">\(\ldots\)</span>) rather than as text (Monday, Tuesday, <span class="math inline">\(\ldots\)</span>).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:variablescateg"></span>
 <img src="figures/nominal_ordinal_binary.png" alt="Artwork by Allison Horst with examples of categorical variables: nominal (left), ordinal (middle) and binary (right)." width="85%"><p class="caption">
@@ -169,8 +170,8 @@ Figure 1.2: Artwork by Allison Horst with examples of categorical variables: nom
 <p><span id="exm:unlabeled-div-1" class="example"><strong>Example 1.3  (Illustration of sampling schemes) </strong></span>Suppose we wish to look at student satisfaction regarding the material taught in an introductory statistics course offered to multiple sections. The population consists of all students enrolled in the course in a given semester and this list provides the sampling frame. We can define strata to consist of class group. A simple random sample would be obtaining by sampling randomly abstracting from class groups, a stratified sample by drawing randomly a number from each class group and a cluster sampling by drawing all students from selected class groups. Cluster sampling is only mostly useful if all groups are similar and if the costs associated to sampling from multiple strata are expensive.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:sampling"></span>
-<img src="01-introduction_files/figure-html/sampling-1.png" alt="Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right)." width="85%"><p class="caption">
-Figure 1.3: Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right).
+<img src="01-introduction_files/figure-html/sampling-1.png" alt="Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right). In the middle, the grouping corresponds to stratum (e.g., age groups) whereas the right contains cluster (e.g., villages)" width="85%"><p class="caption">
+Figure 1.3: Illustration of three sampling schemes from nine stratum: simple random sampling (left), stratified sampling (middle) and cluster sampling (right). In the middle, the grouping corresponds to stratum (e.g., age groups) whereas the right contains cluster (e.g., villages)
 </p>
 </div>
 <p>Stratified sampling is typically superior if we care about having similar proportions of sampled in each group and is useful for reweighting: in <a href="introduction.html#fig:sampling">1.3</a>, the true proportion of sampled is 1/3, with the simple random sampling having a range of [0.22, 0.39] among the strata, compared to [0.32, 0.34] for the stratified sample.</p>
@@ -273,8 +274,8 @@ Figure 1.4: Two by two classification matrix for experiments based on sampling a
 <blockquote>
 <p>ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.</p>
 </blockquote>
-<p>This point also motivates use of <strong>double-blind</strong> procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo and control groups.</p>
-<p>Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corolary.</p>
+<p>This point also motivates use of <strong>double-blind</strong> procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof participants).</p>
+<p>Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.</p>
 </div>
 <div id="variability" class="section level3" number="1.5.2">
 <h3>
@@ -324,13 +325,7 @@ Figure 1.6: xkcd comic <a href="https://xkcd.com/2400/">2400 (Statistics) by Ran
 <li>Define the following terms in your own word: experimental unit, factor, effect size</li>
 <li>What is the main benefit of experimental studies over observational studies?</li>
 <li>List the four pillars of experimental design and briefly describe them.</li>
-<li>
-<span class="citation"><a href="references.html#ref-Box:1978" role="doc-biblioref">Box, Hunter, and Hunter</a> (<a href="references.html#ref-Box:1978" role="doc-biblioref">1978</a>)</span> write in page 103:</li>
 </ul>
-<blockquote>
-<p>Block what you can and randomize what you cannot.</p>
-</blockquote>
-<p>Explain the benefit of blocking for confounding variables (when possible) over randomization.</p>
 </div>
 
 </div>
