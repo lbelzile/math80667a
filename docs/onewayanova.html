@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>3 Completely randomized designs with one factor | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
-<meta name="description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, the with...">
+<meta name="description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, we are...">
 <meta name="generator" content="bookdown 0.23 with bs4_book()">
 <meta property="og:title" content="3 Completely randomized designs with one factor | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
-<meta property="og:description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, the with...">
+<meta property="og:description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, we are...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3 Completely randomized designs with one factor | Experimental Design and Statistical Methods">
-<meta name="twitter:description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, the with...">
+<meta name="twitter:description" content="This chapter describes the most simply experiment, corresponding to comparing \(K\) sub-populations which differ only in the treatment they received. In completely randomized experiments, we are...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -57,8 +57,8 @@
 <span class="header-section-number">3</span> Completely randomized designs with one factor<a class="anchor" aria-label="anchor" href="#onewayanova"><i class="fas fa-link"></i></a>
 </h1>
 <p>This chapter describes the most simply experiment, corresponding to comparing <span class="math inline">\(K\)</span> sub-populations which differ only in the treatment they received.</p>
-<p>In completely randomized experiments, the with a single treatment with <span class="math inline">\(K\)</span> levels, we are be interested in testing whether the mean of some outcome for <span class="math inline">\(K\)</span> different treatments sub-populations are equal.
-The basic assumption of most designs is that we can decompose the observation obtained into two components <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span>
+<p>In completely randomized experiments, we are interested in the effect of treatment variables. We start for simplicity with a single variable with <span class="math inline">\(K\)</span> different treatments levels. The global hypothesis of interest is testing whether the mean of some outcome for <span class="math inline">\(K\)</span> different treatments sub-populations are equal.</p>
+<p>The basic assumption of most designs is that we can decompose the observation obtained into two components <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span>
 <span class="math display">\[\begin{align*}
 \begin{pmatrix} \text{quantity depending only } \\ 
 \text{on the particular unit} 
@@ -67,25 +67,48 @@ The basic assumption of most designs is that we can decompose the observation ob
  \text{on the treatment used}\end{pmatrix}
 \end{align*}\]</span>
 This <strong>additive</strong> decomposition further assumes that each unit is unaffected by (or independent of) the treatment of the other units and that the average effect of the treatment is constant.</p>
-<p>Let <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> denote the expectation (theoretical mean) of each of the <span class="math inline">\(K\)</span> sub-populations defined by the difference treatment. Lack of difference between treatments is equivalent to equality of means, which translates into the hypotheses
+<p>Let <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> denote the expectation (theoretical mean) of each of the <span class="math inline">\(K\)</span> sub-populations defined by the different treatments. Lack of difference between treatments is equivalent to equality of means, which translates into the hypotheses
 <span class="math display">\[\begin{align*}
 \mathscr{H}_0: &amp; \mu_1 = \cdots = \mu_K \\
 \mathscr{H}_a: &amp; \text{at least two treatments have different averages, }
 \end{align*}\]</span>
-The null hypothesis is, as usual, a single numerical value. The null hypothesis imposes <span class="math inline">\(K-1\)</span> restrictions (the number of equality signs, with the value of the global mean <span class="math inline">\(\mu\)</span> left unspecified). The alternative is the complement of this event, i.e., all potential scenarios for which not all expectations are equal.</p>
-<p>A <strong>one-way analysis of variance</strong> consists in comparing the average of each treatment group <span class="math inline">\(T_1, \ldots, T_K\)</span>. Since we have <span class="math inline">\(K\)</span> groups, there will be <span class="math inline">\(K\)</span> averages (one per group) to estimate.
-One slight complication arising from the above is that the values of <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> are unknown. The (theoretical unknown) average in treatment <span class="math inline">\(T_j\)</span> is <span class="math inline">\(\mu_j\)</span> and this is perhaps the more natural parametrization, although it is ill-suited for hypothesis testing because none of the <span class="math inline">\(\mu_i\)</span> values are known in practice.</p>
+The null hypothesis is, as usual, a single numerical value: it imposes <span class="math inline">\(K-1\)</span> restrictions (the number of equality signs, with the value of the global mean <span class="math inline">\(\mu\)</span> left unspecified). The alternative is not unique, since it comprises all potential scenarios for which not all expectations are equal.</p>
+<div id="parametrization" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Parametrization<a class="anchor" aria-label="anchor" href="#parametrization"><i class="fas fa-link"></i></a>
+</h2>
+<p>A <strong>one-way analysis of variance</strong> consists in comparing the average of each treatment group <span class="math inline">\(T_1, \ldots, T_K\)</span>. Since we have <span class="math inline">\(K\)</span> groups, there will be <span class="math inline">\(K\)</span> averages (one per group) to estimate.</p>
+<p>One slight complication arising from the above is that the values of <span class="math inline">\(\mu_1, \ldots, \mu_K\)</span> are unknown. The (theoretical unknown) average in treatment <span class="math inline">\(T_j\)</span> is <span class="math inline">\(\mu_j\)</span> and this is perhaps the more natural parametrization, although it is ill-suited for hypothesis testing because none of the <span class="math inline">\(\mu_i\)</span> values are known in practice.</p>
 <p>An equivalent formulation writes for each treatment group the average as <span class="math inline">\(\mu_j = \mu + \delta_j\)</span>, where <span class="math inline">\(\delta_j\)</span> is the difference between the treatment average <span class="math inline">\(\mu_j\)</span> and the global average of all groups. This however requires imposing the constraint <span class="math inline">\(\delta_1 + \cdots + \delta_K=0\)</span> to ensure the average of effects equals <span class="math inline">\(\mu\)</span>.</p>
 <p>The most common parametrization is in terms of <strong>constrasts</strong>, namely differences between a reference group (say <span class="math inline">\(T_1\)</span>) and the group of interest. We thus have <span class="math inline">\(\mu_1\)</span> for the average of treatment <span class="math inline">\(T_1\)</span> and <span class="math inline">\(\mu_1 + a_i\)</span> for treatment <span class="math inline">\(T_i\)</span>, where <span class="math inline">\(a_i=0\)</span> for <span class="math inline">\(T_1\)</span> and <span class="math inline">\(a_i = \mu_i -\mu_1\)</span> otherwise.</p>
 <p>We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.</p>
+</div>
+<div id="f-statistic-for-anova" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> F-statistic for ANOVA<a class="anchor" aria-label="anchor" href="#f-statistic-for-anova"><i class="fas fa-link"></i></a>
+</h2>
+<p>The following section tries to shed some light into how the <span class="math inline">\(F\)</span>-test statistic works as a summary of evidence: it isn’t straightforward in the way it appears how this is the case. Under the null hypothesis, all groups have the same mean <span class="math inline">\(\mu\)</span> and we can compute the overall average <span class="math inline">\(\widehat{\mu}\)</span> and the group averages <span class="math inline">\(\widehat{\mu}_1, \ldots, \widehat{\mu}_K\)</span>, where <span class="math inline">\(\widehat{\mu}_i\)</span> indicates the sample average in the <span class="math inline">\(i\)</span>th group.</p>
+<p>The <span class="math inline">\(F\)</span>-statistic is heuristically
+<span class="math display" id="eq:Fstatheuristic">\[\begin{align}
+F = \frac{\text{between-group variability}}{\text{within-group variability}} 
+\tag{3.1}
+\end{align}\]</span>
+The between-group variance is the squared differences between the overall mean <span class="math inline">\(\widehat{\mu}\)</span> and the group mean for each observation in the <span class="math inline">\(i\)</span>th group <span class="math inline">\(\widehat{\mu}_i\)</span>, suitably rescaled. If there is no mean difference, the numerator is an estimate of the population variance, and so is the denominator of <a href="onewayanova.html#eq:Fstatheuristic">(3.1)</a>. If there are many observations (and relatively fewer groups), the ratio is approximately one on average.</p>
+<p>If there is no difference in mean, the <em>F</em>-statistic follows in large sample a <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom. The first is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one), and the second is the number of observations minus the number of <em>mean parameters estimates</em> (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The overall mean is full determined by the other averages, since &lt;span class="math inline"&gt;\(n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K\)&lt;/span&gt;.&lt;/p&gt;'><sup>5</sup></a></p>
 
 </div>
+</div>
+
   <div class="chapter-nav">
 <div class="prev"><a href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></div>
 <div class="next"><a href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#onewayanova"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#onewayanova"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
+<li><a class="nav-link" href="#parametrization"><span class="header-section-number">3.1</span> Parametrization</a></li>
+<li><a class="nav-link" href="#f-statistic-for-anova"><span class="header-section-number">3.2</span> F-statistic for ANOVA</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">

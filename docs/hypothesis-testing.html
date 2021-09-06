@@ -68,25 +68,42 @@
 <li>an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary. Its output is random: even if you repeat a recipe, you won’t get the same exact output everytime.</li>
 <li>an estimate is the numerical value obtained once we apply the formula to observed data.</li>
 </ul>
-<p>For example, the sample mean of a sample of size <span class="math inline">\(n\)</span> is <span class="math inline">\(\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)\)</span>. Because the inputs of the function <span class="math inline">\(\overline{Y}\)</span> are random, the estimator <span class="math inline">\(\overline{Y}\)</span> is also random. To illustrate this point, Figure <a href="hypothesis-testing.html#fig:samplevar">2.1</a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, along with their sample mean <span class="math inline">\(\overline{y}\)</span>.</p>
+<p>For example, the sample mean of a sample of size <span class="math inline">\(n\)</span> is the sum of its elements divided by the sample size, <span class="math inline">\(\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)\)</span>. Because the inputs of the function <span class="math inline">\(\overline{Y}\)</span> are random, the estimator <span class="math inline">\(\overline{Y}\)</span> is also random. To illustrate this point, Figure <a href="hypothesis-testing.html#fig:samplevar">2.1</a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, along with their sample mean <span class="math inline">\(\overline{y}\)</span>. Thus, sampling variability implies that the sample means of the subgroups will always differ even if the share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:samplevar"></span>
 <img src="02-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%"><p class="caption">
 Figure 2.1: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.
 </p>
 </div>
-<p>We can clearly see from Figure <a href="hypothesis-testing.html#fig:samplevar">2.1</a> that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will also notice that the sample means are less dispersed around <span class="math inline">\(\mu\)</span> than the individual measurements. This is because the sample mean <span class="math inline">\(\overline{Y}\)</span> is based on multiple observations, so there is more information available.</p>
-<p>Values of the sample mean don’t tell the whole picture: we must also consider their variability. The sample variance <span class="math inline">\(S_n\)</span> is an estimator of the standard deviation <span class="math inline">\(\sigma\)</span>, where <span class="math display">\[\begin{align*}
+<p>We can clearly see from Figure <a href="hypothesis-testing.html#fig:samplevar">2.1</a> that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will however notice that the sample means are less dispersed around <span class="math inline">\(\mu\)</span> than the individual measurements. This is because the sample mean <span class="math inline">\(\overline{Y}\)</span> is based on multiple observations, so there is more information available. This is a fundamental principle of statistics: information accumulated as you get more information, so estimation becomes less noisy.</p>
+<p>Since values of the sample mean don’t tell the whole picture, we may also consider their variability. The sample variance <span class="math inline">\(S_n\)</span> is an estimator of the standard deviation <span class="math inline">\(\sigma\)</span>, where <span class="math display">\[\begin{align*}
 S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
 \end{align*}\]</span>
 The square root of the variance of a statistic is termed <strong>standard error</strong>; it should not be confused with the standard deviation <span class="math inline">\(\sigma\)</span> of the population from which the sample observations <span class="math inline">\(Y_1, \ldots\)</span> are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.</p>
-<p>In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
+<div class="example">
+<span id="exm:unlabeled-div-5" class="example"><strong>Example 2.1  (Sample proportion and uniform draws) </strong></span>To illustrate the concept of sampling variability, we follow the lead of <a href="https://www.crumplab.com/statistics/foundations-for-inference.html">Matthew Crump</a> and consider samples from a uniform distribution on <span class="math inline">\(\{1, 2, \ldots, 10\}\)</span> each number in this interval is equally likely to be sampled.
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unifsamp1"></span>
+<img src="02-hypothesis_testing_files/figure-html/unifsamp1-1.png" alt="Histograms for 10 random samples of size $n=20$ from a discrete uniform distribution." width="85%"><p class="caption">
+Figure 2.2: Histograms for 10 random samples of size <span class="math inline">\(n=20\)</span> from a discrete uniform distribution.
+</p>
+</div>
+<p>Even if they are drawn from the same population, the 10 samples in Figure <a href="hypothesis-testing.html#fig:unifsamp1">2.2</a> look quite different. The only thing at play here is the sample variability: since there are <span class="math inline">\(n=20\)</span> observations in total, there should be on average 10% of the observations in each of the 10 bins, but some bins are empty and others have too many counts. This fluctuation is due to randomness, or chance.</p>
+<p>How can we thus detect whether what we see is compatible with the model we think generated the data? The key is to collect more observations: the bar height is the sample proportion, an average of 0/1 values with ones indicating that the observation is in the bin and zero otherwise.</p>
+<p>Consider now what happens as we increase the sample size: the top panel of Figure <a href="hypothesis-testing.html#fig:uniformsamp2">2.3</a> shows uniform samples for increasing samples size. The histogram looks more and more like the true underlying distribution (flat) as the sample size increases and it’s nearly indistinguishable from the theoretical one (straight line) when <span class="math inline">\(n=10 000\)</span>. Here, the variability decreases by a tenfold every time the sample size increases by a factor 100. The bottom panel, on the other hand, isn’t from a uniform distribution and larger samples come closer to the population distribution. We couldn’t have spotted this difference in the first two plots, since the sampling variability is too important; there, the lack of data in some bins could have been attributed to chance. This is in line with most practical applications, in which the limited sample size restricts our capacity to disentangle real differences from sampling variability. We must embrace this uncertainty: in the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:uniformsamp2"></span>
+<img src="02-hypothesis_testing_files/figure-html/uniformsamp2-1.png" alt="Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right)." width="85%"><p class="caption">
+Figure 2.3: Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).
+</p>
+</div>
+</div>
 </div>
 <div id="tests" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Hypothesis testing<a class="anchor" aria-label="anchor" href="#tests"><i class="fas fa-link"></i></a>
 </h2>
-<p>An hypothesis test is a binary decision rule used to evaluate the statistical evidence provided by a sample to make a decision regarding the underlying population. The main steps involved are:</p>
+<p>An hypothesis test is a binary decision rule (yes/no) used to evaluate the statistical evidence provided by a sample to make a decision regarding the underlying population. The main steps involved are:</p>
 <ul>
 <li>define the model parameters</li>
 <li>formulate the alternative and null hypothesis</li>
@@ -118,16 +135,18 @@ The square root of the variance of a statistic is termed <strong>standard error<
 <span class="math display">\[\begin{align*}
 T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated effect variability}} = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
 \end{align*}\]</span>
-where <span class="math inline">\(\widehat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\theta_0\)</span> is the postulated value of the parameter and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span> is an estimator of the standard deviation of the test statistic <span class="math inline">\(\widehat{\theta}\)</span>. For example, if we are interested in mean differences between treatment group and control group, denoted <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_0\)</span>, then <span class="math inline">\(\theta = \mu_0-\mu_1\)</span> and <span class="math inline">\(\mathscr{H}_0: \mu_0 = \mu_1\)</span> corresponds to <span class="math inline">\(\mathscr{H}_0: \theta = 0\)</span> for no difference. The numerator would thus consist of the difference in sample means and the denominator the standard error of that quantity, calculated using a software.</p>
+where <span class="math inline">\(\widehat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\theta_0\)</span> is the postulated value of the parameter and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span> is the standard error of the test statistic <span class="math inline">\(\widehat{\theta}\)</span>, which is a measure of its variability. This quantity is designed so that if there is no difference, <span class="math inline">\(T\)</span> has approximately mean zero and variance one. This standardization makes comparison easier.</p>
+<p>For example, if we are interested in mean differences between treatment group and control group, denoted <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_0\)</span>, then <span class="math inline">\(\theta = \mu_0-\mu_1\)</span> and <span class="math inline">\(\mathscr{H}_0: \mu_0 = \mu_1\)</span> corresponds to <span class="math inline">\(\mathscr{H}_0: \theta = 0\)</span> for no difference. The numerator would thus consist of the difference in sample means and the denominator the standard error of that quantity, calculated using a software.</p>
 <p>For example, to test whether the mean of a population is zero, we set
 <span class="math display">\[\begin{align*}
 \mathscr{H}_0: \mu=0, \qquad  \mathscr{H}_a:\mu \neq 0,
 \end{align*}\]</span>
 and the usual <span class="math inline">\(t\)</span>-statistic is
-<span class="math display">\[\begin{align}
-T &amp;= \frac{\overline{X}-0}{S_n/\sqrt{n}} \label{ttest}
+<span class="math display" id="eq:ttest">\[\begin{align}
+T &amp;= \frac{\overline{X}-0}{S_n/\sqrt{n}}
+\tag{2.1}
 \end{align}\]</span>
-where <span class="math inline">\(\overline{X}\)</span> is the sample mean of <span class="math inline">\(X_1, \ldots, X_n\)</span> and the denominator of <a href="#eq:ttest">(<strong>??</strong>)</a> is the standard error of the sample mean, <span class="math inline">\(\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}\)</span>. The precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample <span class="math inline">\(t\)</span>-test, whereby <span class="math inline">\(\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0\)</span> for treatment group <span class="math inline">\(T_1\)</span> and control <span class="math inline">\(T_0\)</span>. Assuming equal variance, the denominator is estimated using the pooled variance.</p>
+where <span class="math inline">\(\overline{X}\)</span> is the sample mean of <span class="math inline">\(X_1, \ldots, X_n\)</span> and the denominator of <a href="hypothesis-testing.html#eq:ttest">(2.1)</a> is the standard error of the sample mean, <span class="math inline">\(\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}\)</span>. The precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample <span class="math inline">\(t\)</span>-test, whereby <span class="math inline">\(\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0\)</span> for treatment group <span class="math inline">\(T_1\)</span> and control <span class="math inline">\(T_0\)</span>. Assuming equal variance, the denominator is estimated using the pooled variance.</p>
 </div>
 <div id="null-distribution-and-p-value" class="section level3" number="2.2.3">
 <h3>
@@ -141,7 +160,7 @@ p = 2 \times \mathsf{Pr}_0(T \geq |t|).
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:power-plots"></span>
 <img src="02-hypothesis_testing_files/figure-html/power-plots-1.png" alt="Density of _p_-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right). The probability of rejection $\mathscr{H}_0$ is 0.1, the area under the curve between zero and $\alpha=0.1$. Under the null, the density is uniform (flat rectangle of height 1) and all values in the unit interval are equally likely. Under the alternative, the _p_-values cluster towards zero and the probability of rejecting the null hypothesis increases together with the signal-to-noise (approximately 0.22 for the alternative)." width="85%"><p class="caption">
-Figure 2.2: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right). The probability of rejection <span class="math inline">\(\mathscr{H}_0\)</span> is 0.1, the area under the curve between zero and <span class="math inline">\(\alpha=0.1\)</span>. Under the null, the density is uniform (flat rectangle of height 1) and all values in the unit interval are equally likely. Under the alternative, the <em>p</em>-values cluster towards zero and the probability of rejecting the null hypothesis increases together with the signal-to-noise (approximately 0.22 for the alternative).
+Figure 2.4: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right). The probability of rejection <span class="math inline">\(\mathscr{H}_0\)</span> is 0.1, the area under the curve between zero and <span class="math inline">\(\alpha=0.1\)</span>. Under the null, the density is uniform (flat rectangle of height 1) and all values in the unit interval are equally likely. Under the alternative, the <em>p</em>-values cluster towards zero and the probability of rejecting the null hypothesis increases together with the signal-to-noise (approximately 0.22 for the alternative).
 </p>
 </div>
 <p>There are generally three ways of obtaining null distributions for assessing the degree of evidence against the null hypothesis</p>
@@ -156,7 +175,7 @@ Figure 2.2: Density of <em>p</em>-values under the null hypothesis (left) and un
 <h3>
 <span class="header-section-number">2.2.4</span> Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"><i class="fas fa-link"></i></a>
 </h3>
-<p>The <em>p</em>-value allows us to make a decision about the null hypothesis. If <span class="math inline">\(\mathscr{H}_0\)</span> is true, the <em>p</em>-value follows a uniform distribution, as shown in Figure <a href="hypothesis-testing.html#fig:power-plots">2.2</a>. <a href="https://xkcd.com/1478/">Thus, if the <em>p</em>-value is small</a>, this means observing an outcome more extreme than <span class="math inline">\(T=t\)</span> is unlikely, and so we’re inclined to think that <span class="math inline">\(\mathscr{H}_0\)</span> is not true. There’s always some underlying risk that we’re making a mistake when we make a decision. In statistic, there are <a href="https://xkcd.com/2303/">two type of errors</a>:</p>
+<p>The <em>p</em>-value allows us to make a decision about the null hypothesis. If <span class="math inline">\(\mathscr{H}_0\)</span> is true, the <em>p</em>-value follows a uniform distribution, as shown in Figure <a href="hypothesis-testing.html#fig:power-plots">2.4</a>. <a href="https://xkcd.com/1478/">Thus, if the <em>p</em>-value is small</a>, this means observing an outcome more extreme than <span class="math inline">\(T=t\)</span> is unlikely, and so we’re inclined to think that <span class="math inline">\(\mathscr{H}_0\)</span> is not true. There’s always some underlying risk that we’re making a mistake when we make a decision. In statistic, there are <a href="https://xkcd.com/2303/">two type of errors</a>:</p>
 <ul>
 <li>type I error: we reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is true,</li>
 <li>type II error: we fail to reject <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span>.</li>
@@ -197,7 +216,7 @@ The level <span class="math inline">\(\alpha\)</span> is fixed beforehand, typic
 </ul>
 <p>Do not mix up level of the test (probability fixed beforehand by the researcher) and the <em>p</em>-value. If you do a test at level 5%, the probability of type I error is by definition <span class="math inline">\(\alpha\)</span> and does not depend on the <em>p</em>-value. The latter is conditional probability of observing a more extreme statistic given the null distribution <span class="math inline">\(\mathscr{H}_0\)</span> is true.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-5" class="example"><strong>Example 2.1  (Gender inequality and permutation tests) </strong></span>We consider data from <span class="citation"><a href="references.html#ref-Rosen:1974" role="doc-biblioref">Rosen and Jerdee</a> (<a href="references.html#ref-Rosen:1974" role="doc-biblioref">1974</a>)</span>, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided.</p>
+<p><span id="exm:unlabeled-div-6" class="example"><strong>Example 2.2  (Gender inequality and permutation tests) </strong></span>We consider data from <span class="citation">Rosen and Jerdee (<a href="references.html#ref-Rosen:1974" role="doc-biblioref">1974</a>)</span>, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided.</p>
 <p>We are interested in Experiment 1 related to promotion of employees: managers were requested to decide on whether or not to promote an employee to become branch manager based on recommendations and ratings on potential for customer and employee relations. The authors intervention focused on the description of the nature (complexity) of the manager’s job (either simple or complex) and the sex of the candidate (male or female): all files were similar otherwise.</p>
 <p>The authors played with two factors: nature (complexity) of the manager’s job (either simple or complex) and the sex of the candidate (male or female): all files were similar otherwise.</p>
 <p>We consider for simplicity only sex as a factor and aggregate over job for the <span class="math inline">\(n=93\)</span> replies. Table <a href="hypothesis-testing.html#tab:rosen-table1">2.1</a> shows the counts for each possibility.</p>
@@ -300,9 +319,6 @@ p.value
 <th style="text-align:left;">
 method
 </th>
-<th style="text-align:left;">
-alternative
-</th>
 </tr></thead>
 <tbody><tr>
 <td style="text-align:right;">
@@ -313,9 +329,6 @@ alternative
 </td>
 <td style="text-align:left;">
 Fisher’s Exact Test for Count Data
-</td>
-<td style="text-align:left;">
-two.sided
 </td>
 </tr></tbody>
 </table></div>
@@ -335,18 +348,10 @@ sex
 <tbody>
 <tr>
 <td style="text-align:left;">
-promote
-</td>
-<td style="text-align:left;">
-male
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 hold file
 </td>
 <td style="text-align:left;">
-male
+female
 </td>
 </tr>
 <tr>
@@ -354,7 +359,7 @@ male
 promote
 </td>
 <td style="text-align:left;">
-male
+female
 </td>
 </tr>
 <tr>
@@ -370,7 +375,15 @@ male
 hold file
 </td>
 <td style="text-align:left;">
-male
+female
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hold file
+</td>
+<td style="text-align:left;">
+female
 </td>
 </tr>
 </tbody>
@@ -412,10 +425,10 @@ male
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:infer-odds-ratio-permutation"></span>
 <img src="02-hypothesis_testing_files/figure-html/infer-odds-ratio-permutation-1.png" alt="Histogram of the simulated null distribution obtained using a permutation test; the vertical red line indicates the sample odds ratio." width="85%"><p class="caption">
-Figure 2.3: Histogram of the simulated null distribution obtained using a permutation test; the vertical red line indicates the sample odds ratio.
+Figure 2.5: Histogram of the simulated null distribution obtained using a permutation test; the vertical red line indicates the sample odds ratio.
 </p>
 </div>
-<p>Reassuringly, we again get roughly the same <em>p</em>-value. The histogram in <a href="hypothesis-testing.html#fig:infer-odds-ratio-permutation">2.3</a> shows the distribution of</p>
+<p>Reassuringly, we again get roughly the same <em>p</em>-value. The histogram in <a href="hypothesis-testing.html#fig:infer-odds-ratio-permutation">2.5</a> shows the distribution of</p>
 <p>The article concluded (in light of the above and further experiments)</p>
 <blockquote>
 <p>Results confirmed the hypothesis that male administrators tend to discriminate against female employees in personnel decisions involving promotion, development, and supervision.</p>
@@ -444,26 +457,26 @@ Power is thus a measure of our ability to detect real effects.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:power1"></span>
 <img src="02-hypothesis_testing_files/figure-html/power1-1.png" alt="Comparison between null distribution (full curve) and a specific alternative for a *t*-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white)." width="85%"><p class="caption">
-Figure 2.4: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).
+Figure 2.6: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).
 </p>
 </div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:power2"></span>
 <img src="02-hypothesis_testing_files/figure-html/power2-1.png" alt="Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line)." width="85%"><p class="caption">
-Figure 2.5: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).
+Figure 2.7: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).
 </p>
 </div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:power3"></span>
 <img src="02-hypothesis_testing_files/figure-html/power3-1.png" alt="Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size." width="85%"><p class="caption">
-Figure 2.6: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.
+Figure 2.8: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.
 </p>
 </div>
 <p>We want to choose an experimental design and a test statistic that leads to high power, so that <span class="math inline">\(\gamma\)</span> is as close as possible to one. Minimally, the power of the test should be <span class="math inline">\(\alpha\)</span> because we reject the null hypothesis <span class="math inline">\(\alpha\)</span> fraction of the time even when <span class="math inline">\(\mathscr{H}_0\)</span> is true. Power depends on many criteria, notably</p>
 <ul>
 <li>the effect size: the bigger the difference between the postulated value for <span class="math inline">\(\theta_0\)</span> under <span class="math inline">\(\mathscr{H}_0\)</span> and the observed behaviour, the easier it is to departures from <span class="math inline">\(\theta_0\)</span>.
-(Figure <a href="hypothesis-testing.html#fig:power3">2.6</a>); it’s easier to spot an elephant in a room than a mouse.</li>
-<li>variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure <a href="hypothesis-testing.html#fig:power2">2.5</a> shows);</li>
+(Figure <a href="hypothesis-testing.html#fig:power3">2.8</a>); it’s easier to spot an elephant in a room than a mouse.</li>
+<li>variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure <a href="hypothesis-testing.html#fig:power2">2.7</a> shows);</li>
 <li>the sample size: the more observation, the higher our ability to detect significative differences because the standard error decreases with sample size <span class="math inline">\(n\)</span> at a rate (typically) of <span class="math inline">\(n^{-1/2}\)</span>. The null distribution also becomes more concentrated as the sample size increase. In experimental designs, power may be maximized by specifying different sample size in each group</li>
 <li>the choice of test statistic: for example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. While the resulting tests are typically less powerful, they are more robust to model misspecification and outliers.</li>
 </ul>
@@ -497,7 +510,7 @@ where <span class="math inline">\(t_{n-1,\alpha/2}\)</span> is the <span class="
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:intconf"></span>
 <img src="02-hypothesis_testing_files/figure-html/intconf-1.png" alt="95\% confidence intervals for the mean of a standard normal population $\mathsf{No}(0,1)$, with 100 random samples. On average, 5\% of these intervals fail to include the true mean value of zero (in red)." width="85%"><p class="caption">
-Figure 2.7: 95% confidence intervals for the mean of a standard normal population <span class="math inline">\(\mathsf{No}(0,1)\)</span>, with 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).
+Figure 2.9: 95% confidence intervals for the mean of a standard normal population <span class="math inline">\(\mathsf{No}(0,1)\)</span>, with 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).
 </p>
 </div>
 <p>If we are only interested in the binary decision rule reject/fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>, the confidence interval is equivalent to a <em>p</em>-value since it leads to the same conclusion. Whereas the <span class="math inline">\(1-\alpha\)</span> confidence interval gives the set of all values for which the test statistic doesn’t provide enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> at level <span class="math inline">\(\alpha\)</span>, the <em>p</em>-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the <em>p</em>-value is smaller than <span class="math inline">\(\alpha\)</span>, our null value <span class="math inline">\(\theta\)</span> will be outside of the confidence interval and vice-versa.</p>

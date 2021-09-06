@@ -1,4 +1,38 @@
 
+### What happens if there is no difference between groups
+
+present pictures of the simulations from the numerator and denominator if the null (no mean difference) and the alternative (mean difference) are true
+- draw these directly from the F and shifted F distributions
+- same for denominator
+
+Provide also some intuition about why this seemingly is enough - with infer based permutation + large sample distribution plot
+
+# ANOVA table and components
+
+Show the different components (see Davison)
+and how they are stored - show how these relate to the calculations.
+
+# Example of Baumann for pretest 1, including graphics (raincloud plots?)
+
+# Discuss APA recommandations for reporting
+
+### APA recommandations for reporting the test statistic
+### Graphical representation of groups, etc.
+
+### Example 1: psychology paper
+### Example 2: teaching to read
+
+### Assumptions (redux) and a mathematical formulation
+### Estimation is based on (least squares - sample averages here)
+### Balanced samples: why are they ubiquitous and benefits
+### I cried power! 
+
+Balanced samples are the best allocation when the variance is the same for each group. Show this with the two-sample t-test.
+
+
+
+carData::Baumann
+
 
 > This study investigated the effectiveness of explicit instruction in think aloud as a means to promote elementary students' comprehension monitoring abilities. Sixty-six fourth-grade students were randomly assigned to one of three experimental groups: (a) a Think-Aloud (TA) group, in which students were taught various comprehension monitoring strategies for reading stories (e.g., self-questioning, prediction, retelling, rereading) through the medium of thinking aloud; (b) a Directed Reading-Thinking Activity (DRTA) group, in which students were taught a predict-verify strategy for reading and responding to stories; or (c) a Directed Reading Activity (DRA) group, an instructed control, in which students engaged in a noninteractive, guided reading of stories. The primary quantitative analyses involved two planned orthogonal contrasts—effect of instruction (TA + DRTA vs. 2 x DRA) and intensity of instruction (TA vs. DRTA)—for three whole-sample dependent measures: (a) an error detection test, (b) a comprehension monitoring questionnaire, and (c) a modified cloze test. Results of effect of instruction contrasts revealed that TA and DRTA students were more skillful at comprehension monitoring than DRA students (TA + DRTA>DRA for all three measures). Results of intensity of instruction contrasts indicated that although TA-trained students had greater awareness of comprehension monitoring abilities (TA>DRTA for the questionnaire), DRTA students' performance equaled (TA = DRTA for the cloze test) or exceeded (TA<DRTA for the error detection test) that of the TA students. Qualitative data from student interviews, however, revealed that TA students both reported and demonstrated using a greater depth and breadth of comprehension monitoring abilities than either DRTA or DRA students. It was concluded that both TA and DRTA strategies are effective for enhancing elementary students' comprehension monitoring abilities but that additional research is needed to determine the relative effectiveness of TA and DRTA approaches.
     

@@ -12,8 +12,12 @@ exm:unlabeled-div-3
 exm:unlabeled-div-4
 fig:xkcd2400
 fig:samplevar
-fig:power-plots
 exm:unlabeled-div-5
+fig:unifsamp1
+fig:uniformsamp2
+eq:ttest
+fig:power-plots
+exm:unlabeled-div-6
 tab:rosen-table1
 tab:print-tab-example-chisq-test-rosen
 tab:print-tab-example-fisher-test-rosen
@@ -23,6 +27,7 @@ fig:power1
 fig:power2
 fig:power3
 fig:intconf
+eq:Fstatheuristic
 fig:turingrepdo
 fig:repropvaluescorr
 fig:reprozscores
@@ -52,4 +57,6 @@ conclusion
 power
 confidence-interval
 onewayanova
+parametrization
+f-statistic-for-anova
 reproducibility-crisis

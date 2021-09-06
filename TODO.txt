@@ -1,82 +1,31 @@
 Principles of the design of experiment
 
-- Experimental versus observational
-- Experimental unit versus observational unit
-- Variable versus observation
 - Link with causal inference
-- Classifying variables by type: response, explanatory and nuisance/controls
-also variable type: continuous/discrete response, or categorical
-
-Sampling strategies: simple, stratified (men/women), cluster (classes)
-  - How do we go about handling controls (by design via blocking or by randomization)
 
 Types of sampling bias: non-response, convenience, etc.
   - the case against online surveys
   - thinking about what are potential nuisance
   - impact of nuisance
   - What is randomization design
-Terminology: placebo, blinding, double blind.
 
 Causal inference and DAGs
 Confounders versus colliders
 
-Sources of variability:
-- Populations and random sampling
-  - why we cannot collect data on everyone: illustration from the census.
-- Idea is to summarize/compress information
-- there is inherent variability
-- the validity of the conclusion depends crucially on the validity of the sample
-- e.g. of ordering for AB testing, paired samples
-- Generalizing the findings: from sample to population
-
-See Oelhert Chapter 1
-
-## Checklist for planning experiments
-
-- Open science and preregistration
-
-See DVD Chapter 1
-Lawson (2014), Section 1.6
-Preliminary runs and how to make sense of them
-
-
-
-
-
-
-
 
 :::keyidea
-At the end of this lesson you will:
-
-* Be able to define data science and advanced data science
-* Be able to define the types of data analytic questions
-* Be able to follow a data analysis rubric to evaluate an analysis
 
 :::
 
 :::resources
 
-List of ressources
-
-* Be able to define data science and advanced data science
-* Be able to define the types of data analytic questions
-* Be able to follow a data analysis rubric to evaluate an analysis
-
 :::
 
 :::yourturn
-
-Create an account on a online Git repository (Github, Bitbucket, Gitlab)
-
 
 :::
 
 
 :::outsidethebox
-
-What are the benefits of reproducibility
-
 
 :::
 

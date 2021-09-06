@@ -13,7 +13,7 @@ description: "This book is a web complement to MATH 80667A *Experimental Designs
 # Preliminary remarks {-}
 
 
-These notes are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/) and were last compiled on 2021-09-03.
+These notes are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/) and were last compiled on 2021-09-05.
 
 The objective of the course is to teach you basic principles of experimental designs and statistical inference for the latter using the **R** programming language. We will pay particular attention to the correct reporting and interpretation of results and learn how to review critically scientific papers using experimental designs.
 

@@ -16,26 +16,48 @@ We call numerical summaries of the data **statistics**. Its important to disting
 - an estimate is the numerical value obtained once we apply the formula to observed data.
 
 
-For example, the sample mean of a sample of size $n$ is $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$. Because the inputs of the function $\overline{Y}$ are random, the estimator $\overline{Y}$ is also random. To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$.
+For example, the sample mean of a sample of size $n$ is the sum of its elements divided by the sample size, $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$. Because the inputs of the function $\overline{Y}$ are random, the estimator $\overline{Y}$ is also random. To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Thus, sampling variability implies that the sample means of the subgroups will always differ even if the share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%" />
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will also notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on multiple observations, so there is more information available.
+We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will however notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on multiple observations, so there is more information available. This is a fundamental principle of statistics: information accumulated as you get more information, so estimation becomes less noisy.
 
-Values of the sample mean don't tell the whole picture: we must also consider their variability. The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where \begin{align*}
+Since values of the sample mean don't tell the whole picture, we may also consider their variability. The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where \begin{align*}
 S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
 \end{align*} 
 The square root of the variance of a statistic is termed **standard error**; it should not be confused with the standard deviation $\sigma$ of the population from which the sample observations $Y_1, \ldots$ are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.
 
+::: { .example name="Sample proportion and uniform draws"}
 
-In the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.
+To illustrate the concept of sampling variability, we follow the lead of [Matthew Crump](https://www.crumplab.com/statistics/foundations-for-inference.html) and consider samples from a uniform distribution on $\{1, 2, \ldots, 10\}$ each number in this interval is equally likely to be sampled. 
+<div class="figure" style="text-align: center">
+<img src="02-hypothesis_testing_files/figure-html/unifsamp1-1.png" alt="Histograms for 10 random samples of size $n=20$ from a discrete uniform distribution." width="85%" />
+<p class="caption">(\#fig:unifsamp1)Histograms for 10 random samples of size $n=20$ from a discrete uniform distribution.</p>
+</div>
+
+Even if they are drawn from the same population, the 10 samples in Figure \@ref(fig:unifsamp1) look quite different. The only thing at play here is the sample variability: since there are $n=20$ observations in total, there should be on average 10% of the observations in each of the 10 bins, but some bins are empty and others have too many counts. This fluctuation is due to randomness, or chance. 
+
+How can we thus detect whether what we see is compatible with the model we think generated the data? The key is to collect more observations: the bar height is the sample proportion, an average of 0/1 values with ones indicating that the observation is in the bin and zero otherwise.
+
+Consider now what happens as we increase the sample size: the top panel of Figure \@ref(fig:uniformsamp2) shows uniform samples for increasing samples size. The histogram looks more and more like the true underlying distribution (flat) as the sample size increases and it's nearly indistinguishable from the theoretical one (straight line) when $n=10 000$. Here, the variability decreases by a tenfold every time the sample size increases by a factor 100. The bottom panel, on the other hand, isn't from a uniform distribution and larger samples come closer to the population distribution. We couldn't have spotted this difference in the first two plots, since the sampling variability is too important; there, the lack of data in some bins could have been attributed to chance. This is in line with most practical applications, in which the limited sample size restricts our capacity to disentangle real differences from sampling variability. We must embrace this uncertainty:  in the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.
+
+<div class="figure" style="text-align: center">
+<img src="02-hypothesis_testing_files/figure-html/uniformsamp2-1.png" alt="Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right)." width="85%" />
+<p class="caption">(\#fig:uniformsamp2)Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).</p>
+</div>
+
+
+:::
+
+
+
 
 ## Hypothesis testing {#tests}
 
-An hypothesis test is a binary decision rule used to evaluate the statistical evidence provided by a sample to make a decision regarding the underlying population. The main steps involved are:
+An hypothesis test is a binary decision rule (yes/no) used to evaluate the statistical evidence provided by a sample to make a decision regarding the underlying population. The main steps involved are:
 
 - define the model parameters
 - formulate the alternative and null hypothesis
@@ -63,7 +85,9 @@ A test statistic $T$ is a function of the data which takes the data as input and
 \begin{align*}
 T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated effect variability}} = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
 \end{align*}
-where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is an estimator of the standard deviation of the test statistic $\widehat{\theta}$. For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_1$ and $\mu_0$, then $\theta = \mu_0-\mu_1$ and  $\mathscr{H}_0: \mu_0 = \mu_1$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. The numerator would thus consist of the difference in sample means and the denominator the standard error of that quantity, calculated using a software.
+where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is the standard error of the test statistic $\widehat{\theta}$, which is a measure of its variability. This quantity is designed so that if there is no difference, $T$ has approximately mean zero and variance one. This standardization makes comparison easier.
+
+For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_1$ and $\mu_0$, then $\theta = \mu_0-\mu_1$ and  $\mathscr{H}_0: \mu_0 = \mu_1$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. The numerator would thus consist of the difference in sample means and the denominator the standard error of that quantity, calculated using a software.
 
 
 
@@ -73,7 +97,8 @@ For example, to test whether the mean of a population is zero, we set
 \end{align*}
 and the usual $t$-statistic is
 \begin{align}
-T &= \frac{\overline{X}-0}{S_n/\sqrt{n}} \label{ttest}
+T &= \frac{\overline{X}-0}{S_n/\sqrt{n}}
+(\#eq:ttest)
 \end{align}
 where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$ and the denominator of \@ref(eq:ttest) is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. The precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance.
 
@@ -222,7 +247,6 @@ Fisher's test assumes that the row and sum totals are fixed (that is, the number
    <th style="text-align:right;"> estimate </th>
    <th style="text-align:right;"> p.value </th>
    <th style="text-align:left;"> method </th>
-   <th style="text-align:left;"> alternative </th>
   </tr>
  </thead>
 <tbody>
@@ -230,7 +254,6 @@ Fisher's test assumes that the row and sum totals are fixed (that is, the number
    <td style="text-align:right;"> 4.1 </td>
    <td style="text-align:right;"> 0.0016 </td>
    <td style="text-align:left;"> Fisher's Exact Test for Count Data </td>
-   <td style="text-align:left;"> two.sided </td>
   </tr>
 </tbody>
 </table>
@@ -249,16 +272,12 @@ Yet another alternative to obtain a benchmark to assess the outlyingness of the 
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> promote </td>
-   <td style="text-align:left;"> male </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> male </td>
+   <td style="text-align:left;"> female </td>
   </tr>
   <tr>
    <td style="text-align:left;"> promote </td>
-   <td style="text-align:left;"> male </td>
+   <td style="text-align:left;"> female </td>
   </tr>
   <tr>
    <td style="text-align:left;"> promote </td>
@@ -266,7 +285,11 @@ Yet another alternative to obtain a benchmark to assess the outlyingness of the 
   </tr>
   <tr>
    <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> male </td>
+   <td style="text-align:left;"> female </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hold file </td>
+   <td style="text-align:left;"> female </td>
   </tr>
 </tbody>
 </table>
