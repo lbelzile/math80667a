@@ -419,7 +419,7 @@ Partial or selective reporting of statistical procedures hinders reproducibility
 
 :::
 
-### Power
+## Power
 
 There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false. The power summarizes the level of evidence for various combination of parameters (effect size, variability, sample size).
 
@@ -500,7 +500,7 @@ At the end, we calculate the proportion of tests that lead to a rejection of the
 
 
 
-### Confidence interval
+## Confidence intervals
 
 
 
