@@ -1,6 +1,7 @@
 library(knitr)
 library(kableExtra)
 
+options(knitr.kable.NA = '')
 knitr::opts_chunk$set(
   comment = "#>",
   collapse = TRUE,

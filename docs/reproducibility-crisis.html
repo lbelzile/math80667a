@@ -7,7 +7,7 @@
 <title>4 Reproducibility crisis | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
 <meta name="description" content="Defining replicability and reproducibility. Understanding the scale of the reproducibility crisis. Recognizing common statistical fallacies. Listing strategies for enhancing reproducibility. We...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="4 Reproducibility crisis | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Defining replicability and reproducibility. Understanding the scale of the reproducibility crisis. Recognizing common statistical fallacies. Listing strategies for enhancing reproducibility. We...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="Defining replicability and reproducibility. Understanding the scale of the reproducibility crisis. Recognizing common statistical fallacies. Listing strategies for enhancing reproducibility. We...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -39,7 +39,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Preliminary remarks</a></li>
+<li><a class="" href="index.html">Experimental Design and Statistical Methods</a></li>
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
 <li><a class="" href="onewayanova.html"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
@@ -111,7 +111,7 @@ Figure 4.3: Figure from <span class="citation">Zwet and Cator (<a href="referenc
 Figure 4.4: Tweet showing widespread problems related to unintentional changes to raw data by software.
 </p>
 </div>
-<p>Archival of data helps to avoid unintentional and irreversible manipulations of the original data, examples of which can have large scale consequences as illustrated in Figure <a href="reproducibility-crisis.html#fig:reprotweetexcelgenes">4.4</a> <span class="citation">(<a href="references.html#ref-Ziemann:2016" role="doc-biblioref">Ziemann and El-Osta 2016</a>)</span>, who report flaws in genetic journals due to the automatic conversion of gene names to dates in Excel. These problems are <a href="https://www.theguardian.com/politics/2020/oct/05/how-excel-may-have-caused-loss-of-16000-covid-tests-in-england">far from unique</a> While sensible data cannot be shared “as is” because of confidentiality issues, in many instances the data can and should be made available with a licence and a DOI to allow people to reuse, cite and credit your work.</p>
+<p>Archival of data helps to avoid unintentional and irreversible manipulations of the original data, examples of which can have large scale consequences as illustrated in Figure <a href="reproducibility-crisis.html#fig:reprotweetexcelgenes">4.4</a> <span class="citation">(<a href="references.html#ref-Ziemann:2016" role="doc-biblioref">Ziemann and El-Osta 2016</a>)</span>, who report flaws in genetic journals due to the automatic conversion of gene names to dates in Excel. These problems are <a href="https://www.theguardian.com/politics/2020/oct/05/how-excel-may-have-caused-loss-of-16000-covid-tests-in-england">far from unique</a>. While sensitive data cannot be shared “as is” because of confidentiality issues, in many instances the data can and should be made available with a licence and a DOI to allow people to reuse it, cite and credit your work.</p>
 <p>Operating in an open-science environment should be seen as an opportunity to make better science, offer more opportunities to increase your impact and increase the publication of work regardless of whether the results turn out to be negative. It is the right thing to do and it increases the quality of research produced, with collateral benefits because it forces researchers to validate their methodology before, to double-check their data and their analysis and to adopt good practice.</p>
 <div class="outsidethebox">
 <p>Reflect on your workflow as applied researcher when designing and undertaking experiments. Which practical aspects could you improve upon to improve the reproducibility of your study?</p>

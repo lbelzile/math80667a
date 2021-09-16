@@ -256,8 +256,6 @@ While desirable, the first method is only applicable in simple cases (such as co
 ### Conclusion
 
 
-
-
 The *p*-value allows us to make a decision about the null hypothesis. If $\mathscr{H}_0$ is true, the *p*-value follows a uniform distribution, as shown in Figure \@ref(fig:power-plots). [Thus, if the *p*-value is small](https://xkcd.com/1478/), this means observing an outcome more extreme than $T=t$ is unlikely, and so we're inclined to think that $\mathscr{H}_0$ is not true. There's always some underlying risk that we're making a mistake when we make a decision. In statistic, there are [two type of errors](https://xkcd.com/2303/):
 
 
@@ -411,13 +409,63 @@ The article concluded (in light of the above and further experiments)
 
 In the first experiment, managers were also asked to rank applications on their potential for both employee and customer relations using a Likert scale of six items ranging from (1) extremely unfavorable to (6) extremely favorable. However, only the averages are reported in Table 1 along with [@Rosen:1974]
 
-> Mean rating for the male candidate was 4.73 compared to a mean rating of 4.25 for the female candidate ($F=4.76, \text{df} = 1/80, p < .05$)
+> Mean rating for the male candidate was 4.73 compared to a mean rating of 4.25 for the female candidate ($F=4.76$, $\text{df} = 1/80$, $p < .05$)
 
-In itself, this information isn't sufficient: we don't know the test used, and more importantly the degrees of freedom (80) are much too few compared to the number of observations, implying non-response that isn't discussed elsewhere.
+In itself, this information isn't sufficient: we don't know what test statistic was used (the $\chi^2$ value seemingly doesn't correspond to the chi-square test or is incorrectly reported), and more importantly the degrees of freedom (80) are much too few compared to the number of observations, implying non-response that isn't discussed.
 
-Partial or selective reporting of statistical procedures hinders reproducibility. There are many improvements that would have possible in the presentation, including explicitly stating which test statistic is employed (the $\chi^2$ value seemingly doesn't correspond to the chi-square test or is incorrectly reported), providing the sample size, means variance estimates, the null distribution and its parameters, if any. Without these, we are left to speculate.
+Partial or selective reporting of statistical procedures hinders reproducibility. There are many improvements that would have possible in the presentation, including explicitly stating the name of the test, the sample size, mean and variance estimates, the null distribution and its parameters, if any. Without these, we are left to speculate.
 
 :::
+
+
+
+## Confidence intervals
+
+
+
+A **confidence interval** is an alternative way to present the conclusions of an hypothesis test performed at significance level $\alpha$ by giving a range of all values for which the null isn't rejected at the chosen level. It is often combined with a point estimator $\hat{\theta}$ to give an indication of the variability of the estimation procedure. Wald-based  $(1-\alpha)$ confidence intervals for a parameter  $\theta$ are of the form
+\begin{align*}
+\widehat{\theta} \pm \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta})
+\end{align*}
+where $\mathfrak{q}_{\alpha/2}$ is the $1-\alpha/2$ quantile of the null distribution of the Wald statistic
+\begin{align*}
+T =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
+\end{align*}
+where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random variables: their values will vary from one sample to the next.
+
+
+For example, for a random sample $X_1, \ldots, X_n$ from a normal distribution $\mathsf{No}(\mu, \sigma)$, the ($1-\alpha$) confidence interval for the population mean $\mu$ is
+\begin{align*}
+\overline{X} \pm t_{n-1, \alpha/2} \frac{S}{\sqrt{n}}
+\end{align*}
+where $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a Student-$t$ distribution with $n-1$ degrees of freedom.
+
+Before the interval is calculated, there is a $1-\alpha$ probability that $\theta$ is contained in the **random** interval $(\widehat{\theta} - \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}), \widehat{\theta} + \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}))$, where $\widehat{\theta}$ denotes the estimator. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter $\theta$ is either in the confidence interval or not. We can interpret confidence interval's as follows: if we were to repeat the experiment multiple times, and calculate a $1-\alpha$ confidence interval each time, then roughly $1-\alpha$ of the calculated confidence intervals would contain the true value of $\theta$ in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the *procedure* we use to calculate confidence intervals and not in the actual values we obtain from a sample.
+
+
+
+```{r intconf, eval= TRUE, echo = FALSE, cache = TRUE, fig.width = 8, fig.height = 5, fig.cap = "95\\% confidence intervals for the mean of a standard normal population $\\mathsf{No}(0,1)$, with 100 random samples. On average, 5\\% of these intervals fail to include the true mean value of zero (in red)."}
+set.seed(1234)
+interv <- t(sapply(1:100, function(i){t.test(rnorm(1000), mu=0)$conf.int}))
+confint_dat <- data.frame(lower = interv[,1],
+                          upper = interv[,2],
+                          replicate = 1:100,
+                          covers = factor((interv[,1] > 0) | (interv[,2] < 0), labels = c("covers","fails to cover")))
+ggplot(data = confint_dat,
+       aes(x = factor(replicate))) +
+  geom_hline(yintercept = 0) +
+  geom_segment(mapping = aes(y = lower, yend = upper, x = replicate, xend = replicate, col = covers)) +
+  # scale_color_discrete(c("black","red")) +
+  labs(x = "replicate study",
+       y = "",
+       col = "") +
+  theme(legend.position = "bottom",
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank())
+```
+
+If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.
 
 ## Power
 
@@ -499,51 +547,3 @@ To calculate the power of a test, we need to single out a specific alternative h
 At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
 
 
-
-## Confidence intervals
-
-
-
-A **confidence interval** is an alternative way to present the conclusions of an hypothesis test performed at significance level $\alpha$. It is often combined with a point estimator $\hat{\theta}$ to give an indication of the variability of the estimation procedure. Wald-based  $(1-\alpha)$ confidence intervals for a parameter  $\theta$ are of the form
-\begin{align*}
-\widehat{\theta} \pm \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta})
-\end{align*}
-where $\mathfrak{q}_{\alpha/2}$ is the $1-\alpha/2$ quantile of the null distribution of the Wald statistic
-\begin{align*}
-T =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
-\end{align*}
-and where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random variables: their values will vary from one sample to the next.
-
-
-For example, for a random sample $X_1, \ldots, X_n$ from a normal distribution $\mathsf{No}(\mu, \sigma)$, the ($1-\alpha$) confidence interval for the population mean $\mu$ is
-\begin{align*}
-\overline{X} \pm t_{n-1, \alpha/2} \frac{S}{\sqrt{n}}
-\end{align*}
-where $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a Student-$t$ distribution with $n-1$ degrees of freedom.
-
-Before the interval is calculated, there is a $1-\alpha$ probability that $\theta$ is contained in the **random** interval $(\widehat{\theta} - \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}), \widehat{\theta} + \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}))$, where $\widehat{\theta}$ denotes the estimator. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter $\theta$ is either in the confidence interval or not. We can interpret confidence interval's as follows: if we were to repeat the experiment multiple times, and calculate a $1-\alpha$ confidence interval each time, then roughly $1-\alpha$ of the calculated confidence intervals would contain the true value of $\theta$ in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the *procedure* we use to calculate confidence intervals and not in the actual values we obtain from a sample.
-
-
-
-```{r intconf, eval= TRUE, echo = FALSE, cache = TRUE, fig.width = 8, fig.height = 5, fig.cap = "95\\% confidence intervals for the mean of a standard normal population $\\mathsf{No}(0,1)$, with 100 random samples. On average, 5\\% of these intervals fail to include the true mean value of zero (in red)."}
-set.seed(1234)
-interv <- t(sapply(1:100, function(i){t.test(rnorm(1000), mu=0)$conf.int}))
-confint_dat <- data.frame(lower = interv[,1],
-                          upper = interv[,2],
-                          replicate = 1:100,
-                          covers = factor((interv[,1] > 0) | (interv[,2] < 0), labels = c("covers","fails to cover")))
-ggplot(data = confint_dat,
-       aes(x = factor(replicate))) +
-  geom_hline(yintercept = 0) +
-  geom_segment(mapping = aes(y = lower, yend = upper, x = replicate, xend = replicate, col = covers)) +
-  # scale_color_discrete(c("black","red")) +
-  labs(x = "replicate study",
-       y = "",
-       col = "") +
-  theme(legend.position = "bottom",
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        panel.grid.major.y = element_blank())
-```
-
-If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.
