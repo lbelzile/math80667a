@@ -108,19 +108,6 @@ knitr::kable(summary_stats,
 
 :::
 
-### Graphical representation
-
-If we have a lot of data, it sometimes help to focus only on selected summary statistics. A box-and-whiskers plot (or boxplot) represents five numbers
-
-- The box gives the quartiles, say $q_1$, $q_2$ (median) and $q_3$ of the distribution: 50\% of the observations are smaller or larger than $q_2$, 25\% are smaller than $q_1$ and 75\% are smaller than $q_3$ for the sample.
-
-
-- The length of the whiskers is up to $1.5$ times the interquartiles range $q_3-q_1$ (the whiskers extend until the latest point in the interval, so the largest observation that is smaller than $q_3+1.5(q_3-q_1)$, etc.)
-- Observations beyond the whiskers are represented by dots or circles, sometimes termed outliers. However, beware of this terminology: the larger the sample size, the more values will fall outside the whiskers (about 0.7\% for normal data). This is a drawback of boxplots, which were conceived at a time where big data didn't exist.
-
-```{r boxplot, fig.cap = "Box-and-whiskers plot", echo = FALSE}
-knitr::include_graphics('figures/01-intro-boxplot.png')
-```
 
 
 We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.
@@ -141,21 +128,154 @@ ggplot(data = samp,
                size = 20)
 ```
 
-## F-statistic for ANOVA
+## Sum of square decomposition
 
-The following section tries to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears how this is the case. Under the null hypothesis, all groups have the same mean $\mu$ and we can compute the overall average $\widehat{\mu}$ and the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$, where $\widehat{\mu}_i$ indicates the sample average in the $i$th group.
+The following section tries to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears. 
 
-The $F$-statistic is heuristically
+
+
+
+### Mathematical decomposition of sum of squares
+
+Proceed if you want to see the mathematical intuition behind
+The usual notation for this decomposition is the following: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
+Under the null model, all groups have the same mean, so the natural estimator is the sample average $\widehat{\mu}$ and likewise the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$ are the correct estimators if each group has a (potentially) different mean. The more complex, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
+The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition
+\begin{align*}
+\underset{\text{total sum of squares}}{{\sum_{i}\sum_{k} (y_{ik} - \widehat{\mu})^2}} &= \underset{\text{within sum of squares}}{\sum_i \sum_k (y_{ik} - \widehat{\mu}_k)^2} +  \underset{\text{between sum of squares}}{\sum_k n_i (\widehat{\mu}_k - \widehat{\mu})^2}.
+\end{align*}
+The term on the left is a measure of the variability for the null model ($\mu_1 = \cdots = \mu_K$) under which all observations are predicted by the overall average $\widehat{\mu}$. The within sum of squares measures likewise the distance between the two. We can measure how much worst we do with the alternative model (different average per group) relative to the null by calculating the between sum of square. This quantity in itself varies with the sample size (the more observations, the larger it is) so we must standardize as usual this quantity so that we have a suitable benchmark. In large samples, the $F$ statistic 
+
+The $F$-statistic is 
 \begin{align}
-F = \frac{\text{between-group variability}}{\text{within-group variability}} 
+F = \frac{\text{between-group variability}}{\text{within-group variability}} = \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
 (\#eq:Fstatheuristic)
 \end{align}
-The between-group variance is the squared differences between the overall mean $\widehat{\mu}$ and the group mean for each observation in the $i$th group $\widehat{\mu}_i$, suitably rescaled. If there is no mean difference, the numerator is an estimate of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
+If there is no difference in mean, the _F_-statistic follows in large sample a _F_-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.\@ref(eq:Fstatheuristic) as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of *parameters estimates* for the mean ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[There are only $K$ parameter estimates for the mean, since the overall mean is full determined by the other averages with $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
 
-If there is no difference in mean, the _F_-statistic follows in large sample a _F_-distribution, whose shape is governed by two parameters named degrees of freedom. The first is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one), and the second is the number of observations minus the number of *mean parameters estimates* ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[The overall mean is full determined by the other averages, since $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
+Figure \@ref(fig:squareddistanova) shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.
+
+```{r squareddistanova, eval = TRUE, echo = FALSE, fig.cap = "Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean."}
+set.seed(11234)
+nobs <- 5
+ng <- 3L
+dat <- tibble(x = 1:(nobs*ng),
+  observations = rnorm(ng*nobs, mean = 10, sd = 0.5) + 
+                 rep(rnorm(n = ng, mean = 3), each = nobs),
+  group = factor(x = rep(1:ng, each = nobs), 
+                 labels = letters[1:ng]))
+dat$fitted <- fitted(lm(observations ~ group, data = dat))
+group_means <- dat %>%
+  group_by(group) %>%
+  summarise(gmean = mean(observations)) %>%
+  mutate(x = 1 + (1:ng - 1)*nobs,
+         xend = nobs + (1:ng - 1)*nobs)
+
+
+dat2 <- tibble(x = 1:(nobs*ng),
+  observations = rnorm(ng*nobs, mean = 10, sd = 8) + 
+                 rep(rnorm(n = ng, mean = 0), each = nobs),
+  group = factor(x = rep(1:ng, each = nobs), 
+                 labels = letters[1:ng]))
+dat2$fitted <- fitted(lm(observations ~ group, data = dat2))
+group_means2 <- dat2 %>%
+  group_by(group) %>%
+  summarise(gmean = mean(observations)) %>%
+  mutate(x = 1 + (1:ng - 1)*nobs,
+         xend = nobs + (1:ng - 1)*nobs)
+
+g1 <- ggplot() +
+  geom_hline(yintercept = mean(dat$observations)) + 
+  geom_segment(data = group_means, 
+               aes(x = x, xend = xend, 
+                   y = gmean, yend = gmean, 
+                   col = group),
+               lwd = 2) + 
+  geom_segment(data = dat, 
+               aes(x = x+0.1, 
+                   xend = x+0.1, 
+                   yend = mean(observations), 
+                   y = observations),
+               arrow = arrow(length =  unit(5,"pt"))) +
+  geom_segment(data = dat, 
+               aes(x = x - 0.1, 
+                   xend = x - 0.1, 
+                   yend = fitted, 
+                   y = observations, col = group),
+               arrow = arrow(length =  unit(5,"pt"))) +
+   geom_segment(data = dat, alpha = 0.1,
+              aes(x = x - 0.1,
+                  xend = x + 0.1,
+                  y = observations,
+                  yend = observations)) +
+  labs(y = "observation", x = "") + 
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position = "none")
+g2 <- ggplot() +
+  geom_hline(yintercept = mean(dat2$observations)) + 
+  geom_segment(data = group_means2, 
+               aes(x = x, xend = xend, 
+                   y = gmean, yend = gmean, 
+                   col = group),
+               lwd = 2) + 
+  geom_segment(data = dat2, 
+               aes(x = x+0.1, 
+                   xend = x+0.1, 
+                   yend = mean(observations), 
+                   y = observations),
+               arrow = arrow(length =  unit(5,"pt"))) +
+  geom_segment(data = dat2, 
+               aes(x = x - 0.1, 
+                   xend = x - 0.1, 
+                   yend = fitted, 
+                   y = observations, col = group),
+               arrow = arrow(length =  unit(5,"pt"))) +
+   geom_segment(data = dat2, alpha = 0.1,
+              aes(x = x - 0.1,
+                  xend = x + 0.1,
+                  y = observations,
+                  yend = observations)) +
+  labs(y = "observation", x = "") + 
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position = "none")
+g1 + g2
+```  
+  
+If there is no mean difference (null), the numerator is an estimator of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
+
+```{r compareFnullalternative, fig.cap = "Null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded area is the type I error (null hypothesis) and the type II error (alternative hypothesis).", echo = FALSE, eval = TRUE, fig.height = 4}
+g1 <- ggplot() + 
+  stat_function(xlim = c(0, 8), 
+                n = 1001,
+                fun=df, args = list(df1 = 4, df2 = 80, ncp = 0)) + 
+  stat_function(geom = "area", fill = "blue", alpha = 0.2,
+                xlim = c(qf(0.95, 4,80),8), 
+                n = 1001,
+                fun=df, args = list(df1 = 4, df2 = 80, ncp = 0)) + 
+  labs(x = "statistic", y = "density", subtitle = "null")
+g2 <- ggplot() + 
+  stat_function(xlim = c(0, 8), 
+                n = 1001,
+                fun=df, args = list(df1 = 4, df2 = 80, ncp = 3)) + 
+  stat_function(geom = "area", fill = "blue", alpha = 0.2,
+                xlim = c(0, qf(0.95, 4,80)), 
+                n = 1001,
+                fun=df, args = list(df1 = 4, df2 = 80, ncp = 3)) + 
+  labs(x = "statistic", y = "density", subtitle = "alternative")
+  
+g1 + g2
+
+```
+
+
 
 ```{r Fdist_permut, eval = FALSE, echo = FALSE, cache = TRUE}
 n <- 100 # total sample size
+set.seed(1234)
 fake_data <- # sample fake data from normal(0,1)
   tibble::tibble(response = rnorm(n), 
                  group = factor(sample(letters[1:5], 
@@ -190,10 +310,6 @@ null_dist_asympt <-
   specify(response ~ group) %>%
   infer::calculate(stat = "F") 
 
-null_dist_permute %>%
-  visualize(method = "both") + 
-  shade_p_value(Fstat,
-                direction = "greater")
 graph <- null_dist_permute %>%
     visualize(method = "both", bins = 30) + 
     shade_p_value(Fstat,
@@ -204,5 +320,20 @@ afex::nice(
                id = "ID", 
                between = "group", 
                data = tibble::rowid_to_column(fake_data, "ID"))))
+```
+
+
+## Graphical representation
+
+If we have a lot of data, it sometimes help to focus only on selected summary statistics. A box-and-whiskers plot (or boxplot) represents five numbers
+
+- The box gives the quartiles, say $q_1$, $q_2$ (median) and $q_3$ of the distribution: 50\% of the observations are smaller or larger than $q_2$, 25\% are smaller than $q_1$ and 75\% are smaller than $q_3$ for the sample.
+
+
+- The length of the whiskers is up to $1.5$ times the interquartiles range $q_3-q_1$ (the whiskers extend until the latest point in the interval, so the largest observation that is smaller than $q_3+1.5(q_3-q_1)$, etc.)
+- Observations beyond the whiskers are represented by dots or circles, sometimes termed outliers. However, beware of this terminology: the larger the sample size, the more values will fall outside the whiskers (about 0.7\% for normal data). This is a drawback of boxplots, which were conceived at a time where big data didn't exist.
+
+```{r boxplot, fig.cap = "Box-and-whiskers plot", echo = FALSE}
+knitr::include_graphics('figures/01-intro-boxplot.png')
 ```
 

@@ -132,7 +132,57 @@ mod_sum2zero <- lm(score ~ group,
 
 :::
 
-### Graphical representation
+
+
+We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.
+
+
+
+## Sum of square decomposition
+
+The following section tries to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears. 
+
+
+
+
+### Mathematical decomposition of sum of squares
+
+Proceed if you want to see the mathematical intuition behind
+The usual notation for this decomposition is the following: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
+Under the null model, all groups have the same mean, so the natural estimator is the sample average $\widehat{\mu}$ and likewise the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$ are the correct estimators if each group has a (potentially) different mean. The more complex, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
+The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition
+\begin{align*}
+\underset{\text{total sum of squares}}{{\sum_{i}\sum_{k} (y_{ik} - \widehat{\mu})^2}} &= \underset{\text{within sum of squares}}{\sum_i \sum_k (y_{ik} - \widehat{\mu}_k)^2} +  \underset{\text{between sum of squares}}{\sum_k n_i (\widehat{\mu}_k - \widehat{\mu})^2}.
+\end{align*}
+The term on the left is a measure of the variability for the null model ($\mu_1 = \cdots = \mu_K$) under which all observations are predicted by the overall average $\widehat{\mu}$. The within sum of squares measures likewise the distance between the two. We can measure how much worst we do with the alternative model (different average per group) relative to the null by calculating the between sum of square. This quantity in itself varies with the sample size (the more observations, the larger it is) so we must standardize as usual this quantity so that we have a suitable benchmark. In large samples, the $F$ statistic 
+
+The $F$-statistic is 
+\begin{align}
+F = \frac{\text{between-group variability}}{\text{within-group variability}} = \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
+(\#eq:Fstatheuristic)
+\end{align}
+If there is no difference in mean, the _F_-statistic follows in large sample a _F_-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.\@ref(eq:Fstatheuristic) as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of *parameters estimates* for the mean ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[There are only $K$ parameter estimates for the mean, since the overall mean is full determined by the other averages with $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
+
+Figure \@ref(fig:squareddistanova) shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/squareddistanova-1.png" alt="Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean." width="85%" />
+<p class="caption">(\#fig:squareddistanova)Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean.</p>
+</div>
+  
+If there is no mean difference (null), the numerator is an estimator of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/compareFnullalternative-1.png" alt="Null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded area is the type I error (null hypothesis) and the type II error (alternative hypothesis)." width="85%" />
+<p class="caption">(\#fig:compareFnullalternative)Null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded area is the type I error (null hypothesis) and the type II error (alternative hypothesis).</p>
+</div>
+
+
+
+
+
+
+## Graphical representation
 
 If we have a lot of data, it sometimes help to focus only on selected summary statistics. A box-and-whiskers plot (or boxplot) represents five numbers
 
@@ -146,24 +196,4 @@ If we have a lot of data, it sometimes help to focus only on selected summary st
 <img src="figures/01-intro-boxplot.png" alt="Box-and-whiskers plot" width="85%" />
 <p class="caption">(\#fig:boxplot)Box-and-whiskers plot</p>
 </div>
-
-
-We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.
-
-
-
-## F-statistic for ANOVA
-
-The following section tries to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears how this is the case. Under the null hypothesis, all groups have the same mean $\mu$ and we can compute the overall average $\widehat{\mu}$ and the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$, where $\widehat{\mu}_i$ indicates the sample average in the $i$th group.
-
-The $F$-statistic is heuristically
-\begin{align}
-F = \frac{\text{between-group variability}}{\text{within-group variability}} 
-(\#eq:Fstatheuristic)
-\end{align}
-The between-group variance is the squared differences between the overall mean $\widehat{\mu}$ and the group mean for each observation in the $i$th group $\widehat{\mu}_i$, suitably rescaled. If there is no mean difference, the numerator is an estimate of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
-
-If there is no difference in mean, the _F_-statistic follows in large sample a _F_-distribution, whose shape is governed by two parameters named degrees of freedom. The first is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one), and the second is the number of observations minus the number of *mean parameters estimates* ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[The overall mean is full determined by the other averages, since $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
-
-
 

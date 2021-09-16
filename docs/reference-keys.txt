@@ -32,8 +32,10 @@ exm:unlabeled-div-7
 exm:unlabeled-div-8
 exm:unlabeled-div-9
 tab:tableanovaparam
-fig:boxplot
 eq:Fstatheuristic
+fig:squareddistanova
+fig:compareFnullalternative
+fig:boxplot
 fig:turingrepdo
 fig:repropvaluescorr
 fig:reprozscores
@@ -65,6 +67,7 @@ power
 onewayanova
 hypothesis-tests-for-the-one-way-analysis-of-variance
 parametrizations
+sum-of-square-decomposition
+mathematical-decomposition-of-sum-of-squares
 graphical-representation
-f-statistic-for-anova
 reproducibility-crisis

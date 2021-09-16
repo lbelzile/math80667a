@@ -270,12 +270,16 @@ Yet another alternative to obtain a benchmark to assess the outlyingness of the 
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:left;"> promote </td>
+   <td style="text-align:left;"> male </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> female </td>
+   <td style="text-align:left;"> male </td>
   </tr>
   <tr>
    <td style="text-align:left;"> promote </td>
-   <td style="text-align:left;"> female </td>
+   <td style="text-align:left;"> male </td>
   </tr>
   <tr>
    <td style="text-align:left;"> promote </td>
@@ -283,11 +287,7 @@ Yet another alternative to obtain a benchmark to assess the outlyingness of the 
   </tr>
   <tr>
    <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> female </td>
+   <td style="text-align:left;"> male </td>
   </tr>
 </tbody>
 </table>
