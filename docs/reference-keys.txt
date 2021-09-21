@@ -27,15 +27,16 @@ fig:intconf
 fig:power1
 fig:power2
 fig:power3
-eq:additive
+fig:compareFnullalternative
 exm:unlabeled-div-7
-exm:unlabeled-div-8
-exm:unlabeled-div-9
 tab:tableanovaparam
 eq:Fstatheuristic
 fig:squareddistanova
-fig:compareFnullalternative
+fig:dynamiteplot
 fig:boxplot
+eq:additive
+exm:unlabeled-div-8
+exm:unlabeled-div-9
 fig:turingrepdo
 fig:repropvaluescorr
 fig:reprozscores
@@ -70,4 +71,5 @@ parametrizations
 sum-of-square-decomposition
 mathematical-decomposition-of-sum-of-squares
 graphical-representation
+model-assumptions
 reproducibility-crisis

@@ -110,7 +110,7 @@ The _p_-value allows us to decide whether the observed value of the test statist
 p = 2 \times \mathsf{Pr}_0(T \geq |t|).
 \end{align*}
 
-How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the tell us that the sample mean behaves like a normal random variable with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$ for $n$ large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use to derive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student's $t$, $\chi^2$ and $F$ distributions are the reference distributions that arise the most often. 
+How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the sample mean behaves like a normal random variable with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$ for $n$ large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use to derive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student's $t$, $\chi^2$ and $F$ distributions are the reference distributions that arise the most often. 
 
 
 <div class="figure" style="text-align: center">
@@ -430,4 +430,10 @@ To calculate the power of a test, we need to single out a specific alternative h
 
 At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
 
+Changing the value of $\alpha$ has an impact on the power, since larger values of $\alpha$ move the cutoff towards the bulk of the distribution. It entails a higher percentage of rejection also when the alternative is false. However, the value of $\alpha$ is fixed beforehand to control the type I error (avoid judicial mistakes). The power corresponds to the red shaded area on the right panel of Figure \@ref(fig:compareFnullalternative), would become larger if we moved the cutoff value lower, corresponding to larger $\alpha$. 
+
+<div class="figure" style="text-align: center">
+<img src="02-hypothesis_testing_files/figure-html/compareFnullalternative-1.png" alt="Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region." width="85%" />
+<p class="caption">(\#fig:compareFnullalternative)Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.</p>
+</div>
 

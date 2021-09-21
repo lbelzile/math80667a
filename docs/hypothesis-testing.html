@@ -42,7 +42,7 @@
 <li><a class="" href="index.html">Experimental Design and Statistical Methods</a></li>
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="active" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
-<li><a class="" href="onewayanova.html"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
+<li><a class="" href="onewayanova.html"><span class="header-section-number">3</span> One way analysis of variance</a></li>
 <li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
@@ -156,7 +156,7 @@ where <span class="math inline">\(\overline{X}\)</span> is the sample mean of <s
 <span class="math display">\[\begin{align*}
 p = 2 \times \mathsf{Pr}_0(T \geq |t|).
 \end{align*}\]</span></p>
-<p>How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the tell us that the sample mean behaves like a normal random variable with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma/\sqrt{n}\)</span> for <span class="math inline">\(n\)</span> large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use to derive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student’s <span class="math inline">\(t\)</span>, <span class="math inline">\(\chi^2\)</span> and <span class="math inline">\(F\)</span> distributions are the reference distributions that arise the most often.</p>
+<p>How do we determine the null distribution given that the true data generating mechanism is unknown to us? In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the sample mean behaves like a normal random variable with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma/\sqrt{n}\)</span> for <span class="math inline">\(n\)</span> large enough. The central limit theorem has broader applications since it applies to any average, and we it can be use to derive benchmarks for most commonly used statistics in large samples. Most software use these approximations as proxy by default: the normal, Student’s <span class="math inline">\(t\)</span>, <span class="math inline">\(\chi^2\)</span> and <span class="math inline">\(F\)</span> distributions are the reference distributions that arise the most often.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:power-plots"></span>
 <img src="02-hypothesis_testing_files/figure-html/power-plots-1.png" alt="Density of _p_-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right). The probability of rejection $\mathscr{H}_0$ is 0.1, the area under the curve between zero and $\alpha=0.1$. Under the null, the density is uniform (flat rectangle of height 1) and all values in the unit interval are equally likely. Under the alternative, the _p_-values cluster towards zero and the probability of rejecting the null hypothesis increases together with the signal-to-noise (approximately 0.22 for the alternative)." width="85%"><p class="caption">
@@ -515,13 +515,20 @@ Figure 2.9: Increase of power due to an increase in the sample size or a decreas
 <li>we transform these to the associated <em>p</em>-values based on the postulated null hypothesis.</li>
 </ul>
 <p>At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level <span class="math inline">\(\alpha\)</span>, namely the percentage of <em>p</em>-values smaller than <span class="math inline">\(\alpha\)</span>.</p>
+<p>Changing the value of <span class="math inline">\(\alpha\)</span> has an impact on the power, since larger values of <span class="math inline">\(\alpha\)</span> move the cutoff towards the bulk of the distribution. It entails a higher percentage of rejection also when the alternative is false. However, the value of <span class="math inline">\(\alpha\)</span> is fixed beforehand to control the type I error (avoid judicial mistakes). The power corresponds to the red shaded area on the right panel of Figure <a href="hypothesis-testing.html#fig:compareFnullalternative">2.10</a>, would become larger if we moved the cutoff value lower, corresponding to larger <span class="math inline">\(\alpha\)</span>.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:compareFnullalternative"></span>
+<img src="02-hypothesis_testing_files/figure-html/compareFnullalternative-1.png" alt="Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region." width="85%"><p class="caption">
+Figure 2.10: Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.
+</p>
+</div>
 
 </div>
 </div>
 
   <div class="chapter-nav">
 <div class="prev"><a href="introduction.html"><span class="header-section-number">1</span> Introduction</a></div>
-<div class="next"><a href="onewayanova.html"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></div>
+<div class="next"><a href="onewayanova.html"><span class="header-section-number">3</span> One way analysis of variance</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">

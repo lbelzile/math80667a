@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>3 Completely randomized designs with one factor | Experimental Design and Statistical Methods</title>
+<title>3 One way analysis of variance | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
-<meta name="description" content="In completely randomized experiments, we are solely interested in the effect of treatment variables. This chapter describes the most simple experimental setup one can consider, which consists in...">
+<meta name="description" content="This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="3 Completely randomized designs with one factor | Experimental Design and Statistical Methods">
+<meta property="og:title" content="3 One way analysis of variance | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
-<meta property="og:description" content="In completely randomized experiments, we are solely interested in the effect of treatment variables. This chapter describes the most simple experimental setup one can consider, which consists in...">
+<meta property="og:description" content="This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3 Completely randomized designs with one factor | Experimental Design and Statistical Methods">
-<meta name="twitter:description" content="In completely randomized experiments, we are solely interested in the effect of treatment variables. This chapter describes the most simple experimental setup one can consider, which consists in...">
+<meta name="twitter:title" content="3 One way analysis of variance | Experimental Design and Statistical Methods">
+<meta name="twitter:description" content="This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -42,7 +42,7 @@
 <li><a class="" href="index.html">Experimental Design and Statistical Methods</a></li>
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
-<li><a class="active" href="onewayanova.html"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
+<li><a class="active" href="onewayanova.html"><span class="header-section-number">3</span> One way analysis of variance</a></li>
 <li><a class="" href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
@@ -54,36 +54,11 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="onewayanova" class="section level1" number="3">
 <h1>
-<span class="header-section-number">3</span> Completely randomized designs with one factor<a class="anchor" aria-label="anchor" href="#onewayanova"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3</span> One way analysis of variance<a class="anchor" aria-label="anchor" href="#onewayanova"><i class="fas fa-link"></i></a>
 </h1>
-<p>In completely randomized experiments, we are solely interested in the effect of treatment variables. This chapter describes the most simple experimental setup one can consider, which consists in comparing the average of a single outcome variable with <span class="math inline">\(K\)</span> different treatments levels, each defining a sub-population differing only in the treatment they received. The global hypothesis of interest is whether the mean of all of the sub-populations are equal.</p>
-<p>The basic assumption of most designs is that we can decompose the outcome into two components <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span>
-<span class="math display" id="eq:additive">\[\begin{align}
-\begin{pmatrix} \text{quantity depending only } \\ 
-\text{on the particular unit} 
-\end{pmatrix} + 
-\begin{pmatrix} \text{quantity depending} \\
- \text{on the treatment used}\end{pmatrix}
- \tag{3.1}
-\end{align}\]</span>
-This <strong>additive</strong> decomposition further assumes that each unit is unaffected by (i.e., independent of) the treatment of the other units and that the average effect of the treatment is constant. This notably means that usually the difference between treatments can be estimated by the difference in sample means</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-7" class="example"><strong>Example 3.1  (Additivity and transformations) </strong></span>Chapter 2 of <span class="citation"><a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox</a> (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarden students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a <strong>paired experiment</strong> and take as outcome the difference in sociability scores at the beginning and at the end of the school year.</p>
-<p>One can expect the treatment to have more impact on people with low sociability skills who were struggling to make contacts: a student who scored 50 initially might see an improvement of 20 points with support relative to 10 in the business-as-usual scenario, whereas another who is well integrated and scored high initially may see an improvement of only 5 more had (s)he been assigned to the support group. This implies that the treatment effects are not constant over the scale, a violation of the additivity assumption. One way to deal with this is via transformations: <span class="citation"><a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox</a> (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the transformation <span class="math inline">\(\log\{(x+0.5)/(50-x)\}\)</span> to reduce the warping due to scale.</p>
-</div>
-<p>Another example is in experiments where the effect of treatment is multiplicative, so that the output is of the form
-<span class="math display">\[\begin{align*}
-\begin{pmatrix} \text{quantity depending only } \\ 
-\text{on the particular unit} 
-\end{pmatrix} \times
-\begin{pmatrix} \text{quantity depending} \\
- \text{on the treatment used}\end{pmatrix}
-\end{align*}\]</span>
-Usually, this arises for positive responses and treatments, in which case taking natural logarithms on both sides, with <span class="math inline">\(\log(xy) = \log x + \log y\)</span> yields again an additive.</p>
-<div class="example">
-<p><span id="exm:unlabeled-div-8" class="example"><strong>Example 3.2  (Inadequacy of additivity based on context) </strong></span>This example is adapted from <span class="citation"><a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox</a> (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span>, Example 2.2. Children suffering from attention deficit hyperactivity disorder (ADHD) may receive medication to increase their attention span, measured on a scale of 0 to 100, with 0 indicating normal attention span. An experiment can be designed to assess the impact of a standardized dose in a laboratory by comparing performances of students on a series of task before and after, when to a placebo. To make a case, suppose that students with ADHD fall into two categories: low symptoms and strong symptoms. In the low symptom group, the average attention is 8 per cent with the drug and 12 per cent with the placebo, whereas for people with strong symptoms, the average is 40 per cent among treated and 60 per cent with the placebo. If these two categories are equally represented in the experiment and the population, we would estimate an average reduction of 12 percent in the score (thus higher attention span among treated). Yet, this quantity is artificial, and a better measure would be that symptoms are for the treatment are 2/3 of those of the control (the ratio of proportions).</p>
-</div>
-<p>Equation <a href="onewayanova.html#eq:additive">(3.1)</a> also implies that the effect of the treatment is constant for all individuals. This often isn’t the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable.</p>
+<p>This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay between power, effect size and sample size, etc. with the easiest possible model to build intuition for these concepts. They readily generalized to more complicated linear models.</p>
+<p>The one-way analysis of variance describes the most simple experimental setup one can consider: completely randomized experiments with one factor, in which we are solely interested in the effect of a single treatment variable with multiple levels.</p>
+<p>The focus is on comparisons of the average of a single outcome variable with <span class="math inline">\(K\)</span> different treatments levels, each defining a sub-population differing only in the treatment they received.</p>
 <div id="hypothesis-tests-for-the-one-way-analysis-of-variance" class="section level2" number="3.1">
 <h2>
 <span class="header-section-number">3.1</span> Hypothesis tests for the one-way analysis of variance<a class="anchor" aria-label="anchor" href="#hypothesis-tests-for-the-one-way-analysis-of-variance"><i class="fas fa-link"></i></a>
@@ -103,7 +78,7 @@ The null hypothesis is, as usual, a single numerical value, <span class="math in
 <p>The most common parametrization is in terms of <strong>constrasts</strong> (or mean differences) relative to a reference group (say <span class="math inline">\(T_1\)</span>). The theoretical average of each group is written as <span class="math inline">\(\mu_1 + a_i\)</span> for treatment <span class="math inline">\(T_i\)</span>, where <span class="math inline">\(a_1=0\)</span> for <span class="math inline">\(T_1\)</span> and <span class="math inline">\(a_i = \mu_i-\mu_1\)</span> otherwise. The parameters are <span class="math inline">\(\mu_1, a_2, \ldots, a_K\)</span>.</p>
 <p>An equivalent formulation writes for each treatment group the average of subpopulation <span class="math inline">\(j\)</span> as <span class="math inline">\(\mu_j = \mu + \delta_j\)</span>, where <span class="math inline">\(\delta_j\)</span> is the difference between the treatment average <span class="math inline">\(\mu_j\)</span> and the global average of all groups. Imposing the constraint <span class="math inline">\(\delta_1 + \cdots + \delta_K=0\)</span> ensures that the average of effects equals <span class="math inline">\(\mu\)</span>. Thus, if we know any <span class="math inline">\(K-1\)</span> of <span class="math inline">\(\{\delta_1, \ldots, \delta_K\}\)</span>, we automatically can deduce the last one is automatically known.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-9" class="example"><strong>Example 3.3  (Impact of encouragement on teaching) </strong></span>In <strong>R</strong>, the <code>lm</code> function fits a linear model based on a formula of the form <code>response ~ explanatory</code>. If the explanatory is categorical (i.e., a factor), the parameters of this model are the intercept, which is the sample average of the baseline group and the other parameters are simply contrasts, i.e., the <span class="math inline">\(a_i\)</span>’s.</p>
+<p><span id="exm:unlabeled-div-7" class="example"><strong>Example 3.1  (Impact of encouragement on teaching) </strong></span>In <strong>R</strong>, the <code>lm</code> function fits a linear model based on a formula of the form <code>response ~ explanatory</code>. If the explanatory is categorical (i.e., a factor), the parameters of this model are the intercept, which is the sample average of the baseline group and the other parameters are simply contrasts, i.e., the <span class="math inline">\(a_i\)</span>’s.</p>
 <p>In the sum-to-zero parametrization, obtained with <code>contrasts = list(... = contr.sum)</code>, where the ellipsis is replaced by the name of the categorical variable. In this parametrization, the intercept is the average of each treatment average, <span class="math inline">\((\widehat{\mu}_1 + \cdots + \widehat{\mu}_5)/5\)</span>; this need not coincide with the (overall) mean of the response <span class="math inline">\(\widehat{\mu} = \overline{y}\)</span> unless the sample is balanced, meaning that the number of observations in each group is the same. The other coefficients of the sum-to-zero parametrization are the differences between this intercept and the group means. Since the group means is zero, we can deduce that of the last group from the sum of the others.</p>
 <p>We show the function call to fit a one-way ANOVA in the different parametrizations along with the sample average of each arithmetic group (the two controls who were taught separately and the groups that were praised, reproved and ignored in the third class). Note that the omitted category changes depending on the parametrization.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -232,15 +207,15 @@ The usual notation for this decomposition is the following: suppose <span class=
 Under the null model, all groups have the same mean, so the natural estimator is the sample average <span class="math inline">\(\widehat{\mu}\)</span> and likewise the group averages <span class="math inline">\(\widehat{\mu}_1, \ldots, \widehat{\mu}_K\)</span> are the correct estimators if each group has a (potentially) different mean. The more complex, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
 The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition
 <span class="math display">\[\begin{align*}
-\underset{\text{total sum of squares}}{\sum_{i}\sum_{k} (y_{ik} - \widehat{\mu})^2} &amp;= \underset{\text{within sum of squares}}{\sum_i \sum_k (y_{ik} - \widehat{\mu}_k)^2} +  \underset{\text{between sum of squares}}{\sum_k n_i (\widehat{\mu}_k - \widehat{\mu})^2}.
+\underset{\text{total sum of squares} }{\sum_{i}\sum_{k} (y_{ik} - \widehat{\mu})^2} &amp;= \underset{\text{within sum of squares} }{\sum_i \sum_k (y_{ik} - \widehat{\mu}_k)^2} +  \underset{\text{between sum of squares} }{\sum_k n_i (\widehat{\mu}_k - \widehat{\mu})^2}.
 \end{align*}\]</span>
 The term on the left is a measure of the variability for the null model (<span class="math inline">\(\mu_1 = \cdots = \mu_K\)</span>) under which all observations are predicted by the overall average <span class="math inline">\(\widehat{\mu}\)</span>. The within sum of squares measures likewise the distance between the two. We can measure how much worst we do with the alternative model (different average per group) relative to the null by calculating the between sum of square. This quantity in itself varies with the sample size (the more observations, the larger it is) so we must standardize as usual this quantity so that we have a suitable benchmark. In large samples, the <span class="math inline">\(F\)</span> statistic</p>
 <p>The <span class="math inline">\(F\)</span>-statistic is
 <span class="math display" id="eq:Fstatheuristic">\[\begin{align}
-F = \frac{\text{between-group variability}}{\text{within-group variability}} = \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
-\tag{3.2}
+F &amp;= \frac{\text{between-group variability}}{\text{within-group variability}} \\&amp;= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
+\tag{3.1}
 \end{align}\]</span>
-If there is no difference in mean, the <em>F</em>-statistic follows in large sample a <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.<a href="onewayanova.html#eq:Fstatheuristic">(3.2)</a> as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of <em>parameters estimates</em> for the mean (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;There are only &lt;span class="math inline"&gt;\(K\)&lt;/span&gt; parameter estimates for the mean, since the overall mean is full determined by the other averages with &lt;span class="math inline"&gt;\(n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K\)&lt;/span&gt;.&lt;/p&gt;'><sup>5</sup></a></p>
+If there is no difference in mean, the <em>F</em>-statistic follows in large sample a <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.<a href="onewayanova.html#eq:Fstatheuristic">(3.1)</a> as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of <em>parameters estimates</em> for the mean (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;There are only &lt;span class="math inline"&gt;\(K\)&lt;/span&gt; parameter estimates for the mean, since the overall mean is full determined by the other averages with &lt;span class="math inline"&gt;\(n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K\)&lt;/span&gt;.&lt;/p&gt;'><sup>5</sup></a></p>
 <p>Figure <a href="onewayanova.html#fig:squareddistanova">3.1</a> shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:squareddistanova"></span>
@@ -248,31 +223,70 @@ If there is no difference in mean, the <em>F</em>-statistic follows in large sam
 Figure 3.1: Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean.
 </p>
 </div>
-<p>If there is no mean difference (null), the numerator is an estimator of the population variance, and so is the denominator of <a href="onewayanova.html#eq:Fstatheuristic">(3.2)</a>. If there are many observations (and relatively fewer groups), the ratio is approximately one on average.</p>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:compareFnullalternative"></span>
-<img src="03-completely_randomized_trials_files/figure-html/compareFnullalternative-1.png" alt="Null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded area is the type I error (null hypothesis) and the type II error (alternative hypothesis)." width="85%"><p class="caption">
-Figure 3.2: Null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded area is the type I error (null hypothesis) and the type II error (alternative hypothesis).
-</p>
-</div>
+<p>If there is no mean difference (null), the numerator is an estimator of the population variance, and so is the denominator of <a href="onewayanova.html#eq:Fstatheuristic">(3.1)</a>. If there are many observations (and relatively fewer groups), the ratio is approximately one on average.</p>
 </div>
 </div>
 <div id="graphical-representation" class="section level2" number="3.3">
 <h2>
 <span class="header-section-number">3.3</span> Graphical representation<a class="anchor" aria-label="anchor" href="#graphical-representation"><i class="fas fa-link"></i></a>
 </h2>
-<p>If we have a lot of data, it sometimes help to focus only on selected summary statistics. A box-and-whiskers plot (or boxplot) represents five numbers</p>
+<p>How to represent data in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:dynamiteplot"></span>
+<img src="03-completely_randomized_trials_files/figure-html/dynamiteplot-1.png" alt="Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right)." width="85%"><p class="caption">
+Figure 3.2: Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right).
+</p>
+</div>
+<p>In a one-way analysis of variance, the outcome is a continuous numerical variable, whereas the treatment or explanatory is a categorical variable. Basic graphics for this combination include most graphics available for one dimensional data including estimates of the distribution (dot plots, histograms, density plots) or rugs for the raw data, but replicated for each level of the factor.</p>
+<p>Scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line if the data are continuous.</p>
+<p>Journals are plagued with poor visualisations, a prime example of which is the infamous <a href="https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/">dynamite plot</a>. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number.
+The right panel of Figure <a href="onewayanova.html#fig:dynamiteplot">3.2</a> shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms and the like and a boxplot would also be useless: a summary of nine numbers isn’t really needed.</p>
+<p>If we have a lot of data, it sometimes help to represent selected summary statistics. A box-and-whiskers plot (or boxplot) is a commonly used graphic representing the whole data distribution using five numbers</p>
 <ul>
-<li><p>The box gives the quartiles, say <span class="math inline">\(q_1\)</span>, <span class="math inline">\(q_2\)</span> (median) and <span class="math inline">\(q_3\)</span> of the distribution: 50% of the observations are smaller or larger than <span class="math inline">\(q_2\)</span>, 25% are smaller than <span class="math inline">\(q_1\)</span> and 75% are smaller than <span class="math inline">\(q_3\)</span> for the sample.</p></li>
-<li><p>The length of the whiskers is up to <span class="math inline">\(1.5\)</span> times the interquartiles range <span class="math inline">\(q_3-q_1\)</span> (the whiskers extend until the latest point in the interval, so the largest observation that is smaller than <span class="math inline">\(q_3+1.5(q_3-q_1)\)</span>, etc.)</p></li>
-<li><p>Observations beyond the whiskers are represented by dots or circles, sometimes termed outliers. However, beware of this terminology: the larger the sample size, the more values will fall outside the whiskers (about 0.7% for normal data). This is a drawback of boxplots, which were conceived at a time where big data didn’t exist.</p></li>
+<li>The box gives the quartiles, say <span class="math inline">\(q_1\)</span>, <span class="math inline">\(q_2\)</span> (median) and <span class="math inline">\(q_3\)</span> of the distribution: 50% of the observations are smaller or larger than <span class="math inline">\(q_2\)</span>, 25% are smaller than <span class="math inline">\(q_1\)</span> and 75% are smaller than <span class="math inline">\(q_3\)</span> for the sample.</li>
+<li>The whiskers extend up to <span class="math inline">\(1.5\)</span> times the box width (<span class="math inline">\(q_3-q_1\)</span>) (so the largest observation that is smaller than <span class="math inline">\(q_3+1.5(q_3-q_1)\)</span>, etc.)</li>
 </ul>
+<p>Observations beyond the whiskers are represented by dots or circles, sometimes termed outliers. However, beware of this terminology: the larger the sample size, the more values will fall outside the whiskers (about 0.7% for normal data). This is a drawback of boxplots, which were conceived at a time where big data didn’t exist. If you want to combine boxplots with the raw data, remove the display of outliers to avoid artefacts.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:boxplot"></span>
 <img src="figures/01-intro-boxplot.png" alt="Box-and-whiskers plot" width="85%"><p class="caption">
 Figure 3.3: Box-and-whiskers plot
 </p>
 </div>
+</div>
+<div id="model-assumptions" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions"><i class="fas fa-link"></i></a>
+</h2>
+<p>The basic assumption of most designs is that we can decompose the outcome into two components <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span>
+<span class="math display" id="eq:additive">\[\begin{align}
+\begin{pmatrix} \text{quantity depending only } \\ 
+\text{on the particular unit} 
+\end{pmatrix} + 
+\begin{pmatrix} \text{quantity depending} \\
+ \text{on the treatment used}\end{pmatrix}
+ \tag{3.2}
+\end{align}\]</span>
+This <strong>additive</strong> decomposition further assumes that each unit is unaffected by (i.e., independent of) the treatment of the other units and that the average effect of the treatment is constant. This notably means that usually the difference between treatments can be estimated by the difference in sample means</p>
+<p>More generally, the test statistic may rely on additional assumptions. The <span class="math inline">\(F\)</span>-test of the global null <span class="math inline">\(\mu_1 = \cdots \mu_K\)</span> assumes that the <span class="math inline">\(i\)</span>th observation of group <span class="math inline">\(k\)</span>, say <span class="math inline">\(y_{ik}\)</span>, has average <span class="math inline">\(\mathsf{E}(Y_{ik}) = \mu_k\)</span> and variance <span class="math inline">\(\mathsf{Va}(Y_{ik}) = \sigma^2\)</span>.</p>
+<p>If the variance are unequal, this can leads to a decrease in power or inaccurate statements: statistics that do not make this assumption may be more powerful alternatives.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-8" class="example"><strong>Example 3.2  (Additivity and transformations) </strong></span>Chapter 2 of <span class="citation"><a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox</a> (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarden students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a <strong>paired experiment</strong> and take as outcome the difference in sociability scores at the beginning and at the end of the school year.</p>
+<p>One can expect the treatment to have more impact on people with low sociability skills who were struggling to make contacts: a student who scored 50 initially might see an improvement of 20 points with support relative to 10 in the business-as-usual scenario, whereas another who is well integrated and scored high initially may see an improvement of only 5 more had (s)he been assigned to the support group. This implies that the treatment effects are not constant over the scale, a violation of the additivity assumption. One way to deal with this is via transformations: <span class="citation"><a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox</a> (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the transformation <span class="math inline">\(\log\{(x+0.5)/(50-x)\}\)</span> to reduce the warping due to scale.</p>
+</div>
+<p>Another example is in experiments where the effect of treatment is multiplicative, so that the output is of the form
+<span class="math display">\[\begin{align*}
+\begin{pmatrix} \text{quantity depending only } \\ 
+\text{on the particular unit} 
+\end{pmatrix} \times
+\begin{pmatrix} \text{quantity depending} \\
+ \text{on the treatment used}\end{pmatrix}
+\end{align*}\]</span>
+Usually, this arises for positive responses and treatments, in which case taking natural logarithms on both sides, with <span class="math inline">\(\log(xy) = \log x + \log y\)</span> yields again an additive.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-9" class="example"><strong>Example 3.3  (Inadequacy of additivity based on context) </strong></span>This example is adapted from <span class="citation"><a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox</a> (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span>, Example 2.2. Children suffering from attention deficit hyperactivity disorder (ADHD) may receive medication to increase their attention span, measured on a scale of 0 to 100, with 0 indicating normal attention span. An experiment can be designed to assess the impact of a standardized dose in a laboratory by comparing performances of students on a series of task before and after, when to a placebo. To make a case, suppose that students with ADHD fall into two categories: low symptoms and strong symptoms. In the low symptom group, the average attention is 8 per cent with the drug and 12 per cent with the placebo, whereas for people with strong symptoms, the average is 40 per cent among treated and 60 per cent with the placebo. If these two categories are equally represented in the experiment and the population, we would estimate an average reduction of 12 percent in the score (thus higher attention span among treated). Yet, this quantity is artificial, and a better measure would be that symptoms are for the treatment are 2/3 of those of the control (the ratio of proportions).</p>
+</div>
+<p>Equation <a href="onewayanova.html#eq:additive">(3.2)</a> also implies that the effect of the treatment is constant for all individuals. This often isn’t the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable.</p>
 
 </div>
 </div>
@@ -283,7 +297,7 @@ Figure 3.3: Box-and-whiskers plot
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#onewayanova"><span class="header-section-number">3</span> Completely randomized designs with one factor</a></li>
+<li><a class="nav-link" href="#onewayanova"><span class="header-section-number">3</span> One way analysis of variance</a></li>
 <li>
 <a class="nav-link" href="#hypothesis-tests-for-the-one-way-analysis-of-variance"><span class="header-section-number">3.1</span> Hypothesis tests for the one-way analysis of variance</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#parametrizations"><span class="header-section-number">3.1.1</span> Parametrizations</a></li></ul>
 </li>
@@ -291,6 +305,7 @@ Figure 3.3: Box-and-whiskers plot
 <a class="nav-link" href="#sum-of-square-decomposition"><span class="header-section-number">3.2</span> Sum of square decomposition</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#mathematical-decomposition-of-sum-of-squares"><span class="header-section-number">3.2.1</span> Mathematical decomposition of sum of squares</a></li></ul>
 </li>
 <li><a class="nav-link" href="#graphical-representation"><span class="header-section-number">3.3</span> Graphical representation</a></li>
+<li><a class="nav-link" href="#model-assumptions"><span class="header-section-number">3.4</span> Model assumptions</a></li>
 </ul>
 
       <div class="book-extra">
