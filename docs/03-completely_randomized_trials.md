@@ -17,7 +17,7 @@ Let $\mu_1, \ldots, \mu_K$ denote the expectation (theoretical mean) of each of 
 \end{align*}
 The null hypothesis is, as usual, a single numerical value, $\mu$. The alternative consists of all potential scenarios for which not all expectations are equal. Going from $K$ averages to one requires imposing $K-1$ restrictions (the number of equality signs), as the value of the global mean $\mu$ is left unspecified. 
 
-### Parametrizations
+## Parametrizations and contrasts
 
 The most natural parametrization is in terms of group averages: the (theoretical unknown) average for treatment $T_j$ is $\mu_j$, so we obtain $K$ parameters $\mu_1, \ldots, \mu_K$ whose estimates are the sample averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$. One slight complication arising from the above is that the values of the population average are unknown, so this formulation is ill-suited for hypothesis testing because none of the $\mu_i$ values are known in practice and we need to make comparisons in terms of a known numerical value. 
 
@@ -102,17 +102,14 @@ We can still assess the hypothesis by comparing the sample means in each group, 
 
 
 
-## Sum of square decomposition
 
-The following section tries to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears. 
-
+### Sum of squares decomposition
 
 
+The following section can be safely skipped on first reading: it attempts to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears. 
 
-### Mathematical decomposition of sum of squares
 
-Proceed if you want to see the mathematical intuition behind
-The usual notation for this decomposition is the following: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
+The usual notation for the sum of squares decomposition is as follows: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
 Under the null model, all groups have the same mean, so the natural estimator is the sample average $\widehat{\mu}$ and likewise the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$ are the correct estimators if each group has a (potentially) different mean. The more complex, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
 The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition
 \begin{align*}
@@ -136,14 +133,19 @@ Figure \@ref(fig:squareddistanova) shows how the difference between these distan
   
 If there is no mean difference (null), the numerator is an estimator of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
 
+How reliable is the $F$-statistic approximation? We can assess this by simulating from the null model, repeatedly drawing samples with similar characteristics (same mean and overall variance) and computing the test statistic on each replicate. However, we only have one sample at hand so this little numerical exercise wouldn't work in practice.
 
+If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to [generate those alternative samples by simply shuffling the labels](https://www.jwilber.me/permutationtest/). We see in Figure \@ref(fig:Fdistpermut) that the histogram of the $F$-statistic values obtained from 10 000 permutations closely matches that of the large-sample $F$-distribution when there are on average 20 observations per group (right). However, with smaller samples (left), the theoretical null is underdispersed relative to the permutation based distribution, and the latter should be viewed as more accurate in this setting.
 
-
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/Fdistpermut-1.png" alt="One-way analysis of variance for a sample of size 20 (left) and 100 (right), split in five groups. The histogram shows the computed test values based on 10 000 permutations, which is compared to the density of the large-sample _F_-distribution." width="85%" />
+<p class="caption">(\#fig:Fdistpermut)One-way analysis of variance for a sample of size 20 (left) and 100 (right), split in five groups. The histogram shows the computed test values based on 10 000 permutations, which is compared to the density of the large-sample _F_-distribution.</p>
+</div>
 
 
 ## Graphical representation
 
-How to represent data in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful.
+How to represent data in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful. It is also important to keep in mind that summary statistics are estimators of population quantities that are perhaps unreliable (much too variable) in small samples to be meaningful quantities. Since the mean estimates will likely be reported in the text, the graphics should be used to convey additional information about the data. If the samples are extremely large, then graphics will be typically be used to present salient features of the distributions.
 
 <div class="figure" style="text-align: center">
 <img src="03-completely_randomized_trials_files/figure-html/dynamiteplot-1.png" alt="Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right)." width="85%" />
@@ -154,10 +156,9 @@ In a one-way analysis of variance, the outcome is a continuous numerical variabl
 
 Scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line if the data are continuous. 
 
-Journals are plagued with poor visualisations, a prime example of which is the infamous [dynamite plot](https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/). The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number.
-The right panel of Figure \@ref(fig:dynamiteplot) shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms and the like and a boxplot would also be useless: a summary of nine numbers isn't really needed.
+Journals are plagued with poor visualisations, a prime example of which is the infamous [dynamite plot](https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/): it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of Figure \@ref(fig:dynamiteplot) shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms and the like and a boxplot would also be useless: a summary of nine numbers isn't really needed as there aren't enough data to justify this dimension reduction step. @Weissgerber:2015 discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.
 
-If we have a lot of data, it sometimes help to represent selected summary statistics. A box-and-whiskers plot (or boxplot) is a commonly used graphic representing the whole data distribution using five numbers
+If we have a lot of data, it sometimes help to represent selected summary statistics or group data. A box-and-whiskers plot (or boxplot) is a commonly used graphic representing the whole data distribution using five numbers
 
 - The box gives the quartiles, say $q_1$, $q_2$ (median) and $q_3$ of the distribution: 50\% of the observations are smaller or larger than $q_2$, 25\% are smaller than $q_1$ and 75\% are smaller than $q_3$ for the sample.
 - The whiskers extend up to $1.5$ times the box width ($q_3-q_1$) (so the largest observation that is smaller than $q_3+1.5(q_3-q_1)$, etc.)
@@ -169,10 +170,12 @@ Observations beyond the whiskers are represented by dots or circles, sometimes t
 <p class="caption">(\#fig:boxplot)Box-and-whiskers plot</p>
 </div>
 
-
+@Weissgerber:2019 contains many examples of how to build effective visualizations, including highlighting particular aspects using color, jittering, transparency and how to adequately select the display zone. 
 
 
 ## Model assumptions
+
+So far, we have brushed all of the model assumptions under the carpet. These are necessary requirements for the inference to be valid: any statement related to _p_-values, level of the test, etc. will approximately hold only if a set of assumptions is met in the first place. This section is devoted to the discussion of these assumptions, showing examples 
 
 The basic assumption of most designs is that we can decompose the outcome into two components [@Cox:1958]
 \begin{align}
@@ -183,14 +186,24 @@ The basic assumption of most designs is that we can decompose the outcome into t
  \text{on the treatment used}\end{pmatrix}
  (\#eq:additive)
 \end{align}
-This **additive** decomposition further assumes that each unit is unaffected by (i.e., independent of) the treatment of the other units and that the average effect of the treatment is constant. This notably means that usually the difference between treatments can be estimated by the difference in sample means
+This **additive** decomposition further assumes that each unit is unaffected by (i.e., independent of) the treatment of the other units and that the average effect of the treatment is constant. This notably means that usually the difference between treatments can be estimated by the difference in sample means.
 
-More generally, the test statistic may rely on additional assumptions. The $F$-test of the global null $\mu_1 = \cdots \mu_K$ assumes that the $i$th observation of group $k$, say $y_{ik}$, has average $\mathsf{E}(Y_{ik}) = \mu_k$ and variance $\mathsf{Va}(Y_{ik}) = \sigma^2$.
+It is customary to write the $i$th observation of the $k$th group in the  one-way analysis of variance model as
+$Y_{ik} = \mu_k + \varepsilon_{ik}$,
+where the error term, which accounts for unexplained variability and individual differences, has mean zero and variance $\sigma^2$. Many graphical diagnostics use residuals $y_{ik} - \widehat{\mu}_k$ to look for violation of the assumptions.
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/assumptions-1.png" alt="Data satisfying the assumptions of the one-way analysis of variance model, with additive effects, independent observations and common variance." width="85%" />
+<p class="caption">(\#fig:assumptions)Data satisfying the assumptions of the one-way analysis of variance model, with additive effects, independent observations and common variance.</p>
+</div>
+
+More generally, the test statistic may make further assumptions. The $F$-test of the global null $\mu_1 = \cdots \mu_K$ assumes that the $i$th observation of group $k$, say $y_{ik}$, has average $\mathsf{E}(Y_{ik}) = \mu_k$ and variance $\mathsf{Va}(Y_{ik}) = \sigma^2$. The latter is estimated using all of the residuals, with $\widehat{\sigma}^2 = \sum_k\sum_i (y_{ik} - \widehat{\mu}_k)^2/(n-K)$. Under these assumptions, the $F$-test statistic for the global null $\mu_1 = \cdots = \mu_K$ is the most powerful because it uses all of the data to get a more precise estimation of the variability. Generally, there may be other considerations than power that may guide the choice of test statistic, including robustness (sensitivity to extremes and outliers). For unequal variance, other statistics than the $F$-test statistic may be more powerful. 
 
 
 
-If the variance are unequal, this can leads to a decrease in power or inaccurate statements: statistics that do not make this assumption may be more powerful alternatives.
 
+
+### Additivity 
 
 :::{ .example name="Additivity and transformations"}
 
@@ -208,7 +221,7 @@ Another example is in experiments where the effect of treatment is multiplicativ
 \begin{pmatrix} \text{quantity depending} \\
  \text{on the treatment used}\end{pmatrix}
 \end{align*}
-Usually, this arises for positive responses and treatments, in which case taking natural logarithms on both sides, with $\log(xy) = \log x + \log y$ yields again an additive. 
+Usually, this arises for positive responses and treatments, in which case taking natural logarithms on both sides, with $\log(xy) = \log x + \log y$ yielding again an additive decomposition.
 
 :::{ .example name="Inadequacy of additivity based on context"}
 
@@ -216,6 +229,128 @@ This example is adapted from @Cox:1958, Example 2.2. Children suffering from att
 
 :::
 
-Equation \@ref(eq:additive) also implies that the effect of the treatment is constant for all individuals. This often isn't the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable.
+Equation \@ref(eq:additive) also implies that the effect of the treatment is constant for all individuals. This often isn't the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable. The solution to this would be to setup a more complex model (two-way analysis of variance, general linear model) or stratify by the explanatory variable (for example, compute the difference within each level).
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/omittedlinearity-1.png" alt="Difference in average response; while the treatment seems to lead to a decrease in the response variable, a stratification by age group reveals this only occurs in less than 25 group, with a seemingly reversed effect for the adults. Thus, the marginal model implied by the one-way analysis of variance is possibly misleading or not useful." width="85%" />
+<p class="caption">(\#fig:omittedlinearity)Difference in average response; while the treatment seems to lead to a decrease in the response variable, a stratification by age group reveals this only occurs in less than 25 group, with a seemingly reversed effect for the adults. Thus, the marginal model implied by the one-way analysis of variance is possibly misleading or not useful.</p>
+</div>
+
+### Heterogeneity
+
+The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals $y_{ik} - \widehat{\mu}_k$. Specifically, the unbiased variance estimator is the denominator of the $F$-statistic formula, i.e., the within sum of squares divided by $n-K$ with $n$ the total number of observations and $K$ the number of groups under comparison.
+
+For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett's test^[For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the $\chi^2$ approximation to the null distribution.] and Levene's test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is $\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K$ against the alternative that at least two differ. The Bartlett test statistic has a $\chi^2$ null distribution with $K-1$ degrees of freedom, whereas Levene's test has an $F$-distribution with ($K$, $n-K$) degrees of freedom: it is equivalent to doing a one-way anova, but using the absolute value of the centered residuals, $|y_{ik} - \widehat{\mu}_k|$ as observations.
 
 
+```r
+bartlett.test(score ~ group,
+              data = arithmetic)
+#> 
+#> 	Bartlett test of homogeneity of variances
+#> 
+#> data:  score by group
+#> Bartlett's K-squared = 2, df = 4, p-value = 0.7
+
+car::leveneTest(score ~ group,
+                data = arithmetic,
+                center = mean)
+#> Levene's Test for Homogeneity of Variance (center = mean)
+#>       Df F value Pr(>F)
+#> group  4    1.57    0.2
+#>       40
+# compare with one-way ANOVA
+mod <- lm(score ~ group, data = arithmetic)
+arithmetic$absresid <- abs(resid(mod)) #|y_{ik}-mean_k|
+oneway.test(absresid ~ group, 
+            data = arithmetic,
+            var.equal = TRUE)
+#> 
+#> 	One-way analysis of means
+#> 
+#> data:  absresid and group
+#> F = 2, num df = 4, denom df = 40, p-value = 0.2
+```
+We can see in both cases that the $p$-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch's ANOVA. It is most commonly encountered in the case of two groups ($K=2$) and is the default option in **R** with `t.test` or `oneway.test` (option `var.equal = TRUE`).
+
+What happens with the example of the arithmetic dat when we use this instead of the usual $F$ statistic? Well, the null distribution is still $F$, but with different parameters and the degrees of freedom parameters are based on a complicated formula and take non integer values. Here, the evidence is overwhelming. Generally, the only drawback of using Welch over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and having enough observations in each of the group to reliably estimate a separate variance term: this means that there are $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
+
+
+```r
+# Welch ANOVA
+oneway.test(score ~ group, data = arithmetic, 
+            var.equal = FALSE)
+#> 
+#> 	One-way analysis of means (not assuming equal variances)
+#> 
+#> data:  score and group
+#> F = 19, num df = 4, denom df = 20, p-value = 2e-06
+# Usual F-test statistic
+oneway.test(score ~ group, data = arithmetic, 
+            var.equal = TRUE)
+#> 
+#> 	One-way analysis of means
+#> 
+#> data:  score and group
+#> F = 15, num df = 4, denom df = 40, p-value = 1e-07
+```
+
+Notice how the degrees of freedom of the denominator have decreased. If we use `pairwise.t.test` with argument `pool.sd=FALSE`, this amounts to running Welch $t$-tests separately for each pair of variable.
+
+What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power.
+
+:::{ .example name="Violation of the null hypothesis of equal variance"}
+
+We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics.
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/simuWelchnull-1.png" alt="Histogram of the null distribution of $p$-values obtained through simulation using the classical analysis of variance $F$-test (left) and Welch's unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins used for the display." width="85%" />
+<p class="caption">(\#fig:simuWelchnull)Histogram of the null distribution of $p$-values obtained through simulation using the classical analysis of variance $F$-test (left) and Welch's unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins used for the display.</p>
+</div>
+
+Figure \@ref(fig:simuWelchnull) shows the results for a toy example with simulated data, but the display is striking. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be 4.76% for the Welch statistic. By contrast, we reject 28.95% of the time with the $F$-test: this is a large share of innocents sentenced to jail based on false premises! While not always as striking in terms of consequence, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group and using a statistic that makes minimal assumptions.
+
+:::
+
+There are alternative graphial ways of checking the assumption of equal variance, many including the standardized residuals $r_{ik} = (y_{ik} - \widehat{\mu}_k)/\widehat{\sigma}$ against the fitted values $\widehat{\mu}_k$. We will cover these in later sections.
+
+### Normality
+
+There is a persistent claim yet incorrect in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples,. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
+
+While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not very different at $n=19$ than at $n=20$. How large must the sample size be for the Holy grail? It largely depends on the population: the more extremes, skewness, etc. you have, the large the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far with $n=50$ for heavy-tailed data.
+
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/clt-1.png" alt="Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases." width="85%" />
+<p class="caption">(\#fig:clt)Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases.</p>
+</div>
+
+
+It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions.
+
+The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot: 
+
+### Independence
+
+While I am not allowed to talk of independence as a Quebecer^[All credits for this pun are due to C. Genest], this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample. Independence isn't easy to diagnostic, but may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.
+
+:::{ .example name="Independence of measurements"}
+
+There are many hidden ways in which measurements can impact the response. Physical devices that need to be calibrated before use (scales, microscope) require tuning: if measurements are done by different experimenters or on different days, it may impact and add systematic shift in means for the whole batch.
+
+:::
+
+Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.
+
+What is the impact of dependence between measurements?
+Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also more changes, but for $n$ large the impact is less than that of the scaling since the $F(d_1, d_2)$ distribution is approximately $\chi^2(d_1)$ when $d_2$ is large.]
+
+
+
+<div class="figure" style="text-align: center">
+<img src="03-completely_randomized_trials_files/figure-html/plotLevelIndep-1.png" alt="Size of the $F$-test of equality of means for the one way ANOVA with data from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%." width="85%" />
+<p class="caption">(\#fig:plotLevelIndep)Size of the $F$-test of equality of means for the one way ANOVA with data from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%.</p>
+</div>
+
+The lack of independence can also have drastic consequences on inference and lead to false conclusions: Figure \@ref(fig:plotLevelIndep) shows an example with correlated samples within group (or equivalently repeated measurements from individuals) with 25 observations per group. The $y$-axis shows the size of the test, meaning the proportion of times the null is rejected. Here, since the data are generated from the null model (equal mean) with equal variance, the inflation in the number of spurious discoveries, false alarm or type I error is alarming and the inflation is substantial even with very limited correlation between measurements. 

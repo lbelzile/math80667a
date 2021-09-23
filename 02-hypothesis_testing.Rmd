@@ -548,29 +548,40 @@ At the end, we calculate the proportion of tests that lead to a rejection of the
 
 Changing the value of $\alpha$ has an impact on the power, since larger values of $\alpha$ move the cutoff towards the bulk of the distribution. It entails a higher percentage of rejection also when the alternative is false. However, the value of $\alpha$ is fixed beforehand to control the type I error (avoid judicial mistakes). The power corresponds to the red shaded area on the right panel of Figure \@ref(fig:compareFnullalternative), would become larger if we moved the cutoff value lower, corresponding to larger $\alpha$. 
 
-```{r compareFnullalternative, fig.cap = "Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.", cache = TRUE, echo = FALSE, eval = TRUE, fig.height = 4}
+```{r compareFnullalternative, fig.cap = "Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.", echo = FALSE, cache = TRUE, eval = TRUE, fig.height = 4}
 g1 <- ggplot() + 
-  stat_function(xlim = c(0, 8), 
+  ggplot2::stat_function(xlim = c(0, 8), 
                 n = 1001,
-                fun=df, args = list(df1 = 4, df2 = 80, ncp = 0)) + 
-  stat_function(geom = "area", fill = "blue", alpha = 0.2,
-                xlim = c(qf(0.95, 4,80),8), 
-                n = 1001,
-                fun=df, args = list(df1 = 4, df2 = 80, ncp = 0)) + 
-  labs(x = "statistic", y = "", subtitle = "null")
-g2 <- ggplot() + 
-  stat_function(xlim = c(0, 8), 
-                n = 1001,
-                fun=df, args = list(df1 = 4, df2 = 80, ncp = 3)) + 
-  stat_function(geom = "area", fill = "blue", alpha = 0.2,
-                xlim = c(0, qf(0.95, 4,80)), 
-                n = 1001,
-                fun=df, args = list(df1 = 4, df2 = 80, ncp = 3)) + 
-  stat_function(geom = "area", fill = "red", alpha = 0.2,
+                fun=stats::df, 
+                args = list(df1 = 4, df2 = 80, ncp = 0)) + 
+  ggplot2::stat_function(geom = "area", fill = "blue", alpha = 0.2,
                 xlim = c(qf(0.95, 4,80), 8), 
                 n = 1001,
-                fun=df, args = list(df1 = 4, df2 = 80, ncp = 3)) + 
-  labs(x = "statistic", y = "", subtitle = "alternative")
+                fun=stats::df, args = list(df1 = 4, df2 = 80, ncp = 0)) + 
+  coord_cartesian(xlim = c(0,8), 
+                  ylim = c(0, 0.8), 
+                  expand = FALSE) + 
+  labs(x = "statistic", y = "", subtitle = "null") + 
+  theme_classic()
+g2 <- ggplot() + 
+  ggplot2::stat_function(xlim = c(0,8),
+                n = 1001,
+                fun = stats::df, 
+                args = list(df1 = 4, df2 = 80, ncp = 3)) + 
+  ggplot2::stat_function(geom = "area", fill = "blue", alpha = 0.2,
+                xlim = c(0, qf(0.95, 4,80)), 
+                n = 1001,
+                fun=stats::df, args = list(df1 = 4, df2 = 80, ncp = 3)) + 
+  ggplot2::stat_function(geom = "area", fill = "red", alpha = 0.2,
+                xlim = c(qf(0.95, 4,80), 8), 
+                n = 1001,
+                fun = stats::df, 
+                args = list(df1 = 4, df2 = 80, ncp = 3)) + 
+  coord_cartesian(xlim = c(0, 8), 
+                  ylim = c(0, 0.8), 
+                  expand = FALSE) +
+  labs(x = "statistic", y = "", subtitle = "alternative") + 
+  theme_classic()
   
 g1 + g2
 
