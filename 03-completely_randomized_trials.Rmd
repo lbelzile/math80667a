@@ -420,6 +420,10 @@ knitr::include_graphics('figures/01-intro-boxplot.png')
 
 @Weissgerber:2019 contains many examples of how to build effective visualizations, including highlighting particular aspects using color, jittering, transparency and how to adequately select the display zone. 
 
+## Multiple testing
+
+The more you look, the more you find.
+
 
 ## Model assumptions
 
@@ -544,7 +548,7 @@ g1 + g2
 
 The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals $y_{ik} - \widehat{\mu}_k$. Specifically, the unbiased variance estimator is the denominator of the $F$-statistic formula, i.e., the within sum of squares divided by $n-K$ with $n$ the total number of observations and $K$ the number of groups under comparison.
 
-For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett's test^[For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the $\chi^2$ approximation to the null distribution.] and Levene's test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is $\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K$ against the alternative that at least two differ. The Bartlett test statistic has a $\chi^2$ null distribution with $K-1$ degrees of freedom, whereas Levene's test has an $F$-distribution with ($K$, $n-K$) degrees of freedom: it is equivalent to doing a one-way anova, but using the absolute value of the centered residuals, $|y_{ik} - \widehat{\mu}_k|$ as observations.
+For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett's test^[For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the $\chi^2$ approximation to the null distribution.] and Levene's test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is $\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K$ against the alternative that at least two differ. The Bartlett test statistic has a $\chi^2$ null distribution with $K-1$ degrees of freedom, whereas Levene's test has an $F$-distribution with ($K$, $n-K$) degrees of freedom: it is equivalent to computing the one-way ANOVA $F$-statistic with the absolute value of the centered residuals, $|y_{ik} - \widehat{\mu}_k|$, as observations.
 
 ```{r echo = TRUE, eval = TRUE}
 bartlett.test(score ~ group,
@@ -562,7 +566,7 @@ oneway.test(absresid ~ group,
 ```
 We can see in both cases that the $p$-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch's ANOVA. It is most commonly encountered in the case of two groups ($K=2$) and is the default option in **R** with `t.test` or `oneway.test` (option `var.equal = TRUE`).
 
-What happens with the example of the arithmetic dat when we use this instead of the usual $F$ statistic? Well, the null distribution is still $F$, but with different parameters and the degrees of freedom parameters are based on a complicated formula and take non integer values. Here, the evidence is overwhelming. Generally, the only drawback of using Welch over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and having enough observations in each of the group to reliably estimate a separate variance term: this means that there are $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
+What happens with the example of the arithmetic data when we use this instead of the usual $F$ statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch's ANOVA over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and the need to have enough observations in each of the group to reliably estimate a separate variance term. For Welch's ANOVA, we have to estimate $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
 
 ```{r welchvsF, eval = TRUE, echo = TRUE}
 # Welch ANOVA
@@ -575,11 +579,11 @@ oneway.test(score ~ group, data = arithmetic,
 
 Notice how the degrees of freedom of the denominator have decreased. If we use `pairwise.t.test` with argument `pool.sd=FALSE`, this amounts to running Welch $t$-tests separately for each pair of variable.
 
-What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power.
+What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power. The following toy example illustrates this.
 
 :::{ .example name="Violation of the null hypothesis of equal variance"}
 
-We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics.
+
 
 ```{r simuWelchnull, echo = FALSE, cache = TRUE, fig.cap = "Histogram of the null distribution of $p$-values obtained through simulation using the classical analysis of variance $F$-test (left) and Welch's unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a $\\mathsf{No}(0, 1)$ distribution and 10 observations from $\\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins used for the display."}
 set.seed(1234)
@@ -632,7 +636,7 @@ g2 <- ggplot(data = tibble("pvalue" = pvalsW),
 g1 + g2
 ```
 
-Figure \@ref(fig:simuWelchnull) shows the results for a toy example with simulated data, but the display is striking. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be `r 100*mean(pvalsW < 0.05)`% for the Welch statistic. By contrast, we reject `r 100*mean(pvalsF < 0.05)`% of the time with the $F$-test: this is a large share of innocents sentenced to jail based on false premises! While not always as striking in terms of consequence, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group and using a statistic that makes minimal assumptions.
+We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics. Figure \@ref(fig:simuWelchnull) shows the results. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be `r 100*mean(pvalsW < 0.05)`% for the Welch statistic, not far from the level. By contrast, we reject `r 100*mean(pvalsF < 0.05)`% of the time with the one-way ANOVA global $F$-test: this is a large share of innocents sentenced to jail based on false premises! While the size distotion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.
 
 :::
 
@@ -640,9 +644,9 @@ There are alternative graphial ways of checking the assumption of equal variance
 
 ### Normality
 
-There is a persistent claim yet incorrect in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples,. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
+There is a persistent yet incorrect claim in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
 
-While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not very different at $n=19$ than at $n=20$. How large must the sample size be for the Holy grail? It largely depends on the population: the more extremes, skewness, etc. you have, the large the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far with $n=50$ for heavy-tailed data.
+While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not very different at $n=19$ than at $n=20$. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far off with $n=50$ for heavy-tailed data.
 
 
 ```{r clt, echo = FALSE, fig.cap="Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases."}
@@ -702,13 +706,11 @@ p3 <- ggplot(data = moy20) +
 ```
 
 
-It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions.
-
-The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot: 
+It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions. The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot.
 
 ### Independence
 
-While I am not allowed to talk of independence as a Quebecer^[All credits for this pun are due to C. Genest], this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample. Independence isn't easy to diagnostic, but may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.
+While I am not allowed to talk of independence as a Quebecer^[All credits for this pun are due to C. Genest], this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample.  Independence may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.
 
 :::{ .example name="Independence of measurements"}
 
@@ -718,8 +720,7 @@ There are many hidden ways in which measurements can impact the response. Physic
 
 Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.
 
-What is the impact of dependence between measurements?
-Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also more changes, but for $n$ large the impact is less than that of the scaling since the $F(d_1, d_2)$ distribution is approximately $\chi^2(d_1)$ when $d_2$ is large.]
+What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also more changes, but for $n$ large the impact is less than that of the scaling since the $F(d_1, d_2)$ distribution is approximately $\chi^2(d_1)$ when $d_2$ is large.]
 
 ```{r sizetestCorrelation, echo = FALSE, eval = TRUE, cache = TRUE}
 set.seed(1234)
