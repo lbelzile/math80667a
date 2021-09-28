@@ -35,13 +35,13 @@ fig:squareddistanova
 fig:Fdistpermut
 fig:dynamiteplot
 fig:boxplot
+eq:bonferroni
+fig:xkcdsignificant
 eq:additive
 fig:assumptions
 exm:unlabeled-div-8
 exm:unlabeled-div-9
 fig:omittedlinearity
-exm:unlabeled-div-10
-fig:simuWelchnull
 fig:clt
 exm:unlabeled-div-11
 fig:plotLevelIndep
@@ -78,6 +78,10 @@ hypothesis-tests-for-the-one-way-analysis-of-variance
 parametrizations-and-contrasts
 sum-of-squares-decomposition
 graphical-representation
+pairwise-tests
+multiple-testing
+bonferronis-procedure
+holm-bonferronis-procedure
 model-assumptions
 additivity
 heterogeneity

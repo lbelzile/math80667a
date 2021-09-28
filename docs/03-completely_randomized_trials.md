@@ -172,6 +172,98 @@ Observations beyond the whiskers are represented by dots or circles, sometimes t
 
 @Weissgerber:2019 contains many examples of how to build effective visualizations, including highlighting particular aspects using color, jittering, transparency and how to adequately select the display zone. 
 
+## Pairwise tests {#pairwise-tests}
+
+If the global test of equality of mean for the one-way ANOVA leads to rejection of the null, the conclusion is that one of the group has a different mean. However, the test does not indicate which of the groups differ from the rest nor does it say how many are different. If there are $K$ groups to compare and any comparison is of interest, than we could performs $\binom{K}{2}$ pairwise comparisons with $\mathscr{H}_{0}: \mu_i = \mu_j$ for $i \neq j$. For $K=3$, there are three comparisons, 10 if $K=5$ and 45 if $K=10$.
+
+Assuming equal variances, the two-sample $t$-test statistic is
+\begin{align*}
+t_{ij} = \frac{\widehat{\mu}_i - \widehat{\mu}_j}{\widehat{\sigma} \left(\frac{1}{n_i} + \frac{1}{n_j}\right)^{1/2}},
+\end{align*}
+where $\widehat{\mu}_i$ and $n_i$ are respectively the sample average and the number of observations of group $i$ $\widehat{\sigma}$ the standard deviation estimate derived using the whole sample. As usual, the denominator of $t_{ij}$ is the standard error of the $\widehat{\mu}_i - \widehat{\mu}_j$, whose postulated difference is zero. We can compare the value of the observed statistic to a Student-$t$ distribution with $n-K$ degrees of freedom, denoted $\mathsf{St}(n-K)$. For a two-sided alternative, we reject if $|t_{ij}| > \mathfrak{t}_{1-\alpha/2}$, for $\mathfrak{t}_{1-\alpha/2}$ the $1-\alpha/2$ quantile of $\mathsf{St}(n-K)$.
+
+
+We fail to reject $\mathscr{H}_0$ as $\mathfrak{t}_{\alpha/2} \leq t_{ij} \leq \mathfrak{t}_{1-\alpha/2}$^[Note that the Student-$t$ distribution is symmetric, so $\mathfrak{t}_{1-\alpha/2} = -\mathfrak{t}_{\alpha/2}$.]: this gives us another way of presenting the same conclusion in terms of the set of mean differences $\mu_i - \mu_j$ for which 
+\begin{align*}
+ \mathfrak{t}_{\alpha/2} \leq \frac{(\widehat{\mu}_i - \widehat{\mu}_j) - (\mu_i - \mu_j)}{\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right)} \leq \mathfrak{t}_{1-\alpha/2}
+\end{align*}
+which is equivalent to the $(1-\alpha)$ confidence interval
+\begin{align*}
+\mathsf{CI} = \left[\widehat{\mu}_i - \widehat{\mu}_j + \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right), \widehat{\mu}_i - \widehat{\mu}_j + \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right)\right].
+\end{align*}
+
+The comparison above is termed least significant difference (LSD), but 
+
+## Multiple testing
+
+If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of $\alpha$ of making a type I error if the null is true, meaning when there is no difference between averages in the underlying population. The problem of the above approach is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a $p$-value less than 5\%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. The level $\alpha=5$\% is essentially arbitrary: @Pearson:1926 wrote
+
+> If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
+
+Not all tests are of interest, even if standard software will report all possible pairwise comparisons. However, the number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project [@Nosek:2015]: this number ranged from 4 to 700, with an average of 72 per study --- most studies did not account for the fact they were performing multiple tests or selected the model. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in Figure \@ref(fig:xkcdsignificant): note how there is little scientific backing for the theory (thus such test shouldn't be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.
+
+Why is this a problem? Assume for simplicity that all tests are independent^[This is the case if tests are based on different data, or if the contrasts considered are orthogonal under normality.] and that each test is conducted at level $\alpha$. The probability of making at least one type I error, say $\alpha^{\star}$, is^[The second line holds with independent observations, the second follows from the use of Boole's inequality and does not require independent tests.]
+\begin{align}\alpha^{\star} &= 1 – \text{probability of making no type I error} \\\ &= 1- (1-\alpha)^m\\
+& \leq m\alpha
+  (\#eq:bonferroni)
+\end{align}
+
+With $\alpha = 5$% and $m=4$ tests, $\alpha^{\star} \approx 0.185$ whereas for $m=72$ tests, $\alpha^{\star} \approx 0.975$: this means we are almost guaranteed even when nothing is going on to find "statistically significant" yet meaningless results.
+
+<div class="figure" style="text-align: center">
+<img src="figures/xkcd882_significant.png" alt="xkcd 882: Significant. The alt text is 'So, uh, we did the green study again and got no link. It was probably a--' 'RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!'" width="85%" />
+<p class="caption">(\#fig:xkcdsignificant)xkcd 882: Significant. The alt text is 'So, uh, we did the green study again and got no link. It was probably a--' 'RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!'</p>
+</div>
+
+It is sensible to try and reduce or bound the number of false positive. We consider a **family** of $m$ null hypothesis $\mathscr{H}_{01}, \ldots, \mathscr{H}_{0m}$ tested. The family may dependent on the context, but this comprises all hypothesis that are scientifically relevant and could be reported. These comparisons are called **pre-planned comparisons**: they should be chosen before the experiment takes place and pre-registered to avoid data dredging and selective reporting. The number of planned comparisons should be kept small relative to the number of parameters: for a one-way ANOVA, a general rule of thumb is to make no more comparisons than the number of groups, $K$.
+
+Suppose that we perform $m$ hypothesis test in a study and define
+\begin{align}
+R_i &= \begin{cases} 1 & \text{if we reject }  \mathscr{H}_{0i} \\
+0 & \text{if we fail to reject } \mathscr{H}_{0i}
+\end{cases}\\
+V_i &=\begin{cases} 1 & \text{type I error for } \mathscr{H}_{0i}\quad  (R_i=1 \text{ and  }\mathscr{H}_{0i} \text{ is true}) \\ 0 & \text{otherwise} 
+\end{cases}
+\end{align}
+where $R=R_1 + \cdots + R_m$ is the total number of rejections ($0 \leq R \leq m$), and $V = V_1 + \cdots + V_m$ is the number of null hypothesis rejected by mistake ($0 \leq V \leq R$). 
+
+The **familywise error rate** is the probability of making at least one type I error per family, 
+\begin{align*}
+\mathsf{FWER} = \Pr(V \geq 1).
+\end{align*}
+To control the familywise error rate, one must be more stringent in rejecting the null and perform each test with a smaller level so that the overall or simultaneous probability is less than $\mathsf{FWER}$.
+
+
+
+### Bonferroni's procedure
+
+The easiest way (and one of the least powerful option) is to directly use the inequality in eq. \@ref(eq:bonferroni). If each test is performed at level $\alpha/m$, than the family-wise error is controlled at level $\alpha$.
+
+
+
+The Bonferroni adjustment also controls the **per-family error rate**, which is the expected (theoretical average) number of false positive $\mathsf{PFER} = \mathsf{E}(V)$. The latter is a more stringent criterion than the familywise error rate because $\Pr(V \geq 1) \leq \mathsf{E}(V)$, which does not make a distinction between having one or multiple type I errors.^[By definition, $\mathsf{E}(V) = \sum_{i=1}^m i \Pr(V=i) \leq \sum_{i=1}^m \Pr(V=i) = \Pr(V \geq 1)$ so any procedure that controls the per-family error rate also automatically bounds the familywise error rate.] 
+
+Why is Bonferroni's procedure popular? It is conceptually easy to understand and simple, and it applies to any design and regardless of the dependence between the tests. However, the number of tests to adjust for, $m$, must be prespecified and the procedure leads to low power when the family is large. Moreover, if our sole objective is to control for the familywise error rate, then there are other procedures that are always better in the sense that they still control the $\mathsf{FWER}$ while leading to increased capacity of detection when the null is false.
+
+
+
+If the raw (i.e., unadjusted) $p$-values are reported, we reject hypothesis $\mathscr{H}_{0i}$ if $m \times p_i \ge \alpha$: we multiply each $p$-value by $m$ and reject if the result exceeds $\alpha$.
+
+
+### Holm-Bonferroni's procedure
+
+The idea of Holm's procedure is to use a sharper inequality bound and amounts to performing tests at different levels, with more stringent for smaller $p$-values.
+
+Order the $p$-values of the family of $m$ tests from smallest to largest
+$p_{(1)} \leq \cdots \leq p_{(m)}$ and test sequentially the hypotheses. Coupling Holm's method with Bonferroni's procedure, we compare $p_{(1)}$ to $\alpha_{(1)} = \alpha/m$, $p_{(2)}$ to $\alpha_{(2)}=\alpha/(m-1)$, etc. 
+
+If all of the $p$-values are less than their respective levels, than we still reject each null hypothesis. Otherwise, we reject all the tests whose $p$-values exceeds the smallest nonsignificant one. If $p_{(j)} \geq \alpha_{(j)}$ but $p_{(i)} \leq \alpha_{(i)}$ for $i=1, \ldots, j-1$ (all smaller $p$-values), we reject the associated hypothesis $\mathscr{H}_{0(1)}, \ldots, \mathscr{H}_{0(j-1)}$ but fail to reject $\mathscr{H}_{0(j)}, \ldots, \mathscr{H}_{0(m)}$.
+
+This procedure doesn't control the per-family error rate, but is uniformly more powerful and thus leads to increased detection than Bonferroni's method.
+
+To see this, consider a family of $m=3$ $p$-values with values $0.01$, $0.04$ and $0.02$. Bonferroni's adjustment would lead us to reject the second and third hypotheses at level $\alpha=0.05$, but not Holm-Bonferroni.
+
+
 
 ## Model assumptions
 
@@ -240,7 +332,7 @@ Equation \@ref(eq:additive) also implies that the effect of the treatment is con
 
 The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals $y_{ik} - \widehat{\mu}_k$. Specifically, the unbiased variance estimator is the denominator of the $F$-statistic formula, i.e., the within sum of squares divided by $n-K$ with $n$ the total number of observations and $K$ the number of groups under comparison.
 
-For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett's test^[For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the $\chi^2$ approximation to the null distribution.] and Levene's test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is $\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K$ against the alternative that at least two differ. The Bartlett test statistic has a $\chi^2$ null distribution with $K-1$ degrees of freedom, whereas Levene's test has an $F$-distribution with ($K$, $n-K$) degrees of freedom: it is equivalent to doing a one-way anova, but using the absolute value of the centered residuals, $|y_{ik} - \widehat{\mu}_k|$ as observations.
+For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett's test^[For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the $\chi^2$ approximation to the null distribution.] and Levene's test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is $\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K$ against the alternative that at least two differ. The Bartlett test statistic has a $\chi^2$ null distribution with $K-1$ degrees of freedom, whereas Levene's test has an $F$-distribution with ($K$, $n-K$) degrees of freedom: it is equivalent to computing the one-way ANOVA $F$-statistic with the absolute value of the centered residuals, $|y_{ik} - \widehat{\mu}_k|$, as observations.
 
 
 ```r
@@ -251,7 +343,6 @@ bartlett.test(score ~ group,
 #> 
 #> data:  score by group
 #> Bartlett's K-squared = 2, df = 4, p-value = 0.7
-
 car::leveneTest(score ~ group,
                 data = arithmetic,
                 center = mean)
@@ -273,7 +364,7 @@ oneway.test(absresid ~ group,
 ```
 We can see in both cases that the $p$-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch's ANOVA. It is most commonly encountered in the case of two groups ($K=2$) and is the default option in **R** with `t.test` or `oneway.test` (option `var.equal = TRUE`).
 
-What happens with the example of the arithmetic dat when we use this instead of the usual $F$ statistic? Well, the null distribution is still $F$, but with different parameters and the degrees of freedom parameters are based on a complicated formula and take non integer values. Here, the evidence is overwhelming. Generally, the only drawback of using Welch over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and having enough observations in each of the group to reliably estimate a separate variance term: this means that there are $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
+What happens with the example of the arithmetic data when we use this instead of the usual $F$ statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch's ANOVA over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and the need to have enough observations in each of the group to reliably estimate a separate variance term. For Welch's ANOVA, we have to estimate $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
 
 
 ```r
@@ -297,18 +388,18 @@ oneway.test(score ~ group, data = arithmetic,
 
 Notice how the degrees of freedom of the denominator have decreased. If we use `pairwise.t.test` with argument `pool.sd=FALSE`, this amounts to running Welch $t$-tests separately for each pair of variable.
 
-What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power.
+What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power. The following toy example illustrates this.
 
 :::{ .example name="Violation of the null hypothesis of equal variance"}
 
-We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics.
+
 
 <div class="figure" style="text-align: center">
 <img src="03-completely_randomized_trials_files/figure-html/simuWelchnull-1.png" alt="Histogram of the null distribution of $p$-values obtained through simulation using the classical analysis of variance $F$-test (left) and Welch's unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins used for the display." width="85%" />
 <p class="caption">(\#fig:simuWelchnull)Histogram of the null distribution of $p$-values obtained through simulation using the classical analysis of variance $F$-test (left) and Welch's unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins used for the display.</p>
 </div>
 
-Figure \@ref(fig:simuWelchnull) shows the results for a toy example with simulated data, but the display is striking. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be 4.76% for the Welch statistic. By contrast, we reject 28.95% of the time with the $F$-test: this is a large share of innocents sentenced to jail based on false premises! While not always as striking in terms of consequence, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group and using a statistic that makes minimal assumptions.
+We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics. Figure \@ref(fig:simuWelchnull) shows the results. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be 4.76% for the Welch statistic, not far from the level. By contrast, we reject 28.95% of the time with the one-way ANOVA global $F$-test: this is a large share of innocents sentenced to jail based on false premises! While the size distotion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.
 
 :::
 
@@ -316,9 +407,9 @@ There are alternative graphial ways of checking the assumption of equal variance
 
 ### Normality
 
-There is a persistent claim yet incorrect in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples,. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
+There is a persistent yet incorrect claim in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
 
-While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not very different at $n=19$ than at $n=20$. How large must the sample size be for the Holy grail? It largely depends on the population: the more extremes, skewness, etc. you have, the large the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far with $n=50$ for heavy-tailed data.
+While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not very different at $n=19$ than at $n=20$. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far off with $n=50$ for heavy-tailed data.
 
 
 <div class="figure" style="text-align: center">
@@ -327,13 +418,11 @@ While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$
 </div>
 
 
-It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions.
-
-The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot: 
+It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions. The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot.
 
 ### Independence
 
-While I am not allowed to talk of independence as a Quebecer^[All credits for this pun are due to C. Genest], this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample. Independence isn't easy to diagnostic, but may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.
+While I am not allowed to talk of independence as a Quebecer^[All credits for this pun are due to C. Genest], this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample.  Independence may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.
 
 :::{ .example name="Independence of measurements"}
 
@@ -343,8 +432,7 @@ There are many hidden ways in which measurements can impact the response. Physic
 
 Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.
 
-What is the impact of dependence between measurements?
-Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also more changes, but for $n$ large the impact is less than that of the scaling since the $F(d_1, d_2)$ distribution is approximately $\chi^2(d_1)$ when $d_2$ is large.]
+What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also changes with the sample size, but for $n$ large the impact is less than that of the scaling since the $F(d_1, d_2)$ distribution is approximately $\chi^2(d_1)$ when $d_2$ is large.]
 
 
 
