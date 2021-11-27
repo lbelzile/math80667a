@@ -23,7 +23,7 @@ For example, the sample mean of a sample of size $n$ is the sum of its elements 
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye will however notice that the sample means are less dispersed around $\mu$ than the individual measurements. This is because the sample mean $\overline{Y}$ is based on multiple observations, so there is more information available. This is a fundamental principle of statistics: information accumulated as you get more information, so estimation becomes less noisy.
+We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around $\mu$ than the individual measurements, as the sample mean $\overline{Y}$ is based on multiple observations. This is a fundamental principle of statistics: information accumulates as you get more data.
 
 Since values of the sample mean don't tell the whole picture, we may also consider their variability. The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where \begin{align*}
 S^2_n &= \frac{1}{n-1} \sum_{i=1}^n (X_i-\overline{X})^2.
@@ -348,9 +348,9 @@ In the first experiment, managers were also asked to rank applications on their 
 
 > Mean rating for the male candidate was 4.73 compared to a mean rating of 4.25 for the female candidate ($F=4.76$, $\text{df} = 1/80$, $p < .05$)
 
-In itself, this information isn't sufficient: we don't know what test statistic was used (the $\chi^2$ value seemingly doesn't correspond to the chi-square test or is incorrectly reported), and more importantly the degrees of freedom (80) are much too few compared to the number of observations, implying non-response that isn't discussed.
+The degrees of freedom (80) are much too few compared to the number of observations, implying non-response that isn't discussed.
 
-Partial or selective reporting of statistical procedures hinders reproducibility. There are many improvements that would have possible in the presentation, including explicitly stating the name of the test, the sample size, mean and variance estimates, the null distribution and its parameters, if any. Without these, we are left to speculate.
+Partial or selective reporting of statistical procedures hinders reproducibility. In general, the  presentation should explicitly state the name of the test statistic employed, the sample size, mean and variance estimates, the null distribution used to assess significance and its parameters, if any. Without these, we are left to speculate.
 
 :::
 

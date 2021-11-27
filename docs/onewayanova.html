@@ -7,16 +7,16 @@
 <title>3 One way analysis of variance | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
 <meta name="description" content="This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.24.2 with bs4_book()">
 <meta property="og:title" content="3 One way analysis of variance | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
 <meta property="og:description" content="This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3 One way analysis of variance | Experimental Design and Statistical Methods">
 <meta name="twitter:description" content="This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.0/transition.js"></script><script src="libs/bs3compat-0.3.0/tabs.js"></script><script src="libs/bs3compat-0.3.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -100,6 +100,24 @@ group
 mean
 </th>
 <th style="text-align:right;">
+ng
+</th>
+<th style="text-align:right;">
+se
+</th>
+<th style="text-align:right;">
+lowonese
+</th>
+<th style="text-align:right;">
+uponese
+</th>
+<th style="text-align:right;">
+lower
+</th>
+<th style="text-align:right;">
+upper
+</th>
+<th style="text-align:right;">
 contrasts
 </th>
 <th style="text-align:right;">
@@ -114,7 +132,19 @@ intercept
 <td style="text-align:right;">
 </td>
 <td style="text-align:right;">
-19.67
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+20
 </td>
 <td style="text-align:right;">
 21.00
@@ -126,6 +156,24 @@ control 1
 </td>
 <td style="text-align:right;">
 19.7
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+1.40
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+21.1
+</td>
+<td style="text-align:right;">
+16.4
+</td>
+<td style="text-align:right;">
+22.9
 </td>
 <td style="text-align:right;">
 </td>
@@ -141,7 +189,25 @@ control 2
 18.3
 </td>
 <td style="text-align:right;">
--1.33
+9
+</td>
+<td style="text-align:right;">
+1.19
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+19.5
+</td>
+<td style="text-align:right;">
+15.6
+</td>
+<td style="text-align:right;">
+21.1
+</td>
+<td style="text-align:right;">
+-1
 </td>
 <td style="text-align:right;">
 -2.67
@@ -155,7 +221,25 @@ praised
 27.4
 </td>
 <td style="text-align:right;">
-7.78
+9
+</td>
+<td style="text-align:right;">
+0.82
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+28.3
+</td>
+<td style="text-align:right;">
+25.6
+</td>
+<td style="text-align:right;">
+29.3
+</td>
+<td style="text-align:right;">
+8
 </td>
 <td style="text-align:right;">
 6.44
@@ -169,7 +253,25 @@ reproved
 23.4
 </td>
 <td style="text-align:right;">
-3.78
+9
+</td>
+<td style="text-align:right;">
+1.03
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+24.5
+</td>
+<td style="text-align:right;">
+21.1
+</td>
+<td style="text-align:right;">
+25.8
+</td>
+<td style="text-align:right;">
+4
 </td>
 <td style="text-align:right;">
 2.44
@@ -183,7 +285,25 @@ ignored
 16.1
 </td>
 <td style="text-align:right;">
--3.56
+9
+</td>
+<td style="text-align:right;">
+1.21
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+17.3
+</td>
+<td style="text-align:right;">
+13.3
+</td>
+<td style="text-align:right;">
+18.9
+</td>
+<td style="text-align:right;">
+-4
 </td>
 <td style="text-align:right;">
 </td>
@@ -209,7 +329,7 @@ The term on the left is a measure of the variability for the null model (<span c
 F &amp;= \frac{\text{between-group variability}}{\text{within-group variability}} \\&amp;= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
 \tag{3.1}
 \end{align}\]</span>
-If there is no difference in mean, the <em>F</em>-statistic follows in large sample a <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.<a href="onewayanova.html#eq:Fstatheuristic">(3.1)</a> as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of <em>parameters estimates</em> for the mean (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;There are only &lt;span class="math inline"&gt;\(K\)&lt;/span&gt; parameter estimates for the mean, since the overall mean is full determined by the other averages with &lt;span class="math inline"&gt;\(n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K\)&lt;/span&gt;.&lt;/p&gt;'><sup>5</sup></a></p>
+If there is no difference in mean, the <em>F</em>-statistic follows in large sample a <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.<a href="onewayanova.html#eq:Fstatheuristic">(3.1)</a> as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of <em>parameters estimates</em> for the mean (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a href="references.html#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 <p>Figure <a href="onewayanova.html#fig:squareddistanova">3.1</a> shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:squareddistanova"></span>
@@ -256,9 +376,15 @@ Figure 3.4: Box-and-whiskers plot
 </div>
 <p><span class="citation">T. L. Weissgerber et al. (<a href="references.html#ref-Weissgerber:2019" role="doc-biblioref">2019</a>)</span> contains many examples of how to build effective visualizations, including highlighting particular aspects using color, jittering, transparency and how to adequately select the display zone.</p>
 </div>
-<div id="model-assumptions" class="section level2" number="3.4">
+<div id="multiple-testing" class="section level2" number="3.4">
 <h2>
-<span class="header-section-number">3.4</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.4</span> Multiple testing<a class="anchor" aria-label="anchor" href="#multiple-testing"><i class="fas fa-link"></i></a>
+</h2>
+<p>The more you look, the more you find.</p>
+</div>
+<div id="model-assumptions" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions"><i class="fas fa-link"></i></a>
 </h2>
 <p>So far, we have brushed all of the model assumptions under the carpet. These are necessary requirements for the inference to be valid: any statement related to <em>p</em>-values, level of the test, etc. will approximately hold only if a set of assumptions is met in the first place. This section is devoted to the discussion of these assumptions, showing examples</p>
 <p>The basic assumption of most designs is that we can decompose the outcome into two components <span class="citation">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span>
@@ -281,9 +407,9 @@ Figure 3.5: Data satisfying the assumptions of the one-way analysis of variance 
 </p>
 </div>
 <p>More generally, the test statistic may make further assumptions. The <span class="math inline">\(F\)</span>-test of the global null <span class="math inline">\(\mu_1 = \cdots \mu_K\)</span> assumes that the <span class="math inline">\(i\)</span>th observation of group <span class="math inline">\(k\)</span>, say <span class="math inline">\(y_{ik}\)</span>, has average <span class="math inline">\(\mathsf{E}(Y_{ik}) = \mu_k\)</span> and variance <span class="math inline">\(\mathsf{Va}(Y_{ik}) = \sigma^2\)</span>. The latter is estimated using all of the residuals, with <span class="math inline">\(\widehat{\sigma}^2 = \sum_k\sum_i (y_{ik} - \widehat{\mu}_k)^2/(n-K)\)</span>. Under these assumptions, the <span class="math inline">\(F\)</span>-test statistic for the global null <span class="math inline">\(\mu_1 = \cdots = \mu_K\)</span> is the most powerful because it uses all of the data to get a more precise estimation of the variability. Generally, there may be other considerations than power that may guide the choice of test statistic, including robustness (sensitivity to extremes and outliers). For unequal variance, other statistics than the <span class="math inline">\(F\)</span>-test statistic may be more powerful.</p>
-<div id="additivity" class="section level3" number="3.4.1">
+<div id="additivity" class="section level3" number="3.5.1">
 <h3>
-<span class="header-section-number">3.4.1</span> Additivity<a class="anchor" aria-label="anchor" href="#additivity"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5.1</span> Additivity<a class="anchor" aria-label="anchor" href="#additivity"><i class="fas fa-link"></i></a>
 </h3>
 <div class="example">
 <p><span id="exm:unlabeled-div-8" class="example"><strong>Example 3.2  (Additivity and transformations) </strong></span>Chapter 2 of <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarden students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a <strong>paired experiment</strong> and take as outcome the difference in sociability scores at the beginning and at the end of the school year.</p>
@@ -309,12 +435,12 @@ Figure 3.6: Difference in average response; while the treatment seems to lead to
 </p>
 </div>
 </div>
-<div id="heterogeneity" class="section level3" number="3.4.2">
+<div id="heterogeneity" class="section level3" number="3.5.2">
 <h3>
-<span class="header-section-number">3.4.2</span> Heterogeneity<a class="anchor" aria-label="anchor" href="#heterogeneity"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5.2</span> Heterogeneity<a class="anchor" aria-label="anchor" href="#heterogeneity"><i class="fas fa-link"></i></a>
 </h3>
 <p>The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals <span class="math inline">\(y_{ik} - \widehat{\mu}_k\)</span>. Specifically, the unbiased variance estimator is the denominator of the <span class="math inline">\(F\)</span>-statistic formula, i.e., the within sum of squares divided by <span class="math inline">\(n-K\)</span> with <span class="math inline">\(n\)</span> the total number of observations and <span class="math inline">\(K\)</span> the number of groups under comparison.</p>
-<p>For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett’s test<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the &lt;span class="math inline"&gt;\(\chi^2\)&lt;/span&gt; approximation to the null distribution.&lt;/p&gt;'><sup>6</sup></a> and Levene’s test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is <span class="math inline">\(\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K\)</span> against the alternative that at least two differ. The Bartlett test statistic has a <span class="math inline">\(\chi^2\)</span> null distribution with <span class="math inline">\(K-1\)</span> degrees of freedom, whereas Levene’s test has an <span class="math inline">\(F\)</span>-distribution with (<span class="math inline">\(K\)</span>, <span class="math inline">\(n-K\)</span>) degrees of freedom: it is equivalent to doing a one-way anova, but using the absolute value of the centered residuals, <span class="math inline">\(|y_{ik} - \widehat{\mu}_k|\)</span> as observations.</p>
+<p>For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett’s test<a href="references.html#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> and Levene’s test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is <span class="math inline">\(\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K\)</span> against the alternative that at least two differ. The Bartlett test statistic has a <span class="math inline">\(\chi^2\)</span> null distribution with <span class="math inline">\(K-1\)</span> degrees of freedom, whereas Levene’s test has an <span class="math inline">\(F\)</span>-distribution with (<span class="math inline">\(K\)</span>, <span class="math inline">\(n-K\)</span>) degrees of freedom: it is equivalent to computing the one-way ANOVA <span class="math inline">\(F\)</span>-statistic with the absolute value of the centered residuals, <span class="math inline">\(|y_{ik} - \widehat{\mu}_k|\)</span>, as observations.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/bartlett.test.html">bartlett.test</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">group</span>,
               data <span class="op">=</span> <span class="va">arithmetic</span><span class="op">)</span>
@@ -343,7 +469,7 @@ Figure 3.6: Difference in average response; while the treatment seems to lead to
 <span class="co">#&gt; data:  absresid and group</span>
 <span class="co">#&gt; F = 2, num df = 4, denom df = 40, p-value = 0.2</span></code></pre></div>
 <p>We can see in both cases that the <span class="math inline">\(p\)</span>-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch’s ANOVA. It is most commonly encountered in the case of two groups (<span class="math inline">\(K=2\)</span>) and is the default option in <strong>R</strong> with <code>t.test</code> or <code>oneway.test</code> (option <code>var.equal = TRUE</code>).</p>
-<p>What happens with the example of the arithmetic dat when we use this instead of the usual <span class="math inline">\(F\)</span> statistic? Well, the null distribution is still <span class="math inline">\(F\)</span>, but with different parameters and the degrees of freedom parameters are based on a complicated formula and take non integer values. Here, the evidence is overwhelming. Generally, the only drawback of using Welch over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and having enough observations in each of the group to reliably estimate a separate variance term: this means that there are <span class="math inline">\(2K\)</span> parameters (one mean and one variance per group), rather than <span class="math inline">\(K+1\)</span> parameters for the one-way ANOVA (one mean per group, one overall variance).</p>
+<p>What happens with the example of the arithmetic data when we use this instead of the usual <span class="math inline">\(F\)</span> statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch’s ANOVA over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and the need to have enough observations in each of the group to reliably estimate a separate variance term. For Welch’s ANOVA, we have to estimate <span class="math inline">\(2K\)</span> parameters (one mean and one variance per group), rather than <span class="math inline">\(K+1\)</span> parameters for the one-way ANOVA (one mean per group, one overall variance).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Welch ANOVA</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/oneway.test.html">oneway.test</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">arithmetic</span>, 
@@ -362,45 +488,43 @@ Figure 3.6: Difference in average response; while the treatment seems to lead to
 <span class="co">#&gt; data:  score and group</span>
 <span class="co">#&gt; F = 15, num df = 4, denom df = 40, p-value = 1e-07</span></code></pre></div>
 <p>Notice how the degrees of freedom of the denominator have decreased. If we use <code>pairwise.t.test</code> with argument <code>pool.sd=FALSE</code>, this amounts to running Welch <span class="math inline">\(t\)</span>-tests separately for each pair of variable.</p>
-<p>What are the impacts of unequal variance if we use the <span class="math inline">\(F\)</span>-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level <span class="math inline">\(\alpha\)</span> as claimed) and potential loss of power.</p>
+<p>What are the impacts of unequal variance if we use the <span class="math inline">\(F\)</span>-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level <span class="math inline">\(\alpha\)</span> as claimed) and potential loss of power. The following toy example illustrates this.</p>
 <div class="example">
-<p><span id="exm:unlabeled-div-10" class="example"><strong>Example 3.4  (Violation of the null hypothesis of equal variance) </strong></span>We consider for simplicity a problem with <span class="math inline">\(K=2\)</span> groups, which is the two-sample <span class="math inline">\(t\)</span>-test. We simulated 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>, comparing the distribution of the <span class="math inline">\(p\)</span>-values for the Welch and the <span class="math inline">\(F\)</span>-test statistics.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:simuWelchnull"></span>
+<span id="exm:unlabeled-div-10" class="example"><strong>Example 3.4  (Violation of the null hypothesis of equal variance) </strong></span>
 <img src="03-completely_randomized_trials_files/figure-html/simuWelchnull-1.png" alt="Histogram of the null distribution of $p$-values obtained through simulation using the classical analysis of variance $F$-test (left) and Welch's unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins used for the display." width="85%"><p class="caption">
 Figure 3.7: Histogram of the null distribution of <span class="math inline">\(p\)</span>-values obtained through simulation using the classical analysis of variance <span class="math inline">\(F\)</span>-test (left) and Welch’s unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>. The uniform distribution would have 5% in each of the 20 bins used for the display.
 </p>
 </div>
-<p>Figure <a href="onewayanova.html#fig:simuWelchnull">3.7</a> shows the results for a toy example with simulated data, but the display is striking. The percentage of <span class="math inline">\(p\)</span>-values less than <span class="math inline">\(\alpha=0.05\)</span> based on 10 000 replicates is estimated to be 4.76% for the Welch statistic. By contrast, we reject 28.95% of the time with the <span class="math inline">\(F\)</span>-test: this is a large share of innocents sentenced to jail based on false premises! While not always as striking in terms of consequence, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group and using a statistic that makes minimal assumptions.</p>
+<p>We consider for simplicity a problem with <span class="math inline">\(K=2\)</span> groups, which is the two-sample <span class="math inline">\(t\)</span>-test. We simulated 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>, comparing the distribution of the <span class="math inline">\(p\)</span>-values for the Welch and the <span class="math inline">\(F\)</span>-test statistics. Figure <a href="onewayanova.html#fig:simuWelchnull">3.7</a> shows the results. The percentage of <span class="math inline">\(p\)</span>-values less than <span class="math inline">\(\alpha=0.05\)</span> based on 10 000 replicates is estimated to be 4.76% for the Welch statistic, not far from the level. By contrast, we reject 28.95% of the time with the one-way ANOVA global <span class="math inline">\(F\)</span>-test: this is a large share of innocents sentenced to jail based on false premises! While the size distotion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.</p>
 </div>
 <p>There are alternative graphial ways of checking the assumption of equal variance, many including the standardized residuals <span class="math inline">\(r_{ik} = (y_{ik} - \widehat{\mu}_k)/\widehat{\sigma}\)</span> against the fitted values <span class="math inline">\(\widehat{\mu}_k\)</span>. We will cover these in later sections.</p>
 </div>
-<div id="normality" class="section level3" number="3.4.3">
+<div id="normality" class="section level3" number="3.5.3">
 <h3>
-<span class="header-section-number">3.4.3</span> Normality<a class="anchor" aria-label="anchor" href="#normality"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5.3</span> Normality<a class="anchor" aria-label="anchor" href="#normality"><i class="fas fa-link"></i></a>
 </h3>
-<p>There is a persistent claim yet incorrect in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable <span class="math inline">\(F\)</span>-test. With normal data and equal variances, the eponymous distributions of the <span class="math inline">\(F\)</span> and <span class="math inline">\(t\)</span> tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples,. This <a href="http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html">applet</a> lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in <a href="onewayanova.html#fig:Fdistpermut">3.2</a>, where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.</p>
-<p>While many authors may advocate rules of thumbs (sample size of <span class="math inline">\(n&gt;20\)</span> or <span class="math inline">\(n&gt;30\)</span> per group, say), these rules are arbitrary: the approximation is not very different at <span class="math inline">\(n=19\)</span> than at <span class="math inline">\(n=20\)</span>. How large must the sample size be for the Holy grail? It largely depends on the population: the more extremes, skewness, etc. you have, the large the number of observation must be in order for the approximation to be valid. Figure <a href="onewayanova.html#fig:clt">3.8</a> shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with <span class="math inline">\(n=5\)</span> observations (bottom left), the approximation is not bad but it may still be very far with <span class="math inline">\(n=50\)</span> for heavy-tailed data.</p>
+<p>There is a persistent yet incorrect claim in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable <span class="math inline">\(F\)</span>-test. With normal data and equal variances, the eponymous distributions of the <span class="math inline">\(F\)</span> and <span class="math inline">\(t\)</span> tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This <a href="http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html">applet</a> lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in <a href="onewayanova.html#fig:Fdistpermut">3.2</a>, where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.</p>
+<p>While many authors may advocate rules of thumbs (sample size of <span class="math inline">\(n&gt;20\)</span> or <span class="math inline">\(n&gt;30\)</span> per group, say), these rules are arbitrary: the approximation is not very different at <span class="math inline">\(n=19\)</span> than at <span class="math inline">\(n=20\)</span>. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure <a href="onewayanova.html#fig:clt">3.8</a> shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with <span class="math inline">\(n=5\)</span> observations (bottom left), the approximation is not bad but it may still be very far off with <span class="math inline">\(n=50\)</span> for heavy-tailed data.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:clt"></span>
 <img src="03-completely_randomized_trials_files/figure-html/clt-1.png" alt="Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases." width="85%"><p class="caption">
 Figure 3.8: Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases.
 </p>
 </div>
-<p>It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions.</p>
-<p>The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot:</p>
+<p>It is important to keep in mind that all statistical statements are typically approximate and their reliability depends on the sample size: too small a sample may hampers the strength of your conclusions. The default graphic for checking whether a sample matches a postulated distribution is the quantile-quantile plot.</p>
 </div>
-<div id="independence" class="section level3" number="3.4.4">
+<div id="independence" class="section level3" number="3.5.4">
 <h3>
-<span class="header-section-number">3.4.4</span> Independence<a class="anchor" aria-label="anchor" href="#independence"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5.4</span> Independence<a class="anchor" aria-label="anchor" href="#independence"><i class="fas fa-link"></i></a>
 </h3>
-<p>While I am not allowed to talk of independence as a Quebecer<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;All credits for this pun are due to C. Genest&lt;/p&gt;"><sup>7</sup></a>, this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample. Independence isn’t easy to diagnostic, but may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.</p>
+<p>While I am not allowed to talk of independence as a Quebecer<a href="references.html#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>, this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample. Independence may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.</p>
 <div class="example">
 <p><span id="exm:unlabeled-div-11" class="example"><strong>Example 3.5  (Independence of measurements) </strong></span>There are many hidden ways in which measurements can impact the response. Physical devices that need to be calibrated before use (scales, microscope) require tuning: if measurements are done by different experimenters or on different days, it may impact and add systematic shift in means for the whole batch.</p>
 </div>
 <p>Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.</p>
-<p>What is the impact of dependence between measurements?
-Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the <span class="math inline">\(F\)</span>-test is the sample variance, which is based on the within sum of squares divided by <span class="math inline">\(n-K\)</span>. If each observation is counted 10 times, say, then the real number of measurements is <span class="math inline">\(n\)</span> but the <span class="math inline">\(F\)</span> statistic gets multiplied by a factor 10.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The null distribution also more changes, but for &lt;span class="math inline"&gt;\(n\)&lt;/span&gt; large the impact is less than that of the scaling since the &lt;span class="math inline"&gt;\(F(d_1, d_2)\)&lt;/span&gt; distribution is approximately &lt;span class="math inline"&gt;\(\chi^2(d_1)\)&lt;/span&gt; when &lt;span class="math inline"&gt;\(d_2\)&lt;/span&gt; is large.&lt;/p&gt;'><sup>8</sup></a></p>
+<p>What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the <span class="math inline">\(F\)</span>-test is the sample variance, which is based on the within sum of squares divided by <span class="math inline">\(n-K\)</span>. If each observation is counted 10 times, say, then the real number of measurements is <span class="math inline">\(n\)</span> but the <span class="math inline">\(F\)</span> statistic gets multiplied by a factor 10.<a href="references.html#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:plotLevelIndep"></span>
 <img src="03-completely_randomized_trials_files/figure-html/plotLevelIndep-1.png" alt="Size of the $F$-test of equality of means for the one way ANOVA with data from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%." width="85%"><p class="caption">
@@ -412,7 +536,6 @@ Figure 3.9: Size of the <span class="math inline">\(F\)</span>-test of equality 
 </div>
 </div>
 </div>
-
   <div class="chapter-nav">
 <div class="prev"><a href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></div>
 <div class="next"><a href="reproducibility-crisis.html"><span class="header-section-number">4</span> Reproducibility crisis</a></div>
@@ -425,12 +548,13 @@ Figure 3.9: Size of the <span class="math inline">\(F\)</span>-test of equality 
 <a class="nav-link" href="#parametrizations-and-contrasts"><span class="header-section-number">3.2</span> Parametrizations and contrasts</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#sum-of-squares-decomposition"><span class="header-section-number">3.2.1</span> Sum of squares decomposition</a></li></ul>
 </li>
 <li><a class="nav-link" href="#graphical-representation"><span class="header-section-number">3.3</span> Graphical representation</a></li>
+<li><a class="nav-link" href="#multiple-testing"><span class="header-section-number">3.4</span> Multiple testing</a></li>
 <li>
-<a class="nav-link" href="#model-assumptions"><span class="header-section-number">3.4</span> Model assumptions</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#additivity"><span class="header-section-number">3.4.1</span> Additivity</a></li>
-<li><a class="nav-link" href="#heterogeneity"><span class="header-section-number">3.4.2</span> Heterogeneity</a></li>
-<li><a class="nav-link" href="#normality"><span class="header-section-number">3.4.3</span> Normality</a></li>
-<li><a class="nav-link" href="#independence"><span class="header-section-number">3.4.4</span> Independence</a></li>
+<a class="nav-link" href="#model-assumptions"><span class="header-section-number">3.5</span> Model assumptions</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#additivity"><span class="header-section-number">3.5.1</span> Additivity</a></li>
+<li><a class="nav-link" href="#heterogeneity"><span class="header-section-number">3.5.2</span> Heterogeneity</a></li>
+<li><a class="nav-link" href="#normality"><span class="header-section-number">3.5.3</span> Normality</a></li>
+<li><a class="nav-link" href="#independence"><span class="header-section-number">3.5.4</span> Independence</a></li>
 </ul>
 </li>
 </ul>

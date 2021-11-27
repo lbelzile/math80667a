@@ -96,3 +96,16 @@ Methods for controlling multiplicity
 
 Thinking outside the box: no free lunch.
 
+
+library(tidyverse)
+ng <- 5
+k <- 15
+n <- ng*k
+set.seed(123456)
+fakesamp <- data.frame(response = rnorm(n = n, sd = 2) + rep(rgamma(n = ng, scale = 2, shape = 10), each = k),
+                       group = rep(LETTERS[1:ng], each = k))
+centeredfakesamp <- fakesamp %>% group_by(group) %>% mutate(response = as.numeric(scale(response, scale = FALSE)))
+g1 <- ggplot(data = fakesamp, mapping = aes(x = group, y = response, col = group)) + 
+  geom_point() + theme(legend.position = "none")
+g1
+

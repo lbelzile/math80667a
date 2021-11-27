@@ -579,6 +579,16 @@ oneway.test(score ~ group, data = arithmetic,
 
 Notice how the degrees of freedom of the denominator have decreased. If we use `pairwise.t.test` with argument `pool.sd=FALSE`, this amounts to running Welch $t$-tests separately for each pair of variable.
 
+
+```{r unequalvarianceplot, echo = FALSE, eval = FALSE}
+fakesamp <- data.frame(response = rnorm(n = 25, sd = 2) + rep(rgamma(n = 5, scale = 2, shape = 5), each = 5),
+		       group = rep(LETTERS[1:5], each = 5))
+centeredfakesamp <- fakesamp %>% group_by(group) %>% mutate(response = as.numeric(scale(response, scale = FALSE)))
+g1 <- ggplot(data = fakesamp, mapping = aes(x = group, y = response, col = group)) + 
+	geom_point() + theme(legend.position = "none")
+
+```
+
 What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power. The following toy example illustrates this.
 
 :::{ .example name="Violation of the null hypothesis of equal variance"}
