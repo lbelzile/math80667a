@@ -100,7 +100,7 @@ and the usual $t$-statistic is
 T &= \frac{\overline{X}-0}{S_n/\sqrt{n}}
 (\#eq:ttest)
 \end{align}
-where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$ and the denominator of \@ref(eq:ttest) is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. The precision of the sample mean increases proportionally to the square root of the sample size: the standard error gets halved if we double the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance.
+where $\overline{X}$ is the sample mean of $X_1, \ldots, X_n$ and the denominator of \@ref(eq:ttest) is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. The precision (reciprocal variance) of the sample mean increases proportionally to the sample size, so the standard error gets halved if we quadruple the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_1 - \overline{Y}_0$ for treatment group $T_1$ and control $T_0$. Assuming equal variance, the denominator is estimated using the pooled variance.
 
 
 ### Null distribution and _p_-value
