@@ -3,28 +3,16 @@
 ```{r flowcharttests, echo = FALSE, fig.cap = "Flowchart of statistical tests (Figure 1.1 from @McElreath:2020)."}
 knitr::include_graphics("figures/flowchart_stat_tests_McElreath.png")
 ```
-
-Richard McElreath in the [first chapter](http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf) of his book [@McElreath:2020] draws a parallel between statistical tests and golems (i.e., robots): neither
-
-> discern when the context is inapropriate for its answers. It just knows its own procedure [...] It just does as it's told.
-
-The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations: most common research questions cannot be answered by simple tools. Researchers wishing to perform innovative methodological research should contact experts and consult with statisticians **before** they collect their data to get information on how best to proceed for what they have in mind so as to avoid the risk of making misleading and false claims based on incorrect analysis or data collection.
+----
 
 
-Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution. The latter can be represented graphically using an histogram or a density plot if the data are continuous, or a bar plot for discrete or categorical measurements.
+For example, for a random sample $Y_1, \ldots, Y_n$ from a normal distribution $\mathsf{No}(\mu, \sigma)$, the ($1-\alpha$) confidence interval for the population mean $\mu$ is
+\begin{align*}
+\overline{Y} \pm t_{n-1, \alpha/2} \frac{S}{\sqrt{n}}
+\end{align*}
+where $t_{n-1,\alpha/2}$ is the $1-\alpha/2$ quantile of a Student-$t$ distribution with $n-1$ degrees of freedom.
 
-```{r distributionplot, fig.cap = "Graphical representation of the distribution of outcomes for continuous (left) and discrete (right) data."}
-set.seed(1234)
-samp1 <- c(round(TruncatedNormal::rtmvt(n = 100, 
-                                mu = 80, 
-                                sigma = matrix(20),
-                                df = 2,
-                                lb = 0, ub = 100)))
-ggplot(data = data.frame(samp1)) + 
-  geom_histogram(aes(x=samp1, y = ..density..))
-
-```
-
+---
 
 Many technical statistics terms are sometimes encountered in discussions. For example,
 
@@ -49,3 +37,38 @@ follows a Student-*t* distribution with $n-1$ degrees of freedom, denoted $\math
 
 
 To calculate the power of a test, we need to single out a specific alternative hypothesis: for example, the one-sample *t*-test statistic $T=\sqrt{n}(\overline{X}_n-\mu_0)/S_n \sim \mathcal{T}_{n-1}$ for a normal sample follows a noncentral Student-$t$ distribution with noncentrality parameter $\Delta$ if the expectation of the population is $\Delta + \mu_0$. In general, such closed-form expressions are not easily obtained and we compute instead the power of a test through Monte Carlo methods. 
+
+
+
+
+
+## Pairwise tests {pairwise-tests}
+
+If the global test of equality of mean for the one-way ANOVA leads to rejection of the null, the conclusion is that one of the group has a different mean. However, the test does not indicate which of the groups differ from the rest nor does it say how many are different. If there are $K$ groups to compare and any comparison is of interest, than we could performs $\binom{K}{2}$ pairwise comparisons with $\mathscr{H}_{0}: \mu_i = \mu_j$ for $i \neq j$. For $K=3$, there are three comparisons, 10 if $K=5$ and 45 if $K=10$.
+
+Assuming equal variances, the two-sample $t$-test statistic is
+\begin{align*}
+t_{ij} = \frac{\widehat{\mu}_i - \widehat{\mu}_j}{\widehat{\sigma} \left(\frac{1}{n_i} + \frac{1}{n_j}\right)^{1/2}} = \frac{\widehat{\mu}_i - \widehat{\mu}_j}{\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right)},
+\end{align*}
+where $\widehat{\mu}_i$ and $n_i$ are respectively the sample average and the number of observations of group $i$ $\widehat{\sigma}$ the standard deviation estimate derived using the whole sample. As usual, the denominator of $t_{ij}$ is the standard error of the $\widehat{\mu}_i - \widehat{\mu}_j$, whose postulated difference is zero. We can compare the value of the observed statistic to a Student-$t$ distribution with $n-K$ degrees of freedom, denoted $\mathsf{St}(n-K)$. For a two-sided alternative, we reject if $|t_{ij}| > \mathfrak{t}_{1-\alpha/2}$, for $\mathfrak{t}_{1-\alpha/2}$ the $1-\alpha/2$ quantile of $\mathsf{St}(n-K)$.
+
+Another way of presenting the same conclusion is to write the set of values for which we fail to reject $\mathscr{H}_0$ as $\mathfrak{t}_{\alpha/2} \leq t_{ij} \leq \mathfrak{t}_{1-\alpha/2}$^[Note that the Student-$t$ distribution is symmetric, so $\mathfrak{t}_{1-\alpha/2} = -\mathfrak{t}_{\alpha/2}$.], which is equivalent to the $(1-\alpha)$ confidence interval
+\begin{align*}
+\mathsf{CI} = \left[\mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right), \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right)\right].
+\end{align*}
+
+The comparison above is termed least significant difference (LSD), but 
+
+## Multiple testing
+
+If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of $\alpha$ of making a type I error if the null is true, meaning when there is no difference between averages in the underlying population. The problem of the above approach is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a $p$-value less than 5\%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. The level $\alpha=5$\% is essentially arbitrary: @Tukey:1926 wrote
+
+> If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
+
+Not all tests are of interest, even if standard software will report all possible pairwise comparisons. However, the number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project [@OSC:2015]: this number ranged from 4 to 700, with an average of 72 per study. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure \@ref(fig:xkcdsignificant)
+
+```{r xkcdsignificant, fig.cap = "xkcd 882: Significant. The alt text is 'So, uh, we did the green study again and got no link. It was probably a--' 'RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!'", echo = FALSE, eval = TRUE}
+knitr::include_graphics("figure/xkcd882_
+```
+
+ 

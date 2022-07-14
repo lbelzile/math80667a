@@ -1,0 +1,12 @@
+
+## Power
+
+
+To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible. For a given alternative, we 
+
+- simulate repeatedly samples from the model from the hypothetical alternative world
+- we compute the test statistic for each of these new samples
+- we transform these to the associated *p*-values based on the postulated null hypothesis.
+
+At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$.
+

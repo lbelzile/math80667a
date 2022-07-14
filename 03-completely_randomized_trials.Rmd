@@ -1,40 +1,48 @@
-# One way analysis of variance {#onewayanova}
+# Completely randomized designs {#CRT}
 
-This chapter focuses on the one way analysis of variance. The objective is to present some of the basic concepts surrounding hypothesis test, model validation, multiple testing, the interplay between power, effect size and sample size, etc. with the easiest possible model to build intuition for these concepts. They readily generalized to more complicated linear models.
+This chapter focuses on experiments where potentially multiple factors of interest are manipulated by the experimenter to study their impact. If the allocation of observational units to each treatment combination is completely random, the resulting experiment is a completely randomized design.
+
+
+Most of the time, we will be interest in comparing the average response for each treatment combination: this underlies the analysis of variance model. 
+
+
+The objective is to present some of the basic concepts surrounding  hypothesis test, model validation, multiple testing, the interplay between power, effect size and sample size, etc. with the easiest possible model to build intuition for these concepts. They are readily generalized to more complicated linear models.
 
 The one-way analysis of variance describes the most simple experimental setup one can consider: completely randomized experiments with one factor, in which we are solely interested in the effect of a single treatment variable with multiple levels. 
 
 The focus is on comparisons of the average of a single outcome variable with $K$ different treatments levels, each defining a sub-population differing only in the treatment they received. 
 
-## Hypothesis tests for the one-way analysis of variance 
+## One-way analysis of variance 
 
 A **one-way analysis of variance** compares the sample averages of each treatment group $T_1, \ldots, T_K$ to try and determine if the population averages could be the same. Since we have $K$ groups, there will be $K$ averages (one per group) to estimate. 
 
-Let $\mu_1, \ldots, \mu_K$ denote the expectation (theoretical mean) of each of the $K$ sub-populations defined by the different treatments. Lack of difference between treatments is equivalent to equality of means, which translates into the hypotheses
+Let $\mu_1, \ldots, \mu_K$ denote the theoretical (unknown) mean (aka expectation) of each of the $K$ sub-populations defined by the different treatments. Lack of difference between treatments is equivalent to equality of means, which translates into the hypotheses
 \begin{align*}
 \mathscr{H}_0: & \mu_1 = \cdots = \mu_K \\
 \mathscr{H}_a: & \text{at least two treatments have different averages, }
 \end{align*}
 The null hypothesis is, as usual, a single numerical value, $\mu$. The alternative consists of all potential scenarios for which not all expectations are equal. Going from $K$ averages to one requires imposing $K-1$ restrictions (the number of equality signs), as the value of the global mean $\mu$ is left unspecified. 
 
-## Parametrizations and contrasts
+
+
+### Parametrizations and contrasts
 
 The most natural parametrization is in terms of group averages: the (theoretical unknown) average for treatment $T_j$ is $\mu_j$, so we obtain $K$ parameters $\mu_1, \ldots, \mu_K$ whose estimates are the sample averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$. One slight complication arising from the above is that the values of the population average are unknown, so this formulation is ill-suited for hypothesis testing because none of the $\mu_i$ values are known in practice and we need to make comparisons in terms of a known numerical value. 
 
 The most common parametrization is in terms of **constrasts** (or mean differences) relative to a reference group (say $T_1$). The theoretical average of each group is written as $\mu_1 + a_i$ for treatment $T_i$, where $a_1=0$ for $T_1$ and $a_i = \mu_i-\mu_1$ otherwise. The parameters are $\mu_1, a_2, \ldots, a_K$.
 
-An equivalent formulation writes for each treatment group the average of subpopulation $j$ as $\mu_j = \mu + \delta_j$, where $\delta_j$ is the difference between the treatment average $\mu_j$ and the global average of all groups. Imposing the constraint $\delta_1 + \cdots + \delta_K=0$ ensures that the average of effects equals $\mu$. Thus, if we know any $K-1$ of $\{\delta_1, \ldots, \delta_K\}$, we automatically can deduce the last one is automatically known. 
+An equivalent formulation writes for each treatment group the average of subpopulation $j$ as $\mu_j = \mu + \delta_j$, where $\delta_j$ is the difference between the treatment average $\mu_j$ and the global average of all groups. Imposing the constraint $\delta_1 + \cdots + \delta_K=0$ ensures that the average of effects equals $\mu$. Thus, if we know any $K-1$ of $\{\delta_1, \ldots, \delta_K\}$, we automatically can deduce the last one. 
 
 :::{ .example name="Impact of encouragement on teaching"}
 
 In **R**, the `lm` function fits a linear model based on a formula of the form `response ~ explanatory`. If the explanatory is categorical (i.e., a factor), the parameters of this model are the intercept, which is the sample average of the baseline group and the other parameters are simply contrasts, i.e., the $a_i$'s.
 
-In the sum-to-zero parametrization, obtained with `contrasts = list(... = contr.sum)`, where the ellipsis is replaced by the name of the categorical variable. In this parametrization, the intercept is the average of each treatment average, $(\widehat{\mu}_1 + \cdots + \widehat{\mu}_5)/5$; this need not coincide with the (overall) mean of the response $\widehat{\mu} = \overline{y}$ unless the sample is balanced, meaning that the number of observations in each group is the same. The other coefficients of the sum-to-zero parametrization are the differences between this intercept and the group means. Since the group means is zero, we can deduce that of the last group from the sum of the others.
+The sum-to-zero parametrization is obtained with `contrasts = list(... = contr.sum)`, where the ellipsis is replaced by the name of the categorical variable; an easier alternative is `aov`, which enforces this parametrization by default. With the sum-to-zero parametrization, the intercept is the average of each treatment average, $(\widehat{\mu}_1 + \cdots + \widehat{\mu}_5)/5$; this need not coincide with the (overall) mean of the response $\widehat{\mu} = \overline{y}$ unless the sample the number of observations in each group is the same.^[We say a sample is balanced if each (sub)group contains the same number of observations.] The other coefficients of the sum-to-zero parametrization are the differences between this intercept and the group means. 
 
 
 We show the function call to fit a one-way ANOVA in the different parametrizations along with the sample average of each arithmetic group (the two controls who were taught separately and the groups that were praised, reproved and ignored in the third class). Note that the omitted category changes depending on the parametrization.
 
-```{r arithmeticLoadData, eval = TRUE, echo = FALSE, cache = TRUE, message = FALSE, error = FALSE}
+```{r arithmeticLoadData, eval = TRUE, echo = FALSE, cache = FALSE, message = FALSE, error = FALSE}
 url <- "https://edsm.rbind.io/data/arithmetic.csv"
 arithmetic <- read_csv(url, show_col_types = FALSE) %>%
   mutate(group = factor(group,  
@@ -50,8 +58,6 @@ summary_stats <-
   summarize(mean = mean(score),
             ng = n(), # sample size in each group
             se = sd(score)/sqrt(ng),
-            lowonese = mean - se,
-            uponese = mean + se,
             lower = mean - qt(0.975, df = ng - 1)*se, 
             upper = mean + qt(0.975, df = ng - 1)*se)
 ```
@@ -67,6 +73,7 @@ mod_sum2zero <- lm(score ~ group,
 summary_stats <- summary_stats %>% 
   add_row(tibble(group = factor("intercept"), 
                  mean = NA), .before = 1) %>%
+   select(group, mean) |>
   add_column(contrasts = c(coef(mod_contrast)[1], NA, coef(mod_contrast)[-1]),
              "sum-to-zero" = c(coef(mod_sum2zero), NA))
 options(knitr.kable.NA = '')
@@ -212,7 +219,7 @@ g2 <- ggplot() +
 g1 + g2
 ```  
   
-If there is no mean difference (null), the numerator is an estimator of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
+If there is no mean difference (null hypothesis), the numerator is an estimator of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio is approximately one on average. 
 
 How reliable is the $F$-statistic approximation? We can assess this by simulating from the null model, repeatedly drawing samples with similar characteristics (same mean and overall variance) and computing the test statistic on each replicate. However, we only have one sample at hand so this little numerical exercise wouldn't work in practice.
 
@@ -344,6 +351,7 @@ g1 + g2
 ```
 
 
+
 ## Graphical representation
 
 How to represent data in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful. It is also important to keep in mind that summary statistics are estimators of population quantities that are perhaps unreliable (much too variable) in small samples to be meaningful quantities. Since the mean estimates will likely be reported in the text, the graphics should be used to convey additional information about the data. If the samples are extremely large, then graphics will be typically be used to present salient features of the distributions.
@@ -382,8 +390,7 @@ g2 <- ggplot(data = summary_stats,
              position = position_nudge(y = -0.1)) + 
   geom_errorbar(mapping = aes(ymin = lower, 
                               ymax = upper),
-                width = 0.1,
-                alpha = 0.1,
+                width = 0.5,	
                 position = position_nudge(y = -0.1)) +
   geom_dotplot(data = arithmetic,
              mapping = aes(x = group, 
@@ -405,7 +412,7 @@ In a one-way analysis of variance, the outcome is a continuous numerical variabl
 
 Scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line if the data are continuous. 
 
-Journals are plagued with poor visualisations, a prime example of which is the infamous [dynamite plot](https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/): it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of Figure \@ref(fig:dynamiteplot) shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms and the like and a boxplot would also be useless: a summary of nine numbers isn't really needed as there aren't enough data to justify this dimension reduction step. @Weissgerber:2015 discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.
+Journals are plagued with poor visualisations, a prime example of which is the infamous [dynamite plot](https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/): it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of Figure \@ref(fig:dynamiteplot) shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms: a summary of nine numbers isn't really needed. @Weissgerber:2015 discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.
 
 If we have a lot of data, it sometimes help to represent selected summary statistics or group data. A box-and-whiskers plot (or boxplot) is a commonly used graphic representing the whole data distribution using five numbers
 
@@ -420,34 +427,83 @@ knitr::include_graphics('figures/01-intro-boxplot.png')
 
 @Weissgerber:2019 contains many examples of how to build effective visualizations, including highlighting particular aspects using color, jittering, transparency and how to adequately select the display zone. 
 
-## Pairwise tests {#pairwise-tests}
+## Pairwise tests
 
-If the global test of equality of mean for the one-way ANOVA leads to rejection of the null, the conclusion is that one of the group has a different mean. However, the test does not indicate which of the groups differ from the rest nor does it say how many are different. If there are $K$ groups to compare and any comparison is of interest, than we could performs $\binom{K}{2}$ pairwise comparisons with $\mathscr{H}_{0}: \mu_i = \mu_j$ for $i \neq j$. For $K=3$, there are three comparisons, 10 if $K=5$ and 45 if $K=10$.
+If the global test of equality of mean for the one-way ANOVA leads to rejection of the null, the conclusion is that one of the group has a different mean. However, the test does not indicate which of the groups differ from the rest nor does it say how many are different. There are different options: one is custom contrasts, a special instance of which is pairwise comparisons.
+
+
+
 
 Assuming equal variances, the two-sample $t$-test statistic is
 \begin{align*}
 t_{ij} = \frac{\widehat{\mu}_i - \widehat{\mu}_j}{\widehat{\sigma} \left(\frac{1}{n_i} + \frac{1}{n_j}\right)^{1/2}},
 \end{align*}
-where $\widehat{\mu}_i$ and $n_i$ are respectively the sample average and the number of observations of group $i$ $\widehat{\sigma}$ the standard deviation estimate derived using the whole sample. As usual, the denominator of $t_{ij}$ is the standard error of the $\widehat{\mu}_i - \widehat{\mu}_j$, whose postulated difference is zero. We can compare the value of the observed statistic to a Student-$t$ distribution with $n-K$ degrees of freedom, denoted $\mathsf{St}(n-K)$. For a two-sided alternative, we reject if $|t_{ij}| > \mathfrak{t}_{1-\alpha/2}$, for $\mathfrak{t}_{1-\alpha/2}$ the $1-\alpha/2$ quantile of $\mathsf{St}(n-K)$.
+where $\widehat{\mu}_i$ and $n_i$ are respectively the sample average and the number of observations of group $i$, and $\widehat{\sigma}$ is the estimator of the standard deviation derived using the whole sample (assuming equal variance). As usual, the denominator of $t_{ij}$ is the standard error of the $\widehat{\mu}_i - \widehat{\mu}_j$, whose postulated difference is zero. We can compare the value of the observed statistic to a Student-$t$ distribution with $n-K$ degrees of freedom, denoted $\mathsf{St}(n-K)$. For a two-sided alternative, we reject if $|t_{ij}| > \mathfrak{t}_{1-\alpha/2}$, for $\mathfrak{t}_{1-\alpha/2}$ the $1-\alpha/2$ quantile of $\mathsf{St}(n-K)$.
 
 
-We fail to reject $\mathscr{H}_0$ as $\mathfrak{t}_{\alpha/2} \leq t_{ij} \leq \mathfrak{t}_{1-\alpha/2}$^[Note that the Student-$t$ distribution is symmetric, so $\mathfrak{t}_{1-\alpha/2} = -\mathfrak{t}_{\alpha/2}$.]: this gives us another way of presenting the same conclusion in terms of the set of mean differences $\mu_i - \mu_j$ for which 
+Figure \@ref(fig:tcurve) shows the density of the benchmark distribution for pairwise comparisons in mean for the `arithmetic` data. The blue area under the curve defines the set of values for which we fail to reject the null hypothesis, whereas all values of the test statistic falling in the red area lead to rejection at level $5$%.
+
+```{r tcurve, eval = TRUE, fig.cap = "Student-_t_ null distribution and rejection region for a _t_-test."}
+ggplot() +
+  coord_cartesian(xlim = c(-5,5), 
+                  ylim = c(0, 0.5), 
+                  expand = FALSE) +
+  stat_function(fun = dt, 
+                args = list(df = 40), 
+                xlim = c(qt(0.975, df = 40),5),
+                geom = "area", 
+                fill = "red", 
+                alpha = 0.2) +
+    stat_function(fun = dt, 
+                args = list(df = 40), 
+                xlim = c(-5, qt(0.025, df = 40)),
+                geom = "area", 
+                fill = "red", 
+                alpha = 0.2) +
+    stat_function(fun = dt, 
+                args = list(df = 40), 
+                xlim = c(qt(0.025, df = 40), qt(0.975, df = 40)),
+                geom = "area", 
+                fill = "blue", 
+                alpha = 0.2) + 
+    stat_function(fun = dt, 
+    xlim = c(-5,5),
+                args = list(df = 40), n = 1000) + 
+       theme_classic() + labs(y = "density", x = "")
+```
+
+
+We fail to reject $\mathscr{H}_0$ as $\mathfrak{t}_{\alpha/2} \leq t_{ij} \leq \mathfrak{t}_{1-\alpha/2}$^[Note that the Student-$t$ distribution is symmetric, so $\mathfrak{t}_{1-\alpha/2} = -\mathfrak{t}_{\alpha/2}$.]: this gives us another way of presenting the same conclusion in terms of the set of mean differences $\delta_{ij} = \mu_i - \mu_j$ for which 
 \begin{align*}
- \mathfrak{t}_{\alpha/2} \leq \frac{(\widehat{\mu}_i - \widehat{\mu}_j) - (\mu_i - \mu_j)}{\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right)} \leq \mathfrak{t}_{1-\alpha/2}
+ \mathfrak{t}_{\alpha/2} \leq \frac{\widehat{\delta}_{ij} - \delta_{ij}}{\mathsf{se}\left(\widehat{\delta}_{ij}\right)} \leq \mathfrak{t}_{1-\alpha/2}
 \end{align*}
-which is equivalent to the $(1-\alpha)$ confidence interval
+which is equivalent upon rearranging to the $(1-\alpha)$ confidence interval for $\delta$, 
 \begin{align*}
-\mathsf{CI} = \left[\widehat{\mu}_i - \widehat{\mu}_j + \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right), \widehat{\mu}_i - \widehat{\mu}_j + \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\mu}_i - \widehat{\mu}_j\right)\right].
+\mathsf{CI} = \left[\widehat{\delta}_{ij} + \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right), \widehat{\delta}_{ij} + \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right)\right].
 \end{align*}
+
+
+:::{.example name="Pairwise comparison"}
+
+We consider the pairwise average difference in scores between the praised (group C) and the reproved (group D) of the `arithmetic` study. The sample averages are respectively $\widehat{\mu}_C = 27.4$ and $\widehat{\mu}_D = 23.4$ and the estimated pooled standard deviation for the five groups is $1.15$. Thus, the estimated average difference between groups $C$ and $D$ is $\widehat{\delta}_{CD} = 4$ and the standard error for the difference is $\mathsf{se}(\widehat{\delta}_{CD}) = 1.6216$; all of these are calculated by software.
+
+If we take as null hypothesis $\mathscr{H}_0: \delta_{CD}=0$, the $t$ statistic is 
+\begin{align*}t=\frac{\widehat{\delta}_{CD} - 0}{\mathsf{se}(\widehat{\delta}_{CD})} = \frac{4}{1.6216}=2.467
+\end{align*}
+and the $p$-value is $p=0.018$. We therefore reject the null hypothesis at level $\alpha=0.05$ to conclude that there is a significant difference (at level $\alpha=0.05$) between the average scores of students praised and reproved.
+
+:::
 
 
 ## Multiple testing
 
-If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of $\alpha$ of making a type I error if the null is true, meaning when there is no difference between averages in the underlying population. The problem of the above approach is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a $p$-value less than 5\%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. The level $\alpha=5$\% is essentially arbitrary: @Pearson:1926 wrote
+If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of $\alpha$ of making a type I error if the null is true, meaning when there is no difference between averages in the underlying population. The problem of the above approach is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a $p$-value less than 5\%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. The level $\alpha=5$\% is essentially arbitrary: @Fisher:1926 wrote
 
 > If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
 
-Not all tests are of interest, even if standard software will report all possible pairwise comparisons. However, the number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project [@Nosek:2015]: this number ranged from 4 to 700, with an average of 72 per study --- most studies did not account for the fact they were performing multiple tests or selected the model. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in Figure \@ref(fig:xkcdsignificant): note how there is little scientific backing for the theory (thus such test shouldn't be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.
+Not all tests are of interest, even if standard software will report all possible pairwise comparisons. If there are $K$ groups to compare and any comparison is of interest, than we could performs $\binom{K}{2}$ pairwise comparisons with $\mathscr{H}_{0}: \mu_i = \mu_j$ for $i \neq j$. For $K=3$, there are three such comparisons, 10 pairwise comparisons if $K=5$ and 45 pairwise comparisons if $K=10$. 
+
+The number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project [@Nosek:2015]: this number ranged from 4 to 700, with an average of 72 per study --- most studies did not account for the fact they were performing multiple tests or selected the model. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in Figure \@ref(fig:xkcdsignificant): note how there is little scientific backing for the theory (thus such test shouldn't be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.
 
 Why is this a problem? Assume for simplicity that all tests are independent^[This is the case if tests are based on different data, or if the contrasts considered are orthogonal under normality.] and that each test is conducted at level $\alpha$. The probability of making at least one type I error, say $\alpha^{\star}$, is^[The second line holds with independent observations, the second follows from the use of Boole's inequality and does not require independent tests.]
 \begin{align}\alpha^{\star} &= 1 – \text{probability of making no type I error} \\\ &= 1- (1-\alpha)^m\\
@@ -517,18 +573,18 @@ So far, we have brushed all of the model assumptions under the carpet. These are
 
 The basic assumption of most designs is that we can decompose the outcome into two components [@Cox:1958]
 \begin{align}
-\begin{pmatrix} \text{quantity depending only } \\ 
-\text{on the particular unit} 
-\end{pmatrix} + 
 \begin{pmatrix} \text{quantity depending} \\
- \text{on the treatment used}\end{pmatrix}
+ \text{on the treatment used}\end{pmatrix} +
+ \begin{pmatrix} \text{quantity depending only } \\
+\text{on the particular unit} 
+\end{pmatrix}
  (\#eq:additive)
 \end{align}
-This **additive** decomposition further assumes that each unit is unaffected by (i.e., independent of) the treatment of the other units and that the average effect of the treatment is constant. This notably means that usually the difference between treatments can be estimated by the difference in sample means.
+This **additive** decomposition further assumes that each unit is unaffected by the treatment of the other units and that the average effect of the treatment is constant. Thus, it is justified to use difference in sample mean to estimate the treatment effect since on average, the individual effect is zero. 
 
 It is customary to write the $i$th observation of the $k$th group in the  one-way analysis of variance model as
 $Y_{ik} = \mu_k + \varepsilon_{ik}$,
-where the error term, which accounts for unexplained variability and individual differences, has mean zero and variance $\sigma^2$. Many graphical diagnostics use residuals $y_{ik} - \widehat{\mu}_k$ to look for violation of the assumptions.
+where the error term, which accounts for unexplained variability and individual differences, has mean zero and variance $\sigma^2$. Many graphical diagnostics use residuals, i.e., some variant of the observations minus the group mean $y_{ik} - \widehat{\mu}_k$, to look for violation of the assumptions.
 
 ```{r assumptions, echo = FALSE, fig.cap = "Data satisfying the assumptions of the one-way analysis of variance model, with additive effects, independent observations and common variance.", cache = TRUE}
 set.seed(43221)
@@ -586,7 +642,7 @@ This example is adapted from @Cox:1958, Example 2.2. Children suffering from att
 
 Equation \@ref(eq:additive) also implies that the effect of the treatment is constant for all individuals. This often isn't the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable. The solution to this would be to setup a more complex model (two-way analysis of variance, general linear model) or stratify by the explanatory variable (for example, compute the difference within each level).
 
-```{r omittedlinearity, echo = FALSE, eval = TRUE, message = FALSE, fig.cap = "Difference in average response; while the treatment seems to lead to a decrease in the response variable, a stratification by age group reveals this only occurs in less than 25 group, with a seemingly reversed effect for the adults. Thus, the marginal model implied by the one-way analysis of variance is possibly misleading or not useful."}
+```{r omittedlinearity, echo = FALSE, eval = TRUE, message = FALSE, fig.cap = "Difference in average response; while the treatment seems to lead to a decrease in the response variable, a stratification by age group reveals this only occurs in less than 25 group, with a seemingly reversed effect for the adults. Thus, the marginal model implied by the one-way analysis of variance is misleading."}
 set.seed(1234)
 ngroup <- 2L
 nstrat <- 3L
@@ -652,7 +708,7 @@ oneway.test(absresid ~ group,
 ```
 We can see in both cases that the $p$-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch's ANOVA. It is most commonly encountered in the case of two groups ($K=2$) and is the default option in **R** with `t.test` or `oneway.test` (option `var.equal = TRUE`).
 
-What happens with the example of the arithmetic data when we use this instead of the usual $F$ statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch's ANOVA over the usual is lack of recognition of the former, a slight loss of power if the variance are equal and the need to have enough observations in each of the group to reliably estimate a separate variance term. For Welch's ANOVA, we have to estimate $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
+What happens with the example of the arithmetic data when we use this instead of the usual $F$ statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch's ANOVA over the usual is  the need to have enough observations in each of the group to reliably estimate a separate variance^[Coupled with a slight loss of power if the variance are truly equal, more later.]. For Welch's ANOVA, we have to estimate $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
 
 ```{r welchvsF, eval = TRUE, echo = TRUE}
 # Welch ANOVA
@@ -732,17 +788,17 @@ g2 <- ggplot(data = tibble("pvalue" = pvalsW),
 g1 + g2
 ```
 
-We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics. Figure \@ref(fig:simuWelchnull) shows the results. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be `r 100*mean(pvalsW < 0.05)`% for the Welch statistic, not far from the level. By contrast, we reject `r 100*mean(pvalsF < 0.05)`% of the time with the one-way ANOVA global $F$-test: this is a large share of innocents sentenced to jail based on false premises! While the size distotion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.
+We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics. Figure \@ref(fig:simuWelchnull) shows the results. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be `r 100*mean(pvalsW < 0.05)`% for the Welch statistic, not far from the level. By contrast, we reject `r 100*mean(pvalsF < 0.05)`% of the time with the one-way ANOVA global $F$-test: this is a large share of innocents sentenced to jail based on false premises! While the size distortion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.
 
 :::
 
-There are alternative graphial ways of checking the assumption of equal variance, many including the standardized residuals $r_{ik} = (y_{ik} - \widehat{\mu}_k)/\widehat{\sigma}$ against the fitted values $\widehat{\mu}_k$. We will cover these in later sections.
+There are alternative graphical ways of checking the assumption of equal variance, many including the standardized residuals $r_{ik} = (y_{ik} - \widehat{\mu}_k)/\widehat{\sigma}$ against the fitted values $\widehat{\mu}_k$. We will cover these in later sections.
 
 ### Normality
 
-There is a persistent yet incorrect claim in the literature that the data must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact. This is convenient for mathematical derivations, but these results hold approximately for large samples because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
+There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact: knowing the exact distribution does not due harm and is convenient for mathematical derivations. However, this condition is **unnecessary: the  results hold approximately for large samples  because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in Figure \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
 
-While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not very different at $n=19$ than at $n=20$. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far off with $n=50$ for heavy-tailed data.
+While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not much worst at $n=19$ than at $n=20$. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far off with $n=50$ for heavy-tailed data.
 
 
 ```{r clt, echo = FALSE, fig.cap="Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases."}

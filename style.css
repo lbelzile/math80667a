@@ -22,10 +22,9 @@ pre code {
     background-repeat: no-repeat;
     background-position: 15px center;
     min-height: 120px;
-    color: #FFFFFF;
-    background-color: #9678D3;
-    border: dashed 5px #FFFFFF;
-    background-image: url("figures/yourturn.png") 
+    background-color: #FFFFFF;
+    border: dashed 5px #9678D3;
+    background-image: url("figures/yourturn_c.png") 
  }
   
   
@@ -37,10 +36,9 @@ pre code {
     background-repeat: no-repeat;
     background-position: 15px center;
     min-height: 120px;
-    color: #FFFFFF;
-    background-color: #3DB5E6;
-    border: dashed 5px #FFFFFF;
-    background-image: url("figures/list.png")
+    background-color: #FFFFFF;
+    border: dashed 5px #3DB5E6;
+    background-image: url("figures/list_c.png")
   }
 .codingex{
     padding: 1em;
@@ -50,10 +48,9 @@ pre code {
     background-repeat: no-repeat;
     background-position: 15px center;
     min-height: 120px;
-    color: #000000;
-    background-color: #FFD200;
-    border: dashed 5px #FFFFFF;
-    background-image: url("figures/code.png") 
+    background-color: #FFFFFF;
+    border: dashed 5px #FFD200;
+    background-image: url("figures/code_c.png") 
 }
 
 .outsidethebox{
@@ -64,10 +61,9 @@ pre code {
     background-repeat: no-repeat;
     background-position: 15px center;
     min-height: 120px;
-    color: #FFFFFF;
-    background-color: #005EB8;
-    border: dashed 5px #FFFFFF;
-    background-image: url("figures/box.png") 
+    background-color: #FFFFFF;
+    border: dashed 5px #005EB8;
+    background-image: url("figures/box_c.png") 
 }
 
 .pitfall{
@@ -78,10 +74,9 @@ pre code {
     background-repeat: no-repeat;
     background-position: 15px center;
     min-height: 120px;
-    color: #FFFFFF;
-    background-color: #00BCB5;
-    border: dashed 5px #FFFFFF;
-    background-image: url("figures/important.png") 
+    background-color: #FFFFFF;
+    border: dashed 5px #00BCB5;
+    background-image: url("figures/important_c.png") 
 }
 
 .center {
