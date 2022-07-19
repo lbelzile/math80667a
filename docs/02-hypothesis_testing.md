@@ -34,18 +34,16 @@ It is important to note that most research questions cannot be answered by simpl
 
 Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution. 
 
-An hypothesis test will focus on one or multiple of these characteristics. Suppose we have two groups, control and treatment, whose population averages are $\mu_1$ and $\mu_2$ which we wish to compare.
+An hypothesis test will focus on one or multiple of these characteristics. Suppose we have two groups, control and treatment, whose population averages are $\mu_C$ and $\mu_T$ which we wish to compare.
 
 ::: { .example name="A/B testing"}
-Consider two webpage design: one is the current version (*status quo*) and the other implementation contains a clickable banner in a location where eyetracker suggest that viewers eyes spend more time or attention. The number of clicks on those headlines are what generate longer viewing, and thus higher revenues from advertisement. The characteristic of interest here would be the average click conversation rate, say $\mu_1$ and $\mu_2$, for each of the webpage design.
+Consider two webpage design: one is the current version (*status quo*) and the other implementation contains a clickable banner in a location where eyetracker suggest that viewers eyes spend more time or attention. The number of clicks on those headlines are what generate longer viewing, and thus higher revenues from advertisement. The characteristic of interest here would be the average click conversation rate for each of the webpage design.
 
 It is fairly simple to redirect traffic so that a random fraction gets assigned to the new design for study. After a suitable period of time, the data can be analyzed to see if the new webpage generates more clicks.
 
 :::
 
-People commonly look at the difference $\delta=\mu_2 - \mu_1$ as a measure of the effectiveness of the treatment.^[We could look at the ratio $\mu_2/\mu_1$ instead.] If we properly randomized observations in each subgroup and nothing else changes, then we can think of the difference in average, $\delta$, as being the impact of the treatment.
-
-Because we only have a sample at hand and not the population, we don't know for sure the values of $\mu_1$ and $\mu_2$. These quantities exist, but are unknown to us so the best we can do is estimate them using random samples that are drawn from the population. 
+People commonly look at the difference in average, say $\delta=\mu_T - \mu_C$ as a measure of the effectiveness of the treatment.^[We could look at the ratio $\mu_T/\mu_C$ instead.] If we properly randomized observations in each subgroup and nothing else changes, then this measures the impact of the treatment. Because we only have a sample at hand and not the whole population, we don't know for sure the values of $\mu_C$ and $\mu_T$. These quantities exist, but are unknown to us so the best we can do is estimate them using random samples that are drawn from the population. 
 
 
 We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe for cake). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value (the cake), which is a single realization and not random. In other words,
@@ -61,7 +59,7 @@ We call numerical summaries of the data **statistics**. Its important to disting
 </div>
 
 
-For example, we may use as estimand $\mu$,  the population average of $Y_1, \ldots$. The estimator will be sample mean of a sample of size $n$ is the sum of its elements divided by the sample size, $\overline{Y}=n^{-1}(Y_1 + \cdots + Y_n)$. The estimate for a given sample will be a numerical value, say 4.3.
+For example, we may use as estimand $\mu$,  the population average of $Y_1, \ldots$. The estimator will be sample mean of a sample of size $n$ is the sum of its elements divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate for a given sample will be a numerical value, say 4.3.
 
 Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won't get the exact same result every time.
 
@@ -80,7 +78,7 @@ To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random s
 <p class="caption">(\#fig:samplevar)Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample.</p>
 </div>
 
-We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around $\mu$ than the individual measurements, as the sample mean $\overline{Y}$ is based on multiple observations. This is a fundamental principle of statistics: information accumulates as you get more data.
+We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the overall average $\mu$ than the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data and the sample mean $\overline{Y}$ is based on multiple observations.
 
 Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
 
@@ -225,8 +223,21 @@ To make a decision, we compare our *p*-value $P$ with the level of the test $\al
 - if $P < \alpha$, we reject $\mathscr{H}_0$;
 - if $P \geq \alpha$, we fail to reject $\mathscr{H}_0$.
 
-Do not mix up level of the test (probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error is by definition $\alpha$ and does not depend on the *p*-value. The latter is conditional probability of observing a more extreme statistic given the null distribution $\mathscr{H}_0$ is true.
+Do not mix up level of the test (a probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error (condemning an innocent by mistake) is by definition $\alpha$ and does not depend on the *p*-value. The latter is a conditional probability of observing a more extreme statistic given the null distribution $\mathscr{H}_0$ is true.
 
+:::pitfall
+The [American Statistical Association (ASA) published a 
+list of principles](https://doi.org/10.1080/00031305.2016.1154108) guiding (mis)interpretation of _p_-values, some of which are reproduced below:
+
+> (2) _P_-values do not measure the probability that the studied hypothesis is true.
+
+> (3) Scientific conclusions and business or policy decisions should not be based only on whether a _p_-value passes a specific threshold.
+
+> (4) _P_-values and related analyses should not be reported selectively.
+
+> (5) _p_-value, or statistical significance, does not measure the size of an effect or the importance of a result.
+
+:::
 
 ::: { .example name="Gender inequality and permutation tests"}
 
@@ -264,9 +275,9 @@ We consider for simplicity only sex as a factor and aggregate over job for the $
 
 The null hypothesis of interest here that sex has no impact, so the probability of promotion is the same for men and women. Let $p_{\text{m}}$ and $p_{\text{w}}$ denote these respective probabilities; we can thus write mathematically the null hypothesis as $\mathscr{H}_0: p_{\text{m}} = p_{\text{w}}$ against the alternative $\mathscr{H}_a: p_{\text{m}} \neq p_{\text{w}}$.
 
-The test statistic typically employed for two by two contingency tables is a chi-square test^[If you have taken advanced modelling courses, this is a score test obtained by fitting a Poisson regression with `sex` and `action` as covariates; the null hypothesis corresponding to lack of interaction term between the two.], which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76\%, compared to 19/49 or ~49\% for female --- note that these are sample averages if we set `promote=1` and `hold file=0`. While it seems that this difference of 16\% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2\% for male and 3.4\% for female. 
+The test statistic typically employed for two by two contingency tables is a chi-square test^[If you have taken advanced modelling courses, this is a score test obtained by fitting a Poisson regression with `sex` and `action` as covariates; the null hypothesis corresponding to lack of interaction term between the two.], which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76\%, compared to 19/49 or ~49\% for female. While it seems that this difference of 16\% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2\% for male and 3.4\% for female. 
 
-If there was no discrimination based on sex, we would expect the proportion of people promoted to be the same overall; this is 51/93 =0.55 for the pooled sample. We could simply do a test for the mean difference, but rely instead on the chi-square test, which compares the expected counts (based on equal promotion rates) to the observed counts, suitably standardized. If the discrepancy is large between expected and observed, than this casts doubt on the validity of the null hypothesis.
+If there was no discrimination based on sex, we would expect the proportion of people promoted to be the same overall; this is 51/93 =0.55 for the pooled sample. We could simply do a test for the mean difference, but rely instead on the Pearson contingency $X^2_p$ (aka chi-square) test, which compares the expected counts (based on equal promotion rates) to the observed counts, suitably standardized. If the discrepancy is large between expected and observed, than this casts doubt on the validity of the null hypothesis.
 
 
 ```r

@@ -6,6 +6,19 @@ knitr::include_graphics("figures/flowchart_stat_tests_McElreath.png")
 ----
 
 
+For example, to test whether the mean of a population is zero, we set
+\begin{align*}
+\mathscr{H}_0: \mu=0, \qquad  \mathscr{H}_a:\mu \neq 0,
+\end{align*}
+and the usual $t$-statistic is
+\begin{align}
+T &= \frac{\overline{Y}-0}{S_n/\sqrt{n}}
+(\#eq:ttest)
+\end{align}
+where $\overline{Y}$ is the sample mean of $Y_1, \ldots, Y_n$ and the denominator of \@ref(eq:ttest) is the standard error of the sample mean, $\mathsf{se}(\overline{Y}) = \sigma/\sqrt{n}$. The precision (reciprocal variance) of the sample mean increases proportionally to the sample size, so the standard error gets halved if we quadruple the number of observations, but only decreases by a factor 10 if we have 100 times more observations. Similar calculations hold for the two-sample $t$-test, whereby $\widehat{\theta} = \overline{Y}_2 - \overline{Y}_1$ for treatment group $T_2$ and control $T_1$.^[Assuming equal variance, the denominator is estimated using the pooled variance estimator.]
+
+
+
 For example, for a random sample $Y_1, \ldots, Y_n$ from a normal distribution $\mathsf{No}(\mu, \sigma)$, the ($1-\alpha$) confidence interval for the population mean $\mu$ is
 \begin{align*}
 \overline{Y} \pm t_{n-1, \alpha/2} \frac{S}{\sqrt{n}}
@@ -67,8 +80,5 @@ If you do a single hypothesis test and the testing procedure is well calibrated 
 
 Not all tests are of interest, even if standard software will report all possible pairwise comparisons. However, the number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project [@OSC:2015]: this number ranged from 4 to 700, with an average of 72 per study. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure \@ref(fig:xkcdsignificant)
 
-```{r xkcdsignificant, fig.cap = "xkcd 882: Significant. The alt text is 'So, uh, we did the green study again and got no link. It was probably a--' 'RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!'", echo = FALSE, eval = TRUE}
-knitr::include_graphics("figure/xkcd882_
-```
 
  

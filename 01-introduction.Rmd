@@ -4,7 +4,11 @@
 
 The advancement of science is built on our ability to study and assess research hypotheses. This chapter covers the basic concepts of experiments, starting with vocabulary associated with the field. Emphasis is placed on the difference between experiments and observations.
 
-This course covers experimental designs.  In an experiment, the researcher manipulates one or more features (say the complexity of a text the person must read, or the type of advertisement campaign displayed, etc.) to study their impact. Observational data, such as that collected in survey, are not manipulated: the researcher merely observes differences for an outcome based on other characteristics without interfering. For example, an economist cannot change the interest rates to study their impact on mortage loan default, but can observe the impacts of a steep increase.
+This course covers experimental designs.  In an experiment, the researcher manipulates one or more features (say the complexity of a text the person must read, or the type of advertisement campaign displayed, etc.) to study their impact. The field of causal inference is concerned with inferring the effect of a treatment variable (sometimes called independent variable) on a response variable (dependent variable). In general, however [@Cox:1958]
+
+> effects under investigation tend to be masked by fluctuations outside the experimenter's control.
+
+The purpose of experiments is to arrange data collection so as to be capable of disentangling the differences due to treatment from those due to the (often large) intrinsic variation of the measurements. We typically expect differences between treatments (and thus the effect) to be *comparatively stable* relative to the measurement variation. 
 
 
 
@@ -19,28 +23,22 @@ This course covers experimental designs.  In an experiment, the researcher manip
 
 :::
 
-The field of causal inference is concerned with inferring the effect of a treatment variable (sometimes called independent variable) on a response variable (dependent variable). In general, however [@Cox:1958]
-
-> effects under investigation tend to be masked by fluctuations outside the experimenter's control.
-
-The purpose of experiments is to arrange data collection so as to be capable of disentangling the differences due to treatment from those due to the (often large) intrinsic variation of the measurements. We typically expect differences between treatments (and thus the effect) to be *comparatively stable* relative to the measurement variation. 
-
 
 ## Study type
 
 There are two main categories of studies: observational and experimental. The main difference between the two is treatment assignment. In observational studies, a feature or potential cause is measured, but not assigned by the experimenter. By contrast, the treatment assignment mechanism is fully determined by the experimenter in the latter case.
 
-For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to *directly* establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the factor. 
 
-The preceding paragraph shouldn't be taken to mean that one cannot get meaningful conclusions from observational studies. Rather, I wish to highlight that controlling for the non-random allocation and potential confounding is much more complicated, requires practitioners to make stronger (and sometimes unverifiable) assumptions and requires using a different toolbox (including, but not limited to differences in differences, propensity score weighting, instrumental variables).
+For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to *directly* establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the factor.^[The preceding paragraph shouldn't be taken to mean that one cannot get meaningful conclusions from observational studies. Rather, I wish to highlight that controlling for the non-random allocation and potential confounding is a much more complicated task, requires practitioners to make stronger (and sometimes unverifiable) assumptions and requires using a different toolbox (including, but not limited to differences in differences, propensity score weighting, instrumental variables). The book [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net/index.html) by Nick Huntington-Klein gives a gentle nontechnical introduction to some of these methods.]
 
 ```{r openintrograph, fig.cap = "Two by two classification matrix for experiments based on sampling and study type. Source: Mine Çetinkaya-Rundel and OpenIntro, distributed under the [CC BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/us/).", echo = FALSE}
 knitr::include_graphics("figures/random_sample_assignment.png")
 ```
 
-Figure \@ref(fig:openintrograph) summarizes the two preceding sections. Random allocation of both observational units and assignment to treatment leads to ideal studies, but may be impossible due to ethical considerations.
+Figure \@ref(fig:openintrograph) summarizes the two preceding sections. Random allocation of observational units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations. 
 
-
+:::keyidea
+ 
 
 ## Terminology
 
@@ -58,6 +56,7 @@ In its simplest form, an **experimental design** is a comparison of two or more 
 Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observational units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom). 
 
 Potential blocking factors for this experiment include the strength of individuals, which reflects their prior exposure to the topic, knowledge, maturity, etc. This could be measured using a preliminary exam before assignment of students to class groups is completed. Additional factors worth controlling for include timing of the classroom (morning, afternoon, evening classes) and instructors.
+
 :::
 
 :::yourturn
@@ -80,13 +79,29 @@ The main reason experiments should be preferred to collection of observational d
 relationships between interventions and outcomes as randomisation eliminates much of
 the bias inherent with other study designs
 
-:::pitfall name="Quasi experiments"
+:::{.pitfall #quasiexperiment
+
+**Quasi experiments**
 
 Sometimes, it is impossible or unethical to conduct an experiment. This seemingly precludes study many social phenomena, such as the effect on women and infantile mortality of strict bans on abortions. When changes in legislation occur (such as the Supreme court overturning Roe and Wade), this offers a window to compare neighbouring states.
 
 Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Economic Sciences for his work in experimental economics. One of his most cited paper is @Card.Krueger:1994, a study that looked at the impact of an increase in minimum wage on employment figures. @Card.Krueger:1994 used a planned increase of the minimum wage of $0.80 USD in New Jersey to make comparisons with neighbouring Eastern Pennsylvania counties by studying 410 fast food outlets. The authors found no evidence of a negative impact on employment of this hike.
 
 :::
+
+:::{.keyidea #internalexternalvalidity name="Point of terminology"}
+
+**Point of terminology: internal and external validity**
+
+
+A study from which we can study causal relationships is said to have **internal validity**. By design, experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal.
+
+In observational studies, disentangling causal relationship is more difficult. Correlation is not causation, and most phenomenon are complex with tens of variables potentially influencing both the factors under study and the response.
+
+**External validity** refers directly to generalizability of the conclusions of a study: \@ref(fig:openintrograph) shows that external validity is directly related to random sampling from the population
+
+:::
+
 
 ## Review of basic concepts
 
@@ -472,7 +487,7 @@ Replication studies done in university often draw participants from students enr
 
 
 ::: { .example name="Spratt-Archer barley in Ireland"}
-Example 1.9 in @Cox:1958 mentions recollections of ``Student'' on Spratt-Archer barley, a new variety of barley that performed well in experiments and which the Irish Department of Agriculture encouraged to have introduced elsewhere. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley was experimented in well-farmed areas. 
+Example 1.9 in @Cox:1958 mentions recollections of "Student"^[William Sealy Gosset] on Spratt-Archer barley, a new variety of barley that performed well in experiments and whose culture the Irish Department of Agriculture encouraged. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley had been experimented in well-farmed areas, exempt of nuisance. 
 :::
 
 ### Simplicity

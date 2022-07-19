@@ -49,8 +49,6 @@ fig:dynamiteplot
 fig:boxplot
 fig:tcurve
 exm:unlabeled-div-12
-eq:bonferroni
-fig:xkcdsignificant
 eq:additive
 fig:assumptions
 exm:unlabeled-div-13
@@ -96,9 +94,6 @@ parametrizations-and-contrasts
 sum-of-squares-decomposition
 graphical-representation
 pairwise-tests
-multiple-testing
-bonferronis-procedure
-holm-bonferronis-procedure
 model-assumptions
 additivity
 heterogeneity

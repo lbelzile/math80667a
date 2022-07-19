@@ -1,0 +1,13 @@
+# Block designs
+
+The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, there 
+
+::: yourturn
+
+- @Box:1978 write on page 103 the following moto:
+
+> Block what you can and randomize what you cannot.
+
+Explain the main benefit of blocking for confounding variables (when possible) over randomization.
+
+:::
