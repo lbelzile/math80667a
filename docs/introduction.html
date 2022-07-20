@@ -111,7 +111,7 @@ Figure 1.1: Two by two classification matrix for experiments based on sampling a
 </div>
 <p>Figure <a href="introduction.html#fig:openintrograph">1.1</a> summarizes the two preceding sections. Random allocation of observational units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations.</p>
 </div>
-<div id="terminology" class="section level2 keyidea" number="1.2">
+<div id="terminology" class="section level2" number="1.2">
 <h2>
 <span class="header-section-number">1.2</span> Terminology<a class="anchor" aria-label="anchor" href="#terminology"><i class="fas fa-link"></i></a>
 </h2>
@@ -144,7 +144,7 @@ Figure 1.1: Two by two classification matrix for experiments based on sampling a
 relationships between interventions and outcomes as randomisation eliminates much of
 the bias inherent with other study designs</p>
 </blockquote>
-<p>:::{.pitfall #quasiexperiment</p>
+<div id="quasiexperiment" class="pitfall">
 <p><strong>Quasi experiments</strong></p>
 <p>Sometimes, it is impossible or unethical to conduct an experiment. This seemingly precludes study many social phenomena, such as the effect on women and infantile mortality of strict bans on abortions. When changes in legislation occur (such as the Supreme court overturning Roe and Wade), this offers a window to compare neighbouring states.</p>
 <p>Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Economic Sciences for his work in experimental economics. One of his most cited paper is <span class="citation">Card and Krueger (<a href="references.html#ref-Card.Krueger:1994" role="doc-biblioref">1994</a>)</span>, a study that looked at the impact of an increase in minimum wage on employment figures. <span class="citation">Card and Krueger (<a href="references.html#ref-Card.Krueger:1994" role="doc-biblioref">1994</a>)</span> used a planned increase of the minimum wage of $0.80 USD in New Jersey to make comparisons with neighbouring Eastern Pennsylvania counties by studying 410 fast food outlets. The authors found no evidence of a negative impact on employment of this hike.</p>
@@ -154,6 +154,7 @@ the bias inherent with other study designs</p>
 <p>A study from which we can study causal relationships is said to have <strong>internal validity</strong>. By design, experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal.</p>
 <p>In observational studies, disentangling causal relationship is more difficult. Correlation is not causation, and most phenomenon are complex with tens of variables potentially influencing both the factors under study and the response.</p>
 <p><strong>External validity</strong> refers directly to generalizability of the conclusions of a study: <a href="introduction.html#fig:openintrograph">1.1</a> shows that external validity is directly related to random sampling from the population</p>
+</div>
 </div>
 <div id="review-of-basic-concepts" class="section level2" number="1.3">
 <h2>
@@ -366,7 +367,7 @@ Figure 1.8: xkcd comic <a href="https://xkcd.com/605/">605 (Extrapolating) by Ra
 <p><span id="exm:unlabeled-div-5" class="example"><strong>Example 1.12  (Generalizability) </strong></span>Replication studies done in university often draw participants from students enrolled in the institutions. The findings are thus not necessarily robust if extrapolated to the whole population if there are characteristics for which they have strong (familiarity to technology, acquaintance with administrative system, political views, etc). These samples are often <strong>convenience samples</strong>.</p>
 </div>
 <div class="example">
-<p><span id="exm:unlabeled-div-6" class="example"><strong>Example 1.13  (Spratt-Archer barley in Ireland) </strong></span>Example 1.9 in <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> mentions recollections of ``Student’’ on Spratt-Archer barley, a new variety of barley that performed well in experiments and which the Irish Department of Agriculture encouraged to have introduced elsewhere. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley was experimented in well-farmed areas.</p>
+<p><span id="exm:unlabeled-div-6" class="example"><strong>Example 1.13  (Spratt-Archer barley in Ireland) </strong></span>Example 1.9 in <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> mentions recollections of “Student”<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;William Sealy Gosset&lt;/p&gt;"><sup>5</sup></a> on Spratt-Archer barley, a new variety of barley that performed well in experiments and whose culture the Irish Department of Agriculture encouraged. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley had been experimented in well-farmed areas, exempt of nuisance.</p>
 </div>
 </div>
 <div id="simplicity" class="section level3" number="1.5.4">

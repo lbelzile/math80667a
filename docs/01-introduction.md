@@ -38,8 +38,6 @@ For example, an economist studying the impact of interest rates on the price of 
 
 Figure \@ref(fig:openintrograph) summarizes the two preceding sections. Random allocation of observational units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations. 
 
-:::keyidea
- 
 
 ## Terminology
 
@@ -80,7 +78,7 @@ The main reason experiments should be preferred to collection of observational d
 relationships between interventions and outcomes as randomisation eliminates much of
 the bias inherent with other study designs
 
-:::{.pitfall #quasiexperiment
+:::{.pitfall #quasiexperiment}
 
 **Quasi experiments**
 
@@ -381,7 +379,7 @@ Replication studies done in university often draw participants from students enr
 
 
 ::: { .example name="Spratt-Archer barley in Ireland"}
-Example 1.9 in @Cox:1958 mentions recollections of ``Student'' on Spratt-Archer barley, a new variety of barley that performed well in experiments and which the Irish Department of Agriculture encouraged to have introduced elsewhere. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley was experimented in well-farmed areas. 
+Example 1.9 in @Cox:1958 mentions recollections of "Student"^[William Sealy Gosset] on Spratt-Archer barley, a new variety of barley that performed well in experiments and whose culture the Irish Department of Agriculture encouraged. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley had been experimented in well-farmed areas, exempt of nuisance. 
 :::
 
 ### Simplicity

@@ -163,7 +163,7 @@ How to represent data in a publication? The purpose of the visualization is to p
 <p class="caption">(\#fig:dynamiteplot)Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right).</p>
 </div>
 
-In a one-way analysis of variance, the outcome is a continuous numerical variable, whereas the treatment or explanatory is a categorical variable. Basic graphics include dot plots, histograms and density plots, or rugs for the raw data. These are then replicated for each level of the factor. 
+In a one-way analysis of variance, the outcome is a continuous numerical variable, whereas the treatment or explanatory is a categorical variable. Basic graphics include dot plots, histograms and density plots, or rugs for the raw data. We can produce one such graph for each level of the factor. 
 
 Scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line if the data are continuous. 
 

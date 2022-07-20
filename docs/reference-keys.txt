@@ -40,6 +40,7 @@ fig:power1
 fig:power2
 fig:power3
 fig:compareFnullalternative
+exm:LiuRimMinMin2022E1
 exm:unlabeled-div-11
 tab:tableanovaparam
 eq:Fstatheuristic

@@ -10,7 +10,7 @@ Because introductory statistics course typically present hypothesis tests withou
 
 **Learning objectives**:
 
-* Understanding the role of uncertainty in decision making and
+* Understanding the role of uncertainty in decision making.
 * Understanding the importance of signal-to-noise ratio as a measure of evidence.
 * Knowing the basic ingredients of hypothesis testing and being capable of correctly formulating and identifying these components in a paper.
 * Correctly interpreting $p$-values and confidence intervals for a parameter.
@@ -59,7 +59,7 @@ We call numerical summaries of the data **statistics**. Its important to disting
 </div>
 
 
-For example, we may use as estimand $\mu$,  the population average of $Y_1, \ldots$. The estimator will be sample mean of a sample of size $n$ is the sum of its elements divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate for a given sample will be a numerical value, say 4.3.
+For example, we may use as estimand the population average of $Y_1, \ldots$, say $\mu$. The estimator will be sample mean of a sample, i.e., the sum of its elements divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate will be a numerical value, say 4.3.
 
 Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won't get the exact same result every time.
 
@@ -200,8 +200,8 @@ While desirable, the first method is only applicable in simple cases (such as co
 The *p*-value allows us to make a decision about the null hypothesis. If $\mathscr{H}_0$ is true, the *p*-value follows a uniform distribution, as shown in Figure \@ref(fig:power-plots). [Thus, if the *p*-value is small](https://xkcd.com/1478/), this means observing an outcome more extreme than $T=t$ is unlikely, and so we're inclined to think that $\mathscr{H}_0$ is not true. There's always some underlying risk that we're making a mistake when we make a decision. In statistic, there are [two type of errors](https://xkcd.com/2303/):
 
 
-- type I error: we reject $\mathscr{H}_0$ when $\mathscr{H}_0$ is true,
-- type II error: we fail to reject $\mathscr{H}_0$ when $\mathscr{H}_0$.
+- type I error: we reject the null hypothesis $\mathscr{H}_0$ when the null is true,
+- type II error: we fail to reject the null hypothesis $\mathscr{H}_0$ when the alternative is true.
 
 The two hypothesis are not judged equally: we seek to avoid error of type I (judicial errors, corresponding to condamning an innocent). To prevent this, we fix a the level of the test, $\alpha$, which captures our tolerance to the risk of commiting a type I error: the higher the level of the test $\alpha$, the more often we will reject the null hypothesis when the latter is true. The value of $\alpha \in (0, 1)$ is the probability of rejecting $\mathscr{H}_0$ when $\mathscr{H}_0$ is in fact true,
 \begin{align*}
@@ -474,7 +474,34 @@ Changing the value of $\alpha$ has an impact on the power, since larger values o
 <p class="caption">(\#fig:compareFnullalternative)Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.</p>
 </div>
 
+:::{.example #LiuRimMinMin2022E1 name="The Surprise of Reaching Out"}
+@Liu:2022 studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.
 
+We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of Other (including non-binary people) is much higher than census reports, and the population skews much younger.
+
+Since there are only two groups, initiator and responder, we are dealing with a pairwise comparison. The logical test one could use is a _t_-test, or a variant thereof. We show how to perform this and compare the results obtained using different test statistics.
+
+
+```
+#> # A tibble: 3 × 4
+#>   gender   min   max  mean
+#>   <fct>  <dbl> <dbl> <dbl>
+#> 1 Male      18    78  32.0
+#> 2 Female    19    68  36.5
+#> 3 Other     24    30  27.7
+#> # A tibble: 2 × 4
+#>   role       mean    sd     n
+#>   <fct>     <dbl> <dbl> <int>
+#> 1 initiator  5.50  1.28   103
+#> 2 responder  5.87  1.27    97
+#> # A tibble: 2 × 6
+#>   term         df  sumsq meansq statistic p.value
+#>   <chr>     <dbl>  <dbl>  <dbl>     <dbl>   <dbl>
+#> 1 role          1   6.87   6.87      4.21  0.0414
+#> 2 Residuals   198 323.     1.63     NA    NA
+```
+
+:::
 
 ## Conclusion
 
