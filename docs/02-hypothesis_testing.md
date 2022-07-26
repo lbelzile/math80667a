@@ -275,19 +275,11 @@ We consider for simplicity only sex as a factor and aggregate over job for the $
 
 The null hypothesis of interest here that sex has no impact, so the probability of promotion is the same for men and women. Let $p_{\text{m}}$ and $p_{\text{w}}$ denote these respective probabilities; we can thus write mathematically the null hypothesis as $\mathscr{H}_0: p_{\text{m}} = p_{\text{w}}$ against the alternative $\mathscr{H}_a: p_{\text{m}} \neq p_{\text{w}}$.
 
-The test statistic typically employed for two by two contingency tables is a chi-square test^[If you have taken advanced modelling courses, this is a score test obtained by fitting a Poisson regression with `sex` and `action` as covariates; the null hypothesis corresponding to lack of interaction term between the two.], which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76\%, compared to 19/49 or ~49\% for female. While it seems that this difference of 16\% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2\% for male and 3.4\% for female. 
+The test statistic typically employed for contingency tables is a chi-square test^[If you have taken advanced modelling courses, this is a score test obtained by fitting a Poisson regression with `sex` and `action` as covariates; the null hypothesis corresponding to lack of interaction term between the two.], which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76\%, compared to 19/49 or ~49\% for female. While it seems that this difference of 16\% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2\% for male and 3.4\% for female. 
 
 If there was no discrimination based on sex, we would expect the proportion of people promoted to be the same overall; this is 51/93 =0.55 for the pooled sample. We could simply do a test for the mean difference, but rely instead on the Pearson contingency $X^2_p$ (aka chi-square) test, which compares the expected counts (based on equal promotion rates) to the observed counts, suitably standardized. If the discrepancy is large between expected and observed, than this casts doubt on the validity of the null hypothesis.
 
 
-```r
-## Create a 2x2 matrix (contingency table) with the counts
-dat_exper1 <- matrix(c(32L, 12L, 19L, 30L), ncol = 2, nrow = 2, byrow = TRUE)
-# Calculate the statistic on data
-obs_stat <- chisq.test(x = dat_exper1, correct = FALSE)
-# Tidy output to get a tibble
-test_res <- broom::tidy(obs_stat)
-```
 
 <table>
 <caption>(\#tab:print-tab-example-chisq-test-rosen)Chi-square test for experiment 1 of Rosen and Jerdee (1974)</caption>
@@ -375,19 +367,35 @@ Yet another alternative to obtain a benchmark to assess the outlyingness of the 
 Under the null hypothesis, sex has no incidence on the action of the manager. This means we could get an idea of the "what-if" world by shuffling the sex labels repeatedly. Thus, we could obtain a benchmark by repeating the following steps multiple times:
 
 1. permute the labels for `sex`,
-2. recreate a contingency table by aggregating counts, 
+2. recreate a contingency table by aggregating counts,
 3. calculate the odds ratio for the simulated table.
 
 <div class="figure" style="text-align: center">
-<img src="02-hypothesis_testing_files/figure-html/infer-odds-ratio-permutation-1.png" alt="Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio." width="85%" />
-<p class="caption">(\#fig:infer-odds-ratio-permutation)Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.</p>
+<img src="02-hypothesis_testing_files/figure-html/fig-infer-odds-ratio-permutation-1.png" alt="Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio." width="85%" />
+<p class="caption">(\#fig:fig-infer-odds-ratio-permutation)Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.</p>
 </div>
 
- The histogram in Figure \@ref(fig:infer-odds-ratio-permutation) shows the distribution of the odds ratio based on 10 000 permutations. Reassuringly, we again get roughly the same approximate _p_-value, here 0.002.^[The _p_-value obtained for the permutation test would change from one run to the next since it's input is a random permutation. However, the precision of the proportion statistic is sufficient for decision making.]
+The histogram in Figure \@ref(fig:fig-infer-odds-ratio-permutation) shows the distribution of the odds ratio based on 10 000 permutations. Reassuringly, we again get roughly the same approximate _p_-value, here 0.002.^[The _p_-value obtained for the permutation test would change from one run to the next since it's input is random. However, the precision of the proportion statistic is sufficient for decision making purposes.]
 
 The article concluded (in light of the above and further experiments)
 
 > Results confirmed the hypothesis that male administrators tend to discriminate against female employees in personnel decisions involving promotion, development, and supervision.
+
+
+**Recap**
+ 
+- Model parameters: probability of promotion for men and women, respectively $p_{\text{m}}$ and $p_{\text{w}}$.
+- Hypotheses: no discrimination based on gender, meaning equal probability of promotion (null hypothesis 
+$\mathscr{H}_0: p_{\text{m}}=p_{\text{w}}$, versus alternative hypothesis $\mathscr{H}_a: p_{\text{m}}\neq p_{\text{w}}$).
+- Test statistic: (1) chi-square test for contingency tables, (2) Fisher exact test, (3) odds ratio.
+- $p$-value: (1) .0010, 
+(2) .0016 and (3) .0024 (permutation test).
+- Conclusion: reject null hypothesis, as there is evidence of a gender-discrimination with different probability of promotion for men and women.
+
+
+Following the APA guidelines, the $\chi^2$ statistic would be reported as $\chi^2(1, n = 93) = 10.79$, $p = .001$ along with counts and sample proportions.
+
+
 
 :::
 
@@ -432,17 +440,155 @@ Before the interval is calculated, there is a $1-\alpha$ probability that $\thet
 
 If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.
 
+
+
+
+
+
+::: {.example #LiuRimMinMin2022E1 name="The Surprise of Reaching Out"}
+
+@Liu.Rim.Min.Min:2022 studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.
+
+We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of `other` (including non-binary people) is much higher than that of the general census, and the population skews quite young according to Table \@ref(tab:tbl-LRMMS1-summarystat).
+
+
+
+<table class="kable_wrapper table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:tbl-LRMMS1-summarystat)Summary statistics of the age of participants, and counts per gender (left) and mean ratings, standard deviation and number of participants per experimental condition (right).</caption>
+<tbody>
+  <tr>
+   <td> 
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gender </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> 32.0 </td>
+   <td style="text-align:right;"> 105 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 36.5 </td>
+   <td style="text-align:right;"> 92 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> other </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 27.7 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+</tbody>
+</table>
+
+ </td>
+   <td> 
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> role </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> initiator </td>
+   <td style="text-align:right;"> 5.50 </td>
+   <td style="text-align:right;"> 1.28 </td>
+   <td style="text-align:right;"> 103 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> responder </td>
+   <td style="text-align:right;"> 5.87 </td>
+   <td style="text-align:right;"> 1.27 </td>
+   <td style="text-align:right;"> 97 </td>
+  </tr>
+</tbody>
+</table>
+
+ </td>
+  </tr>
+</tbody>
+</table>
+
+
+Since there are only two groups, initiator and responder, we are dealing with a pairwise comparison. The logical test one could use is a two sample _t_-test, or a variant thereof. Using Welch two sample $t$-test statistic, both group average and standard deviation are estimated using the data provided and the latter are used to build a statistic. This explains the non-integer degrees of freedom.
+
+The software returns $t(197.52) = -2.05$, $p = .041$, which leads to the rejection of the null hypothesis of no difference in appreciation depending on the role of the individual (initiator or responder). The estimated mean difference is $\Delta M = -0.37$, 95\% CI $[-0.73, -0.01]$; since $0$ is not included in the confidence interval, we also reject the null hypothesis at level 5%. The estimate suggests that initiators underestimate the appreciation of reaching out.^[Assuming that the variance of each subgroup were equal, we could have used a two-sample $t$-test instead. The difference in the conclusion is immaterial, with a nearly equal _p_-value.]
+
+
+
+
+**Recap**
+
+- Model parameters: average expected appreciation score $\mu_{\mathrm{i}}$ and $\mu_{\mathrm{r}}$ of initiators and responder, respectively
+- Hypothesis:  expected appreciation score is the same for initiator and responders, $\mathscr{H}_0: \mu_{\mathrm{i}}=\mu_{\mathrm{r}}$ against alternative $\mathscr{H}_0: \mu_{\mathrm{i}} \neq \mu_{\mathrm{r}}$ that they are different.
+- Test statistic: Welch two sample $t$-test
+- $p$-value: 0.041
+- Conclusion: reject the null hypothesis, average appreciation score differs depending on the role
+
+:::
+
+
+
+
+
+
+::: {.example #BrucksLevav22 name="Virtual communication curbs creative idea generation"}
+
+A Nature study performed an experiment to see how virtual communications teamwork by comparing the output both in terms of ideas generated during a brainstorming session by pairs and of the quality of ideas, as measured by external referees. The sample consisted of 301 pairs of participants who interacted via either videoconference or face-to-face.
+
+
+
+
+
+The authors compared the number of creative ideas, a subset of the ideas generated with creativity score above average. The mean number of the number of creative ideas for face-to-face $7.92$ ideas (sd $3.40$) relative to videoconferencing  $6.73$ ideas (sd $3.27$).
+
+@Brucks.Levav:2022 used a negative binomial regression model: in their model, the expected number creative ideas generated is 
+\begin{align*}
+\mathsf{E}(\texttt{ncreative}) = \exp(\beta_0 + \beta_1 \mathrm{video})
+\end{align*}
+
+
+The mean number of ideas for videoconferencing is thus $\exp(\beta_1)$ times that of the face-to-face: the estimate of the multiplicative factor is $\exp(\beta_1)$ is $0.85$ 95\% CI $[0.77, 0.94]$. 
+
+No difference between experimental conditions translates into the null hypothesis as $\mathscr{H}_0: \beta_1=0$ vs $\mathscr{H}_0: \beta_1 \neq 0$.  The likelihood ratio test comparing the regression model with and without $\texttt{video}$ the statistic is $R=9.89$ ($p$-value based on $\chi^2_1$ of $.002$). We conclude the average number of ideas is different, with summary statistics suggesting that virtual pairs generate fewer ideas.
+
+If we had resorted to a two sample $t$-test, we would have found a mean difference in number of creative idea of $\Delta M = 1.19$, 95\% CI $[0.43, 1.95]$, $t(299) = 3.09$, $p = .002$.
+
+
+:::
+
 ## Power
 
-There are two sides to an hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis, or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. Our ability to detect these improvements and make discoveries depends on the power of the test: the larger the power, the greater our ability to reject $\mathscr{H}_0$ when the latter is false.
+The previous examples highlighted how different test statistics gave broadly similar conclusions despite being based on different benchmark. Generally, however, there will be a tradeoff between the number of assumptions we make about our data or model (the fewer, the better) and the ability to draw conclusions when there is truly something going on when the null hypothesis is false.
+
+There are two typically to uses to hypothesis test: either we want to show it is not unreasonable to assume the null hypothesis (for example, assuming equal variance), or else we want to show beyond reasonable doubt that a difference or effect is significative: for example, one could wish to demonstrate that a new website design (alternative hypothesis) leads to a significant increase in sales relative to the status quo. 
+
+Our ability make discoveries depends on the power of the test: the larger the power, the greater our ability to reject the null hypothesis $\mathscr{H}_0$ when the latter is false.
 
 
-Failing to reject $\mathscr{H}_0$ when $\mathscr{H}_a$ is true (not guilty verdict of a criminal) corresponds to the definition of type II error, say. The **power of a test** is the probability of **correctly** rejecting the null hypothesis $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
+The **power of a test** is the probability of **correctly** rejecting the null hypothesis $\mathscr{H}_0$ when $\mathscr{H}_0$ is false, i.e.,
 \begin{align*}
 \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
 \end{align*}
-Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favor of an alternative.
-Power is thus a measure of our ability to detect real effects.
+Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favour of an alternative. Power is thus a measure of our ability to detect real effects. 
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/power1-1.png" alt="Comparison between null distribution (full curve) and a specific alternative for a *t*-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white)." width="85%" />
@@ -461,11 +607,11 @@ Power is thus a measure of our ability to detect real effects.
 
 We want to choose an experimental design and a test statistic that leads to high power, so that this power is as close as possible to one. Minimally, the power of the test should be $\alpha$ because we reject the null hypothesis $\alpha$ fraction of the time even when $\mathscr{H}_0$ is true. Power depends on many criteria, notably
 
-- the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behaviour, the easier it is to departures from $\theta_0$.
+- the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behaviour, the easier it is to detect departures from $\theta_0$.
 (Figure \@ref(fig:power3)); it's easier to spot an elephant in a room than a mouse.
-- variability: the less noisy your data, the easier it is to detect differences between the curves (big differences are easier to spot, as Figure \@ref(fig:power2) shows);
-- the sample size: the more observation, the higher our ability to detect significative differences because the amount of evidence increases as we gather more observations.^[The standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase.] In experimental designs, the power also depends on how many observations are allocated to each group.^[While the default is to assign an equal number to each subgroup, power may be maximized by specifying different sample size in each group if the variability of the measurement differ in these groups.]
-- the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. While some are clearly inferior, some less powerful choice may be preferable. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are less sensible to model assumption, model misspecification and outliers. 
+- variability: the less noisy your data, the easier it is to assess that the observed differences are genuine), as Figure \@ref(fig:power2) shows);
+- the sample size: the more observation, the higher our ability to detect significative differences because the amount of evidence increases as we gather more observations.^[Specifically, the standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase.] In experimental designs, the power also depends on how many observations are allocated to each group.^[While the default is to assign an equal number to each subgroup, power may be maximized by specifying different sample size in each group if the variability of the measurement differ in these groups.]
+- the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. While some are clearly inferior, some less powerful choice may be preferable. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are less sensible to model assumption, model misspecification and outliers.
 
 Changing the value of $\alpha$ has an impact on the power, since larger values of $\alpha$ move the cutoff towards the bulk of the distribution. It entails a higher percentage of rejection also when the alternative is false. However, the value of $\alpha$ is fixed beforehand to control the type I error (avoid judicial mistakes). The power corresponds to the red shaded area on the right panel of Figure \@ref(fig:compareFnullalternative), would become larger if we moved the cutoff value lower, corresponding to larger $\alpha$. 
 
@@ -474,40 +620,26 @@ Changing the value of $\alpha$ has an impact on the power, since larger values o
 <p class="caption">(\#fig:compareFnullalternative)Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.</p>
 </div>
 
-:::{.example #LiuRimMinMin2022E1 name="The Surprise of Reaching Out"}
-@Liu:2022 studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.
-
-We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of Other (including non-binary people) is much higher than census reports, and the population skews much younger.
-
-Since there are only two groups, initiator and responder, we are dealing with a pairwise comparison. The logical test one could use is a _t_-test, or a variant thereof. We show how to perform this and compare the results obtained using different test statistics.
-
-
-```
-#> # A tibble: 3 × 4
-#>   gender   min   max  mean
-#>   <fct>  <dbl> <dbl> <dbl>
-#> 1 Male      18    78  32.0
-#> 2 Female    19    68  36.5
-#> 3 Other     24    30  27.7
-#> # A tibble: 2 × 4
-#>   role       mean    sd     n
-#>   <fct>     <dbl> <dbl> <int>
-#> 1 initiator  5.50  1.28   103
-#> 2 responder  5.87  1.27    97
-#> # A tibble: 2 × 6
-#>   term         df  sumsq meansq statistic p.value
-#>   <chr>     <dbl>  <dbl>  <dbl>     <dbl>   <dbl>
-#> 1 role          1   6.87   6.87      4.21  0.0414
-#> 2 Residuals   198 323.     1.63     NA    NA
-```
-
-:::
 
 ## Conclusion
+
+This chapter has focused on presenting the tools of the trade and some examples outlining the key ingredients that are common to any statistical procedure and the reporting of the latter. The reader is not expected to know which test statistic to adopt, but rather should understand at this stage how our ability to do (scientific) discoveries depends on a number of factors.
+
 
 
 Richard McElreath in the [first chapter](http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf) of his book [@McElreath:2020] draws a parallel between statistical tests and golems (i.e., robots): neither
 
 > discern when the context is inapropriate for its answers. It just knows its own procedure [...] It just does as it's told.
 
-The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations
+The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations. A _p_-value does not indicate whether the hypothesis is reasonable, whether the design is proper, whether the choice of measurement is adequate, etc.
+
+
+::: yourturn
+
+Pick a journal paper (e.g., one of the dataset documented in the course webpage) and a particular study. 
+
+Look up for the ingredients of the testing procedure (parameters,  hypotheses, test statistic name and value, summary statistics, _p_-value, conclusion).
+
+You may encounter other measures, such as effect size, that will be discussed later.
+
+:::

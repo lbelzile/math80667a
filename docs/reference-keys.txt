@@ -34,13 +34,15 @@ tab:rosen-table1
 tab:print-tab-example-chisq-test-rosen
 tab:print-tab-example-fisher-test-rosen
 tab:dat-long-test-rosen-print
-fig:infer-odds-ratio-permutation
+fig:fig-infer-odds-ratio-permutation
 fig:intconf
+exm:LiuRimMinMin2022E1
+tab:tbl-LRMMS1-summarystat
+exm:BrucksLevav22
 fig:power1
 fig:power2
 fig:power3
 fig:compareFnullalternative
-exm:LiuRimMinMin2022E1
 exm:unlabeled-div-11
 tab:tableanovaparam
 eq:Fstatheuristic

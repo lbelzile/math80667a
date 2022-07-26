@@ -75,7 +75,7 @@ knitr::include_graphics("figures/Nature_reporting_statistics.png")
 
 Operating in an open-science environment should be seen as an opportunity to make better science, offer more opportunities to increase your impact and increase the likelihood that your work gets published regardless of whether the results turn out to be negative. It is the *right thing* to do and it increases the quality of research produced, with collateral benefits because it forces researchers to validate their methodology before, to double-check their data and their analysis and to adopt good practice.
 
-
+There are many platforms for preregistering studies and sharing data, with different level of formality. One such is the [Research Box](https://researchbox.org/).
 
 ::: yourturn
 

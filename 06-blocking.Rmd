@@ -11,3 +11,66 @@ The previous chapter dealt with factorial experiments in which all experimental 
 Explain the main benefit of blocking for confounding variables (when possible) over randomization.
 
 :::
+
+
+
+::: { .example name="Inconsistency of product description and image in online retailing"}
+
+@Lee.Choi:2019 measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.
+
+```{r}
+#| label: LC19-linreg
+#| eval: true
+#| echo: false
+# Load data
+data(LC19_S1, package = "hecedsm")
+# Fit a linear regression
+linreg <- lm(prodeval ~ familiarity + consistency,
+             data = LC19_S1)
+# Output coefficients and t-tests
+#summary(linreg)
+```
+
+
+```{r}
+#| label: fig-ANCOVA-demo
+#| fig-cap: "Scatterplot of product evaluation as a function of the familiarity score, split by experimental manipulation."
+#| eval: true
+#| echo: false
+set.seed(1234)
+ggplot(data = LC19_S1, 
+       mapping = aes(y = prodeval, 
+                     x = familiarity, 
+                     col = consistency)) + 
+  geom_point(position = "jitter") + 
+  geom_smooth(method = "lm", 
+              formula = y ~ x,
+              show.legend = FALSE,
+              fullrange = TRUE,
+              se = FALSE) +
+  scale_y_continuous(limits = c(1,9),
+                     breaks = c(3L, 6L, 9L)) +
+  scale_x_continuous(limits = c(3,7),
+                    breaks = 1:7) + 
+  theme_classic() + 
+  theme(legend.position = "bottom") +
+  labs(y = "product evaluation",
+       col = "display")
+```
+
+Figure \@ref(fig:fig-ANCOVA-demo) shows that people more familiar with the product or brand tend to have a more positive product evaluation, as postulated by the authors. The graph also shows two straight lines corresponding to the fit of a linear model with different intercept and slope for each display group: there is little material difference, but further checks would be needed to assess whether a single linear relationship could adequately characterize the relation in both groups.
+
+One way to account for familiarity when comparing the mean is to use a linear regression with `familiarity` as another explanatory variable. The expected value of the product evaluation is
+\begin{align*}
+\mathsf{E}(\texttt{prodeval}) = \beta_0 + \beta_1 \texttt{familiarity} + \beta_2 \texttt{consistency},
+\end{align*}
+where $\texttt{familiarity}$ is the score from 1 to 7 and $\texttt{consistency}$ is a binary indicator equal to one if the output is inconsistent and zero otherwise. 
+The coefficient $\beta_2$ thus measures the difference between product evaluation rating for consistent vs inconsistent displays, for the same familiarity score. For the time being, we brush model assumptions and test validity under the carpet and focus only on conclusions and test components.
+
+
+We can look at coefficient (standard error) estimates $\widehat{\beta}_2 = `r round(coef(linreg)[3], 2)` (`r round( as.numeric(sqrt(diag(vcov(linreg)))[3]),3)`)$.
+No difference between groups would mean $\beta_2=0$ and we can build a test statistic by looking at the standardized regression coefficient $t = \widehat{\beta}_2/\mathsf{se}(\widehat{\beta}_2)$. The result output is `r papaja::apa_print(linreg)$full_result$consistencyinconsistent`. We reject the null hypothesis of equal product evaluation for both display at level 5%: there is evidence that there is a small difference, with people giving on average a score that is 0.64 points smaller (on a scale of 1 to 9) when presented with conflicting descriptions and images.
+
+
+
+:::
