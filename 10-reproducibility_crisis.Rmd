@@ -72,10 +72,68 @@ To enforce reproducibility, many journals now have policy regarding data, materi
 knitr::include_graphics("figures/Nature_reporting_statistics.png")
 ```
 
+## Causes of the replication crisis
+
+Below are multiple (non-exclusive) explanations for the lack of replication of study findings. 
+
+### The garden of forking paths
+
+The garden of forking paths, named after a [novel of Borges](https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths), is a term coined by [Andrew Gelman](http://www.stat.columbia.edu/~gelman/research/unpublished/forking.pdf) to refer to researchers' degrees of freedom. With vague hypothesis and data collection rules, it is easy for the researcher to adapt and interpret the conclusions in a way that fits his or her chosen narratives. In the words of @Gelman.Loken:2014
+
+> Given a particular data set, it can seem entirely appropriate to look at the data and construct reasonable rules for data exclusion, coding, and analysis that can lead to statistical significance. In such a case, researchers need to perform only one test, but that test is conditional on the data.
+
+This user case is not accomodated by classical testing theory. Research hypothesis are often formulated in a vague way, such that different analysis methods, tests may be compatible. [Abel et al. (2022) recent preprint](https://docs.iza.org/dp15476.pdf) found that preregistration alone did not solve this problem, but that publication bias in randomized control trial was alleviated by publication of pre-analysis plans. This is directly related to the garden of forking path.
+
+
+
+
+### Selective reporting
+
+Also known as the file-drawer problem, selective reporting occurs because publication of results that fail to reach statistical significance (sic) are harder to publish. In much the same way as multiple testing, if 20 researchers perform a study but only one of them writes a paper and the result is a fluke, then this indicates. There are widespread indications publication bias, as evidence by the distribution of $p$-values reported in papers. A [recent preprint of a study](https://docs.iza.org/dp15478.pdf) found the prevalance to be higher in online experiments such as Amazon MTurks. 
+
+
+
+::: outsidethebox
+
+Methods that pool together results, such as meta-analysis, are sensitive to selective reporting. Why does it matter?
+
+:::
+
+
+### Multiple testing
+
+
+If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of $\alpha$ (often 0.05) of making a type I error if the null is true. The problem  is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a $p$-value less than 5\%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. The level $\alpha=5$\% is essentially arbitrary: @Tukey:1926 wrote
+
+> If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
+
+Not all tests are of interest, even if standard software will report all possible pairwise comparisons. Even then, the number of tests performed in the course of an analysis can be very large. The more tests are performed, the more likely one of the tests will lead to statistical significance. [Dr. Yoav Benjamini](http://www.math.tau.ac.il/~ybenja/), a leading researcher in multiple testing, looked at the number of inference / tests performed in the Psychology replication project [@OSC:2015]. The number of tests performed ranged from 4 to 700, with an average of 72 and that only 11 out of the 100 engaged with selection, but only cursorily.  It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure \@ref(fig:xkcdsignificant)
+
+
+```{r xkcd882, out.width = '60%', fig.cap = "xkcd comic [882 (Significant) by Randall Munroe](https://xkcd.com/882/). Alt text: `So, uh, we did the green study again and got no link. It was probably a--` `RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!`. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)."}
+knitr::include_graphics("figures/xkcd882_significant.png")
+```
+
+_P_-hacking and the replication crisis has lead many leading statisticians to advocate much more stringent cutoff criterion such as $p < 0.001$.
+
+### Non-representative samples
+
+Many researchers opt for convenience samples by using online panels such as Qualtrics, Amazon MTurks, etc. The quality of those observations is at best dubious: ask yourself whether you would answer such as survey for a small amount. Manipulation checks to ensure participants are following, information is not completed by bots, a threshold for the minimal time required to complete the study, etc. are necessary (but not sufficient) conditions to ensure that the data are not rubbish.
+
+A more important criticism is that the people who answer those surveys are not representative of the population as a whole: sampling bias thus plays an important role in the conclusions and, even if the summary statistics are not too different from the general population, they may exhibit different opinions, levels of skills, etc. than most.
+
+```{r samplingbias}
+#| echo: false
+#| fig.cap: "Sampling bias. Artwork by [Jonathan Hey (Sketchplanations)](https://sketchplanations.com/sampling-bias) shared under the [CC BY-NC 4.0 license](http://creativecommons.org/licenses/by-nc/4.0/)."
+knitr::include_graphics('figures/samplingbias.jpg')
+```
+The same can be said of panels of students recruited in universities classes, who are more young, educated and perhaps may infer through backward induction the purpose of the study and answer accordingly.
+
+## Summary
 
 Operating in an open-science environment should be seen as an opportunity to make better science, offer more opportunities to increase your impact and increase the likelihood that your work gets published regardless of whether the results turn out to be negative. It is the *right thing* to do and it increases the quality of research produced, with collateral benefits because it forces researchers to validate their methodology before, to double-check their data and their analysis and to adopt good practice.
 
-There are many platforms for preregistering studies and sharing data, with different level of formality. One such is the [Research Box](https://researchbox.org/).
+There are many platforms for preregistering studies and sharing preanalysis plans, scripts and data, with different level of formality. One such is the [Research Box](https://researchbox.org/).
 
 ::: yourturn
 

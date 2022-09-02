@@ -14,7 +14,8 @@ rmd_files: [
   "01-introduction.Rmd",
   "02-hypothesis_testing.Rmd",
   "03-completely_randomized_trials.Rmd",
-  "04-reproducibility_crisis.Rmd",
+  "10-reproducibility_crisis.Rmd",
+  "06-blocking.Rmd",
   "references.Rmd"
 ]
 

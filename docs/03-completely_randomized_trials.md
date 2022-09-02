@@ -2,19 +2,12 @@
 
 This chapter focuses on experiments where potentially multiple factors of interest are manipulated by the experimenter to study their impact. If the allocation of observational units to each treatment combination is completely random, the resulting experiment is a completely randomized design.
 
-
-Most of the time, we will be interest in comparing the average response for each treatment combination: this underlies the analysis of variance model. 
-
-
-The objective is to present some of the basic concepts surrounding  hypothesis test, model validation, multiple testing, the interplay between power, effect size and sample size, etc. with the easiest possible model to build intuition for these concepts. They are readily generalized to more complicated linear models.
-
 The one-way analysis of variance describes the most simple experimental setup one can consider: completely randomized experiments with one factor, in which we are solely interested in the effect of a single treatment variable with multiple levels. 
-
-The focus is on comparisons of the average of a single outcome variable with $K$ different treatments levels, each defining a sub-population differing only in the treatment they received. 
 
 ## One-way analysis of variance 
 
-A **one-way analysis of variance** compares the sample averages of each treatment group $T_1, \ldots, T_K$ to try and determine if the population averages could be the same. Since we have $K$ groups, there will be $K$ averages (one per group) to estimate. 
+
+The focus is on comparisons of the average of a single outcome variable with $K$ different treatments levels, each defining a sub-population differing only in the experimental condition they received. A **one-way analysis of variance** compares the sample averages of each treatment group $T_1, \ldots, T_K$ to try and determine if the population averages could be the same. Since we have $K$ groups, there will be $K$ averages (one per group) to estimate. 
 
 Let $\mu_1, \ldots, \mu_K$ denote the theoretical (unknown) mean (aka expectation) of each of the $K$ sub-populations defined by the different treatments. Lack of difference between treatments is equivalent to equality of means, which translates into the hypotheses
 \begin{align*}
@@ -22,6 +15,7 @@ Let $\mu_1, \ldots, \mu_K$ denote the theoretical (unknown) mean (aka expectatio
 \mathscr{H}_a: & \text{at least two treatments have different averages, }
 \end{align*}
 The null hypothesis is, as usual, a single numerical value, $\mu$. The alternative consists of all potential scenarios for which not all expectations are equal. Going from $K$ averages to one requires imposing $K-1$ restrictions (the number of equality signs), as the value of the global mean $\mu$ is left unspecified. 
+
 
 
 
@@ -41,6 +35,7 @@ The sum-to-zero parametrization is obtained with `contrasts = list(... = contr.s
 
 
 We show the function call to fit a one-way ANOVA in the different parametrizations along with the sample average of each arithmetic group (the two controls who were taught separately and the groups that were praised, reproved and ignored in the third class). Note that the omitted category changes depending on the parametrization.
+
 
 
 
@@ -106,7 +101,7 @@ mod_sum2zero <- lm(score ~ group,
 
 
 
-We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the expectation: their inherent variability will limit our ability to detect differences in mean if the signal-to-noise ratio is small.
+We can still assess the hypothesis by comparing the sample means in each group, which are noisy estimates of the population mean: their inherent variability will limit our ability to detect differences in averages if the signal-to-noise ratio is small.
 
 
 
@@ -114,11 +109,12 @@ We can still assess the hypothesis by comparing the sample means in each group, 
 ### Sum of squares decomposition
 
 
-The following section can be safely skipped on first reading: it attempts to shed some light into how the $F$-test statistic works as a summary of evidence: it isn't straightforward in the way it appears. 
+The following section can be safely skipped on first reading: it attempts to shed some light into how the $F$-test statistic works as a summary of evidence, as it isn't straightforward in the way it appears. 
 
 
-The usual notation for the sum of squares decomposition is as follows: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
-Under the null model, all groups have the same mean, so the natural estimator is the sample average $\widehat{\mu}$ and likewise the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$ are the correct estimators if each group has a (potentially) different mean. The more complex, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
+The usual notation for the sum of squares decomposition is as follows: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$ and the number of observations in each group is the same. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
+
+Under the null model, all groups have the same mean, so the natural estimator for the latter is the sample average of the pooled sample $\widehat{\mu}$ and likewise the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$ are the best estimators for the group averages if each group has a (potentially) different mean. The more complex model, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
 The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition
 \begin{align*}
 \underset{\text{total sum of squares} }{\sum_{i}\sum_{k} (y_{ik} - \widehat{\mu})^2} &= \underset{\text{within sum of squares} }{\sum_i \sum_k (y_{ik} - \widehat{\mu}_k)^2} +  \underset{\text{between sum of squares} }{\sum_k n_i (\widehat{\mu}_k - \widehat{\mu})^2}.
@@ -133,7 +129,7 @@ F &= \frac{\text{between-group variability}}{\text{within-group variability}} \\
 (\#eq:Fstatheuristic)
 \end{align}
 
-Heuristically, if there is no mean difference (null hypothesis), the numerator is an estimator of the population variance, and so is the denominator of \@ref(eq:Fstatheuristic). If there are many observations (and relatively fewer groups), the ratio in eq.\@ref(eq:Fstatheuristic) is approximately one on average and, for large enough sample, the null distribution of the _F_-statistic is approximately an _F_-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq.\@ref(eq:Fstatheuristic) as scaling factors to ensure proper standardization. The first is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one for the one-way analysis of variance), and the second is the number of observations minus the number of *parameters estimates* for the mean ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[There are only $K$ parameter estimates for the mean, since the overall mean is full determined by the other averages with $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
+If there is no mean difference (null hypothesis), the numerator is an estimator of the population variance, and so is the denominator of eq. \@ref(eq:Fstatheuristic) and the ratio of the two is approximately 1 on average. However, the between sum of square is more variable and this induces skewness: for large enough sample, the null distribution of the _F_-statistic is approximately an _F_-distribution, whose shape is governed by two parameters named degrees of freedom which appear in eq. \@ref(eq:Fstatheuristic) as scaling factors to ensure proper standardization. The first degree of freedom is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one for the one-way analysis of variance), and the second degree of freedom is the number of observations minus the number of *parameters estimates* for the mean ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[There are only $K$ parameter estimates for the mean, since the overall mean is full determined by the other averages with $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
 
 Figure \@ref(fig:squareddistanova) shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.
 
@@ -142,10 +138,7 @@ Figure \@ref(fig:squareddistanova) shows how the difference between these distan
 <p class="caption">(\#fig:squareddistanova)Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean.</p>
 </div>
   
-
-How reliable is the $F$-statistic approximation? We can assess this by simulating from the null model, repeatedly drawing samples with similar characteristics (same mean and overall variance) and computing the test statistic on each replicate. However, we only have one sample at hand so this little numerical exercise wouldn't work in practice.
-
-If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to [generate those alternative samples by simply shuffling the labels](https://www.jwilber.me/permutationtest/). We see in Figure \@ref(fig:Fdistpermut) that the histogram of the $F$-statistic values obtained from 10 000 permutations closely matches that of the large-sample $F$-distribution when there are on average 20 observations per group (right). However, with smaller samples (left), the theoretical null is underdispersed relative to the permutation based distribution, and the latter should be viewed as more accurate in this setting.
+If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to [generate those alternative samples by simply shuffling the labels](https://www.jwilber.me/permutationtest/). We see in Figure \@ref(fig:Fdistpermut) that the histogram of the $F$-statistic values obtained from 10 000 permutations closely matches that of the large-sample $F$-distribution when there are on average 20 observations per group (right). However, with smaller samples (left), the theoretical null is underdispersed relative to the permutation based distribution, and the latter should be viewed as more accurate in this setting. However, the large sample distribution is readily obtained and does not require simulations.
 
 <div class="figure" style="text-align: center">
 <img src="03-completely_randomized_trials_files/figure-html/Fdistpermut-1.png" alt="One-way analysis of variance for a sample of size 20 (left) and 100 (right), split in five groups. The histogram shows the computed test values based on 10 000 permutations, which is compared to the density of the large-sample _F_-distribution." width="85%" />
@@ -329,7 +322,7 @@ oneway.test(absresid ~ group,
 ```
 We can see in both cases that the $p$-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch's ANOVA. It is most commonly encountered in the case of two groups ($K=2$) and is the default option in **R** with `t.test` or `oneway.test` (option `var.equal = TRUE`).
 
-What happens with the example of the arithmetic data when we use this instead of the usual $F$ statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch's ANOVA over the usual is  the need to have enough observations in each of the group to reliably estimate a separate variance^[Coupled with a slight loss of power if the variance are truly equal, more later.]. For Welch's ANOVA, we have to estimate $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
+What happens with the example of the arithmetic data when we use this instead of the usual $F$ statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch's ANOVA over the usual $F$ statistic is  the need to have enough observations in each of the group to reliably estimate a separate variance^[Coupled with a slight loss of power if the variance are truly equal, more on this later.]. For Welch's ANOVA, we have to estimate $2K$ parameters (one mean and one variance per group), rather than $K+1$ parameters for the one-way ANOVA (one mean per group, one overall variance).
 
 
 ```r
@@ -375,7 +368,7 @@ There are alternative graphical ways of checking the assumption of equal varianc
 
 ### Normality
 
-There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parameter) statistical tests like the one-way analysis of variable $F$-test. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact: knowing the exact distribution does not due harm and is convenient for mathematical derivations. However, this condition is **unnecessary: the  results hold approximately for large samples  because of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in Figure \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
+There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parametric) models like the one-way analysis of variance. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact: knowing the exact distribution does not due harm and is convenient for mathematical derivations. However, it should be stressed that this condition is **unnecessary**: the  results hold approximately for large samples by virtue of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in Figure \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
 
 While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not much worst at $n=19$ than at $n=20$. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far off with $n=50$ for heavy-tailed data.
 
@@ -405,8 +398,8 @@ What is the impact of dependence between measurements? Heuristically, correlated
 
 
 <div class="figure" style="text-align: center">
-<img src="03-completely_randomized_trials_files/figure-html/plotLevelIndep-1.png" alt="Size of the $F$-test of equality of means for the one way ANOVA with data from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%." width="85%" />
-<p class="caption">(\#fig:plotLevelIndep)Size of the $F$-test of equality of means for the one way ANOVA with data from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%.</p>
+<img src="03-completely_randomized_trials_files/figure-html/plotLevelIndep-1.png" alt="Percentage of rejection of the null hypothesis for the $F$-test of equality of means for the one way ANOVA with data generated with equal mean and variance from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%." width="85%" />
+<p class="caption">(\#fig:plotLevelIndep)Percentage of rejection of the null hypothesis for the $F$-test of equality of means for the one way ANOVA with data generated with equal mean and variance from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%.</p>
 </div>
 
-The lack of independence can also have drastic consequences on inference and lead to false conclusions: Figure \@ref(fig:plotLevelIndep) shows an example with correlated samples within group (or equivalently repeated measurements from individuals) with 25 observations per group. The $y$-axis shows the size of the test, meaning the proportion of times the null is rejected. Here, since the data are generated from the null model (equal mean) with equal variance, the inflation in the number of spurious discoveries, false alarm or type I error is alarming and the inflation is substantial even with very limited correlation between measurements. 
+The lack of independence can also have drastic consequences on inference and lead to false conclusions: Figure \@ref(fig:plotLevelIndep) shows an example with correlated samples within group (or equivalently repeated measurements from individuals) with 25 observations per group. The $y$-axis shows the proportion of times the null is rejected when it shouldn't be. Here, since the data are generated from the null model (equal mean) with equal variance, the inflation in the number of spurious discoveries, false alarm or type I error is alarming and the inflation is substantial even with very limited correlation between measurements. 

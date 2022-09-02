@@ -71,6 +71,7 @@
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
 <li><a class="" href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></li>
 <li><a class="" href="replication-crisis.html"><span class="header-section-number">4</span> Replication crisis</a></li>
+<li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">5</span> Designs to reduce the error</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -121,9 +122,9 @@ Figure 1.1: Two by two classification matrix for experiments based on sampling a
 <li>The subjects (or <strong>experimental units</strong>) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.</li>
 <li>The <strong>observational unit</strong> is the smallest level (time point, individual) at which measurement are recorded.</li>
 <li>The <strong>experimental treatments</strong> or conditions (also called <strong>factor</strong>, or independent variable), are <em>manipulated and controlled</em> by the researcher. Oftentimes, there is a <strong>control</strong> or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).</li>
-<li>Additional explanatories that are intrinsic to the experimental (sub-)units are termed <strong>blocking factors</strong>. Controlling for these allows to reduce the variability of measurements, typically leading to improved inferences.</li>
+<li>Additional explanatories that are intrinsic to the experimental (sub-)units are termed <strong>blocking factors</strong>. Controlling for these typically leads to improved inferences, because we filter out the unwanted variability they generate.</li>
 <li>After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject.</li>
-<li>Observed differences in the outcome variable between the experimental conditions (treatments) is called the treatment effect (or <strong>effect size</strong>).</li>
+<li>Observed differences in the outcome variable between the experimental conditions (treatments) are called treatment effects.</li>
 </ul>
 <div class="example">
 <p><span id="exm:experimentdefinitions" class="example"><strong>Example 1.1  (Pedagogical experience) </strong></span>Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observational units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom).</p>
@@ -152,9 +153,8 @@ the bias inherent with other study designs</p>
 </div>
 <div id="internalexternalvalidity" class="keyidea" name="Point of terminology">
 <p><strong>Point of terminology: internal and external validity</strong></p>
-<p>A study from which we can study causal relationships is said to have <strong>internal validity</strong>. By design, experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal.</p>
-<p>In observational studies, disentangling causal relationship is more difficult. Correlation is not causation, and most phenomenon are complex with tens of variables potentially influencing both the factors under study and the response.</p>
-<p><strong>External validity</strong> refers directly to generalizability of the conclusions of a study: <a href="introduction.html#fig:openintrograph">1.1</a> shows that external validity is directly related to random sampling from the population</p>
+<p>A study from which we can study causal relationships is said to have <strong>internal validity</strong>. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other factors, not covered in the class, that can threaten internal validity.</p>
+<p><strong>External validity</strong> refers directly to generalizability of the conclusions of a study: Figure <a href="introduction.html#fig:openintrograph">1.1</a> shows that external validity is directly related to random sampling from the population</p>
 </div>
 </div>
 <div id="review-of-basic-concepts" class="section level2" number="1.3">
@@ -266,7 +266,13 @@ Figure 1.6: Illustration of three sampling schemes from nine groups: simple rand
 <p>The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?</p>
 </div>
 <p>There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.</p>
-<p>In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon’s Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review <span class="citation">(<a href="references.html#ref-Aguinis:2021" role="doc-biblioref">Aguinis, Villamor, and Ramani 2021</a>)</span>. These samples are subject to self-selection bias and should be read with skepticism. I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is relatively unimportant. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the repartition of individuals with the composition obtained from the census.</p>
+<p>In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon’s Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review <span class="citation">(<a href="references.html#ref-Aguinis:2021" role="doc-biblioref">Aguinis, Villamor, and Ramani 2021</a>)</span>. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-samplingbias"></span>
+<img src="figures/continuous_discrete.png" alt="Sampling bias. Artwork by Jonathan Hey [(Sketchplanations)](https://sketchplanations.com/sampling-bias), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-nc/4.0/)" width="85%"><p class="caption">
+Figure 1.7: Sampling bias. Artwork by Jonathan Hey <a href="https://sketchplanations.com/sampling-bias">(Sketchplanations)</a>, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-SA 4.0</a>
+</p>
+</div>
 </div>
 </div>
 <div id="examples-of-experimental-designs" class="section level2" number="1.4">
@@ -279,7 +285,7 @@ Figure 1.6: Illustration of three sampling schemes from nine groups: simple rand
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rothamsted"></span>
 <img src="figures/HFL-A1958.jpg" alt="[1958 plan for the Highfield Ley--Arable Experiment](http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield-Ley-Arable-1-1). Source: Rothamsted Research Station,  reproduced under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)." width="85%"><p class="caption">
-Figure 1.7: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield-Ley-Arable-1-1">1958 plan for the Highfield Ley–Arable Experiment</a>. Source: Rothamsted Research Station, reproduced under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>.
+Figure 1.8: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield-Ley-Arable-1-1">1958 plan for the Highfield Ley–Arable Experiment</a>. Source: Rothamsted Research Station, reproduced under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>.
 </p>
 </div>
 </div>
@@ -307,7 +313,7 @@ Figure 1.7: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield
 <p>Families participated in the experiment for 3–5 years. The upper age limit for adults at the time of enrollment was 61, so that no participants would become eligible for Medicare before the experiment ended. To assess participant service use, costs, and quality of care, RAND served as the families’ insurer and processed their claims. To assess participant health, RAND administered surveys at the beginning and end of the experiment and also conducted comprehensive physical exams. Sixty percent of participants were randomly chosen to receive exams at the beginning of the study, and all received physicals at the end. The random use of physicals at the beginning was intended to control for possible health effects that might be stimulated by the physical exam alone, independent of further participation in the experiment.</p>
 </blockquote>
 </div>
-<p>There are many other greath examples in <a href="https://tellingstorieswithdata.com/10-hunt.html#rct-examples">the dedicated section of Chapter 10 of <em>Telling stories with data</em> by Rohan Alexander</a> <span class="citation">(<a href="references.html#ref-Alexander2021" role="doc-biblioref">Alexander 2022</a>)</span>. Section 1.4 of <span class="citation">Berger, Maurer, and Celli (<a href="references.html#ref-Berger:2018" role="doc-biblioref">2018</a>)</span> also lists various applications of experimental designs in a variety of fields.</p>
+<p>There are many other great examples in <a href="https://tellingstorieswithdata.com/10-hunt.html#rct-examples">the dedicated section of Chapter 10 of <em>Telling stories with data</em> by Rohan Alexander</a> <span class="citation">(<a href="references.html#ref-Alexander2021" role="doc-biblioref">Alexander 2022</a>)</span>. Section 1.4 of <span class="citation">Berger, Maurer, and Celli (<a href="references.html#ref-Berger:2018" role="doc-biblioref">2018</a>)</span> also lists various applications of experimental designs in a variety of fields.</p>
 </div>
 <div id="requirements-for-good-experiments" class="section level2" number="1.5">
 <h2>
@@ -333,20 +339,20 @@ Figure 1.7: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield
 <blockquote>
 <p>ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.</p>
 </blockquote>
-<p>This point also motivates use of <strong>double-blind</strong> procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof participants).</p>
-<p>Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.</p>
+<p>This point also motivates use of <strong>double-blind</strong> procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof).</p>
+<p>Randomization<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The percentage of participants need not be equiprobable, nor do we need to assign the same probability to each participant. However, going away from equal number of people per group has consequences and makes the statistical analysis more complicated.&lt;/p&gt;"><sup>5</sup></a> is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.</p>
 </div>
 <div id="variability" class="section level3" number="1.5.2">
 <h3>
 <span class="header-section-number">1.5.2</span> Variability<a class="anchor" aria-label="anchor" href="#variability"><i class="fas fa-link"></i></a>
 </h3>
-<p>The second point listed by <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the effect size is divided by its standard error; both terms will be defined rigourously latter, but the intuition should be that it’s easier to detect something when the signal is large and the background noise is low. The latter is a function of</p>
+<p>The second point listed by <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the difference in mean treatment is divided by its standard error, a form of effect size. The intuition should be that it’s easier to detect something when the signal is large and the background noise is low. The latter is a function of</p>
 <ol style="list-style-type: lower-alpha">
 <li>the accuracy of the experimental work and measurements apparatus and the intrinsic variability of the phenomenon under study,</li>
-<li>the number of experimental and observational units, i.e., the sample size and</li>
+<li>the number of experimental and observational units (the sample size).</li>
 <li>the choice of design and statistical procedures.</li>
 </ol>
-<p>Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is oftentimes standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.</p>
+<p>Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is usually standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.</p>
 </div>
 <div id="generalizability" class="section level3" number="1.5.3">
 <h3>
@@ -357,35 +363,35 @@ Figure 1.7: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield
 <p>not just empirical knowledge about what the treatment differences are, but also some understanding of the reasons for the differences.</p>
 </blockquote>
 <p>Even if we believe a factor to have no effect, it may be wise to introduce it in the experiment to check this assumption: if it is not a source of variability, it shouldn’t impact the findings and at the same time would provide some more robustness.</p>
-<p>If we look at a continuous treatment, than it is probably only safe to draw conclusions within the range of doses administered. Comic in <a href="introduction.html#fig:xkcd605">1.8</a> is absurd, but makes this point.</p>
+<p>If we look at a continuous treatment, than it is probably only safe to draw conclusions within the range of doses administered. Comic in <a href="introduction.html#fig:xkcd605">1.9</a> is absurd, but makes this point.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:xkcd605"></span>
 <img src="figures/xkcd605_extrapolating.png" alt="xkcd comic [605 (Extrapolating) by Randall Munroe](https://xkcd.com/605/). Alt text: By the third trimester, there will be thousands of babies inside you. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="50%"><p class="caption">
-Figure 1.8: xkcd comic <a href="https://xkcd.com/605/">605 (Extrapolating) by Randall Munroe</a>. Alt text: By the third trimester, there will be thousands of babies inside you. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+Figure 1.9: xkcd comic <a href="https://xkcd.com/605/">605 (Extrapolating) by Randall Munroe</a>. Alt text: By the third trimester, there will be thousands of babies inside you. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
 </p>
 </div>
 <div class="example">
 <p><span id="exm:unlabeled-div-5" class="example"><strong>Example 1.12  (Generalizability) </strong></span>Replication studies done in university often draw participants from students enrolled in the institutions. The findings are thus not necessarily robust if extrapolated to the whole population if there are characteristics for which they have strong (familiarity to technology, acquaintance with administrative system, political views, etc). These samples are often <strong>convenience samples</strong>.</p>
 </div>
 <div class="example">
-<p><span id="exm:unlabeled-div-6" class="example"><strong>Example 1.13  (Spratt-Archer barley in Ireland) </strong></span>Example 1.9 in <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> mentions recollections of “Student”<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;William Sealy Gosset&lt;/p&gt;"><sup>5</sup></a> on Spratt-Archer barley, a new variety of barley that performed well in experiments and whose culture the Irish Department of Agriculture encouraged. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley had been experimented in well-farmed areas, exempt of nuisance.</p>
+<p><span id="exm:unlabeled-div-6" class="example"><strong>Example 1.13  (Spratt-Archer barley in Ireland) </strong></span>Example 1.9 in <span class="citation">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> mentions recollections of “Student”<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;William Sealy Gosset&lt;/p&gt;"><sup>6</sup></a> on Spratt-Archer barley, a new variety of barley that performed well in experiments and whose culture the Irish Department of Agriculture encouraged. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley had been experimented in well-farmed areas, exempt of nuisance.</p>
 </div>
 </div>
 <div id="simplicity" class="section level3" number="1.5.4">
 <h3>
 <span class="header-section-number">1.5.4</span> Simplicity<a class="anchor" aria-label="anchor" href="#simplicity"><i class="fas fa-link"></i></a>
 </h3>
-<p>The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. Figure <a href="introduction.html#fig:xkcd2400">1.9</a> shows an <a href="https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png">hypothetical graph</a> on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.</p>
-<p>Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.</p>
+<p>The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. Figure <a href="introduction.html#fig:xkcd2400">1.10</a> shows an <a href="https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png">hypothetical graph</a> on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.</p>
+<p>Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs, requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:xkcd2400"></span>
 <img src="figures/xkcd2400_statistics.png" alt="xkcd comic [2400 (Statistics) by Randall Munroe](https://xkcd.com/2400/). Alt text: We reject the null hypothesis based on the 'hot damn, check out this chart' test. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="40%"><p class="caption">
-Figure 1.9: xkcd comic <a href="https://xkcd.com/2400/">2400 (Statistics) by Randall Munroe</a>. Alt text: We reject the null hypothesis based on the ‘hot damn, check out this chart’ test. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+Figure 1.10: xkcd comic <a href="https://xkcd.com/2400/">2400 (Statistics) by Randall Munroe</a>. Alt text: We reject the null hypothesis based on the ‘hot damn, check out this chart’ test. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
 </p>
 </div>
 <div class="yourturn">
 <ul>
-<li>Define the following terms in your own word: experimental unit, factor, treatment</li>
+<li>Define the following terms in your own word: experimental unit, factor, treatment.</li>
 <li>What is the main benefit of experimental studies over observational studies?</li>
 </ul>
 </div>

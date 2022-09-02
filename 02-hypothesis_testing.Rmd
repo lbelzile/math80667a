@@ -92,12 +92,12 @@ ggplot(data = samp,
                size = 20)
 ```
 
-We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the overall average $\mu$ than the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data and the sample mean $\overline{Y}$ is based on multiple observations.
+We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average $\mu$ than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.
 
 Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
 
 
-To get an idea of how certain something is, we have to consider the variability of an observation $Y_i$. This variance is typically denoted $\sigma^2$ and the standard deviation, $\sigma$, is expressed in the same unit as the measurements.
+To get an idea of how certain something is, we have to consider the variability of an observation $Y_i$. This variance is typically denoted $\sigma^2$ and it's square root, the standard deviation, by $\sigma$. 
 
 The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where 
 \begin{align*}
@@ -195,18 +195,20 @@ A good analogy for hypothesis tests is a trial for murder on which you are appoi
 
 ### Hypothesis
 
-In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0$) and the alternative hypothesis ($\mathscr{H}_a$). Usually, the null hypothesis (the 'status quo') is a single numerical value. The alternative is what we're really interested in testing. In \@ref(fig:samplevar), we could consider whether all five groups have the same mean $\mathscr{H}_0: \mu_1 = \mu_2 = \cdots = \mu_5$ against the alternative that at least two of them are different. These two outcomes are mutually exclusive and cover all possible scenarios. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject $\mathscr{H}_0$ in favor of $\mathscr{H}_a$, subject to some pre-specified risk of error: while we know that the differences are just due to sampling variability in Figure \@ref(fig:samplevar) because the data is simulated, in practice we need to assess the evidence using a numerical summary. 
+In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0$) and the alternative hypothesis ($\mathscr{H}_a$). Usually, the null hypothesis (the 'status quo') is a single numerical value. The alternative is what we're really interested in testing. In Figure \@ref(fig:samplevar), we could consider whether all five groups have the same mean $\mathscr{H}_0: \mu_1 = \mu_2 = \cdots = \mu_5$ against the alternative that at least two of them are different. These two outcomes are mutually exclusive and cover all possible scenarios. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject $\mathscr{H}_0$ in favor of $\mathscr{H}_a$, subject to some pre-specified risk of error: while we know that the differences are just due to sampling variability in Figure \@ref(fig:samplevar) because the data is simulated, in practice we need to assess the evidence using a numerical summary. 
 
 
 ::: { .example name="A/B testing (continued)"}
 
-We follow-up with our A/B test experiment. Given $\mu_1$ the population average click conversation rate for the current webpage and $\mu_2$ that of the redesign, we are interested in the *one-sided hypothesis* that $\mathscr{H}_0: \mu_2 \geq \mu_1$. This is logical: given the costs associated to changes to the interface and the resulting disruption, we only want to implement changes that improve the webpage design and allow us to generate more revenues.
+We follow-up with our A/B test experiment. Given $\mu_1$ the population average click conversation rate for the current webpage and $\mu_2$, that of the redesign, we are interested in the *one-sided hypothesis* that $\mathscr{H}_0: \mu_2 \geq \mu_1$. This is logical: given the costs associated to changes to the interface and the resulting disruption, we only want to implement changes that improve the webpage design and allow us to generate more revenues.
 
 One-sided hypothesis are directional: we care only about a specific direction, and so here $\mathscr{H}_a: \mu_2 \leq \mu_1$. Indeed, if the experiment suggests that the conversion rate is worst with the new webpage design, we won't go forward.
 
-Since neither of these population values are known to us, we can work instead with $\mathscr{H}_0: \mu_2-\mu_1 \geq 0$. We can use as estimator for the difference $\mu_2-\mu_1$ the difference in sample average in each subgroup.
+Since neither of these population averages $\mu_1$ and $\mu_2$ are known to us, we can work instead with $\mathscr{H}_0: \mu_2-\mu_1 \geq 0$. We can use as estimator for the difference $\mu_2-\mu_1$ the difference in sample average in each subgroup.
 
 The null hypothesis here is an interval, but it suffices the consider the most beneficial scenario, which is $\mu_2-\mu_1=0$. Indeed, if we can disprove that there is no difference and see an increase of the click rate with the updated version, all more extreme cases are automatically discarded in favour of the alternative that the new design is better.
+
+One-sided tests for which the evidence runs contrary to the hypothesis (say the mean conversion rate is higher for the current design than for the new one) lead to _p_-values of 1, since there is no proof against the null hypothesis that the old design (the status quo) is better.
 
 :::
 
@@ -219,9 +221,9 @@ Many statistics we will consider are of the form^[This class of statistic, which
 \begin{align*}
 T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated effect variability}} = \frac{\widehat{\theta} - \theta_0}{\mathrm{se}(\widehat{\theta})}
 \end{align*}
-where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is the standard error of the test statistic $\widehat{\theta}$. This quantity is designed so that, if there is no difference, $T$ has approximately mean zero and variance one. This standardization makes comparison easier; in fact, the form of the test statistic is chosen so that it doesn't depend on the units used.
+where $\widehat{\theta}$ is an estimator of $\theta$, $\theta_0$ is the postulated value of the parameter and  $\mathrm{se}(\widehat{\theta})$ is the standard error of the test statistic $\widehat{\theta}$. This quantity is designed so that, if our postulated value $\theta_0$ is correct, $T$ has approximately mean zero and variance one. This standardization makes comparison easier; in fact, the form of the test statistic is chosen so that it doesn't depend on the measurement units.
 
-For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_T$ and $\mu_C$, then $\theta = \mu_T-\mu_C$ and  $\mathscr{H}_0: \mu_T = \mu_C$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. The two-sample $t$-test would have numerator $\widehat{\theta} = \overline{Y}_T - \overline{Y}_C$, where $\overline{Y}_T$ is the sample average in treatment group and $\overline{Y}_C$ that of the control group.
+For example, if we are interested in mean differences between treatment group and control group, denoted $\mu_T$ and $\mu_C$, then $\theta = \mu_T-\mu_C$ and  $\mathscr{H}_0: \mu_T = \mu_C$ corresponds to $\mathscr{H}_0: \theta = 0$ for no difference. The two-sample $t$-test would have numerator $\widehat{\theta} = \overline{Y}_T - \overline{Y}_C$, where $\overline{Y}_T$ is the sample average in treatment group and $\overline{Y}_C$ that of the control group. The postulated value for the mean difference is zero.
 
 The numerator would thus consist of the difference in sample means and the denominator the standard error of that quantity, calculated using a software.^[Assuming equal variance, the denominator is estimated using the pooled variance estimator.]
 
@@ -418,9 +420,7 @@ knitr::kable(x = test_res, digits = c(1,4,0,0),
 If the counts of each cell are large, the null distribution of the chi-square test is well approximated by a $\chi^2$ distribution. The output of the test includes the value of the statistic, the degrees of freedom of the $\chi^2$ approximation and the _p_-value, which gives the probability that a random draw from a $\chi^2_1$ distribution is larger than the observed test statistic **assuming the null hypothesis is true**. The _p_-value is very small, `r test_res$p.value`, which means such a result is quite unlikely to happen by chance if there was no sex-discrimination.
 
 
-There are alternative test statistics that could be used, among which the odds ratio. The odds of an event is the ratio of the number of success over failure: in our example, this would be the number of promoted over held files. The odds of promotion for male is 32/12, whereas that of female is 19/30. The odds ratio for male versus female is thus $\mathsf{OR}=$ (32/12) / (19/30)= `r round((32/12) / (19/30), 2)`. Under the null hypothesis, $\mathscr{H}_0: \mathsf{OR}=$ 1 (same probability of being promoted) (why?)
-
-Fisher's test assumes that the row and sum totals are fixed (that is, the number of promoted/withheld files and male/female are fixed at the design stage) and uses this to derive the exact probability of observing this particular configuration if the proportion of success was the same. The numerical value of Fisher's exact test, obtained by running `fisher.test(dat_exper1)`, is different from that obtained earlier, but so is the null distribution^[The null distribution for Fisher's exact test is hypergeometric. This fact is well known in combinatorics, also known as the art of counting marbles.]. On the contrary, the _p_-value is very close to the one reported for the $\chi^2$ test in Table \@ref(tab:print-tab-example-chisq-test-rosen).
+There are alternative test statistics that could be used, among which Fisher's test. The latter assumes that the row and sum totals are fixed (that is, the number of promoted/withheld files and male/female are fixed at the design stage) and uses this to derive the exact probability of observing this particular configuration if the proportion of success was the same. The numerical value of Fisher's exact test statistic is different from that of the chi-square test for contingency tables, but so is the null distribution^[The null distribution for Fisher's exact test is hypergeometric. This fact is well known in combinatorics.]. On the contrary, the _p_-value is very close to the one reported for the $\chi^2$ test in Table \@ref(tab:print-tab-example-chisq-test-rosen).
 
 
 ```{r print-tab-example-fisher-test-rosen, echo = FALSE, eval = TRUE}
@@ -452,7 +452,9 @@ Under the null hypothesis, sex has no incidence on the action of the manager. Th
 
 1. permute the labels for `sex`,
 2. recreate a contingency table by aggregating counts,
-3. calculate the odds ratio for the simulated table.
+3. calculate a test statistic for the simulated table.
+
+As test statistic, we use odds ratio: the odds of an event is the ratio of the number of success over failure: in our example, this would be the number of promoted over held files. The odds of promotion for male is 32/12, whereas that of female is 19/30. The odds ratio for male versus female is thus $\mathsf{OR}=$ (32/12) / (19/30)= `r round((32/12) / (19/30), 2)`. Under the null hypothesis, $\mathscr{H}_0: \mathsf{OR}=$ 1 (same probability of being promoted) (why?)
 
 ```{r}
 #| label: fig-infer-odds-ratio-permutation
@@ -667,16 +669,18 @@ The authors compared the number of creative ideas, a subset of the ideas generat
 
 @Brucks.Levav:2022 used a negative binomial regression model: in their model, the expected number creative ideas generated is 
 \begin{align*}
-\mathsf{E}(\texttt{ncreative}) = \exp(\beta_0 + \beta_1 \mathrm{video})
+\mathsf{E}(\texttt{ncreative}) = \exp(\beta_0 + \beta_1 \texttt{video})
 \end{align*}
-
+where $\texttt{video}=0$ if the pair are in the same room and $\texttt{video}=1$ if they interact instead via videoconferencing.
 
 The mean number of ideas for videoconferencing is thus $\exp(\beta_1)$ times that of the face-to-face: the estimate of the multiplicative factor is $\exp(\beta_1)$ is $`r papaja::print_num(exp(coef(negbin)[2]))`$ `r papaja::print_confint(exp(confint(negbin)[2,]), ,enclose_math = TRUE)`. 
 
-No difference between experimental conditions translates into the null hypothesis as $\mathscr{H}_0: \beta_1=0$ vs $\mathscr{H}_0: \beta_1 \neq 0$.  The likelihood ratio test comparing the regression model with and without $\texttt{video}$ the statistic is $R=`r papaja::printnum(LRT_negbin)`$ ($p$-value based on $\chi^2_1$ of $`r papaja::print_p(pval_negbin)`$). We conclude the average number of ideas is different, with summary statistics suggesting that virtual pairs generate fewer ideas.
+No difference between experimental conditions translates into the null hypothesis as $\mathscr{H}_0: \beta_1=0$ vs $\mathscr{H}_0: \beta_1 \neq 0$ or equivalently $\mathscr{H}_0: \exp(\beta_1)=1$.  The likelihood ratio test comparing the regression model with and without $\texttt{video}$ the statistic is $R=`r papaja::printnum(LRT_negbin)`$ ($p$-value based on $\chi^2_1$ of $`r papaja::print_p(pval_negbin)`$). We conclude the average number of ideas is different, with summary statistics suggesting that virtual pairs generate fewer ideas.
 
 If we had resorted to a two sample $t$-test, we would have found a mean difference in number of creative idea of `r papaja::apa_print(ttest_BL22)$full_result`.
 
+
+Both tests come with slightly different sets of assumptions, but yield similar conclusions: there is evidence of a smaller  number of creative ideas when people interact via videoconferencing.
 
 :::
 
@@ -752,9 +756,9 @@ We want to choose an experimental design and a test statistic that leads to high
 
 - the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behaviour, the easier it is to detect departures from $\theta_0$.
 (Figure \@ref(fig:power3)); it's easier to spot an elephant in a room than a mouse.
-- variability: the less noisy your data, the easier it is to assess that the observed differences are genuine), as Figure \@ref(fig:power2) shows);
+- variability: the less noisy your data, the easier it is to assess that the observed differences are genuine, as Figure \@ref(fig:power2) shows;
 - the sample size: the more observation, the higher our ability to detect significative differences because the amount of evidence increases as we gather more observations.^[Specifically, the standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase.] In experimental designs, the power also depends on how many observations are allocated to each group.^[While the default is to assign an equal number to each subgroup, power may be maximized by specifying different sample size in each group if the variability of the measurement differ in these groups.]
-- the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. While some are clearly inferior, some less powerful choice may be preferable. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are less sensible to model assumption, model misspecification and outliers.
+- the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. Choosing and designing statistics is usually best left out to statisticians, as there may be tradeoffs. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are also less sensible to model assumptions, model misspecification and outliers.
 
 Changing the value of $\alpha$ has an impact on the power, since larger values of $\alpha$ move the cutoff towards the bulk of the distribution. It entails a higher percentage of rejection also when the alternative is false. However, the value of $\alpha$ is fixed beforehand to control the type I error (avoid judicial mistakes). The power corresponds to the red shaded area on the right panel of Figure \@ref(fig:compareFnullalternative), would become larger if we moved the cutoff value lower, corresponding to larger $\alpha$. 
 

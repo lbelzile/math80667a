@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>5 Designs to reduce the error | Experimental Design and Statistical Methods</title>
+<meta name="author" content="Léo Belzile">
+<meta name="description" content="The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest:...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="5 Designs to reduce the error | Experimental Design and Statistical Methods">
+<meta property="og:type" content="book">
+<meta property="og:description" content="The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest:...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5 Designs to reduce the error | Experimental Design and Statistical Methods">
+<meta name="twitter:description" content="The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest:...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Experimental Design and Statistical Methods</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Experimental Design and Statistical Methods</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
+<li><a class="" href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></li>
+<li><a class="" href="replication-crisis.html"><span class="header-section-number">4</span> Replication crisis</a></li>
+<li><a class="active" href="designs-to-reduce-the-error.html"><span class="header-section-number">5</span> Designs to reduce the error</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/lbelzile/math80667a">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="designs-to-reduce-the-error" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Designs to reduce the error<a class="anchor" aria-label="anchor" href="#designs-to-reduce-the-error"><i class="fas fa-link"></i></a>
+</h1>
+<p>The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. These are instances of <strong>blocking factors</strong>: by filtering their effect out and looking at the residual variability that is unexplained by the blocking factors, we can increase power. Block designs reduce the error term, at the cost of including and estimating additional parameters (group average or slope).</p>
+<p>We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is <strong>no interaction</strong> between experimental factor and blocking factors<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;We can check for this assumption.&lt;/p&gt;"><sup>25</sup></a> Thus, we will be interested mostly in marginal effects.</p>
+<p>A related design is to include a continuous covariate to the analysis of variance. If we randomized the observations properly, this shouldn’t be necessary. The linear model term helps again reduce the residual variability, which increases the power to detect differences due to experimental conditions. Such a design was historically called <strong>analysis of covariance</strong>, an instance of a linear model.</p>
+<p>Including blocking factor or covariates should in principle increase power provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn’t be used to assign treatment.</p>
+<div id="ancova" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Analysis of covariance<a class="anchor" aria-label="anchor" href="#ancova"><i class="fas fa-link"></i></a>
+</h2>
+<p>In an analysis of covariance, we include a linear component for a (continuous) covariate, with the purpose again to reduce residual error. A prime example is prior/post experiment measurements, whereby we monitor the change in outcome due to the manipulation.</p>
+<p>In such setting, it may seem logical to take the difference in post and prior score as response: this is showcased in Example <a href="designs-to-reduce-the-error.html#exm:vanStek">5.2</a> and <span class="citation">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>, an analysis of which is presented on <a href="https://edsm.rbind.io/example/06-ancova/">the course website</a>.</p>
+<p>When we add a covariate, we need the latter to have a strong linear correlation for the inclusion to make sense. We can assess graphically whether the relationship is linear, and whether the slopes for each experimental condition are the same.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If not, this implies that the covariate interacts with the experimental condition.&lt;/p&gt;"><sup>26</sup></a></p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-ancovadifftrend"></span>
+<img src="06-blocking_files/figure-html/fig-ancovadifftrend-1.png" alt="Simulated data from two groups with an analysis of covariance model. " width="85%"><p class="caption">
+Figure 5.1: Simulated data from two groups with an analysis of covariance model.
+</p>
+</div>
+<p>The left panel of Figure <a href="designs-to-reduce-the-error.html#fig:fig-ancovadifftrend">5.1</a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of Figure <a href="designs-to-reduce-the-error.html#fig:fig-ancovadifftrend">5.1</a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
+<p>Figure <a href="designs-to-reduce-the-error.html#fig:fig-ancovaresid">5.2</a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel; note that the <span class="math inline">\(y\)</span>-axes have different scales.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-ancovaresid"></span>
+<img src="06-blocking_files/figure-html/fig-ancovaresid-1.png" alt="Response after subtracting mean (left) and after detrending (right)." width="85%"><p class="caption">
+Figure 5.2: Response after subtracting mean (left) and after detrending (right).
+</p>
+</div>
+<p>We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.</p>
+<div class="example">
+<p><span id="exm:leechoi" class="example"><strong>Example 5.1  (Inconsistency of product description and image in online retailing) </strong></span><span class="citation">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
+<p>One way to account for familiarity when comparing the mean is to use a linear regression with <code>familiarity</code> as another explanatory variable. The expected value of the product evaluation is
+<span class="math display" id="eq:vS">\[\begin{align}
+\mathsf{E}(\texttt{prodeval}) = \beta_0 + \beta_1 \texttt{familiarity} + \beta_2 \texttt{consistency}, \tag{5.1}
+\end{align}\]</span>
+where <span class="math inline">\(\texttt{familiarity}\)</span> is the score from 1 to 7 and <span class="math inline">\(\texttt{consistency}\)</span> is a binary indicator equal to one if the output is inconsistent and zero otherwise.
+The coefficient <span class="math inline">\(\beta_2\)</span> thus measures the difference between product evaluation rating for consistent vs inconsistent displays, for the same familiarity score.</p>
+<p>We can look at coefficient (standard error) estimates <span class="math inline">\(\widehat{\beta}_2 = -0.64 (0.302)\)</span>.
+No difference between groups would mean <span class="math inline">\(\beta_2=0\)</span> and we can build a test statistic by looking at the standardized regression coefficient <span class="math inline">\(t = \widehat{\beta}_2/\mathsf{se}(\widehat{\beta}_2)\)</span>. The result output is <span class="math inline">\(b = -0.64\)</span>, 95% CI <span class="math inline">\([-1.24, -0.04]\)</span>, <span class="math inline">\(t(93) = -2.12\)</span>, <span class="math inline">\(p = .037\)</span>. We reject the null hypothesis of equal product evaluation for both display at level 5%: there is evidence that there is a small difference, with people giving on average a score that is 0.64 points smaller (on a scale of 1 to 9) when presented with conflicting descriptions and images.</p>
+<p>We can compare the analysis of variance table obtained by fitting the model with and without <span class="math inline">\(\texttt{familiarity}\)</span>. Table <a href="designs-to-reduce-the-error.html#tab:tbl-anovatabLC19S1">5.1</a> shows that the effect of consistency is small and not significant and a two-sample <em>t</em>-test shows no evidence of difference between the average familiarity score in both experimental conditions (<span class="math inline">\(p\)</span>-value of .532). However, we can explain roughly one fifth of the residual variability by the familiarity with the brand (see the sum of squares in Table <a href="designs-to-reduce-the-error.html#tab:tbl-anovatabLC19S1">5.1</a>): removing the latter leads to a higher signal-to-noise ratio for the impact of consistency, at the expense of a loss of one degree of freedom. Thus, it appears that the manipulation was successful.</p>
+<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tbl-anovatabLC19S1">Table 5.1: </span>Analysis of variance tables for the models without <span class="math inline">\(\texttt{familiarity}\)</span>.
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+sumsq
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+consistency
+</td>
+<td style="text-align:right;">
+7.04
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.55
+</td>
+<td style="text-align:left;">
+.113
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Residuals
+</td>
+<td style="text-align:right;">
+259.18
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tbl-anovatabLC19S1">Table 5.1: </span>Analysis of variance tables for the models with <span class="math inline">\(\texttt{familiarity}\)</span>.
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+sumsq
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+familiarity
+</td>
+<td style="text-align:right;">
+55.9
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+25.60
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+consistency
+</td>
+<td style="text-align:right;">
+9.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4.49
+</td>
+<td style="text-align:left;">
+.037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Residuals
+</td>
+<td style="text-align:right;">
+203.2
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-ANCOVA-demo"></span>
+<img src="06-blocking_files/figure-html/fig-ANCOVA-demo-1.png" alt="Scatterplot of product evaluation as a function of the familiarity score, split by experimental manipulation." width="85%"><p class="caption">
+Figure 5.3: Scatterplot of product evaluation as a function of the familiarity score, split by experimental manipulation.
+</p>
+</div>
+<p>Figure <a href="designs-to-reduce-the-error.html#fig:fig-ANCOVA-demo">5.3</a> shows that people more familiar with the product or brand tend to have a more positive product evaluation, as postulated by the authors. The graph also shows two straight lines corresponding to the fit of a linear model with different intercept and slope for each display group: there is little material difference, one needs to assess formally whether a single linear relationship as the one postulated in eq.<a href="designs-to-reduce-the-error.html#eq:vS">(5.1)</a> can adequately characterize the relation in both groups.</p>
+<p>To this effect, we fit a linear model with different slopes in each group, and compare the fit of the latter with the analysis of covariance model that includes a single slope for both groups: we can then test if the slopes are the same, or alternatively if the difference between the slopes is zero. The <em>t</em>-statistic indicates no difference in slope (<span class="math inline">\(p\)</span>-value of .379), thus the assumption is reasonable. Levene’s test for homogeneity of variance indicates no discernible difference between groups. Thus, it appears there is a difference in perception of product quality due to the manipulation.</p>
+</div>
+<div class="example">
+<p><span id="exm:vanStek" class="example"><strong>Example 5.2  (Effect of scientific consensus on false beliefs) </strong></span>We consider Study 3 of <span class="citation">Stekelenburg et al. (<a href="references.html#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span>, who studied changes in perception of people holding false beliefs or denying (to some extent) the scientific consensus by presenting them with news article showcasing information about various phenomena. The experimental manipulation consisted in presenting boosting, a form of training to help readers identify and establish whether scientifists were truly expert in the domain of interest, how strong was the consensus, etc.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The article is interesting because lack of planning/changes led them to adapt the design from experiment 1 to 3 until they found something. Without preregistration, it is unlikely such findings would have been publishable.&lt;/p&gt;"><sup>27</sup></a></p>
+<p>The third and final experiment of the paper focused on genetically modified organisms: it is a replication of Study 2, but with a control group (since there were no detectable difference between experimental conditions <code>Boost</code> and <code>BoostPlus</code>) and a larger sample size (because Study 2 was underpowered).</p>
+<p>The data include 854 observations with <code>prior</code>, the negative of the prior belief score of the participant, the <code>post</code> experiment score for the veracity of the claim. Both were measured using a visual scale ranging from -100 (I am 100% certain this is false) to 100 (I am 100% certain this is true), with 0 (I don’t know) in the middle. Only people with negative prior beliefs were recruited to the study. The three experimental conditions were <code>BoostPlus</code>, <code>consensus</code> and a <code>control</code> group. Note that the scores in the data have been negated, meaning that negative posterior scores indicate agreement with the consensus on GMO.</p>
+<p>Preliminary checks suggest that, although the slopes for prior beliefs could plausibly be the same in each group and the data are properly randomized, there is evidence of unequal variance for the changes in score. As such, we fit a model with mean
+<span class="math display">\[\begin{align*}
+\mathsf{E}(\texttt{post}) &amp;= \begin{cases}
+\beta_0 + \beta_1 \texttt{prior} + \alpha_1 &amp;  \texttt{condition} = \texttt{BoostPlus}\\
+\beta_0 + \beta_1 \texttt{prior} + \alpha_2 &amp;\texttt{condition} = \texttt{consensus}\\
+\beta_0 + \beta_1 \texttt{prior} + \alpha_3 &amp;\texttt{condition} = \texttt{control}
+\end{cases}
+\end{align*}\]</span>
+with <span class="math inline">\(\alpha_1 + \alpha_2 + \alpha_3=0\)</span>, using the sum-to-zero parametrization, and with different variance for each experimental condition,
+<span class="math display">\[\begin{align*}
+\mathsf{Va}(\texttt{post}) = \begin{cases}
+\sigma^2_1, &amp;  \texttt{condition} = \texttt{BoostPlus},\\
+\sigma^2_2, &amp;  \texttt{condition} = \texttt{consensus},\\
+\sigma^2_3, &amp; \texttt{condition} = \texttt{control}.
+\end{cases}
+\end{align*}\]</span>
+Because of the unequal variances, we cannot use multiple testing procedures reserved for analysis of variance and resort instead to Holm–Bonferroni to control the familywise error rate. We here look only at pairwise differences between conditions.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;In Study 2, the interest was comparing manipulation vs control and the Boost vs BoostPlus conditions, two orthogonal contrasts.&lt;/p&gt;"><sup>28</sup></a></p>
+<div class="inline-table"><table class="kable_wrapper table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tbl-anovatabSSVB">Table 5.2: </span>Analysis of variance tables for the model with (left) and without (right) <span class="math inline">\(\texttt{prior}\)</span> belief score.
+</caption>
+<tbody><tr>
+<td>
+<table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr></thead>
+<tbody><tr>
+<td style="text-align:left;">
+condition
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+42.5
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr></tbody>
+</table>
+</td>
+<td>
+<table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+prior
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+289
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+condition
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr></tbody>
+</table></div>
+<p>Repeating the exercise of comparing the amount of evidence for comparison with and without inclusion of a covariate shows that the value of the test statistic is larger (Table <a href="designs-to-reduce-the-error.html#tab:tbl-anovatabSSVB">5.2</a>), indicative of stronger evidence with the analysis of covariance model: the conclusion would be unaffected with such large sample sizes. We of course care very little for the global <span class="math inline">\(F\)</span> test of equality of mean, as the previous study had shown large differences. What is more interesting here is quantifying the change between conditions.</p>
+<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tbl-contraststabSSVB">Table 5.3: </span>Pairwise contrasts with <span class="math inline">\(p\)</span>-values adjusted using Holm–Bonferroni for the ANOVA model (without <span class="math inline">\(\texttt{prior}\)</span> belief score).
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+contrast
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+consensus vs control
+</td>
+<td style="text-align:right;">
+-12.0
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+558
+</td>
+<td style="text-align:right;">
+-3.01
+</td>
+<td style="text-align:left;">
+.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+consensus vs BoostPlus
+</td>
+<td style="text-align:right;">
+16.3
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+546
+</td>
+<td style="text-align:right;">
+3.49
+</td>
+<td style="text-align:left;">
+.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BoostPlus vs control
+</td>
+<td style="text-align:right;">
+-28.3
+</td>
+<td style="text-align:right;">
+4.4
+</td>
+<td style="text-align:right;">
+506
+</td>
+<td style="text-align:right;">
+-6.49
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tbl-contraststabSSVB">Table 5.3: </span>Pairwise contrasts with <span class="math inline">\(p\)</span>-values adjusted using Holm–Bonferroni for the ANCOVA model (with <span class="math inline">\(\texttt{prior}\)</span> belief score).
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+contrast
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+consensus vs control
+</td>
+<td style="text-align:right;">
+-11.8
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+543
+</td>
+<td style="text-align:right;">
+-3.54
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+consensus vs BoostPlus
+</td>
+<td style="text-align:right;">
+17.5
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+524
+</td>
+<td style="text-align:right;">
+4.11
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BoostPlus vs control
+</td>
+<td style="text-align:right;">
+-29.3
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+459
+</td>
+<td style="text-align:right;">
+-7.45
+</td>
+<td style="text-align:left;">
+&lt; .001
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>Table <a href="designs-to-reduce-the-error.html#tab:tbl-contraststabSSVB">5.3</a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in Figure <a href="designs-to-reduce-the-error.html#fig:fig-vanStekS3">5.4</a>, helps decrease background noise.</p>
+<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-vanStekS3">Table 5.4: </span>Summary statistics of belief as a function of time of measurement and experimental condition.
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+time
+</th>
+<th style="text-align:left;">
+condition
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+se
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+prior
+</td>
+<td style="text-align:left;">
+BoostPlus
+</td>
+<td style="text-align:right;">
+57.65
+</td>
+<td style="text-align:right;">
+1.69
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+prior
+</td>
+<td style="text-align:left;">
+consensus
+</td>
+<td style="text-align:right;">
+56.32
+</td>
+<td style="text-align:right;">
+1.67
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+prior
+</td>
+<td style="text-align:left;">
+control
+</td>
+<td style="text-align:right;">
+56.49
+</td>
+<td style="text-align:right;">
+1.68
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+post
+</td>
+<td style="text-align:left;">
+BoostPlus
+</td>
+<td style="text-align:right;">
+2.62
+</td>
+<td style="text-align:right;">
+3.53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+post
+</td>
+<td style="text-align:left;">
+consensus
+</td>
+<td style="text-align:right;">
+18.93
+</td>
+<td style="text-align:right;">
+3.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+post
+</td>
+<td style="text-align:left;">
+control
+</td>
+<td style="text-align:right;">
+30.91
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+</tr>
+</tbody>
+</table></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-vanStekS3"></span>
+<img src="06-blocking_files/figure-html/fig-vanStekS3-1.png" alt="Difference between prior and post experiment beliefs on genetically engineered food." width="85%"><p class="caption">
+Figure 5.4: Difference between prior and post experiment beliefs on genetically engineered food.
+</p>
+</div>
+</div>
+<div class="pitfall">
+<p><span class="citation">Stekelenburg et al. (<a href="references.html#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span> split their data to do pairwise comparisons two at the time (thus taking roughly two-third of the data to perform a two sample <em>t</em>-test with each pair). Although it does not impact their conclusion, this approach is conceptually incorrect: if the variance was equal, we would want to use all observations to estimate it (so their approach would be suboptimal, since we would estimate the variance three times with smaller samples).</p>
+<p>On the contrary, using a model that assumes equal variance when it is not the case leads to distortion: the variance we estimate will be some sort of average of the variability <span class="math inline">\(\sigma_i\)</span> and <span class="math inline">\(\sigma_j\)</span> in experimental condition <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, again potentially leading to distortions. With large samples, this may be unconsequential, but illustrates caveats of subsample analyses.</p>
+</div>
+<div class="pitfall">
+<p>Figure <a href="designs-to-reduce-the-error.html#fig:fig-vanStekS3f1">5.5</a> shows the relationship between prior and posterior score. The data show clear difference between individuals: many start from completely disbelieving of genetically engineered food and change their mind (sometimes drastically), there are many people who do not change idea at all and have similar scores, and many who give a posterior score of zero. This heterogeneity in the data illustrates the danger of only looking at the summary statistics and comparing averages. It does not tell the whole picture! One could investigate whether the strength of religious or political beliefs, or how much participants trust scientists, could explain some of the observed differences.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-vanStekS3f1"></span>
+<img src="06-blocking_files/figure-html/fig-vanStekS3f1-1.png" alt="Scatterplot of negated prior and posterior belief score." width="85%"><p class="caption">
+Figure 5.5: Scatterplot of negated prior and posterior belief score.
+</p>
+</div>
+</div>
+</div>
+<div id="sample-size-consideration" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Sample size consideration<a class="anchor" aria-label="anchor" href="#sample-size-consideration"><i class="fas fa-link"></i></a>
+</h2>
+<p>We will distinguish between different
+<!-- Dean, Voss, Daguliic (2017), Section 10.2 --></p>
+<!--
+## Block designs with more one or more blocking factors
+
+How to allocation observations optimally?
+Do we need observations in each cells? Examples of designs
+
+## Effect size for block designs
+
+Removing the variability of the block.
+Also for power calculations (partial)
+
+
+-->
+<div class="keyidea">
+<p><strong>Summary</strong>:</p>
+<ul>
+<li>Inclusion of blocking factor and continuous covariates may help filtering out unwanted variability.</li>
+<li>These are typically concomitant variables (measured alongside the response variable).</li>
+<li>These designs reduce the residual error, leading to an increase in power (more ability to detect differences in average between experimental conditions).</li>
+<li>We are only interested in differences due to experimental condition (marginal effects).</li>
+<li>In general, there should be no interaction between covariates/blocking factors and experimental conditions.</li>
+<li>This hypothesis can be assessed by comparing the models with and without interaction, if there are enough units (e.g., equality of slope for ANCOVA).</li>
+</ul>
+</div>
+<div class="yourturn">
+<ul>
+<li>
+<span class="citation">Box, Hunter, and Hunter (<a href="references.html#ref-Box:1978" role="doc-biblioref">1978</a>)</span> write on page 103 the following moto:</li>
+</ul>
+<blockquote>
+<p>Block what you can and randomize what you cannot.</p>
+</blockquote>
+<p>Explain the main benefit of blocking for confounding variables (when possible) over randomization.</p>
+</div>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="replication-crisis.html"><span class="header-section-number">4</span> Replication crisis</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#designs-to-reduce-the-error"><span class="header-section-number">5</span> Designs to reduce the error</a></li>
+<li><a class="nav-link" href="#ancova"><span class="header-section-number">5.1</span> Analysis of covariance</a></li>
+<li><a class="nav-link" href="#sample-size-consideration"><span class="header-section-number">5.2</span> Sample size consideration</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/06-blocking.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/06-blocking.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Experimental Design and Statistical Methods</strong>" was written by Léo Belzile. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -47,9 +47,9 @@ In its simplest form, an **experimental design** is a comparison of two or more 
 - The subjects (or **experimental units**) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.
 - The **observational unit** is the smallest level (time point, individual) at which measurement are recorded.
 - The **experimental treatments** or conditions (also called **factor**, or independent variable), are *manipulated and controlled* by the researcher. Oftentimes, there is a **control** or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).
-- Additional explanatories that are intrinsic to the experimental (sub-)units are termed **blocking factors**. Controlling for these allows to reduce the variability of measurements, typically leading to improved inferences.
+- Additional explanatories that are intrinsic to the experimental (sub-)units are termed **blocking factors**. Controlling for these typically leads to improved inferences, because we filter out the unwanted variability they generate.
 - After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject. 
-- Observed differences in the outcome variable between the experimental conditions (treatments) is called the treatment effect (or **effect size**). 
+- Observed differences in the outcome variable between the experimental conditions (treatments) are called treatment effects. 
 
 ::: {.example #experimentdefinitions name="Pedagogical experience"}
 Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observational units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom). 
@@ -93,11 +93,9 @@ Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Ec
 **Point of terminology: internal and external validity**
 
 
-A study from which we can study causal relationships is said to have **internal validity**. By design, experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal.
+A study from which we can study causal relationships is said to have **internal validity**. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other factors, not covered in the class, that can threaten internal validity.
 
-In observational studies, disentangling causal relationship is more difficult. Correlation is not causation, and most phenomenon are complex with tens of variables potentially influencing both the factors under study and the response.
-
-**External validity** refers directly to generalizability of the conclusions of a study: \@ref(fig:openintrograph) shows that external validity is directly related to random sampling from the population
+**External validity** refers directly to generalizability of the conclusions of a study: Figure \@ref(fig:openintrograph) shows that external validity is directly related to random sampling from the population
 
 :::
 
@@ -255,7 +253,12 @@ The credibility of a study relies in large part on the quality of the data colle
 
 There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.
 
-In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon's Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review [@Aguinis:2021]. These samples are subject to self-selection bias and should be read with skepticism. I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is relatively unimportant. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the repartition of individuals with the composition obtained from the census. 
+In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon's Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review [@Aguinis:2021]. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census. 
+
+<div class="figure" style="text-align: center">
+<img src="figures/continuous_discrete.png" alt="Sampling bias. Artwork by Jonathan Hey [(Sketchplanations)](https://sketchplanations.com/sampling-bias), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-nc/4.0/)" width="85%" />
+<p class="caption">(\#fig:fig-samplingbias)Sampling bias. Artwork by Jonathan Hey [(Sketchplanations)](https://sketchplanations.com/sampling-bias), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-nc/4.0/)</p>
+</div>
 
 
 ## Examples of experimental designs
@@ -314,7 +317,7 @@ In a large-scale [multiyear experiment conducted by the RAND Corporation](https:
 
 :::
 
-There are many other greath examples in [the dedicated section of Chapter 10 of *Telling stories with data* by Rohan Alexander](https://tellingstorieswithdata.com/10-hunt.html#rct-examples) [@Alexander2021]. Section 1.4 of @Berger:2018 also lists various applications of experimental designs in a variety of fields.
+There are many other great examples in [the dedicated section of Chapter 10 of *Telling stories with data* by Rohan Alexander](https://tellingstorieswithdata.com/10-hunt.html#rct-examples) [@Alexander2021]. Section 1.4 of @Berger:2018 also lists various applications of experimental designs in a variety of fields.
 
 
 
@@ -342,19 +345,19 @@ The first point raised by Cox is thus that we
 
 > ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.
 
-This point also motivates use of **double-blind** procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof participants).
+This point also motivates use of **double-blind** procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof).
 
-Randomization is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.
+Randomization^[The percentage of participants need not be equiprobable, nor do we need to assign the same probability to each participant. However, going away from equal number of people per group has consequences and makes the statistical analysis more complicated.] is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.
 
 ### Variability 
 
-The second point listed by @Cox:1958 is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the effect size is divided by its standard error; both terms will be defined rigourously latter, but the intuition should be that it's easier to detect something when the signal is large and the background noise is low. The latter is a function of 
+The second point listed by @Cox:1958 is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the difference in mean treatment is divided by its standard error, a form of effect size. The intuition should be that it's easier to detect something when the signal is large and the background noise is low. The latter is a function of 
 
 (a) the accuracy of the experimental work and measurements apparatus and the intrinsic variability of the phenomenon under study, 
-(b) the number of experimental and observational units, i.e., the sample size and 
+(b) the number of experimental and observational units (the sample size).
 (c) the choice of design and statistical procedures. 
 
-Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is oftentimes standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.
+Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is usually standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.
 
 ### Generalizability
 
@@ -384,10 +387,10 @@ Example 1.9 in @Cox:1958 mentions recollections of "Student"^[William Sealy Goss
 
 ### Simplicity
 
-The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most  researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. Figure \@ref(fig:xkcd2400) shows an [hypothetical graph](https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png) on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.
+The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. Figure \@ref(fig:xkcd2400) shows an [hypothetical graph](https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png) on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.
 
 
-Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.
+Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs, requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.
 
 <div class="figure" style="text-align: center">
 <img src="figures/xkcd2400_statistics.png" alt="xkcd comic [2400 (Statistics) by Randall Munroe](https://xkcd.com/2400/). Alt text: We reject the null hypothesis based on the 'hot damn, check out this chart' test. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="40%" />
@@ -396,7 +399,7 @@ Randomization justifies the use of the statistical tools we will use under very 
 
 ::: yourturn
 
-- Define the following terms in your own word: experimental unit, factor, treatment
+- Define the following terms in your own word: experimental unit, factor, treatment.
 - What is the main benefit of experimental studies over observational studies?
 
 :::

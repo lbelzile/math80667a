@@ -71,6 +71,7 @@
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
 <li><a class="" href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></li>
 <li><a class="active" href="replication-crisis.html"><span class="header-section-number">4</span> Replication crisis</a></li>
+<li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">5</span> Designs to reduce the error</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -147,24 +148,96 @@ Figure 4.4: Tweet showing widespread problems related to unintentional changes t
 Figure 4.5: Screenshot of the Nature Reporting summary for statistics, reproduced under the CC BY 4.0 license.
 </p>
 </div>
+<div id="causes-of-the-replication-crisis" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Causes of the replication crisis<a class="anchor" aria-label="anchor" href="#causes-of-the-replication-crisis"><i class="fas fa-link"></i></a>
+</h2>
+<p>Below are multiple (non-exclusive) explanations for the lack of replication of study findings.</p>
+<div id="the-garden-of-forking-paths" class="section level3" number="4.1.1">
+<h3>
+<span class="header-section-number">4.1.1</span> The garden of forking paths<a class="anchor" aria-label="anchor" href="#the-garden-of-forking-paths"><i class="fas fa-link"></i></a>
+</h3>
+<p>The garden of forking paths, named after a <a href="https://en.wikipedia.org/wiki/The_Garden_of_Forking_Paths">novel of Borges</a>, is a term coined by <a href="http://www.stat.columbia.edu/~gelman/research/unpublished/forking.pdf">Andrew Gelman</a> to refer to researchers’ degrees of freedom. With vague hypothesis and data collection rules, it is easy for the researcher to adapt and interpret the conclusions in a way that fits his or her chosen narratives. In the words of <span class="citation">Gelman and Loken (<a href="references.html#ref-Gelman.Loken:2014" role="doc-biblioref">2014</a>)</span></p>
+<blockquote>
+<p>Given a particular data set, it can seem entirely appropriate to look at the data and construct reasonable rules for data exclusion, coding, and analysis that can lead to statistical significance. In such a case, researchers need to perform only one test, but that test is conditional on the data.</p>
+</blockquote>
+<p>This user case is not accomodated by classical testing theory. Research hypothesis are often formulated in a vague way, such that different analysis methods, tests may be compatible. <a href="https://docs.iza.org/dp15476.pdf">Abel et al. (2022) recent preprint</a> found that preregistration alone did not solve this problem, but that publication bias in randomized control trial was alleviated by publication of pre-analysis plans. This is directly related to the garden of forking path.</p>
+</div>
+<div id="selective-reporting" class="section level3" number="4.1.2">
+<h3>
+<span class="header-section-number">4.1.2</span> Selective reporting<a class="anchor" aria-label="anchor" href="#selective-reporting"><i class="fas fa-link"></i></a>
+</h3>
+<p>Also known as the file-drawer problem, selective reporting occurs because publication of results that fail to reach statistical significance (sic) are harder to publish. In much the same way as multiple testing, if 20 researchers perform a study but only one of them writes a paper and the result is a fluke, then this indicates. There are widespread indications publication bias, as evidence by the distribution of <span class="math inline">\(p\)</span>-values reported in papers. A <a href="https://docs.iza.org/dp15478.pdf">recent preprint of a study</a> found the prevalance to be higher in online experiments such as Amazon MTurks.</p>
+<div class="outsidethebox">
+<p>Methods that pool together results, such as meta-analysis, are sensitive to selective reporting. Why does it matter?</p>
+</div>
+</div>
+<div id="multiple-testing" class="section level3" number="4.1.3">
+<h3>
+<span class="header-section-number">4.1.3</span> Multiple testing<a class="anchor" aria-label="anchor" href="#multiple-testing"><i class="fas fa-link"></i></a>
+</h3>
+<p>If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of <span class="math inline">\(\alpha\)</span> (often 0.05) of making a type I error if the null is true. The problem is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a <span class="math inline">\(p\)</span>-value less than 5%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether <span class="math inline">\(p \leq \alpha\)</span> (statistically significant at level <span class="math inline">\(\alpha\)</span> or not leads to selective reporting of findings. The level <span class="math inline">\(\alpha=5\)</span>% is essentially arbitrary: <span class="citation">(<a href="#ref-Tukey:1926" role="doc-biblioref"><strong>Tukey:1926?</strong></a>)</span> wrote</p>
+<blockquote>
+<p>If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level.</p>
+</blockquote>
+<p>Not all tests are of interest, even if standard software will report all possible pairwise comparisons. Even then, the number of tests performed in the course of an analysis can be very large. The more tests are performed, the more likely one of the tests will lead to statistical significance. <a href="http://www.math.tau.ac.il/~ybenja/">Dr. Yoav Benjamini</a>, a leading researcher in multiple testing, looked at the number of inference / tests performed in the Psychology replication project <span class="citation">(<a href="#ref-OSC:2015" role="doc-biblioref"><strong>OSC:2015?</strong></a>)</span>. The number of tests performed ranged from 4 to 700, with an average of 72 and that only 11 out of the 100 engaged with selection, but only cursorily. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure <a href="#fig:xkcdsignificant"><strong>??</strong></a></p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:xkcd882"></span>
+<img src="figures/xkcd882_significant.png" alt="xkcd comic [882 (Significant) by Randall Munroe](https://xkcd.com/882/). Alt text: `So, uh, we did the green study again and got no link. It was probably a--` `RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!`. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="60%"><p class="caption">
+Figure 4.6: xkcd comic <a href="https://xkcd.com/882/">882 (Significant) by Randall Munroe</a>. Alt text: <code>So, uh, we did the green study again and got no link. It was probably a--</code> <code>RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!</code>. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+</p>
+</div>
+<p><em>P</em>-hacking and the replication crisis has lead many leading statisticians to advocate much more stringent cutoff criterion such as <span class="math inline">\(p &lt; 0.001\)</span>.</p>
+</div>
+<div id="non-representative-samples" class="section level3" number="4.1.4">
+<h3>
+<span class="header-section-number">4.1.4</span> Non-representative samples<a class="anchor" aria-label="anchor" href="#non-representative-samples"><i class="fas fa-link"></i></a>
+</h3>
+<p>Many researchers opt for convenience samples by using online panels such as Qualtrics, Amazon MTurks, etc. The quality of those observations is at best dubious: ask yourself whether you would answer such as survey for a small amount. Manipulation checks to ensure participants are following, information is not completed by bots, a threshold for the minimal time required to complete the study, etc. are necessary (but not sufficient) conditions to ensure that the data are not rubbish.</p>
+<p>A more important criticism is that the people who answer those surveys are not representative of the population as a whole: sampling bias thus plays an important role in the conclusions and, even if the summary statistics are not too different from the general population, they may exhibit different opinions, levels of skills, etc. than most.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:samplingbias"></span>
+<img src="figures/samplingbias.jpg" alt="Sampling bias. Artwork by [Jonathan Hey (Sketchplanations)](https://sketchplanations.com/sampling-bias) shared under the [CC BY-NC 4.0 license](http://creativecommons.org/licenses/by-nc/4.0/)." width="85%"><p class="caption">
+Figure 4.7: Sampling bias. Artwork by <a href="https://sketchplanations.com/sampling-bias">Jonathan Hey (Sketchplanations)</a> shared under the <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 license</a>.
+</p>
+</div>
+<p>The same can be said of panels of students recruited in universities classes, who are more young, educated and perhaps may infer through backward induction the purpose of the study and answer accordingly.</p>
+</div>
+</div>
+<div id="summary" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Summary<a class="anchor" aria-label="anchor" href="#summary"><i class="fas fa-link"></i></a>
+</h2>
 <p>Operating in an open-science environment should be seen as an opportunity to make better science, offer more opportunities to increase your impact and increase the likelihood that your work gets published regardless of whether the results turn out to be negative. It is the <em>right thing</em> to do and it increases the quality of research produced, with collateral benefits because it forces researchers to validate their methodology before, to double-check their data and their analysis and to adopt good practice.</p>
-<p>There are many platforms for preregistering studies and sharing data, with different level of formality. One such is the <a href="https://researchbox.org/">Research Box</a>.</p>
+<p>There are many platforms for preregistering studies and sharing preanalysis plans, scripts and data, with different level of formality. One such is the <a href="https://researchbox.org/">Research Box</a>.</p>
 <div class="yourturn">
 <p>Reflect on your workflow as applied researcher when designing and undertaking experiments. Which practical aspects could you improve upon to improve the reproducibility of your study?</p>
 </div>
 
 </div>
+</div>
   <div class="chapter-nav">
 <div class="prev"><a href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></div>
-<div class="next"><a href="references.html">References</a></div>
+<div class="next"><a href="designs-to-reduce-the-error.html"><span class="header-section-number">5</span> Designs to reduce the error</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#replication-crisis"><span class="header-section-number">4</span> Replication crisis</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#replication-crisis"><span class="header-section-number">4</span> Replication crisis</a></li>
+<li>
+<a class="nav-link" href="#causes-of-the-replication-crisis"><span class="header-section-number">4.1</span> Causes of the replication crisis</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#the-garden-of-forking-paths"><span class="header-section-number">4.1.1</span> The garden of forking paths</a></li>
+<li><a class="nav-link" href="#selective-reporting"><span class="header-section-number">4.1.2</span> Selective reporting</a></li>
+<li><a class="nav-link" href="#multiple-testing"><span class="header-section-number">4.1.3</span> Multiple testing</a></li>
+<li><a class="nav-link" href="#non-representative-samples"><span class="header-section-number">4.1.4</span> Non-representative samples</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#summary"><span class="header-section-number">4.2</span> Summary</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/04-reproducibility_crisis.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/04-reproducibility_crisis.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/10-reproducibility_crisis.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/10-reproducibility_crisis.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

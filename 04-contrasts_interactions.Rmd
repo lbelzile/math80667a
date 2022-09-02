@@ -1,0 +1,47 @@
+# Contrasts and interactions {#contrasts-interactions}
+
+The analysis of variance model tests the (global) null hypothesis that the average of all groups is equal. In an experimental context, this implies one or more of the manipulation has a different effect from the others. It may be of interest to study more specific findings, for example looking at all pairwise differences to see which pairs of experimental conditions leads to significant differences in responses. More generally, many hypothesis  formulated by researchers may imply more specific comparisons for the scientific question of interest.
+
+We can normally express these as **contrasts**. As [Dr. Lukas Meier](https://stat.ethz.ch/~meier) puts it, if the global $F$-test for equality of means is equivalent to a dimly lit room, contrasts are akin to spotlight that let one focus on particular aspects of differences in treatments.
+
+More formally speaking, a contrast is a linear combination of averages with a sum-to-zero constraint: in plain English, this means we assign a weight to each group average, that the weights sum to zero and that the resulting statistic is formed by taking as numerator the weighted sum of the group means. We can then build a $t$ statistic as usual by standardizing the resulting quantity. 
+
+If $c_i$ denotes the weight of group average $\mu_i$ $(i=1, \ldots, K)$, then we can write the contrast as $C = c_1 \mu_1 + \cdots + c_K \mu_K$ with the null hypothesis $\mathscr{H}_0: C=0$ against a two-sided alternative. The sample estimate is obtained by replacing $\mu_i$ by the sample average of that group, $\widehat{\mu}_i = \overline{y}_{i}$. We can easily obtain the standard error of the linear combination $C$.
+
+Contrasts thus encode the research question.
+
+:::{ .example name="Contrasts for encouragement on teaching"}
+
+The `arithmetic` data example considered five different treatment groups with 9 individuals in each. Two of them were control groups, one received praise, another was reproved and the last was ignored.
+
+Suppose that researchers were interested in assessing whether the experimental manipulation had an effect, and whether the impact of positive and negative feedback is the same on students.^[These would be formulated *at registration time*, but for the sake of the argument we proceed as if they were.]
+
+Suppose we have five groups in the order (control 1, control 2, praised, reproved, ignored). 
+We can express these hypothesis as
+
+- $\mathscr{H}_{01}$: $\mu_{\text{praise}} = \mu_{\text{reproved}}$
+- $\mathscr{H}_{02}$: 
+\begin{align*}
+\frac{1}{2}(\mu_{\text{control}_1}+\mu_{\text{control}_2}) = \frac{1}{3}\mu_{\text{praised}} + \frac{1}{3}\mu_{\text{reproved}} + \frac{1}{3}\mu_{\text{ignored}}
+\end{align*}
+
+Note that, for the hypothesis of control vs experimental manipulation, we look at average of the different groups associated with each item. Using the ordering, the weights of the contrast vector are $(1/2, 1/2, -1/3, -1/3, -1/3)$ and $(0, 0, 1, -1, 0)$. Note that there are many equivalent formulation: we could multiply the weights by any number (different from zero) and we would get the same test statistic, as the latter is standardized.
+
+
+```{r eval = FALSE, echo = TRUE}
+library(emmeans)
+linmod <- aov(score ~ group, data = arithmetic)
+linmod_emm <- emmeans(linmod, specs = 'group')
+contrast_specif <- list(
+  controlvsmanip = c(0.5, 0.5, -1/3, -1/3, -1/3),
+  praisedvsreproved = c(0, 0, 1, -1, 0)
+)
+contrasts_res <- 
+  contrast(object = linmod_emm, 
+                    method = contrast_specif)
+# Obtain confidence intervals instead of p-values
+confint(contrasts_res)
+```
+
+
+:::
