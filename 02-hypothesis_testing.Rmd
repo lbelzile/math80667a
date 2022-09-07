@@ -33,7 +33,8 @@ knitr::include_graphics("figures/xkcd2569_hypothesis_generation.png")
 
 Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution. 
 
-An hypothesis test will focus on one or multiple of these characteristics. Suppose we have two groups, control and treatment, whose population averages are $\mu_C$ and $\mu_T$ which we wish to compare.
+The purpose of this section is to illustrate how we cannot simply use raw differences between groups to make meaningful comparisons: due to sampling variability, samples will be alike even if they are generated in the same way, but there will be always be differences between their summary statistics. Such differences tend to attenuate (or increase) as we collect more sample. Inherent to this is the fact that as we gather more data (and thus more information) about our target, the portrait becomes more precise. This is ultimately what allows us to draw meaningful conclusions but, in order to do so, we need first to determine what is likely or plausible and could be a stroke of luck, and what is not likely to occur solely due to randomness.
+
 
 ::: { .example name="A/B testing"}
 Consider two webpage design: one is the current version (*status quo*) and the other implementation contains a clickable banner in a location where eyetracker suggest that viewers eyes spend more time or attention. The number of clicks on those headlines are what generate longer viewing, and thus higher revenues from advertisement. The characteristic of interest here would be the average click conversation rate for each of the webpage design.
@@ -42,12 +43,12 @@ It is fairly simple to redirect traffic so that a random fraction gets assigned 
 
 :::
 
-People commonly look at the difference in average, say $\delta=\mu_T - \mu_C$ as a measure of the effectiveness of the treatment.^[We could look at the ratio $\mu_T/\mu_C$ instead.] If we properly randomized observations in each subgroup and nothing else changes, then this measures the impact of the treatment. Because we only have a sample at hand and not the whole population, we don't know for sure the values of $\mu_C$ and $\mu_T$. These quantities exist, but are unknown to us so the best we can do is estimate them using random samples that are drawn from the population. 
+An hypothesis test will focus on one or multiple of these characteristics. Suppose for simplicity that we have only two groups, control and treatment, whose population averages are $\mu_C$ and $\mu_T$ we wish to compare. People commonly look at the difference in average, say $\delta=\mu_T - \mu_C$ as a measure of the effectiveness of the treatment.^[We could look at the ratio $\mu_T/\mu_C$ instead.] If we properly randomized observations in each subgroup and nothing else changes, then this measures the impact of the treatment. Because we only have a sample at hand and not the whole population, we don't know for sure the values of $\mu_C$ and $\mu_T$. These quantities exist, but are unknown to us so the best we can do is estimate them using our sample. If we have a random sample from the population, then the characteristics of the sample will be (noisy) proxys of those of the population.
 
 
 We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe for cake). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value (the cake), which is a single realization and not random. In other words,
 
-- an estimand is our conceptual target, like the population characteristic of interest.
+- an estimand is our conceptual target, like the population characteristic of interest (population mean).
 - an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary that is a proxy of our target.
 - an estimate is a number, the numerical value obtained once we apply the formula to observed data.
 
@@ -62,7 +63,7 @@ knitr::include_graphics("figures/estimate.jpg")
 ```
 
 
-For example, we may use as estimand the population average of $Y_1, \ldots$, say $\mu$. The estimator will be sample mean of a sample, i.e., the sum of its elements divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate will be a numerical value, say 4.3.
+For example, we may use as estimand the population average of $Y_1, \ldots$, say $\mu$. The estimator will be sample mean, i.e., the sum of the elements in the sample divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate will be a numerical value, say 4.3.
 
 Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won't get the exact same result every time.
 
@@ -73,7 +74,7 @@ knitr::include_graphics("figures/xkcd2581_health_stats.png")
 
 
 
-To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Thus, sampling variability implies that the sample means of the subgroups will always differ even if the share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
+To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Thus, sampling variability implies that the sample means of the subgroups will always differ even if they share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
 
 ```{r samplevar, eval = TRUE, echo = FALSE, fig.cap = "Five samples of size $n=10$ drawn from a common population with mean $\\mu$ (horizontal line). The colored segments show the sample means of each sample."}
 set.seed(1234)
@@ -94,10 +95,10 @@ ggplot(data = samp,
 
 We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average $\mu$ than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.
 
-Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
+Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average in repeated samples. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
 
 
-To get an idea of how certain something is, we have to consider the variability of an observation $Y_i$. This variance is typically denoted $\sigma^2$ and it's square root, the standard deviation, by $\sigma$. 
+To get an idea of how certain something is, we have to consider the variability of an observation $Y_i$. This variance of an observation drawn from the population is typically denoted $\sigma^2$ and it's square root, the standard deviation, by $\sigma$. 
 
 The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where 
 \begin{align*}
