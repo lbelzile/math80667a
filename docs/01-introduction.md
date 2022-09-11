@@ -29,7 +29,7 @@ The purpose of experiments is to arrange data collection so as to be capable of 
 There are two main categories of studies: observational and experimental. The main difference between the two is treatment assignment. In observational studies, a feature or potential cause is measured, but not assigned by the experimenter. By contrast, the treatment assignment mechanism is fully determined by the experimenter in the latter case.
 
 
-For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to *directly* establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the factor.^[The preceding paragraph shouldn't be taken to mean that one cannot get meaningful conclusions from observational studies. Rather, I wish to highlight that controlling for the non-random allocation and potential confounding is a much more complicated task, requires practitioners to make stronger (and sometimes unverifiable) assumptions and requires using a different toolbox (including, but not limited to differences in differences, propensity score weighting, instrumental variables). The book [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net/index.html) by Nick Huntington-Klein gives a gentle nontechnical introduction to some of these methods.]
+For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to *directly* establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the experimental manipulation.^[The preceding paragraph shouldn't be taken to mean that one cannot get meaningful conclusions from observational studies. Rather, I wish to highlight that controlling for the non-random allocation and potential confounding is a much more complicated task, requires practitioners to make stronger (and sometimes unverifiable) assumptions and requires using a different toolbox (including, but not limited to differences in differences, propensity score weighting, instrumental variables). The book [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net/index.html) by Nick Huntington-Klein gives a gentle nontechnical introduction to some of these methods.]
 
 <div class="figure" style="text-align: center">
 <img src="figures/random_sample_assignment.png" alt="Two by two classification matrix for experiments based on sampling and study type. Source: Mine Çetinkaya-Rundel and OpenIntro, distributed under the [CC BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/us/)." width="85%" />
@@ -46,8 +46,9 @@ In its simplest form, an **experimental design** is a comparison of two or more 
 
 - The subjects (or **experimental units**) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.
 - The **observational unit** is the smallest level (time point, individual) at which measurement are recorded.
-- The **experimental treatments** or conditions (also called **factor**, or independent variable), are *manipulated and controlled* by the researcher. Oftentimes, there is a **control** or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).
-- Additional explanatories that are intrinsic to the experimental (sub-)units are termed **blocking factors**. Controlling for these typically leads to improved inferences, because we filter out the unwanted variability they generate.
+- Explanatories (independent variables) are variables that impact the response. They can be continuous (dose) or categorical variables; in the latter case, they are termed **factors**.
+- The **experimental treatments** or conditions are *manipulated and controlled* by the researcher. Oftentimes, there is a **control** or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).
+- Additional explanatories that are intrinsic to the experimental (sub-)units are termed **blocking** variables. Controlling for these typically leads to improved inferences, because we filter out the unwanted variability they generate.
 - After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject. 
 - Observed differences in the outcome variable between the experimental conditions (treatments) are called treatment effects. 
 
@@ -93,7 +94,7 @@ Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Ec
 **Point of terminology: internal and external validity**
 
 
-A study from which we can study causal relationships is said to have **internal validity**. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other factors, not covered in the class, that can threaten internal validity.
+A study from which we can study causal relationships is said to have **internal validity**. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other aspects, not covered in the class, that can threaten internal validity.
 
 **External validity** refers directly to generalizability of the conclusions of a study: Figure \@ref(fig:openintrograph) shows that external validity is directly related to random sampling from the population
 
@@ -174,7 +175,7 @@ Choosing a particular instrument or metric could be in principle done by studyin
 :::
 
 
-At the heart of most analysis are measurements. The data presented in the course have been cleaned and oftentimes the choice of explanatory variable and factor is evident from the context. In applications, however, this choice is not always trivial.
+At the heart of most analysis are measurements. The data presented in the course have been cleaned and oftentimes the choice of explanatory variables and experimental factor^[A factor is a categorical variable, thus the experimental factor encodes the different groups to compare] is evident from the context. In applications, however, this choice is not always trivial.
 
 
 ### Population and samples {#population-sample}

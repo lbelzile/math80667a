@@ -34,7 +34,8 @@ It is important to note that most research questions cannot be answered by simpl
 
 Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution. 
 
-An hypothesis test will focus on one or multiple of these characteristics. Suppose we have two groups, control and treatment, whose population averages are $\mu_C$ and $\mu_T$ which we wish to compare.
+The purpose of this section is to illustrate how we cannot simply use raw differences between groups to make meaningful comparisons: due to sampling variability, samples will be alike even if they are generated in the same way, but there will be always be differences between their summary statistics. Such differences tend to attenuate (or increase) as we collect more sample. Inherent to this is the fact that as we gather more data (and thus more information) about our target, the portrait becomes more precise. This is ultimately what allows us to draw meaningful conclusions but, in order to do so, we need first to determine what is likely or plausible and could be a stroke of luck, and what is not likely to occur solely due to randomness.
+
 
 ::: { .example name="A/B testing"}
 Consider two webpage design: one is the current version (*status quo*) and the other implementation contains a clickable banner in a location where eyetracker suggest that viewers eyes spend more time or attention. The number of clicks on those headlines are what generate longer viewing, and thus higher revenues from advertisement. The characteristic of interest here would be the average click conversation rate for each of the webpage design.
@@ -43,12 +44,12 @@ It is fairly simple to redirect traffic so that a random fraction gets assigned 
 
 :::
 
-People commonly look at the difference in average, say $\delta=\mu_T - \mu_C$ as a measure of the effectiveness of the treatment.^[We could look at the ratio $\mu_T/\mu_C$ instead.] If we properly randomized observations in each subgroup and nothing else changes, then this measures the impact of the treatment. Because we only have a sample at hand and not the whole population, we don't know for sure the values of $\mu_C$ and $\mu_T$. These quantities exist, but are unknown to us so the best we can do is estimate them using random samples that are drawn from the population. 
+An hypothesis test will focus on one or multiple of these characteristics. Suppose for simplicity that we have only two groups, control and treatment, whose population averages are $\mu_C$ and $\mu_T$ we wish to compare. People commonly look at the difference in average, say $\delta=\mu_T - \mu_C$ as a measure of the effectiveness of the treatment.^[We could look at the ratio $\mu_T/\mu_C$ instead.] If we properly randomized observations in each subgroup and nothing else changes, then this measures the impact of the treatment. Because we only have a sample at hand and not the whole population, we don't know for sure the values of $\mu_C$ and $\mu_T$. These quantities exist, but are unknown to us so the best we can do is estimate them using our sample. If we have a random sample from the population, then the characteristics of the sample will be (noisy) proxys of those of the population.
 
 
 We call numerical summaries of the data **statistics**. Its important to distinguish between procedures/formulas and their numerical values. An **estimator** is a rule or formula used to calculate an estimate of some parameter or quantity of interest based on observed data (like a recipe for cake). Once we have observed data we can actually compute the sample mean, that is, we have an estimate --- an actual value (the cake), which is a single realization and not random. In other words,
 
-- an estimand is our conceptual target, like the population characteristic of interest.
+- an estimand is our conceptual target, like the population characteristic of interest (population mean).
 - an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary that is a proxy of our target.
 - an estimate is a number, the numerical value obtained once we apply the formula to observed data.
 
@@ -59,7 +60,7 @@ We call numerical summaries of the data **statistics**. Its important to disting
 </div>
 
 
-For example, we may use as estimand the population average of $Y_1, \ldots$, say $\mu$. The estimator will be sample mean of a sample, i.e., the sum of its elements divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate will be a numerical value, say 4.3.
+For example, we may use as estimand the population average of $Y_1, \ldots$, say $\mu$. The estimator will be sample mean, i.e., the sum of the elements in the sample divided by the sample size, $\overline{Y}=(Y_1 + \cdots + Y_n)/n$. The estimate will be a numerical value, say 4.3.
 
 Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won't get the exact same result every time.
 
@@ -71,7 +72,7 @@ Because the inputs of the estimator are random, the output is also random and ch
 
 
 
-To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Thus, sampling variability implies that the sample means of the subgroups will always differ even if the share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
+To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Thus, sampling variability implies that the sample means of the subgroups will always differ even if they share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
 
 <div class="figure" style="text-align: center">
 <img src="02-hypothesis_testing_files/figure-html/samplevar-1.png" alt="Five samples of size $n=10$ drawn from a common population with mean $\mu$ (horizontal line). The colored segments show the sample means of each sample." width="85%" />
@@ -80,10 +81,10 @@ To illustrate this point, Figure \@ref(fig:samplevar) shows five simple random s
 
 We can clearly see from Figure \@ref(fig:samplevar) that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average $\mu$ than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.
 
-Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
+Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average in repeated samples. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
 
 
-To get an idea of how certain something is, we have to consider the variability of an observation $Y_i$. This variance is typically denoted $\sigma^2$ and it's square root, the standard deviation, by $\sigma$. 
+To get an idea of how certain something is, we have to consider the variability of an observation $Y_i$. This variance of an observation drawn from the population is typically denoted $\sigma^2$ and it's square root, the standard deviation, by $\sigma$. 
 
 The sample variance $S_n$ is an estimator of the standard deviation $\sigma$, where 
 \begin{align*}
@@ -146,9 +147,9 @@ In statistical tests we have two hypotheses: the null hypothesis ($\mathscr{H}_0
 
 ::: { .example name="A/B testing (continued)"}
 
-We follow-up with our A/B test experiment. Given $\mu_1$ the population average click conversation rate for the current webpage and $\mu_2$, that of the redesign, we are interested in the *one-sided hypothesis* that $\mathscr{H}_0: \mu_2 \geq \mu_1$. This is logical: given the costs associated to changes to the interface and the resulting disruption, we only want to implement changes that improve the webpage design and allow us to generate more revenues.
+We follow-up with our A/B test experiment. Given $\mu_1$ the population average click conversation rate for the current webpage and $\mu_2$, that of the redesign, we are interested in the *one-sided hypothesis* that $\mathscr{H}_0: \mu_2 \leq \mu_1$ against the alternative (that we are trying to prove) $\mathscr{H}_a: \mu_2 > \mu_1$. In choosing as null hypothesis that the new design is no better or worst, we are putting all our weight to make sure the changes carry forward if there is overwhelming evidence that the new design is better and allow us to generate more revenues, given the costs associated to changes to the interface and the resulting disruption.
 
-One-sided hypothesis are directional: we care only about a specific direction, and so here $\mathscr{H}_a: \mu_2 \leq \mu_1$. Indeed, if the experiment suggests that the conversion rate is worst with the new webpage design, we won't go forward.
+One-sided hypothesis are directional: we care only about a specific direction, and so here $\mathscr{H}_a: \mu_2 > \mu_1$. Indeed, if the experiment suggests that the conversion rate is worst with the new webpage design, we won't go forward.
 
 Since neither of these population averages $\mu_1$ and $\mu_2$ are known to us, we can work instead with $\mathscr{H}_0: \mu_2-\mu_1 \geq 0$. We can use as estimator for the difference $\mu_2-\mu_1$ the difference in sample average in each subgroup.
 
@@ -157,6 +158,12 @@ The null hypothesis here is an interval, but it suffices the consider the most b
 One-sided tests for which the evidence runs contrary to the hypothesis (say the mean conversion rate is higher for the current design than for the new one) lead to _p_-values of 1, since there is no proof against the null hypothesis that the old design (the status quo) is better.
 
 :::
+
+The previous example illustrates the fact that, when writing down null and alternative hypotheses, what we are trying to prove is typically the alternative. 
+
+In pairwise comparisons or contrasts, we can assign a directionality. The benefit is that, if we are sure of the direction of the postulated effect, we only consider as extreme scenarios that run in the direction we postulated^[This implies that the level $\alpha$ is all on one side, rather than split equally between both tails of the distribution. In practice, this translated into increased power of detection.] However, if the empirical evidence runs contrary to our guess, then there is no support for the hypothesis.
+
+In more general statistical models, it helps to view the null hypothesis as a simplification of a more complex model: the latter will fit the data better because it is more flexible, but we would fail to reject the null unless this improvement is drastic. For example, in an analysis of variance model, we compare different mean in each of $K$ groups against a single common average. 
 
 ### Test statistic
 
@@ -421,17 +428,19 @@ Partial or selective reporting of statistical procedures hinders reproducibility
 
 A **confidence interval** is an alternative way to present the conclusions of an hypothesis test performed at significance level $\alpha$ by giving a range of all values for which the null isn't rejected at the chosen level. It is often combined with a point estimator $\hat{\theta}$ to give an indication of the variability of the estimation procedure. Wald-based  $(1-\alpha)$ confidence intervals for a parameter  $\theta$ are of the form
 \begin{align*}
-\widehat{\theta} \pm \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta})
+\widehat{\theta} + \text{critical value} \; \mathrm{se}(\widehat{\theta})
 \end{align*}
-where $\mathfrak{q}_{\alpha/2}$ is the $1-\alpha/2$ quantile of the null distribution of the Wald statistic
+based on the Wald statistic $W$,
 \begin{align*}
-T =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
+W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 \end{align*}
-where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random variables: their values will vary from one sample to the next.
+and where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The critical values  are quantile of the null distribution  and are chosen so that the probability of being more extreme is $\alpha$. 
+
+The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random: their values will vary from one sample to the next.
 
 
 
-Before the interval is calculated, there is a $1-\alpha$ probability that $\theta$ is contained in the **random** interval $(\widehat{\theta} - \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}), \widehat{\theta} + \mathfrak{q}_{\alpha/2} \; \mathrm{se}(\widehat{\theta}))$, where $\widehat{\theta}$ denotes the estimator. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter $\theta$ is either in the confidence interval or not. We can interpret confidence interval's as follows: if we were to repeat the experiment multiple times, and calculate a $1-\alpha$ confidence interval each time, then roughly $1-\alpha$ of the calculated confidence intervals would contain the true value of $\theta$ in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the *procedure* we use to calculate confidence intervals and not in the actual values we obtain from a sample.
+For generic random samples, there is a $1-\alpha$ probability that $\theta$ is contained in the **random** confidence interval computed. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter $\theta$ is either inside the confidence interval or not. We can interpret confidence interval's as follows: if we were to repeat the experiment multiple times, and calculate a $1-\alpha$ confidence interval each time, then roughly $1-\alpha$ of the calculated confidence intervals would contain the true value of $\theta$ in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the *procedure* we use to calculate confidence intervals and not in the actual values we obtain from a sample.
 
 
 
@@ -609,7 +618,9 @@ Depending on the alternative models, it is more or less easy to detect that the 
 <p class="caption">(\#fig:power3)Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.</p>
 </div>
 
-We want to choose an experimental design and a test statistic that leads to high power, so that this power is as close as possible to one. Minimally, the power of the test should be $\alpha$ because we reject the null hypothesis $\alpha$ fraction of the time even when $\mathscr{H}_0$ is true. Power depends on many criteria, notably
+We want to choose an experimental design and a test statistic that leads to high power, so that this power is as close as possible to one. Under various assumptions about the distribution of the original data, we can derive optimal tests that are most powerful, but some of the power comes from imposing more structure and these assumptions need not be satisfied in practice. 
+
+Minimally, the power of the test should be $\alpha$ because we reject the null hypothesis $\alpha$ fraction of the time even when $\mathscr{H}_0$ is true. Power depends on many criteria, notably
 
 - the effect size: the bigger the difference between the postulated value for $\theta_0$ under $\mathscr{H}_0$ and the observed behaviour, the easier it is to detect departures from $\theta_0$.
 (Figure \@ref(fig:power3)); it's easier to spot an elephant in a room than a mouse.
@@ -617,12 +628,9 @@ We want to choose an experimental design and a test statistic that leads to high
 - the sample size: the more observation, the higher our ability to detect significative differences because the amount of evidence increases as we gather more observations.^[Specifically, the standard error decreases with sample size $n$ at a rate (typically) of $n^{-1/2}$. The null distribution also becomes more concentrated as the sample size increase.] In experimental designs, the power also depends on how many observations are allocated to each group.^[While the default is to assign an equal number to each subgroup, power may be maximized by specifying different sample size in each group if the variability of the measurement differ in these groups.]
 - the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. Choosing and designing statistics is usually best left out to statisticians, as there may be tradeoffs. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are also less sensible to model assumptions, model misspecification and outliers.
 
-Changing the value of $\alpha$ has an impact on the power, since larger values of $\alpha$ move the cutoff towards the bulk of the distribution. It entails a higher percentage of rejection also when the alternative is false. However, the value of $\alpha$ is fixed beforehand to control the type I error (avoid judicial mistakes). The power corresponds to the red shaded area on the right panel of Figure \@ref(fig:compareFnullalternative), would become larger if we moved the cutoff value lower, corresponding to larger $\alpha$. 
+Changing the value of $\alpha$ also has an impact on the power, since larger values of $\alpha$ move the cutoff towards the bulk of the distribution. However, it entails a higher percentage of rejection also when the alternative is false. Since the value of $\alpha$ is fixed beforehand to control the type I error (avoid judicial mistakes), it's not a parameter we consider.
 
-<div class="figure" style="text-align: center">
-<img src="02-hypothesis_testing_files/figure-html/compareFnullalternative-1.png" alt="Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region." width="85%" />
-<p class="caption">(\#fig:compareFnullalternative)Densities of the null (left) and alternative (right) distributions for the one-way analysis of variance: if some of the group means are different, the curve gets shifted to the right. The shaded blue area is the type I error (null hypothesis) and the type II error (alternative hypothesis); the power is the area of the red shaded region.</p>
-</div>
+
 
 
 ## Conclusion

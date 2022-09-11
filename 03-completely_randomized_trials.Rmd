@@ -4,6 +4,7 @@ This chapter focuses on experiments where potentially multiple factors of intere
 
 The one-way analysis of variance describes the most simple experimental setup one can consider: completely randomized experiments with one factor, in which we are solely interested in the effect of a single treatment variable with multiple levels. 
 
+
 ## One-way analysis of variance 
 
 
@@ -21,9 +22,11 @@ The null hypothesis is, as usual, a single numerical value, $\mu$. The alternati
 
 ### Parametrizations and contrasts
 
+This section can be skipped on first reading. It focuses on the interpretation of the coefficients obtained from a linear model or analysis of variance model.
+
 The most natural parametrization is in terms of group averages: the (theoretical unknown) average for treatment $T_j$ is $\mu_j$, so we obtain $K$ parameters $\mu_1, \ldots, \mu_K$ whose estimates are the sample averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$. One slight complication arising from the above is that the values of the population average are unknown, so this formulation is ill-suited for hypothesis testing because none of the $\mu_i$ values are known in practice and we need to make comparisons in terms of a known numerical value. 
 
-The most common parametrization is in terms of **constrasts** (or mean differences) relative to a reference group (say $T_1$). The theoretical average of each group is written as $\mu_1 + a_i$ for treatment $T_i$, where $a_1=0$ for $T_1$ and $a_i = \mu_i-\mu_1$ otherwise. The parameters are $\mu_1, a_2, \ldots, a_K$.
+The most common parametrization for the linear model is in terms of **differences to a baseline**, say $T_1$. The theoretical average of each group is written as $\mu_1 + a_i$ for treatment $T_i$, where $a_1=0$ for $T_1$ and $a_i = \mu_i-\mu_1$ otherwise. The parameters are $\mu_1, a_2, \ldots, a_K$.
 
 An equivalent formulation writes for each treatment group the average of subpopulation $j$ as $\mu_j = \mu + \delta_j$, where $\delta_j$ is the difference between the treatment average $\mu_j$ and the global average of all groups. Imposing the constraint $\delta_1 + \cdots + \delta_K=0$ ensures that the average of effects equals $\mu$. Thus, if we know any $K-1$ of $\{\delta_1, \ldots, \delta_K\}$, we automatically can deduce the last one. 
 
@@ -108,7 +111,7 @@ ggplot(data = samp,
 The following section can be safely skipped on first reading: it attempts to shed some light into how the $F$-test statistic works as a summary of evidence, as it isn't straightforward in the way it appears. 
 
 
-The usual notation for the sum of squares decomposition is as follows: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$ and the number of observations in each group is the same. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}$, where $\sum_i$ denotes the sum over all individuals in the group. 
+The usual notation for the sum of squares decomposition is as follows: suppose $y_{ik}$ represents the $i$th person in the $k$th treatment group ($k=1, \ldots, K$) and the sample size $n$ can be split between groups as $n_1, \ldots, n_K$; in the case of a balanced sample, $n_1=\cdots=n_K = n/K$ and the number of observations in each group is the same. We denote by $\widehat{\mu}_k$ the sample average in group $k$ and $\widehat{\mu}$ the overall average $(y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}/n$, where $\sum_i$ denotes the sum over all individuals in the group. 
 
 Under the null model, all groups have the same mean, so the natural estimator for the latter is the sample average of the pooled sample $\widehat{\mu}$ and likewise the group averages $\widehat{\mu}_1, \ldots, \widehat{\mu}_K$ are the best estimators for the group averages if each group has a (potentially) different mean. The more complex model, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious.
 The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition
@@ -219,7 +222,11 @@ g2 <- ggplot() +
 g1 + g2
 ```  
   
-If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to [generate those alternative samples by simply shuffling the labels](https://www.jwilber.me/permutationtest/). We see in Figure \@ref(fig:Fdistpermut) that the histogram of the $F$-statistic values obtained from 10 000 permutations closely matches that of the large-sample $F$-distribution when there are on average 20 observations per group (right). However, with smaller samples (left), the theoretical null is underdispersed relative to the permutation based distribution, and the latter should be viewed as more accurate in this setting. However, the large sample distribution is readily obtained and does not require simulations.
+  
+The $F$-distribution is what we call a **large sample approximation** to the behaviour of the statistic if there is truly no difference between group averages (and if model assumptions are satisfied): it tells us what to expect if there is nothing going on. The quality of the approximation depends on the sample size in each group: it is more accurate when there are more observations in each group, as average estimation becomes more reliable^[Mostly because the central limit theorem kicks in].
+
+
+As was alluded to in the last chapter, large sample approximations are not the only option for assessing the null, but they are cheap and easy to obtain. If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to [generate those alternative samples by simply shuffling the labels](https://www.jwilber.me/permutationtest/). We see in Figure \@ref(fig:Fdistpermut) that the histogram of the $F$-statistic values obtained from 10 000 permutations closely matches that of the large-sample $F$-distribution when there are on average 20 observations per group (right), so the computational burden associated with running this simulation outweights the benefits. However, with smaller samples (left), the large sample approximation appears underdispersed relative to the permutation based distribution; the latter should be viewed as more accurate in this setting. 
 
 ```{r Fdistpermut, eval = TRUE, echo = FALSE, cache = TRUE, fig.cap = "One-way analysis of variance for a sample of size 20 (left) and 100 (right), split in five groups. The histogram shows the computed test values based on 10 000 permutations, which is compared to the density of the large-sample _F_-distribution."}
 library(tidymodels)
@@ -347,10 +354,75 @@ g1 + g2
 ```
 
 
+More interestingly perhaps is what happens to the values taken by the statistic when not all of the averages are the same. We can see in Figure \@ref(fig:fig-distributionFanova) that, when there are some difference between group means, the values taken by the statistic for a random sample are more to the right than the null distribution: the larger those differences, the more the curve will shift to the right and the more often we will obtain a value in the rejection region (in red).
+
+
+If there are only two groups, then one can show that the $F$-statistic is mathematically equivalent to squaring the $t$-statistic: the null distributions are $\mathsf{St}(n-K)$ and $\mathsf{F}(1, n-K)$ and lead to the same $p$-values and thus same statistical inference and conclusions.
+
+
+```{r fig-distributionFanova, eval = TRUE, echo = FALSE, fig.cap = "Distribution of the $F$-test statistic for the one-way analysis of variance when the true group means are equal (top) and under a specific alternative when they are not (bottom). Any value falling within the red region leads to rejection of the null hypothesis at level $\\alpha=0.05$."}
+g1 <- ggplot() +
+  geom_vline(xintercept = qf(0.95, 4, 40), 
+             linetype = "dashed") + 
+  labs(y = "", x = "statistic") + 
+  stat_function(fun = df, 
+                args = list(df1 = 4, df2 = 40), 
+                xlim = c(0, qf(0.95, 
+                               df1 = 4, df2 = 40)),
+                geom = "area", 
+                fill = "blue", 
+                alpha = 0.2) +
+    stat_function(fun = df, 
+                args = list(df1 = 4, df2 = 40), 
+                xlim = c(qf(0.95, 
+                               df1 = 4, df2 = 40), 10),
+                geom = "area", 
+                fill = "red", 
+                alpha = 0.2) +
+  stat_function(fun = df, 
+                args = list(df1 = 4, df2 = 40),
+                xlim = c(0,10),
+                n = 1001) +
+  annotate("text", x = 3, hjust = 0, y = 0.5,
+           label = "null hypothesis is true") +
+  theme_classic() +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position = "none")
+g2 <- ggplot() +
+  geom_vline(xintercept = qf(0.95, 4, 40), 
+             linetype = "dashed") + 
+  labs(y = "", x = "statistic") + 
+  stat_function(fun = df, 
+                args = list(df1 = 4, df2 = 40, ncp = 4), 
+                xlim = c(0, qf(0.95, 
+                               df1 = 4, df2 = 40)),
+                geom = "area", 
+                fill = "blue", 
+                alpha = 0.2) +
+    stat_function(fun = df, 
+                args = list(df1 = 4, df2 = 40, ncp = 4), 
+                xlim = c(qf(0.95, 
+                               df1 = 4, df2 = 40), 10),
+                geom = "area", 
+                fill = "red", 
+                alpha = 0.2) +
+  stat_function(fun = df, 
+                args = list(df1 = 4, df2 = 40, ncp = 4),
+                xlim = c(0,10),
+                n = 1001) +
+  annotate("text", x = 3, hjust=0, y = 0.2, 
+           label = "alternative hypothesis is true") +
+  theme_classic() +
+  theme(legend.position = "none")
+g1 / g2
+```  
+
 
 ## Graphical representation
 
-How to represent data in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful. It is also important to keep in mind that summary statistics are estimators of population quantities that are perhaps unreliable (much too variable) in small samples to be meaningful quantities. Since the mean estimates will likely be reported in the text, the graphics should be used to convey additional information about the data. If the samples are extremely large, then graphics will be typically be used to present salient features of the distributions.
+How to represent data for a one-way analysis in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful. It is also important to keep in mind that summary statistics are estimators of population quantities that are perhaps unreliable (much too variable) in small samples to be meaningful quantities. Since the mean estimates will likely be reported in the text, the graphics should be used to convey additional information about the data. If the samples are extremely large, then graphics will be typically be used to present salient features of the distributions.
 
 ```{r dynamiteplot, echo = FALSE, eval = TRUE, cache = TRUE, fig.cap = "Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right)."}
 
@@ -404,11 +476,11 @@ g2 <- ggplot(data = summary_stats,
 g1 + g2
 ```
 
-In a one-way analysis of variance, the outcome is a continuous numerical variable, whereas the treatment or explanatory is a categorical variable. Basic graphics include dot plots, histograms and density plots, or rugs for the raw data. We can produce one such graph for each level of the factor. 
+In a one-way analysis of variance, the outcome is a continuous numerical variable, whereas the treatment or explanatory is a categorical variable. Basic graphics include dot plots, histograms and density plots, or rugs for the raw data. 
 
-Scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line if the data are continuous. 
+Typically, scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line (rugs) if the data are continuous and take on few distinct values.
 
-Journals are plagued with poor visualisations, a prime example of which is the infamous [dynamite plot](https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/): it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of Figure \@ref(fig:dynamiteplot) shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms: a summary of nine numbers isn't really needed. @Weissgerber:2015 discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.
+Journals are plagued with poor vizualisations, a prime example of which is the infamous [dynamite plot](https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/): it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of Figure \@ref(fig:dynamiteplot) shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms, and a five number summary of nine observations isn't really necessary so boxplot are useless. @Weissgerber:2015 discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.
 
 If we have a lot of data, it sometimes help to represent selected summary statistics or group data. A box-and-whiskers plot (or boxplot) is a commonly used graphic representing the whole data distribution using five numbers
 
@@ -474,9 +546,9 @@ We fail to reject $\mathscr{H}_0$ as $\mathfrak{t}_{\alpha/2} \leq t_{ij} \leq \
 \begin{align*}
  \mathfrak{t}_{\alpha/2} \leq \frac{\widehat{\delta}_{ij} - \delta_{ij}}{\mathsf{se}\left(\widehat{\delta}_{ij}\right)} \leq \mathfrak{t}_{1-\alpha/2}
 \end{align*}
-which is equivalent upon rearranging to the $(1-\alpha)$ confidence interval for $\delta$, 
+which is equivalent upon rearranging to the $(1-\alpha)$ confidence interval for $\delta_{ij}$,^[] 
 \begin{align*}
-\mathsf{CI} = \left[\widehat{\delta}_{ij} + \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right), \widehat{\delta}_{ij} + \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right)\right].
+\mathsf{CI} = \left[\widehat{\delta}_{ij} - \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right), \widehat{\delta}_{ij} - \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right)\right].
 \end{align*}
 
 
@@ -497,6 +569,16 @@ and the $p$-value is $p=0.018$. We therefore reject the null hypothesis at level
 
 So far, we have brushed all of the model assumptions under the carpet. These are necessary requirements for the inference to be valid: any statement related to _p_-values, etc. will approximately hold only if a set of assumptions is met in the first place. This section is devoted to the discussion of these assumptions, showcasing examples of where things can go wrong. 
 
+
+It is customary to write the $i$th observation of the $k$th group in the  one-way analysis of variance model as
+\begin{align}
+\underset{\text{observation}}{Y_{ik}} = \underset{\text{mean of group $k$}}{\mu_k} + \underset{\text{error term}}{\varepsilon_{ik}},
+(\#eq:onewayanovaeq)
+\end{align}
+where the error terms $\varepsilon_{ik}$, which account for unexplained variability and individual differences, are independent from one with mean zero and variance $\sigma^2$.
+
+### Additivity
+
 The basic assumption of most designs is that we can decompose the outcome into two components [@Cox:1958]
 \begin{align}
 \begin{pmatrix} \text{quantity depending} \\
@@ -507,10 +589,17 @@ The basic assumption of most designs is that we can decompose the outcome into t
  (\#eq:additive)
 \end{align}
 This **additive** decomposition further assumes that each unit is unaffected by the treatment of the other units and that the average effect of the treatment is constant. Thus, it is justified to use difference in sample mean to estimate the treatment effect since on average, the individual effect is zero. 
+ 
 
-It is customary to write the $i$th observation of the $k$th group in the  one-way analysis of variance model as
-$Y_{ik} = \mu_k + \varepsilon_{ik}$,
-where the error term, which accounts for unexplained variability and individual differences, has mean zero and variance $\sigma^2$. Many graphical diagnostics use residuals, i.e., some variant of the observations minus the group mean $y_{ik} - \widehat{\mu}_k$, to look for violation of the assumptions.
+
+The decomposition of observations in terms of group average and mean-zero noise in \@ref(eq:onewayanovaeq) suggests that we could plot the error term $\varepsilon_{ik}$ against observations, or against other factors or explanatories, to see if there is any unusual structure unexplained by the model and indicating problems with the randomization or additivity. However, we do not have access to $\varepsilon_{ik}$ since both the true group mean $\mu_k$ and the error $\varepsilon_{ik}$ are unknown. However, a good proxy is the **ordinary residual** $e_{ik} = y_{ik} - \widehat{\mu}_k$ where $\widehat{\mu}_k$ is the sample mean of all observations in experimental group $k$. By construction, the sample mean of the residuals will be zero, but local deviations may indicate violations of the analysis (for example, plotting residuals against time could show a learning effect).
+
+```{r}
+
+
+```
+
+Many graphical diagnostics use residuals, i.e., some variant of the observations minus the group mean $y_{ik} - \widehat{\mu}_k$, to look for violation of the assumptions.
 
 ```{r assumptions, echo = FALSE, fig.cap = "Data satisfying the assumptions of the one-way analysis of variance model, with additive effects, independent observations and common variance.", cache = TRUE}
 set.seed(43221)
@@ -538,15 +627,13 @@ More generally, the test statistic may make further assumptions. The $F$-test of
 
 
 
-
-
-### Additivity 
+ 
 
 :::{ .example name="Additivity and transformations"}
 
-Chapter 2 of @Cox:1958 discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarden students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a **paired experiment** and take as outcome the difference in sociability scores at the beginning and at the end of the school year. 
+Chapter 2 of @Cox:1958 discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarten students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a **paired experiment** and take as outcome the difference in sociability scores at the beginning and at the end of the school year. 
 
-One can expect the treatment to have more impact on people with low sociability skills who were struggling to make contacts: a student who scored 50 initially might see an improvement of 20 points with support relative to 10 in the business-as-usual scenario, whereas another who is well integrated and scored high initially may see an improvement of only 5 more had (s)he been assigned to the support group. This implies that the treatment effects are not constant over the scale, a violation of the additivity assumption. One way to deal with this is via transformations: @Cox:1958 discusses the transformation $\log\{(x+0.5)/(50-x)\}$ to reduce the warping due to scale. 
+One can expect the treatment to have more impact on people with low sociability skills who were struggling to make contacts: a student who scored 50 initially might see an improvement of 20 points with support relative to 10 in the business-as-usual scenario, whereas another who is well integrated and scored high initially may see an improvement of only 5 more had (s)he been assigned to the support group. This implies that the treatment effects are not constant over the scale, a violation of the additivity assumption. One way to deal with this is via transformations: @Cox:1958 discusses the transformation $\log\{(x+0.5)/(100.5-x)\}$ to reduce the warping due to scale. 
 
 :::
 
@@ -612,6 +699,7 @@ g2 <-  ggplot(data = data_fake,
 g1 + g2
 ```
 
+
 ### Heterogeneity
 
 The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals $y_{ik} - \widehat{\mu}_k$. Specifically, the unbiased variance estimator is the denominator of the $F$-statistic formula, i.e., the within sum of squares divided by $n-K$ with $n$ the total number of observations and $K$ the number of groups under comparison.
@@ -656,6 +744,7 @@ g1 <- ggplot(data = fakesamp, mapping = aes(x = group, y = response, col = group
 	geom_point() + theme(legend.position = "none")
 
 ```
+
 
 What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power. The following toy example illustrates this.
 
@@ -720,9 +809,12 @@ We consider for simplicity a problem with $K=2$ groups, which is the two-sample 
 
 There are alternative graphical ways of checking the assumption of equal variance, many including the standardized residuals $r_{ik} = (y_{ik} - \widehat{\mu}_k)/\widehat{\sigma}$ against the fitted values $\widehat{\mu}_k$. We will cover these in later sections.
 
+Oftentimes, unequal variance occurs because the model is not additive. You could use variance-stabilizing transformations (e.g., log for multiplicative effects) to ensure approximately equal variance in each group. Another option is to use a model that is suitable for the type of response you have (including count and binary data). Lastly, it may be necessary to explicitly model the variance in more complex design (including repeated measures) where there is a learning effect over time and variability decreases as a result. Consult an expert if needed.
+
+
 ### Normality
 
-There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parametric) models like the one-way analysis of variance. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact: knowing the exact distribution does not due harm and is convenient for mathematical derivations. However, it should be stressed that this condition is **unnecessary**: the  results hold approximately for large samples by virtue of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in Figure \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
+There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parametric) models like the one-way analysis of variance. With normal data and equal variances, the eponymous distributions of the $F$ and $t$ tests are exact: knowing the exact distribution does no harm and is convenient for mathematical derivations. However, it should be stressed that this condition is **unnecessary**: the results hold approximately for large samples by virtue of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This [applet](http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html) lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in Figure \@ref(fig:Fdistpermut), where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.
 
 While many authors may advocate rules of thumbs (sample size of $n>20$ or $n>30$ per group, say), these rules are arbitrary: the approximation is not much worst at $n=19$ than at $n=20$. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. Figure \@ref(fig:clt) shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with $n=5$ observations (bottom left), the approximation is not bad but it may still be very far off with $n=50$ for heavy-tailed data.
 
@@ -798,7 +890,7 @@ There are many hidden ways in which measurements can impact the response. Physic
 
 Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.
 
-What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also changes with the sample size, but for $n$ large the impact is less than that of the scaling since the $F(d_1, d_2)$ distribution is approximately $\chi^2(d_1)$ when $d_2$ is large.]
+What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also changes with the sample size, but for $n$ large the impact is less than that of the scaling since the $\mathsf{F}(\nu_1, \nu_2)$ distribution is approximately $\chi^2(\nu_1)$ when $\nu_2$ is large.]
 
 ```{r sizetestCorrelation, echo = FALSE, eval = TRUE, cache = TRUE}
 set.seed(1234)
