@@ -1,14 +1,14 @@
 # Designs to reduce the error
 
 
-The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. These are instances of **blocking factors**: by filtering their effect out and looking at the residual variability that is unexplained by the blocking factors, we can increase power. Block designs reduce the error term, at the cost of including and estimating additional parameters (group average or slope). 
+The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. These are instances of **blocking factors**: variables that impact the measurements's variability, but that are not of direct interest. By filtering their effect out and looking at the residual variability that is unexplained by the blocking factors. Block designs reduce the error term, at the cost of including and estimating additional parameters (group average or slope). 
 
-We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors^[We can check for this assumption.] Thus, we will be interested mostly in marginal effects.
+We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors.^[We can always check for this assumption.] Thus, we will be interested mostly in marginal effects.
 
-A related design is to include a continuous covariate to the analysis of variance. If we randomized the observations properly, this shouldn't be necessary. The linear model term helps again reduce the residual variability, which increases the power to detect differences due to experimental conditions. Such a design was historically called **analysis of covariance**, an instance of a linear model.
+A related design includes a continuous covariate to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn't necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called **analysis of covariance**, an instance of a linear model.
 
 
-Including blocking factor or covariates should in principle increase power provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn't be used to assign treatment.
+Including blocking factor or covariates should in principle increase power and our ability to detect real differences due to experimental manipulations, provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn't be used to assign treatment.
 
 
 ## Analysis of covariance {#ancova}

@@ -70,8 +70,10 @@
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
 <li><a class="active" href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></li>
-<li><a class="" href="replication-crisis.html"><span class="header-section-number">4</span> Replication crisis</a></li>
-<li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">5</span> Designs to reduce the error</a></li>
+<li><a class="" href="contrasts-interactions.html"><span class="header-section-number">4</span> Contrasts and interactions</a></li>
+<li><a class="" href="complete-factorial-designs.html"><span class="header-section-number">5</span> Complete factorial designs</a></li>
+<li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">6</span> Designs to reduce the error</a></li>
+<li><a class="" href="replication-crisis.html"><span class="header-section-number">7</span> Replication crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -389,7 +391,7 @@ Figure 3.8: Difference in average response; while the treatment seems to lead to
 <span class="header-section-number">3.4.2</span> Heterogeneity<a class="anchor" aria-label="anchor" href="#heterogeneity"><i class="fas fa-link"></i></a>
 </h3>
 <p>The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals <span class="math inline">\(y_{ik} - \widehat{\mu}_k\)</span>. Specifically, the unbiased variance estimator is the denominator of the <span class="math inline">\(F\)</span>-statistic formula, i.e., the within sum of squares divided by <span class="math inline">\(n-K\)</span> with <span class="math inline">\(n\)</span> the total number of observations and <span class="math inline">\(K\)</span> the number of groups under comparison.</p>
-<p>For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett’s test<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the &lt;span class="math inline"&gt;\(\chi^2\)&lt;/span&gt; approximation to the null distribution.&lt;/p&gt;'><sup>25</sup></a> and Levene’s test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is <span class="math inline">\(\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K\)</span> against the alternative that at least two differ. The Bartlett test statistic has a <span class="math inline">\(\chi^2\)</span> null distribution with <span class="math inline">\(K-1\)</span> degrees of freedom, whereas Levene’s test has an <span class="math inline">\(F\)</span>-distribution with (<span class="math inline">\(K\)</span>, <span class="math inline">\(n-K\)</span>) degrees of freedom: it is equivalent to computing the one-way ANOVA <span class="math inline">\(F\)</span>-statistic with the absolute value of the centered residuals, <span class="math inline">\(|y_{ik} - \widehat{\mu}_k|\)</span>, as observations.</p>
+<p>For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett’s test<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the &lt;span class="math inline"&gt;\(\chi^2\)&lt;/span&gt; approximation to the null distribution.&lt;/p&gt;'><sup>25</sup></a> and Levene’s test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is <span class="math inline">\(\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K\)</span> against the alternative that at least two differ. The Bartlett test statistic has a <span class="math inline">\(\chi^2\)</span> null distribution with <span class="math inline">\(K-1\)</span> degrees of freedom, whereas Levene’s test has an <span class="math inline">\(F\)</span>-distribution with (<span class="math inline">\(K-1\)</span>, <span class="math inline">\(n-K\)</span>) degrees of freedom: it is equivalent to computing the one-way ANOVA <span class="math inline">\(F\)</span>-statistic with the absolute value of the centered residuals, <span class="math inline">\(|y_{ik} - \widehat{\mu}_k|\)</span>, as observations.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/bartlett.test.html">bartlett.test</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">group</span>,</span>
 <span>              data <span class="op">=</span> <span class="va">arithmetic</span><span class="op">)</span></span>
@@ -409,15 +411,14 @@ Figure 3.8: Difference in average response; while the treatment seems to lead to
 <span><span class="co"># compare with one-way ANOVA</span></span>
 <span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">arithmetic</span><span class="op">)</span></span>
 <span><span class="va">arithmetic</span><span class="op">$</span><span class="va">absresid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span><span class="op">)</span> <span class="co">#|y_{ik}-mean_k|</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/oneway.test.html">oneway.test</a></span><span class="op">(</span><span class="va">absresid</span> <span class="op">~</span> <span class="va">group</span>, </span>
-<span>            data <span class="op">=</span> <span class="va">arithmetic</span>,</span>
-<span>            var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">absresid</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">arithmetic</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  One-way analysis of means</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; data:  absresid and group</span></span>
-<span><span class="co">#&gt; F = 2, num df = 4, denom df = 40, p-value = 0.2</span></span></code></pre></div>
-<p>We can see in both cases that the <span class="math inline">\(p\)</span>-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch’s ANOVA. It is most commonly encountered in the case of two groups (<span class="math inline">\(K=2\)</span>) and is the default option in <strong>R</strong> with <code>t.test</code> or <code>oneway.test</code> (option <code>var.equal = TRUE</code>).</p>
+<span><span class="co">#&gt; Response: absresid</span></span>
+<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)</span></span>
+<span><span class="co">#&gt; group      4   17.4    4.34    1.57    0.2</span></span>
+<span><span class="co">#&gt; Residuals 40  110.6    2.77</span></span></code></pre></div>
+<p>We can see in both cases that the <span class="math inline">\(p\)</span>-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch’s ANOVA. It is most commonly encountered in the case of two groups (<span class="math inline">\(K=2\)</span>) and is the default option in <strong>R</strong> with <code>t.test</code> or <code>oneway.test</code>.</p>
 <p>What happens with the example of the arithmetic data when we use this instead of the usual <span class="math inline">\(F\)</span> statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch’s ANOVA over the usual <span class="math inline">\(F\)</span> statistic is the need to have enough observations in each of the group to reliably estimate a separate variance<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Coupled with a slight loss of power if the variance are truly equal, more on this later.&lt;/p&gt;"><sup>26</sup></a>. For Welch’s ANOVA, we have to estimate <span class="math inline">\(2K\)</span> parameters (one mean and one variance per group), rather than <span class="math inline">\(K+1\)</span> parameters for the one-way ANOVA (one mean per group, one overall variance).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Welch ANOVA</span></span>
@@ -489,7 +490,7 @@ Figure 3.11: Percentage of rejection of the null hypothesis for the <span class=
 
   <div class="chapter-nav">
 <div class="prev"><a href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></div>
-<div class="next"><a href="replication-crisis.html"><span class="header-section-number">4</span> Replication crisis</a></div>
+<div class="next"><a href="contrasts-interactions.html"><span class="header-section-number">4</span> Contrasts and interactions</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">

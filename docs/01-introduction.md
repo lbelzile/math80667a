@@ -100,6 +100,17 @@ A study from which we can study causal relationships is said to have **internal 
 
 :::
 
+:::{.keyidea #internalexternalvalidity name="Point of terminology"}
+
+**Point of terminology: between-subjects and within-subjects designs**
+
+In between-subjects designs, subjects are randomly assigned to only one of the different
+experimental conditions. On the contrary, participants receive many or all of the experimental treatments in a within-subjects design, the order of assignment of the conditions typically being random.
+
+While within-subject designs allow for a better use of available ressources (it is cheaper to have fewer participants perform multiple tasks), observations from within-design are correlated and more subject to missingness and learning effects, all of which require special statistical treatment.
+
+:::
+
 
 ## Review of basic concepts
 
