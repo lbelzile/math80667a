@@ -97,6 +97,12 @@ This user case is not accomodated by classical testing theory. Research hypothes
 Also known as the file-drawer problem, selective reporting occurs because publication of results that fail to reach statistical significance (sic) are harder to publish. In much the same way as multiple testing, if 20 researchers perform a study but only one of them writes a paper and the result is a fluke, then this indicates. There are widespread indications publication bias, as evidence by the distribution of $p$-values reported in papers. A [recent preprint of a study](https://docs.iza.org/dp15478.pdf) found the prevalance to be higher in online experiments such as Amazon MTurks. 
 
 
+_P_-hacking and the replication crisis has lead many leading statisticians to advocate much more stringent cutoff criterion such as $p < 0.001$ instead of the usual $p<0.05$ criterion as level for the test.
+The level $\alpha=5$\% is essentially arbitrary and dates back to @Fisher:1926, who wrote
+
+> If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
+
+
 
 ::: outsidethebox
 
@@ -105,22 +111,6 @@ Methods that pool together results, such as meta-analysis, are sensitive to sele
 :::
 
 
-### Multiple testing
-
-
-If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of $\alpha$ (often 0.05) of making a type I error if the null is true. The problem  is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a $p$-value less than 5\%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. The level $\alpha=5$\% is essentially arbitrary: @Tukey:1926 wrote
-
-> If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
-
-Not all tests are of interest, even if standard software will report all possible pairwise comparisons. Even then, the number of tests performed in the course of an analysis can be very large. The more tests are performed, the more likely one of the tests will lead to statistical significance. [Dr. Yoav Benjamini](http://www.math.tau.ac.il/~ybenja/), a leading researcher in multiple testing, looked at the number of inference / tests performed in the Psychology replication project [@OSC:2015]. The number of tests performed ranged from 4 to 700, with an average of 72 and that only 11 out of the 100 engaged with selection, but only cursorily.  It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure \@ref(fig:xkcdsignificant)
-
-
-<div class="figure" style="text-align: center">
-<img src="figures/xkcd882_significant.png" alt="xkcd comic [882 (Significant) by Randall Munroe](https://xkcd.com/882/). Alt text: `So, uh, we did the green study again and got no link. It was probably a--` `RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!`. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="60%" />
-<p class="caption">(\#fig:xkcd882)xkcd comic [882 (Significant) by Randall Munroe](https://xkcd.com/882/). Alt text: `So, uh, we did the green study again and got no link. It was probably a--` `RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!`. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/).</p>
-</div>
-
-_P_-hacking and the replication crisis has lead many leading statisticians to advocate much more stringent cutoff criterion such as $p < 0.001$.
 
 ### Non-representative samples
 

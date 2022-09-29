@@ -1,4 +1,4 @@
-# Contrasts and interactions {#contrasts-interactions}
+# Contrasts and multiple testing {#contrasts-multiple-testing}
 
 The analysis of variance model tests the (global) null hypothesis that the average of all groups is equal. In an experimental context, this implies one or more of the manipulation has a different effect from the others on the mean response. Oftentimes, this isn't interesting in itself: we could be interested in comparing different options relative to a *status quo*, or determine whether specific combinations work better than separately. The scientific question of interest that warranted the experiment may lead to a specific set of hypotheses, which can be formulated by researchers as comparisons between means of different subgroups.
 
@@ -186,10 +186,6 @@ Beyond looking at the global null, we will be interested in a set of contrast st
 
 
 If you do a **single** hypothesis test and the testing procedure is well calibrated (meaning that the model model assumptions hold), there is a probability of $\alpha$ of making a type I error if the null is true, meaning when there is no difference between averages in the underlying population. The problem of the above approach is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that, on average, one of them will yield a $p$-value less than 5\%. This, coupled with the tendency in the many fields to dichotomise the result of every test depending on whether $p \leq \alpha$ (statistically significant at level $\alpha$ or not leads to selective reporting of findings. 
-
-The level $\alpha=5$\% is essentially arbitrary: @Tukey:1926 wrote
-
-> If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level. 
 
 Not all tests are of interest, even if standard software will report all possible pairwise comparisons. However, the number of tests performed in the course of an analysis can be very large. Dr. Yoav Benjamini investigated the number of tests performed in each study of the Psychology replication project [@OSC:2015]: this number ranged from 4 to 700, with an average of 72 per study. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure \@ref(fig:xkcdsignificant).
 

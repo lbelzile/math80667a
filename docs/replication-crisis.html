@@ -70,7 +70,7 @@
 <li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
 <li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
 <li><a class="" href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></li>
-<li><a class="" href="contrasts-interactions.html"><span class="header-section-number">4</span> Contrasts and interactions</a></li>
+<li><a class="" href="contrasts-multiple-testing.html"><span class="header-section-number">4</span> Contrasts and multiple testing</a></li>
 <li><a class="" href="complete-factorial-designs.html"><span class="header-section-number">5</span> Complete factorial designs</a></li>
 <li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">6</span> Designs to reduce the error</a></li>
 <li><a class="active" href="replication-crisis.html"><span class="header-section-number">7</span> Replication crisis</a></li>
@@ -170,37 +170,25 @@ Figure 7.5: Screenshot of the Nature Reporting summary for statistics, reproduce
 <span class="header-section-number">7.1.2</span> Selective reporting<a class="anchor" aria-label="anchor" href="#selective-reporting"><i class="fas fa-link"></i></a>
 </h3>
 <p>Also known as the file-drawer problem, selective reporting occurs because publication of results that fail to reach statistical significance (sic) are harder to publish. In much the same way as multiple testing, if 20 researchers perform a study but only one of them writes a paper and the result is a fluke, then this indicates. There are widespread indications publication bias, as evidence by the distribution of <span class="math inline">\(p\)</span>-values reported in papers. A <a href="https://docs.iza.org/dp15478.pdf">recent preprint of a study</a> found the prevalance to be higher in online experiments such as Amazon MTurks.</p>
+<p><em>P</em>-hacking and the replication crisis has lead many leading statisticians to advocate much more stringent cutoff criterion such as <span class="math inline">\(p &lt; 0.001\)</span> instead of the usual <span class="math inline">\(p&lt;0.05\)</span> criterion as level for the test.
+The level <span class="math inline">\(\alpha=5\)</span>% is essentially arbitrary and dates back to <span class="citation">Fisher (<a href="references.html#ref-Fisher:1926" role="doc-biblioref">1926</a>)</span>, who wrote</p>
+<blockquote>
+<p>If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level.</p>
+</blockquote>
 <div class="outsidethebox">
 <p>Methods that pool together results, such as meta-analysis, are sensitive to selective reporting. Why does it matter?</p>
 </div>
 </div>
-<div id="multiple-testing-1" class="section level3" number="7.1.3">
+<div id="non-representative-samples" class="section level3" number="7.1.3">
 <h3>
-<span class="header-section-number">7.1.3</span> Multiple testing<a class="anchor" aria-label="anchor" href="#multiple-testing-1"><i class="fas fa-link"></i></a>
-</h3>
-<p>If you do a single hypothesis test and the testing procedure is well calibrated (model assumptions met), there is a probability of <span class="math inline">\(\alpha\)</span> (often 0.05) of making a type I error if the null is true. The problem is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that one of them will yield a <span class="math inline">\(p\)</span>-value less than 5%, for instance. This, coupled with the tendency in the many fields to dichotomize the result of every test depending on whether <span class="math inline">\(p \leq \alpha\)</span> (statistically significant at level <span class="math inline">\(\alpha\)</span> or not leads to selective reporting of findings. The level <span class="math inline">\(\alpha=5\)</span>% is essentially arbitrary: <span class="citation">(<a href="#ref-Tukey:1926" role="doc-biblioref"><strong>Tukey:1926?</strong></a>)</span> wrote</p>
-<blockquote>
-<p>If one in twenty does not seem high enough odds, we may, if we prefer it, draw the line at one in fifty or one in a hundred. Personally, the writer prefers to set a low standard of significance at the 5 per cent point, and ignore entirely all results which fails to reach this level.</p>
-</blockquote>
-<p>Not all tests are of interest, even if standard software will report all possible pairwise comparisons. Even then, the number of tests performed in the course of an analysis can be very large. The more tests are performed, the more likely one of the tests will lead to statistical significance. <a href="http://www.math.tau.ac.il/~ybenja/">Dr. Yoav Benjamini</a>, a leading researcher in multiple testing, looked at the number of inference / tests performed in the Psychology replication project <span class="citation">(<a href="#ref-OSC:2015" role="doc-biblioref"><strong>OSC:2015?</strong></a>)</span>. The number of tests performed ranged from 4 to 700, with an average of 72 and that only 11 out of the 100 engaged with selection, but only cursorily. It is natural to ask then how many are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the xkcd cartoon of Figure <a href="contrasts-interactions.html#fig:xkcdsignificant">4.1</a></p>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:xkcd882"></span>
-<img src="figures/xkcd882_significant.png" alt="xkcd comic [882 (Significant) by Randall Munroe](https://xkcd.com/882/). Alt text: `So, uh, we did the green study again and got no link. It was probably a--` `RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!`. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="60%"><p class="caption">
-Figure 7.6: xkcd comic <a href="https://xkcd.com/882/">882 (Significant) by Randall Munroe</a>. Alt text: <code>So, uh, we did the green study again and got no link. It was probably a--</code> <code>RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!</code>. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
-</p>
-</div>
-<p><em>P</em>-hacking and the replication crisis has lead many leading statisticians to advocate much more stringent cutoff criterion such as <span class="math inline">\(p &lt; 0.001\)</span>.</p>
-</div>
-<div id="non-representative-samples" class="section level3" number="7.1.4">
-<h3>
-<span class="header-section-number">7.1.4</span> Non-representative samples<a class="anchor" aria-label="anchor" href="#non-representative-samples"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1.3</span> Non-representative samples<a class="anchor" aria-label="anchor" href="#non-representative-samples"><i class="fas fa-link"></i></a>
 </h3>
 <p>Many researchers opt for convenience samples by using online panels such as Qualtrics, Amazon MTurks, etc. The quality of those observations is at best dubious: ask yourself whether you would answer such as survey for a small amount. Manipulation checks to ensure participants are following, information is not completed by bots, a threshold for the minimal time required to complete the study, etc. are necessary (but not sufficient) conditions to ensure that the data are not rubbish.</p>
 <p>A more important criticism is that the people who answer those surveys are not representative of the population as a whole: sampling bias thus plays an important role in the conclusions and, even if the summary statistics are not too different from the general population, they may exhibit different opinions, levels of skills, etc. than most.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:samplingbias"></span>
 <img src="figures/samplingbias.jpg" alt="Sampling bias. Artwork by [Jonathan Hey (Sketchplanations)](https://sketchplanations.com/sampling-bias) shared under the [CC BY-NC 4.0 license](http://creativecommons.org/licenses/by-nc/4.0/)." width="85%"><p class="caption">
-Figure 7.7: Sampling bias. Artwork by <a href="https://sketchplanations.com/sampling-bias">Jonathan Hey (Sketchplanations)</a> shared under the <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 license</a>.
+Figure 7.6: Sampling bias. Artwork by <a href="https://sketchplanations.com/sampling-bias">Jonathan Hey (Sketchplanations)</a> shared under the <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 license</a>.
 </p>
 </div>
 <p>The same can be said of panels of students recruited in universities classes, who are more young, educated and perhaps may infer through backward induction the purpose of the study and answer accordingly.</p>
@@ -229,8 +217,7 @@ Figure 7.7: Sampling bias. Artwork by <a href="https://sketchplanations.com/samp
 <a class="nav-link" href="#causes-of-the-replication-crisis"><span class="header-section-number">7.1</span> Causes of the replication crisis</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#the-garden-of-forking-paths"><span class="header-section-number">7.1.1</span> The garden of forking paths</a></li>
 <li><a class="nav-link" href="#selective-reporting"><span class="header-section-number">7.1.2</span> Selective reporting</a></li>
-<li><a class="nav-link" href="#multiple-testing-1"><span class="header-section-number">7.1.3</span> Multiple testing</a></li>
-<li><a class="nav-link" href="#non-representative-samples"><span class="header-section-number">7.1.4</span> Non-representative samples</a></li>
+<li><a class="nav-link" href="#non-representative-samples"><span class="header-section-number">7.1.3</span> Non-representative samples</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#summary"><span class="header-section-number">7.2</span> Summary</a></li>
