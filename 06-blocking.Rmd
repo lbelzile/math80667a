@@ -468,9 +468,7 @@ ggplot(data = SSVB21_S3,
 
 :::
 
-## Sample size consideration
 
-We will distinguish between different 
 <!-- Dean, Voss, Daguliic (2017), Section 10.2 -->
 
 <!--
