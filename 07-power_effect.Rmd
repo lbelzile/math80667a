@@ -1,3 +1,99 @@
+# Effect sizes and power
+
+
+Test statistics shows how outlying these measures are relative to relative to a null hypothesis, typically that of no effect or equal mean in each subgroup: they do not say how far the means are relative to one another. In a way, statistics are a mean to an end when a researcher tries to prove that some experimental manipulation has an effect on the response variable. One example is in development of new drugs which need to be authorized for commercialization by Health Canada: what is the minimum difference between two treatments that would be large enough to justify commercialization of a drug? This will involve a tradeoff between efficacy of new treatment relative to the status quo, the cost of drug, etc. In a sense, statistical significance of a testing procedure does not translate into practical relevance, which itself depends on the scientific question at hand.
+
+
+
+
+```{r}
+#| label: fig-effectsize
+#| cache: true
+#| echo: false
+#| fig-width: 11
+#| fig-height: 5
+#| out-width: '90%'
+#| fig-cap: "True sampling distribution for a two-sample $t$-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small  (left panel) and large (right panel) sample sizes."
+region <- data.frame(start = c(-Inf, qnorm(0.025, sd = 2), qnorm(0.975, sd = 2)),
+                     end = c(qnorm(0.025, sd = 2), qnorm(0.975, sd = 2), Inf),
+                     region = factor(c("reject","fail to reject","reject")))
+p1 <- ggplot(region) +
+  geom_rect(aes(xmin = start, xmax = end, fill = region),
+            ymin = -Inf, ymax = Inf, alpha = 0.2, data = region) +
+  scale_fill_manual(values = c("blue","red")) +
+  coord_cartesian(xlim = c(-6,10), ylim = c(0, 0.46), expand = FALSE) +
+  geom_vline(xintercept = c(0,3), alpha = 0.1) +
+  stat_function(fun = dnorm, args = list(mean = 3, sd = 2), xlim = c(qnorm(0.975, sd = 2), 10),
+                geom = "area", fill = "white") +
+  stat_function(fun = dnorm, n = 1000, args = list(mean = 0, sd = 2), xlim = c(-6,10)) +
+  stat_function(fun = dnorm, n = 1000, args = list(mean = 3, sd = 2), lty = 2, xlim = c(-6,10)) +
+  ylab("density") +
+  geom_segment(data = data.frame(x = 0, 
+                                 xend = 3, 
+                                 y = 0.45, 
+                                 yend = 0.45), 
+               mapping = aes(x = x, 
+                             xend = xend, 
+                             y = y, 
+                             yend = yend),
+               arrow =  arrow(ends = "both",
+                              length = unit(0.1, "cm"))) + 
+  theme_classic()
+
+region1 <- data.frame(start = c(-Inf, qnorm(0.025), qnorm(0.975)),
+                      end = c(qnorm(0.025), qnorm(0.975), Inf),
+                      region = factor(c("reject","fail to reject","reject")))
+p2 <- ggplot(region1) +
+  geom_rect(aes(xmin = start, xmax = end, fill = region),
+            ymin = -Inf, ymax = Inf, alpha = 0.2, data = region1) +
+  scale_fill_manual(values = c("blue","red")) +
+  coord_cartesian(xlim = c(-6,10), ylim = c(0, 0.46), expand = FALSE) +
+  stat_function(fun = dnorm, args = list(mean = 3, sd = 1), xlim = c(qnorm(0.975),10),
+                geom = "area", fill = "white") +
+  ylab("density") +
+  geom_vline(xintercept = c(0,3), alpha = 0.1) +
+  stat_function(fun = dnorm, args = list(mean = 3, sd = 1), xlim = c(-5, 10), n = 1000) +
+  stat_function(fun = dnorm, n = 1000, args = list(mean = 0, sd = 1), lty = 2, xlim = c(-5,10)) +
+  geom_segment(data = data.frame(x = 0, 
+                                 xend = 3, 
+                                 y = 0.45, 
+                                 yend = 0.45), 
+               mapping = aes(x = x, 
+                             xend = xend, 
+                             y = y, 
+                             yend = yend),
+               arrow =  arrow(ends = "both",
+                              length = unit(0.1, "cm"))) + 
+  theme_classic()
+p1 + p2 + plot_layout(guides = 'collect') & theme(legend.position = 'bottom')
+```
+
+
+Mechanically, the $p$-value will be smaller on average when the sample size is large than when it is big. Figure \@ref(fig:effectsize) shows an example with the sampling distributions of the difference in mean under the null (curve centered at zero) and the true alternative (mean difference of two).  The area in white under the curve represents the power, which is larger with larger sample size and coincides with smaller average $p$-values for the testing procedure. One could argue that, on the surface, every null hypothesis is wrong and that, with a sufficiently large number of observation, all observed differences eventually become "statistically significant". This has to do with the fact that we become more and more certain of the estimated means of each experimental sub-condition. What is clear, however, is that not all of these differences are large or practically relevant.
+
+Effect size are useful summaries to inform about the standardized magnitude of these differences, to combine with results of other experiment using meta-analysis, or to serve in power studies to determine how many samples are needed to replicate an effect.
+
+To gather intuition, we begin with the task of comparing the means of two groups using a two-sample $t$-test, with the null hypothesis of equality in means or $\mathscr{H}_0: \mu_1 = \mu_2$. The test statistic is 
+\begin{align*}
+T = \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} = \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} \left(\frac{1}{n_1}+\frac{1}{n_2}\right)^{-1/2}
+\end{align*}
+where $\widehat{\sigma}$ is the pooled sample size estimator. The first term, $\widehat{d}_s = (\widehat{\mu}_2 - \widehat{\mu}_1)/\widehat{\sigma}$, is termed Cohen's $d$ [@Cohen:1988] and it measures the standardized difference between groups, a form of signal-to-noise ratio. As the sample size, the sample mean and pooled sample variance become closer and closer to the true population values $\mu_1, \mu_2, \sigma$ and this stabilizes to a number; at the same time, the statistic $T$ becomes bigger as $n$ becomes larger because of the second term (if we consider a balanced sample, $n_1 = n_2 = n/2$ we can rewrite the statistic as $T = \sqrt{n} \widehat{d}_s/2$ and the statement is more obvious). 
+
+Consider as a simple illustration simulating data from two Normal distributions with means $\mu_1=0$ and $\mu_2=2$ and unit standard deviation $\sigma=1$. The true population value of Cohen's $d$ is $2$.
+
+```{r}
+
+```
+
+
+If we compare two experiments targeting the same population, we expect the one with larger samples to have a larger value of $T$. As this metric depends on the sample size and design, the test statistic (and the $p$-value) are not a good measure of how large the effect is size. This [app] by Kristoffer Magnusson [@magnussonCohend] illustrates how one can interpret Cohen's $d$ measure in terms of overlap between groups, etc.
+
+There are two main classes of effect size: standardized mean differences, of which Cohen's $d$ is part of, and ratio (percentages) of explained variance. The latter are used in analysis of variance when there are multiple groups to compare.
+
+Unfortunately, the literature on effect size and researchers often fail to distinguish between estimand (unknown target) and the estimator that is being used, with frequent notational confusion arising due to conflicting standards and definitions. Terms are also overloaded: the same notation may be used to denote an effect size, but it will be calculated differently depending on whether the design is between-subject or within-subject (with repeated correlated measures per participant), or whether there are blocking factors.
+
+
+
 
 ## Power
 
