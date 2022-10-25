@@ -17,6 +17,7 @@ rmd_files: [
   "04-contrasts_multipletesting.Rmd",
   "05-interactions_multiway.Rmd",
   "06-blocking.Rmd",
+  "07-power_effect.Rmd",
   "10-reproducibility_crisis.Rmd",
   "references.Rmd"
 ]

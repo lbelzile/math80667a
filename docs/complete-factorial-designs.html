@@ -7,7 +7,7 @@
 <title>5 Complete factorial designs | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
 <meta name="description" content="We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously. Before jumping into the statistical analysis, let us discuss...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
 <meta property="og:title" content="5 Complete factorial designs | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
 <meta property="og:description" content="We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously. Before jumping into the statistical analysis, let us discuss...">
@@ -73,7 +73,8 @@
 <li><a class="" href="contrasts-multiple-testing.html"><span class="header-section-number">4</span> Contrasts and multiple testing</a></li>
 <li><a class="active" href="complete-factorial-designs.html"><span class="header-section-number">5</span> Complete factorial designs</a></li>
 <li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">6</span> Designs to reduce the error</a></li>
-<li><a class="" href="replication-crisis.html"><span class="header-section-number">7</span> Replication crisis</a></li>
+<li><a class="" href="effect-sizes-and-power.html"><span class="header-section-number">7</span> Effect sizes and power</a></li>
+<li><a class="" href="replication-crisis.html"><span class="header-section-number">8</span> Replication crisis</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -88,22 +89,6 @@
 </h1>
 <p>We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously.</p>
 <p>Before jumping into the statistical analysis, let us discuss briefly some examples that will be covered in the sequel.</p>
-<!--
-
-:::{ .example name="Replication of 'Precision of the anchor influences the amount of adjustment'"}
-
-
-We consider data from a replication by Chandler (2016) of Study 4a of Janiszewski and Uy (2008). Both studies measured the amount of adjustment when presented with vague or precise range of value for objects, with potential encouragement for adjusting more the value.
-
-@Chandler:2016 described the effect in the replication report:
-
-> Janiszewski and Uy (2008) conceptualized people’s attempt to adjust following presentation of an anchor as movement along a subjective representation scale by a certain number of units. Precise numbers (e.g. $9.99) imply a finer-resolution scale than round numbers (e.g. $10). Consequently, adjustment along a subjectively finer resolution scale will result in less objective adjustment than adjustment by the same number of units along a subjectively coarse resolution scale.
-
-The experiment is a 2 by 2 factorial design (two-way ANOVA) with `anchor` (either round or precise) and `magnitude` (`0` for small, `1` for big adjustment) as experimental factors. A total of 120 students were recruited and randomly assigned to one of the four experimental sub-condition, for a total of 30 observations per subgroup (`anchor`, `magnitude`). The response variable is `majust`, the mean adjustment for the price estimate of the item.
-
-:::
-
--->
 <div class="example">
 <p><span id="exm:unlabeled-div-19" class="example"><strong>Example 5.1  (Psychological ownership of borrowed money) </strong></span>Supplemental Study 5 from <span class="citation">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.</p>
 </div>
@@ -203,8 +188,8 @@ where</p>
 </tbody>
 </table></div>
 <p>The <span class="math inline">\(i\)</span>th row mean represents the average response across all levels of <span class="math inline">\(B\)</span>,
-<span class="math inline">\(\mu_{i.} = (\mu_{i1} + \cdots + \mu_{ib})/n_b\)</span> and similarly for the average of the <span class="math inline">\(j\)</span>th column, <span class="math inline">\(\mu_{.j} = (\mu_{1j} + \cdots + \mu_{aj})/n_a.\)</span> Finally, the overall average is
-<span class="math display">\[\mu = \frac{\sum_{i=1}^a \sum_{j=1}^b \mu_{ij}}{n_an_b}.\]</span></p>
+<span class="math inline">\(\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b\)</span> and similarly for the average of the <span class="math inline">\(j\)</span>th column, <span class="math inline">\(\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.\)</span> Finally, the overall average is
+<span class="math display">\[\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.\]</span></p>
 <p>Each subgroup average <span class="math inline">\(\mu_{ij}\)</span> will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means <span class="math inline">\(\widehat{\mu}_{i.}\)</span>, <span class="math inline">\(\widehat{\mu}_{.j}\)</span> and <span class="math inline">\(\widehat{\mu}\)</span>. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.</p>
 </div>
 <div id="interactions" class="section level2" number="5.2">
@@ -262,9 +247,9 @@ where</p>
 <li>
 <span class="math inline">\((\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu\)</span> is the interaction term for <span class="math inline">\(A_i\)</span> and <span class="math inline">\(B_j\)</span> which encodes the effect of both variable not already captured by the main effects.</li>
 </ul>
-<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{a-1}=0\)</span>. The <strong>sum to zero</strong> constraints,
-<span class="math display">\[\sum_{i=1}^a \alpha_i=0, \quad \sum_{j=1}^b \beta_j=0, \quad  \sum_{j=1}^b (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^a (\alpha\beta)_{ij}=0,\]</span> restore identifiability as they imposes
-which imposes <span class="math inline">\(1 + a + b\)</span> constraints.</p>
+<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(n_a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\)</span>. The <strong>sum to zero</strong> constraints,
+<span class="math display">\[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]</span> restore identifiability as they imposes
+which imposes <span class="math inline">\(1 + n_a + n_b\)</span> constraints.</p>
 <p>The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.</p>
 <p><strong>To be continued</strong>…</p>
 <div class="example">

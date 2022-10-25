@@ -393,9 +393,7 @@ Figure \@ref(fig:fig-vanStekS3f1) shows the relationship between prior and poste
 
 :::
 
-## Sample size consideration
 
-We will distinguish between different 
 <!-- Dean, Voss, Daguliic (2017), Section 10.2 -->
 
 <!--

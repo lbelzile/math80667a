@@ -7,67 +7,10 @@ Test statistics show how outlying observed differences between experimental cond
 
 
 
-```{r}
-#| label: fig-effectsize
-#| cache: true
-#| echo: false
-#| fig-width: 11
-#| fig-height: 5
-#| out-width: '90%'
-#| fig-cap: "True sampling distribution for a two-sample $t$-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small  (left panel) and large (right panel) sample sizes."
-region <- data.frame(start = c(-Inf, qnorm(0.025, sd = 2), qnorm(0.975, sd = 2)),
-                     end = c(qnorm(0.025, sd = 2), qnorm(0.975, sd = 2), Inf),
-                     region = factor(c("reject","fail to reject","reject")))
-p1 <- ggplot(region) +
-  geom_rect(aes(xmin = start, xmax = end, fill = region),
-            ymin = -Inf, ymax = Inf, alpha = 0.2, data = region) +
-  scale_fill_manual(values = c("blue","red")) +
-  coord_cartesian(xlim = c(-6,10), ylim = c(0, 0.46), expand = FALSE) +
-  geom_vline(xintercept = c(0,3), alpha = 0.1) +
-  stat_function(fun = dnorm, args = list(mean = 3, sd = 2), xlim = c(qnorm(0.975, sd = 2), 10),
-                geom = "area", fill = "white") +
-  stat_function(fun = dnorm, n = 1000, args = list(mean = 0, sd = 2), xlim = c(-6,10)) +
-  stat_function(fun = dnorm, n = 1000, args = list(mean = 3, sd = 2), lty = 2, xlim = c(-6,10)) +
-  ylab("density") +
-  geom_segment(data = data.frame(x = 0, 
-                                 xend = 3, 
-                                 y = 0.45, 
-                                 yend = 0.45), 
-               mapping = aes(x = x, 
-                             xend = xend, 
-                             y = y, 
-                             yend = yend),
-               arrow =  arrow(ends = "both",
-                              length = unit(0.1, "cm"))) + 
-  theme_classic()
-
-region1 <- data.frame(start = c(-Inf, qnorm(0.025), qnorm(0.975)),
-                      end = c(qnorm(0.025), qnorm(0.975), Inf),
-                      region = factor(c("reject","fail to reject","reject")))
-p2 <- ggplot(region1) +
-  geom_rect(aes(xmin = start, xmax = end, fill = region),
-            ymin = -Inf, ymax = Inf, alpha = 0.2, data = region1) +
-  scale_fill_manual(values = c("blue","red")) +
-  coord_cartesian(xlim = c(-6,10), ylim = c(0, 0.46), expand = FALSE) +
-  stat_function(fun = dnorm, args = list(mean = 3, sd = 1), xlim = c(qnorm(0.975),10),
-                geom = "area", fill = "white") +
-  ylab("density") +
-  geom_vline(xintercept = c(0,3), alpha = 0.1) +
-  stat_function(fun = dnorm, args = list(mean = 3, sd = 1), xlim = c(-5, 10), n = 1000) +
-  stat_function(fun = dnorm, n = 1000, args = list(mean = 0, sd = 1), lty = 2, xlim = c(-5,10)) +
-  geom_segment(data = data.frame(x = 0, 
-                                 xend = 3, 
-                                 y = 0.45, 
-                                 yend = 0.45), 
-               mapping = aes(x = x, 
-                             xend = xend, 
-                             y = y, 
-                             yend = yend),
-               arrow =  arrow(ends = "both",
-                              length = unit(0.1, "cm"))) + 
-  theme_classic()
-p1 + p2 + plot_layout(guides = 'collect') & theme(legend.position = 'bottom')
-```
+<div class="figure" style="text-align: center">
+<img src="07-power_effect_files/figure-html/fig-effectsize-1.png" alt="True sampling distribution for a two-sample $t$-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small  (left panel) and large (right panel) sample sizes." width="90%" />
+<p class="caption">(\#fig:fig-effectsize)True sampling distribution for a two-sample $t$-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small  (left panel) and large (right panel) sample sizes.</p>
+</div>
 
 
 Mechanically, the $p$-value will get smaller on average when the sample size is larger. Figure \@ref(fig:fig-effectsize) shows an example with the sampling distributions of the difference in mean under the null (curve centered at zero) and the true alternative (mean difference of two).  The area in white under the curve represents the power, which is larger with larger sample size and coincides with smaller average $p$-values for the testing procedure. One could argue that, on the surface, every null hypothesis is wrong and that, with a sufficiently large number of observation, all observed differences eventually become "statistically significant". This has to do with the fact that we become more and more certain of the estimated means of each experimental sub-condition. Statistical significance of a testing procedure does not translate into practical relevance, which itself depends on the scientific question at hand.
@@ -101,26 +44,15 @@ For these different measures, it is possible to obtain (asymmetric) confidence i
 ::: {.example #LiuRimMinMin2022E1effect name="The Surprise of Reaching Out"}
 
 
-```{r}
-#| eval: true
-#| echo: false
-data(LRMM22_S1, package = "hecedsm")
-ttest <- t.test(appreciation ~ role, 
-                data = LRMM22_S1,
-                var.equal = TRUE)
-effect <- effectsize::hedges_g(appreciation ~ role, 
-                data = LRMM22_S1, pooled_sd = TRUE)
-cles <- effectsize::d_to_cles(effect)
-```
 
 
-We consider a two-sample $t$-test for the study of @Liu.Rim.Min.Min:2022 discussed in Example \@ref(exm:LiuRimMinMin2022E1). The difference in average response index is `r round(as.numeric(diff(ttest$estimate)), 3)`, indicating that the responder have a higher score. The $p$-value is `r round(ttest$p.value,3)`, showing a small effect. 
 
-If we consider the standardized distance d$, we obtain a **standardized** difference of `r round(effect$Hedges_g, 3)` standard deviations using Hedge's $g$, with an associated 95% confidence interval of [`r round(effect$CI_low, 3)`, `r round(effect$CI_high, 3)`]: thus, the difference found is small and there is a large uncertainty surrounding it. There is a `r round(cles$Coefficient[1]*100,0)`% probability that an observation drawn at random from the responder condition will exceed the mean of the initiator group (probability of superiority) and `r round(cles$Coefficient[1]*100,1)`% of the responder observations will exceed the mean of the initiator.
+We consider a two-sample $t$-test for the study of @Liu.Rim.Min.Min:2022 discussed in \@ref(exm:LiuRimMinMin2022E1). The difference in average response index is 0.371, indicating that the responder have a higher score. The $p$-value is 0.041, showing a small effect. 
 
-```{r}
-#| eval: false
-#| echo: true
+If we consider the standardized distance d$, we obtain a **standardized** difference of -0.289 standard deviations using Hedge's $g$, with an associated 95% confidence interval of [-0.567, -0.011]: thus, the difference found is small and there is a large uncertainty surrounding it. There is a 42% probability that an observation drawn at random from the responder condition will exceed the mean of the initiator group (probability of superiority) and 41.9% of the responder observations will exceed the mean of the initiator.
+
+
+```r
 data(LRMM22_S1, package = "hecedsm")
 ttest <- t.test(
   appreciation ~ role, 

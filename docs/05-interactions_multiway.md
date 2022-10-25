@@ -4,23 +4,6 @@ We next consider experiments and designs in which there are multiple factors bei
 
 Before jumping into the statistical analysis, let us discuss briefly some examples that will be covered in the sequel.
 
-<!--
-
-:::{ .example name="Replication of 'Precision of the anchor influences the amount of adjustment'"}
-
-
-We consider data from a replication by Chandler (2016) of Study 4a of Janiszewski and Uy (2008). Both studies measured the amount of adjustment when presented with vague or precise range of value for objects, with potential encouragement for adjusting more the value.
-
-@Chandler:2016 described the effect in the replication report:
-
-> Janiszewski and Uy (2008) conceptualized people’s attempt to adjust following presentation of an anchor as movement along a subjective representation scale by a certain number of units. Precise numbers (e.g. $9.99) imply a finer-resolution scale than round numbers (e.g. $10). Consequently, adjustment along a subjectively finer resolution scale will result in less objective adjustment than adjustment by the same number of units along a subjectively coarse resolution scale.
-
-The experiment is a 2 by 2 factorial design (two-way ANOVA) with `anchor` (either round or precise) and `magnitude` (`0` for small, `1` for big adjustment) as experimental factors. A total of 120 students were recruited and randomly assigned to one of the four experimental sub-condition, for a total of 30 observations per subgroup (`anchor`, `magnitude`). The response variable is `majust`, the mean adjustment for the price estimate of the item.
-
-:::
-
--->
-
 :::{.example name="Psychological ownership of borrowed money"}
 
 Supplemental Study 5 from @Sharma.Tully.Cryder:2021 checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.
@@ -77,8 +60,8 @@ Table: (\#tab:cellmeansMP14) Conceptual depiction of cell average for the two by
 
 
 The $i$th row mean represents the average response across all levels of $B$,
-$\mu_{i.} = (\mu_{i1} + \cdots + \mu_{ib})/n_b$ and similarly for the average of the $j$th column, $\mu_{.j} = (\mu_{1j} + \cdots + \mu_{aj})/n_a.$ Finally, the overall average is 
-$$\mu = \frac{\sum_{i=1}^a \sum_{j=1}^b \mu_{ij}}{n_an_b}.$$
+$\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b$ and similarly for the average of the $j$th column, $\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.$ Finally, the overall average is 
+$$\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.$$
 
 Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means $\widehat{\mu}_{i.}$, $\widehat{\mu}_{.j}$ and $\widehat{\mu}$. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.
 
@@ -138,9 +121,9 @@ where
 - $\beta_j  = \mu_{.j} - \mu$ is the mean of level $B_j$ minus overall mean.
 - $(\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu$ is the interaction term for $A_i$ and $B_j$ which encodes the effect of both variable not already captured by the main effects.
 
-A rapid calculation shows that there are more coefficients than the number of cells and subgroups ($n_an_b$ cells overall) in our table. The model is **overparametrized**: to get away with this, we impose constraints to remove redundancies. The idea is that if we know $a-1$ of the mean for factor $A$ and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor $A$ by setting $\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{a-1}=0$. The **sum to zero** constraints,
-$$\sum_{i=1}^a \alpha_i=0, \quad \sum_{j=1}^b \beta_j=0, \quad  \sum_{j=1}^b (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^a (\alpha\beta)_{ij}=0,$$ restore identifiability as they imposes 
-which imposes $1 +  a + b$ constraints.
+A rapid calculation shows that there are more coefficients than the number of cells and subgroups ($n_an_b$ cells overall) in our table. The model is **overparametrized**: to get away with this, we impose constraints to remove redundancies. The idea is that if we know $n_a-1$ of the mean for factor $A$ and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor $A$ by setting $\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0$. The **sum to zero** constraints,
+$$\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,$$ restore identifiability as they imposes 
+which imposes $1 +  n_a + n_b$ constraints.
 
 The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.
 
