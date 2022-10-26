@@ -148,7 +148,6 @@ ancova
 effect-sizes-and-power
 effect-sizes
 standardized-mean-differences
-estimators
 power-1
 replication-crisis
 causes-of-the-replication-crisis
