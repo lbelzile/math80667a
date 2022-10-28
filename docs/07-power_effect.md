@@ -73,7 +73,54 @@ effectsize::d_to_cles(effect)
 :::
 
 
+### Ratio and proportion of variance
 
+Another class of effect sizes are obtained by considering either the ratio of the variance due to an effect (say differences in means relative to the overall mean) relative to the background level of noise as measured by the variance.
+
+One common measure employed in software is Cohen's _f_ [@Cohen:1988], which for a one-way ANOVA (equal variance $\sigma^2$) with more than two groups, 
+$$
+f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigma^2_{\text{effect}}}{\sigma^2},
+$$
+a weighted sum of squared difference relative to the overall mean $\mu$. $\sigma^2_{\text{effect}}$ is a measure of the variability that is due to the difference in mean, so standardizing it by the measurement variance gives us a ratio of variance with values higher than one indicating that more variability is explainable, leading to higher effect sizes. If the means of every subgroup is the same, then $f=0$. For $k=2$ groups, Cohen's $f$ and Cohen's $d$ are related via $f=d/2$.
+
+Cohen's $f$ can be directly related to the behaviour of the $F$ statistic under an alternative, as explained in Section \@ref(power-oneway). However, since the interpretation isn't straightforward, we typically consider proportions of variance (rather than ratios of variance).
+
+To build such an effect size, we break down the variability that is explained by our experimental manipulation ($\sigma^2_\text{effect}$), here denoted by effect, from the leftover unexplained part, or residual ($\sigma^2_\text{resid}$). In a one-way analysis of variance, $$\sigma^2_{\text{total}} = \sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}$$ and the percentage of variability explained by the $\text{effect}$.
+$$\eta^2 = \frac{\text{explained variability}}{\text{total variability}}= \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}} = \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{total}}}.$$
+Simple arithmetic manipulations reveal that $f^2 = \eta^2/(1-\eta^2)$, so we can relate any proportion of variance in terms of ratio and vice-versa.
+
+Such an effect size depends on unknown population quantities (the true means of each subgroup, the overall mean and the variance). There are multiple alternative estimators to estimate $\eta^2$, and researchers are often carefree when reporting as to which is used. To disambiguate, I will put $\hat{\eta}^2$ to denote an estimator. To make an analogy, there are many different recipes (estimators) that can lead to a particular cake, but some may lead to a mixing that is on average too wet if they are not well calibrated.
+
+The default estimator for $\eta^2$ is the coefficient of determination of the linear regression, denoted $\widehat{R}^2$ or $\widehat{\eta}^2$. The latter can be reconstructed from the analysis of variance table using the formula
+$$
+\widehat{R}{}^2 = \frac{F\nu_1}{F\nu_1 + \nu_2}
+$$
+where for the one-way ANOVA $\nu_1 = K-1$ and $\nu_2 = n-K$ are the degrees of freedom of a design with $n$ observations and $K$ experimental conditions. 
+
+Unfortunately, $\widehat{R}{}^2$ is an upward biased estimator (too large on average), leading to optimistic measures. Another estimator of $\eta^2$ that is recommended in @Keppel/Wickens:2004 for power calculations is $\widehat{\omega}^2$, which is
+$$\widehat{\omega}^2 = \frac{\nu_1 (F-1)}{\nu_1(F-1)+n}.$$
+Since the $F$ statistic is approximately 1 on average, this measure removes the mode. Both $\widehat{\omega}^2$ and $\widehat{\epsilon}^2$ have been reported to be less biased and thus preferable as estimators of the true proportion of variance [@Lakens:2013].
+
+### Partial effects and variance decomposition
+
+In a multiway design with several factors, we may want to estimate the effect of separate factors or interactions. In such cases, we can break down the variability explained by manipulations per effect. The effect size for such models are build by comparing the variance explained by the effect $\sigma^2_{\text{effect}}$. 
+
+For example, say we have a completely randomized balanced design with two factors $A$, $B$ and their interaction $AB$. We can decompose the total variance as
+$$\sigma^2_{\text{total}} = \sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}.$$
+When the design is balanced, these variance terms can be estimated using the mean squared error from the analysis of variance table output. If the design is unbalanced, the sum of square decomposition is not unique and we will get different estimates when using Type II and Type III sum of squares.
+
+We can get formula similar to the one-sample case with now what are termed **partial** effect sizes, e.g., 
+$$\widehat{\omega}^2_{\langle \text{effect} \rangle} = \frac{\text{df}_{\text{effect}}(F_{\text{effect}}-1)}{\text{df}_{\text{effect}}(F_{\text{effect}}-1) + n},$$
+where $n$ is the overall sample size and $F_\text{effect}$ and the corresponding degrees of freedom could be the statistic associated to the main effects $A$ and $B$, or the interaction term $AB$. In **R**, the `effectsize` package reports these estimates with one-sided confidence intervals derived using the pivot method [@Steiger:2004].^[The confidence intervals are based on the $\mathsf{F}$ distribution, by changing the non-centrality parameter and inverting the distribution function (pivot method). This yields asymmetric intervals.]
+
+Software will typically return estimates of effect size alongside with the designs, but there are small things to keep in mind. One is that the decomposition of the variance is not unique with unbalanced data. The second is that, when using repeated measures and mixed models, the same notation is used to denote different quantities. 
+
+Lastly, it is customary to report effect sizes that include the variability of blocking factors and random effects, leading to so-called **generalized** effect sizes. Include the variance of all blocking factors and interactions (only with the effect!) in the denominator.^[Typically, there won't be any interaction with blocking factors, but it there was for some reason, it should be included in the total.]
+
+For example, if $A$ is the experimental factor whose main effect is of interest, $B$ is a blocking factor and $C$ is another experimental factor, use
+$$\eta_{\langle A \rangle}^2 = \frac{\sigma^2_A}{\sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}}.$$
+as generalized partial effect. In **R**, most effect sizes for variance proportion have a `generalized` argument to which the vector of names of blocking factor can be passed. The reason for including blocking factors and random effects is that they would not necessarily be available in a replication. 
+The correct effect size measure to calculate and to report depends on the design, and there are numerous estimators that can be utilized. Since they are related to one another, it is oftentimes possible to compute them directly from the output or convert. The formula highlight the importance of reporting (with enough precision) exactly the values of the test statistic.
 
 
 
@@ -94,7 +141,7 @@ In order to better understand the interplay between power, effect size and sampl
 - the level of the test, $\alpha$: if we increase the rejection region, we technically increase power when we run an experiment under an alternative regime. However, the level is oftentimes prespecified to avoid type I errors.
 We may consider multiplicity correction within the power function, such as Bonferonni's method, which is equivalent to reducing $\alpha$.
 
-### Power for one-way ANOVA
+### Power for one-way ANOVA {#power-oneway}
 
 To fix ideas, we consider the one-way analysis of variance model. In the usual setup, we consider $K$ experimental conditions with $n_k$ observations in group $k$, whose population average we denote by $\mu_k$. We can parametrize the model in terms of the overall sample average,
 \begin{align*}
@@ -122,9 +169,12 @@ Closer examination reveals that $\Delta$ increases with $n_j$ (sample size) and 
 Under the alternative, the distribution of the $F$ statistic is a noncentral Fisher distribution, denoted $\mathsf{F}(\nu_1, \nu_2, \Delta)$ with degrees of freedom $\nu_1$ and $\nu_2$ and noncentrality parameter $\Delta$.^[Note that the $F(\nu_1, \nu_2)$ distribution is indistinguishable from $\chi^2(\nu_1)$ for $\nu_2$ large. A similar result holds for tests with $\chi^2$ null distributions.] To calculate the power of a test, we need to single out a specific alternative hypothesis. 
 
 
-<img src="07-power_effect_files/figure-html/power_curve-1.png" width="80%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="07-power_effect_files/figure-html/powercurve-1.png" alt="Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter $\Delta=3$. The area in white under the curve denotes the power under this alternative." width="80%" />
+<p class="caption">(\#fig:powercurve)Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter $\Delta=3$. The area in white under the curve denotes the power under this alternative.</p>
+</div>
 
-The plot in \@ref(fig:power_curve) shows the null (full line) distribution and the true alternative (dashed line). The noncentral $\mathsf{F}$ is shifted to the right and right skewed. The power is the area in white in the rejection region.
+The plot in Figure \@ref(fig:powercurve) shows the null (full line) distribution and the true distribution (dashed line) for a particular alternative. The noncentral $\mathsf{F}$ is shifted to the right and right skewed, so the mode (peak) is further away from 1.
 
 
 Given a value of $\Delta=nf^2$ and information about the effect of interest (degrees of freedom of the effect and the residuals), we can compute the tail probability as follows

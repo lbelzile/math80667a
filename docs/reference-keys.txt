@@ -92,6 +92,7 @@ fig:fig-vanStekS3
 fig:fig-vanStekS3f1
 fig:fig-effectsize
 exm:LiuRimMinMin2022E1effect
+fig:powercurve
 fig:turingrepdo
 fig:repropvaluescorr
 fig:reprozscores
@@ -148,8 +149,10 @@ ancova
 effect-sizes-and-power
 effect-sizes
 standardized-mean-differences
+ratio-and-proportion-of-variance
+partial-effects-and-variance-decomposition
 power-1
-power-for-one-way-anova
+power-oneway
 power-in-complex-designs
 replication-crisis
 causes-of-the-replication-crisis
