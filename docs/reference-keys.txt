@@ -149,6 +149,8 @@ effect-sizes-and-power
 effect-sizes
 standardized-mean-differences
 power-1
+power-for-one-way-anova
+power-in-complex-designs
 replication-crisis
 causes-of-the-replication-crisis
 the-garden-of-forking-paths
