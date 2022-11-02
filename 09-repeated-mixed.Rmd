@@ -1,4 +1,4 @@
-# Repeated measures and mixed models
+# Repeated measures
 
 So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments, the latter being presented in random order. There is an obvious benefit in doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions. For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes. By including multiple conditions, we can filter out effect due to subject, much like with blocking: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.
 
@@ -7,6 +7,21 @@ There are of course drawbacks to gathering repeated measures from individuals. B
 To minimize potential biases, there are multiple strategies one can use. One should randomize the order of treatment conditions among subjects to reduce confounding, or else use a balanced crossover design and include the period and carryover effect in the statistical model via control variables, so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.
 
 There are multiple approaches to handling repeated measures, the biggest difference being that observations are now correlated whereas we assumed measurements were independent until now. One can take averages over experimental condition per pation and treat them as additional blocking factors. One can fit a model that accounts for the multivariate nature of the response, using multivariate analysis of variance. The most popular and widely used method nowadays is to fit a mixed model, with random effects accounting to subject-specific characteristics. By doing so, we assume that the levels of a factor (here the subject identifiers) form a random sample from a large population.
+
+### Data format
+
+With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in wide format, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in **long format**. Figure \@ref(fig:fig-longvswide) shows the difference between the two format. All the databases in the `hecedsm` package are given in long format.
+
+
+```{r}
+#| label: fig-longvswide
+#| fig-cap = "Long versus wide-format for data tables (illustration by Garrick Aden-Buie)."
+#| echo: false
+#| eval: true
+knitr::include_graphics(path = "figures/original-dfs-tidy.png")
+```
+
+Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant. 
 
 ## Random effects
 
@@ -23,108 +38,112 @@ In a between-subjects design, subjects are **nested** within condition/treatment
 
 To fix ideas, we consider a one-way ANOVA with a random effect. As before, we have one experimental factor $A$ with $n_a$ levels, which we write
 $$\begin{align*}\underset{\text{response}\vphantom{l}}{Y_{ij}} = \underset{\text{global mean}}{\mu_{\vphantom{j}}} + \underset{\text{mean difference}}{\alpha_j} + \underset{\text{random effect for subject}}{S_{i\vphantom{j}}} + \underset{\text{error}\vphantom{l}}{\varepsilon_{ij}}\end{align*}$$
-where $S_i \sim \mathsf{No}(0, \sigma^2_s)$ and $\varepsilon_{ij} \sim \mathsf{No}(0, \sigma^2_e)$ are random variables. We assume that the errors and random effects are independent from one another. The model **parameters** are $\mu$, $\alpha_1, \ldots, \alpha_{n_a}$, $\sigma^2_s$ and $\sigma^2_e$ with the sum-to-zero constraint $\alpha_1 + \cdots + \alpha_{n_a}=0$.
+where we take $S_i \sim \mathsf{No}(0, \sigma^2_s)$ and $\varepsilon_{ij} \sim \mathsf{No}(0, \sigma^2_e)$ are random variables. We assume that the errors and random effects are independent from one another. The model **parameters** are $\mu$, $\alpha_1, \ldots, \alpha_{n_a}$, $\sigma^2_s$ and $\sigma^2_e$ with the sum-to-zero constraint $\alpha_1 + \cdots + \alpha_{n_a}=0$.
 
----
+Mixed models include, by definition, both random and fixed effects. Fixed effects are model parameters corresponding to overall average or difference in means for the experimental conditions. These are the terms for which we want to perform hypothesis tests and compute contrasts. Random effects, on the other hand, are typically used to model dependence (clusters), since observations from these factors will be correlated, and capture the variability arising from different units. 
 
-class: title title-7
-# Variance components
+Inclusion of random effects introduces positive correlation between measurements: specifically, the correlation between two observations from the same subject will be $\sigma^2_s/(\sigma^2_s+\sigma^2_e)$ and zero otherwise. This correlation structure is termed compound symmetry, since the correlation between measurements is the same regardless of the order of the observations. If there are multiple random effects, the structure will be more complicated.
 
-- The global average is $\mu$.
-- The variance of the response $Y_{ij}$ is $\sigma^2_s + \sigma^2_e$.
-- The **intra-class correlation** between observations in group $i$ is $\sigma^2_s/(\sigma^2_s + \sigma^2_e)$.
+Correlation has an important impact on testing, as was observed in Subsection \@ref(independence): failing to account for correlation leads to $p$-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.
 
-This dependence structure within group is termed **compound symmetry**.
+What is the purpose of the random effect? For one, it will allow us to predict the individual differences; with fixed effects and blocking, we would estimate the average for each subject despite the fact that this quantity is of no interest. Random effects also shrink effects toward the global mean and so these regularize estimation, the effect being more important when there are few measurements per person and estimated effects for subjects are based on a handful of measurements. 
 
----
-class: title title-7
-# Example: happy fakes
 
-An experiment conducted in a graduate course at HEC gathered electroencephalography (EEG) data.
+:::{ .example name="Happy fakes"}
+We consider an experiment conducted in a graduate course at HEC, *Information Technologies and Neuroscience*, in which PhD students gathered electroencephalography (EEG) data. The project focused on human perception of deepfake image created by a generative adversarial network: Amirabdolahian and Ali-Adeeb (2021) expected the attitude towards real and computer generated image of people smiling to change.
 
-The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. 
+The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. Repeated measures were collected on 9 participants given in the database `AA21`, who were expected to look at 120 faces. Not all participants completed the full trial, as can be checked by looking at the cross-tabs of the counts
 
-Repeated measures were collected on 9 participants, but only the average of the 34 replications is provided.
----
-# Experimental conditions
-
-.pull-left-wide[
-The control (`real`) is a true image, whereas the other were generated using a generative adversarial network (GAN) so be slightly smiling (`GAN_S`) or extremely smiling (`GAN_E`, looks more fake).
-
-Research question: do the GAN image trigger different reactions (pairwise difference with control)?
-]
-.pull-right-narrow[
-
-![](img/10/face_real.jpg)
-![](img/10/face_GAN_S.jpg)
-![](img/10/face_GAN_E.jpg)
-
-]
----
-
-class: title title-7
-# Models for repeated measures
-
-We have $r=1$ replication per participant for each condition. In this specific case, the repeated-measures ANOVA model amounts to a randomized block, i.e.,
-
-- `participant` (blocking factor)
-- `condition` (experimental factor)
-
-For balanced designs, we can use `aov` in **R**. 
-
-This approach has a drawback: variance estimates can be negative...
-
----
-.panelset[
-.panel[.panel-name[Load data]
-```{r interaction, echo = TRUE, eval = TRUE, cache = TRUE}
-library(tidyverse)
-library(lme4)
-library(lmerTest)
-options(contrasts = c("contr.sum", "contr.poly"))
-url <- "https://edsm.rbind.io/data/faces.csv"
-faces <- read.csv(url, header = TRUE, 
-                 stringsAsFactors = TRUE) %>%
-  mutate(id = factor(participant),
-         condition = relevel(condition, ref = "real"))
-# Declare participant ID as categorical
-```
-]
-.panel[.panel-name[Graph]
-.pull-left[
-```{r graph, echo = TRUE, eval = FALSE}
-library(tidyverse)
-ggplot(data = faces,
-       aes(x = id,
-           group = condition,
-           colour = condition,
-           y = amplitude)) +
-  geom_point()
-```
-]
-.pull-right[
-```{r graph2, echo = FALSE, eval = TRUE, out.width = '90%', fig.asp = 0.689, fig.width = 5}
-library(tidyverse)
-ggplot(data = faces,
-       aes(x = id,
-           group = condition,
-           colour = condition,
-           y = amplitude)) +
-  geom_point() +
-  theme_classic() +
-  theme(legend.position = "bottom")
+```{r}
+data(AA21, package = "hecedsm")
+xtabs(~stimulus + id, data = AA21)
 ```
 
-]
-]
-.panel[.panel-name[ANOVA]
-.small[
-```{r aovcall, eval = TRUE, echo = TRUE}
-anova_model <- aov(amplitude ~ condition + Error(id), data = faces)
+The experimental manipulation is encoded in the `stimuli`, with levels control (`R`) for real facial images, whereas the others were generated using a generative adversarial network (GAN) with be slightly smiling (`GAN1`) or extremely smiling (`GAN2`); the latter looks more fake. While the presentation order was randomized, the order of presentation of the faces within each type is recorded using the `epoch` variable: this allows us to measure the fatigue effect.
+
+Since our research question is whether images generated from generative adversarial networks trigger different reactions, we will be looking at pairwise differences with the control.
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-GANfaces
+#| fig-cap: "Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)."
+knitr::include_graphics(c("figures/face_real.jpg", 
+                          "figures/face_GAN_S.jpg",
+                          "figures/face_GAN_E.jpg"))
+```
+
+We could begin by grouping the data and computing the average for each experimental condition `stimulus` per participant and set `id` as blocking factor. The analysis of variance table obtained from `aov` would be correct, but fails to account for correlation. Unfortunately, the 
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+AA21_m <- AA21 |>
+  dplyr::group_by(id, stimulus) |>
+  dplyr::summarize(latency = mean(latency))
+fixedmod <- aov(latency ~ stimulus + Error(id), data = AA21_m)
+summary(fixedmod)
 # Random intercept for participant
-model <- lme4::lmer(amplitude ~ condition + (1 | id), 
-               data = faces)
-car::Anova(model, test = "F", type = 3)
+mixedmod <- lme4::lmer(latency ~ stimulus + (1 | id), 
+               data = AA21_m)
+car::Anova(mixedmod, test = "F", type = 3)
+```
+
+Since the design is balanced after averaging, we can use `aov` in **R**. This approach has a drawback, as variance components can be negative. While `aov` is fast, it only works for simple balanced designs. 
+If we use `aov`, we need to specify the subject id within `Error` term. 
+
+To fit one within-subject analysis of variance model, which is a special case of linear mixed model, we can use the `lmer` function in the `lme4` package. The random effect (a form of random intercept) will be specified using  `(1 | id)` to specify that the data from each participant are correlated and include conditionally for each participant. Note that the $p$-values are the same in both cases.
+
+We could try to keep all observations instead: this gives better evidence of some differences between the groups, although there is too much background noise to really distinguish differences between experimental conditions. We will come back to this design later.
+
+
+:::
+
+In mixed models, it is essential to determine the correct structure: identifiers of subjects must be declared as factors and the user must pay attention to random terms and how the models are fitted. Unfortunately, this requires some good knowledge of the machinery behind the tests and the model specification. Performing sanity checks to ensure the means and degrees of freedom match the intuition is necessary.
+
+With balanced data, the estimated marginal means coincide with the row averages. If we have a single replication or the average for each subject/condition, we could create a new column with the contrast and then fit a model with an intercept-only (global mean) to check whether the latter is zero. With 12 participants, we should thus expect our test statistic to have 11 degrees of freedom, since one unit is spent on estimating the mean parameter.
+
+Unfortunately, the `emmeans` package analysis for the mixed model or object fitted using `aov` will be incorrect. The `afex` package includes functionalities that are tailored for within-subject and between-subjects and has an interface with `emmeans`.
+
+```{r}
+afexmod <- afex::aov_car( 
+  latency ~ stimulus + Error(id/stimulus),
+  data = AA21_m)
+afexmod <- afex::aov_ez(
+  id = "id",           # subject id
+  dv = "latency",      # response variable
+  within = "stimulus", # within-subject factor
+  data = AA21,
+  fun_aggregate = mean)
+# Correct output
+afexmod |>
+  emmeans(spec = "stimulus") |> 
+  contrast(method = list("real vs GAN" = c(1, -0.5, -0.5)))
+# Incorrect output - note the degrees of freedom
+fixedmod |> 
+  emmeans(spec = "stimulus") |> 
+  contrast(method = list("real vs GAN" = c(1, -0.5, -0.5)))
+```
+
+
+```{r}
+options(contrasts = c("contr.sum", "contr.poly"))
+mixedmod <- lme4::lmer(latency ~ stimuli + (1 | id) + (1 |id:stimuli), 
+               data = AA21)
+car::Anova(mixedmod, test = "Chisq", type = 3)
+mixedmod |> emmeans::emmeans(specs = "stimuli")
+```
+
+
+```{r}
+ggplot(data = hecedsm::AA21,
+       aes(x = id,
+           group = stimulus,
+           colour = stimulus,
+           y = latency)) +
+    geom_point() + theme_classic()
 ```
 
 - No detectable difference between conditions.
