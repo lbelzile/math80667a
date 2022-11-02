@@ -18,7 +18,8 @@ rmd_files: [
   "05-interactions_multiway.Rmd",
   "06-blocking.Rmd",
   "07-power_effect.Rmd",
-  "10-reproducibility_crisis.Rmd",
+  "08-reproducibility_crisis.Rmd",
+  "09-repeated-mixed.Rmd",
   "references.Rmd"
 ]
 
