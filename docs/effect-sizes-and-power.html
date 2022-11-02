@@ -136,19 +136,125 @@ There are different estimators of <span class="math inline">\(d\)</span> dependi
 <span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/d_to_cles.html">d_to_cles</a></span><span class="op">(</span><span class="va">effect</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
+<div id="ratio-and-proportion-of-variance" class="section level3" number="7.1.2">
+<h3>
+<span class="header-section-number">7.1.2</span> Ratio and proportion of variance<a class="anchor" aria-label="anchor" href="#ratio-and-proportion-of-variance"><i class="fas fa-link"></i></a>
+</h3>
+<p>Another class of effect sizes are obtained by considering either the ratio of the variance due to an effect (say differences in means relative to the overall mean) relative to the background level of noise as measured by the variance.</p>
+<p>One common measure employed in software is Cohen’s <em>f</em> <span class="citation">(<a href="references.html#ref-Cohen:1988" role="doc-biblioref">Cohen 1988</a>)</span>, which for a one-way ANOVA (equal variance <span class="math inline">\(\sigma^2\)</span>) with more than two groups,
+<span class="math display">\[
+f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigma^2_{\text{effect}}}{\sigma^2},
+\]</span>
+a weighted sum of squared difference relative to the overall mean <span class="math inline">\(\mu\)</span>. <span class="math inline">\(\sigma^2_{\text{effect}}\)</span> is a measure of the variability that is due to the difference in mean, so standardizing it by the measurement variance gives us a ratio of variance with values higher than one indicating that more variability is explainable, leading to higher effect sizes. If the means of every subgroup is the same, then <span class="math inline">\(f=0\)</span>. For <span class="math inline">\(k=2\)</span> groups, Cohen’s <span class="math inline">\(f\)</span> and Cohen’s <span class="math inline">\(d\)</span> are related via <span class="math inline">\(f=d/2\)</span>.</p>
+<p>Cohen’s <span class="math inline">\(f\)</span> can be directly related to the behaviour of the <span class="math inline">\(F\)</span> statistic under an alternative, as explained in Section <a href="effect-sizes-and-power.html#power-oneway">7.2.1</a>. However, since the interpretation isn’t straightforward, we typically consider proportions of variance (rather than ratios of variance).</p>
+<p>To build such an effect size, we break down the variability that is explained by our experimental manipulation (<span class="math inline">\(\sigma^2_\text{effect}\)</span>), here denoted by effect, from the leftover unexplained part, or residual (<span class="math inline">\(\sigma^2_\text{resid}\)</span>). In a one-way analysis of variance, <span class="math display">\[\sigma^2_{\text{total}} = \sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}\]</span> and the percentage of variability explained by the <span class="math inline">\(\text{effect}\)</span>.
+<span class="math display">\[\eta^2 = \frac{\text{explained variability}}{\text{total variability}}= \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}} = \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{total}}}.\]</span>
+Simple arithmetic manipulations reveal that <span class="math inline">\(f^2 = \eta^2/(1-\eta^2)\)</span>, so we can relate any proportion of variance in terms of ratio and vice-versa.</p>
+<p>Such an effect size depends on unknown population quantities (the true means of each subgroup, the overall mean and the variance). There are multiple alternative estimators to estimate <span class="math inline">\(\eta^2\)</span>, and researchers are often carefree when reporting as to which is used. To disambiguate, I will put <span class="math inline">\(\hat{\eta}^2\)</span> to denote an estimator. To make an analogy, there are many different recipes (estimators) that can lead to a particular cake, but some may lead to a mixing that is on average too wet if they are not well calibrated.</p>
+<p>The default estimator for <span class="math inline">\(\eta^2\)</span> is the coefficient of determination of the linear regression, denoted <span class="math inline">\(\widehat{R}^2\)</span> or <span class="math inline">\(\widehat{\eta}^2\)</span>. The latter can be reconstructed from the analysis of variance table using the formula
+<span class="math display">\[
+\widehat{R}{}^2 = \frac{F\nu_1}{F\nu_1 + \nu_2}
+\]</span>
+where for the one-way ANOVA <span class="math inline">\(\nu_1 = K-1\)</span> and <span class="math inline">\(\nu_2 = n-K\)</span> are the degrees of freedom of a design with <span class="math inline">\(n\)</span> observations and <span class="math inline">\(K\)</span> experimental conditions.</p>
+<p>Unfortunately, <span class="math inline">\(\widehat{R}{}^2\)</span> is an upward biased estimator (too large on average), leading to optimistic measures. Another estimator of <span class="math inline">\(\eta^2\)</span> that is recommended in <span class="citation">Keppel and Wickens (<a href="references.html#ref-Keppel/Wickens:2004" role="doc-biblioref">2004</a>)</span> for power calculations is <span class="math inline">\(\widehat{\omega}^2\)</span>, which is
+<span class="math display">\[\widehat{\omega}^2 = \frac{\nu_1 (F-1)}{\nu_1(F-1)+n}.\]</span>
+Since the <span class="math inline">\(F\)</span> statistic is approximately 1 on average, this measure removes the mode. Both <span class="math inline">\(\widehat{\omega}^2\)</span> and <span class="math inline">\(\widehat{\epsilon}^2\)</span> have been reported to be less biased and thus preferable as estimators of the true proportion of variance <span class="citation">(<a href="references.html#ref-Lakens:2013" role="doc-biblioref">Lakens 2013</a>)</span>.</p>
+</div>
+<div id="partial-effects-and-variance-decomposition" class="section level3" number="7.1.3">
+<h3>
+<span class="header-section-number">7.1.3</span> Partial effects and variance decomposition<a class="anchor" aria-label="anchor" href="#partial-effects-and-variance-decomposition"><i class="fas fa-link"></i></a>
+</h3>
+<p>In a multiway design with several factors, we may want to estimate the effect of separate factors or interactions. In such cases, we can break down the variability explained by manipulations per effect. The effect size for such models are build by comparing the variance explained by the effect <span class="math inline">\(\sigma^2_{\text{effect}}\)</span>.</p>
+<p>For example, say we have a completely randomized balanced design with two factors <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and their interaction <span class="math inline">\(AB\)</span>. We can decompose the total variance as
+<span class="math display">\[\sigma^2_{\text{total}} = \sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}.\]</span>
+When the design is balanced, these variance terms can be estimated using the mean squared error from the analysis of variance table output. If the design is unbalanced, the sum of square decomposition is not unique and we will get different estimates when using Type II and Type III sum of squares.</p>
+<p>We can get formula similar to the one-sample case with now what are termed <strong>partial</strong> effect sizes, e.g.,
+<span class="math display">\[\widehat{\omega}^2_{\langle \text{effect} \rangle} = \frac{\text{df}_{\text{effect}}(F_{\text{effect}}-1)}{\text{df}_{\text{effect}}(F_{\text{effect}}-1) + n},\]</span>
+where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(F_\text{effect}\)</span> and the corresponding degrees of freedom could be the statistic associated to the main effects <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, or the interaction term <span class="math inline">\(AB\)</span>. In <strong>R</strong>, the <code>effectsize</code> package reports these estimates with one-sided confidence intervals derived using the pivot method <span class="citation">(<a href="references.html#ref-Steiger:2004" role="doc-biblioref">Steiger 2004</a>)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The confidence intervals are based on the &lt;span class="math inline"&gt;\(\mathsf{F}\)&lt;/span&gt; distribution, by changing the non-centrality parameter and inverting the distribution function (pivot method). This yields asymmetric intervals.&lt;/p&gt;'><sup>43</sup></a></p>
+<p>Software will typically return estimates of effect size alongside with the designs, but there are small things to keep in mind. One is that the decomposition of the variance is not unique with unbalanced data. The second is that, when using repeated measures and mixed models, the same notation is used to denote different quantities.</p>
+<p>Lastly, it is customary to report effect sizes that include the variability of blocking factors and random effects, leading to so-called <strong>generalized</strong> effect sizes. Include the variance of all blocking factors and interactions (only with the effect!) in the denominator.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Typically, there won’t be any interaction with blocking factors, but it there was for some reason, it should be included in the total.&lt;/p&gt;"><sup>44</sup></a></p>
+<p>For example, if <span class="math inline">\(A\)</span> is the experimental factor whose main effect is of interest, <span class="math inline">\(B\)</span> is a blocking factor and <span class="math inline">\(C\)</span> is another experimental factor, use
+<span class="math display">\[\eta_{\langle A \rangle}^2 = \frac{\sigma^2_A}{\sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}}.\]</span>
+as generalized partial effect. In <strong>R</strong>, most effect sizes for variance proportion have a <code>generalized</code> argument to which the vector of names of blocking factor can be passed. The reason for including blocking factors and random effects is that they would not necessarily be available in a replication.
+The correct effect size measure to calculate and to report depends on the design, and there are numerous estimators that can be utilized. Since they are related to one another, it is oftentimes possible to compute them directly from the output or convert. The formula highlight the importance of reporting (with enough precision) exactly the values of the test statistic.</p>
+</div>
 </div>
 <div id="power-1" class="section level2" number="7.2">
 <h2>
 <span class="header-section-number">7.2</span> Power<a class="anchor" aria-label="anchor" href="#power-1"><i class="fas fa-link"></i></a>
 </h2>
-<p>To calculate the power of a test, we need to single out a specific alternative hypothesis. In very special case, analytic derivations are possible. For a given alternative, we</p>
+<p>The power is the probability of correctly rejecting a null hypothesis when it isn’t true. However, whereas the null alternative corresponds to a single value (equality in mean), there are infinitely many alternatives…</p>
+<p>There is an intricate relation between effect size, power and sample size. Journals and grant agencies oftentimes require an estimate of the latter before funding a study, so one needs to ensure that the sample size is large enough to pick-up effects of scientific interest (good signal-to-noise), but also not overly large as to minimize time and money and make an efficient allocation of resources. This is Goldilock’s principle, but having more never hurts.</p>
+<p>If we run a pilot study to estimate the background level of noise and the estimated effect, or if we wish to perform a replication study, we will come up with a similar question in both cases: how many participants are needed to reliably detect such a difference? Setting a minimum value for the power (at least 80%, but typically 90% or 95% when feasible) ensures that the study is more reliable and ensures a high chance of success of finding an effect of at least the size specified. A power of 80% ensures that, on average, 4 in 5 experiments in which we study a phenomenon with the specified non-null effect size should lead to rejecting the null hypothesis.</p>
+<p>In order to better understand the interplay between power, effect size and sample size, we consider a theoretical example. The purpose of displaying the formula is to (hopefully) more transparently confirm some of our intuitions about what leads to higher power. There are many things that can influence the power:</p>
+<ul>
+<li>the experimental design: a blocking design or repeated measures tend to filter out some of the unwanted variability in the population, thus increasing power relative to a completely randomized design</li>
+<li>the background variability <span class="math inline">\(\sigma\)</span>:the noise level is oftentimes intrinsic to the measurement. It depends on the phenomenon under study, but instrumentation and the choice of scale, etc. can have an impact. Running experiments in a controlled environment helps reduce this, but researchers typically have limited control on the variability inherent to each observation.</li>
+<li>the sample size: as more data are gathered, information accumulates. The precision of measurements (e.g., differences in mean) is normally determined by the group with the smallest sample size, so (approximate) balancing increases power if the variance in each group is the same.</li>
+<li>the size of the effect: the bigger the effect, the easier it is to accurately detect (it’s easier to spot an elephant than a mouse hiding in a classroom).</li>
+<li>the level of the test, <span class="math inline">\(\alpha\)</span>: if we increase the rejection region, we technically increase power when we run an experiment under an alternative regime. However, the level is oftentimes prespecified to avoid type I errors.
+We may consider multiplicity correction within the power function, such as Bonferonni’s method, which is equivalent to reducing <span class="math inline">\(\alpha\)</span>.</li>
+</ul>
+<div id="power-oneway" class="section level3" number="7.2.1">
+<h3>
+<span class="header-section-number">7.2.1</span> Power for one-way ANOVA<a class="anchor" aria-label="anchor" href="#power-oneway"><i class="fas fa-link"></i></a>
+</h3>
+<p>To fix ideas, we consider the one-way analysis of variance model. In the usual setup, we consider <span class="math inline">\(K\)</span> experimental conditions with <span class="math inline">\(n_k\)</span> observations in group <span class="math inline">\(k\)</span>, whose population average we denote by <span class="math inline">\(\mu_k\)</span>. We can parametrize the model in terms of the overall sample average,
+<span class="math display">\[\begin{align*}
+\mu = \frac{1}{n}\sum_{j=1}^K\sum_{i=1}^{n_j} \mu_j = \frac{1}{n}\sum_{j=1}^K n_j \mu_j,
+\end{align*}\]</span>
+where <span class="math inline">\(n=n_1 + \cdots +n_K\)</span> is the total sample size.
+The <span class="math inline">\(F\)</span>-statistic of the one-way ANOVA is
+<span class="math display">\[\begin{align*}
+F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
+\end{align*}\]</span>
+The null distribution is <span class="math inline">\(F(K-1, n-K)\)</span>. Our interest is in understanding how the <em>F</em>-statistic behaves under an alternative.</p>
+<p>During the construction, we stressed out that the denominator is an estimator of <span class="math inline">\(\sigma^2\)</span> under both the null and alternative. What happens to the numerator? We can write the population average for
+<span class="math display">\[
+\mathsf{E}(\text{between sum of squares}) = \sigma^2\{(K-1) + \Delta\}.
+\]</span>
+where
+<span class="math display">\[
+\Delta = \dfrac{\sum_{j=1}^K n_j(\mu_j - \mu)^2}{\sigma^2} = nf^2.
+\]</span>
+with <span class="math inline">\(f^2\)</span> the square of Cohen’s <span class="math inline">\(f\)</span>. Under the null hypothesis, <span class="math inline">\(\mu_j=\mu\)</span> for <span class="math inline">\(j=1, \ldots, K\)</span> and <span class="math inline">\(\Delta=0\)</span>, but if some groups have different average the displacement will be non-zero. The greater <span class="math inline">\(\Delta\)</span>, the further the mode (peak of the distribution) is from unity and the greater the power.</p>
+<p>Closer examination reveals that <span class="math inline">\(\Delta\)</span> increases with <span class="math inline">\(n_j\)</span> (sample size) and with the true squared mean difference <span class="math inline">\((\mu_j-\mu)^2\)</span> increases effect size represented by the difference in mean, but decreases as the observation variance increases.</p>
+<p>Under the alternative, the distribution of the <span class="math inline">\(F\)</span> statistic is a noncentral Fisher distribution, denoted <span class="math inline">\(\mathsf{F}(\nu_1, \nu_2, \Delta)\)</span> with degrees of freedom <span class="math inline">\(\nu_1\)</span> and <span class="math inline">\(\nu_2\)</span> and noncentrality parameter <span class="math inline">\(\Delta\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Note that the &lt;span class="math inline"&gt;\(F(\nu_1, \nu_2)\)&lt;/span&gt; distribution is indistinguishable from &lt;span class="math inline"&gt;\(\chi^2(\nu_1)\)&lt;/span&gt; for &lt;span class="math inline"&gt;\(\nu_2\)&lt;/span&gt; large. A similar result holds for tests with &lt;span class="math inline"&gt;\(\chi^2\)&lt;/span&gt; null distributions.&lt;/p&gt;'><sup>45</sup></a> To calculate the power of a test, we need to single out a specific alternative hypothesis.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:powercurve"></span>
+<img src="07-power_effect_files/figure-html/powercurve-1.png" alt="Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter $\Delta=3$. The area in white under the curve denotes the power under this alternative." width="80%"><p class="caption">
+Figure 7.2: Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter <span class="math inline">\(\Delta=3\)</span>. The area in white under the curve denotes the power under this alternative.
+</p>
+</div>
+<p>The plot in Figure <a href="effect-sizes-and-power.html#fig:powercurve">7.2</a> shows the null (full line) distribution and the true distribution (dashed line) for a particular alternative. The noncentral <span class="math inline">\(\mathsf{F}\)</span> is shifted to the right and right skewed, so the mode (peak) is further away from 1.</p>
+<p>Given a value of <span class="math inline">\(\Delta=nf^2\)</span> and information about the effect of interest (degrees of freedom of the effect and the residuals), we can compute the tail probability as follows</p>
+<ol style="list-style-type: decimal">
+<li>Compute the cutoff point: the value under <span class="math inline">\(\mathscr{H}_0\)</span> that leads to rejection at level <span class="math inline">\(\alpha\)</span>
+</li>
+<li>Compute probability below the alternative curve, from the cutoff onwards.</li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cutoff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">qf</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fl">1</span><span class="op">-</span><span class="va">alpha</span>, df1 <span class="op">=</span> <span class="va">df1</span>, df2 <span class="op">=</span> <span class="va">df2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Fdist.html">pf</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">cutoff</span>,  df1 <span class="op">=</span> <span class="va">df1</span>, df2 <span class="op">=</span> <span class="va">df2</span>, </span>
+<span>    ncp <span class="op">=</span> <span class="va">Delta</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>In practice, a software will return these quantities and inform us about the power. Note that these results are trustworthy provided the model assumptions are met, otherwise they may be misleading.</p>
+<p>The most difficult question when trying to estimate sample size for a study is determining which value to use for the effect size. One could opt for a value reported elsewhere for a similar scale to estimate the variability and provide educated guesses for the mean differences. Another option is to run a pilot study and use the resulting estimates to inform about sensible values, perhaps using confidence intervals to see the range of plausible effect sizes.</p>
+<p>Reliance on estimated effect sizes reported in the literature is debatable: many such effects are inflated as a result of the file-drawer problem and, as such, can lead to unreasonably high expectations about power.</p>
+<p>The <code>WebPower</code> package in <strong>R</strong> offers a comprehensive solution for conducting power studies, as is the free software <a href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.</p>
+</div>
+<div id="power-in-complex-designs" class="section level3" number="7.2.2">
+<h3>
+<span class="header-section-number">7.2.2</span> Power in complex designs<a class="anchor" aria-label="anchor" href="#power-in-complex-designs"><i class="fas fa-link"></i></a>
+</h3>
+<p>In cases where an analytic derivations isn’t possible, we can resort to simulations to approximate the power. For a given alternative, we</p>
 <ul>
 <li>simulate repeatedly samples from the model from the hypothetical alternative world</li>
 <li>we compute the test statistic for each of these new samples</li>
 <li>we transform these to the associated <em>p</em>-values based on the postulated null hypothesis.</li>
 </ul>
-<p>At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level <span class="math inline">\(\alpha\)</span>, namely the percentage of <em>p</em>-values smaller than <span class="math inline">\(\alpha\)</span>.</p>
+<p>At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level <span class="math inline">\(\alpha\)</span>, namely the percentage of <em>p</em>-values smaller than <span class="math inline">\(\alpha\)</span>. We can vary the sample size and see how many observations we need per group to achieve the desired level of power.</p>
 
+</div>
 </div>
 </div>
 
@@ -160,9 +266,18 @@ There are different estimators of <span class="math inline">\(d\)</span> dependi
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#effect-sizes-and-power"><span class="header-section-number">7</span> Effect sizes and power</a></li>
 <li>
-<a class="nav-link" href="#effect-sizes"><span class="header-section-number">7.1</span> Effect sizes</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#standardized-mean-differences"><span class="header-section-number">7.1.1</span> Standardized mean differences</a></li></ul>
+<a class="nav-link" href="#effect-sizes"><span class="header-section-number">7.1</span> Effect sizes</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#standardized-mean-differences"><span class="header-section-number">7.1.1</span> Standardized mean differences</a></li>
+<li><a class="nav-link" href="#ratio-and-proportion-of-variance"><span class="header-section-number">7.1.2</span> Ratio and proportion of variance</a></li>
+<li><a class="nav-link" href="#partial-effects-and-variance-decomposition"><span class="header-section-number">7.1.3</span> Partial effects and variance decomposition</a></li>
+</ul>
 </li>
-<li><a class="nav-link" href="#power-1"><span class="header-section-number">7.2</span> Power</a></li>
+<li>
+<a class="nav-link" href="#power-1"><span class="header-section-number">7.2</span> Power</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#power-oneway"><span class="header-section-number">7.2.1</span> Power for one-way ANOVA</a></li>
+<li><a class="nav-link" href="#power-in-complex-designs"><span class="header-section-number">7.2.2</span> Power in complex designs</a></li>
+</ul>
+</li>
 </ul>
 
       <div class="book-extra">
