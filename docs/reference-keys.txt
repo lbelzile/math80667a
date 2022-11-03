@@ -99,6 +99,9 @@ fig:reprozscores
 fig:reprotweetexcelgenes
 fig:naturereportstat
 fig:samplingbias
+fig:fig-longvswide
+exm:unlabeled-div-23
+fig:fig-GANfaces
 introduction
 study-type
 terminology
@@ -160,3 +163,7 @@ the-garden-of-forking-paths
 selective-reporting
 non-representative-samples
 summary
+repeated-measures-and-multivariate-models
+repeated-measures
+contrasts-1
+model-assumptions-1

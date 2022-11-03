@@ -19,7 +19,7 @@ rmd_files: [
   "06-blocking.Rmd",
   "07-power_effect.Rmd",
   "08-reproducibility_crisis.Rmd",
-  "09-repeated-mixed.Rmd",
+  "09-repeated.Rmd",
   "references.Rmd"
 ]
 

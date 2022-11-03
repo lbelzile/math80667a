@@ -1,0 +1,80 @@
+# Introduction to mixed models
+
+
+
+## Multivariate analysis of variance
+
+WORK IN PROGRESS
+
+Multivariate analysis of variance models fitted using `lm` with `anova` and `manova` commands.
+
+Sum of square decomposition and relation with one-way ANOVA. Different potential statistics arising from the definition.
+
+Follow-up discriminant analysis
+
+Power requirements 
+
+Model assumptions (multivariate normality): graphical checks and tests. Requirements for sample size being larger for vector mean than univariate models.
+
+Example from hecedsm::AVC02 and hecedsm::hecedsm::BSJ92
+
+
+
+
+What is the purpose of the random effect? For one, it will allow us to predict the individual differences; with fixed effects and blocking, we would estimate the average for each subject despite the fact that this quantity is of no interest. Random effects also shrink effects toward the global mean and so these regularize estimation, the effect being more important when there are few measurements per person and estimated effects for subjects are based on a handful of measurements. 
+
+
+## Random effects
+
+There is no consensus as to what constitutes a random effect.
+
+Gelman (2005) lists a handful of definitions:
+
+> When a sample exhausts the population, the corresponding variable is fixed; when the sample is a small (i.e., negligible) part of the population the corresponding variable is random [Green and Tukey (1960)].
+
+> Effects are fixed if they are interesting in themselves or random if there is interest in the underlying population (e.g., Searle, Casella and McCulloch [(1992), Section 1.4])
+
+
+
+To fix ideas, we consider a one-way ANOVA with a random effect. As before, we have one experimental factor $A$ with $n_a$ levels, which we write
+$$\begin{align*}\underset{\text{response}\vphantom{l}}{Y_{ij}} = \underset{\text{global mean}}{\mu_{\vphantom{j}}} + \underset{\text{mean difference}}{\alpha_j} + \underset{\text{random effect for subject}}{S_{i\vphantom{j}}} + \underset{\text{error}\vphantom{l}}{\varepsilon_{ij}}\end{align*}$$
+where we take $S_i \sim \mathsf{No}(0, \sigma^2_s)$ and $\varepsilon_{ij} \sim \mathsf{No}(0, \sigma^2_e)$ are random variables. We assume that the errors and random effects are independent from one another. The model **parameters** are $\mu$, $\alpha_1, \ldots, \alpha_{n_a}$, $\sigma^2_s$ and $\sigma^2_e$ with the sum-to-zero constraint $\alpha_1 + \cdots + \alpha_{n_a}=0$.
+
+Mixed models include, by definition, both random and fixed effects. Fixed effects are model parameters corresponding to overall average or difference in means for the experimental conditions. These are the terms for which we want to perform hypothesis tests and compute contrasts. Random effects, on the other hand, are typically used to model dependence (clusters), since observations from these factors will be correlated, and capture the variability arising from different units. 
+
+Inclusion of random effects introduces positive correlation between measurements: specifically, the correlation between two observations from the same subject will be $\sigma^2_s/(\sigma^2_s+\sigma^2_e)$ and zero otherwise. This correlation structure is termed compound symmetry, since the correlation between measurements is the same regardless of the order of the observations. If there are multiple random effects, the structure will be more complicated.
+
+```{r}
+# Random intercept for participant
+mixedmod <- lme4::lmer(
+  latency ~ stimulus + (1 | id), 
+  data = AA21_m)
+car::Anova(mixedmod, test = "F", type = 3)
+```
+
+
+
+In mixed models, it is essential to determine the correct structure: identifiers of subjects must be declared as factors and the user must pay attention to random terms and how the models are fitted. Unfortunately, this requires some good knowledge of the machinery behind the tests and the model specification. Performing sanity checks to ensure the means and degrees of freedom match the intuition is necessary.
+
+
+
+```{r}
+options(contrasts = c("contr.sum", "contr.poly"))
+mixedmod <- lme4::lmer(latency ~ stimuli + (1 | id) + (1 |id:stimuli), 
+               data = AA21)
+car::Anova(mixedmod, test = "Chisq", type = 3)
+mixedmod |> emmeans::emmeans(specs = "stimuli")
+```
+
+
+```{r}
+ggplot(data = hecedsm::AA21,
+       aes(x = id,
+           group = stimulus,
+           colour = stimulus,
+           y = latency)) +
+    geom_point() + theme_classic()
+```
+
+
+

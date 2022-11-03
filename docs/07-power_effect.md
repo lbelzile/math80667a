@@ -207,3 +207,17 @@ In cases where an analytic derivations isn't possible, we can resort to simulati
 
 At the end, we calculate the proportion of tests that lead to a rejection of the null hypothesis at level $\alpha$, namely the percentage of *p*-values smaller than $\alpha$. We can vary the sample size and see how many observations we need per group to achieve the desired level of power.
 
+
+
+:::keyidea
+
+**Summary**:
+
+* Effect sizes are used to provide a standardized measure of the strength of a result, independent of the design and the sample size.
+* There are two classes: standardized differences and proportions of variance.
+* Multiple estimators exists: report the latter along with the software used to compute confidence intervals.
+* The adequate measure of variability to use for the effect size depends on the design: we normally include the variability of blocking factors and residual variance.
+* Given a design, we can deduce either the sample size, the power or the effect size from the other two metrics. This allows us to compute sample size for a study or replication.
+
+:::
+

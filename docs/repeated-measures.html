@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>9 Repeated measures | Experimental Design and Statistical Methods</title>
+<meta name="author" content="Léo Belzile">
+<meta name="description" content="So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="9 Repeated measures | Experimental Design and Statistical Methods">
+<meta property="og:type" content="book">
+<meta property="og:description" content="So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="9 Repeated measures | Experimental Design and Statistical Methods">
+<meta name="twitter:description" content="So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Experimental Design and Statistical Methods</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">9</span> Repeated measures</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/lbelzile/math80667a">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="repeated-measures" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> Repeated measures<a class="anchor" aria-label="anchor" href="#repeated-measures"><i class="fas fa-link"></i></a>
+</h1>
+<p>So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments, the latter being presented in random order to avoid confounding. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions.</p>
+<p>For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes.</p>
+<p>In a between-subjects design, subjects are <strong>nested</strong> within experimental condition, as a subject can only be assigned a single treatment. In a within-subjects designs, experimental factors and subjects are <strong>crossed</strong>: it is possible to observed all combination of subject and experimental conditions.</p>
+<p>By including multiple conditions, we can filter out effect due to subject, much like with blocking: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.</p>
+<p>There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming more fluent as manipulations go on), period effects (practice of fatigue, e.g., leading to a decrease in acuity), permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).</p>
+<p>To minimize potential biases, there are multiple strategies one can use. While can randomize the order of treatment conditions among subjects to reduce confounding, or use a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.</p>
+<p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation. Multivariate analysis of variance (MANOVA) leads to procedures that are analogous to univariate analysis of variance, but we now need to estimate correlation and variance parameters for each measurement separately and there are multiple potential statistics that can be defined for testing effects. While we can benefit from the correlation and find differences that wouldn’t be detected from univariate models, the additional parameters to estimate lead to a loss of power. Finally, the most popular method nowadays for handling repeated measures is to fit a mixed model, with random effects accounting to subject-specific characteristics. By doing so, we assume that the levels of a factor (here the subject identifiers) form a random sample from a large population. These models can be difficult to fit and one needs to take great care in specifying the model.</p>
+<div id="data-format" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Data format<a class="anchor" aria-label="anchor" href="#data-format"><i class="fas fa-link"></i></a>
+</h2>
+<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. Figure <a href="repeated-measures.html#fig:fig-longvswide">9.1</a> illustrates the difference between the two formats.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-longvswide"></span>
+<img src="figures/original-dfs-tidy.png" alt="Long versus wide-format for data tables (illustration by Garrick Aden-Buie)." width="85%"><p class="caption">
+Figure 9.1: Long versus wide-format for data tables (illustration by Garrick Aden-Buie).
+</p>
+</div>
+<p>Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant.</p>
+<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed Subsection <a href="CRT.html#independence">3.4.4</a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 9.1  (Happy fakes) </strong></span>We consider an experiment conducted in a graduate course at HEC, <em>Information Technologies and Neuroscience</em>, in which PhD students gathered electroencephalography (EEG) data. The project focused on human perception of deepfake image created by a generative adversarial network: Amirabdolahian and Ali-Adeeb (2021) expected the attitude towards real and computer generated image of people smiling to change.</p>
+<p>The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. Repeated measures were collected on 9 participants given in the database <code>AA21</code>, who were expected to look at 120 faces. Not all participants completed the full trial, as can be checked by looking at the cross-tabs of the counts</p>
+<pre><code>#&gt;         id
+#&gt; stimulus  1  2  3  4  5  6  7  8  9 10 11 12
+#&gt;     real 30 32 34 32 38 29 36 36 40 30 39 33
+#&gt;     GAN1 32 31 40 33 38 29 39 31 39 28 35 34
+#&gt;     GAN2 31 33 37 34 38 29 34 36 40 33 35 32</code></pre>
+<p>The experimental manipulation is encoded in the <code>stimuli</code>, with levels control (<code>real</code>) for real facial images, whereas the others were generated using a generative adversarial network (GAN) with be slightly smiling (<code>GAN1</code>) or extremely smiling (<code>GAN2</code>); the latter looks more fake. While the presentation order was randomized, the order of presentation of the faces within each type is recorded using the <code>epoch</code> variable: this allows us to measure the fatigue effect.</p>
+<p>Since our research question is whether images generated from generative adversarial networks trigger different reactions, we will be looking at pairwise differences with the control.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-GANfaces"></span>
+<img src="figures/face_real.png" alt="Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)." width="25%"><img src="figures/face_GAN_S.png" alt="Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)." width="25%"><img src="figures/face_GAN_E.jpg" alt="Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)." width="25%"><p class="caption">
+Figure 9.2: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right).
+</p>
+</div>
+<p>We could begin by grouping the data and computing the average for each experimental condition <code>stimulus</code> per participant and set <code>id</code> as blocking factor. The analysis of variance table obtained from <code>aov</code> would be correct, but fails to account for correlation.</p>
+<p>The one-way analysis of variance with <span class="math inline">\(n_s\)</span> subjects, each of which was exposed to the <span class="math inline">\(n_a\)</span> experimental conditions, can be written
+<span class="math display">\[\begin{align*}\underset{\text{response}\vphantom{l}}{Y_{ij}} = \underset{\text{global mean}}{\mu_{\vphantom{j}}} + \underset{\text{mean difference}}{\alpha_j} + \underset{\text{subject difference}}{s_{i\vphantom{j}}} + \underset{\text{error}\vphantom{l}}{\varepsilon_{ij}}\end{align*}\]</span></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Compute mean for each subject + </span></span>
+<span><span class="co"># experimental condition subgroup</span></span>
+<span><span class="va">AA21_m</span> <span class="op">&lt;-</span> <span class="va">AA21</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">stimulus</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>latency <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">latency</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Use aov for balanced sample</span></span>
+<span><span class="va">fixedmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span></span>
+<span>  <span class="va">latency</span> <span class="op">~</span> <span class="va">stimulus</span> <span class="op">+</span> <span class="fu">Error</span><span class="op">(</span><span class="va">id</span><span class="op">/</span><span class="va">stimulus</span><span class="op">)</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">AA21_m</span><span class="op">)</span></span>
+<span><span class="co"># Print ANOVA table</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fixedmod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Error: id</span></span>
+<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)</span></span>
+<span><span class="co">#&gt; Residuals 11    188    17.1               </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Error: id:stimulus</span></span>
+<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)</span></span>
+<span><span class="co">#&gt; stimulus   2    1.9    0.97     0.5   0.62</span></span>
+<span><span class="co">#&gt; Residuals 22   43.0    1.96</span></span></code></pre></div>
+<p>Since the design is balanced after averaging, we can use <code>aov</code> in <strong>R</strong>: we need to specify the subject identifier within <code>Error</code> term. This approach has a drawback, as variance components can be negative if the variability due to subject is negligible. While <code>aov</code> is fast, it only works for simple balanced designs.</p>
+</div>
+</div>
+<div id="contrasts-1" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Contrasts<a class="anchor" aria-label="anchor" href="#contrasts-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>With balanced data, the estimated marginal means coincide with the row averages. If we have a single replication or the average for each subject/condition, we could create a new column with the contrast and then fit a model with an intercept-only (global mean) to check whether the latter is zero. With 12 participants, we should thus expect our test statistic to have 11 degrees of freedom, since one unit is spent on estimating the mean parameter and we have 12 participants.</p>
+<p>Unfortunately, the <code>emmeans</code> package analysis for object fitted using <code>aov</code> will be incorrect: this can be seen by passing a contrast vector and inspecting the degrees of freedom. The <code>afex</code> package includes functionalities that are tailored for within-subject and between-subjects and has an interface with <code>emmeans</code>.</p>
+<p>The <code>afex</code> package has different functions for computing the within-subjects design and the <code>aov_ez</code> specification, which allow people to list within and between-subjects factor separately with subject identifiers may be easier to understand. It also has an argument, <code>fun_aggregate</code>, to automatically average replications.</p>
+<pre><code>#&gt; $emmeans
+#&gt;  stimulus emmean    SE df lower.CL upper.CL
+#&gt;  real      -10.8 0.942 11    -12.8    -8.70
+#&gt;  GAN1      -10.8 0.651 11    -12.3    -9.40
+#&gt;  GAN2      -10.3 0.662 11    -11.8    -8.85
+#&gt; 
+#&gt; Confidence level used: 0.95 
+#&gt; 
+#&gt; $contrasts
+#&gt;  contrast    estimate    SE df t.ratio p.value
+#&gt;  real vs GAN   -0.202 0.552 11  -0.366  0.7210
+#&gt; $emmeans
+#&gt;  stimulus emmean    SE   df lower.CL upper.CL
+#&gt;  real      -10.8 0.763 16.2    -12.4    -9.15
+#&gt;  GAN1      -10.8 0.763 16.2    -12.4    -9.21
+#&gt;  GAN2      -10.3 0.763 16.2    -11.9    -8.69
+#&gt; 
+#&gt; Warning: EMMs are biased unless design is perfectly balanced 
+#&gt; Confidence level used: 0.95 
+#&gt; 
+#&gt; $contrasts
+#&gt;  contrast    estimate    SE df t.ratio p.value
+#&gt;  real vs GAN   -0.202 0.494 22  -0.409  0.6870</code></pre>
+</div>
+<div id="model-assumptions-1" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>The validity of the <span class="math inline">\(F\)</span> statistic null distribution relies on the model having the correct structure.</p>
+<p>In repeated-measure analysis of variance, we assume again that each variance has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.&lt;/p&gt;"><sup>1</sup></a></p>
+<p>What if the measurements have unequal variance or different correlations? We could fit a fully multivariate model that accounts for the
+While this is automatic with two measurements (as there is a single correlation), we can check this by comparing the fit of a model with an unstructured covariance (difference variances for each and correlations for each pair of variable)</p>
+<p>Since we care only about differences in treatment, can get away with a weaker assumption than compound symmetry (equicorrelation) by relying instead on <em>sphericity</em>, which holds if the variance of the difference between treatment is constant.</p>
+<p>The most popular approach to handling correlation in tests is a two-stage approach: first, check for sphericity (using, e.g., Mauchly’s test of sphericity). If the null hypothesis of sphericity is rejected, one can use a correction for the <span class="math inline">\(F\)</span> statistic by modifying the parameters of the Fisher <span class="math inline">\(\mathsf{F}\)</span> null distribution used as benchmark.</p>
+<p>An idea due to Box is to correct the degrees of freedom of the <span class="math inline">\(\mathsf{F}(\nu_1, \nu_2)\)</span> distribution by multiplying them by a common factor <span class="math inline">\(\epsilon&lt;1\)</span> and use <span class="math inline">\(\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)\)</span>. Since the <span class="math inline">\(F\)</span> statistic is a ratio of variances, the <span class="math inline">\(\epsilon\)</span> term would cancel. Using the scaled <span class="math inline">\(\mathsf{F}\)</span> distribution leads to larger <span class="math inline">\(p\)</span>-values, thus accounting for the correlation.</p>
+<p>There are three widely used corrections: Greenhouse–Geisser, Huynh–Feldt and Box correction, which divides by <span class="math inline">\(\nu_1\)</span> both degrees of freedom and gives a very conservative option. The Huynh–Feldt method is reported to be more powerful so should be preferred, but the estimated value of <span class="math inline">\(\epsilon\)</span> can be larger than 1.</p>
+<p>Using the <code>afex</code> functions, we get the result for Mauchly’s test of sphericity and the <span class="math inline">\(p\)</span> values from using either correction method</p>
+<pre><code>#&gt; 
+#&gt; Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
+#&gt; 
+#&gt;             Sum Sq num Df Error SS den Df F value  Pr(&gt;F)    
+#&gt; (Intercept)   4073      1      188     11   238.6 8.4e-09 ***
+#&gt; stimulus         2      2       43     22     0.5    0.62    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; 
+#&gt; Mauchly Tests for Sphericity
+#&gt; 
+#&gt;          Test statistic p-value
+#&gt; stimulus          0.678   0.143
+#&gt; 
+#&gt; 
+#&gt; Greenhouse-Geisser and Huynh-Feldt Corrections
+#&gt;  for Departure from Sphericity
+#&gt; 
+#&gt;          GG eps Pr(&gt;F[GG])
+#&gt; stimulus  0.757       0.57
+#&gt; 
+#&gt;          HF eps Pr(&gt;F[HF])
+#&gt; stimulus  0.851      0.587</code></pre>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Experimental Design and Statistical Methods</strong>" was written by Léo Belzile. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
