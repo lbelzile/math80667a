@@ -95,7 +95,7 @@ Since the design is balanced after averaging, we can use `aov` in **R**: we need
 
 :::
 
-## Contrasts 
+### Contrasts 
 
 With balanced data, the estimated marginal means coincide with the row averages. If we have a single replication or the average for each subject/condition, we could create a new column with the contrast and then fit a model with an intercept-only (global mean) to check whether the latter is zero. With 12 participants, we should thus expect our test statistic to have 11 degrees of freedom, since one unit is spent on estimating the mean parameter and we have 12 participants.
 
@@ -141,7 +141,10 @@ fixedmod |>
     contr = cont_vec)
 ```
 
-## Model assumptions
+:::
+
+
+### Sphericity assumption
 
 The validity of the $F$ statistic null distribution relies on the model having the correct structure.
 
@@ -165,7 +168,104 @@ Using the `afex` functions, we get the result for Mauchly's test of sphericity a
 summary(afexmod)
 ```
 
+:::{ .example name="Visual acuity"}
 
+We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection.  The mixed analysis of variance includes the experimental factors `adaptation` (2 levels, within), `fontsize` (4 levels, within), `position` (5 levels, within) and visual  `acuity` (2 levels, within). There are a total of 1760 measurements for 44 participants in `LBJ17_S1A`, balanced.
+The within-subject factors give a total of 40 measurements ($2 \times 4 \times 5$) per participant; all of these factors are crossed and we can estimate interactions for them. The subjects are nested within visual acuity groups, The participants were dichotomized in two groups based on their visual acuity, obtained from preliminary checks, using a median split.
+
+To fit the model, we rely on the `aov_ez` function from `afex`. By default, the latter includes all interactions.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+LBJ_mod <- afex::aov_ez(
+  id = "id",     # subject id
+  dv = "nerror", # response
+  between = "acuity",
+  within = c("adaptation",
+             "fontsize", 
+             "position"),
+  data = hecedsm::LBJ17_S1A)
+anova(LBJ_mod,  # model
+      correction = "none", # no correction for sphericity
+      es = "pes") 
+#partial eta-square for effect sizes (es)
+```
+
+This is the most complicated model we tested so far: there are four experimental factor being manipulated at once, and all interactions of order two, three and four are included!
+
+The fourth order interaction isn't statistically significant: this means that we can legitimately marginalize over and look at each of the four three-way ANOVA designs in turn. We can also see that the third order interaction `adaptation:fontsize:position` and `acuity:adaptation:position ` are not really meaningful. 
+
+The following paragraph is technical and can be skipped. One difficult bit with designs including both within-subject and between-subject factors is the degrees of freedom and the correct sum of square terms to use to calculate the $F$ statistics for each hypothesis of interest. The correct setup is to use the next sum of square (and the associated degrees of freedom) from this. For any main effect or interaction, we count the number of instances of this particular (e.g., 10 for the interaction between position and adaptation). We subtract the number of mean parameter used to estimate means and differences in mean (1 global mean, 4 means for position, 1 for adaptation), which gives $4=10-6$ degrees of freedom. Next, this term is compared to the mean square which contains only subject (here via acuity levels, since subjects are nested within acuity) and the corresponding variables; the correct mean square is for `acuity:adaptation:position`. In the balanced design setting, this can be formalized using Hasse diagram [@Oehlert:2010]. 
+
+We can produce an interaction plot to see what comes out: since we can't draw in four dimensions, we map visual acuity and adaptation level to panels and use different colours for the position. The figure looks different altogether from the paper because their $y$ axis is flipped.
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-LBJ-interactionplot
+# Quick and dirty ggplot
+afex::afex_plot(object = LBJ_mod, 
+          x = "fontsize", 
+          trace = "position",
+          panel = c("acuity","adaptation"),
+          mapping = c("color", "linetype"), 
+          error = "none") +
+    theme_classic() +
+    theme(legend.position = "bottom") +
+    labs(x = "font size",
+         subtitle = "number of correct words",
+         y = "")
+# Seems flipped relative to the paper
+```
+
+:::
+
+## Multivariate analysis of variance
+
+The second paradigm for modelling is to specify that the response from each subject is in fact a multivariate object: we can combine all measurements from a given individual in a vector $\boldsymbol{Y}$. In the example with the happy fakes, this would be the tuple of measurements for (`real`, `GAN1`, `GAN2`).
+
+The multivariate analysis of variance model is designed by assuming observations follow a (multivariate) normal distribution with mean vector $\boldsymbol{\mu}_j$ in group $j$ and common covariance matrix $\boldsymbol{\Sigma}$ and comparing means between groups. As in univariate analysis of variance, the multivariate normal assumption holds approximately by virtue of the central limit theorem in large samples, but the convergence is slower and larger numbers are needed to ensure this is valid.
+
+The difference with the univariate approach is now that we will compare a global mean vector $\boldsymbol{\mu}$ between comparisons. In the one-way analysis of variance model with an experimental factor having $K$ levels and a balanced sample $n_g$ observations per group and $n=n_gK$ total observations, we assume that each group has average $\boldsymbol{\mu}_k$ $(k=1, \ldots, K)$, which we can estimate using only the observations from that group. Under the null hypothesis, all groups have the same mean, so the estimator is the overall mean $\boldsymbol{\mu}$ combining all $n$ observations.
+
+The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics.  Wilk's $\Lambda$ is the most popular choice. Another common choice, which leads to a statistic giving lower power but more robust to departure from model assumptions is Pillai's trace.
+
+The MANOVA model assumes that the covariance matrices are the same within each experimental condition. Under normality assumption, we can use Box's $M$ statistic to test the hypothesis.
+
+### Mathematical complement
+
+
+This section is technical and can be omitted. Analogous to the univariate case, we can decompose the variance estimator in terms of within, between and total variance. Let $\boldsymbol{Y}_{ik}$ denote the response vector for the $i$th observation of group $k$; then, we can decompose the variance as
+\begin{align*} &
+\underset{\text{total variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})^\top} \\\qquad &= \underset{\text{within variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)^\top} + \underset{\text{between variance}}{\sum_{k=1}^K n_g(\boldsymbol{\mu}_{k} - \widehat{\boldsymbol{\mu}})(\widehat{\boldsymbol{\mu}}_k - \widehat{\boldsymbol{\mu}})^\top}
+\end{align*}
+defining covariance matrix estimators. If we write $\widehat{\boldsymbol{\Sigma}}_T$, $\widehat{\boldsymbol{\Sigma}}_W$, and $\widehat{\boldsymbol{\Sigma}}_B$ for respectively the total, within and between variance estimators, we can build a statistic from these ingredients to see how much variability is induced by centering using a common vector. When $K>2$, there are multiple statistics that be constructed, including
+
+- Wilk's $\Lambda$: $|\widehat{\boldsymbol{\Sigma}}_W|/|\widehat{\boldsymbol{\Sigma}}_W + \widehat{\boldsymbol{\Sigma}}_B|$
+- Roy's maximum root: the largest eigenvalue of $\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B$
+- Lawley--Hotelling trace: $\mathrm{tr}(\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B)$
+- Pillai's trace: $\mathrm{tr}\left\{\widehat{\boldsymbol{\Sigma}}_B(\widehat{\boldsymbol{\Sigma}}_W +\widehat{\boldsymbol{\Sigma}}_B)^{-1}\right\}$.
+
+All four criteria lead to equivalent statistics and the same $p$-values if $K=2$.
+
+With a two-way balanced MANOVA, we can perform simlar decomposition for each factor or interaction, with 
+$$\widehat{\boldsymbol{\Sigma}}_T = \widehat{\boldsymbol{\Sigma}}_A + \widehat{\boldsymbol{\Sigma}}_B + \widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W.$$
+
+Wilk's $\Lambda$ is based on taking the ratio of the determinant of the within-variance and that of the sum of effect-variance plus within-variance, e.g., $|\widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W|$ for the interaction term. 
+
+### Model fitting
+
+We can treat the within-subject responses as a vector of observations and estimate the model using using multivariate linear regression. Contrary to the univariate counterpart, the model explicitly models the correlation between observations from the same subject.
+
+In order to fit a model with a multivariate response, we first need to pivot the data into wider format so as to have a matrix with rows for the number of subjects and $M$ columns for the number of response variables. 
+
+Once the data are in a suitable format, we fit the multivariate model with the `lm` function using the sum-to-zero constraints, here imposed globally by changing the `contrasts` option. Syntax-wise, the only difference with the univariate case is that the response on the left of the tilde sign (`~`) is now a matrix composed by binding together the vectors with the different responses.
+
+:::{ .example name="Happy fakes - multivariate"}
+
+We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.
 
 ```{r}
 # Pivot to wide format
@@ -175,16 +275,126 @@ AA21_mw <- AA21_m |>
 # Model with each variable with a different mean
 # Specify all columns with column bind 
 # left of the ~, following 
+options(contrasts = c("contr.sum", "contr.poly"))
 mlm <- lm(cbind(real, GAN1, GAN2) ~ 1,
           data = AA21_mw)
+```
+
+Since the within-subject factor `stimulus` disappeared when we consider the multivariate response, we only specify a global mean vector $\boldsymbol{\mu}$ via `~1`. In general, we would add the between-subject factors to the right-hand side of the equation. Our hypothesis of equal mean translates into the hypothesis $\boldsymbol{\mu} = \mu\boldsymbol{1}_3$, which can be imposed using a call to `anova`. The output returns the statistic and $p$-values including corrections for sphericity.
+
+We can also use `emmeans` to set up post-hoc contrasts. Since we have no variable, we need to set in `specs` the repeated measure variable appearing on the left hand side of the formula; the latter is labelled `rep.meas` by default.
+
+```{r}
 # Test the multivariate model against
 # equal mean (X = ~1)
 anova(mlm, X = ~1, test = "Spherical")
 # Follow-up contrast comparisons
 library(emmeans)
-# The repeated measure variable appearing
-# on the left hand side of the formula
-# is labelled 'rep.meas' by default.
 emm_mlm <- emmeans(mlm, specs = "rep.meas") 
 emm_mlm |> contrast(method = list(c(1,-0.5,-0.5)))
 ```
+
+We can check that the output is the same in this case as the within-subject analysis of variance model fitted previously with the `afex` package.
+:::
+
+:::{ .example name="Teaching to read"}
+
+We consider a between-subject repeated measure multivariate analysis of variance model with the @Baumann:1992. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).
+
+
+We could obtain the estimated covariance matrix of the fitted model by extracting the residuals $Y_{ik} - \widehat{\mu}_k$ and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test2.
+
+Let us compute the multivariate analysis of variance model
+
+```{r}
+#| eval: true
+#| echo: true
+data(BSJ92, package = "hecedsm")
+# Force sum-to-zero parametrization
+options(contrasts = c("contr.sum", "contr.poly"))
+# Fit MANOVA model
+mmod <- lm(
+  cbind(posttest1, posttest2, posttest3) ~ group,
+   data = BSJ92)
+# Calculate multivariate test
+mtest <- car::Anova(mmod, test = "Wilks")
+# mtest
+# Get all statistics and univariate tests
+summary(car::Anova(mmod), univariate = TRUE)
+``` 
+
+By default, we get Pillai's trace statistic. Here, there is clear evidence of differences between groups of observations regardless of the statistic being used. 
+
+We can compute effect size as before by passing the table, for example using `eta_squared(mtest)` to get the effect size of the multivariate test, or simple the model to get the individual variable effect sizes.
+
+Having found a difference, one could in principle investigate for which component of the response they are by performing univariate analysis of variance and accounting for multiple testing using, e.g., Bonferroni's correction. A more fruitful avenue if you are trying to discriminate is to use descriptive discriminant analysis as a follow-up, which computes the best fitting hyperplanes that separate groups.
+
+```{r}
+#| eval: false
+#| echo: true
+MASS::lda(group ~ posttest1 + posttest2 + posttest3,
+          data = BSJ92)
+```
+
+This amounts to compute the weights $\boldsymbol{w}$ such, that, computing $\boldsymbol{w}^\top\boldsymbol{Y}$ creating a composite score by adding up weighted components that leads to maximal separation between groups. Figure \@ref(fig:fig-lindiscrim) shows the new coordinates.
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-lindiscrim
+#| fig-cap: "Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group."
+discrim <- MASS::lda(group ~ posttest1 + posttest2 + posttest3,
+    data = BSJ92)
+pred <- as.matrix(BSJ92[,c("posttest1","posttest2","posttest3")]) %*% discrim$scaling
+newdata <- 
+  data.frame(LD1 = pred[,"LD1"],
+           LD2 = pred[,"LD2"],
+           group = BSJ92$group)
+ggplot(data = newdata,
+        aes(x = LD1,
+            y = LD2,
+            color = group)) +
+  geom_point() + 
+  geom_rug() +
+  labs(x = "linear discriminant 1",
+       y = "linear discriminant 2") + 
+  theme_classic() +
+  theme(legend.position = "bottom")
+```
+
+Linear discriminant analysis is a topic on it's own that is beyond the scope of the course.
+
+:::
+
+### Model assumptions
+
+
+In addition to the usual model assumptions (independence of measurements from different subjects, equal variance, additivity, etc.), the MANOVA model adds two hypothesis that altogether determine how reliable our $p$-values and conclusions are. 
+
+The first assumption is that of multivariate normality of the response. The central limit theorem can be applied to a multivariate response, but the sample size needed overall to reliably estimate the correlation and variance is larger than in the univariate setting. This hypothesis can be tested using the Shapiro-Wilk normality test (null hypothesis is that of normality) by passing the residuals of the multivariate model. Such a test can lead to rejection of the null hypothesis when specific variables are far from normal, or when the dependence structure isn't the one exhibited by a multivariate normal model. With decent sample sizes (say $n=50$ per group), this assumption isn't as important as others. 
+
+
+```{r}
+# Shapiro-Wilk normality test
+# Must transpose the residuals 
+# to get a 3 by n matrix
+mvnormtest::mshapiro.test(U = t(resid(mmod)))
+```
+
+The second assumption is that the covariance matrix is the same for all individuals, regardless of their experimental group assignment. We could try checking whether a covariance model in each group: under multivariate normal assumption, this leads to a test statistic called Box's $M$ test. Unfortunately, this test is quite sensitive to departures from the multivariate normal assumption and, if the $p$-value is small, it may have to do more with the normality than the heterogeneity.
+
+```{r}
+with(BSJ92, 
+     biotools::boxM(
+       data = cbind(posttest1, posttest2, posttest3),
+       grouping = group))
+```
+
+In our example, there is limited evidence against any of those model assumptions. We should of course also check the assumptions of the analysis of variance model for each of `postest1`, `posttest2` and `posttest3` in turn; such a check is left as an exercice to the reader.
+
+### Power and effect size
+
+Since all of the multivariate statistics can be transformed for a comparison with a univariate $\mathsf{F}$ distribution, we can estimate partial effect size as before. The package `effectsize` offers a measure of partial $\widehat{\eta}^2$ for the multivariate tests.^[I must confess I haven't checked whether the output is sensical.]
+
+Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free **G**${}^{*}$**Power** software [@GPower3] also offers some tools. See also @Lauter:1978 for pairwise comparisons.

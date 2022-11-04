@@ -102,6 +102,10 @@ fig:samplingbias
 fig:fig-longvswide
 exm:unlabeled-div-23
 fig:fig-GANfaces
+exm:unlabeled-div-24
+exm:unlabeled-div-25
+exm:unlabeled-div-26
+fig:fig-lindiscrim
 introduction
 study-type
 terminology
@@ -166,4 +170,9 @@ summary
 repeated-measures-and-multivariate-models
 repeated-measures
 contrasts-1
+sphericity-assumption
+multivariate-analysis-of-variance
+mathematical-complement
+model-fitting
 model-assumptions-1
+power-and-effect-size

@@ -2,24 +2,6 @@
 
 
 
-## Multivariate analysis of variance
-
-WORK IN PROGRESS
-
-Multivariate analysis of variance models fitted using `lm` with `anova` and `manova` commands.
-
-Sum of square decomposition and relation with one-way ANOVA. Different potential statistics arising from the definition.
-
-Follow-up discriminant analysis
-
-Power requirements 
-
-Model assumptions (multivariate normality): graphical checks and tests. Requirements for sample size being larger for vector mean than univariate models.
-
-Example from hecedsm::AVC02 and hecedsm::hecedsm::BSJ92
-
-
-
 
 What is the purpose of the random effect? For one, it will allow us to predict the individual differences; with fixed effects and blocking, we would estimate the average for each subject despite the fact that this quantity is of no interest. Random effects also shrink effects toward the global mean and so these regularize estimation, the effect being more important when there are few measurements per person and estimated effects for subjects are based on a handful of measurements. 
 

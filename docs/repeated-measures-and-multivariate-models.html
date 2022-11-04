@@ -155,11 +155,10 @@ Figure 9.2: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): r
 <span><span class="co">#&gt; Residuals 22   43.0    1.96</span></span></code></pre></div>
 <p>Since the design is balanced after averaging, we can use <code>aov</code> in <strong>R</strong>: we need to specify the subject identifier within <code>Error</code> term. This approach has a drawback, as variance components can be negative if the variability due to subject is negligible. While <code>aov</code> is fast, it only works for simple balanced designs.</p>
 </div>
-</div>
-<div id="contrasts-1" class="section level2" number="9.2">
-<h2>
-<span class="header-section-number">9.2</span> Contrasts<a class="anchor" aria-label="anchor" href="#contrasts-1"><i class="fas fa-link"></i></a>
-</h2>
+<div id="contrasts-1" class="section level3" number="9.1.1">
+<h3>
+<span class="header-section-number">9.1.1</span> Contrasts<a class="anchor" aria-label="anchor" href="#contrasts-1"><i class="fas fa-link"></i></a>
+</h3>
 <p>With balanced data, the estimated marginal means coincide with the row averages. If we have a single replication or the average for each subject/condition, we could create a new column with the contrast and then fit a model with an intercept-only (global mean) to check whether the latter is zero. With 12 participants, we should thus expect our test statistic to have 11 degrees of freedom, since one unit is spent on estimating the mean parameter and we have 12 participants.</p>
 <p>Unfortunately, the <code>emmeans</code> package analysis for object fitted using <code>aov</code> will be incorrect: this can be seen by passing a contrast vector and inspecting the degrees of freedom. The <code>afex</code> package includes functionalities that are tailored for within-subject and between-subjects and has an interface with <code>emmeans</code>.</p>
 <p>The <code>afex</code> package has different functions for computing the within-subjects design and the <code>aov_ez</code> specification, which allow people to list within and between-subjects factor separately with subject identifiers may be easier to understand. It also has an argument, <code>fun_aggregate</code>, to automatically average replications.</p>
@@ -186,11 +185,12 @@ Figure 9.2: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): r
 #&gt; $contrasts
 #&gt;  contrast    estimate    SE df t.ratio p.value
 #&gt;  real vs GAN   -0.202 0.494 22  -0.409  0.6870</code></pre>
+<p>:::</p>
 </div>
-<div id="model-assumptions-1" class="section level2" number="9.3">
-<h2>
-<span class="header-section-number">9.3</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions-1"><i class="fas fa-link"></i></a>
-</h2>
+<div id="sphericity-assumption" class="section level3" number="9.1.2">
+<h3>
+<span class="header-section-number">9.1.2</span> Sphericity assumption<a class="anchor" aria-label="anchor" href="#sphericity-assumption"><i class="fas fa-link"></i></a>
+</h3>
 <p>The validity of the <span class="math inline">\(F\)</span> statistic null distribution relies on the model having the correct structure.</p>
 <p>In repeated-measure analysis of variance, we assume again that each variance has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.&lt;/p&gt;"><sup>46</sup></a></p>
 <p>What if the measurements have unequal variance or different correlations? We could fit a fully multivariate model that accounts for the
@@ -224,6 +224,111 @@ While this is automatic with two measurements (as there is a single correlation)
 #&gt; 
 #&gt;          HF eps Pr(&gt;F[HF])
 #&gt; stimulus  0.851      0.587</code></pre>
+<div class="example">
+<p><span id="exm:unlabeled-div-24" class="example"><strong>Example 9.2  (Visual acuity) </strong></span>We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection. The mixed analysis of variance includes the experimental factors <code>adaptation</code> (2 levels, within), <code>fontsize</code> (4 levels, within), <code>position</code> (5 levels, within) and visual <code>acuity</code> (2 levels, within). There are a total of 1760 measurements for 44 participants in <code>LBJ17_S1A</code>, balanced.
+The within-subject factors give a total of 40 measurements (<span class="math inline">\(2 \times 4 \times 5\)</span>) per participant; all of these factors are crossed and we can estimate interactions for them. The subjects are nested within visual acuity groups, The participants were dichotomized in two groups based on their visual acuity, obtained from preliminary checks, using a median split.</p>
+<p>To fit the model, we rely on the <code>aov_ez</code> function from <code>afex</code>. By default, the latter includes all interactions.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">LBJ_mod</span> <span class="op">&lt;-</span> <span class="fu">afex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/afex/man/aov_car.html">aov_ez</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="st">"id"</span>,     <span class="co"># subject id</span></span>
+<span>  dv <span class="op">=</span> <span class="st">"nerror"</span>, <span class="co"># response</span></span>
+<span>  between <span class="op">=</span> <span class="st">"acuity"</span>,</span>
+<span>  within <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"adaptation"</span>,</span>
+<span>             <span class="st">"fontsize"</span>, </span>
+<span>             <span class="st">"position"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="fu">hecedsm</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/hecedsm/man/LBJ17_S1A.html">LBJ17_S1A</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">LBJ_mod</span>,  <span class="co"># model</span></span>
+<span>      correction <span class="op">=</span> <span class="st">"none"</span>, <span class="co"># no correction for sphericity</span></span>
+<span>      es <span class="op">=</span> <span class="st">"pes"</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; Anova Table (Type 3 tests)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: nerror</span></span>
+<span><span class="co">#&gt;                                     num Df den Df   MSE       F   pes  Pr(&gt;F)</span></span>
+<span><span class="co">#&gt; acuity                                   1     42 1.229   30.77 0.423 1.8e-06</span></span>
+<span><span class="co">#&gt; adaptation                               1     42 0.300    7.76 0.156 0.00800</span></span>
+<span><span class="co">#&gt; acuity:adaptation                        1     42 0.300   12.73 0.233 0.00091</span></span>
+<span><span class="co">#&gt; fontsize                                 3    126 0.756 1705.68 0.976 &lt; 2e-16</span></span>
+<span><span class="co">#&gt; acuity:fontsize                          3    126 0.756   10.04 0.193 5.6e-06</span></span>
+<span><span class="co">#&gt; position                                 4    168 0.213    9.42 0.183 6.8e-07</span></span>
+<span><span class="co">#&gt; acuity:position                          4    168 0.213    4.17 0.090 0.00303</span></span>
+<span><span class="co">#&gt; adaptation:fontsize                      3    126 0.230    3.29 0.073 0.02296</span></span>
+<span><span class="co">#&gt; acuity:adaptation:fontsize               3    126 0.230    6.98 0.142 0.00022</span></span>
+<span><span class="co">#&gt; adaptation:position                      4    168 0.138    0.60 0.014 0.66209</span></span>
+<span><span class="co">#&gt; acuity:adaptation:position               4    168 0.138    0.90 0.021 0.46406</span></span>
+<span><span class="co">#&gt; fontsize:position                       12    504 0.206    9.05 0.177 7.5e-16</span></span>
+<span><span class="co">#&gt; acuity:fontsize:position                12    504 0.206    2.70 0.060 0.00155</span></span>
+<span><span class="co">#&gt; adaptation:fontsize:position            12    504 0.134    0.51 0.012 0.90739</span></span>
+<span><span class="co">#&gt; acuity:adaptation:fontsize:position     12    504 0.134    1.18 0.027 0.29550</span></span>
+<span><span class="co">#&gt;                                        </span></span>
+<span><span class="co">#&gt; acuity                              ***</span></span>
+<span><span class="co">#&gt; adaptation                          ** </span></span>
+<span><span class="co">#&gt; acuity:adaptation                   ***</span></span>
+<span><span class="co">#&gt; fontsize                            ***</span></span>
+<span><span class="co">#&gt; acuity:fontsize                     ***</span></span>
+<span><span class="co">#&gt; position                            ***</span></span>
+<span><span class="co">#&gt; acuity:position                     ** </span></span>
+<span><span class="co">#&gt; adaptation:fontsize                 *  </span></span>
+<span><span class="co">#&gt; acuity:adaptation:fontsize          ***</span></span>
+<span><span class="co">#&gt; adaptation:position                    </span></span>
+<span><span class="co">#&gt; acuity:adaptation:position             </span></span>
+<span><span class="co">#&gt; fontsize:position                   ***</span></span>
+<span><span class="co">#&gt; acuity:fontsize:position            ** </span></span>
+<span><span class="co">#&gt; adaptation:fontsize:position           </span></span>
+<span><span class="co">#&gt; acuity:adaptation:fontsize:position    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#partial eta-square for effect sizes (es)</span></span></code></pre></div>
+<p>This is the most complicated model we tested so far: there are four experimental factor being manipulated at once, and all interactions of order two, three and four are included!</p>
+<p>The fourth order interaction isn’t statistically significant: this means that we can legitimately marginalize over and look at each of the four three-way ANOVA designs in turn. We can also see that the third order interaction <code>adaptation:fontsize:position</code> and <code>acuity:adaptation:position</code> are not really meaningful.</p>
+<p>The following paragraph is technical and can be skipped. One difficult bit with designs including both within-subject and between-subject factors is the degrees of freedom and the correct sum of square terms to use to calculate the <span class="math inline">\(F\)</span> statistics for each hypothesis of interest. The correct setup is to use the next sum of square (and the associated degrees of freedom) from this. For any main effect or interaction, we count the number of instances of this particular (e.g., 10 for the interaction between position and adaptation). We subtract the number of mean parameter used to estimate means and differences in mean (1 global mean, 4 means for position, 1 for adaptation), which gives <span class="math inline">\(4=10-6\)</span> degrees of freedom. Next, this term is compared to the mean square which contains only subject (here via acuity levels, since subjects are nested within acuity) and the corresponding variables; the correct mean square is for <code>acuity:adaptation:position</code>. In the balanced design setting, this can be formalized using Hasse diagram <span class="citation">(<a href="references.html#ref-Oehlert:2010" role="doc-biblioref">Oehlert 2000</a>)</span>.</p>
+<p>We can produce an interaction plot to see what comes out: since we can’t draw in four dimensions, we map visual acuity and adaptation level to panels and use different colours for the position. The figure looks different altogether from the paper because their <span class="math inline">\(y\)</span> axis is flipped.</p>
+<div class="inline-figure"><img src="09-repeated_files/figure-html/fig-LBJ-interactionplot-1.png" width="85%" style="display: block; margin: auto;"></div>
+</div>
+</div>
+</div>
+<div id="multivariate-analysis-of-variance" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Multivariate analysis of variance<a class="anchor" aria-label="anchor" href="#multivariate-analysis-of-variance"><i class="fas fa-link"></i></a>
+</h2>
+<p>The second paradigm for modelling is to specify that the response from each subject is in fact a multivariate object: we can combine all measurements from a given individual in a vector <span class="math inline">\(\boldsymbol{Y}\)</span>. In the example with the happy fakes, this would be the tuple of measurements for (<code>real</code>, <code>GAN1</code>, <code>GAN2</code>).</p>
+<p>The multivariate analysis of variance model is designed by assuming observations follow a (multivariate) normal distribution with mean vector <span class="math inline">\(\boldsymbol{\mu}_j\)</span> in group <span class="math inline">\(j\)</span> and common covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span> and comparing means between groups. As in univariate analysis of variance, the multivariate normal assumption holds approximately by virtue of the central limit theorem in large samples, but the convergence is slower and larger numbers are needed to ensure this is valid.</p>
+<p>The difference with the univariate approach is now that we will compare a global mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> between comparisons. In the one-way analysis of variance model with an experimental factor having <span class="math inline">\(K\)</span> levels and a balanced sample <span class="math inline">\(n_g\)</span> observations per group and <span class="math inline">\(n=n_gK\)</span> total observations, we assume that each group has average <span class="math inline">\(\boldsymbol{\mu}_k\)</span> <span class="math inline">\((k=1, \ldots, K)\)</span>, which we can estimate using only the observations from that group. Under the null hypothesis, all groups have the same mean, so the estimator is the overall mean <span class="math inline">\(\boldsymbol{\mu}\)</span> combining all <span class="math inline">\(n\)</span> observations.</p>
+<p>The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics. Wilk’s <span class="math inline">\(\Lambda\)</span> is the most popular choice. Another common choice, which leads to a statistic giving lower power but more robust to departure from model assumptions is Pillai’s trace.</p>
+<p>The MANOVA model assumes that the covariance matrices are the same within each experimental condition. Under normality assumption, we can use Box’s <span class="math inline">\(M\)</span> statistic to test the hypothesis.</p>
+<div id="mathematical-complement" class="section level3" number="9.2.1">
+<h3>
+<span class="header-section-number">9.2.1</span> Mathematical complement<a class="anchor" aria-label="anchor" href="#mathematical-complement"><i class="fas fa-link"></i></a>
+</h3>
+<p>This section is technical and can be omitted. Analogous to the univariate case, we can decompose the variance estimator in terms of within, between and total variance. Let <span class="math inline">\(\boldsymbol{Y}_{ik}\)</span> denote the response vector for the <span class="math inline">\(i\)</span>th observation of group <span class="math inline">\(k\)</span>; then, we can decompose the variance as
+<span class="math display">\[\begin{align*} &amp;
+\underset{\text{total variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})^\top} \\\qquad &amp;= \underset{\text{within variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)^\top} + \underset{\text{between variance}}{\sum_{k=1}^K n_g(\boldsymbol{\mu}_{k} - \widehat{\boldsymbol{\mu}})(\widehat{\boldsymbol{\mu}}_k - \widehat{\boldsymbol{\mu}})^\top}
+\end{align*}\]</span>
+defining covariance matrix estimators. If we write <span class="math inline">\(\widehat{\boldsymbol{\Sigma}}_T\)</span>, <span class="math inline">\(\widehat{\boldsymbol{\Sigma}}_W\)</span>, and <span class="math inline">\(\widehat{\boldsymbol{\Sigma}}_B\)</span> for respectively the total, within and between variance estimators, we can build a statistic from these ingredients to see how much variability is induced by centering using a common vector. When <span class="math inline">\(K&gt;2\)</span>, there are multiple statistics that be constructed, including</p>
+<ul>
+<li>Wilk’s <span class="math inline">\(\Lambda\)</span>: <span class="math inline">\(|\widehat{\boldsymbol{\Sigma}}_W|/|\widehat{\boldsymbol{\Sigma}}_W + \widehat{\boldsymbol{\Sigma}}_B|\)</span>
+</li>
+<li>Roy’s maximum root: the largest eigenvalue of <span class="math inline">\(\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B\)</span>
+</li>
+<li>Lawley–Hotelling trace: <span class="math inline">\(\mathrm{tr}(\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B)\)</span>
+</li>
+<li>Pillai’s trace: <span class="math inline">\(\mathrm{tr}\left\{\widehat{\boldsymbol{\Sigma}}_B(\widehat{\boldsymbol{\Sigma}}_W +\widehat{\boldsymbol{\Sigma}}_B)^{-1}\right\}\)</span>.</li>
+</ul>
+<p>All four criteria lead to equivalent statistics and the same <span class="math inline">\(p\)</span>-values if <span class="math inline">\(K=2\)</span>.</p>
+<p>With a two-way balanced MANOVA, we can perform simlar decomposition for each factor or interaction, with
+<span class="math display">\[\widehat{\boldsymbol{\Sigma}}_T = \widehat{\boldsymbol{\Sigma}}_A + \widehat{\boldsymbol{\Sigma}}_B + \widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W.\]</span></p>
+<p>Wilk’s <span class="math inline">\(\Lambda\)</span> is based on taking the ratio of the determinant of the within-variance and that of the sum of effect-variance plus within-variance, e.g., <span class="math inline">\(|\widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W|\)</span> for the interaction term.</p>
+</div>
+<div id="model-fitting" class="section level3" number="9.2.2">
+<h3>
+<span class="header-section-number">9.2.2</span> Model fitting<a class="anchor" aria-label="anchor" href="#model-fitting"><i class="fas fa-link"></i></a>
+</h3>
+<p>We can treat the within-subject responses as a vector of observations and estimate the model using using multivariate linear regression. Contrary to the univariate counterpart, the model explicitly models the correlation between observations from the same subject.</p>
+<p>In order to fit a model with a multivariate response, we first need to pivot the data into wider format so as to have a matrix with rows for the number of subjects and <span class="math inline">\(M\)</span> columns for the number of response variables.</p>
+<p>Once the data are in a suitable format, we fit the multivariate model with the <code>lm</code> function using the sum-to-zero constraints, here imposed globally by changing the <code>contrasts</code> option. Syntax-wise, the only difference with the univariate case is that the response on the left of the tilde sign (<code>~</code>) is now a matrix composed by binding together the vectors with the different responses.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-25" class="example"><strong>Example 9.3  (Happy fakes - multivariate) </strong></span>We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.</p>
+<p>Since the within-subject factor <code>stimulus</code> disappeared when we consider the multivariate response, we only specify a global mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> via <code>~1</code>. In general, we would add the between-subject factors to the right-hand side of the equation. Our hypothesis of equal mean translates into the hypothesis <span class="math inline">\(\boldsymbol{\mu} = \mu\boldsymbol{1}_3\)</span>, which can be imposed using a call to <code>anova</code>. The output returns the statistic and <span class="math inline">\(p\)</span>-values including corrections for sphericity.</p>
+<p>We can also use <code>emmeans</code> to set up post-hoc contrasts. Since we have no variable, we need to set in <code>specs</code> the repeated measure variable appearing on the left hand side of the formula; the latter is labelled <code>rep.meas</code> by default.</p>
 <pre><code>#&gt; Analysis of Variance Table
 #&gt; 
 #&gt; 
@@ -238,7 +343,108 @@ While this is automatic with two measurements (as there is a single correlation)
 #&gt; Residuals   11
 #&gt;  contrast         estimate    SE df t.ratio p.value
 #&gt;  c(1, -0.5, -0.5)   -0.202 0.552 11  -0.366  0.7210</code></pre>
+<p>We can check that the output is the same in this case as the within-subject analysis of variance model fitted previously with the <code>afex</code> package.</p>
+</div>
+<div class="example">
+<p><span id="exm:unlabeled-div-26" class="example"><strong>Example 9.4  (Teaching to read) </strong></span>We consider a between-subject repeated measure multivariate analysis of variance model with the <span class="citation">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).</p>
+<p>We could obtain the estimated covariance matrix of the fitted model by extracting the residuals <span class="math inline">\(Y_{ik} - \widehat{\mu}_k\)</span> and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test2.</p>
+<p>Let us compute the multivariate analysis of variance model</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BSJ92</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
+<span><span class="co"># Force sum-to-zero parametrization</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Fit MANOVA model</span></span>
+<span><span class="va">mmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">posttest1</span>, <span class="va">posttest2</span>, <span class="va">posttest3</span><span class="op">)</span> <span class="op">~</span> <span class="va">group</span>,</span>
+<span>   data <span class="op">=</span> <span class="va">BSJ92</span><span class="op">)</span></span>
+<span><span class="co"># Calculate multivariate test</span></span>
+<span><span class="va">mtest</span> <span class="op">&lt;-</span> <span class="fu">car</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/car/man/Anova.html">Anova</a></span><span class="op">(</span><span class="va">mmod</span>, test <span class="op">=</span> <span class="st">"Wilks"</span><span class="op">)</span></span>
+<span><span class="co"># mtest</span></span>
+<span><span class="co"># Get all statistics and univariate tests</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu">car</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/car/man/Anova.html">Anova</a></span><span class="op">(</span><span class="va">mmod</span><span class="op">)</span>, univariate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Type II MANOVA Tests:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Sum of squares and products for error:</span></span>
+<span><span class="co">#&gt;           posttest1 posttest2 posttest3</span></span>
+<span><span class="co">#&gt; posttest1     640.5      30.8       498</span></span>
+<span><span class="co">#&gt; posttest2      30.8     356.4      -104</span></span>
+<span><span class="co">#&gt; posttest3     498.3    -104.4      2512</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt;  </span></span>
+<span><span class="co">#&gt; Term: group </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Sum of squares and products for the hypothesis:</span></span>
+<span><span class="co">#&gt;           posttest1 posttest2 posttest3</span></span>
+<span><span class="co">#&gt; posttest1    108.12      6.67     190.6</span></span>
+<span><span class="co">#&gt; posttest2      6.67     95.12      56.7</span></span>
+<span><span class="co">#&gt; posttest3    190.61     56.65     357.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate Tests: group</span></span>
+<span><span class="co">#&gt;                  Df test stat approx F num Df den Df   Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; Pillai            2     0.408     5.30      6    124 0.000068 ***</span></span>
+<span><span class="co">#&gt; Wilks             2     0.632     5.24      6    122 0.000078 ***</span></span>
+<span><span class="co">#&gt; Hotelling-Lawley  2     0.519     5.19      6    120 0.000089 ***</span></span>
+<span><span class="co">#&gt; Roy               2     0.318     6.58      3     62  0.00062 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Type II Sums of Squares</span></span>
+<span><span class="co">#&gt;           df posttest1 posttest2 posttest3</span></span>
+<span><span class="co">#&gt; group      2       108      95.1       357</span></span>
+<span><span class="co">#&gt; residuals 63       641     356.4      2512</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  F-tests</span></span>
+<span><span class="co">#&gt;       posttest1 posttest2 posttest3</span></span>
+<span><span class="co">#&gt; group      5.32      8.41      4.48</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  p-values</span></span>
+<span><span class="co">#&gt;       posttest1 posttest2 posttest3</span></span>
+<span><span class="co">#&gt; group 0.007     0.0006    0.015</span></span></code></pre></div>
+<p>By default, we get Pillai’s trace statistic. Here, there is clear evidence of differences between groups of observations regardless of the statistic being used.</p>
+<p>We can compute effect size as before by passing the table, for example using <code>eta_squared(mtest)</code> to get the effect size of the multivariate test, or simple the model to get the individual variable effect sizes.</p>
+<p>Having found a difference, one could in principle investigate for which component of the response they are by performing univariate analysis of variance and accounting for multiple testing using, e.g., Bonferroni’s correction. A more fruitful avenue if you are trying to discriminate is to use descriptive discriminant analysis as a follow-up, which computes the best fitting hyperplanes that separate groups.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span><span class="op">(</span><span class="va">group</span> <span class="op">~</span> <span class="va">posttest1</span> <span class="op">+</span> <span class="va">posttest2</span> <span class="op">+</span> <span class="va">posttest3</span>,</span>
+<span>          data <span class="op">=</span> <span class="va">BSJ92</span><span class="op">)</span></span></code></pre></div>
+<p>This amounts to compute the weights <span class="math inline">\(\boldsymbol{w}\)</span> such, that, computing <span class="math inline">\(\boldsymbol{w}^\top\boldsymbol{Y}\)</span> creating a composite score by adding up weighted components that leads to maximal separation between groups. Figure <a href="repeated-measures-and-multivariate-models.html#fig:fig-lindiscrim">9.3</a> shows the new coordinates.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-lindiscrim"></span>
+<img src="09-repeated_files/figure-html/fig-lindiscrim-1.png" alt="Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group." width="85%"><p class="caption">
+Figure 9.3: Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group.
+</p>
+</div>
+<p>Linear discriminant analysis is a topic on it’s own that is beyond the scope of the course.</p>
+</div>
+</div>
+<div id="model-assumptions-1" class="section level3" number="9.2.3">
+<h3>
+<span class="header-section-number">9.2.3</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>In addition to the usual model assumptions (independence of measurements from different subjects, equal variance, additivity, etc.), the MANOVA model adds two hypothesis that altogether determine how reliable our <span class="math inline">\(p\)</span>-values and conclusions are.</p>
+<p>The first assumption is that of multivariate normality of the response. The central limit theorem can be applied to a multivariate response, but the sample size needed overall to reliably estimate the correlation and variance is larger than in the univariate setting. This hypothesis can be tested using the Shapiro-Wilk normality test (null hypothesis is that of normality) by passing the residuals of the multivariate model. Such a test can lead to rejection of the null hypothesis when specific variables are far from normal, or when the dependence structure isn’t the one exhibited by a multivariate normal model. With decent sample sizes (say <span class="math inline">\(n=50\)</span> per group), this assumption isn’t as important as others.</p>
+<pre><code>#&gt; 
+#&gt;  Shapiro-Wilk normality test
+#&gt; 
+#&gt; data:  Z
+#&gt; W = 1, p-value = 0.06</code></pre>
+<p>The second assumption is that the covariance matrix is the same for all individuals, regardless of their experimental group assignment. We could try checking whether a covariance model in each group: under multivariate normal assumption, this leads to a test statistic called Box’s <span class="math inline">\(M\)</span> test. Unfortunately, this test is quite sensitive to departures from the multivariate normal assumption and, if the <span class="math inline">\(p\)</span>-value is small, it may have to do more with the normality than the heterogeneity.</p>
+<pre><code>#&gt; 
+#&gt;  Box's M-test for Homogeneity of Covariance Matrices
+#&gt; 
+#&gt; data:  cbind(posttest1, posttest2, posttest3)
+#&gt; Chi-Sq (approx.) = 15, df = 12, p-value = 0.2</code></pre>
+<p>In our example, there is limited evidence against any of those model assumptions. We should of course also check the assumptions of the analysis of variance model for each of <code>postest1</code>, <code>posttest2</code> and <code>posttest3</code> in turn; such a check is left as an exercice to the reader.</p>
+</div>
+<div id="power-and-effect-size" class="section level3" number="9.2.4">
+<h3>
+<span class="header-section-number">9.2.4</span> Power and effect size<a class="anchor" aria-label="anchor" href="#power-and-effect-size"><i class="fas fa-link"></i></a>
+</h3>
+<p>Since all of the multivariate statistics can be transformed for a comparison with a univariate <span class="math inline">\(\mathsf{F}\)</span> distribution, we can estimate partial effect size as before. The package <code>effectsize</code> offers a measure of partial <span class="math inline">\(\widehat{\eta}^2\)</span> for the multivariate tests.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;I must confess I haven’t checked whether the output is sensical.&lt;/p&gt;"><sup>47</sup></a></p>
+<p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation">(<a href="references.html#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation">Läuter (<a href="references.html#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons.</p>
 
+</div>
 </div>
 </div>
 
@@ -251,9 +457,20 @@ While this is automatic with two measurements (as there is a single correlation)
 <li>
 <a class="nav-link" href="#repeated-measures-and-multivariate-models"><span class="header-section-number">9</span> Repeated measures and multivariate models</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#data-format">Data format</a></li></ul>
 </li>
-<li><a class="nav-link" href="#repeated-measures"><span class="header-section-number">9.1</span> Repeated measures</a></li>
-<li><a class="nav-link" href="#contrasts-1"><span class="header-section-number">9.2</span> Contrasts</a></li>
-<li><a class="nav-link" href="#model-assumptions-1"><span class="header-section-number">9.3</span> Model assumptions</a></li>
+<li>
+<a class="nav-link" href="#repeated-measures"><span class="header-section-number">9.1</span> Repeated measures</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#contrasts-1"><span class="header-section-number">9.1.1</span> Contrasts</a></li>
+<li><a class="nav-link" href="#sphericity-assumption"><span class="header-section-number">9.1.2</span> Sphericity assumption</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#multivariate-analysis-of-variance"><span class="header-section-number">9.2</span> Multivariate analysis of variance</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mathematical-complement"><span class="header-section-number">9.2.1</span> Mathematical complement</a></li>
+<li><a class="nav-link" href="#model-fitting"><span class="header-section-number">9.2.2</span> Model fitting</a></li>
+<li><a class="nav-link" href="#model-assumptions-1"><span class="header-section-number">9.2.3</span> Model assumptions</a></li>
+<li><a class="nav-link" href="#power-and-effect-size"><span class="header-section-number">9.2.4</span> Power and effect size</a></li>
+</ul>
+</li>
 </ul>
 
       <div class="book-extra">
