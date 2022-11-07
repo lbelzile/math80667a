@@ -18,25 +18,6 @@ To minimize potential biases, there are multiple strategies one can use. While c
 There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation. Multivariate analysis of variance (MANOVA) leads to procedures that are analogous to univariate analysis of variance, but we now need to estimate correlation and variance parameters for each measurement separately and there are multiple potential statistics that can be defined for testing effects. While we can benefit from the correlation and find differences that wouldn't be detected from univariate models, the additional parameters to estimate lead to a loss of power. Finally, the most popular method nowadays for handling repeated measures is to fit a mixed model, with random effects accounting to subject-specific characteristics. By doing so, we assume that the levels of a factor (here the subject identifiers) form a random sample from a large population. These models can be difficult to fit and one needs to take great care in specifying the model. 
 
 
-
-### Data format {-}
-
-With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in **wide format**, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in **long format**, for which there is a single measurement per line. Figure \@ref(fig:fig-longvswide) illustrates the difference between the two formats.
-
-
-```{r}
-#| label: fig-longvswide
-#| fig-cap: "Long versus wide-format for data tables (illustration by Garrick Aden-Buie)."
-#| echo: false
-#| eval: true
-knitr::include_graphics(path = "figures/original-dfs-tidy.png")
-```
-
-Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant. 
-
-
-Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed Subsection \@ref(independence): failing to account for correlation leads to $p$-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.
-
 ## Repeated measures
 
 We introduce the concept of repeated measure and within-subject ANOVA with an example.
@@ -103,15 +84,22 @@ Unfortunately, the `emmeans` package analysis for object fitted using `aov` will
 
 
 ```{r}
-afexmod <- afex::aov_car( 
-  latency ~ stimulus + Error(id/stimulus),
-  data = AA21_m)
+afexmod <- afex::aov_ez(
+  id = "id",           # subject id
+  dv = "latency",      # response variable
+  within = "stimulus", # within-subject factor
+  data = AA21,
+  fun_aggregate = mean)
 ```
 
 
 ```{r}
 #| eval: false
 #| echo: false
+
+afexmod <- afex::aov_car( 
+  latency ~ stimulus + Error(id/stimulus),
+  data = AA21_m)
 afexmod <- afex::aov_ez(
   id = "id",           # subject id
   dv = "latency",      # response variable
@@ -141,7 +129,7 @@ fixedmod |>
     contr = cont_vec)
 ```
 
-:::
+
 
 
 ### Sphericity assumption
@@ -233,6 +221,27 @@ The difference with the univariate approach is now that we will compare a global
 The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics.  Wilk's $\Lambda$ is the most popular choice. Another common choice, which leads to a statistic giving lower power but more robust to departure from model assumptions is Pillai's trace.
 
 The MANOVA model assumes that the covariance matrices are the same within each experimental condition. Under normality assumption, we can use Box's $M$ statistic to test the hypothesis.
+
+
+
+### Data format
+
+With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in **wide format**, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in **long format**, for which there is a single measurement per line. Figure \@ref(fig:fig-longvswide) illustrates the difference between the two formats.
+
+
+```{r}
+#| label: fig-longvswide
+#| fig-cap: "Long versus wide-format for data tables (illustration by Garrick Aden-Buie)."
+#| echo: false
+#| eval: true
+knitr::include_graphics(path = "figures/original-dfs-tidy.png")
+```
+
+Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant. 
+
+
+Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed Subsection \@ref(independence): failing to account for correlation leads to $p$-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.
+
 
 ### Mathematical complement
 

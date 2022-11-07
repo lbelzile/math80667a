@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
@@ -76,6 +76,7 @@
 <li><a class="" href="effect-sizes-and-power.html"><span class="header-section-number">7</span> Effect sizes and power</a></li>
 <li><a class="" href="replication-crisis.html"><span class="header-section-number">8</span> Replication crisis</a></li>
 <li><a class="active" href="repeated-measures-and-multivariate-models.html"><span class="header-section-number">9</span> Repeated measures and multivariate models</a></li>
+<li><a class="" href="introduction-to-mixed-models.html"><span class="header-section-number">10</span> Introduction to mixed models</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -95,19 +96,6 @@
 <p>There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming more fluent as manipulations go on), period effects (practice of fatigue, e.g., leading to a decrease in acuity), permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).</p>
 <p>To minimize potential biases, there are multiple strategies one can use. While can randomize the order of treatment conditions among subjects to reduce confounding, or use a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.</p>
 <p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation. Multivariate analysis of variance (MANOVA) leads to procedures that are analogous to univariate analysis of variance, but we now need to estimate correlation and variance parameters for each measurement separately and there are multiple potential statistics that can be defined for testing effects. While we can benefit from the correlation and find differences that wouldn’t be detected from univariate models, the additional parameters to estimate lead to a loss of power. Finally, the most popular method nowadays for handling repeated measures is to fit a mixed model, with random effects accounting to subject-specific characteristics. By doing so, we assume that the levels of a factor (here the subject identifiers) form a random sample from a large population. These models can be difficult to fit and one needs to take great care in specifying the model.</p>
-<div id="data-format" class="section level3 unnumbered">
-<h3>Data format<a class="anchor" aria-label="anchor" href="#data-format"><i class="fas fa-link"></i></a>
-</h3>
-<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. Figure <a href="repeated-measures-and-multivariate-models.html#fig:fig-longvswide">9.1</a> illustrates the difference between the two formats.</p>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:fig-longvswide"></span>
-<img src="figures/original-dfs-tidy.png" alt="Long versus wide-format for data tables (illustration by Garrick Aden-Buie)." width="85%"><p class="caption">
-Figure 9.1: Long versus wide-format for data tables (illustration by Garrick Aden-Buie).
-</p>
-</div>
-<p>Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant.</p>
-<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed Subsection <a href="CRT.html#independence">3.4.4</a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
-</div>
 <div id="repeated-measures" class="section level2" number="9.1">
 <h2>
 <span class="header-section-number">9.1</span> Repeated measures<a class="anchor" aria-label="anchor" href="#repeated-measures"><i class="fas fa-link"></i></a>
@@ -126,7 +114,7 @@ Figure 9.1: Long versus wide-format for data tables (illustration by Garrick Ade
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:fig-GANfaces"></span>
 <img src="figures/face_real.png" alt="Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)." width="25%"><img src="figures/face_GAN_S.png" alt="Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)." width="25%"><img src="figures/face_GAN_E.jpg" alt="Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right)." width="25%"><p class="caption">
-Figure 9.2: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right).
+Figure 9.1: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): real, slightly modified and extremely modified (from left to right).
 </p>
 </div>
 <p>We could begin by grouping the data and computing the average for each experimental condition <code>stimulus</code> per participant and set <code>id</code> as blocking factor. The analysis of variance table obtained from <code>aov</code> would be correct, but fails to account for correlation.</p>
@@ -185,7 +173,6 @@ Figure 9.2: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): r
 #&gt; $contrasts
 #&gt;  contrast    estimate    SE df t.ratio p.value
 #&gt;  real vs GAN   -0.202 0.494 22  -0.409  0.6870</code></pre>
-<p>:::</p>
 </div>
 <div id="sphericity-assumption" class="section level3" number="9.1.2">
 <h3>
@@ -295,9 +282,23 @@ The within-subject factors give a total of 40 measurements (<span class="math in
 <p>The difference with the univariate approach is now that we will compare a global mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> between comparisons. In the one-way analysis of variance model with an experimental factor having <span class="math inline">\(K\)</span> levels and a balanced sample <span class="math inline">\(n_g\)</span> observations per group and <span class="math inline">\(n=n_gK\)</span> total observations, we assume that each group has average <span class="math inline">\(\boldsymbol{\mu}_k\)</span> <span class="math inline">\((k=1, \ldots, K)\)</span>, which we can estimate using only the observations from that group. Under the null hypothesis, all groups have the same mean, so the estimator is the overall mean <span class="math inline">\(\boldsymbol{\mu}\)</span> combining all <span class="math inline">\(n\)</span> observations.</p>
 <p>The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics. Wilk’s <span class="math inline">\(\Lambda\)</span> is the most popular choice. Another common choice, which leads to a statistic giving lower power but more robust to departure from model assumptions is Pillai’s trace.</p>
 <p>The MANOVA model assumes that the covariance matrices are the same within each experimental condition. Under normality assumption, we can use Box’s <span class="math inline">\(M\)</span> statistic to test the hypothesis.</p>
-<div id="mathematical-complement" class="section level3" number="9.2.1">
+<div id="data-format" class="section level3" number="9.2.1">
 <h3>
-<span class="header-section-number">9.2.1</span> Mathematical complement<a class="anchor" aria-label="anchor" href="#mathematical-complement"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.1</span> Data format<a class="anchor" aria-label="anchor" href="#data-format"><i class="fas fa-link"></i></a>
+</h3>
+<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. Figure <a href="repeated-measures-and-multivariate-models.html#fig:fig-longvswide">9.2</a> illustrates the difference between the two formats.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-longvswide"></span>
+<img src="figures/original-dfs-tidy.png" alt="Long versus wide-format for data tables (illustration by Garrick Aden-Buie)." width="85%"><p class="caption">
+Figure 9.2: Long versus wide-format for data tables (illustration by Garrick Aden-Buie).
+</p>
+</div>
+<p>Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant.</p>
+<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed Subsection <a href="CRT.html#independence">3.4.4</a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
+</div>
+<div id="mathematical-complement" class="section level3" number="9.2.2">
+<h3>
+<span class="header-section-number">9.2.2</span> Mathematical complement<a class="anchor" aria-label="anchor" href="#mathematical-complement"><i class="fas fa-link"></i></a>
 </h3>
 <p>This section is technical and can be omitted. Analogous to the univariate case, we can decompose the variance estimator in terms of within, between and total variance. Let <span class="math inline">\(\boldsymbol{Y}_{ik}\)</span> denote the response vector for the <span class="math inline">\(i\)</span>th observation of group <span class="math inline">\(k\)</span>; then, we can decompose the variance as
 <span class="math display">\[\begin{align*} &amp;
@@ -318,9 +319,9 @@ defining covariance matrix estimators. If we write <span class="math inline">\(\
 <span class="math display">\[\widehat{\boldsymbol{\Sigma}}_T = \widehat{\boldsymbol{\Sigma}}_A + \widehat{\boldsymbol{\Sigma}}_B + \widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W.\]</span></p>
 <p>Wilk’s <span class="math inline">\(\Lambda\)</span> is based on taking the ratio of the determinant of the within-variance and that of the sum of effect-variance plus within-variance, e.g., <span class="math inline">\(|\widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W|\)</span> for the interaction term.</p>
 </div>
-<div id="model-fitting" class="section level3" number="9.2.2">
+<div id="model-fitting" class="section level3" number="9.2.3">
 <h3>
-<span class="header-section-number">9.2.2</span> Model fitting<a class="anchor" aria-label="anchor" href="#model-fitting"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.3</span> Model fitting<a class="anchor" aria-label="anchor" href="#model-fitting"><i class="fas fa-link"></i></a>
 </h3>
 <p>We can treat the within-subject responses as a vector of observations and estimate the model using using multivariate linear regression. Contrary to the univariate counterpart, the model explicitly models the correlation between observations from the same subject.</p>
 <p>In order to fit a model with a multivariate response, we first need to pivot the data into wider format so as to have a matrix with rows for the number of subjects and <span class="math inline">\(M\)</span> columns for the number of response variables.</p>
@@ -418,9 +419,9 @@ Figure 9.3: Scatterplot of observations projected onto the linear discriminants 
 <p>Linear discriminant analysis is a topic on it’s own that is beyond the scope of the course.</p>
 </div>
 </div>
-<div id="model-assumptions-1" class="section level3" number="9.2.3">
+<div id="model-assumptions-1" class="section level3" number="9.2.4">
 <h3>
-<span class="header-section-number">9.2.3</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.4</span> Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>In addition to the usual model assumptions (independence of measurements from different subjects, equal variance, additivity, etc.), the MANOVA model adds two hypothesis that altogether determine how reliable our <span class="math inline">\(p\)</span>-values and conclusions are.</p>
 <p>The first assumption is that of multivariate normality of the response. The central limit theorem can be applied to a multivariate response, but the sample size needed overall to reliably estimate the correlation and variance is larger than in the univariate setting. This hypothesis can be tested using the Shapiro-Wilk normality test (null hypothesis is that of normality) by passing the residuals of the multivariate model. Such a test can lead to rejection of the null hypothesis when specific variables are far from normal, or when the dependence structure isn’t the one exhibited by a multivariate normal model. With decent sample sizes (say <span class="math inline">\(n=50\)</span> per group), this assumption isn’t as important as others.</p>
@@ -437,9 +438,9 @@ Figure 9.3: Scatterplot of observations projected onto the linear discriminants 
 #&gt; Chi-Sq (approx.) = 15, df = 12, p-value = 0.2</code></pre>
 <p>In our example, there is limited evidence against any of those model assumptions. We should of course also check the assumptions of the analysis of variance model for each of <code>postest1</code>, <code>posttest2</code> and <code>posttest3</code> in turn; such a check is left as an exercice to the reader.</p>
 </div>
-<div id="power-and-effect-size" class="section level3" number="9.2.4">
+<div id="power-and-effect-size" class="section level3" number="9.2.5">
 <h3>
-<span class="header-section-number">9.2.4</span> Power and effect size<a class="anchor" aria-label="anchor" href="#power-and-effect-size"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.5</span> Power and effect size<a class="anchor" aria-label="anchor" href="#power-and-effect-size"><i class="fas fa-link"></i></a>
 </h3>
 <p>Since all of the multivariate statistics can be transformed for a comparison with a univariate <span class="math inline">\(\mathsf{F}\)</span> distribution, we can estimate partial effect size as before. The package <code>effectsize</code> offers a measure of partial <span class="math inline">\(\widehat{\eta}^2\)</span> for the multivariate tests.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;I must confess I haven’t checked whether the output is sensical.&lt;/p&gt;"><sup>47</sup></a></p>
 <p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation">(<a href="references.html#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation">Läuter (<a href="references.html#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons.</p>
@@ -450,13 +451,11 @@ Figure 9.3: Scatterplot of observations projected onto the linear discriminants 
 
   <div class="chapter-nav">
 <div class="prev"><a href="replication-crisis.html"><span class="header-section-number">8</span> Replication crisis</a></div>
-<div class="next"><a href="references.html">References</a></div>
+<div class="next"><a href="introduction-to-mixed-models.html"><span class="header-section-number">10</span> Introduction to mixed models</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li>
-<a class="nav-link" href="#repeated-measures-and-multivariate-models"><span class="header-section-number">9</span> Repeated measures and multivariate models</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#data-format">Data format</a></li></ul>
-</li>
+<li><a class="nav-link" href="#repeated-measures-and-multivariate-models"><span class="header-section-number">9</span> Repeated measures and multivariate models</a></li>
 <li>
 <a class="nav-link" href="#repeated-measures"><span class="header-section-number">9.1</span> Repeated measures</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#contrasts-1"><span class="header-section-number">9.1.1</span> Contrasts</a></li>
@@ -465,10 +464,11 @@ Figure 9.3: Scatterplot of observations projected onto the linear discriminants 
 </li>
 <li>
 <a class="nav-link" href="#multivariate-analysis-of-variance"><span class="header-section-number">9.2</span> Multivariate analysis of variance</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#mathematical-complement"><span class="header-section-number">9.2.1</span> Mathematical complement</a></li>
-<li><a class="nav-link" href="#model-fitting"><span class="header-section-number">9.2.2</span> Model fitting</a></li>
-<li><a class="nav-link" href="#model-assumptions-1"><span class="header-section-number">9.2.3</span> Model assumptions</a></li>
-<li><a class="nav-link" href="#power-and-effect-size"><span class="header-section-number">9.2.4</span> Power and effect size</a></li>
+<li><a class="nav-link" href="#data-format"><span class="header-section-number">9.2.1</span> Data format</a></li>
+<li><a class="nav-link" href="#mathematical-complement"><span class="header-section-number">9.2.2</span> Mathematical complement</a></li>
+<li><a class="nav-link" href="#model-fitting"><span class="header-section-number">9.2.3</span> Model fitting</a></li>
+<li><a class="nav-link" href="#model-assumptions-1"><span class="header-section-number">9.2.4</span> Model assumptions</a></li>
+<li><a class="nav-link" href="#power-and-effect-size"><span class="header-section-number">9.2.5</span> Power and effect size</a></li>
 </ul>
 </li>
 </ul>

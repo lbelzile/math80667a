@@ -46,25 +46,15 @@ The next step will be in determining whether we have enough observations to supp
 
 We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly.
 
-```{r}
-#| label: fig-aafulldat
-#| fig-cap: "Jittered scatterplot of individual measurements per participant and stimulus type."
-#| eval: true
-#| echo: false
-ggplot(data = hecedsm::AA21,
-       aes(x = id,
-           group = stimulus,
-           colour = stimulus,
-           y = latency)) +
-    geom_point(position = "jitter") +
-  theme_classic()
-```
+<div class="figure" style="text-align: center">
+<img src="10-mixed_files/figure-html/fig-aafulldat-1.png" alt="Jittered scatterplot of individual measurements per participant and stimulus type." width="85%" />
+<p class="caption">(\#fig:fig-aafulldat)Jittered scatterplot of individual measurements per participant and stimulus type.</p>
+</div>
 
 Figure \@ref(fig:fig-aafulldat) shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.
 
-```{r}
-#| eval: true
-#| echo: true
+
+```r
 library(lmerTest) 
 # fit and tests for mixed models
 options(contrasts = c("contr.sum", "contr.poly"))
@@ -77,17 +67,30 @@ mixedmod <- lmer(
     dplyr::filter(latency > -40))
 # Output parameter estimates
 print(mixedmod)
+#> Linear mixed model fit by REML ['lmerModLmerTest']
+#> Formula: latency ~ stimulus + (1 | id) + (1 | id:stimulus)
+#>    Data: dplyr::filter(hecedsm::AA21, latency > -40)
+#> REML criterion at convergence: 8008
+#> Random effects:
+#>  Groups      Name        Std.Dev.
+#>  id:stimulus (Intercept) 0.737   
+#>  id          (Intercept) 2.268   
+#>  Residual                6.223   
+#> Number of obs: 1227, groups:  id:stimulus, 36; id, 12
+#> Fixed Effects:
+#> (Intercept)    stimulus1    stimulus2  
+#>     -10.537       -0.253       -0.139
 ```
 
 We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large.
 
 We can also look globally at the statistical evidence for the 
 
-```{r}
-# Global effect of different faces
-# ANOVA here is type III effects 
-# computed from the 'lmerTest' package
-anova(mixedmod)
+
+```
+#> Type III Analysis of Variance Table with Satterthwaite's method
+#>          Sum Sq Mean Sq NumDF DenDF F value Pr(>F)
+#> stimulus   65.6    32.8     2  23.3    0.85   0.44
 ```
 
 The global $F$ test of significance for stimulus is based on an approximation; the denominator degrees of freedom for the approximate $F$ statistic are based on Satterthwaite's method, which provides a correction. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in Figure \@ref(fig:fig-aafulldat).
@@ -106,9 +109,8 @@ To fit the linear mixed model with a random effect for both children `id` and `l
 
 We modify the data to keep only 5 and 6 years old students, since most older kids verbalized during the task and we would have large disbalance (14 ten years old out of 235, and 19 out of 269 seven years old). We also exclude the point-and-name task, since verbalization was part of the instruction. This leaves us with $1419$ observations and we can check that there are indeed enough children in each condition to get estimates.
 
-```{r}
-#| eval: true
-#| echo: true
+
+```r
 data(MULTI21_D2, package = "hecedsm")
 MULTI21_D2_sub <- MULTI21_D2 |>
   dplyr::filter(
@@ -119,13 +121,16 @@ MULTI21_D2_sub <- MULTI21_D2 |>
                            labels = c("no", "yes")),
     age = factor(age)) # drop unused age levels
 xtabs(~ age + verbalization, data = MULTI21_D2_sub)
+#>      verbalization
+#> age    no yes
+#>   5yo 106 334
+#>   6yo  56 450
 ```
 
 Given that we have multiple students of every age group, we can include two-way and three-way interactions in the $2^3$ design. We also include random effects for the student and the lab.
 
-```{r}
-#| eval: true
-#| echo: true
+
+```r
 library(lmerTest)
 library(emmeans)
 hmod <- lmer(
@@ -137,8 +142,8 @@ hmod <- lmer(
 
 We focus here on selected part of the output from `summary()` giving the estimated variance terms.
 
-```{r}
-#| echo: true
+
+```r
 #> Random effects:
 #>  Groups   Name        Variance Std.Dev.
 #>  id:lab   (Intercept) 0.3587   0.599   
@@ -148,62 +153,52 @@ We focus here on selected part of the output from `summary()` giving the estimat
 ```
 
 
-We can interpret the results as follows: the total variance is the sum of the  `id`, `lab` and `residual` variances components give us an all but negligible effect of lab with `r round(100*(hmod@theta[2]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent of the total variance, versus `r round(100*(hmod@theta[1]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn't add much to the correlation.
+We can interpret the results as follows: the total variance is the sum of the  `id`, `lab` and `residual` variances components give us an all but negligible effect of lab with 7 percent of the total variance, versus 40.5 percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn't add much to the correlation.
 
-```{r}
-#| eval: true
-#| echo: true
+
+```r
 anova(hmod, ddf = "Kenward-Roger")
+#> Type III Analysis of Variance Table with Kenward-Roger's method
+#>                          Sum Sq Mean Sq NumDF DenDF F value Pr(>F)    
+#> age                       20.50   20.50     1   459   30.05  7e-08 ***
+#> timing                     3.25    3.25     1   469    4.76   0.03 *  
+#> verbalization             13.61   13.61     1   459   19.94  1e-05 ***
+#> age:timing                 0.24    0.24     1   469    0.36   0.55    
+#> age:verbalization          0.08    0.08     1   462    0.12   0.72    
+#> timing:verbalization       2.64    2.64     1   469    3.88   0.05 *  
+#> age:timing:verbalization   0.27    0.27     1   469    0.40   0.53    
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 # Check estimated marginal means for age
 emm <- emmeans(hmod, specs = "age")
 emm
+#>  age emmean     SE   df lower.CL upper.CL
+#>  5yo   1.85 0.0914 35.8     1.67     2.04
+#>  6yo   2.44 0.1053 60.9     2.23     2.65
+#> 
+#> Results are averaged over the levels of: timing, verbalization 
+#> Degrees-of-freedom method: kenward-roger 
+#> Confidence level used: 0.95
 # Pairwise differences
 pairdiff <- emm |> pairs()
 pairdiff
+#>  contrast  estimate    SE  df t.ratio p.value
+#>  5yo - 6yo    -0.59 0.108 459  -5.480  <.0001
+#> 
+#> Results are averaged over the levels of: timing, verbalization 
+#> Degrees-of-freedom method: kenward-roger
 ```
 
 
-The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means for age with an estimated correct number of words of `r summary(emm)$emmean[1]` (95% confidence interval of [`r summary(emm)$lower.CL[1]`, `r summary(emm)$upper.CL[1]`]) words out of 5 for the 5 years olds and `r summary(emm)$emmean[2]` (95% CI [`r summary(emm)$lower.CL[2]`, `r summary(emm)$upper.CL[2]`]) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward--Roger method are much fewer, respectively `r summary(emm)$df[1]` and `r summary(emm)$df[2]` for five and six years old.
+The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means for age with an estimated correct number of words of 1.854 (95% confidence interval of [1.669, 2.04]) words out of 5 for the 5 years olds and 2.445 (95% CI [2.234, 2.655]) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward--Roger method are much fewer, respectively 35.827 and 60.944 for five and six years old.
 
-The $t$-test for the pairwise difference of the marginal effect is `r -summary(pairdiff)$estimate` words with standard error `r summary(pairdiff)$SE`. Judging from the output, the degrees of freedom calculation for the pairwise $t$-test are erroneous --- they seem to be some average between the number of entries for the five years old (`r table(MULTI21_D2_sub$age)[1]`) and six years old (`r table(MULTI21_D2_sub$age)[2]`), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.
+The $t$-test for the pairwise difference of the marginal effect is 0.59 words with standard error 0.108. Judging from the output, the degrees of freedom calculation for the pairwise $t$-test are erroneous --- they seem to be some average between the number of entries for the five years old (440) and six years old (506), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.
 
 We can easily see the limited interaction and strong main effects from the interaction plot in Figure \@ref(fig:fig-interactionrecall). The confidence intervals are of different width because of the sample inbalance.
 
-```{r}
-#| label: fig-interactionrecall
-#| fig-cap: "Interaction plot for the recall task for younger children."
-#| eval: true
-#| echo: false
-emm_full <- summary(emmeans(
-  hmod, 
-  specs = c("age", 
-            "timing", 
-            "verbalization")))
-emm_full$age <- factor(rep(c(5L, 6L), 
-                    length.out = 8))
-emm_full <- tibble::as_tibble(emm_full)
-library(ggplot2)
-ggplot(data = emm_full,
-       mapping = aes(x = age,
-               color = verbalization,
-               group = verbalization,
-               y = emmean,
-               ymax = emmean + 
-                 qt(0.975, df = df)*SE,
-               ymin = emmean - 
-                 qt(0.975, df = df)*SE)
-       ) + 
-  geom_linerange(orientation = "x") +
-  geom_point() +
-  geom_line() + 
-  facet_wrap(~ timing) +
-  labs(x = "age group (years)", 
-       y = "",
-       title = "Mean number of correct words per task and age group",
-       subtitle = "Older children and those who verbalize remember more.",
-       caption = "Mean with 95% confidence intervals") + 
-  theme_classic() + 
-  theme(legend.position = "bottom")
-```
+<div class="figure" style="text-align: center">
+<img src="10-mixed_files/figure-html/fig-interactionrecall-1.png" alt="Interaction plot for the recall task for younger children." width="85%" />
+<p class="caption">(\#fig:fig-interactionrecall)Interaction plot for the recall task for younger children.</p>
+</div>
 
 :::

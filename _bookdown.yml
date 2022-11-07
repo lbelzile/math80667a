@@ -20,6 +20,7 @@ rmd_files: [
   "07-power_effect.Rmd",
   "08-reproducibility_crisis.Rmd",
   "09-repeated.Rmd",
+  "10-mixed.Rmd",
   "references.Rmd"
 ]
 
