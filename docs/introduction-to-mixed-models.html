@@ -130,7 +130,7 @@ Figure 10.1: Jittered scatterplot of individual measurements per participant and
 </p>
 </div>
 <p>Figure <a href="introduction-to-mixed-models.html#fig:fig-aafulldat">10.1</a> shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span> </span>
 <span><span class="co"># fit and tests for mixed models</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></span>
@@ -170,7 +170,7 @@ which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The r
 <p>The task order is a within-subject factor, whereas timing and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).</p>
 <p>To fit the linear mixed model with a random effect for both children <code>id</code> and <code>lab</code>: since children are nested in lab, we must specify the random effects via <code>(1 | id:lab) + (1 | lab)</code> if <code>id</code> are not unique.</p>
 <p>We modify the data to keep only 5 and 6 years old students, since most older kids verbalized during the task and we would have large disbalance (14 ten years old out of 235, and 19 out of 269 seven years old). We also exclude the point-and-name task, since verbalization was part of the instruction. This leaves us with <span class="math inline">\(1419\)</span> observations and we can check that there are indeed enough children in each condition to get estimates.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MULTI21_D2</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
 <span><span class="va">MULTI21_D2_sub</span> <span class="op">&lt;-</span> <span class="va">MULTI21_D2</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
@@ -186,7 +186,7 @@ which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The r
 <span><span class="co">#&gt;   5yo 106 334</span></span>
 <span><span class="co">#&gt;   6yo  56 450</span></span></code></pre></div>
 <p>Given that we have multiple students of every age group, we can include two-way and three-way interactions in the <span class="math inline">\(2^3\)</span> design. We also include random effects for the student and the lab.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans">emmeans</a></span><span class="op">)</span></span>
 <span><span class="va">hmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span></span>
@@ -195,7 +195,7 @@ which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The r
 <span><span class="co"># Parameter estimates</span></span>
 <span><span class="co">#summary(hmod)</span></span></code></pre></div>
 <p>We focus here on selected part of the output from <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> giving the estimated variance terms.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#&gt; Random effects:</span></span>
 <span><span class="co">#&gt;  Groups   Name        Variance Std.Dev.</span></span>
 <span><span class="co">#&gt;  id:lab   (Intercept) 0.3587   0.599   </span></span>
@@ -203,7 +203,7 @@ which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The r
 <span><span class="co">#&gt;  Residual             0.6823   0.826   </span></span>
 <span><span class="co">#&gt; Number of obs: 946, groups:  id:lab, 473; lab, 17</span></span></code></pre></div>
 <p>We can interpret the results as follows: the total variance is the sum of the <code>id</code>, <code>lab</code> and <code>residual</code> variances components give us an all but negligible effect of lab with 7 percent of the total variance, versus 40.5 percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn’t add much to the correlation.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">hmod</span>, ddf <span class="op">=</span> <span class="st">"Kenward-Roger"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Type III Analysis of Variance Table with Kenward-Roger's method</span></span>
 <span><span class="co">#&gt;                          Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)    </span></span>

@@ -308,13 +308,28 @@ Once the data are in a suitable format, we fit the multivariate model with the `
 We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.
 
 
+```r
+# Pivot to wide format
+AA21_mw <- AA21_m |>
+  tidyr::pivot_wider(names_from = stimulus, # within-subject factor labels
+                     values_from = latency) # response measurements 
+# Model with each variable with a different mean
+# Specify all columns with column bind 
+# left of the ~, following 
+options(contrasts = c("contr.sum", "contr.poly"))
+mlm <- lm(cbind(real, GAN1, GAN2) ~ 1,
+          data = AA21_mw)
+```
 
 Since the within-subject factor `stimulus` disappeared when we consider the multivariate response, we only specify a global mean vector $\boldsymbol{\mu}$ via `~1`. In general, we would add the between-subject factors to the right-hand side of the equation. Our hypothesis of equal mean translates into the hypothesis $\boldsymbol{\mu} = \mu\boldsymbol{1}_3$, which can be imposed using a call to `anova`. The output returns the statistic and $p$-values including corrections for sphericity.
 
 We can also use `emmeans` to set up post-hoc contrasts. Since we have no variable, we need to set in `specs` the repeated measure variable appearing on the left hand side of the formula; the latter is labelled `rep.meas` by default.
 
 
-```
+```r
+# Test the multivariate model against
+# equal mean (X = ~1)
+anova(mlm, X = ~1, test = "Spherical")
 #> Analysis of Variance Table
 #> 
 #> 
@@ -327,6 +342,10 @@ We can also use `emmeans` to set up post-hoc contrasts. Since we have no variabl
 #>             Df   F num Df den Df Pr(>F) G-G Pr H-F Pr
 #> (Intercept)  1 0.5      2     22  0.615  0.567  0.587
 #> Residuals   11
+# Follow-up contrast comparisons
+library(emmeans)
+emm_mlm <- emmeans(mlm, specs = "rep.meas") 
+emm_mlm |> contrast(method = list(c(1,-0.5,-0.5)))
 #>  contrast         estimate    SE df t.ratio p.value
 #>  c(1, -0.5, -0.5)   -0.202 0.552 11  -0.366  0.7210
 ```
@@ -432,7 +451,11 @@ The first assumption is that of multivariate normality of the response. The cent
 
 
 
-```
+```r
+# Shapiro-Wilk normality test
+# Must transpose the residuals 
+# to get a 3 by n matrix
+mvnormtest::mshapiro.test(U = t(resid(mmod)))
 #> 
 #> 	Shapiro-Wilk normality test
 #> 
@@ -443,7 +466,11 @@ The first assumption is that of multivariate normality of the response. The cent
 The second assumption is that the covariance matrix is the same for all individuals, regardless of their experimental group assignment. We could try checking whether a covariance model in each group: under multivariate normal assumption, this leads to a test statistic called Box's $M$ test. Unfortunately, this test is quite sensitive to departures from the multivariate normal assumption and, if the $p$-value is small, it may have to do more with the normality than the heterogeneity.
 
 
-```
+```r
+with(BSJ92, 
+     biotools::boxM(
+       data = cbind(posttest1, posttest2, posttest3),
+       grouping = group))
 #> 
 #> 	Box's M-test for Homogeneity of Covariance Matrices
 #> 
