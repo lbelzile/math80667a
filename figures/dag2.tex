@@ -1,0 +1,35 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usetikzlibrary{positioning}
+\begin{document}
+\tikzset{
+    > = stealth,
+    every node/.append style = {
+        draw = none,
+    },
+    every path/.append style = {
+        arrows = ->,
+    },
+    hidden/.style = {
+        shape = circle,
+        draw = black!80,
+        fill = black!70,
+        inner sep = 1pt,
+        text = white
+    }
+}
+\tikz{
+    \node (m) [hidden] {M$_{1}$};
+    \node (m2) [hidden, fill= violet,right = of m] {M$_{2}$};
+    \node (x) [hidden,below left = of m] {X};
+    \node (y) [hidden,below right = of m] {Y};
+
+    \path (x) edge (y);
+    \path (x) edge (m);
+    \path (m) edge (y);
+    \path (m) edge (m2);
+    \path (m2) edge (y);
+}
+\end{document}

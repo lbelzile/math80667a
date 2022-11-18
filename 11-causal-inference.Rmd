@@ -12,11 +12,13 @@ Causal inference is concerned with inferring the effect of an action or manipula
 
 
 
-In an experiment, we can manipulate assignment to treatment $a$ and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid a)$ for different values of the action set $a$. We talk about causation when for treatment ($a=i$) and control ($a=0$), the distributions of $(Y \mid a=i)$ differs from that of $(Y \mid a=0)$. 
+In an experiment, we can manipulate assignment to treatment $a$ and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid X)$ for different values of the action set $X$ (for example, $X$ could be an experimental factor. We talk about causation when for treatment ($X=j$) and control ($X=0$), the distributions of $(Y \mid X=j)$ differs from that of $(Y \mid X=0)$.
 
-The most simple used measure of causation is the **average treatment effect**, which is the difference between the population averages of treated and control groups,
+The fundamental problem of causal inference is that we typically cannot compare the outcome for all different treatments for the same individuals, i.e., we can only observe the outcome for one treatment $X=j$, $(Y_i \mid X=j)$.
+
+Rather than look at the individual treatment effect, we must focus on the population effects. The most common measure of causation is the **average treatment effect**, which is the difference between the population averages of treatment group $j$ and the control group,
 \begin{align*}
-\textsf{ATE}_i = \mathsf{E}(Y \mid a=i) - \mathsf{E}(Y \mid a=0)
+\textsf{ATE}_j = \mathsf{E}(Y \mid X=j) - \mathsf{E}(Y \mid X=0)
 \end{align*}
 In experimental designs, we can target the average treatment effect if our subjects comply with their treatment assignment and if we randomize the effect and use a random sample which is representative of the population.
 
@@ -62,16 +64,123 @@ These are represented in Figure \@ref(fig:fig-causalrelations). In the graph, $X
 knitr::include_graphics("figures/causal_dag_aheiss.jpg")
 ```
 
-It is *essential* to determine via logic or otherwise (experiments can help!) the direction of the relationship, lest we run into trouble. Popular statistical tools such as linear regression model correlation, which is symmetric and so cannot help the direction of the arrows in the directed acyclic graph. Why does it matter what kind of relation exists? For one, the conclusions we will draw depend on the nature of the relation. For example, we could eliminate the effect of a confounding variable by controlling in a regression model or by stratifying for different values of the confounders in order to extract the causal estimate of $X$ on $Y$. However, the same strategy with a collider would backfire and we would get erroneous conclusions. A recent example of collider is @Kowal:2021, who reportedly found out couples with more children were more unhappy. As reported by Richard McElreath, controlling for mariage is incorrect since unhappy couples tend to divorce, but families with large number of children are less likely to divorce! This invalides the claim and findings of the paper.
+In an experimental design, confounding effects from the experimental treatment $X$ to the response $Y$ are controlled by randomization or sample selection: all incoming arrows inside $X$ from other variables are removed. If we include additional variables in the model which happen to be colliders, then we won't recover the causal effect of interest. Addition of mediators will let us filter the effect due to $Z$ from the direct effect of $X$.
+
+It is *essential* to determine via logic or otherwise (experiments can help!) the direction of the relationship, lest we run into trouble. Popular statistical tools such as linear regression capture correlation, which is symmetric and so cannot help the direction of the arrows in the directed acyclic graph. 
+
+The conclusions we will draw from statistical models depend on the nature of the relation. For example, in an observational setting, we could eliminate the effect of a confounding variable by controlling in a regression model or by stratifying for different values of the confounders in order to extract the causal estimate of $X$ on $Y$. However, the same strategy with a collider would backfire and we would get erroneous conclusions: @Kowal:2021 reportedly found out married couples with more children were less happy. As Richard McElreath hinted, controlling for marriage (through sample selection) is incorrect since unhappy couples tend to divorce, but families with many children are less likely to divorce! This invalides the reasoning of the paper.
 
 
 
 
-The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then highlight the fundamental differences between experimental and observational studies. Another section will focus on the study of interactions between variables (also called moderation in humanities), when the effect depends on other variables and differs depending on characteristics. 
+The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by @Baron.Kenny:1986. We focus on the hidden assumptions that can undermine causal claims of mediation.
+
+
+In a randomized experiment, we can check the average outcome of a manipulation by comparing groups: assuming random sampling, these conclusions can be broadly generalized to the population of interest from which the sample is drawn. However, it may be that the effect of the treatment depends on other variables: cultural differences, gender or education may change. In the statistical model, inclusion of interaction terms (typically product of the moderator variable with the factor encoding the experimental sub-condition) will allow us to estimate those differences. 
+
+## Mediation
+
+In order to do inference and tests relations, we need to add to our logical causal model represented by a directed acyclic graph a data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won't be verifiable, in part because we cannot know for sure about all potential confounders, but also because our.
+
+Following @Pearl:2016, we use $Y_i(x, m)$ to denote the outcome for individual $i$ with explanatory or experimental covariate/factor $x$ and mediator $m$. The 
+
+
+Given pre-treatment covariates $W$, potential outcomes for mediation and treatment are conditionally independent of treatment assignment.
+$$ Y_i(x', m), M_i(x) \perp\mkern-10mu\perp X_i \mid W_i = w$$
+Given pre-treatment covariates and observed treatment, potential outcomes are independent of mediation.
+$$ Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, W_i = w$$
+
+The first condition is satisfied in experimental studies due to randomization.
+
+
+
+
+When measuring effects in psychology and marketing, it will often be the case that the conceptual causal model includes variables that cannot be directly measured. The proxy, as in Figure \@ref(fig:xkcd2652) add an additional layer of complexity and potential sources of confounding.
+
+```{r xkcd2652, out.width = '60%', fig.cap = "xkcd comic [2652 (Proxy Variable) by Randall Munroe](https://xkcd.com/2533/). Alt text: Our work has produced great answers. Now someone just needs to figure out which questions they go with. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)."}
+knitr::include_graphics("figures/xkcd2652_proxy_variable.png")
+```
+
+---
+# Total effect
+
+**Total effect**: overall impact of $X$ (both through $M$ and directly)
+
+$$\begin{align*}\mathsf{TE}(x, x^*) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x^*)]\end{align*}$$
+
+This can be generalized for continuous $X$ to any pair of values $(x_1, x_2)$.
+
+.pull-left[
+.box-inv-3[
+**X** → **M** → **Y** <br>plus <br>**X** → **Y**
+]
+]
+.pull-right[
+```{r moderation, echo=FALSE, fig.width=4, fig.height=2, out.width="80%"}
+dagify(
+  Y ~ X + M,
+  M ~ X,
+  coords = list(x = c(X = 1, Y = 3, M = 2),
+                y = c(X = 1, Y = 1, M = 2)),
+  exposure = "X",
+  outcome = "Y"
+) %>% 
+  tidy_dagitty() %>% 
+  node_status() %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_point(aes(color = status), size = 15) +
+  geom_dag_text(color = "white", size = 5) +
+  scale_color_manual(values = c("#FF4136", "#0074D9"),
+                     na.value = "#7FDBFF") +
+  guides(color = "none") +
+  theme_dag()
+```
+]
+---
+# Average controlled direct effect
+
+$$\begin{align*}\textsf{CDE}(m, x, x^*) &= \mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x^*, m=m) \\&= \mathsf{E}(Y_{x, m} -Y_{x^*, m}) \end{align*}$$
+Expected population change in response when the experimental factor changes from $x$ to $x^*$ and the mediator is set to a fixed value $m$.
+
+---
+# Direct and indirect effects
+
+**Natural direct effect**: $\textsf{NDE}(x, x^*) = \mathsf{E}(Y_{x, M_{x^*}} - Y_{x^*,  M_{x^*}})$    
+   - expected change in $Y$ under treatment $x$ if $M$ is set to whatever value it would take under control $x^*$
+
+
+The **natural indirect effect** ($\mathsf{NIE}$) is the expected change in the response $Y$ if we set our experimental value $X$ to its control value and change the mediator value which it would attain under $x$,
+$$\textsf{NIE}(x, x^*) = \mathsf{E}(Y_{x^*, M_{x}} - Y_{x^*,  M_{x^*}})$$
+
+
+
+One such assumption is **sequential ignorability**
+Given pre-treatment covariates , potential outcomes for mediation and
+treatment are conditionally independent of treatment assignment.
+
+$$\begin{align*}
+X &= f_X(U_X)\\
+M &= f_M(X, U_M)\\
+Y &= f_Y(X, M, U_Y)
+\end{align*}$$
+with $U_X, U_M, U_Y$ representing unexplained variability affecting each of the random variables:
+
+- treatment/experimental factor $X$
+- mediator $M$
+- response $Y$
+
+
+# Counterfactual framework
+
+$$\begin{align*}
+M_x &= f_M(x, U), \\ Y_x &= f_Y(x, M_x, U),\\ Y_{x, m} &= f_Y(x, m, U)
+\end{align*}$$
+
+
+## Linear mediation model
+
 
 One of the most popular model in social sciences is the linear mediation model. We will present in details the basis for inference and highlight the assumptions of the model required for the results to have a causal interpretation and robustness of the results to model misspecification.
 
-In a randomized experiment, we can check the average outcome of a manipulation by comparing groups: assuming random sampling, these conclusions can be broadly generalized to the population of interest from which the sample is drawn. However, it may be that the effect of the treatment depends on other variables: cultural differences, gender or education may change. In the statistical model, inclusion of interaction terms (typically product of the moderator variable with the factor encoding the experimental subcondition) will allow us to estimate those differences. 
 
-
-<!-- Sequential ignorability assumption, SUTVA, -->

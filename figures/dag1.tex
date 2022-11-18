@@ -1,0 +1,55 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\renewcommand{\familydefault}{\sfdefault}
+\usetikzlibrary{positioning}
+\begin{document}
+\tikzset{
+    > = stealth,
+    every node/.append style = {
+        draw = none,
+    },
+    every path/.append style = {
+        arrows = ->,
+    },
+    hidden/.style = {
+        shape = circle,
+        draw = black!80,
+        fill = black!70,
+        inner sep = 1pt,
+        text = white
+    }
+}
+\tikz{
+    \node (a) {$C_{\scriptscriptstyle \text{X,M}}$};
+    \node (z) [hidden,right = of a] {M};
+    \node (b) [right = of z] {$C_{\scriptscriptstyle \text{M,Y}}$};
+    \node (x) [hidden,below left = of z] {X};
+    \node (y) [hidden,below right = of z] {Y};
+    \node (d) [below = of z] {};
+    \node (c) [below = of d] {$C_{\scriptscriptstyle \text{X,Y}}$};
+    \path [dotted] (a) edge (x);
+    \path [dotted] (a) edge (z);
+    \path [dotted] (b) edge (y);
+    \path [dotted] (b) edge (z);
+    \path [dotted] (c) edge (x);
+    \path [dotted] (c) edge (y);
+    \path (x) edge (y);
+    \path (x) edge (z);
+    \path (z) edge (y);
+}
+
+\tikz{
+    \node (a) {\phantom{$C_{\scriptscriptstyle \text{X,M}}$}};
+    \node (z) [hidden,right = of a] {M};
+    \node (b) [right = of z] {$C_{\scriptscriptstyle \text{M,Y}}$};
+    \node (x) [hidden,below left = of z] {X};
+    \node (y) [hidden,below right = of z] {Y};
+    \node (c) [below right = of x] {\phantom{$C_{\scriptscriptstyle \text{X,Y}}$}};
+    \path [dotted] (b) edge (y);
+    \path [dotted] (b) edge (z);
+    \path (x) edge (y);
+    \path (x) edge (z);
+    \path (z) edge (y);
+}
+\end{document}
