@@ -25,8 +25,8 @@ It is important to note that most research questions cannot be answered by simpl
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/xkcd2569_hypothesis_generation.png" alt="xkcd comic [2569 (Hypothesis generation) by Randall Munroe](https://xkcd.com/605/). Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="60%" />
-<p class="caption">(\#fig:xkcd2569)xkcd comic [2569 (Hypothesis generation) by Randall Munroe](https://xkcd.com/605/). Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/).</p>
+<img src="figures/xkcd2569_hypothesis_generation.png" alt="xkcd comic [2569 (Hypothesis generation) by Randall Munroe](https://xkcd.com/2569/). Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="60%" />
+<p class="caption">(\#fig:xkcd2569)xkcd comic [2569 (Hypothesis generation) by Randall Munroe](https://xkcd.com/2569/). Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/).</p>
 </div>
 
 ## Sampling variability

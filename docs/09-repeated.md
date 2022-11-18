@@ -28,7 +28,9 @@ We consider an experiment conducted in a graduate course at HEC, *Information Te
 The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. Repeated measures were collected on 9 participants given in the database `AA21`, who were expected to look at 120 faces. Not all participants completed the full trial, as can be checked by looking at the cross-tabs of the counts
 
 
-```
+```r
+data(AA21, package = "hecedsm")
+xtabs(~stimulus + id, data = AA21)
 #>         id
 #> stimulus  1  2  3  4  5  6  7  8  9 10 11 12
 #>     real 30 32 34 32 38 29 36 36 40 30 39 33
@@ -87,6 +89,14 @@ Unfortunately, the `emmeans` package analysis for object fitted using `aov` will
 
 
 
+```r
+afexmod <- afex::aov_ez(
+  id = "id",           # subject id
+  dv = "latency",      # response variable
+  within = "stimulus", # within-subject factor
+  data = AA21,
+  fun_aggregate = mean)
+```
 
 
 
@@ -95,7 +105,16 @@ Unfortunately, the `emmeans` package analysis for object fitted using `aov` will
 The `afex` package has different functions for computing the within-subjects design and the `aov_ez` specification, which allow people to list within and between-subjects factor separately with subject identifiers may be easier to understand. It also has an argument, `fun_aggregate`, to automatically average replications.
 
 
-```
+```r
+# Set up contrast vector
+cont_vec <- list(
+  "real vs GAN" = c(1, -0.5, -0.5))
+library(emmeans)
+# Correct output
+afexmod |>
+  emmeans::emmeans(
+    spec = "stimulus", 
+    contr = cont_vec)
 #> $emmeans
 #>  stimulus emmean    SE df lower.CL upper.CL
 #>  real      -10.8 0.942 11    -12.8    -8.70
@@ -107,6 +126,12 @@ The `afex` package has different functions for computing the within-subjects des
 #> $contrasts
 #>  contrast    estimate    SE df t.ratio p.value
 #>  real vs GAN   -0.202 0.552 11  -0.366  0.7210
+# Incorrect output - 
+# note the wrong degrees of freedom
+fixedmod |> 
+  emmeans::emmeans(
+    spec = "stimulus", 
+    contr = cont_vec)
 #> $emmeans
 #>  stimulus emmean    SE   df lower.CL upper.CL
 #>  real      -10.8 0.763 16.2    -12.4    -9.15
@@ -128,12 +153,12 @@ The `afex` package has different functions for computing the within-subjects des
 
 The validity of the $F$ statistic null distribution relies on the model having the correct structure.
 
-In repeated-measure analysis of variance, we assume again that each variance has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.^[Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.]
+In repeated-measure analysis of variance, we assume again that each measurement has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.^[Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.]
 
-What if the measurements have unequal variance or different correlations? We could fit a fully multivariate model that accounts for the 
-While this is automatic with two measurements (as there is a single correlation), we can check this by comparing the fit of a model with an unstructured covariance (difference variances for each  and correlations for each pair of variable)
+What if the within-subject measurements have unequal variance or the correlation between those responses differs? 
 
-Since we care only about differences in treatment, can get away with a weaker assumption than compound symmetry (equicorrelation) by relying instead on *sphericity*, which holds if the variance of the difference between treatment is constant.
+Since we care only about differences in treatment, can get away with a weaker assumption than compound symmetry (equicorrelation) by relying instead on *sphericity*, which holds if the variance of the difference between treatment is constant. Sphericity is not a relevant concept when there is only two measurements (as there is a single correlation); we could check this by comparing the fit of a model with an unstructured covariance (difference variances for each  and correlations for each pair of variable)
+
 
 The most popular approach to handling correlation in tests is a two-stage approach: first, check for sphericity (using, e.g., Mauchly's test of sphericity). If the null hypothesis of sphericity is rejected, one can use a correction for the $F$ statistic by modifying the parameters of the Fisher $\mathsf{F}$ null distribution used as benchmark.
 
@@ -145,7 +170,8 @@ There are three widely used corrections: Greenhouse--Geisser, Huynh--Feldt and B
 Using the `afex` functions, we get the result for Mauchly's test of sphericity and the $p$ values from using either correction method
 
 
-```
+```r
+summary(afexmod)
 #> 
 #> Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
 #> 
@@ -174,7 +200,7 @@ Using the `afex` functions, we get the result for Mauchly's test of sphericity a
 
 :::{ .example name="Visual acuity"}
 
-We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection.  The mixed analysis of variance includes the experimental factors `adaptation` (2 levels, within), `fontsize` (4 levels, within), `position` (5 levels, within) and visual  `acuity` (2 levels, within). There are a total of 1760 measurements for 44 participants in `LBJ17_S1A`, balanced.
+We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection.  The mixed analysis of variance includes the experimental factors `adaptation` (2 levels, within), `fontsize` (4 levels, within), `position` (5 levels, within) and visual  `acuity` (2 levels, between). There are a total of 1760 measurements for 44 participants in `LBJ17_S1A`, balanced.
 The within-subject factors give a total of 40 measurements ($2 \times 4 \times 5$) per participant; all of these factors are crossed and we can estimate interactions for them. The subjects are nested within visual acuity groups, The participants were dichotomized in two groups based on their visual acuity, obtained from preliminary checks, using a median split.
 
 To fit the model, we rely on the `aov_ez` function from `afex`. By default, the latter includes all interactions.

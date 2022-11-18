@@ -7,7 +7,7 @@
 <title>9 Repeated measures and multivariate models | Experimental Design and Statistical Methods</title>
 <meta name="author" content="Léo Belzile">
 <meta name="description" content="So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many...">
-<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
 <meta property="og:title" content="9 Repeated measures and multivariate models | Experimental Design and Statistical Methods">
 <meta property="og:type" content="book">
 <meta property="og:description" content="So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many...">
@@ -77,6 +77,7 @@
 <li><a class="" href="replication-crisis.html"><span class="header-section-number">8</span> Replication crisis</a></li>
 <li><a class="active" href="repeated-measures-and-multivariate-models.html"><span class="header-section-number">9</span> Repeated measures and multivariate models</a></li>
 <li><a class="" href="introduction-to-mixed-models.html"><span class="header-section-number">10</span> Introduction to mixed models</a></li>
+<li><a class="" href="causal-inference.html"><span class="header-section-number">11</span> Causal inference</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -104,11 +105,14 @@
 <div class="example">
 <p><span id="exm:unlabeled-div-23" class="example"><strong>Example 9.1  (Happy fakes) </strong></span>We consider an experiment conducted in a graduate course at HEC, <em>Information Technologies and Neuroscience</em>, in which PhD students gathered electroencephalography (EEG) data. The project focused on human perception of deepfake image created by a generative adversarial network: Amirabdolahian and Ali-Adeeb (2021) expected the attitude towards real and computer generated image of people smiling to change.</p>
 <p>The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. Repeated measures were collected on 9 participants given in the database <code>AA21</code>, who were expected to look at 120 faces. Not all participants completed the full trial, as can be checked by looking at the cross-tabs of the counts</p>
-<pre><code>#&gt;         id
-#&gt; stimulus  1  2  3  4  5  6  7  8  9 10 11 12
-#&gt;     real 30 32 34 32 38 29 36 36 40 30 39 33
-#&gt;     GAN1 32 31 40 33 38 29 39 31 39 28 35 34
-#&gt;     GAN2 31 33 37 34 38 29 34 36 40 33 35 32</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">AA21</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/xtabs.html">xtabs</a></span><span class="op">(</span><span class="op">~</span><span class="va">stimulus</span> <span class="op">+</span> <span class="va">id</span>, data <span class="op">=</span> <span class="va">AA21</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         id</span></span>
+<span><span class="co">#&gt; stimulus  1  2  3  4  5  6  7  8  9 10 11 12</span></span>
+<span><span class="co">#&gt;     real 30 32 34 32 38 29 36 36 40 30 39 33</span></span>
+<span><span class="co">#&gt;     GAN1 32 31 40 33 38 29 39 31 39 28 35 34</span></span>
+<span><span class="co">#&gt;     GAN2 31 33 37 34 38 29 34 36 40 33 35 32</span></span></code></pre></div>
 <p>The experimental manipulation is encoded in the <code>stimuli</code>, with levels control (<code>real</code>) for real facial images, whereas the others were generated using a generative adversarial network (GAN) with be slightly smiling (<code>GAN1</code>) or extremely smiling (<code>GAN2</code>); the latter looks more fake. While the presentation order was randomized, the order of presentation of the faces within each type is recorded using the <code>epoch</code> variable: this allows us to measure the fatigue effect.</p>
 <p>Since our research question is whether images generated from generative adversarial networks trigger different reactions, we will be looking at pairwise differences with the control.</p>
 <div class="figure" style="text-align: center">
@@ -149,73 +153,97 @@ Figure 9.1: Example of faces presented in Amirabdolahian and Ali-Adeeb (2021): r
 </h3>
 <p>With balanced data, the estimated marginal means coincide with the row averages. If we have a single replication or the average for each subject/condition, we could create a new column with the contrast and then fit a model with an intercept-only (global mean) to check whether the latter is zero. With 12 participants, we should thus expect our test statistic to have 11 degrees of freedom, since one unit is spent on estimating the mean parameter and we have 12 participants.</p>
 <p>Unfortunately, the <code>emmeans</code> package analysis for object fitted using <code>aov</code> will be incorrect: this can be seen by passing a contrast vector and inspecting the degrees of freedom. The <code>afex</code> package includes functionalities that are tailored for within-subject and between-subjects and has an interface with <code>emmeans</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">afexmod</span> <span class="op">&lt;-</span> <span class="fu">afex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/afex/man/aov_car.html">aov_ez</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="st">"id"</span>,           <span class="co"># subject id</span></span>
+<span>  dv <span class="op">=</span> <span class="st">"latency"</span>,      <span class="co"># response variable</span></span>
+<span>  within <span class="op">=</span> <span class="st">"stimulus"</span>, <span class="co"># within-subject factor</span></span>
+<span>  data <span class="op">=</span> <span class="va">AA21</span>,</span>
+<span>  fun_aggregate <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>afex</code> package has different functions for computing the within-subjects design and the <code>aov_ez</code> specification, which allow people to list within and between-subjects factor separately with subject identifiers may be easier to understand. It also has an argument, <code>fun_aggregate</code>, to automatically average replications.</p>
-<pre><code>#&gt; $emmeans
-#&gt;  stimulus emmean    SE df lower.CL upper.CL
-#&gt;  real      -10.8 0.942 11    -12.8    -8.70
-#&gt;  GAN1      -10.8 0.651 11    -12.3    -9.40
-#&gt;  GAN2      -10.3 0.662 11    -11.8    -8.85
-#&gt; 
-#&gt; Confidence level used: 0.95 
-#&gt; 
-#&gt; $contrasts
-#&gt;  contrast    estimate    SE df t.ratio p.value
-#&gt;  real vs GAN   -0.202 0.552 11  -0.366  0.7210
-#&gt; $emmeans
-#&gt;  stimulus emmean    SE   df lower.CL upper.CL
-#&gt;  real      -10.8 0.763 16.2    -12.4    -9.15
-#&gt;  GAN1      -10.8 0.763 16.2    -12.4    -9.21
-#&gt;  GAN2      -10.3 0.763 16.2    -11.9    -8.69
-#&gt; 
-#&gt; Warning: EMMs are biased unless design is perfectly balanced 
-#&gt; Confidence level used: 0.95 
-#&gt; 
-#&gt; $contrasts
-#&gt;  contrast    estimate    SE df t.ratio p.value
-#&gt;  real vs GAN   -0.202 0.494 22  -0.409  0.6870</code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Set up contrast vector</span></span>
+<span><span class="va">cont_vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"real vs GAN"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans">emmeans</a></span><span class="op">)</span></span>
+<span><span class="co"># Correct output</span></span>
+<span><span class="va">afexmod</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span></span>
+<span>    spec <span class="op">=</span> <span class="st">"stimulus"</span>, </span>
+<span>    contr <span class="op">=</span> <span class="va">cont_vec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $emmeans</span></span>
+<span><span class="co">#&gt;  stimulus emmean    SE df lower.CL upper.CL</span></span>
+<span><span class="co">#&gt;  real      -10.8 0.942 11    -12.8    -8.70</span></span>
+<span><span class="co">#&gt;  GAN1      -10.8 0.651 11    -12.3    -9.40</span></span>
+<span><span class="co">#&gt;  GAN2      -10.3 0.662 11    -11.8    -8.85</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $contrasts</span></span>
+<span><span class="co">#&gt;  contrast    estimate    SE df t.ratio p.value</span></span>
+<span><span class="co">#&gt;  real vs GAN   -0.202 0.552 11  -0.366  0.7210</span></span>
+<span><span class="co"># Incorrect output - </span></span>
+<span><span class="co"># note the wrong degrees of freedom</span></span>
+<span><span class="va">fixedmod</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span></span>
+<span>    spec <span class="op">=</span> <span class="st">"stimulus"</span>, </span>
+<span>    contr <span class="op">=</span> <span class="va">cont_vec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $emmeans</span></span>
+<span><span class="co">#&gt;  stimulus emmean    SE   df lower.CL upper.CL</span></span>
+<span><span class="co">#&gt;  real      -10.8 0.763 16.2    -12.4    -9.15</span></span>
+<span><span class="co">#&gt;  GAN1      -10.8 0.763 16.2    -12.4    -9.21</span></span>
+<span><span class="co">#&gt;  GAN2      -10.3 0.763 16.2    -11.9    -8.69</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Warning: EMMs are biased unless design is perfectly balanced </span></span>
+<span><span class="co">#&gt; Confidence level used: 0.95 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $contrasts</span></span>
+<span><span class="co">#&gt;  contrast    estimate    SE df t.ratio p.value</span></span>
+<span><span class="co">#&gt;  real vs GAN   -0.202 0.494 22  -0.409  0.6870</span></span></code></pre></div>
 </div>
 <div id="sphericity-assumption" class="section level3" number="9.1.2">
 <h3>
 <span class="header-section-number">9.1.2</span> Sphericity assumption<a class="anchor" aria-label="anchor" href="#sphericity-assumption"><i class="fas fa-link"></i></a>
 </h3>
 <p>The validity of the <span class="math inline">\(F\)</span> statistic null distribution relies on the model having the correct structure.</p>
-<p>In repeated-measure analysis of variance, we assume again that each variance has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.&lt;/p&gt;"><sup>46</sup></a></p>
-<p>What if the measurements have unequal variance or different correlations? We could fit a fully multivariate model that accounts for the
-While this is automatic with two measurements (as there is a single correlation), we can check this by comparing the fit of a model with an unstructured covariance (difference variances for each and correlations for each pair of variable)</p>
-<p>Since we care only about differences in treatment, can get away with a weaker assumption than compound symmetry (equicorrelation) by relying instead on <em>sphericity</em>, which holds if the variance of the difference between treatment is constant.</p>
+<p>In repeated-measure analysis of variance, we assume again that each measurement has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.&lt;/p&gt;"><sup>46</sup></a></p>
+<p>What if the within-subject measurements have unequal variance or the correlation between those responses differs?</p>
+<p>Since we care only about differences in treatment, can get away with a weaker assumption than compound symmetry (equicorrelation) by relying instead on <em>sphericity</em>, which holds if the variance of the difference between treatment is constant. Sphericity is not a relevant concept when there is only two measurements (as there is a single correlation); we could check this by comparing the fit of a model with an unstructured covariance (difference variances for each and correlations for each pair of variable)</p>
 <p>The most popular approach to handling correlation in tests is a two-stage approach: first, check for sphericity (using, e.g., Mauchly’s test of sphericity). If the null hypothesis of sphericity is rejected, one can use a correction for the <span class="math inline">\(F\)</span> statistic by modifying the parameters of the Fisher <span class="math inline">\(\mathsf{F}\)</span> null distribution used as benchmark.</p>
 <p>An idea due to Box is to correct the degrees of freedom of the <span class="math inline">\(\mathsf{F}(\nu_1, \nu_2)\)</span> distribution by multiplying them by a common factor <span class="math inline">\(\epsilon&lt;1\)</span> and use <span class="math inline">\(\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)\)</span>. Since the <span class="math inline">\(F\)</span> statistic is a ratio of variances, the <span class="math inline">\(\epsilon\)</span> term would cancel. Using the scaled <span class="math inline">\(\mathsf{F}\)</span> distribution leads to larger <span class="math inline">\(p\)</span>-values, thus accounting for the correlation.</p>
 <p>There are three widely used corrections: Greenhouse–Geisser, Huynh–Feldt and Box correction, which divides by <span class="math inline">\(\nu_1\)</span> both degrees of freedom and gives a very conservative option. The Huynh–Feldt method is reported to be more powerful so should be preferred, but the estimated value of <span class="math inline">\(\epsilon\)</span> can be larger than 1.</p>
 <p>Using the <code>afex</code> functions, we get the result for Mauchly’s test of sphericity and the <span class="math inline">\(p\)</span> values from using either correction method</p>
-<pre><code>#&gt; 
-#&gt; Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
-#&gt; 
-#&gt;             Sum Sq num Df Error SS den Df F value  Pr(&gt;F)    
-#&gt; (Intercept)   4073      1      188     11   238.6 8.4e-09 ***
-#&gt; stimulus         2      2       43     22     0.5    0.62    
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; 
-#&gt; Mauchly Tests for Sphericity
-#&gt; 
-#&gt;          Test statistic p-value
-#&gt; stimulus          0.678   0.143
-#&gt; 
-#&gt; 
-#&gt; Greenhouse-Geisser and Huynh-Feldt Corrections
-#&gt;  for Departure from Sphericity
-#&gt; 
-#&gt;          GG eps Pr(&gt;F[GG])
-#&gt; stimulus  0.757       0.57
-#&gt; 
-#&gt;          HF eps Pr(&gt;F[HF])
-#&gt; stimulus  0.851      0.587</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">afexmod</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Univariate Type III Repeated-Measures ANOVA Assuming Sphericity</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;             Sum Sq num Df Error SS den Df F value  Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; (Intercept)   4073      1      188     11   238.6 8.4e-09 ***</span></span>
+<span><span class="co">#&gt; stimulus         2      2       43     22     0.5    0.62    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Mauchly Tests for Sphericity</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;          Test statistic p-value</span></span>
+<span><span class="co">#&gt; stimulus          0.678   0.143</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Greenhouse-Geisser and Huynh-Feldt Corrections</span></span>
+<span><span class="co">#&gt;  for Departure from Sphericity</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;          GG eps Pr(&gt;F[GG])</span></span>
+<span><span class="co">#&gt; stimulus  0.757       0.57</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;          HF eps Pr(&gt;F[HF])</span></span>
+<span><span class="co">#&gt; stimulus  0.851      0.587</span></span></code></pre></div>
 <div class="example">
-<p><span id="exm:unlabeled-div-24" class="example"><strong>Example 9.2  (Visual acuity) </strong></span>We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection. The mixed analysis of variance includes the experimental factors <code>adaptation</code> (2 levels, within), <code>fontsize</code> (4 levels, within), <code>position</code> (5 levels, within) and visual <code>acuity</code> (2 levels, within). There are a total of 1760 measurements for 44 participants in <code>LBJ17_S1A</code>, balanced.
+<p><span id="exm:unlabeled-div-24" class="example"><strong>Example 9.2  (Visual acuity) </strong></span>We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection. The mixed analysis of variance includes the experimental factors <code>adaptation</code> (2 levels, within), <code>fontsize</code> (4 levels, within), <code>position</code> (5 levels, within) and visual <code>acuity</code> (2 levels, between). There are a total of 1760 measurements for 44 participants in <code>LBJ17_S1A</code>, balanced.
 The within-subject factors give a total of 40 measurements (<span class="math inline">\(2 \times 4 \times 5\)</span>) per participant; all of these factors are crossed and we can estimate interactions for them. The subjects are nested within visual acuity groups, The participants were dichotomized in two groups based on their visual acuity, obtained from preliminary checks, using a median split.</p>
 <p>To fit the model, we rely on the <code>aov_ez</code> function from <code>afex</code>. By default, the latter includes all interactions.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">LBJ_mod</span> <span class="op">&lt;-</span> <span class="fu">afex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/afex/man/aov_car.html">aov_ez</a></span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="st">"id"</span>,     <span class="co"># subject id</span></span>
 <span>  dv <span class="op">=</span> <span class="st">"nerror"</span>, <span class="co"># response</span></span>
@@ -328,7 +356,7 @@ defining covariance matrix estimators. If we write <span class="math inline">\(\
 <p>Once the data are in a suitable format, we fit the multivariate model with the <code>lm</code> function using the sum-to-zero constraints, here imposed globally by changing the <code>contrasts</code> option. Syntax-wise, the only difference with the univariate case is that the response on the left of the tilde sign (<code>~</code>) is now a matrix composed by binding together the vectors with the different responses.</p>
 <div class="example">
 <p><span id="exm:unlabeled-div-25" class="example"><strong>Example 9.3  (Happy fakes - multivariate) </strong></span>We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pivot to wide format</span></span>
 <span><span class="va">AA21_mw</span> <span class="op">&lt;-</span> <span class="va">AA21_m</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">stimulus</span>, <span class="co"># within-subject factor labels</span></span>
@@ -341,7 +369,7 @@ defining covariance matrix estimators. If we write <span class="math inline">\(\
 <span>          data <span class="op">=</span> <span class="va">AA21_mw</span><span class="op">)</span></span></code></pre></div>
 <p>Since the within-subject factor <code>stimulus</code> disappeared when we consider the multivariate response, we only specify a global mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> via <code>~1</code>. In general, we would add the between-subject factors to the right-hand side of the equation. Our hypothesis of equal mean translates into the hypothesis <span class="math inline">\(\boldsymbol{\mu} = \mu\boldsymbol{1}_3\)</span>, which can be imposed using a call to <code>anova</code>. The output returns the statistic and <span class="math inline">\(p\)</span>-values including corrections for sphericity.</p>
 <p>We can also use <code>emmeans</code> to set up post-hoc contrasts. Since we have no variable, we need to set in <code>specs</code> the repeated measure variable appearing on the left hand side of the formula; the latter is labelled <code>rep.meas</code> by default.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Test the multivariate model against</span></span>
 <span><span class="co"># equal mean (X = ~1)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">mlm</span>, X <span class="op">=</span> <span class="op">~</span><span class="fl">1</span>, test <span class="op">=</span> <span class="st">"Spherical"</span><span class="op">)</span></span>
@@ -369,7 +397,7 @@ defining covariance matrix estimators. If we write <span class="math inline">\(\
 <p><span id="exm:unlabeled-div-26" class="example"><strong>Example 9.4  (Teaching to read) </strong></span>We consider a between-subject repeated measure multivariate analysis of variance model with the <span class="citation">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).</p>
 <p>We could obtain the estimated covariance matrix of the fitted model by extracting the residuals <span class="math inline">\(Y_{ik} - \widehat{\mu}_k\)</span> and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test2.</p>
 <p>Let us compute the multivariate analysis of variance model</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BSJ92</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
 <span><span class="co"># Force sum-to-zero parametrization</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></span>
@@ -425,7 +453,7 @@ defining covariance matrix estimators. If we write <span class="math inline">\(\
 <p>By default, we get Pillai’s trace statistic. Here, there is clear evidence of differences between groups of observations regardless of the statistic being used.</p>
 <p>We can compute effect size as before by passing the table, for example using <code>eta_squared(mtest)</code> to get the effect size of the multivariate test, or simple the model to get the individual variable effect sizes.</p>
 <p>Having found a difference, one could in principle investigate for which component of the response they are by performing univariate analysis of variance and accounting for multiple testing using, e.g., Bonferroni’s correction. A more fruitful avenue if you are trying to discriminate is to use descriptive discriminant analysis as a follow-up, which computes the best fitting hyperplanes that separate groups.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lda.html">lda</a></span><span class="op">(</span><span class="va">group</span> <span class="op">~</span> <span class="va">posttest1</span> <span class="op">+</span> <span class="va">posttest2</span> <span class="op">+</span> <span class="va">posttest3</span>,</span>
 <span>          data <span class="op">=</span> <span class="va">BSJ92</span><span class="op">)</span></span></code></pre></div>
 <p>This amounts to compute the weights <span class="math inline">\(\boldsymbol{w}\)</span> such, that, computing <span class="math inline">\(\boldsymbol{w}^\top\boldsymbol{Y}\)</span> creating a composite score by adding up weighted components that leads to maximal separation between groups. Figure <a href="repeated-measures-and-multivariate-models.html#fig:fig-lindiscrim">9.3</a> shows the new coordinates.</p>
@@ -444,7 +472,7 @@ Figure 9.3: Scatterplot of observations projected onto the linear discriminants 
 </h3>
 <p>In addition to the usual model assumptions (independence of measurements from different subjects, equal variance, additivity, etc.), the MANOVA model adds two hypothesis that altogether determine how reliable our <span class="math inline">\(p\)</span>-values and conclusions are.</p>
 <p>The first assumption is that of multivariate normality of the response. The central limit theorem can be applied to a multivariate response, but the sample size needed overall to reliably estimate the correlation and variance is larger than in the univariate setting. This hypothesis can be tested using the Shapiro-Wilk normality test (null hypothesis is that of normality) by passing the residuals of the multivariate model. Such a test can lead to rejection of the null hypothesis when specific variables are far from normal, or when the dependence structure isn’t the one exhibited by a multivariate normal model. With decent sample sizes (say <span class="math inline">\(n=50\)</span> per group), this assumption isn’t as important as others.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Shapiro-Wilk normality test</span></span>
 <span><span class="co"># Must transpose the residuals </span></span>
 <span><span class="co"># to get a 3 by n matrix</span></span>
@@ -455,7 +483,7 @@ Figure 9.3: Scatterplot of observations projected onto the linear discriminants 
 <span><span class="co">#&gt; data:  Z</span></span>
 <span><span class="co">#&gt; W = 1, p-value = 0.06</span></span></code></pre></div>
 <p>The second assumption is that the covariance matrix is the same for all individuals, regardless of their experimental group assignment. We could try checking whether a covariance model in each group: under multivariate normal assumption, this leads to a test statistic called Box’s <span class="math inline">\(M\)</span> test. Unfortunately, this test is quite sensitive to departures from the multivariate normal assumption and, if the <span class="math inline">\(p\)</span>-value is small, it may have to do more with the normality than the heterogeneity.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">BSJ92</span>, </span>
 <span>     <span class="fu">biotools</span><span class="fu">::</span><span class="fu"><a href="https://arsilva87.github.io/biotools/reference/boxM.html">boxM</a></span><span class="op">(</span></span>
 <span>       data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">posttest1</span>, <span class="va">posttest2</span>, <span class="va">posttest3</span><span class="op">)</span>,</span>

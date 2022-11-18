@@ -110,6 +110,8 @@ exm:unlabeled-div-27
 fig:fig-aafulldat
 exm:unlabeled-div-28
 fig:fig-interactionrecall
+fig:fig-daggity
+fig:fig-causalrelations
 introduction
 study-type
 terminology
@@ -183,3 +185,4 @@ model-assumptions-1
 power-and-effect-size
 introduction-to-mixed-models
 fixed-vs-random-effects
+causal-inference

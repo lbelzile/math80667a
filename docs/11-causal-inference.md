@@ -4,9 +4,10 @@
 A pet peeve of statisticians is to state that correlation (or association) between two phenomena is not the same as causation. For example, weather forecasts of rain and the number of people carrying umbrellas in the streets are positively correlated, but the relationship is directed: if I intervene as an experimenter and force everyone around to carry umbrellas, it won't impact weather forecasts nor the weather itself.
 The website [Spurious correlations](https://tylervigen.com/spurious-correlations) by Tyler Vigen shows multiple graphs of absurd relations, many of which are simply artefact of population growth.
 
-```{r xkcd2569, out.width = '60%', fig.cap = "xkcd comic [552 (Correlation) by Randall Munroe](https://xkcd.com/552/). Alt text: Correlation doesn't imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing 'look over there'. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)."}
-knitr::include_graphics("figures/xkcd552_correlation.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/xkcd552_correlation.png" alt="xkcd comic [552 (Correlation) by Randall Munroe](https://xkcd.com/552/). Alt text: Correlation doesn't imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing 'look over there'. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)." width="60%" />
+<p class="caption">(\#fig:xkcd2569)xkcd comic [552 (Correlation) by Randall Munroe](https://xkcd.com/552/). Alt text: Correlation doesn't imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing 'look over there'. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/).</p>
+</div>
 
 Causal inference is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables.  Such action may be conceptual: we can imagine for example looking at student's success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as **potential outcomes**. The fundamental problem of causal inference is that while we would like to study the impact of every action on our response, we can only effectively measure it in one scenario^[In a within-subject design, a single ordering can be presented.]
 
@@ -35,14 +36,10 @@ Figure \@ref(fig:fig-daggity) shows an example of DAG in a real world study iden
 
 <!--https://bookdown.org/mike/data_analysis/causal-inference.html-->
 
-```{r}
-#| label: fig-daggity
-#| eval: true
-#| echo: false
-#| out-width: '60%'
-#| fig-cap: "Directed acyclic graph of @McQuire:2020 reproduction by [Andrew Heiss](https://www.andrewheiss.com/), licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)."
-knitr::include_graphics("figures/dagitty-model.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/dagitty-model.png" alt="Directed acyclic graph of @McQuire:2020 reproduction by [Andrew Heiss](https://www.andrewheiss.com/), licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)." width="60%" />
+<p class="caption">(\#fig:fig-daggity)Directed acyclic graph of @McQuire:2020 reproduction by [Andrew Heiss](https://www.andrewheiss.com/), licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).</p>
+</div>
 
 
 At a theoretical level, the DAG will help identify which paths and relations to control through conditioning arguments to strip the relation to that of interest. Judea Pearl [e.g., @Pearl:2016] identifies three potential relations between triples of variables: 
@@ -53,14 +50,10 @@ At a theoretical level, the DAG will help identify which paths and relations to 
 
 These are represented in Figure \@ref(fig:fig-causalrelations). In the graph, $X$ represents an explanatory variable, typically the experimental factor, $Y$ is the response and $Z$ is another variable whose role depends on the logical flow between variables (collider, confounder or mediator).
 
-```{r}
-#| label: fig-causalrelations
-#| eval: true
-#| echo: false
-#| out-width: '100%'
-#| fig-cap: "Type of causal relations by Andrew Heiss, licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)."
-knitr::include_graphics("figures/causal_dag_aheiss.jpg")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/causal_dag_aheiss.jpg" alt="Type of causal relations by Andrew Heiss, licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)." width="100%" />
+<p class="caption">(\#fig:fig-causalrelations)Type of causal relations by Andrew Heiss, licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).</p>
+</div>
 
 It is *essential* to determine via logic or otherwise (experiments can help!) the direction of the relationship, lest we run into trouble. Popular statistical tools such as linear regression model correlation, which is symmetric and so cannot help the direction of the arrows in the directed acyclic graph. Why does it matter what kind of relation exists? For one, the conclusions we will draw depend on the nature of the relation. For example, we could eliminate the effect of a confounding variable by controlling in a regression model or by stratifying for different values of the confounders in order to extract the causal estimate of $X$ on $Y$. However, the same strategy with a collider would backfire and we would get erroneous conclusions. A recent example of collider is @Kowal:2021, who reportedly found out couples with more children were more unhappy. As reported by Richard McElreath, controlling for mariage is incorrect since unhappy couples tend to divorce, but families with large number of children are less likely to divorce! This invalides the claim and findings of the paper.
 

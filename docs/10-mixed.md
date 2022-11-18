@@ -29,7 +29,7 @@ In terms of estimation, fixed effect terms are mean parameters, while all random
 Random effects would proceed to directly estimate the variability arising from different subjects. We can still get predictions for the subject-specific effect, but this prediction will be shrunk toward the global mean for that particular treatment category. As we gather more data about the subjects, the predictions will become closer to the fixed effect estimates when the number of observations per subject or group increases, but these prediction can deviate from mean estimates in the case where there are few measurements per subject.
 
 
-Oelhert:2010 identifies the following step to perform a mixed model
+@Oelhert:2010 identifies the following step to perform a mixed model
 
 1. Identify sources of variation
 2. Identify whether factors are crossed are nested
@@ -101,9 +101,9 @@ The global $F$ test of significance for stimulus is based on an approximation; t
 We consider a replication study of @Elliot:2021,
 which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The replication was performed in 17 different school labs, adapting a protocol of @Flavell:1966, with an overall sample of 977 child partaking in the experiment.
 
-Each participant was assigned to three tasks: `delayed` recall with 15 seconds wait, or `immediate`, and finally  a naming task (`point-and-name`). The `timing` variable records the order in which these were presented: the order of `delayed` and `immediate` was counterbalanced across individuals, with the naming task always occurring last. The response variable is the number of words correctly recalled out of five. The experimenters also recorded the frequency at which students spontaneously verbalized during the task (except the naming task, where they were instructed to do so).
+Each participant was assigned to three tasks (`timing`): `delayed` recall with 15 seconds wait, or `immediate`, and finally  a naming task (`point-and-name`). The `taskorder` variable records the order in which these were presented: the order of `delayed` and `immediate` was counterbalanced across individuals, with the naming task always occurring last. The response variable is the number of words correctly recalled out of five. The experimenters also recorded the frequency at which students spontaneously verbalized during the task (except the naming task, where they were instructed to do so).
 
-The task order is a within-subject factor, whereas timing and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).
+The timing is a within-subject factor, whereas task order and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).
 
 To fit the linear mixed model with a random effect for both children `id` and `lab`: since children are nested in lab, we must specify the random effects via `(1 | id:lab) + (1 | lab)` if `id` are not unique.
 

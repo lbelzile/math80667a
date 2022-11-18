@@ -24,7 +24,7 @@ The first step of a design is formulating a research question. Generally, this h
 It is important to note that most research questions cannot be answered by simple tools. Researchers wishing to perform innovative methodological research should contact experts and consult with statisticians **before** they collect their data to get information on how best to proceed for what they have in mind so as to avoid the risk of making misleading and false claims based on incorrect analysis or data collection.
 
 
-```{r xkcd2569, out.width = '60%', fig.cap = "xkcd comic [2569 (Hypothesis generation) by Randall Munroe](https://xkcd.com/605/). Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)."}
+```{r xkcd2569, out.width = '60%', fig.cap = "xkcd comic [2569 (Hypothesis generation) by Randall Munroe](https://xkcd.com/2569/). Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the [CC BY-NC 2.5 license](https://creativecommons.org/licenses/by-nc/2.5/)."}
 knitr::include_graphics("figures/xkcd2569_hypothesis_generation.png")
 ```
 
