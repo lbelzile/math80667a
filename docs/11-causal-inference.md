@@ -15,7 +15,7 @@ The content of this chapter is divided as follows. First, we discuss the logical
 
 ## Basics of causal inference
 
-In an experiment, we can manipulate assignment to treatment $a$ and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid X)$ for different values of the action set $X$ (for example, $X$ could be an experimental factor. We talk about causation when for treatment ($X=j$) and control ($X=0$), the distributions of $(Y \mid X=j)$ differs from that of $(Y \mid X=0)$. The fundamental problem of causal inference is that, while we would like to study the impact of every action on our response, we can only observe the outcome for one treatment $X=j$, $(Y_i \mid X=j)$.^[In a within-subject design, the analog is that a single ordering can be presented.] 
+In an experiment, we can manipulate assignment to treatment $a$ and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid X)$ for different values of the action set $X$ (for example, $X$ could be an experimental factor. We talk about causation when for treatment ($X=j$) and control ($X=0$), the distributions of $(Y \mid X=j)$ differs from that of $(Y \mid X=0)$. The fundamental problem of causal inference is that, while we would like to study the impact of every action on our response, we can only observe the outcome for treatment $j$, written $(Y_i \mid X=j)$.^[In a within-subject design, the analog is that a single ordering can be presented.] 
 
 Rather than look at the individual treatment effect, we must focus on the population effects. The most common measure of causation is the **average treatment effect**, which is the difference between the population averages of treatment group $j$ and the control group,
 \begin{align*}
@@ -78,8 +78,9 @@ The **total effect** measures the  overall impact of changes in $X$ (both throug
 \end{align*}
 where $x^*$ is the factor level of the reference or control and $x$ is another treatment value. This definition generalizes when $X$ is a continuous variable.
 
-The average controlled directed effect measures the flow along $X \rightarrow Y$, disabling the pathway $X \to M \to Y$ and is
-\begin{align*}\textsf{CDE}(m, x, x^*) &= \mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x^*, m=m) \\&= \mathsf{E}(Y_{x, m} -Y_{x^*, m})
+The average controlled directed effect measures the flow along $X \rightarrow Y$, disabling the pathway $X \to M \to Y$; it is
+\begin{align*}
+\textsf{CDE}(m, x, x^{*}) &= \mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x^{*}, m=m) \\&= \mathsf{E}(Y_{x, m} -Y_{x^*, m})]
 \end{align*}
 This measures the expected change in response when the experimental factor changes from $x$ to $x^*$ and the mediator is set to a fixed value $m$ uniformly over the population. 
 
@@ -123,47 +124,45 @@ When measuring effects in psychology and marketing, it will often be the case th
 ## Linear mediation model
 
 
-One of the most popular model in social sciences is the linear mediation model, popularized by @Baron.Kenny:1986 although the method predates this publication. Another inferential approach, suggested by @Preacher.Hayes:2004, uses the same model with different test statistics and is extremely popular because it comes with software; Hayes' PROCESS macro for SAS, SPSS and **R** have lead to the widespread adoption by researchers. @Bullock.Green.Ha:2010 show limitations of the approach.
+One of the most popular model in social sciences is the linear mediation model, popularized by @Baron.Kenny:1986 although the method predates this publication. Another inferential approach, suggested by @Preacher.Hayes:2004, uses the same model with different test statistics and is extremely popular because it comes with software; Hayes' (infamous) [PROCESS macros for SAS, SPSS and **R**](https://www.processmacro.org/index.html) have lead to the widespread adoption by researchers. @Bullock.Green.Ha:2010 list limitations of the approach and provide examples of instances in which the model does not have a meaningful causal interpretation.
 
 The linear mediation model assumes that the effect of mediation and treatment is additive and that the response measurement is continuous. Consider covariates $\mathbf{Z}$, experimental factor $\mathbf{X}$ corresponding to treatment and postulated mediator variable $M$, assumed continuous. Given **uncorrelated** unobserved noise variables $\varepsilon_M$ and $\varepsilon_Y$, we specify linear regression models,
 \begin{align}
 M \mid X=x &= c_M + \alpha x + \varepsilon_M,\\
 Y \mid X=x, M=m &=  c_Y + \beta x + \gamma m + \mathbf{z}^\top\boldsymbol{\omega} + \varepsilon_Y
 \end{align}
-where we use the contrast-to-reference parametrization so that the reference category for the intercept corresponds to control (group $x^*$) and $x$ the other category of interest. The model for $Y \mid X, M$ should including additional covariates $\mathbf{z}$ to control for confounding between $M$ and $Y$.
+where we use the contrast-to-reference parametrization so that the reference category for the intercept corresponds to control (group $x^*$) and $x$ the other category of interest, with $\alpha$ capturing the difference between $x$ and $x^*$. The model for $Y \mid X, M$ should including additional covariates $\mathbf{z}$ to control for confounding between $M$ and $Y$.
 
-The parameters can be interpreted as the direct ($\beta$), indirect ($\alpha \gamma$) and total $\beta + \alpha \gamma$) effects. To see this, we plug the first equation in the second and obtain the marginal model for $Y$ given treatment $X$,
+The parameters can be interpreted as the direct ($\beta$), indirect ($\alpha \gamma$) and total ($\beta + \alpha \gamma$) effects. To see this, we plug the first equation in the second and obtain the marginal model for $Y$ given treatment $X$,
 $$\begin{align}
 Y \mid X=x &= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma U_M + U_Y)}\\
 &= c_Y' + \tau X + U_Y'
 \end{align}$$
 These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression (ordinary least squares).
 
-We can estimate the conditional direct effect $\alpha\gamma$ and test whether it's zero, indicating absence of mediation. @Baron.Kenny:1986 recommended using Sobel's test statistic, a Wald-test
+In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients $\alpha\gamma$. Absence of mediation implies the product is zero. @Baron.Kenny:1986 recommended using Sobel's test statistic, a Wald-test of the form
 \begin{align*}
-S  = \frac{\widehat{\alpha}\widehat{\gamma}-0}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} \stackrel{\cdot}{\sim}\mathsf{No}(0,1)
+S  = \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} =  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} \stackrel{\cdot}{\sim}\mathsf{No}(0,1)
 \end{align*} 
-where $\widehat{\alpha}$ and its variance $\mathsf{Va}(\widehat{\alpha})$ are directly obtained from estimated coefficients and standard errors.
+where $\widehat{\alpha}$, $\widehat{\gamma}$ and their variance $\mathsf{Va}(\widehat{\alpha})$ and $\mathsf{Va}(\widehat{\gamma})$ can be obtained from the estimated coefficients and standard errors.^[Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both $\alpha$ and $\gamma$ are non-zero (hence the tests!)] The Sobel's statistic $S$ is approximately standard normal in large samples, but the approximation is sometimes crude.
 
-
-This (somewhat simplistic) causal model suggest that we can estimate the total causal effect of $X$, labelled $\tau$, by running the linear regression \@ref(eq:regYmarg).  In a completely randomized experimental design, there is no confounding affecting treatment $X$ so this strategy is valid.
+In the linear mediation causal model, we can estimate the total causal effect of $X$, labelled $\tau$, by running the linear regression of $Y$ on $X$ as there is no confounding affecting treatment $X$ in a completely randomized experimental design. This strategy isn't valid with observational data unless we adjust for confounders. Under no unmeasured confounders and linearity, the product $\alpha\gamma$ is also equal to the difference between the total effect and the **natural direct effect**, $\tau - \beta$.
 
 @Baron.Kenny:1986 suggested for $X$ and $M$ continuous breaking down the task in three separate steps:
 
-1) fit a linear regression \@ref(eq:regM) of $M$ on $X$ to estimate $\alpha$
-2) fit a linear regression \@ref(eq:regYmarg) of $Y$ on $X$ to estimate $\tau$
-3) fit a linear regression \@ref(eq:regY) of $Y$ on $X$ and $M$ to estimate $\beta$ and $\gamma$.
+1) fit a linear regression of $M$ on $X$ to estimate $\alpha$
+2) fit a linear regression of $Y$ on $X$ to estimate $\tau$
+3) fit a linear regression of $Y$ on $X$ and $M$ to estimate $\beta$ and $\gamma$.
 
-They then go to check that $\alpha, \delta, \gamma$ are non-zero by testing the null hypotheses $\mathscr{H}_0: \alpha=0$, $\mathscr{H}_0: \delta=0$ and $\mathscr{H}_0: \gamma=0$ against the two-sided alternatives. The total effect can be zero because $\alpha\gamma = - \beta$, even if there is mediation.
+They then go to check that $\alpha, \delta, \gamma$ are non-zero by testing the null hypotheses $\mathscr{H}_0: \alpha=0$, $\mathscr{H}_0: \delta=0$ and $\mathscr{H}_0: \gamma=0$ against the two-sided alternatives. 
 
-If $\alpha \gamma$ is non-zero (because the terms in the product aren't), then they consider building Sobel's statistic with the product of estimators $\alpha \beta$, which is equivalent under no unmeasured confounders to the difference between the total effect $\tau$ and the **natural direct effect** $\beta$.
+This approach has caveats since mediation refers to the relation $X \to M \to $Y$, so we only need to consider (joint tests of) $\alpha$ and $\gamma$. @Zhao.Lynch.Chen:2010 review the typology of mediation.
 
-Sobel's statistic is 
-\begin{align}
-S &= \frac{\widehat{\alpha}\cdot\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} 
-\end{align}
+1. complementary mediation when both direct and indirect effects are of the same sign and non-zero.
+2. competitive mediation when direct and indirect effects are of opposite signs.
+3. indirect-only mediation when the direct effect of $X \to Y$ is null, but the effect $X \to M \to Y$ isn't.
 
-where $\widehat{\alpha}$ and $\widehat{\gamma}$ are ordinary least squares estimators with the corresponding variance estimators appearing in the denominator.^[Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both $\alpha$ and $\gamma$ are non-zero (hence the tests!)] The Sobel's statistic $S$ is approximately standard normal in large samples, but the approximation is sometimes crude.
+
 
 To see this, let's generate data with a binary treatment and normally distributed mediators and response with no confounding (so the data generating process matches exactly the formulation fo Baron--Kenny. We set $\alpha=2$, $\beta = 1/2$ and $\gamma=0$. This is an instance where the null is true ($X$ affects both $M$ and $Y$).
 
@@ -173,7 +172,7 @@ To see this, let's generate data with a binary treatment and normally distribute
 <p class="caption">(\#fig:fig-sobelsimu)Null distribution of Sobel's statistic against approximate asymptotic normal distribution with 20 observations $\alpha=0$, $\gamma=0.1$ and normal random errors.</p>
 </div>
 
-If we knew exactly the model that generated $X$, $M$, $Y$ and the relations between them, we could simulate multiple datasets like in Figure \@ref(fig:sobelsimu) with $n=20$ observations and compare the test statistic we obtained with the simulation-based null distribution with $\alpha\gamma=0$. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. An alternative is the bootstrap, a form of simulation-based inference. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See @Efron:1994 and @Davison.Hinkley:1997 for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by @Preacher.Hayes:2004 consists in repeating the following $B$ times:
+If we knew exactly the model that generated $X$, $M$, $Y$ and the relations between them, we could simulate multiple datasets like in Figure \@ref(fig:fig-sobelsimu) with $n=20$ observations and compare the test statistic we obtained with the simulation-based null distribution with $\alpha\gamma=0$. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. An alternative is the bootstrap, a form of simulation-based inference. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See @Efron.Tibshirani:1993 and @Davison.Hinkley:1997 for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by @Preacher.Hayes:2004 consists in repeating the following $B$ times:
 
 1) sample $n$ observations **with replacement**, i.e., a tuple ($X_i, M_i, Y_i)$, from the original data .
 2) compute the natural indirect effect $\widehat{\alpha}\cdot\widehat{\gamma}$ on each simulated sample
@@ -188,12 +187,8 @@ Nowadays, the asymptotic approximation (sometimes misnamed delta method^[The lat
 <p class="caption">(\#fig:bootstrap)Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines).</p>
 </div>
 
-The nonparametric percentile bootstrap confidence interval for $\alpha\gamma$ is [-0.08, 1.71] and thus we fail to reject the null hypothesis of mediation $\mathscr{H}_0: \alpha \gamma=0$ due to lack of power.
+The nonparametric percentile bootstrap confidence interval for $\alpha\gamma$ is [-0.08, 1.71] and thus we fail to reject the null hypothesis  $\mathscr{H}_0: \alpha \gamma=0$.
 
 
-@Zhao.Lynch.Chen:2010 review the typology of mediation.
 
-1. complementary mediation when both direct and indirect effects are of the same sign and non-zero.
-2. competitive mediation when direct and indirect effects are of opposite signs.
-3. indirect-only mediation when the direct effect of $X \to Y$ is null, but the effect $X \to M \to Y$ isn't.
 

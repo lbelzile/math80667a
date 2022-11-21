@@ -192,3 +192,5 @@ causal-inference
 basics-of-causal-inference
 mediation
 linear-mediation-model
+block-designs-with-more-one-or-more-blocking-factors
+effect-size-for-block-designs
