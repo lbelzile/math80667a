@@ -1,0 +1,22 @@
+# Nonparametric tests
+
+In small samples or in the presence of very skewed responses with extreme observations, the conclusions drawn from the $\mathsf{F}$ approximation to the analysis of variance model need not hold. This chapter presents **nonparametric tests**: these are procedures based on ranks that can be easily understood.
+
+If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could compute ranks. These are the relative ordering in a sample, where rank 1 denotes the smallest observation and rank $n$ the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information.
+
+SHOW EXAMPLE OF APPLICATION WHERE THE RESULT CHANGES.
+
+The following tests are popular alternatives
+
+- Wilcoxon's signed-rank test: an alternative to a one-sample t-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences).
+- Mann--Whitney $U$, aka Wilcoxon rank-sum test: the nonparametric analog of two-sample $t$-test, which ranks all observations in the sample and compares them between groups.
+- Kruskal--Wallis test: analysis of variance model for the ranks, obtained by computing the ranks overall of the response and performing an ANOVA.
+
+For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests using the same ANOVA functions works.
+
+More information about the null distribution and intuition. There are subtleties associated with ties and the zero-fudge (use `coin` package, discard zero differences for signed-rank test first and adjust sample size accordingly. For ties, we assign to the average rank, so 4, 2.5., 2.5, 1 if we have data (8,2,1,2).
+
+[See J. K. Lindeløv](https://lindeloev.github.io/tests-as-linear/) cheatsheet.
+
+
+Add two examples (`BRLS21_T3` uses signed-rank test, Bruck and Levav's eyetracker data in `BL22_E` uses Kruskal--Wallis). Show the $p$-values match up to rounding.

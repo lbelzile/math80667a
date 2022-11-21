@@ -112,6 +112,9 @@ exm:unlabeled-div-28
 fig:fig-interactionrecall
 fig:fig-daggity
 fig:fig-causalrelations
+fig:xkcd2652
+fig:fig-sobelsimu
+fig:bootstrap
 introduction
 study-type
 terminology
@@ -186,3 +189,6 @@ power-and-effect-size
 introduction-to-mixed-models
 fixed-vs-random-effects
 causal-inference
+basics-of-causal-inference
+mediation
+linear-mediation-model
