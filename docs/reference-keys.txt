@@ -115,6 +115,12 @@ fig:fig-causalrelations
 fig:xkcd2652
 fig:fig-sobelsimu
 fig:bootstrap
+fig:fig-dag1
+fig:fig-dag2
+tab:unnamed-chunk-8
+tab:tbl-mediation
+tab:tbl-testsmoder
+fig:fig-jn
 introduction
 study-type
 terminology
@@ -192,5 +198,6 @@ causal-inference
 basics-of-causal-inference
 mediation
 linear-mediation-model
-block-designs-with-more-one-or-more-blocking-factors
-effect-size-for-block-designs
+model-assumptions-2
+example
+moderation-and-interactions

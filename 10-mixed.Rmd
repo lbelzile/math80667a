@@ -29,7 +29,7 @@ In terms of estimation, fixed effect terms are mean parameters, while all random
 Random effects would proceed to directly estimate the variability arising from different subjects. We can still get predictions for the subject-specific effect, but this prediction will be shrunk toward the global mean for that particular treatment category. As we gather more data about the subjects, the predictions will become closer to the fixed effect estimates when the number of observations per subject or group increases, but these prediction can deviate from mean estimates in the case where there are few measurements per subject.
 
 
-@Oelhert:2010 identifies the following step to perform a mixed model
+@Oehlert:2010 identifies the following step to perform a mixed model
 
 1. Identify sources of variation
 2. Identify whether factors are crossed are nested
