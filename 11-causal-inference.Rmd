@@ -80,12 +80,12 @@ In order to do inference and tests relations, we need to add to our logical caus
 To define in full generality the treatment and mediation effect, we need to consider the potential outcome framework. Following @Pearl:2014, we use $Y_i(x, m)$ to denote the potential outcome for individual $i$ with explanatory or experimental covariate/factor $x$ and mediator $m$. Likewise, $M_i(x)$ is the potential mediator when applying treatment level $x$.^[The notation is important to distinguish between association $Y \mid X$ when observing $X$ from manipulations or interventions, $Y \mid \mathsf{do}(X)$ and counterfactuals $Y(X)$.]
 
 
-The **total effect** measures the  overall impact of changes in $X$ (both through $M$ and directly) when experimentally manipulating $X$,
+The **total effect** measures the  overall impact of changes in outcome $Y$ (both through $M$ and directly) when experimentally manipulating $X$,
 \begin{align*}\mathsf{TE}(x, x^*) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x^*)],
 \end{align*}
 where $x^*$ is the factor level of the reference or control and $x$ is another treatment value. This definition generalizes when $X$ is a continuous variable.
 
-The average controlled directed effect measures the flow along $X \rightarrow Y$, disabling the pathway $X \to M \to Y$ and is
+The **average controlled directed effect** measures the flow along $X \rightarrow Y$, disabling the pathway $X \to M \to Y$ by fixing the mediatior: it is
 \begin{align*}
 \textsf{CDE}(m, x, x^*) &= 
 \mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x^*, m=m)] \\&= \mathsf{E}\{Y(x,m) -Y(x^*, m)\}
@@ -94,7 +94,7 @@ This measures the expected change in response when the experimental factor chang
 
 The **natural direct effect**, 
 \begin{align*}
-\textsf{NDE}(x, x^*) = \mathsf{E}[Y_\{x, M(x^*)\} - Y\{x^*,  M(x^*)\}],
+\textsf{NDE}(x, x^*) = \mathsf{E}[Y\{x, M(x^*)\} - Y\{x^*,  M(x^*)\}],
 \end{align*}
 is the expected change in $Y$ under treatment $x$ if $M$ is set to whatever value it would take under control $x^*$.
 
@@ -107,13 +107,13 @@ The **natural indirect effect** ($\mathsf{NIE}$) is the expected change in the r
 
 Armed with these definitions, we can consider the **sequential ignorability assumption**, which is decomposed into two components.
 
-Given pre-treatment covariates $W$, potential outcomes for mediation and outcome are conditionally independent of treatment assignment.
+The first component is: given pre-treatment covariates $W$, treatment assignment is independent of potential outcomes for mediation and outcome,
 \begin{align*}
 Y_i(x', m), M_i(x) \perp\mkern-10mu\perp X_i \mid W_i = w.
 \end{align*}
-In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don't change. The dependence on $W$ is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known from each individual). The first condition is satisfied in experimental studies due to randomization.
+In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don't change.^[The dependence on $W$ is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known from each individual).]
 
-The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, potential outcomes are independent of mediation.
+The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, mediation is independent of potential outcomes,
 \begin{align*}
 Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, W_i = w
 \end{align*}
@@ -121,7 +121,7 @@ The set of assumptions from @Imai:2010 and @Pearl:2014 are equivalent under rand
 
 The total effect can be written 
 $$\mathsf{TE}(x, x^*) = \mathsf{NDE}(x, x^*) - \mathsf{NIE}(x^*, x).$$
-In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as $\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}$ [@Pearl:2014].
+In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as $\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}$ [@Pearl:2014]. 
 
 When measuring effects in psychology and marketing, it will often be the case that the conceptual causal model includes variables that cannot be directly measured. The proxy, as in Figure \@ref(fig:xkcd2652) add an additional layer of complexity and potential sources of confounding.
 
@@ -146,10 +146,12 @@ where we use the contrast-to-reference parametrization so that the reference cat
 
 The parameters can be interpreted as the direct ($\beta$), indirect ($\alpha \gamma$) and total ($\beta + \alpha \gamma$) effects. To see this, we plug the first equation in the second and obtain the marginal model for $Y$ given treatment $X$,
 $$\begin{align}
-Y \mid X=x &= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma U_M + U_Y)}\\
-&= c_Y' + \tau X + U_Y'
+Y \mid X=x &= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
+&= c_Y' + \tau X + \varepsilon_Y'
 \end{align}$$
 These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression (ordinary least squares).
+
+The sequential ignorability in the linear mediation models boils down to "no unmeasured confounders" in the relations $X \to Y$, $X \to M$ and $M \to Y$: the first two are satisfied in experimental studies due to randomization, as shown in \@ref(fig:fig-dag1). This means $\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y$ must be independent and, as a result, error terms should also be uncorrelated.
 
 In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients $\alpha\gamma$. Absence of mediation implies the product is zero. @Baron.Kenny:1986 recommended using Sobel's test statistic, a Wald-test of the form
 \begin{align*}
@@ -165,9 +167,7 @@ In the linear mediation causal model, we can estimate the total causal effect of
 2) fit a linear regression of $Y$ on $X$ to estimate $\tau$
 3) fit a linear regression of $Y$ on $X$ and $M$ to estimate $\beta$ and $\gamma$.
 
-They then go to check that $\alpha, \delta, \gamma$ are non-zero by testing the null hypotheses $\mathscr{H}_0: \alpha=0$, $\mathscr{H}_0: \delta=0$ and $\mathscr{H}_0: \gamma=0$ against the two-sided alternatives. 
-
-This approach has caveats since mediation refers to the relation $X \to M \to $Y$, so we only need to consider (joint tests of) $\alpha$ and $\gamma$. @Zhao.Lynch.Chen:2010 review the typology of mediation.
+In the "@Baron.Kenny:1986 approach", we test $\mathscr{H}_0: \alpha=0$, $\mathscr{H}_0: \tau=0$ and $\mathscr{H}_0: \gamma=0$ against the two-sided alternative. This approach has caveats since mediation refers to the relation $X \to M \to Y$, so we only need to consider (joint tests of) $\alpha$ and $\gamma$ (the total effect could be zero because $\beta = -\alpha\gamma$ even if there is mediation). @Zhao.Lynch.Chen:2010 review the typology of mediation.
 
 1. complementary mediation when both direct and indirect effects are of the same sign and non-zero.
 2. competitive mediation when direct and indirect effects are of opposite signs.
@@ -398,7 +398,7 @@ linmed <- mediate(
   mediator = "fluency",
   sims = 5000L,
   boot = TRUE,
-  boot.ci.type = "perc",
+  boot.ci.type = "bca", # bias-corrected and accelerated (bca)
   control.value = "inconsistent",
   treat.value = "consistent")
 ```

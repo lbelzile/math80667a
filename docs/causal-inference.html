@@ -146,11 +146,11 @@ Figure 11.2: Type of causal relations by Andrew Heiss, licensed under <a href="h
 </h2>
 <p>In order to do inference and tests relations, we need to add to our logical causal model represented by a directed acyclic graph a data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won’t be verifiable.</p>
 <p>To define in full generality the treatment and mediation effect, we need to consider the potential outcome framework. Following <span class="citation">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span>, we use <span class="math inline">\(Y_i(x, m)\)</span> to denote the potential outcome for individual <span class="math inline">\(i\)</span> with explanatory or experimental covariate/factor <span class="math inline">\(x\)</span> and mediator <span class="math inline">\(m\)</span>. Likewise, <span class="math inline">\(M_i(x)\)</span> is the potential mediator when applying treatment level <span class="math inline">\(x\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The notation is important to distinguish between association &lt;span class="math inline"&gt;\(Y \mid X\)&lt;/span&gt; when observing &lt;span class="math inline"&gt;\(X\)&lt;/span&gt; from manipulations or interventions, &lt;span class="math inline"&gt;\(Y \mid \mathsf{do}(X)\)&lt;/span&gt; and counterfactuals &lt;span class="math inline"&gt;\(Y(X)\)&lt;/span&gt;.&lt;/p&gt;'><sup>49</sup></a></p>
-<p>The <strong>total effect</strong> measures the overall impact of changes in <span class="math inline">\(X\)</span> (both through <span class="math inline">\(M\)</span> and directly) when experimentally manipulating <span class="math inline">\(X\)</span>,
+<p>The <strong>total effect</strong> measures the overall impact of changes in outcome <span class="math inline">\(Y\)</span> (both through <span class="math inline">\(M\)</span> and directly) when experimentally manipulating <span class="math inline">\(X\)</span>,
 <span class="math display">\[\begin{align*}\mathsf{TE}(x, x^*) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x^*)],
 \end{align*}\]</span>
 where <span class="math inline">\(x^*\)</span> is the factor level of the reference or control and <span class="math inline">\(x\)</span> is another treatment value. This definition generalizes when <span class="math inline">\(X\)</span> is a continuous variable.</p>
-<p>The average controlled directed effect measures the flow along <span class="math inline">\(X \rightarrow Y\)</span>, disabling the pathway <span class="math inline">\(X \to M \to Y\)</span> and is
+<p>The <strong>average controlled directed effect</strong> measures the flow along <span class="math inline">\(X \rightarrow Y\)</span>, disabling the pathway <span class="math inline">\(X \to M \to Y\)</span> by fixing the mediatior: it is
 <span class="math display">\[\begin{align*}
 \textsf{CDE}(m, x, x^*) &amp;=
 \mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x^*, m=m)] \\&amp;= \mathsf{E}\{Y(x,m) -Y(x^*, m)\}
@@ -158,7 +158,7 @@ where <span class="math inline">\(x^*\)</span> is the factor level of the refere
 This measures the expected change in response when the experimental factor changes from <span class="math inline">\(x\)</span> to <span class="math inline">\(x^*\)</span> and the mediator is set to a fixed value <span class="math inline">\(m\)</span> uniformly over the population.</p>
 <p>The <strong>natural direct effect</strong>,
 <span class="math display">\[\begin{align*}
-\textsf{NDE}(x, x^*) = \mathsf{E}[Y_\{x, M(x^*)\} - Y\{x^*,  M(x^*)\}],
+\textsf{NDE}(x, x^*) = \mathsf{E}[Y\{x, M(x^*)\} - Y\{x^*,  M(x^*)\}],
 \end{align*}\]</span>
 is the expected change in <span class="math inline">\(Y\)</span> under treatment <span class="math inline">\(x\)</span> if <span class="math inline">\(M\)</span> is set to whatever value it would take under control <span class="math inline">\(x^*\)</span>.</p>
 <p>The <strong>natural indirect effect</strong> (<span class="math inline">\(\mathsf{NIE}\)</span>) is the expected change in the response <span class="math inline">\(Y\)</span> if we set our experimental value <span class="math inline">\(X\)</span> to its control value <span class="math inline">\(x^*\)</span> and change the mediator value which it would attain under <span class="math inline">\(x\)</span>,
@@ -166,12 +166,12 @@ is the expected change in <span class="math inline">\(Y\)</span> under treatment
 \textsf{NIE}(x, x^*) = \mathsf{E}[Y\{x^*, M(x)\} - Y\{x^*,  M(x^*)\}]
 \end{align*}\]</span></p>
 <p>Armed with these definitions, we can consider the <strong>sequential ignorability assumption</strong>, which is decomposed into two components.</p>
-<p>Given pre-treatment covariates <span class="math inline">\(W\)</span>, potential outcomes for mediation and outcome are conditionally independent of treatment assignment.
+<p>The first component is: given pre-treatment covariates <span class="math inline">\(W\)</span>, treatment assignment is independent of potential outcomes for mediation and outcome,
 <span class="math display">\[\begin{align*}
 Y_i(x', m), M_i(x) \perp\mkern-10mu\perp X_i \mid W_i = w.
 \end{align*}\]</span>
-In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don’t change. The dependence on <span class="math inline">\(W\)</span> is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known from each individual). The first condition is satisfied in experimental studies due to randomization.</p>
-<p>The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, potential outcomes are independent of mediation.
+In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don’t change.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The dependence on &lt;span class="math inline"&gt;\(W\)&lt;/span&gt; is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known from each individual).&lt;/p&gt;'><sup>50</sup></a></p>
+<p>The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, mediation is independent of potential outcomes,
 <span class="math display">\[\begin{align*}
 Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, W_i = w
 \end{align*}\]</span>
@@ -200,15 +200,16 @@ Y \mid X=x, M=m &amp;=  c_Y + \beta x + \gamma m + \mathbf{z}^\top\boldsymbol{\o
 where we use the contrast-to-reference parametrization so that the reference category for the intercept corresponds to control (group <span class="math inline">\(x^*\)</span>) and <span class="math inline">\(x\)</span> the other category of interest, with <span class="math inline">\(\alpha\)</span> capturing the difference between <span class="math inline">\(x\)</span> and <span class="math inline">\(x^*\)</span>. The model for <span class="math inline">\(Y \mid X, M\)</span> should include additional covariates <span class="math inline">\(\mathbf{z}\)</span> to control for confounding between <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> if the latter is suspected.</p>
 <p>The parameters can be interpreted as the direct (<span class="math inline">\(\beta\)</span>), indirect (<span class="math inline">\(\alpha \gamma\)</span>) and total (<span class="math inline">\(\beta + \alpha \gamma\)</span>) effects. To see this, we plug the first equation in the second and obtain the marginal model for <span class="math inline">\(Y\)</span> given treatment <span class="math inline">\(X\)</span>,
 <span class="math display">\[\begin{align}
-Y \mid X=x &amp;= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma U_M + U_Y)}\\
-&amp;= c_Y' + \tau X + U_Y'
+Y \mid X=x &amp;= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
+&amp;= c_Y' + \tau X + \varepsilon_Y'
 \end{align}\]</span>
 These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression (ordinary least squares).</p>
+<p>The sequential ignorability in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization, as shown in <a href="causal-inference.html#fig:fig-dag1">11.6</a>. This means <span class="math inline">\(\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y\)</span> must be independent and, as a result, error terms should also be uncorrelated.</p>
 <p>In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients <span class="math inline">\(\alpha\gamma\)</span>. Absence of mediation implies the product is zero. <span class="citation">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> recommended using Sobel’s test statistic, a Wald-test of the form
 <span class="math display">\[\begin{align*}
 S  = \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} =  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} \stackrel{\cdot}{\sim}\mathsf{No}(0,1)
 \end{align*}\]</span>
-where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math inline">\(\widehat{\gamma}\)</span> and their variance <span class="math inline">\(\mathsf{Va}(\widehat{\alpha})\)</span> and <span class="math inline">\(\mathsf{Va}(\widehat{\gamma})\)</span> can be obtained from the estimated coefficients and standard errors.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both &lt;span class="math inline"&gt;\(\alpha\)&lt;/span&gt; and &lt;span class="math inline"&gt;\(\gamma\)&lt;/span&gt; are non-zero (hence the tests!)&lt;/p&gt;'><sup>50</sup></a> The Sobel’s statistic <span class="math inline">\(S\)</span> is approximately standard normal in large samples, but the approximation is sometimes crude.</p>
+where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math inline">\(\widehat{\gamma}\)</span> and their variance <span class="math inline">\(\mathsf{Va}(\widehat{\alpha})\)</span> and <span class="math inline">\(\mathsf{Va}(\widehat{\gamma})\)</span> can be obtained from the estimated coefficients and standard errors.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both &lt;span class="math inline"&gt;\(\alpha\)&lt;/span&gt; and &lt;span class="math inline"&gt;\(\gamma\)&lt;/span&gt; are non-zero (hence the tests!)&lt;/p&gt;'><sup>51</sup></a> The Sobel’s statistic <span class="math inline">\(S\)</span> is approximately standard normal in large samples, but the approximation is sometimes crude.</p>
 <p>In the linear mediation causal model, we can estimate the total causal effect of <span class="math inline">\(X\)</span>, labelled <span class="math inline">\(\tau\)</span>, by running the linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> as there is no confounding affecting treatment <span class="math inline">\(X\)</span> in a completely randomized experimental design. This strategy isn’t valid with observational data unless we adjust for confounders. Under no unmeasured confounders and linearity, the product <span class="math inline">\(\alpha\gamma\)</span> is also equal to the difference between the total effect and the <strong>natural direct effect</strong>, <span class="math inline">\(\tau - \beta\)</span>.</p>
 <p><span class="citation">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> suggested for <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> continuous breaking down the task in three separate steps:</p>
 <ol style="list-style-type: decimal">
@@ -218,8 +219,7 @@ where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math i
 </li>
 <li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> to estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>.</li>
 </ol>
-<p>They then go to check that <span class="math inline">\(\alpha, \delta, \gamma\)</span> are non-zero by testing the null hypotheses <span class="math inline">\(\mathscr{H}_0: \alpha=0\)</span>, <span class="math inline">\(\mathscr{H}_0: \delta=0\)</span> and <span class="math inline">\(\mathscr{H}_0: \gamma=0\)</span> against the two-sided alternatives.</p>
-<p>This approach has caveats since mediation refers to the relation $X M <span class="math inline">\(Y\)</span>, so we only need to consider (joint tests of) <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>. <span class="citation">Zhao, Lynch, and Chen (<a href="references.html#ref-Zhao.Lynch.Chen:2010" role="doc-biblioref">2010</a>)</span> review the typology of mediation.</p>
+<p>In the “<span class="citation">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> approach”, we test <span class="math inline">\(\mathscr{H}_0: \alpha=0\)</span>, <span class="math inline">\(\mathscr{H}_0: \tau=0\)</span> and <span class="math inline">\(\mathscr{H}_0: \gamma=0\)</span> against the two-sided alternative. This approach has caveats since mediation refers to the relation <span class="math inline">\(X \to M \to Y\)</span>, so we only need to consider (joint tests of) <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> (the total effect could be zero because <span class="math inline">\(\beta = -\alpha\gamma\)</span> even if there is mediation). <span class="citation">Zhao, Lynch, and Chen (<a href="references.html#ref-Zhao.Lynch.Chen:2010" role="doc-biblioref">2010</a>)</span> review the typology of mediation.</p>
 <ol style="list-style-type: decimal">
 <li>complementary mediation when both direct and indirect effects are of the same sign and non-zero.</li>
 <li>competitive mediation when direct and indirect effects are of opposite signs.</li>
@@ -239,7 +239,7 @@ Figure 11.4: Null distribution of Sobel’s statistic against approximate asympt
 <li>compute the natural indirect effect <span class="math inline">\(\widehat{\alpha}\cdot\widehat{\gamma}\)</span> on each simulated sample</li>
 </ol>
 <p>For a two-sided test at level <span class="math inline">\(\alpha\)</span>, compute the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap statistics <span class="math inline">\(\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B\)</span>. For example, if the level is <span class="math inline">\(\alpha=5\)</span>% and we generate <span class="math inline">\(B=1000\)</span> bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.</p>
-<p>Nowadays, the asymptotic approximation (sometimes misnamed delta method<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The latter is the name of the method used to derive the denominator of Sobel’s statistic.&lt;/p&gt;"><sup>51</sup></a>) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.</p>
+<p>Nowadays, the asymptotic approximation (sometimes misnamed delta method<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;The latter is the name of the method used to derive the denominator of Sobel’s statistic.&lt;/p&gt;"><sup>52</sup></a>) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:bootstrap"></span>
 <img src="11-causal-inference_files/figure-html/bootstrap-1.png" alt="Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines)." width="85%"><p class="caption">
@@ -288,7 +288,7 @@ If <span class="math inline">\(\alpha_i\)</span> differ from one observation to 
 </h3>
 <p>Study 2 of <span class="citation">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
 <p>The experimental variable is the consistency of the product description and depiction, with <code>fluency</code> leading to “processing disfluency” that is expected to impact negatively judgment ratings.
-Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of <span class="citation">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span>).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Incidentally, reporting the coefficients allows in a Table allows one to retro-engineer the model and ensure reproducibility.&lt;/p&gt;"><sup>52</sup></a></p>
+Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of <span class="citation">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span>).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Incidentally, reporting the coefficients allows in a Table allows one to retro-engineer the model and ensure reproducibility.&lt;/p&gt;"><sup>53</sup></a></p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">LC19_S2</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
 <span><span class="va">YsMX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">prodeval</span> <span class="op">~</span> <span class="va">fluency</span> <span class="op">+</span> <span class="va">consistency</span> <span class="op">+</span> <span class="va">familiarity</span>,</span>
@@ -425,7 +425,7 @@ familiarity
 <span>  mediator <span class="op">=</span> <span class="st">"fluency"</span>,</span>
 <span>  sims <span class="op">=</span> <span class="fl">5000L</span>,</span>
 <span>  boot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  boot.ci.type <span class="op">=</span> <span class="st">"perc"</span>,</span>
+<span>  boot.ci.type <span class="op">=</span> <span class="st">"bca"</span>, <span class="co"># bias-corrected and accelerated (bca)</span></span>
 <span>  control.value <span class="op">=</span> <span class="st">"inconsistent"</span>,</span>
 <span>  treat.value <span class="op">=</span> <span class="st">"consistent"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
@@ -457,10 +457,10 @@ ACME
 0.286
 </td>
 <td style="text-align:right;">
-0.015
+0.025
 </td>
 <td style="text-align:right;">
-0.595
+0.615
 </td>
 <td style="text-align:right;">
 0.037
@@ -474,10 +474,10 @@ ADE
 0.287
 </td>
 <td style="text-align:right;">
--0.165
+-0.166
 </td>
 <td style="text-align:right;">
-0.737
+0.732
 </td>
 <td style="text-align:right;">
 0.218
@@ -491,10 +491,10 @@ Total Effect
 0.573
 </td>
 <td style="text-align:right;">
-0.047
+0.037
 </td>
 <td style="text-align:right;">
-1.091
+1.080
 </td>
 <td style="text-align:right;">
 0.030
@@ -508,10 +508,10 @@ Prop. Mediated
 0.499
 </td>
 <td style="text-align:right;">
--0.051
+0.211
 </td>
 <td style="text-align:right;">
-1.938
+5.956
 </td>
 <td style="text-align:right;">
 0.057
@@ -632,7 +632,7 @@ Residuals
 </tbody>
 </table></div>
 <div class="inline-figure"><img src="11-causal-inference_files/figure-html/unnamed-chunk-13-1.png" width="85%" style="display: block; margin: auto;"></div>
-<p>Because of the interaction, comparing the levels of the experimental factor only makes sense if we fix the value of sexism (since the slopes are not parallel) and won’t necessarily be reliable outside of the range of observed values of sexism. We could look at quantiles and differences at the mean sexism,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This is the default with &lt;code&gt;emmeans&lt;/code&gt;&lt;/p&gt;"><sup>53</sup></a> or one standard deviation away.</p>
+<p>Because of the interaction, comparing the levels of the experimental factor only makes sense if we fix the value of sexism (since the slopes are not parallel) and won’t necessarily be reliable outside of the range of observed values of sexism. We could look at quantiles and differences at the mean sexism,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;This is the default with &lt;code&gt;emmeans&lt;/code&gt;&lt;/p&gt;"><sup>54</sup></a> or one standard deviation away.</p>
 <p>We may be interested in the range of values of the predictor <span class="math inline">\(W\)</span> for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson–Neyman method <span class="citation">(<a href="references.html#ref-Johnson.Neyman:1936" role="doc-biblioref">Johnson and Neyman 1936</a>)</span> considers this range, but this leads to multiple testing problems since we probe the model repeatedly. <span class="citation">Esarey and Sumner (<a href="references.html#ref-Esarey.Sumner:2018" role="doc-biblioref">2018</a>)</span> offer a method that provides control for the false discovery rate.</p>
 <p>To illustrate the method, we dichotomize the manipulation pooling individual and collective protests, since these are the most similar.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
