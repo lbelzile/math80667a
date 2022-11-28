@@ -1,22 +1,25 @@
 # Nonparametric tests
 
-In small samples or in the presence of very skewed responses with extreme observations, the conclusions drawn from the $\mathsf{F}$ approximation to the analysis of variance model need not hold. This chapter presents **nonparametric tests**: these are procedures based on ranks that can be easily understood.
+In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for $t$-tests or analysis of variance models need not hold. This chapter presents **nonparametric tests**.
 
-If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could compute ranks. These are the relative ordering in a sample, where rank 1 denotes the smallest observation and rank $n$ the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information.
+If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size $n$, where rank 1 denotes the smallest observation and rank $n$ the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations (8,2,1,2) gives ranks (4, 2.5., 1, 2.5) if we assign the average rank to ties.
 
-SHOW EXAMPLE OF APPLICATION WHERE THE RESULT CHANGES.
+When are nonparametric tests used? In small samples, the central limit theorem may not apply and the conclusions rely more heavily on model assumptions. If we are willing to assume data are drawn from a parametric model, a probabilistic model from which data originates, such as normal $\mathsf{No}(\mu, \sigma^2)$ with parameters $\mu$ and $\sigma$. If we estimate those parameters on the basis of the observed sample, here the sample mean $\widehat{\mu}$ and sample standard deviation $\widehat{\sigma}$, we can obtain probability (under the null hypothesis) of certain outcome for the standardized $t$-test, or correspondingly confidence intervals. As ranks are simply numbers between $1$ to $n$ (if there are no ties), no matter how data are generated, we can typically assess the repartition of those integers under the null hypothesis. There is no free lunch: ranks require fewer modelling assumptions^[But not always: for example, the null distribution of Wilcoxon's rank sum test compares medians in two groups, but under the assumption that the distribution in each group is the same. This assumption doesn't hold if groups have unequal variance.], but they have lower power than their parametric counterparts *if* the assumption underlying these tests are validated.
 
-The following tests are popular alternatives
+The following list nonparametric tests and their popular parametric equivalent.
 
-- Wilcoxon's signed-rank test: an alternative to a one-sample t-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences).
-- Mann--Whitney $U$, aka Wilcoxon rank-sum test: the nonparametric analog of two-sample $t$-test, which ranks all observations in the sample and compares them between groups.
-- Kruskal--Wallis test: analysis of variance model for the ranks, obtained by computing the ranks overall of the response and performing an ANOVA.
+- Wilcoxon's signed-rank test: an alternative to a one-sample $t$-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences).
+- Mann--Whitney $U$ or Wilcoxon's rank-sum test: the nonparametric analog of two-sample $t$-test, which ranks all observations in the sample and compares them between groups.
+- Kruskal--Wallis test: analysis of variance model for the ranks, obtained by pooling all observations, computing the ranks, and splitting them by experimental condition.
+- Friedman's rank sum test for complete block design: ranks are computed within each block (one block, one experimental factor) and we consider the sum of the ranks for each treatment level.
 
-For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests using the same ANOVA functions works.
+For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests using the same $t$-test or ANOVA functions works: [see J. K. Lindeløv](https://lindeloev.github.io/tests-as-linear/) cheatsheet and examples for indications.
+
+
 
 More information about the null distribution and intuition. There are subtleties associated with ties and the zero-fudge (use `coin` package, discard zero differences for signed-rank test first and adjust sample size accordingly. For ties, we assign to the average rank, so 4, 2.5., 2.5, 1 if we have data (8,2,1,2).
 
-[See J. K. Lindeløv](https://lindeloev.github.io/tests-as-linear/) cheatsheet.
+
 
 
 Add two examples (`BRLS21_T3` uses signed-rank test, Bruck and Levav's eyetracker data in `BL22_E` uses Kruskal--Wallis). Show the $p$-values match up to rounding.
