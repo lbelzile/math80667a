@@ -22,6 +22,7 @@ rmd_files: [
   "09-repeated.Rmd",
   "10-mixed.Rmd",
   "11-causal-inference.Rmd",
+  12-nonparametric.Rmd,
   "references.Rmd"
 ]
 

@@ -121,6 +121,9 @@ tab:unnamed-chunk-8
 tab:tbl-mediation
 tab:tbl-testsmoder
 fig:fig-jn
+exm:unlabeled-div-29
+fig:fig-normqqplot
+exm:unlabeled-div-30
 introduction
 study-type
 terminology
@@ -201,3 +204,6 @@ linear-mediation-model
 model-assumptions-2
 example
 moderation-and-interactions
+nonparametric-tests
+wilcoxon-signed-rank-test
+wilcoxon-rank-sum-test-and-kruskalwallis-test

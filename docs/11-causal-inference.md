@@ -355,29 +355,29 @@ linmed <- mediate(
   <tr>
    <td style="text-align:left;"> ACME </td>
    <td style="text-align:right;"> 0.286 </td>
-   <td style="text-align:right;"> 0.025 </td>
-   <td style="text-align:right;"> 0.615 </td>
+   <td style="text-align:right;"> 0.015 </td>
+   <td style="text-align:right;"> 0.595 </td>
    <td style="text-align:right;"> 0.037 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ADE </td>
    <td style="text-align:right;"> 0.287 </td>
-   <td style="text-align:right;"> -0.166 </td>
-   <td style="text-align:right;"> 0.732 </td>
+   <td style="text-align:right;"> -0.165 </td>
+   <td style="text-align:right;"> 0.737 </td>
    <td style="text-align:right;"> 0.218 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Total Effect </td>
    <td style="text-align:right;"> 0.573 </td>
-   <td style="text-align:right;"> 0.037 </td>
-   <td style="text-align:right;"> 1.080 </td>
+   <td style="text-align:right;"> 0.047 </td>
+   <td style="text-align:right;"> 1.091 </td>
    <td style="text-align:right;"> 0.030 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Prop. Mediated </td>
    <td style="text-align:right;"> 0.499 </td>
-   <td style="text-align:right;"> 0.211 </td>
-   <td style="text-align:right;"> 5.956 </td>
+   <td style="text-align:right;"> -0.051 </td>
+   <td style="text-align:right;"> 1.938 </td>
    <td style="text-align:right;"> 0.057 </td>
   </tr>
 </tbody>

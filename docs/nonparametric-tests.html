@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>12 Nonparametric tests | Experimental Design and Statistical Methods</title>
+<meta name="author" content="Léo Belzile">
+<meta name="description" content="In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for \(t\)-tests or...">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta property="og:title" content="12 Nonparametric tests | Experimental Design and Statistical Methods">
+<meta property="og:type" content="book">
+<meta property="og:description" content="In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for \(t\)-tests or...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="12 Nonparametric tests | Experimental Design and Statistical Methods">
+<meta name="twitter:description" content="In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for \(t\)-tests or...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Experimental Design and Statistical Methods</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Experimental Design and Statistical Methods</a></li>
+<li><a class="" href="introduction.html"><span class="header-section-number">1</span> Introduction</a></li>
+<li><a class="" href="hypothesis-testing.html"><span class="header-section-number">2</span> Hypothesis testing</a></li>
+<li><a class="" href="CRT.html"><span class="header-section-number">3</span> Completely randomized designs</a></li>
+<li><a class="" href="contrasts-multiple-testing.html"><span class="header-section-number">4</span> Contrasts and multiple testing</a></li>
+<li><a class="" href="complete-factorial-designs.html"><span class="header-section-number">5</span> Complete factorial designs</a></li>
+<li><a class="" href="designs-to-reduce-the-error.html"><span class="header-section-number">6</span> Designs to reduce the error</a></li>
+<li><a class="" href="effect-sizes-and-power.html"><span class="header-section-number">7</span> Effect sizes and power</a></li>
+<li><a class="" href="replication-crisis.html"><span class="header-section-number">8</span> Replication crisis</a></li>
+<li><a class="" href="repeated-measures-and-multivariate-models.html"><span class="header-section-number">9</span> Repeated measures and multivariate models</a></li>
+<li><a class="" href="introduction-to-mixed-models.html"><span class="header-section-number">10</span> Introduction to mixed models</a></li>
+<li><a class="" href="causal-inference.html"><span class="header-section-number">11</span> Causal inference</a></li>
+<li><a class="active" href="nonparametric-tests.html"><span class="header-section-number">12</span> Nonparametric tests</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/lbelzile/math80667a">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="nonparametric-tests" class="section level1" number="12">
+<h1>
+<span class="header-section-number">12</span> Nonparametric tests<a class="anchor" aria-label="anchor" href="#nonparametric-tests"><i class="fas fa-link"></i></a>
+</h1>
+<p>In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for <span class="math inline">\(t\)</span>-tests or analysis of variance models need not hold. This chapter presents <strong>nonparametric tests</strong>.</p>
+<p>If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size <span class="math inline">\(n\)</span>, where rank 1 denotes the smallest observation and rank <span class="math inline">\(n\)</span> the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations (8,2,1,2) gives ranks (4, 2.5., 1, 2.5) if we assign the average rank to ties.</p>
+<p>When are nonparametric tests used? The answer is that they are robust (meaning their conclusions are less affected) by departure from distributional assumptions (data are normal) and by outliers. In large samples, the central limit theorem kicks in and the behaviour of most group average is normal. However, in small samples, the quality of the <span class="math inline">\(p\)</span>-value approximate depends more critically on whether the model assumptions hold or not.</p>
+<p>All of what has been covered so far is part of parametric statistics: we assume summary statistics behave in a particular way and utilize the probabilistic model from which these originate to describe the range of likely outcomes under the null hypothesis. As ranks are simply numbers between <span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span> (if there are no ties), no matter how data are generated, we can typically assess the repartition of those integers under the null hypothesis. There is no free lunch: while rank-based tests require fewer modelling assumptions, but they have lower power than their parametric counterparts <em>if</em> the assumption underlying these tests are validated.</p>
+<p>In short: the more you are willing to assume, the more information you can squeeze out of your problem. However, the inference can be fragile so you have to decide on a trade-off between efficiency (keeping all numerical records) and robustness (e.g., keeping only the signs or the ranking of the data).</p>
+<p>The following list nonparametric tests and their popular parametric equivalent.</p>
+<ul>
+<li>sign test: an alternative to a one-sample <span class="math inline">\(t\)</span>-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences). Only uses the sign of the difference, minimal assumptions but not powerful</li>
+<li>Wilcoxon’s signed rank test: idem, but using the ranks of the observations</li>
+<li>Mann–Whitney <span class="math inline">\(U\)</span> or Wilcoxon’s rank-sum test: the nonparametric analog of two-sample <span class="math inline">\(t\)</span>-test, which ranks all observations in the sample and compares them between groups. For between-subject designs</li>
+</ul>
+<p>These can be extended with repeated measurements to more than two groups:</p>
+<ul>
+<li>
+<a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/friedman.htm">Friedman’s rank sum test</a> for completely randomized block design: ranks are computed within each block (one block, one experimental factor) and we consider the sum of the ranks for each treatment level. Equivalent of sign test with more samples; also <a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/quade.htm">Quade’s test</a>
+</li>
+<li>Kruskal–Wallis test: one-way analysis of variance model with ranks, obtained by pooling all observations, computing the ranks, and splitting them by experimental condition.</li>
+</ul>
+<p>For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests from the linear model or ANOVA function yield more or less the same benchmarks for all useful purposes: <a href="https://lindeloev.github.io/tests-as-linear/">see J. K. Lindeløv</a> cheatsheet and examples for indications.</p>
+<div id="wilcoxon-signed-rank-test" class="section level2" number="12.1">
+<h2>
+<span class="header-section-number">12.1</span> Wilcoxon signed rank test<a class="anchor" aria-label="anchor" href="#wilcoxon-signed-rank-test"><i class="fas fa-link"></i></a>
+</h2>
+<p>The most common use of the signed rank test is for paired samples for which the response is measured on a numeric or ordinal scale. Let <span class="math inline">\(Y_{ij}\)</span> denote measurement <span class="math inline">\(j\)</span> of person <span class="math inline">\(i\)</span> and the matching observation <span class="math inline">\(Y_{kj}\)</span>. For each pair <span class="math inline">\(i=1, \ldots, n\)</span>, we can compute the difference <span class="math inline">\(D_i = Y_{ij}-Y_{ik}\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;With one sample, we postulate a median &lt;span class="math inline"&gt;\(\mu_0\)&lt;/span&gt; and set &lt;span class="math inline"&gt;\(D_i = Y_{i} - \mu_0\)&lt;/span&gt;.&lt;/p&gt;'><sup>55</sup></a> If we assume there is no difference between the distributions of the values taken, then the distribution of the difference <span class="math inline">\(D_j\)</span> is symmetric around zero under the null hypothesis.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;We could subtract likewise &lt;span class="math inline"&gt;\(\mu_0\)&lt;/span&gt; from the paired difference if we assume the distributions are &lt;span class="math inline"&gt;\(\mu_0\)&lt;/span&gt; units apart.&lt;/p&gt;'><sup>56</sup></a> The statistic tests thus tests whether the median is zero.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;When using ranks, we cannot talk about the mean of the distribution, but rather about quantiles.&lt;/p&gt;"><sup>57</sup></a></p>
+<p>Once we have the new differences <span class="math inline">\(D_1, \ldots, D_n\)</span>, we take absolute values and compute their ranks, <span class="math inline">\(R_i = \mathsf{rank}|D_i|\)</span>. The test statistic is formed by computing the sum of the ranks <span class="math inline">\(R_i\)</span> associated with positive differences <span class="math inline">\(D_i&gt;0\)</span>. How does this test statistic work as a summary of evidence? If there was no difference we expect roughly half of the centered observations or paired difference to be positive and half to be negative. The sum of positive ranks should be close to the average rank: for a two-sided test, large or small sums are evidence against the null hypothesis that there is no difference between groups.</p>
+<p>In management sciences, Likert scales are frequently used as response. The drawback of this approach, unless the response is the average of multiple questions, is that there will be ties and potentially zero differences <span class="math inline">\(D_j=0\)</span>. There are subtleties associated with testing, since the signed rank assumes that all differences are either positive or negative. The <code>coin</code> package in <strong>R</strong> deals correctly with such instances, but it is important to specify the treatment of such values.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;For example, are zero difference discarded prior to ranking, as suggested by Wilcoxon, or kept for the ranking and discarded after, as proposed by &lt;span class="citation"&gt;Pratt (&lt;a href="references.html#ref-Pratt:1959" role="doc-biblioref"&gt;1959&lt;/a&gt;)&lt;/span&gt;)? We also need to deal with ties, as the distribution of numbers changes with ties. If this seems complicated to you, well it is… so much that the default implementation in &lt;strong&gt;R&lt;/strong&gt; is unreliable. &lt;a href="https://www.stat.umn.edu/geyer/5601/examp/signrank.html"&gt;Charles Geyer&lt;/a&gt; illustrate the problems with the &lt;em&gt;zero fudge&lt;/em&gt;, but the point is quite technical. His notes do clearly make the case you can’t trust default software, even if it’s been sitting around for a long time.&lt;/p&gt;'><sup>58</sup></a></p>
+<div class="example">
+<p><span id="exm:unlabeled-div-29" class="example"><strong>Example 12.1  (Smartwatches and other distractions) </strong></span>We consider a within-subject design from <span class="citation">Brodeur et al. (<a href="references.html#ref-Brodeur:2021" role="doc-biblioref">2021</a>)</span>, who conducted an experiment at Tech3Lab to check distraction while driving from different devices including smartwatches using a virtual reality environment. The authors wanted to investigate whether smartwatches were more distracting than cellphones while driving. Using a simulator, they ran a within-subject design where each participant was assigned to a distraction (phone, using a speaker, texting while driving or smartwatch) while using a driving simulator. The response is the number of road safety violations conducted on the segment. Each task was assigned in a random order. The data can be found in the <code>BRLS21_T3</code> dataset in package <code>hecedsm</code>.</p>
+<p>A quick inspection reveals that the data are balanced with four tasks and 31 individuals. We can view the within-subject design with a single replication as a complete block design (with <code>id</code> as block) and <code>task</code> as experimental manipulation.</p>
+<p>How could we compare the different tasks? The data here are clearly very far from normally distributed and there are notable outliers among the residuals, as evidenced by <a href="nonparametric-tests.html#fig:fig-normqqplot">12.1</a>. Conclusions probably wouldn’t be affected by using an analysis of variance, but it may be easier to convince reviewers that the findings are solid by ressorting to nonparametric procedures.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig-normqqplot"></span>
+<img src="12-nonparametric_files/figure-html/fig-normqqplot-1.png" alt="Normal quantile-quantile plot of the block design. There are many outliers" width="80%"><p class="caption">
+Figure 12.1: Normal quantile-quantile plot of the block design. There are many outliers
+</p>
+</div>
+<p>Both the Friedman and the Quade tests are obtained by computing ranks within each block (participant) and then performing a two-way analysis of variance. The Friedman test is less powerful than Quade’s with a small number of groups. Both are applicable for block designs with a single factor.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BRLS21_T3</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
+<span><span class="va">friedman</span> <span class="op">&lt;-</span> <span class="fu">coin</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coin/man/SymmetryTests.html">friedman_test</a></span><span class="op">(</span></span>
+<span>  <span class="va">nviolation</span> <span class="op">~</span> <span class="va">task</span> <span class="op">|</span> <span class="va">id</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">BRLS21_T3</span><span class="op">)</span></span>
+<span><span class="va">quade</span> <span class="op">&lt;-</span> <span class="fu">coin</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coin/man/SymmetryTests.html">quade_test</a></span><span class="op">(</span></span>
+<span>  <span class="va">nviolation</span> <span class="op">~</span> <span class="va">task</span> <span class="op">|</span> <span class="va">id</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">BRLS21_T3</span><span class="op">)</span></span>
+<span><span class="va">eff_size</span> <span class="op">&lt;-</span> <span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/rank_epsilon_squared.html">kendalls_w</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="st">"nviolation"</span>, </span>
+<span>  groups <span class="op">=</span> <span class="st">"task"</span>, </span>
+<span>  blocks <span class="op">=</span> <span class="st">"id"</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">BRLS21_T3</span><span class="op">)</span></span></code></pre></div>
+<p>The Friedman test is obtained by replacing observations by the rank within each block (so rather than the number of violations per task, we compute the rank among the four tasks). The Friedman’s test statistic is <span class="math inline">\(18.97\)</span> and is compared to a benchmark <span class="math inline">\(\chi^2_3\)</span> distribution, yielding a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(0\)</span>.</p>
+<p>We can also obtain effect sizes for the rank test, termed Kendall’s <span class="math inline">\(W\)</span>. A value of 1 indicates complete agreement in the ranking: here, this would occur if the ranking of the number of violations was the same for each participant. The estimated agreement (effect size) is <span class="math inline">\(0.2\)</span>.</p>
+<p>The test reveals significant differences in the number of road safety violations across tasks. We could therefore perform all pairwise differences using the signed-rank test and adjust <span class="math inline">\(p\)</span>-values to correct for the fact we have performed six hypothesis tests.</p>
+<p>To do this, we modify the data and map them to wide-format (each line corresponds to an individual). We can then feed the data to compute differences, here for <code>phone</code> vs <code>watch</code>. We could proceed likewise for the five other pairwise comparisons and then adjust <span class="math inline">\(p\)</span>-values.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">smartwatch</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">BRLS21_T3</span>,</span>
+<span>  names_from <span class="op">=</span> <span class="va">task</span>,</span>
+<span>  values_from <span class="op">=</span> <span class="va">nviolation</span><span class="op">)</span></span>
+<span><span class="fu">coin</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coin/man/SymmetryTests.html">wilcoxsign_test</a></span><span class="op">(</span><span class="va">phone</span> <span class="op">~</span> <span class="va">watch</span>,</span>
+<span>                      data <span class="op">=</span> <span class="va">smartwatch</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Asymptotic Wilcoxon-Pratt Signed-Rank Test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  y by x (pos, neg) </span></span>
+<span><span class="co">#&gt;   stratified by block</span></span>
+<span><span class="co">#&gt; Z = 0.4, p-value = 0.7</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true mu is not equal to 0</span></span></code></pre></div>
+<p>You can think of the test as performing a paired <span class="math inline">\(t\)</span>-test for the 31 signed ranks <span class="math inline">\(R_i =\mathsf{sign}(D_i) \mathsf{rank}(|D_i|)\)</span> and testing whether the mean is zero. The <span class="math inline">\(p\)</span>-value obtained by doing this after discarding zeros is <span class="math inline">\(0.73\)</span>, which is pretty much the same as the more complicated approximation.</p>
+</div>
+</div>
+<div id="wilcoxon-rank-sum-test-and-kruskalwallis-test" class="section level2" number="12.2">
+<h2>
+<span class="header-section-number">12.2</span> Wilcoxon rank sum test and Kruskal–Wallis test<a class="anchor" aria-label="anchor" href="#wilcoxon-rank-sum-test-and-kruskalwallis-test"><i class="fas fa-link"></i></a>
+</h2>
+<p>These testing procedures are the nonparametric analog of the one-way analysis in a between-subject design. One could be interested in computing the differences between experimental conditions (pairwise) or overall if there are <span class="math inline">\(K \geq 2\)</span> experimental conditions. To this effect, we simply pool all observations, rank them and compare the average rank in each group. We can track what should be the repartition of data if there was no difference between groups (all ranks should be somehow uniformly distributed among the <span class="math inline">\(K\)</span> groups). If there are groups with larger averages than others, than this is evidence.</p>
+<p>In the two-sample case, we may also be interested in providing an estimator of the difference between condition. To this effect, we can compute the average of pairwise differences between observations of each pair of groups: those are called Walsh’s averages. The Hodges–Lehmann estimate of location is simply the median of Walsh’s averages and we can use the Walsh’s averages themselves to obtain a confidence interval.</p>
+<div class="example">
+<p><span id="exm:unlabeled-div-30" class="example"><strong>Example 12.2  (Virtual communications) </strong></span><span class="citation">Brucks and Levav (<a href="references.html#ref-Brucks.Levav:2022" role="doc-biblioref">2022</a>)</span> measure the attention of participants based on condition using an eyetracker. We compare the time spend looking at the partner by experimental condition (face-to-face or videoconferencing). The authors used a Kruskal–Wallis test, but this is equivalent to Wilcoxon’s rank-sum test.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BL22_E</span>, package <span class="op">=</span> <span class="st">"hecedsm"</span><span class="op">)</span></span>
+<span><span class="va">mww</span> <span class="op">&lt;-</span> <span class="fu">coin</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coin/man/LocationTests.html">wilcox_test</a></span><span class="op">(</span></span>
+<span>  <span class="va">partner_time</span> <span class="op">~</span> <span class="va">cond</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">BL22_E</span>, </span>
+<span>  conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">welch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">partner_time</span> <span class="op">~</span> <span class="va">cond</span>, </span>
+<span>  data <span class="op">=</span> <span class="va">BL22_E</span>, </span>
+<span>  conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">mww</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Asymptotic Wilcoxon-Mann-Whitney Test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  partner_time by cond (f2f, video)</span></span>
+<span><span class="co">#&gt; Z = -6, p-value = 1e-10</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true mu is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  -50.7 -25.9</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; difference in location </span></span>
+<span><span class="co">#&gt;                  -37.8</span></span></code></pre></div>
+<p>The output of the test includes, in addition to the <span class="math inline">\(p\)</span>-value for the null hypothesis that both median time are the same, a confidence interval for the time difference (in seconds). The Hodges–Lehmann estimate of location is <span class="math inline">\(-37.81\)</span> seconds, with a 95% confidence interval for the difference of <span class="math inline">\([-50.69, -25.91]\)</span> seconds.</p>
+<p>These can be compared with the usual Welch’s two-sample <span class="math inline">\(t\)</span>-test with unequal variance. The estimated mean difference is <span class="math inline">\(-39.69\)</span> seconds for face-to-face vs group video, with a 95% confidence interval of <span class="math inline">\([-52.93, -26.45]\)</span>.</p>
+<p>In either case, it’s clear that the videoconferencing translates into longer time spent gazing at the partner than in-person meetings.</p>
+</div>
+
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="causal-inference.html"><span class="header-section-number">11</span> Causal inference</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#nonparametric-tests"><span class="header-section-number">12</span> Nonparametric tests</a></li>
+<li><a class="nav-link" href="#wilcoxon-signed-rank-test"><span class="header-section-number">12.1</span> Wilcoxon signed rank test</a></li>
+<li><a class="nav-link" href="#wilcoxon-rank-sum-test-and-kruskalwallis-test"><span class="header-section-number">12.2</span> Wilcoxon rank sum test and Kruskal–Wallis test</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/lbelzile/math80667a/blob/master/12-nonparametric.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/lbelzile/math80667a/edit/master/12-nonparametric.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Experimental Design and Statistical Methods</strong>" was written by Léo Belzile. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
