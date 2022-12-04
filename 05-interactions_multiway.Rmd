@@ -87,8 +87,10 @@ In our example of @Maglio.Polman:2014, a simple effect would be comparing the di
 
 ```{r}
 #| label: fig-2by2
-#| fig-cap: "Line graph for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of @Crump.Navarro.Suzuki:2019 by Matthew Crump (CC BY-SA 4.0 license)."
+#| fig-cap: "Interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of @Crump.Navarro.Suzuki:2019 by Matthew Crump (CC BY-SA 4.0 license)."
 #| out-width: "100%"
+#| fig-width: 10
+#| fig-height: 4
 p1 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
   factorB = c("b1", "b2", "b1", "b2"),
@@ -102,7 +104,7 @@ p2 <- data.frame(
 p3 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
   factorB = c("b1", "b2", "b1", "b2"),
-  means = c(10, 13, 5, 2)
+  means = c(5, 10, 5, 10)
 )
 p4 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
@@ -112,12 +114,12 @@ p4 <- data.frame(
 p5 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
   factorB = c("b1", "b2", "b1", "b2"),
-  means = c(10, 18, 5, 7)
+  means = c(5, 10, 10, 5)
 )
 p6 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
   factorB = c("b1", "b2", "b1", "b2"),
-  means = c(5, 10, 5, 10)
+  means = c(10, 13, 5, 2)
 )
 p7 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
@@ -127,18 +129,20 @@ p7 <- data.frame(
 p8 <- data.frame(
   factorA = c("a1", "a1", "a2", "a2"),
   factorB = c("b1", "b2", "b1", "b2"),
-  means = c(5, 10, 10, 5)
+  means = c(10, 18, 5, 7)
 )
+
 all_22s <- rbind(p1, p2, p3, p4, p5, p6, p7, p8)
 type <- factor(rep(1:8, each = 4), 
                labels = c("no effect",
                           "main effect of A only",
-                          "main effect of A and interaction",
-                          "both main effects",
-                          "both main effects and interaction",
                           "main effect of B only",
-                          "main effect of B and interaction",
-                          "interaction only"))
+                          "both main effects",
+                          "interaction only",
+                          "main effect of A and interaction",
+                           "main effect of B and interaction",
+                          
+                          "both main effects and interaction" ))
 all_22s <- cbind(all_22s, type)
 options(ggplot2.discrete.colour= MetBrewer::met.brewer(name = "Hiroshige", 2))
 ggplot(all_22s, 

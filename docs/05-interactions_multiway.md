@@ -86,8 +86,8 @@ In our example of @Maglio.Polman:2014, a simple effect would be comparing the di
 
 
 <div class="figure" style="text-align: center">
-<img src="05-interactions_multiway_files/figure-html/fig-2by2-1.png" alt="Line graph for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of @Crump.Navarro.Suzuki:2019 by Matthew Crump (CC BY-SA 4.0 license)." width="100%" />
-<p class="caption">(\#fig:fig-2by2)Line graph for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of @Crump.Navarro.Suzuki:2019 by Matthew Crump (CC BY-SA 4.0 license).</p>
+<img src="05-interactions_multiway_files/figure-html/fig-2by2-1.png" alt="interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of @Crump.Navarro.Suzuki:2019 by Matthew Crump (CC BY-SA 4.0 license)." width="100%" />
+<p class="caption">(\#fig:fig-2by2)interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of @Crump.Navarro.Suzuki:2019 by Matthew Crump (CC BY-SA 4.0 license).</p>
 </div>
 
 
