@@ -14,6 +14,17 @@ pre code {
 }
 
 
+.book .book-body .page-wrapper .page-inner section.normal a {
+  max-width: 90% !important;
+  margin-right: 10px;
+  font-size: 1.3em
+}
+
+.book-summary {
+ font-size: 1.4em !important;
+}
+
+
 .yourturn {
     padding: 1em;
     margin: 1em 0;
@@ -85,3 +96,4 @@ pre code {
   margin-right: auto;
   width: 50%;
 }
+

@@ -1,0 +1,79 @@
+# Count data
+
+```{r}
+#| label: setup
+#| file: "_common.R"
+#| include: false
+```
+
+Many experiments can have binary outcomes: aggregating these results by factor leads to contingency tables, which contain the total count per factor combination. These data can be understood in the same way as other ANOVA models, but with the aggregated responses. The following section is meant as both an introduction to the topic, showcasing examples of tests and their application. 
+
+
+
+
+
+Pearson's goodness of fit examines discrepancies
+
+:::{ .example}
+
+We consider a  study from @Bertrand.Mullainathain:2004, who study racial discrimination in hiring based on the consonance of applicants names. The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.
+
+If there was no racial discrimination (null hypothesis), we would expect the average number of times a white applicant was called back (but no black applicant) to be the same as a single black applicant (but no white). Only the entries for different numbers of call-back (either 0 vs 2, 0 vs 1 or 1 vs 2 for either race) are instructive about our question of interest. 
+
+
+```{r}
+#| eval: false
+#| echo: false
+BM04_T2 <- rbind(c(1103, 74, 19),
+      c(33, 46, 18),
+      c(6, 7, 17))
+colnames(BM04_T2) <- c("no", "1W", "2W")
+rownames(BM04_T2) <- c("no", "1B", "2B")
+
+qty <- data.frame(white = factor(rep(c("no", "1", "2"), each = 3)),
+                  black = factor(rep(c("no", "1", "2"), length.out = 9)),
+                  count = as.vector(BM04_T2))
+
+library(emmeans)
+model <- glm(count ~ white*black, #saturated model 
+             data = qty, 
+             family = poisson)
+library(emmeans)
+emmeans(model, specs = c("white","black")) |> 
+  contrast(method = 
+              list("1vs2" = c(0,1,0,-1,0,0,0,0,0),
+                   "1vs0" = c(0,0,1,0,0,0,-1,0,0),
+                   "2vs0" = c(0,0,0,0,0,1,0,-1,0))) |>
+  emmeans::joint_tests()
+
+PearsonX2 <- (74-33)^2/(74+33) + (19-6)^2/(19+6) + (18-7)^2/(18+7)
+pchisq(PearsonX2, df = 3, lower.tail = FALSE)
+
+
+data(MULTI21_D1, package = "hecedsm")
+contingency <- xtabs(
+  count ~ age + frequency, 
+  data = MULTI21_D1)
+chisq.test(contingency)
+
+counts_5vs7 <- xtabs(
+  count ~ age + frequency, 
+  data = MULTI21_D1,
+  subset = age %in% c("5yo", "7yo"),
+  drop.unused.levels = TRUE)
+chisq.test(counts_5vs7)
+effectsize::cramers_v(chisq.test(counts_5vs7))
+
+data(DA22_E2, package = "hecedsm")
+# How many observations?
+nrow(DA22_E2)
+tabs <- with(DA22_E2, table(purchased, format))
+chisq.test(tabs, correct = FALSE)
+# In the paper, all participants were included for this test but other were excluded at a latter stage. 
+# DA22_E2 only includes the subset
+
+
+
+```
+
+:::

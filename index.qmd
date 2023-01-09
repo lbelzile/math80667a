@@ -1,0 +1,9 @@
+
+# Welcome {-}
+
+This book is a web complement to MATH 80667A *Experimental Designs and Statistical Methods*, a graduate course offered at HEC Montréal in the joint Ph.D. program in Management.
+
+These notes are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/) and were last compiled on `r Sys.setlocale("LC_TIME", "en_CA.UTF-8"); format(Sys.Date(), format = "%A, %B %d %Y")`.
+
+The objective of the course is to teach basic principles of experimental designs and statistical inference using the **R** programming language. We will pay particular attention to the correct reporting and interpretation of results and learn how to review critically scientific papers using experimental designs.
+The unifying theme of the book is that statistics are summary of evidence, and statistic as a field is the science of decision-making in the presence of uncertainty. We use examples drawn from published articles in management sciences to illustrate core concepts.

@@ -1,6 +1,5 @@
 library(knitr)
 library(kableExtra)
-
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(
   comment = "#>",
@@ -19,12 +18,21 @@ options(knitr.graphics.auto_pdf = TRUE)
 options(scipen = 1, digits = 3)
 library(viridis)
 library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
-library(tidyverse)
-scale_colour_discrete <- viridis::scale_color_viridis(option="turbo")
-scale_fill_discrete <- viridis::scale_fill_viridis(option="turbo")
-options(ggplot2.continuous.colour = "turbo",
-        ggplot2.continuous.fill = "turbo")
 library(patchwork)
 theme_set(theme_minimal())
-hecblue <- rgb(red = 0, green = 60, blue = 113, max = 255)
-heccyan <- rgb(red = 0, green = 159, blue = 223, max = 255)
+options(knitr.graphics.auto_pdf = TRUE)
+options(scipen = 1, digits = 3)
+library(viridis, quietly = FALSE)
+library(ggplot2, warn.conflicts = FALSE, quietly = TRUE)
+# suppressPackageStartupMessages(library(poorman, quietly = TRUE, warn.conflicts = FALSE))
+suppressPackageStartupMessages(library(dplyr, quietly = TRUE, warn.conflicts = FALSE))
+library(patchwork)
+# safe_colorblind_palette <- c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499",
+#                              "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888")
+
+safe_colorblind_palette <- MetBrewer::met.brewer("Hiroshige",10)
+options(ggplot2.continuous.colour = "turbo",
+        ggplot2.continuous.fill = "turbo")
+scale_colour_discrete <- scale_color_manual(MetBrewer::met.brewer("Hiroshige",10))
+scale_fill_discrete <- scale_fill_manual(MetBrewer::met.brewer("Hiroshige",10))
+theme_set(theme_classic())
