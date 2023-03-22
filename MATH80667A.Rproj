@@ -12,6 +12,10 @@ Encoding: UTF-8
 RnwWeave: knitr
 LaTeX: pdfLaTeX
 
-BuildType: Website
+AutoAppendNewline: Yes
+StripTrailingWhitespace: Yes
+
+BuildType: Makefile
 
 QuitChildProcessesOnExit: Yes
+DisableExecuteRprofile: Yes

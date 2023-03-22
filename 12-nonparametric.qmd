@@ -1,0 +1,184 @@
+# Nonparametric tests
+
+```{r}
+#| label: setup
+#| file: "_common.R"
+#| include: true
+#| message: false
+#| warning: false
+```
+
+In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for $t$-tests or analysis of variance models need not hold. This chapter presents **nonparametric tests**.
+
+If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size $n$, where rank 1 denotes the smallest observation and rank $n$ the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations (8,2,1,2) gives ranks (4, 2.5., 1, 2.5) if we assign the average rank to ties.
+
+When are nonparametric tests used? The answer is that they are robust (meaning their conclusions are less affected) by departure from distributional assumptions (data are normal) and by outliers. In large samples, the central limit theorem kicks in and the behaviour of most group average is normal. However, in small samples, the quality of the $p$-value approximate depends more critically on whether the model assumptions hold or not. 
+
+All of what has been covered so far is part of parametric statistics: we assume summary statistics behave in a particular way and utilize the probabilistic model from which these originate to describe the range of likely outcomes under the null hypothesis. As ranks are simply numbers between $1$ to $n$ (if there are no ties), no matter how data are generated, we can typically assess the repartition of those integers under the null hypothesis. There is no free lunch: while rank-based tests require fewer modelling assumptions, but they have lower power than their parametric counterparts *if* the assumption underlying these tests are validated.
+
+In short: the more you are willing to assume, the more information you can squeeze out of your problem. However, the inference can be fragile so you have to decide on a trade-off between efficiency (keeping all numerical records) and robustness (e.g., keeping only the signs or the ranking of the data).
+
+
+The following list nonparametric tests and their popular parametric equivalent.
+
+- sign test: an alternative to a one-sample $t$-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences). Only uses the sign of the difference, minimal assumptions but not powerful
+- Wilcoxon's signed rank test: idem, but using the ranks of the observations
+- Mann--Whitney $U$ or Wilcoxon's rank-sum test: the nonparametric analog of two-sample $t$-test, which ranks all observations in the sample and compares them between groups. For between-subject designs
+
+These can be extended with repeated measurements to more than two groups: 
+
+- [Friedman's rank sum test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/friedman.htm) for completely randomized block design: ranks are computed within each block (one block, one experimental factor) and we consider the sum of the ranks for each treatment level. Equivalent of sign test with more samples; also [Quade's test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/quade.htm)
+- Kruskal--Wallis test: one-way analysis of variance model with ranks, obtained by pooling all observations, computing the ranks, and splitting them by experimental condition.
+
+For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests from the linear model or ANOVA function yield more or less the same benchmarks for all useful purposes: [see J. K. Lindeløv](https://lindeloev.github.io/tests-as-linear/) cheatsheet and examples for indications.
+
+
+
+
+## Wilcoxon signed rank test
+
+
+
+The most common use of the signed rank test is for paired samples for which the response is measured on a numeric or ordinal scale. Let $Y_{ij}$ denote measurement $j$ of person $i$ and the matching observation $Y_{kj}$. For each pair $i=1, \ldots, n$, we can compute the difference $D_i = Y_{ij}-Y_{ik}$.^[With one sample, we postulate a median $\mu_0$ and set $D_i = Y_{i} - \mu_0$.] If we assume there is no difference between the distributions of the values taken, then the distribution of the difference $D_j$ is symmetric around zero under the null hypothesis.^[We could subtract likewise $\mu_0$ from the paired difference if we assume the distributions are $\mu_0$ units apart.] The statistic tests thus tests whether the median is zero.^[When using ranks, we cannot talk about the mean of the distribution, but rather about quantiles.]
+
+Once we have the new differences $D_1, \ldots, D_n$, we take absolute values and compute their ranks, $R_i = \mathsf{rank}|D_i|$. The test statistic is formed by computing the sum of the ranks $R_i$ associated with positive differences $D_i>0$. How does this test statistic work as a summary of evidence? If there was no difference we expect roughly half of the centered observations or paired difference to be positive and half to be negative. The sum of positive ranks should be close to the average rank: for a two-sided test, large or small sums are evidence against the null hypothesis that there is no difference between groups.
+
+
+In management sciences, Likert scales are frequently used as response. The drawback of this approach, unless the response is the average of multiple questions, is that there will be ties and potentially zero differences $D_j=0$. There are subtleties associated with testing, since the signed rank assumes that all differences are either positive or negative. The `coin` package in **R** deals correctly with such instances, but it is important to specify the treatment of such values.^[For example, are zero difference discarded prior to ranking, as suggested by Wilcoxon, or kept for the ranking and discarded after, as proposed by @Pratt:1959? We also need to deal with ties, as the distribution of numbers changes with ties. If this seems complicated to you, well it is... so much that the default implementation in **R** is unreliable. [Charles Geyer](https://www.stat.umn.edu/geyer/5601/examp/signrank.html) illustrate the problems with the *zero fudge*, but the point is quite technical. His notes make a clear case that you can't trust default software, even if it's been sitting around for a long time.]
+
+
+
+:::{ .example name="Smartwatches and other distractions"}
+
+We consider a within-subject design from @Brodeur:2021, who conducted an experiment at Tech3Lab to check distraction while driving from different devices including smartwatches using a virtual reality environment. The authors wanted to investigate whether smartwatches were more distracting than cellphones while driving. Using a simulator, they ran a within-subject design where each participant was assigned to a distraction (phone, using a speaker, texting while driving or smartwatch) while using a  driving simulator. The response is the number of road safety violations conducted on the segment. Each task was assigned in a random order. The data can be found in the `BRLS21_T3` dataset in package `hecedsm`.
+
+```{r}
+#| eval: false
+library(coin, quietly = TRUE)
+data(BRLS21_T3, package = "hecedsm")
+str(BRLS21_T3)
+xtabs(~ task + id, data = BRLS21_T3)
+```
+
+A quick inspection reveals that the data are balanced with four tasks and 31 individuals. We can view the within-subject design with a single replication as a complete block design (with `id` as block) and `task` as experimental manipulation.
+
+How could we compare the different tasks? The data here are clearly very far from normally distributed and there are notable outliers among the residuals, as evidenced by \@ref(fig:fig-normqqplot). Conclusions probably wouldn't be affected by using an analysis of variance, but it may be easier to convince reviewers that the findings are solid by ressorting to nonparametric procedures.
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-align: 'center'
+#| fig-width: 8
+#| fig-height: 8
+#| out-width: '80%'
+#| label: fig-normqqplot
+#| fig-cap: "Normal quantile-quantile plot of the block design. There are many outliers"
+car::qqPlot(
+  resid(aov(nviolation ~ id + task, 
+            data = hecedsm::BRLS21_T3)),
+  id = FALSE, 
+  xlab = "theoretical quantiles",
+  ylab = "ordinary residuals")
+```
+
+Both the Friedman and the Quade tests are obtained by computing ranks within each block (participant) and then performing a two-way analysis of variance. The Friedman test is less powerful than Quade's with a small number of groups. Both are applicable for block designs with a single factor. 
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+data(BRLS21_T3, package = "hecedsm")
+friedman <- coin::friedman_test(
+  nviolation ~ task | id,
+  data = BRLS21_T3)
+quade <- coin::quade_test(
+  nviolation ~ task | id,
+  data = BRLS21_T3)
+eff_size <- effectsize::kendalls_w(
+  x = "nviolation", 
+  groups = "task", 
+  blocks = "id", 
+  data = BRLS21_T3)
+```
+
+
+The Friedman test is obtained by replacing observations by the rank within each block (so rather than the number of violations per task, we compute the rank among the four tasks). The Friedman's test statistic is $`r round( friedman@statistic@teststatistic, 3)`$ and is compared to a benchmark $\chi^2_3$ distribution, yielding a $p$-value of $`r round(friedman@distribution@pvalue(q = friedman@statistic@teststatistic), 4)`$. 
+
+
+We can also obtain effect sizes for the rank test, termed Kendall's $W$. A value of 1 indicates complete agreement in the ranking: here, this would occur if the ranking of the number of violations was the same for each participant. The estimated agreement (effect size) is $`r round(eff_size$Kendalls_W, 2)`$.
+
+The test reveals significant differences in the number of road safety violations across tasks. We could therefore perform all pairwise differences using the signed-rank test and adjust $p$-values to correct for the fact we have performed six hypothesis tests.
+
+
+To do this, we modify the data and map them to wide-format (each line corresponds to an individual). We can then feed the data to compute differences, here for `phone` vs `watch`. We could proceed likewise for the five other pairwise comparisons and then adjust $p$-values.
+
+```{r}
+#| eval: true
+#| echo: true
+smartwatch <- tidyr::pivot_wider(
+  data = BRLS21_T3,
+  names_from = task,
+  values_from = nviolation)
+coin::wilcoxsign_test(phone ~ watch,
+                      data = smartwatch)
+```
+
+
+```{r}
+#| eval: true
+#| echo: false
+signed_rank <- function(
+    x,
+    method = c("Pratt","Wilcoxon")){
+  method <- match.arg(method)
+  if(method == "Pratt"){
+    sx <- sign(x)*rank(abs(x))
+    return(sx[sign(x)!=0])
+  } else if(method == "Wilcoxon"){
+    x <- x[x!=0]
+    return(sign(x)*rank(abs(x)))
+  }
+}
+# Rank differences
+srank <- with(smartwatch,
+                    signed_rank(phone - watch))
+ttest <- t.test(srank)
+```
+
+You can think of the test as performing a paired $t$-test for the 31 signed ranks $R_i =\mathsf{sign}(D_i) \mathsf{rank}(|D_i|)$ and testing whether the mean is zero. The $p$-value obtained by doing this after discarding zeros is $`r round(ttest$p.value, 3)`$, which is pretty much the same as the more complicated approximation.
+
+:::
+
+## Wilcoxon rank sum test and Kruskal--Wallis test
+
+These testing procedures are the nonparametric analog of the one-way analysis in a between-subject design. One could be interested in computing the differences between experimental conditions (pairwise) or overall if there are $K \geq 2$ experimental conditions. To this effect, we simply pool all observations, rank them and compare the average rank in each group. We can track what should be the repartition of data if there was no difference between groups (all ranks should be somehow uniformly distributed among the $K$ groups). If there are groups with larger averages than others, than this is evidence.
+
+In the two-sample case, we may also be interested in providing an estimator of the difference between condition. To this effect, we can compute the average of pairwise differences between observations of each pair of groups: those are called Walsh's averages. The Hodges--Lehmann estimate of location is simply the median of Walsh's averages and we can use the Walsh's averages themselves to obtain a confidence interval.
+
+:::{ .example  name="Virtual communications"}
+
+@Brucks.Levav:2022 measure the attention of participants based on condition using an eyetracker. We compare the time spend looking at the partner by experimental condition (face-to-face or videoconferencing). The authors used a Kruskal--Wallis test, but this is equivalent to Wilcoxon's rank-sum test.
+
+```{r}
+#| eval: true
+#| echo: true
+data(BL22_E, package = "hecedsm")
+mww <- coin::wilcox_test(
+  partner_time ~ cond, 
+  data = BL22_E, 
+  conf.int = TRUE)
+welch <- t.test(partner_time ~ cond, 
+  data = BL22_E, 
+  conf.int = TRUE)
+mww
+```
+
+The output of the test includes, in addition to the $p$-value for the null hypothesis that both median time are the same, a confidence interval for the time difference (in seconds). The Hodges--Lehmann estimate of location is $`r round(as.numeric(mww@confint(level = 0.95)$estimate), 2)`$ seconds, with a 95% confidence interval for the difference of $[`r round(mww@confint(level = 0.95)$conf.int[1], 2)`, `r round(mww@confint(level = 0.95)$conf.int[2], 2)`]$ seconds.
+
+These can be compared with the usual Welch's two-sample $t$-test with unequal variance. The estimated mean difference is $`r round(as.numeric(welch$estimate[1]-welch$estimate[2]), 2)`$ seconds for face-to-face vs group video, with a 95% confidence interval of  $[`r round(as.numeric(welch$conf.int[1]), 2)`, `r round(as.numeric(welch$conf.int[2]), 2)`]$.
+
+In either case, it's clear that the videoconferencing translates into longer time spent gazing at the partner than in-person meetings.
+
+:::

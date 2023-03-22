@@ -1,0 +1,217 @@
+# Introduction to mixed models
+
+```{r}
+#| label: setup
+#| file: "_common.R"
+#| include: true
+#| message: false
+options(digits=2)
+```
+
+This chapter considers tools for models with repeated measures from a modern perspective, using random effects for modelling. This class of model, called hierarchical models, multilevel models or mixed models in simple scenarios, give us more flexibility to account for complex scenarios in which there may be different sources of variability.
+
+For example, consider a large-scale replication study about teaching methods. We may have multiple labs partaking in a research program and each has unique characteristics. Because of these, we can expect that measurements collected within a lab will be correlated. At the same time, we can have repeated mesures for participants in the study. One can view this setup as a hierarchy, with within-subject factor within subject within lab. In such settings, the old-school approach to analysis of variance becomes difficult, if not impossible; it doesn't easily account for the heterogeneity in the lab sample size and does not let us estimate the variability within labs.
+
+We begin our journey with the same setup as for repeated measures ANOVA by considering one-way within-subject ANOVA model. We assign each participant (subject) in the study to all of the experimental treatments, in random order. If we have one experimental factor $A$ with $n_a$ levels, the model is
+\begin{align*}\underset{\text{response}\vphantom{l}}{Y_{ij}} = \underset{\text{global mean}}{\mu_{\vphantom{j}}} + \underset{\text{mean difference}}{\alpha_j} + \underset{\text{random effect for subject}}{S_{i\vphantom{j}}} + \underset{\text{error}\vphantom{l}}{\varepsilon_{ij}}.
+\end{align*}
+In a random effect model, we assume that the subject effect $S_i$ is a random variable; we take $S_i \sim \mathsf{No}(0, \sigma^2_s)$ and the latter is assumed to be independent of the noise $\varepsilon_{ij} \sim \mathsf{No}(0, \sigma^2_e)$. The model parameters that we need to estimate are the global mean $\mu$, the mean differences $\alpha_1, \ldots, \alpha_{n_a}$, the subject-specific variability $\sigma^2_s$ and the residual variability $\sigma^2_e$, with the sum-to-zero constraint $\alpha_1 + \cdots + \alpha_{n_a}=0$.
+
+Inclusion of random effects introduces positive correlation between measurements: specifically, the correlation between two observations from the same subject will be $\rho=\sigma^2_s/(\sigma^2_s+\sigma^2_e)$ and zero otherwise. This correlation structure is termed compound symmetry, since the correlation between measurements, $\rho$, is the same regardless of the order of the observations. If there are multiple random effects, the dependence structure will be more complicated.
+
+In the repeated measure models, we need to first reduce measurements to a single average per within-subject factor, then fit the model by including the subject as a blocking factor. We are therefore considering subjects as fixed effects by including them as blocking factors, and estimate the mean effect for each subject: the value of $\sigma^2_s$ is estimated from the mean squared error of the subject term, but this empirical estimate can be negative. By contrast, the mixed model machinery will directly estimate the variance term, which will be constrained to be strictly positive.
+
+## Fixed vs random effects
+
+
+Mixed models include, by definition, both **random** and **fixed** effects. Fixed effects are model parameters corresponding to overall average or difference in means for the experimental conditions. These are the terms for which we want to perform hypothesis tests and compute contrasts. So far, we have only considered models with fixed effects. 
+
+Random effects, on the other hand, assumes that the treatments are random samples from a population of interest. If we gathered another sample, we would be looking at a new set of treatments. Random effects model the variability arising from the sampling of that population and focuses on variance and correlation parameters. Addition of random effects does not impact the population mean, but induces variability and correlation within subject. There is no consensual definition, but @Gelman:2005 lists a handful:
+
+> When a sample exhausts the population, the corresponding variable is fixed; when the sample is a small (i.e., negligible) part of the population the corresponding variable is random [Green and Tukey (1960)].
+
+> Effects are fixed if they are interesting in themselves or random if there is interest in the underlying population (e.g., Searle, Casella and McCulloch [(1992), Section 1.4])
+
+In terms of estimation, fixed effect terms are mean parameters, while all random effects will be obtained from variance and correlation parameters. In the repeated measure approach with fixed effects and blocking, we would estimate the average for each subject despite the fact that this quantity is of no interest. Estimating a mean with only a handful of measurements is a risky business and the estimated effects are sensitive to outliers. 
+
+Random effects would proceed to directly estimate the variability arising from different subjects. We can still get predictions for the subject-specific effect, but this prediction will be shrunk toward the global mean for that particular treatment category. As we gather more data about the subjects, the predictions will become closer to the fixed effect estimates when the number of observations per subject or group increases, but these prediction can deviate from mean estimates in the case where there are few measurements per subject.
+
+
+@Oehlert:2010 identifies the following step to perform a mixed model
+
+1. Identify sources of variation
+2. Identify whether factors are crossed are nested
+3. Determine whether factors should be fixed or random
+4. Figure out which interactions can exist and whether they can be fitted.
+
+To fit the model, identifiers of subjects must be declared as factors (categorical variables).
+
+We say to factors are nested ($A$ within $B$) when one can only coexist within the levels of the other: this has implications, for we cannot have interaction between the two. In between-subject experiments, factors are crossed, meaning we can assign an experimental unit or a subject to each factor combination and thus interactions can occur.  For example, subjects are nested in between-level factors.
+
+The next step will be in determining whether we have enough observations to support the inclusion of a random term. In a pure within-subject design, we could not include an interaction between subject and the within-factor unless we have multiple replications for each subject, as is the case here. We can therefore include both subject identifier and experimental factor, as well as their interaction. Note that in `lme4` package, the random effects are specified inside parenthesis.
+
+:::{ .example name="Happy fakes, remixed"}
+
+We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly.
+
+```{r}
+#| label: fig-aafulldat
+#| fig-cap: "Jittered scatterplot of individual measurements per participant and stimulus type."
+#| eval: true
+#| echo: false
+ggplot(data = hecedsm::AA21,
+       aes(x = id,
+           group = stimulus,
+           colour = stimulus,
+           y = latency)) +
+    geom_point(position = "jitter") +
+  theme_classic()
+```
+
+@fig-aafulldat shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.
+
+```{r}
+#| eval: true
+#| echo: true
+library(lmerTest) 
+# fit and tests for mixed models
+options(contrasts = c("contr.sum", "contr.poly"))
+mixedmod <- lmer(
+  latency ~ stimulus + 
+    (1 | id) + # random effect for subject
+    (1 | id:stimulus), 
+  # random effect for interaction 
+  data = hecedsm::AA21 |> #remove outliers
+    dplyr::filter(latency > -40))
+# Output parameter estimates
+print(mixedmod)
+```
+
+We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large.
+
+We can also look globally at the statistical evidence for the 
+
+```{r}
+# Global effect of different faces
+# ANOVA here is type III effects 
+# computed from the 'lmerTest' package
+anova(mixedmod)
+```
+
+The global $F$ test of significance for stimulus is based on an approximation; the denominator degrees of freedom for the approximate $F$ statistic are based on Satterthwaite's method, which provides a correction. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in @fig-aafulldat.
+
+:::
+
+:::{ .example name="Verbalization and memorization"}
+We consider a replication study of @Elliot:2021,
+which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The replication was performed in 17 different school labs, adapting a protocol of @Flavell:1966, with an overall sample of 977 child partaking in the experiment.
+
+Each participant was assigned to three tasks (`timing`): `delayed` recall with 15 seconds wait, or `immediate`, and finally  a naming task (`point-and-name`). The `taskorder` variable records the order in which these were presented: the order of `delayed` and `immediate` was counterbalanced across individuals, with the naming task always occurring last. The response variable is the number of words correctly recalled out of five. The experimenters also recorded the frequency at which students spontaneously verbalized during the task (except the naming task, where they were instructed to do so).
+
+The timing is a within-subject factor, whereas task order and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).
+
+To fit the linear mixed model with a random effect for both children `id` and `lab`: since children are nested in lab, we must specify the random effects via `(1 | id:lab) + (1 | lab)` if `id` are not unique.
+
+We modify the data to keep only 5 and 6 years old students, since most older kids verbalized during the task and we would have large disbalance (14 ten years old out of 235, and 19 out of 269 seven years old). We also exclude the point-and-name task, since verbalization was part of the instruction. This leaves us with 1419 observations and we can check that there are indeed enough children in each condition to get estimates.
+
+```{r}
+#| eval: true
+#| echo: true
+data(MULTI21_D2, package = "hecedsm")
+MULTI21_D2_sub <- MULTI21_D2 |>
+  dplyr::filter(
+    age %in% c("5yo", "6yo"),
+    timing != "point-and-name") |>
+  dplyr::mutate(
+    verbalization = factor(frequency != "never",
+                           labels = c("no", "yes")),
+    age = factor(age)) # drop unused age levels
+xtabs(~ age + verbalization, data = MULTI21_D2_sub)
+```
+
+Given that we have multiple students of every age group, we can include two-way and three-way interactions in the $2^3$ design. We also include random effects for the student and the lab.
+
+```{r}
+#| eval: true
+#| echo: true
+library(lmerTest)
+library(emmeans)
+hmod <- lmer(
+  mcorrect ~ age*timing*verbalization + (1 | id:lab) + (1 | lab), 
+  data = MULTI21_D2_sub)
+# Parameter estimates
+#summary(hmod)
+```
+
+We focus here on selected part of the output from `summary()` giving the estimated variance terms.
+
+```{r}
+#| echo: true
+#> Random effects:
+#>  Groups   Name        Variance Std.Dev.
+#>  id:lab   (Intercept) 0.3587   0.599   
+#>  lab      (Intercept) 0.0625   0.250   
+#>  Residual             0.6823   0.826   
+#> Number of obs: 946, groups:  id:lab, 473; lab, 17
+```
+
+
+We can interpret the results as follows: the total variance is the sum of the  `id`, `lab` and `residual` variances components give us an all but negligible effect of lab with `r round(100*(hmod@theta[2]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent of the total variance, versus `r round(100*(hmod@theta[1]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn't add much to the correlation.
+
+```{r}
+#| eval: true
+#| echo: true
+anova(hmod, ddf = "Kenward-Roger")
+# Check estimated marginal means for age
+emm <- emmeans(hmod, specs = "age")
+emm
+# Pairwise differences
+pairdiff <- emm |> pairs()
+pairdiff
+```
+
+
+The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means (95% confidence interval) for age with an estimated correct number of words of `r summary(emm)$emmean[1]`  (`r summary(emm)$lower.CL[1]`, `r summary(emm)$upper.CL[1]`) words out of 5 for the 5 years olds and `r summary(emm)$emmean[2]` (`r summary(emm)$lower.CL[2]`, `r summary(emm)$upper.CL[2]`) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward--Roger method are much fewer, respectively `r summary(emm)$df[1]` and `r summary(emm)$df[2]` for five and six years old.
+
+The $t$-test for the pairwise difference of the marginal effect is `r -summary(pairdiff)$estimate` words with standard error `r summary(pairdiff)$SE`. Judging from the output, the degrees of freedom calculation for the pairwise $t$-test are erroneous --- they seem to be some average between the number of entries for the five years old (`r table(MULTI21_D2_sub$age)[1]`) and six years old (`r table(MULTI21_D2_sub$age)[2]`), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.
+
+We can easily see the limited interaction and strong main effects from the interaction plot in @fig-interactionrecall. The confidence intervals are of different width because of the sample inbalance.
+
+```{r}
+#| label: fig-interactionrecall
+#| fig-cap: "Interaction plot for the recall task for younger children."
+#| eval: true
+#| echo: false
+emm_full <- summary(emmeans(
+  hmod, 
+  specs = c("age", 
+            "timing", 
+            "verbalization")))
+emm_full$age <- factor(rep(c(5L, 6L), 
+                    length.out = 8))
+emm_full <- tibble::as_tibble(emm_full)
+library(ggplot2)
+ggplot(data = emm_full,
+       mapping = aes(x = age,
+               color = verbalization,
+               group = verbalization,
+               y = emmean,
+               ymax = emmean + 
+                 qt(0.975, df = df)*SE,
+               ymin = emmean - 
+                 qt(0.975, df = df)*SE)
+       ) + 
+  geom_linerange(orientation = "x") +
+  geom_point() +
+  geom_line() + 
+  facet_wrap(~ timing) +
+  labs(x = "age group (years)", 
+       y = "",
+       title = "Mean number of correct words per task and age group",
+       subtitle = "Older children and those who verbalize remember more.",
+       caption = "Mean with 95% confidence intervals") + 
+  theme_classic() + 
+  theme(legend.position = "bottom")
+```
+
+:::

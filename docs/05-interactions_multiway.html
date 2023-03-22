@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Experimental design and statistical methods - 5&nbsp; Complete factorial designs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./06-blocking.html" rel="next">
+<link href="./04-contrasts_multipletesting.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Experimental design and statistical methods</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#efficiency-of-multiway-analysis-of-variance." id="toc-efficiency-of-multiway-analysis-of-variance." class="nav-link active" data-scroll-target="#efficiency-of-multiway-analysis-of-variance."><span class="toc-section-number">5.1</span>  Efficiency of multiway analysis of variance.</a></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions"><span class="toc-section-number">5.2</span>  Interactions</a></li>
+  <li><a href="#model-parametrization" id="toc-model-parametrization" class="nav-link" data-scroll-target="#model-parametrization"><span class="toc-section-number">5.3</span>  Model parametrization</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/05-interactions_multiway.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header">
+<h1 class="title d-none d-lg-block display-7"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></h1>
+
+</header>
+
+<div class="cell" data-file="_common.R" data-hash="05-interactions_multiway_cache/html/setup_f47746f31ed2d3a98128789d88a78c28">
+
+</div>
+<p>We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously. Before jumping into the statistical analysis, let us discuss briefly some examples that will be covered in the sequel.</p>
+<div class="example" name="Psychological ownership of borrowed money">
+<p>Supplemental Study 5 from <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.</p>
+</div>
+<div class="example" name="Spatial orientation shrinks and expands psychological distance">
+<p><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> measured the subjective distance on travel based on the direction of travel. They conducted an experiment in the Toronto subway green line, asking commuters from Bay station to answer the question “How far away does the [name] station feel to you?” using a 7 point Likert scale ranging from very close (1) to very far (7). The stations name were one of Spadina, St.&nbsp;George, Bloor–Yonge and Sherbourne (from West to East).</p>
+<p>As there are four stations and two directions of travel (a 4 by 2 design), the scientific question of interest for subjective measures of distance would consist of perceiving differently the distance depending on the direction of travel. We could also wonder whether destinations that are two stations away from Bay (Spadina and Sherbourne) would be considered equidistant, and similarly for the other two.</p>
+</div>
+<section id="efficiency-of-multiway-analysis-of-variance." class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="efficiency-of-multiway-analysis-of-variance."><span class="header-section-number">5.1</span> Efficiency of multiway analysis of variance.</h2>
+<p>Consider the setting of <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> and suppose we want to check the impact of debt and collect a certain number of observations in each group. If we suspected the label had an influence, we could run a one-way analysis of variance for each spending type separately (thus, two one-way ANOVA each with two groups). We could do likewise if we wanted instead to focus on whether the spending was discretionary in nature or not, for each label: together, this would give a total of eight sets of observations. Combining the two factors allows us to halve the number of groups/samples we collect in this simple setting: this highlights the efficiency of running an experiment modifying all of these instances at once, over a series of one-way analysis of variance. This concept extends to higher dimension when we manipulate two or more factors. Factorial designs allow us to study the impact of multiple variables simultaneously with <strong>fewer overall observations</strong>.</p>
+<p>The drawback is that as we increase the number of factors, the total number of subgroups increases: with a complete design<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and with factors <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, etc. with <span class="math inline">\(n_a\)</span>, <span class="math inline">\(n_b\)</span>, <span class="math inline">\(n_c\)</span>, <span class="math inline">\(\ldots\)</span> levels, we have a total of <span class="math inline">\(n_a\times n_b \times n_c \times \cdots\)</span> combinations and the number of observations needed to efficiently measure the group means increases quickly. This is the <strong>curse of dimensionality</strong>: the larger the number of experimental treatments manipulated together, the larger the sample size needed. A more efficient approach, which we will cover in later section, relies on measuring multiple observations from the same experimental units, for example by giving multiple tasks (randomly ordered) to participants.</p>
+<p>Intrinsically, the multiway factorial design model description does not change relative to a one-way design: the analysis of variance describes the sample mean for the response in each subgroup,</p>
+<p>Consider a two-way analysis of variance model. This is a linear model with two factors, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, with respectively <span class="math inline">\(n_a\)</span> and <span class="math inline">\(n_b\)</span> levels. The response <span class="math inline">\(Y_{ijk}\)</span> of the <span class="math inline">\(k\)</span>th measurement in group <span class="math inline">\((a_i, b_j)\)</span> is <span id="eq-twowayasoneway"><span class="math display">\[
+\underset{\text{response}\vphantom{b}}{Y_{ijk}} = \underset{\text{subgroup mean}}{\mu_{ij}} + \underset{\text{error term}}{\varepsilon_{ijk}}
+\tag{5.1}\]</span></span> where</p>
+<ul>
+<li><span class="math inline">\(Y_{ijk}\)</span> is the <span class="math inline">\(k\)</span>th replicate for <span class="math inline">\(i\)</span>th level of factor <span class="math inline">\(A\)</span> and <span class="math inline">\(j\)</span>th level of factor <span class="math inline">\(B\)</span></li>
+<li><span class="math inline">\(\mu_{ij}\)</span> is the average response of measurements in group <span class="math inline">\((a_i, b_j)\)</span></li>
+<li><span class="math inline">\(\varepsilon_{ijk}\)</span> are independent error terms with mean zero and standard deviation <span class="math inline">\(\sigma\)</span>.</li>
+</ul>
+<p>This, it turns out, is a special case of linear regression model. We could build contrasts for comparing group averages, but it will more convenient to reparametrize the model so that hypotheses of interest are directly expressed in terms of the parameters.</p>
+<p>For example, in the <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> study, we could gather observations for each factor combination in a table, where <code>direction</code> is the row and <code>station</code> the column.</p>
+<div id="tbl-cellmeansMP14" class="anchored">
+<table class="table">
+<caption>Table&nbsp;5.1: Conceptual depiction of cell average for the two by two design of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span></caption>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 2%">
+<col style="width: 30%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(A\)</span> <code>station</code></th>
+<th><span class="math inline">\(B\)</span> <code>direction</code></th>
+<th style="text-align: center;"><span class="math inline">\(b_1\)</span> (<code>east</code>)</th>
+<th style="text-align: center;"><span class="math inline">\(b_2\)</span> (<code>west</code>)</th>
+<th style="text-align: center;"><em>row mean</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a_1\)</span> (<code>Spadina</code>)</td>
+<td></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{11}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{12}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{1.}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(a_2\)</span> (<code>St. George</code>)</td>
+<td></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{21}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{22}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{2.}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(a_3\)</span> (<code>Bloor-Yonge</code>)</td>
+<td></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{31}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{32}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{3.}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(a_4\)</span> (<code>Sherbourne</code>)</td>
+<td></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{41}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{42}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{4.}\)</span></td>
+</tr>
+<tr class="odd">
+<td><em>column mean</em></td>
+<td></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{.1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu_{.2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The <span class="math inline">\(i\)</span>th row mean represents the average response across all levels of <span class="math inline">\(B\)</span>, <span class="math inline">\(\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b\)</span> and similarly for the average of the <span class="math inline">\(j\)</span>th column, <span class="math inline">\(\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.\)</span> Finally, the overall average is <span class="math display">\[\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.\]</span></p>
+<p>Each subgroup average <span class="math inline">\(\mu_{ij}\)</span> will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means <span class="math inline">\(\widehat{\mu}_{i.}\)</span>, <span class="math inline">\(\widehat{\mu}_{.j}\)</span> and <span class="math inline">\(\widehat{\mu}\)</span>. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.</p>
+</section>
+<section id="interactions" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="interactions"><span class="header-section-number">5.2</span> Interactions</h2>
+<p>Table <a href="#tbl-cellmeansMP14">Table&nbsp;<span>5.1</span></a> shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either <code>direction</code> or <code>station</code> as sole factor.</p>
+<p>We will use particular terminology to refer to these:</p>
+<ul>
+<li><strong>simple effects</strong>: difference between levels of one in a fixed combination of others. Simple effects are comparing cell averages within a given row or column.</li>
+<li><strong>main effects</strong>: differences relative to average for each condition of a factor. Main effects are row/column averages.</li>
+<li><strong>interaction effects</strong>: when simple effects differ depending on levels of another factor. Interactions effects are difference relative to the row or column average.</li>
+</ul>
+<p>In other words, an interaction occurs when some experimental factors, when coupled together, have different impacts than the superposition of each. An interaction between two factors occurs when the average effect of one independent variable depends on the level of the other.</p>
+<p>If there is a significant interaction, the main effects are <strong>not</strong> of interest since they are misleading. Rather, we will compute the simple effects by making the comparison one at level at the time.</p>
+<p>In our example of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, a simple effect would be comparing the distance between Spadina and Sherbourne for east. The main effect for the direction would be the average perceived distance for east and for west. Finally, the interaction would measure how much these differ by station depending on direction.</p>
+<div class="cell" data-layout-align="center" data-hash="05-interactions_multiway_cache/html/fig-2by2_b8f5b39fa8d6ea17393618b5be6036dc">
+<div class="cell-output-display">
+<div id="fig-2by2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-interactions_multiway_files/figure-html/fig-2by2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.1: Interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of <span class="citation" data-cites="Crump.Navarro.Suzuki:2019">Crump, Navarro, and Suzuki (<a href="references.html#ref-Crump.Navarro.Suzuki:2019" role="doc-biblioref">2019</a>)</span> by Matthew Crump (CC BY-SA 4.0 license).</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>To better understand, we consider the average response and suppose we have access to the true population average for each sub-treatment. We can then represent the population using a line graph with the two factors, one being mapped to color and another to the <span class="math inline">\(x\)</span>-axis. <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> shows what happens under all possible scenarios with a 2 by 2 design. When there is no overall effect, the mean is constant. If there isn’t a main effect of <span class="math inline">\(A\)</span>, the average of the two mean response for <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> are the same, etc. Interactions are depicted by <strong>non-parallel lines</strong>.</p>
+<p>It’s clear from <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> that looking only at the average of <span class="math inline">\(A\)</span> alone (the main effect) isn’t instructive when we are in the presence of an interaction: rather, we should be comparing the values of <span class="math inline">\(A\)</span> for <span class="math inline">\(b_1\)</span> separately than those for <span class="math inline">\(b_2\)</span>, and vice-versa using simple effects, otherwise our conclusions may be misleading.</p>
+<div class="example" name="Interaction plots for Maglio and Polman (2014)">
+<p>The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on <a href="#fig-interactionplotMP">Figure&nbsp;<span>5.2</span></a>, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.</p>
+<div class="cell" data-layout-align="center" data-hash="05-interactions_multiway_cache/html/fig-interactionplotMP_0793c0a1d7f20e4c99b1d8309d535114">
+<div class="cell-output-display">
+<div id="fig-interactionplotMP" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-interactions_multiway_files/figure-html/fig-interactionplotMP-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.2: Interaction plot for Study 1 of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, showing group averages and 95% confidence intervals for the means. Observations are overlaid on the graph.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-parametrization" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="model-parametrization"><span class="header-section-number">5.3</span> Model parametrization</h2>
+<p>The model parametrized in terms of subgroup or cell average is okay in <a href="#eq-twowayasoneway">Equation&nbsp;<span>5.1</span></a>, but it doesn’t help us if we want to check for the presence of main effects and interaction, even if it would be possible to specify the contrasts required to test these hypotheses. We can however express the model in terms of main effects and interactions.</p>
+<p>We consider the alternative formulation <span class="math display">\[\begin{align*}
+Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
+\end{align*}\]</span> where</p>
+<ul>
+<li><span class="math inline">\(\mu\)</span> is the average of all subgroup averages, termed overall mean.</li>
+<li><span class="math inline">\(\alpha_i = \mu_{i.} - \mu\)</span> is the mean of level <span class="math inline">\(A_i\)</span> minus the overall mean.</li>
+<li><span class="math inline">\(\beta_j = \mu_{.j} - \mu\)</span> is the mean of level <span class="math inline">\(B_j\)</span> minus overall mean.</li>
+<li><span class="math inline">\((\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu\)</span> is the interaction term for <span class="math inline">\(A_i\)</span> and <span class="math inline">\(B_j\)</span> which encodes the effect of both variable not already captured by the main effects.</li>
+</ul>
+<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(n_a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\)</span>. The <strong>sum to zero</strong> constraints, <span class="math display">\[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]</span> restore identifiability as they imposes which imposes <span class="math inline">\(1 + n_a + n_b\)</span> constraints.</p>
+<p>The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.</p>
+<p><strong>To be continued</strong>…</p>
+<div class="example" name="Testing for Psychological ownership of borrowed money">
+<p><span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors <code>debttype</code> and <code>purchase</code>), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.</p>
+<p>The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a>, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn’t significant, then we could pool observations instead and average across either of the two factors, resulting in the marginal comparisons with the main effects.</p>
+<p>Fitting the model including the interaction between factors ensures that we keep the additivity assumption and that our conclusions aren’t misleading: the price to pay is additional mean parameters to be estimated, which isn’t an issue if you collect enough data, but can be critical when data collection is extremely costly and only a few runs are allowed.</p>
+<p>In <strong>R</strong>, we include both factors in a formula as <code>response ~ factorA * factorB</code>, the <code>*</code> symbol indicating that both are allowed to interact; in the main effect model, we would use instead <code>+</code> to reflect that the effects of both factors add up.</p>
+<div class="cell" data-layout-align="center" data-hash="05-interactions_multiway_cache/html/unnamed-chunk-4_07b4f38c52352d38f5d6b069fbde3742">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing Supplementary Study 5</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of Sharma, Tully, and Cryder (2021)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(STC21_SS5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(likelihood <span class="sc">~</span> purchase<span class="sc">*</span>debttype, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> STC21_SS5)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of means</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Grand mean</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4.88 </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purchase </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     discretionary    need</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             4.182   5.579</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rep       751.000 750.000</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      credit    loan</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       5.127   4.631</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rep 753.000 748.000</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purchase:debttype </span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                debttype</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase        credit loan </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   discretionary   4.5    3.8</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rep           392.0  359.0</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   need            5.7    5.4</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rep           361.0  389.0</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance reveals </span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># non-significant interaction</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># of purchase and type</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Anova Table (Type III tests)</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Response: likelihood</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   Sum Sq   Df F value  Pr(&gt;F)    </span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)         7974    1 1040.96 &lt; 2e-16 ***</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase             283    1   36.91 1.6e-09 ***</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; debttype              88    1   11.55  0.0007 ***</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase:debttype     14    1    1.79  0.1817    </span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals          11467 1497                    </span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="st">"debttype"</span>,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $emmeans</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype emmean    SE   df lower.CL upper.CL</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit     5.12 0.101 1497     4.93     5.32</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  loan       4.63 0.101 1497     4.43     4.83</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: purchase </span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95 </span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $contrasts</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast      estimate    SE   df t.ratio p.value</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit - loan    0.496 0.143 1497   3.470  0.0005</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: purchase</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise comparisons within levels of purchase</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effect</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"purchase"</span>, <span class="st">"debttype"</span>),</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="st">"purchase"</span>,</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $emmeans</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = discretionary:</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype emmean    SE   df lower.CL upper.CL</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit     4.51 0.140 1497     4.24     4.78</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  loan       3.82 0.146 1497     3.54     4.11</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = need:</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype emmean    SE   df lower.CL upper.CL</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit     5.74 0.146 1497     5.45     6.02</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  loan       5.43 0.140 1497     5.16     5.71</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95 </span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $contrasts</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = discretionary:</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast      estimate    SE   df t.ratio p.value</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit - loan    0.687 0.202 1497   3.400  0.0007</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = need:</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast      estimate    SE   df t.ratio p.value</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit - loan    0.305 0.202 1497   1.510  0.1318</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the analysis of variance table, we only focus on the last line with the sum of squares for <code>purchase:debttype</code>. The <span class="math inline">\(F\)</span> statistic is 1.785; using the <span class="math inline">\(\mathsf{F}\)</span> (1, 1497) distribution as benchmark, we obtain a <span class="math inline">\(p\)</span>-value of 0.18 so there is no evidence the effect of purchase depends on debt type.</p>
+<p>We can thus pool data and look at the effect of debt type (<code>loan</code> or <code>credit</code>) overall by combining the results for all purchase types, one of the planned comparison reported in the Supplementary material. To do this in <strong>R</strong> with the <code>emmeans</code> package, we use the <code>emmeans</code> function and we quote the factor of interest (i.e., the one we want to keep) in <code>specs</code>. By default, this will compute the estimate marginal means: the <code>contr = "pairwise"</code> indicates that we want the difference between the two, which gives us the contrasts.</p>
+<p>To get the simple effects, we give both variables in <code>specs</code> as factors for which to compute subgroup means, then set additionally the <code>by</code> command to specify which variable we want separate results for. We get the difference in average between <code>credit</code> and <code>loan</code> labels for each purchase type along with the <span class="math inline">\(t\)</span> statistics for the marginal contrast and the <span class="math inline">\(p\)</span>-value. The simple effects suggest that the label has an impact on perception only for discretionary expenses rather than needed ones, which runs counter-intuitively with the lack of interaction.</p>
+</div>
+<div class="keyidea">
+<p><strong>Summary</strong>:</p>
+<ul>
+<li>Complete factorial designs consist of experiments in which we manipulate multiple experimental factors at once and collect observations for each subgroup.</li>
+<li>Factorial designs are more efficient than running repeatedly one-way analysis of variance with the same sample size per group.</li>
+<li>Interactions occur when the effect of a variable depends on the levels of the others.</li>
+<li>Interaction plots (group average per group) can help capture this difference, but beware of overinterpretation in small samples.</li>
+<li>If there is an interaction, we consider differences and contrasts for each level of the other factor (<strong>simple effects</strong>).</li>
+<li>If there is no interaction, we can pool observations and look at <strong>main effects</strong>.</li>
+<li>A multiway analysis of variance can be treated as a one-way analysis of variance by collapsing categories; however, only specific contrasts will be of interest.</li>
+<li>The number of observations increases quickly with the dimension as we increase the number of factors considered.</li>
+</ul>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Crump.Navarro.Suzuki:2019" class="csl-entry" role="doc-biblioentry">
+Crump, M. J. C., D. J. Navarro, and J. Suzuki. 2019. <em>Answering Questions with Data: Introductory Statistics for Psychology Students</em>. <a href="https://doi.org/10.17605/OSF.IO/JZE52">https://doi.org/10.17605/OSF.IO/JZE52</a>.
+</div>
+<div id="ref-Maglio.Polman:2014" class="csl-entry" role="doc-biblioentry">
+Maglio, Sam J., and Evan Polman. 2014. <span>“Spatial Orientation Shrinks and Expands Psychological Distance.”</span> <em>Psychological Science</em> 25 (7): 1345–52. <a href="https://doi.org/10.1177/0956797614530571">https://doi.org/10.1177/0956797614530571</a>.
+</div>
+<div id="ref-Sharma.Tully.Cryder:2021" class="csl-entry" role="doc-biblioentry">
+Sharma, Eesha, Stephanie Tully, and Cynthia Cryder. 2021. <span>“Psychological Ownership of (Borrowed) Money.”</span> <em>Journal of Marketing Research</em> 58 (3): 497–514. <a href="https://doi.org/10.1177/0022243721993816">https://doi.org/10.1177/0022243721993816</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>By complete design, it is meant that we gather observations for each subcategory.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04-contrasts_multipletesting.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./06-blocking.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

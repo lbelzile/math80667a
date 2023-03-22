@@ -1,0 +1,77 @@
+project:
+  type: book
+  output-dir: docs
+execute: 
+  cache: true
+  freeze: true
+  echo: false
+  eval: true
+bibliography: MATH80667A.bib
+highlight: tango
+split_bib: no
+title-block-style: none
+
+
+preview:
+  port: 3200
+  browser: true
+  watch-inputs: true
+  navigate: true
+
+book:
+  title: Experimental design and statistical methods
+  output-file: MATH80667A-EDSM
+  author: Léo Belzile
+  date: today
+  chapters:
+  - index.qmd
+  - 01-introduction.qmd
+  - 02-hypothesis_testing.qmd
+  - 03-completely_randomized_trials.qmd
+  - 04-contrasts_multipletesting.qmd
+  - 05-interactions_multiway.qmd
+  - 06-blocking.qmd
+  - 07-power_effect.qmd
+  - 08-reproducibility_crisis.qmd
+  - 09-repeated.qmd
+  - 10-mixed.qmd
+  - 11-causal-inference.qmd
+  - 12-nonparametric.qmd
+  - references.qmd
+  site-url: https://lbelzile.github.io/math80667a/
+  repo-url: https://github.com/lbelzile/math80667a/
+  repo-branch: main
+  repo-actions: [edit]
+  search: true
+  downloads: [pdf]
+format:
+  html:
+    theme: custom.scss
+    css: style.css
+    reader-mode: true
+    fig-align: center
+    toc-location: right
+    code-fold: false
+    code-summary: "Code"
+    code-overflow: wrap
+    code-block-border-left: true
+    code-copy: true
+    engine: knitr
+    default-image-extension: png
+  pdf:
+    documentclass: scrbook
+    latex_documents:
+       targetname: MATH80667A-EDSM.tex
+    fontsize: 11pt
+    fig-pos: "ht!"
+    papersize: letter
+    template-partials: 
+      - before-body.tex
+    include-in-header: preamble.tex
+    include-before-body: coverpage.tex
+    pdf-engine: pdflatex
+    citation-package: natbib
+    keep-tex: true
+    biblio-style: apalike2
+    link-citations: yes
+
