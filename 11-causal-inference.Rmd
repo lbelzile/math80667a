@@ -525,3 +525,41 @@ The cutoff value is 4.20 with control for the false discovery rate and 4.15 with
 In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation model could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation.
 
 Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.
+
+<!--
+To fix ideas, we consider a Study 1 of @Roczniewska.Higgins:2019, who studied the impact of changes in the Polish education system, whereby middle school was due to disappear and be replaced with a new system with 8 years of elementary school and four years of high school. The authors surveyed teachers in middle and primary schools to see which would be the impact with two messages, either prevention or promotion.
+
+We run the bootstrap manually.
+-->
+
+```{r}
+#| eval: false
+#| echo: false
+data(RH19_S1, package = "hecedsm")
+
+boot_fn <- function(data, indices){
+modM1 <- lm(fluency ~ regfocus*promem + regfocus*prevem,
+   data = data, subset = indices)
+modM2 <- lm(fairness ~ regfocus*promem + regfocus*prevem,
+   data = data, subset = indices)
+modM3 <- lm(engagement ~ regfocus*promem + regfocus*prevem,
+   data = data, subset = indices)
+modY <- lm(dopenness ~ regfocus + promem + prevem +
+             regfocus:promem + regfocus:prevem +
+             engagement + fairness + fluency +
+             change + change:fairness,
+   data = data, subset = indices)
+# Stack all model parameters and return a vector
+c(coef(modM1), coef(modM2), coef(modM3), coef(modY))
+}
+npbootstrap <- boot::boot(
+  data = RH19_S1,
+  statistic = boot_fn,
+  stype = "i",
+  R = 4999L)
+
+coef <- npbootstrap$t0
+confints <- apply(npbootstrap$t, 2, quantile, c(0.025, 0.975))
+pvals <- sum(abs(air.boot$t[,2]-1) > abs(air.boot$t0[2]-1))/(1+air.boot$R)
+
+```
