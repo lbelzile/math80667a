@@ -226,9 +226,8 @@ where
 - $\beta_j  = \mu_{.j} - \mu$ is the mean of level $B_j$ minus overall mean.
 - $(\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu$ is the interaction term for $A_i$ and $B_j$ which encodes the effect of both variable not already captured by the main effects.
 
-A rapid calculation shows that there are more coefficients than the number of cells and subgroups ($n_an_b$ cells overall) in our table. The model is **overparametrized**: to get away with this, we impose constraints to remove redundancies. The idea is that if we know $n_a-1$ of the mean for factor $A$ and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor $A$ by setting $\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0$. The **sum to zero** constraints,
-$$\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,$$ restore identifiability as they imposes 
-which imposes $1 +  n_a + n_b$ constraints.
+A rapid calculation shows that there are more coefficients than the number of cells and subgroups ($n_an_b$ cells overall) in our table. The model is **overparametrized**: to get away with this, we impose constraints to remove redundancies. The idea is that if we know $n_a-1$ of the mean for factor $A$ and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor $A$ by setting $\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0$. The $1 +  n_a + n_b$ **sum to zero** constraints,
+$$\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,$$ restore identifiability.
 
 The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.
 
