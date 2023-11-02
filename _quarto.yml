@@ -68,10 +68,9 @@ format:
     template-partials: 
       - before-body.tex
     include-in-header: preamble.tex
-    include-before-body: coverpage.tex
     pdf-engine: pdflatex
     citation-package: natbib
     keep-tex: true
     biblio-style: apalike2
-    link-citations: yes
+    link-citations: true
 

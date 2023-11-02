@@ -16,7 +16,7 @@ Pearson's goodness of fit examines discrepancies
 
 :::{ .example}
 
-We consider a  study from @Bertrand.Mullainathain:2004, who study racial discrimination in hiring based on the consonance of applicants names. The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.
+We consider a  study from @Bertrand.Mullainathain:2004, who study racial discrimination in hiring based on the consonance of applicants names; a similar example was recently featured in selection at the [M.Sc. level from *Ondes*](https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf). The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.
 
 If there was no racial discrimination (null hypothesis), we would expect the average number of times a white applicant was called back (but no black applicant) to be the same as a single black applicant (but no white). Only the entries for different numbers of call-back (either 0 vs 2, 0 vs 1 or 1 vs 2 for either race) are instructive about our question of interest. 
 

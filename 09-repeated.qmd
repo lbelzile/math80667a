@@ -186,7 +186,7 @@ Since we care only about differences in treatment, can get away with a weaker as
 The most popular approach to handling correlation in tests is a two-stage approach: first, check for sphericity (using, e.g., Mauchly's test of sphericity). If the null hypothesis of sphericity is rejected, one can use a correction for the $F$ statistic by modifying the parameters of the Fisher $\mathsf{F}$ null distribution used as benchmark.
 
 
-An idea due to Box is to correct the degrees of freedom of the $\mathsf{F}(\nu_1, \nu_2)$ distribution by multiplying them by a common factor $\epsilon<1$ and use $\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)$. Since the $F$ statistic is a ratio of variances, the $\epsilon$ term would cancel. Using the scaled $\mathsf{F}$ distribution leads to larger $p$-values, thus accounting for the correlation.
+An idea due to Box is to correct the degrees of freedom of the $\mathsf{F}(\nu_1, \nu_2)$ distribution by multiplying them by a common factor $\epsilon<1$ and use $\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)$ as null distribution instead to benchmark our statistics and determine how extreme our observed one is. Since the $F$ statistic is a ratio of variances, the $\epsilon$ terms would cancel. Using the scaled $\mathsf{F}$ distribution leads to larger $p$-values, thus accounting for the correlation.
 
 There are three widely used corrections: Greenhouse--Geisser, Huynh--Feldt and Box correction, which divides by $\nu_1$ both degrees of freedom and gives a very conservative option. The Huynh--Feldt method is reported to be more powerful so should be preferred, but the estimated value of $\epsilon$ can be larger than 1.
 
@@ -242,7 +242,7 @@ The fourth order interaction isn't statistically significant: this means that we
 
 The following paragraph is technical and can be skipped. One difficult bit with designs including both within-subject and between-subject factors is the degrees of freedom and the correct sum of square terms to use to calculate the $F$ statistics for each hypothesis of interest. The correct setup is to use the next sum of square (and the associated degrees of freedom) from this. For any main effect or interaction, we count the number of instances of this particular (e.g., 10 for the interaction between position and adaptation). We subtract the number of mean parameter used to estimate means and differences in mean (1 global mean, 4 means for position, 1 for adaptation), which gives $4=10-6$ degrees of freedom. Next, this term is compared to the mean square which contains only subject (here via acuity levels, since subjects are nested within acuity) and the corresponding variables; the correct mean square is for `acuity:adaptation:position`. In the balanced design setting, this can be formalized using Hasse diagram [@Oehlert:2010]. 
 
-We can produce an interaction plot to see what comes out: since we can't draw in four dimensions, we map visual acuity and adaptation level to panels and use different colours for the position. The figure looks different from the paper, seemingly because their $y$-axis is flipped.
+We can produce an interaction plot to see what comes out: since we can't draw in four dimensions, we map visual acuity and adaptation level to panels with different colours for the position. The figure looks different from the paper, seemingly because their $y$-axis is flipped.
 
 ```{r}
 #| eval: true
@@ -274,15 +274,15 @@ The multivariate analysis of variance model is designed by assuming observations
 
 The difference with the univariate approach is now that we will compare a global mean vector $\boldsymbol{\mu}$ between comparisons. In the one-way analysis of variance model with an experimental factor having $K$ levels and a balanced sample $n_g$ observations per group and $n=n_gK$ total observations, we assume that each group has average $\boldsymbol{\mu}_k$ $(k=1, \ldots, K)$, which we can estimate using only the observations from that group. Under the null hypothesis, all groups have the same mean, so the estimator is the overall mean $\boldsymbol{\mu}$ combining all $n$ observations.
 
-The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics.  Wilk's $\Lambda$ is the most popular choice. Another common choice, which leads to a statistic giving lower power but more robust to departure from model assumptions is Pillai's trace.
+The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics.  Wilk's $\Lambda$ is the most popular choice. Another common choice, which leads to a statistic giving lower power but which is also more robust to departure from model assumptions is Pillai's trace.
 
-The MANOVA model assumes that the covariance matrices are the same within each experimental condition. Under normality assumption, we can use Box's $M$ statistic to test the hypothesis.
+The MANOVA model assumes that the covariance matrices are the same within each experimental condition. We can use Box's $M$ statistic to test the normality hypothesis.
 
 
 
 ### Data format
 
-With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in **wide format**, since there are multiple measurements in each row. While this format is suitable for multivariate models, many statistical routines will instead expect data to be in **long format**, for which there is a single measurement per line. @fig-longvswide illustrates the difference between the two formats.
+With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in **wide format**, since there are multiple measurements in each row. While this format is suitable for storate, many statistical routines will instead expect data to be in **long format**, for which there is a single measurement per line. @fig-longvswide illustrates the difference between the two formats.
 
 
 ```{r}
@@ -306,7 +306,7 @@ This section is technical and can be omitted. Analogous to the univariate case, 
 \begin{align*} &
 \underset{\text{total variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})^\top} \\\qquad &= \underset{\text{within variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)^\top} + \underset{\text{between variance}}{\sum_{k=1}^K n_g(\boldsymbol{\mu}_{k} - \widehat{\boldsymbol{\mu}})(\widehat{\boldsymbol{\mu}}_k - \widehat{\boldsymbol{\mu}})^\top}
 \end{align*}
-defining covariance matrix estimators. If we write $\widehat{\boldsymbol{\Sigma}}_T$, $\widehat{\boldsymbol{\Sigma}}_W$, and $\widehat{\boldsymbol{\Sigma}}_B$ for respectively the total, within and between variance estimators, we can build a statistic from these ingredients to see how much variability is induced by centering using a common vector. When $K>2$, there are multiple statistics that be constructed, including
+defining covariance matrix estimators. If we write $\widehat{\boldsymbol{\Sigma}}_T,$ $\widehat{\boldsymbol{\Sigma}}_W$, and $\widehat{\boldsymbol{\Sigma}}_B$ for respectively the total, within and between variance estimators, we can build a statistic from these ingredients to see how much variability is induced by centering using a common vector. When $K>2$, there are multiple statistics that be constructed, including
 
 - Wilk's $\Lambda$: $|\widehat{\boldsymbol{\Sigma}}_W|/|\widehat{\boldsymbol{\Sigma}}_W + \widehat{\boldsymbol{\Sigma}}_B|$
 - Roy's maximum root: the largest eigenvalue of $\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B$
@@ -315,7 +315,7 @@ defining covariance matrix estimators. If we write $\widehat{\boldsymbol{\Sigma}
 
 All four criteria lead to equivalent statistics and the same $p$-values if $K=2$.
 
-With a two-way balanced MANOVA, we can perform simlar decomposition for each factor or interaction, with 
+With a two-way balanced MANOVA, we can perform a similar decomposition for each factor or interaction, with 
 $$\widehat{\boldsymbol{\Sigma}}_T = \widehat{\boldsymbol{\Sigma}}_A + \widehat{\boldsymbol{\Sigma}}_B + \widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W.$$
 
 Wilk's $\Lambda$ is based on taking the ratio of the determinant of the within-variance and that of the sum of effect-variance plus within-variance, e.g., $|\widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W|$ for the interaction term. 
@@ -371,7 +371,7 @@ We can check that the output is the same in this case as the within-subject anal
 We consider a between-subject repeated measure multivariate analysis of variance model with the @Baumann:1992. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).
 
 
-We could obtain the estimated covariance matrix of the fitted model by extracting the residuals $Y_{ik} - \widehat{\mu}_k$ and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test2.
+We could obtain the estimated covariance matrix of the fitted model by extracting the residuals $Y_{ik} - \widehat{\mu}_k$ and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test 2.
 
 Let us compute the multivariate analysis of variance model
 

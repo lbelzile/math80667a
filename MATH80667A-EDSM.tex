@@ -8,7 +8,6 @@
 ]{scrbook}
 
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -18,6 +17,10 @@
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -293,7 +296,7 @@
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
-\renewcommand*{\proofname}{Proof}
+\AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
 \newtheorem*{solution}{Solution}
 \makeatother
@@ -302,10 +305,12 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 \makeatletter
-\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
 \makeatother
 \makeatletter
 \@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
 \makeatother
 \makeatletter
 \makeatother
@@ -323,12 +328,12 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{1/9/23}
+\date{2023-11-02}
 
 \begin{document}
 \frontmatter
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, boxrule=0pt, sharp corners, interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, breakable, interior hidden, borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -351,7 +356,8 @@ the joint Ph.D.~program in Management.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on Sunday, January 08 2023.
+and were last compiled on
+\texttt{r\ Sys.setlocale("LC\_TIME",\ "en\_CA.UTF-8");\ format(Sys.Date(),\ format\ =\ "\%A,\ \%B\ \%d\ \%Y")}.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -442,7 +448,7 @@ experimental manipulation.\footnote{The preceding paragraph shouldn't be
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/random_sample_assignment.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/random_sample_assignment.pdf}
 
 }
 
@@ -494,8 +500,8 @@ two or more treatments (experimental conditions):
   conditions (treatments) are called treatment effects.
 \end{itemize}
 
-\leavevmode\vadjust pre{\hypertarget{exm-experimentdefinitions}{}}%
-\begin{example}[Pedagogical experience]\label{exm-experimentdefinitions}
+\begin{example}[Pedagogical
+experience]\protect\hypertarget{exm-experimentdefinitions}{}\label{exm-experimentdefinitions}
 
 Suppose we want to study the effectiveness of different pedagogical
 approaches to learning. Evidence-based pedagogical researchs point out
@@ -623,7 +629,7 @@ representation for data is contingent on variable type. Specifically,
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/continuous_discrete.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/continuous_discrete.png}
 
 }
 
@@ -668,7 +674,7 @@ rather than as text (Monday, Tuesday, \(\ldots\)).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/nominal_ordinal_binary.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/nominal_ordinal_binary.png}
 
 }
 
@@ -705,7 +711,7 @@ resembles the density a normal distribution, which lead
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/hallgrimskirkja_reykjavik.jpg}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/hallgrimskirkja_reykjavik.jpg}
 
 }
 
@@ -736,7 +742,7 @@ mean and sample variance as key summary statistics.\footnote{The
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./01-introduction_files/figure-pdf/fig-normaldist-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{01-introduction_files/figure-pdf/fig-normaldist-1.pdf}
 
 }
 
@@ -832,9 +838,8 @@ be random and change from one sample to the next. While larger samples
 typically carry more information, sample size is not a guarantee of
 quality, as the following example demonstrates.
 
-\leavevmode\vadjust pre{\hypertarget{exm-Galluppoll}{}}%
 \begin{example}[Polling for the 1936 USA Presidential
-Election]\label{exm-Galluppoll}
+Election]\protect\hypertarget{exm-Galluppoll}{}\label{exm-Galluppoll}
 
 \emph{The Literary Digest} surveyed 10 millions people by mail to know
 voting preferences for the 1936 USA Presidential Election. A sizeable
@@ -912,7 +917,7 @@ clusters (e.g., villages or classrooms).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./01-introduction_files/figure-pdf/fig-sampling-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{01-introduction_files/figure-pdf/fig-sampling-1.pdf}
 
 }
 
@@ -958,7 +963,7 @@ composition obtained from the census.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/continuous_discrete.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/continuous_discrete.png}
 
 }
 
@@ -976,9 +981,8 @@ designs}\label{examples-of-experimental-designs}}
 The field of experimental design has a long history, starting with
 agricultural field trials.
 
-\leavevmode\vadjust pre{\hypertarget{exm-agriculturalfieldtrials}{}}%
 \begin{example}[Agricultural field trials at the Rothamsted Research
-Station.]\label{exm-agriculturalfieldtrials}
+Station.]\protect\hypertarget{exm-agriculturalfieldtrials}{}\label{exm-agriculturalfieldtrials}
 
 The \href{https://www.rothamsted.ac.uk/}{Rothamsted Research Station} in
 the UK has been conducting experiments since 1843. Ronald A. Fisher, who
@@ -989,7 +993,7 @@ recollection of his contribution to the field.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/HFL-A1958.jpg}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/HFL-A1958.jpg}
 
 }
 
@@ -1006,9 +1010,8 @@ Experimental design revolves in large part in understanding how best to
 allocate our resources, determine the impact of policies or choosing the
 most effective ``treatment'' from a series of option.
 
-\leavevmode\vadjust pre{\hypertarget{exm-experimentalexample1}{}}%
 \begin{example}[Modern experiments and A/B
-testing]\label{exm-experimentalexample1}
+testing]\protect\hypertarget{exm-experimentalexample1}{}\label{exm-experimentalexample1}
 
 Most modern experiments happen online, with tech companies running
 thousands of experiments on an ongoing basis in order to discover
@@ -1029,9 +1032,8 @@ and can be learned despite the large variability in customer behaviour.
 There are also multiple examples of randomized control experiments used
 for policy making.
 
-\leavevmode\vadjust pre{\hypertarget{exm-experimentvsobservations}{}}%
 \begin{example}[Experiments on wellness
-programs]\label{exm-experimentvsobservations}
+programs]\protect\hypertarget{exm-experimentvsobservations}{}\label{exm-experimentvsobservations}
 
 Song and Baicker (\protect\hyperlink{ref-Song.Baicker:2019}{2019})
 conducted a large randomized trial over a period of 18 months to study
@@ -1053,8 +1055,7 @@ These findings are strikingly different from previous observational
 studies, which found increase participation in sportive activities,
 increased job duration, reduced medical spendings.
 
-\leavevmode\vadjust pre{\hypertarget{exm-Tennesseestar}{}}%
-\begin{example}[STAR]\label{exm-Tennesseestar}
+\begin{example}[STAR]\protect\hypertarget{exm-Tennesseestar}{}\label{exm-Tennesseestar}
 
 The Tennessee's Student Teacher Achievement Ratio
 \href{(https://dss.princeton.edu/catalog/resource1589)}{(STAR)} project
@@ -1075,8 +1076,8 @@ kindergarten and continued through third grade.
 
 \end{example}
 
-\leavevmode\vadjust pre{\hypertarget{exm-randcorp}{}}%
-\begin{example}[RAND health care programs]\label{exm-randcorp}
+\begin{example}[RAND health care
+programs]\protect\hypertarget{exm-randcorp}{}\label{exm-randcorp}
 
 In a large-scale
 \href{https://www.rand.org/health-care/projects/hie.html}{multiyear
@@ -1244,7 +1245,7 @@ Figure~\ref{fig-xkcd605} is absurd, but makes this point.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.5\textwidth,height=\textheight]{./figures/xkcd605_extrapolating.png}
+{\centering \includegraphics[width=0.5\textwidth,height=\textheight]{figures/xkcd605_extrapolating.png}
 
 }
 
@@ -1301,7 +1302,7 @@ researchers.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.4\textwidth,height=\textheight]{./figures/xkcd2400_statistics.png}
+{\centering \includegraphics[width=0.4\textwidth,height=\textheight]{figures/xkcd2400_statistics.png}
 
 }
 
@@ -1384,7 +1385,7 @@ or data collection.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{./figures/xkcd2569_hypothesis_generation.png}
+{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{figures/xkcd2569_hypothesis_generation.png}
 
 }
 
@@ -1418,8 +1419,8 @@ meaningful conclusions but, in order to do so, we need first to
 determine what is likely or plausible and could be a stroke of luck, and
 what is not likely to occur solely due to randomness.
 
-\leavevmode\vadjust pre{\hypertarget{exm-ABtest}{}}%
-\begin{example}[A/B testing]\label{exm-ABtest}
+\begin{example}[A/B
+testing]\protect\hypertarget{exm-ABtest}{}\label{exm-ABtest}
 
 Consider two webpage design: one is the current version (\emph{status
 quo}) and the other implementation contains a clickable banner in a
@@ -1482,7 +1483,7 @@ In other words,
 
 \raisebox{-\height}{
 
-\includegraphics{./figures/estimand.jpg}
+\includegraphics{figures/estimand.jpg}
 
 }
 
@@ -1497,7 +1498,7 @@ In other words,
 
 \raisebox{-\height}{
 
-\includegraphics{./figures/estimator.jpg}
+\includegraphics{figures/estimator.jpg}
 
 }
 
@@ -1512,7 +1513,7 @@ In other words,
 
 \raisebox{-\height}{
 
-\includegraphics{./figures/estimate.jpg}
+\includegraphics{figures/estimate.jpg}
 
 }
 
@@ -1544,7 +1545,7 @@ Figure~\ref{fig-xkcd605}.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{./figures/xkcd2581_health_stats.png}
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{figures/xkcd2581_health_stats.png}
 
 }
 
@@ -1569,7 +1570,7 @@ accounting for spurious results due to the background noise.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./02-hypothesis_testing_files/figure-pdf/fig-samplevar-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-samplevar-1.pdf}
 
 }
 
@@ -1619,9 +1620,8 @@ to interpret than variance. Since the standard error is a function of
 the sample size, it is however good practice to report the estimated
 standard deviation in reports.
 
-\leavevmode\vadjust pre{\hypertarget{exm-samppropunif}{}}%
 \begin{example}[Sample proportion and uniform
-draws]\label{exm-samppropunif}
+draws]\protect\hypertarget{exm-samppropunif}{}\label{exm-samppropunif}
 
 To illustrate the concept of sampling variability, we follow the lead of
 \href{https://www.crumplab.com/statistics/foundations-for-inference.html}{Matthew
@@ -1631,7 +1631,7 @@ to be sampled.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./02-hypothesis_testing_files/figure-pdf/fig-unifsamp1-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-unifsamp1-1.pdf}
 
 }
 
@@ -1673,7 +1673,7 @@ helps us disentangle the signal from the noise.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./02-hypothesis_testing_files/figure-pdf/fig-uniformsamp2-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-uniformsamp2-1.pdf}
 
 }
 
@@ -1765,8 +1765,8 @@ know that the differences are just due to sampling variability in
 Figure~\ref{fig-samplevar} because the data is simulated, in practice we
 need to assess the evidence using a numerical summary.
 
-\leavevmode\vadjust pre{\hypertarget{exm-abtest-cont}{}}%
-\begin{example}[A/B testing (continued)]\label{exm-abtest-cont}
+\begin{example}[A/B testing
+(continued)]\protect\hypertarget{exm-abtest-cont}{}\label{exm-abtest-cont}
 
 We follow-up with our A/B test experiment. Given \(\mu_1\) the
 population average click conversation rate for the current webpage and
@@ -1910,7 +1910,7 @@ more likely to be observed.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./02-hypothesis_testing_files/figure-pdf/fig-power-plots-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-power-plots-1.pdf}
 
 }
 
@@ -1986,14 +1986,15 @@ evidence that the proposal is the better alternative and will lead to
 increased traffic or revenues.
 
 \begin{longtable}[]{@{}lcc@{}}
-\toprule()
+\toprule\noalign{}
 \textbf{Decision} \textbackslash{} \textbf{true model} &
 \(\mathscr{H}_0\) & \(\mathscr{H}_a\) \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 fail to reject \(\mathscr{H}_0\) & \(\checkmark\) & type II error \\
 reject \(\mathscr{H}_0\) & type I error & \(\checkmark\) \\
-\bottomrule()
 \end{longtable}
 
 To make a decision, we compare our \emph{p}-value \(P\) with the level
@@ -2063,9 +2064,8 @@ below:
 \end{enumerate}
 \end{quote}
 
-\leavevmode\vadjust pre{\hypertarget{exm-rosenjerdee74}{}}%
 \begin{example}[Gender inequality and permutation
-tests]\label{exm-rosenjerdee74}
+tests]\protect\hypertarget{exm-rosenjerdee74}{}\label{exm-rosenjerdee74}
 
 We consider data from Rosen and Jerdee
 (\protect\hyperlink{ref-Rosen:1974}{1974}), who look at sex role
@@ -2193,7 +2193,7 @@ being promoted) (why?)
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./02-hypothesis_testing_files/figure-pdf/fig-infer-odds-ratio-permutation-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-infer-odds-ratio-permutation-1.pdf}
 
 }
 
@@ -2311,7 +2311,7 @@ sample.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./02-hypothesis_testing_files/figure-pdf/intconf-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/intconf-1.pdf}
 
 }
 
@@ -2332,9 +2332,8 @@ postulated value and so is more precise for this particular value. If
 the \emph{p}-value is smaller than \(\alpha\), our null value \(\theta\)
 will be outside of the confidence interval and vice-versa.
 
-\leavevmode\vadjust pre{\hypertarget{exm-LiuRimMinMin2022E1}{}}%
 \begin{example}[``The Surprise of Reaching
-Out'']\label{exm-LiuRimMinMin2022E1}
+Out'']\protect\hypertarget{exm-LiuRimMinMin2022E1}{}\label{exm-LiuRimMinMin2022E1}
 
 Liu et al. (\protect\hyperlink{ref-Liu.Rim.Min.Min:2022}{2022+}) studies
 social interactions and the impact of surprise on people reaching out if
@@ -2428,9 +2427,8 @@ out.\footnote{Assuming that the variance of each subgroup were equal, we
   differs depending on the role
 \end{itemize}
 
-\leavevmode\vadjust pre{\hypertarget{exm-BrucksLevav22}{}}%
 \begin{example}[Virtual communication curbs creative idea
-generation]\label{exm-BrucksLevav22}
+generation]\protect\hypertarget{exm-BrucksLevav22}{}\label{exm-BrucksLevav22}
 
 A Nature study performed an experiment to see how virtual communications
 teamwork by comparing the output both in terms of ideas generated during
@@ -2726,7 +2724,7 @@ the difference in length is much smaller relative to the colored arrows.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-squareddistanova-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-squareddistanova-1.pdf}
 
 }
 
@@ -2767,7 +2765,7 @@ setting.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-Fdistpermut-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-Fdistpermut-1.pdf}
 
 }
 
@@ -2795,7 +2793,7 @@ conclusions.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-distributionFanova-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-distributionFanova-1.pdf}
 
 }
 
@@ -2825,7 +2823,7 @@ distributions.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-dynamiteplot-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-dynamiteplot-1.pdf}
 
 }
 
@@ -2895,7 +2893,7 @@ avoid artefacts.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/01-intro-boxplot.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/01-intro-boxplot.png}
 
 }
 
@@ -2948,7 +2946,7 @@ falling in the red area lead to rejection at level \(5\)\%.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-tcurve-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-tcurve-1.pdf}
 
 }
 
@@ -3047,7 +3045,7 @@ for violation of the assumptions.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-assumptions-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-assumptions-1.pdf}
 
 }
 
@@ -3142,7 +3140,7 @@ difference within each level).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-omittedlinearity-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-omittedlinearity-1.pdf}
 
 }
 
@@ -3266,7 +3264,7 @@ illustrates this.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}
 
 }
 
@@ -3346,7 +3344,7 @@ off with \(n=50\) for heavy-tailed data.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-clt-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-clt-1.pdf}
 
 }
 
@@ -3402,7 +3400,7 @@ factor 10.\footnote{The null distribution also changes with the sample
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./03-completely_randomized_trials_files/figure-pdf/fig-plotLevelIndep-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-plotLevelIndep-1.pdf}
 
 }
 
@@ -3565,8 +3563,8 @@ praised vs reproved & 4.00 & 1.62 & 40 & 0.72 & 7.28\\
 \end{tabular}
 \end{table}
 
-\leavevmode\vadjust pre{\hypertarget{exm-teachingtoread}{}}%
-\begin{example}[Teaching to read]\label{exm-teachingtoread}
+\begin{example}[Teaching to
+read]\protect\hypertarget{exm-teachingtoread}{}\label{exm-teachingtoread}
 
 We consider data from Baumann, Seifert-Kessell, and Jones
 (\protect\hyperlink{ref-Baumann:1992}{1992}). The abstract of the paper
@@ -3778,7 +3776,7 @@ meaningless results.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/xkcd882_significant.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/xkcd882_significant.png}
 
 }
 
@@ -4007,7 +4005,7 @@ gather observations for each factor combination in a table, where
 \caption{\label{tbl-cellmeansMP14}Conceptual depiction of cell average
 for the two by two design of Maglio and Polman
 (\protect\hyperlink{ref-Maglio.Polman:2014}{2014})}\tabularnewline
-\toprule()
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \(A\) \texttt{station}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -4019,9 +4017,9 @@ for the two by two design of Maglio and Polman
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
 \emph{row mean}
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endfirsthead
-\toprule()
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \(A\) \texttt{station}
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -4033,8 +4031,10 @@ for the two by two design of Maglio and Polman
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
 \emph{row mean}
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 \(a_1\) (\texttt{Spadina}) & & \(\mu_{11}\) & \(\mu_{12}\) &
 \(\mu_{1.}\) \\
 \(a_2\) (\texttt{St.\ George}) & & \(\mu_{21}\) & \(\mu_{22}\) &
@@ -4044,7 +4044,6 @@ for the two by two design of Maglio and Polman
 \(a_4\) (\texttt{Sherbourne}) & & \(\mu_{41}\) & \(\mu_{42}\) &
 \(\mu_{4.}\) \\
 \emph{column mean} & & \(\mu_{.1}\) & \(\mu_{.2}\) & \(\mu\) \\
-\bottomrule()
 \end{longtable}
 
 The \(i\)th row mean represents the average response across all levels
@@ -4107,7 +4106,7 @@ how much these differ by station depending on direction.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{./05-interactions_multiway_files/figure-pdf/fig-2by2-1.pdf}
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{05-interactions_multiway_files/figure-pdf/fig-2by2-1.pdf}
 
 }
 
@@ -4148,7 +4147,7 @@ intuition.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
 
 }
 
@@ -4451,7 +4450,7 @@ experimental condition are the same.\footnote{If not, this implies that
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./06-blocking_files/figure-pdf/fig-ancovadifftrend-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ancovadifftrend-1.pdf}
 
 }
 
@@ -4482,7 +4481,7 @@ scales.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./06-blocking_files/figure-pdf/fig-ancovaresid-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ancovaresid-1.pdf}
 
 }
 
@@ -4589,7 +4588,7 @@ Residuals & 203.2 & 93 &  & \\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./06-blocking_files/figure-pdf/fig-ANCOVA-demo-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ANCOVA-demo-1.pdf}
 
 }
 
@@ -4617,9 +4616,8 @@ test for homogeneity of variance indicates no discernible difference
 between groups. Thus, it appears there is a difference in perception of
 product quality due to the manipulation.
 
-\leavevmode\vadjust pre{\hypertarget{exm-vanStek}{}}%
 \begin{example}[Effect of scientific consensus on false
-beliefs]\label{exm-vanStek}
+beliefs]\protect\hypertarget{exm-vanStek}{}\label{exm-vanStek}
 
 We consider Study 3 of Stekelenburg et al.
 (\protect\hyperlink{ref-vanStekelenburg:2021}{2021}), who studied
@@ -4805,7 +4803,7 @@ post & control & 30.91 & 2.56\\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./06-blocking_files/figure-pdf/fig-vanStekS3-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-vanStekS3-1.pdf}
 
 }
 
@@ -4845,7 +4843,7 @@ trust scientists, could explain some of the observed differences.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./06-blocking_files/figure-pdf/fig-vanStekS3f1-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-vanStekS3f1-1.pdf}
 
 }
 
@@ -4922,7 +4920,7 @@ them unsuitable for describing differences.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{./07-power_effect_files/figure-pdf/fig-effectsize-1.pdf}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-effectsize-1.pdf}
 
 }
 
@@ -5023,7 +5021,7 @@ confidence intervals or tolerance intervals.\footnote{By using the pivot
   null distribution, whether \(\mathsf{St}\), \(\mathsf{F}\) or
   \(\chi^2\).}
 
-\hypertarget{LiuRimMinMin2022E1effect}{}
+\leavevmode\vadjust pre{\hypertarget{LiuRimMinMin2022E1effect}{}}%
 We consider a two-sample \(t\)-test for the study of Liu et al.
 (\protect\hyperlink{ref-Liu.Rim.Min.Min:2022}{2022+}) discussed in
 Example~\ref{exm-LiuRimMinMin2022E1}. The difference in average response
@@ -5221,7 +5219,7 @@ hypothesis is false.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./07-power_effect_files/figure-pdf/fig-power1-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power1-1.pdf}
 
 }
 
@@ -5234,7 +5232,7 @@ alternative distribution which is in the rejection area (in white).}
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./07-power_effect_files/figure-pdf/fig-power2-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power2-1.pdf}
 
 }
 
@@ -5248,7 +5246,7 @@ to the null distribution (full line).}
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./07-power_effect_files/figure-pdf/fig-power3-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power3-1.pdf}
 
 }
 
@@ -5417,7 +5415,7 @@ test, we need to single out a specific alternative hypothesis.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{./07-power_effect_files/figure-pdf/fig-powercurve-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-powercurve-1.pdf}
 
 }
 
@@ -5563,7 +5561,7 @@ Turing Way} and presented in Figure~\ref{fig-turingrepdo}.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/turing_way.jpg}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/turing_way.jpg}
 
 }
 
@@ -5626,7 +5624,7 @@ and reporting selected results.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/RPP_psycho_repro.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/RPP_psycho_repro.png}
 
 }
 
@@ -5654,7 +5652,7 @@ not published is called the \textbf{file-drawer} problem.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/vanZwet_Cator-zvalues.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/vanZwet_Cator-zvalues.png}
 
 }
 
@@ -5718,7 +5716,7 @@ retrieve former versions if you make mistakes at some point.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/reproducibility.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/reproducibility.png}
 
 }
 
@@ -5746,7 +5744,7 @@ require the following to be reported in all published papers:
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/Nature_reporting_statistics.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/Nature_reporting_statistics.png}
 
 }
 
@@ -5843,7 +5841,7 @@ exhibit different opinions, levels of skills, etc. than most.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/samplingbias.jpg}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/samplingbias.jpg}
 
 }
 
@@ -5953,7 +5951,7 @@ in Figure~\ref{fig-xkcd2569}.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{./figures/xkcd2533-slope_hypothesis_testing.png}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{figures/xkcd2533-slope_hypothesis_testing.png}
 
 }
 
@@ -6033,7 +6031,7 @@ pairwise differences with the control.
 
 \raisebox{-\height}{
 
-\includegraphics{./figures/face_real.png}
+\includegraphics{figures/face_real.png}
 
 }
 
@@ -6048,7 +6046,7 @@ pairwise differences with the control.
 
 \raisebox{-\height}{
 
-\includegraphics{./figures/face_GAN_S.png}
+\includegraphics{figures/face_GAN_S.png}
 
 }
 
@@ -6063,7 +6061,7 @@ pairwise differences with the control.
 
 \raisebox{-\height}{
 
-\includegraphics{./figures/face_GAN_E.png}
+\includegraphics{figures/face_GAN_E.png}
 
 }
 
@@ -6377,7 +6375,7 @@ different from the paper, seemingly because their \(y\)-axis is flipped.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./09-repeated_files/figure-pdf/fig-LBJ-interactionplot-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{09-repeated_files/figure-pdf/fig-LBJ-interactionplot-1.pdf}
 
 }
 
@@ -6443,7 +6441,7 @@ the two formats.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/original-dfs-tidy.png}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/original-dfs-tidy.png}
 
 }
 
@@ -6708,7 +6706,7 @@ between groups. Figure~\ref{fig-lindiscrim} shows the new coordinates.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./09-repeated_files/figure-pdf/fig-lindiscrim-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{09-repeated_files/figure-pdf/fig-lindiscrim-1.pdf}
 
 }
 
@@ -6952,7 +6950,7 @@ them accordingly.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./10-mixed_files/figure-pdf/fig-aafulldat-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{10-mixed_files/figure-pdf/fig-aafulldat-1.pdf}
 
 }
 
@@ -7173,7 +7171,7 @@ inbalance.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./10-mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{10-mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
 
 }
 
@@ -7200,7 +7198,7 @@ relations, many of which are simply artefact of population growth.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{./figures/xkcd552_correlation.png}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/xkcd552_correlation.png}
 
 }
 
@@ -7294,7 +7292,7 @@ world view, but is already rather complicated.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{./figures/dagitty-model.png}
+{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{figures/dagitty-model.png}
 
 }
 
@@ -7330,7 +7328,7 @@ mediator).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{./figures/causal_dag_aheiss.jpg}
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/causal_dag_aheiss.jpg}
 
 }
 
@@ -7463,7 +7461,7 @@ additional layer of complexity and potential sources of confounding.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{./figures/xkcd2652_proxy_variable.png}
+{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{figures/xkcd2652_proxy_variable.png}
 
 }
 
@@ -7606,7 +7604,7 @@ where the null is true (\(X\) affects both \(M\) and \(Y\)).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./11-causal-inference_files/figure-pdf/fig-sobelsimu-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/fig-sobelsimu-1.pdf}
 
 }
 
@@ -7662,7 +7660,7 @@ percentile method.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./11-causal-inference_files/figure-pdf/bootstrap-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/bootstrap-1.pdf}
 
 }
 
@@ -7708,7 +7706,7 @@ We can unpack the model assumptions for the linear mediation model.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./figures/dag1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/dag1.pdf}
 
 }
 
@@ -7731,7 +7729,7 @@ mediation effect on \(X\) is due to \(M_1\).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.45\textwidth,height=\textheight]{./figures/dag2.pdf}
+{\centering \includegraphics[width=0.45\textwidth,height=\textheight]{figures/dag2.pdf}
 
 }
 
@@ -7969,7 +7967,7 @@ Residuals & 159.22 & 123 &  & \\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./11-causal-inference_files/figure-pdf/unnamed-chunk-16-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/unnamed-chunk-16-1.pdf}
 
 }
 
@@ -8012,7 +8010,7 @@ individual and collective protests, since these are the most similar.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{./11-causal-inference_files/figure-pdf/fig-jn-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/fig-jn-1.pdf}
 
 }
 
@@ -8198,7 +8196,7 @@ ressorting to nonparametric procedures.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{./12-nonparametric_files/figure-pdf/fig-normqqplot-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{12-nonparametric_files/figure-pdf/fig-normqqplot-1.pdf}
 
 }
 
@@ -8578,8 +8576,8 @@ and Expands Psychological Distance.''} \emph{Psychological Science} 25
 (7): 1345--52. \url{https://doi.org/10.1177/0956797614530571}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-magnussonCohend}{}}%
-Magnusson, Kristoffer. 2021. \emph{Interpreting {C}ohen's \(d\) Effect
-Size: An Interactive Visualization} (version 2.5.1).
+Magnusson, Kristoffer. 2021. {``Interpreting {C}ohen's \(d\) Effect
+Size: An Interactive Visualization.''}
 \url{https://rpsychologist.com/cohend/}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-McElreath:2020}{}}%

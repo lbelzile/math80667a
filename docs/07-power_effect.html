@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -139,10 +110,12 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="style.css">
@@ -152,11 +125,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-power_effect.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -164,112 +142,127 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></a>
+  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></a>
+  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a>
+  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></a>
+  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a>
+  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></a>
+  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></a>
+  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></a>
+  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></a>
+  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></a>
+  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#effect-sizes" id="toc-effect-sizes" class="nav-link active" data-scroll-target="#effect-sizes"><span class="toc-section-number">7.1</span>  Effect sizes</a>
+  <li><a href="#effect-sizes" id="toc-effect-sizes" class="nav-link active" data-scroll-target="#effect-sizes"><span class="header-section-number">7.1</span> Effect sizes</a>
   <ul class="collapse">
-  <li><a href="#standardized-mean-differences" id="toc-standardized-mean-differences" class="nav-link" data-scroll-target="#standardized-mean-differences"><span class="toc-section-number">7.1.1</span>  Standardized mean differences</a></li>
-  <li><a href="#ratio-and-proportion-of-variance" id="toc-ratio-and-proportion-of-variance" class="nav-link" data-scroll-target="#ratio-and-proportion-of-variance"><span class="toc-section-number">7.1.2</span>  Ratio and proportion of variance</a></li>
-  <li><a href="#partial-effects-and-variance-decomposition" id="toc-partial-effects-and-variance-decomposition" class="nav-link" data-scroll-target="#partial-effects-and-variance-decomposition"><span class="toc-section-number">7.1.3</span>  Partial effects and variance decomposition</a></li>
+  <li><a href="#standardized-mean-differences" id="toc-standardized-mean-differences" class="nav-link" data-scroll-target="#standardized-mean-differences"><span class="header-section-number">7.1.1</span> Standardized mean differences</a></li>
+  <li><a href="#ratio-and-proportion-of-variance" id="toc-ratio-and-proportion-of-variance" class="nav-link" data-scroll-target="#ratio-and-proportion-of-variance"><span class="header-section-number">7.1.2</span> Ratio and proportion of variance</a></li>
+  <li><a href="#partial-effects-and-variance-decomposition" id="toc-partial-effects-and-variance-decomposition" class="nav-link" data-scroll-target="#partial-effects-and-variance-decomposition"><span class="header-section-number">7.1.3</span> Partial effects and variance decomposition</a></li>
   </ul></li>
-  <li><a href="#power" id="toc-power" class="nav-link" data-scroll-target="#power"><span class="toc-section-number">7.2</span>  Power</a>
+  <li><a href="#power" id="toc-power" class="nav-link" data-scroll-target="#power"><span class="header-section-number">7.2</span> Power</a>
   <ul class="collapse">
-  <li><a href="#sec-power-oneway" id="toc-sec-power-oneway" class="nav-link" data-scroll-target="#sec-power-oneway"><span class="toc-section-number">7.2.1</span>  Power for one-way ANOVA</a></li>
-  <li><a href="#power-in-complex-designs" id="toc-power-in-complex-designs" class="nav-link" data-scroll-target="#power-in-complex-designs"><span class="toc-section-number">7.2.2</span>  Power in complex designs</a></li>
+  <li><a href="#sec-power-oneway" id="toc-sec-power-oneway" class="nav-link" data-scroll-target="#sec-power-oneway"><span class="header-section-number">7.2.1</span> Power for one-way ANOVA</a></li>
+  <li><a href="#power-in-complex-designs" id="toc-power-in-complex-designs" class="nav-link" data-scroll-target="#power-in-complex-designs"><span class="header-section-number">7.2.2</span> Power in complex designs</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/07-power_effect.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
@@ -278,13 +271,10 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header">
-<h1 class="title d-none d-lg-block display-7"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></h1>
+<h1 class="title display-7"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></h1>
 
 </header>
 
-<div class="cell" data-file="_common.R" data-hash="07-power_effect_cache/html/setup_65ddaf2c46cf2188afd5fad02cb4e24a">
-
-</div>
 <p>In social studies, it is common to write a paper containing multiple studies on a similar topic. These may use different designs, with varying sample size. If the studies uses different questionnaires, or change the Likert scale, the results and the mean difference between groups are not directly comparable between experiments.</p>
 <p>We may also wish replicate a study by using the same material and re-run an experiment. For the replication to be somewhat successful (or at least reliable), one needs to determine beforehand how many participants should be recruited in the study.</p>
 <p>We could think for an example of comparing statistics or <span class="math inline">\(p\)</span>-values, which are by construction standardized unitless measures, making them comparable across study. Test statistics show how outlying observed differences between experimental conditions relative to a null hypothesis, typically that of no effect (equal mean in each subgroup). However, statistics are usually a function of both the sample size (the number of observations in each experimental condition) and the effect size (how large the standardized differences between groups are), making them unsuitable for describing differences.</p>
@@ -293,7 +283,7 @@ div.csl-indent {
 <div id="fig-effectsize" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-effectsize-1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.1: True sampling distribution for a two-sample <span class="math inline">\(t\)</span>-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small (left panel) and large (right panel) sample sizes.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;7.1: True sampling distribution for a two-sample <span class="math inline">\(t\)</span>-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small (left panel) and large (right panel) sample sizes.</figcaption>
 </figure>
 </div>
 </div>
@@ -313,9 +303,6 @@ T =  \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} \left(\frac{1}{n
 <p>The difference <span class="math inline">\(d=(\mu_1-\mu_2)/\sigma\)</span> has an obvious interpretation: a distance of <span class="math inline">\(a\)</span> indicates that the means of the two groups are <span class="math inline">\(a\)</span> standard deviation apart. Cohen’s <span class="math inline">\(d\)</span> is sometimes loosely categorized in terms of weak (<span class="math inline">\(d = 0.2\)</span>), medium (<span class="math inline">\(d=0.5\)</span>) and large (<span class="math inline">\(d=0.8\)</span>) effect size; these, much like arbitrary <span class="math inline">\(p\)</span>-value cutoffs, are rules of thumbs. Alongside <span class="math inline">\(d\)</span>, there are many commonly reported metrics that are simple transformations of <span class="math inline">\(d\)</span> describing the observed difference. This interactive <a href="https://rpsychologist.com/cohend/">applet</a> by Kristoffer Magnusson <span class="citation" data-cites="magnussonCohend">(<a href="references.html#ref-magnussonCohend" role="doc-biblioref">Magnusson 2021</a>)</span> shows the visual impact of changing the value of <span class="math inline">\(d\)</span> along. There are different estimators of <span class="math inline">\(d\)</span> depending on whether or not the pooled variance estimator is used. Cohen’s <span class="math inline">\(d\)</span>, is upward biased, meaning it gives values that are on average larger than the truth. Hedge’s <span class="math inline">\(g\)</span> <span class="citation" data-cites="Hedges:1981">(<a href="references.html#ref-Hedges:1981" role="doc-biblioref">Hedges 1981</a>)</span> offers a bias-correction and should always be preferred as an estimator.</p>
 <p>For these different estimators, it is possible to obtain (asymmetric) confidence intervals or tolerance intervals.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="LiuRimMinMin2022E1effect" class="example" name="The Surprise of Reaching Out">
-<div class="cell" data-layout-align="center" data-hash="07-power_effect_cache/html/unnamed-chunk-3_f8f4aa165369659a12bf1c93d772f1c3">
-
-</div>
 <p>We consider a two-sample <span class="math inline">\(t\)</span>-test for the study of <span class="citation" data-cites="Liu.Rim.Min.Min:2022">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2022" role="doc-biblioref">2022+</a>)</span> discussed in <a href="02-hypothesis_testing.html#exm-LiuRimMinMin2022E1">Example&nbsp;<span>2.5</span></a>. The difference in average response index is 0.371, indicating that the responder have a higher score. The <span class="math inline">\(p\)</span>-value is 0.041, showing a small effect.</p>
 <p>If we consider the standardized difference <span class="math inline">\(d\)</span>, the group means are -0.289 standard deviations apart based on Hedge’s <span class="math inline">\(g\)</span>, with an associated 95% confidence interval of [-0.567, -0.011]: thus, the difference found is small (using <span class="citation" data-cites="Cohen:1988">Cohen (<a href="references.html#ref-Cohen:1988" role="doc-biblioref">1988</a>)</span>’s convention) and there is a large uncertainty surrounding it.</p>
 <p>There is a <span class="math inline">\(42\)</span>% probability that an observation drawn at random from the responder condition will exceed an observation drawn at random of the initiator group (probability of superiority) and <span class="math inline">\(38.6\)</span>% of the responder observations will exceed the median of the initiator (Cohen’s <span class="math inline">\(U_3\)</span>).</p>
@@ -368,7 +355,7 @@ f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigm
 <div id="fig-power1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-power1-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.2: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;7.2: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).</figcaption>
 </figure>
 </div>
 </div>
@@ -378,7 +365,7 @@ f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigm
 <div id="fig-power2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-power2-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.3: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;7.3: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).</figcaption>
 </figure>
 </div>
 </div>
@@ -388,7 +375,7 @@ f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigm
 <div id="fig-power3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-power3-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.4: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;7.4: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.</figcaption>
 </figure>
 </div>
 </div>
@@ -402,9 +389,6 @@ f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigm
 <li>the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. Choosing and designing statistics is usually best left out to statisticians, as there may be tradeoffs. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are also less sensible to model assumptions, model misspecification and outliers.</li>
 </ul>
 <p>Changing the value of <span class="math inline">\(\alpha\)</span> also has an impact on the power, since larger values of <span class="math inline">\(\alpha\)</span> move the cutoff towards the bulk of the distribution. However, it entails a higher percentage of rejection also when the alternative is false. Since the value of <span class="math inline">\(\alpha\)</span> is fixed beforehand to control the type I error (avoid judicial mistakes), it’s not a parameter we consider.</p>
-<div class="cell" data-layout-align="center" data-hash="07-power_effect_cache/html/fig-compareFnullalternative_77f24c1ad00f46bfd5bc41347ac84670">
-
-</div>
 <p>There is an intricate relation between effect size, power and sample size. Journals and grant agencies oftentimes require an estimate of the latter before funding a study, so one needs to ensure that the sample size is large enough to pick-up effects of scientific interest (good signal-to-noise), but also not overly large as to minimize time and money and make an efficient allocation of resources. This is Goldilock’s principle, but having more never hurts.</p>
 <p>If we run a pilot study to estimate the background level of noise and the estimated effect, or if we wish to perform a replication study, we will come up with a similar question in both cases: how many participants are needed to reliably detect such a difference? Setting a minimum value for the power (at least 80%, but typically 90% or 95% when feasible) ensures that the study is more reliable and ensures a high chance of success of finding an effect of at least the size specified. A power of 80% ensures that, on average, 4 in 5 experiments in which we study a phenomenon with the specified non-null effect size should lead to rejecting the null hypothesis.</p>
 <p>In order to better understand the interplay between power, effect size and sample size, we consider a theoretical example. The purpose of displaying the formula is to (hopefully) more transparently confirm some of our intuitions about what leads to higher power. There are many things that can influence the power:</p>
@@ -434,7 +418,7 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 <div id="fig-powercurve" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-powercurve-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.5: Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter <span class="math inline">\(\Delta=3\)</span>. The area in white under the curve denotes the power under this alternative.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;7.5: Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter <span class="math inline">\(\Delta=3\)</span>. The area in white under the curve denotes the power under this alternative.</figcaption>
 </figure>
 </div>
 </div>
@@ -476,26 +460,26 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Cohen:1988" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Cohen:1988" class="csl-entry" role="listitem">
 Cohen, J. 1988. <em>Statistical Power Analysis for the Behavioral Sciences</em>. 2nd ed. New York: Routledge. <a href="https://doi.org/10.4324/9780203771587">https://doi.org/10.4324/9780203771587</a>.
 </div>
-<div id="ref-Hedges:1981" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hedges:1981" class="csl-entry" role="listitem">
 Hedges, Larry V. 1981. <span>“Distribution Theory for <span>G</span>lass’s Estimator of Effect Size and Related Estimators.”</span> <em>Journal of Educational Statistics</em> 6 (2): 107–28. <a href="https://doi.org/10.3102/10769986006002107">https://doi.org/10.3102/10769986006002107</a>.
 </div>
-<div id="ref-Keppel/Wickens:2004" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Keppel/Wickens:2004" class="csl-entry" role="listitem">
 Keppel, G., and T. D. Wickens. 2004. <em>Design and Analysis: A Researcher’s Handbook</em>. Pearson Prentice Hall.
 </div>
-<div id="ref-Lakens:2013" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Lakens:2013" class="csl-entry" role="listitem">
 Lakens, Daniel. 2013. <span>“Calculating and Reporting Effect Sizes to Facilitate Cumulative Science: A Practical Primer for <span class="math inline">\(t\)</span>-Tests and ANOVAs.”</span> <em>Frontiers in Psychology</em> 4: 863. <a href="https://doi.org/10.3389/fpsyg.2013.00863">https://doi.org/10.3389/fpsyg.2013.00863</a>.
 </div>
-<div id="ref-Liu.Rim.Min.Min:2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Liu.Rim.Min.Min:2022" class="csl-entry" role="listitem">
 Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2022+. <span>“The Surprise of Reaching Out: Appreciated More Than We Think.”</span> <em>Journal of Personality and Social Psychology</em>, 2022+. <a href="https://doi.org/10.1037/pspi0000402">https://doi.org/10.1037/pspi0000402</a>.
 </div>
-<div id="ref-magnussonCohend" class="csl-entry" role="doc-biblioentry">
-Magnusson, Kristoffer. 2021. <em>Interpreting <span>C</span>ohen’s <span class="math inline">\(d\)</span> Effect Size: An Interactive Visualization</em> (version 2.5.1). <a href="https://rpsychologist.com/cohend/">https://rpsychologist.com/cohend/</a>.
+<div id="ref-magnussonCohend" class="csl-entry" role="listitem">
+Magnusson, Kristoffer. 2021. <span>“Interpreting <span>C</span>ohen’s <span class="math inline">\(d\)</span> Effect Size: An Interactive Visualization.”</span> <a href="https://rpsychologist.com/cohend/">https://rpsychologist.com/cohend/</a>.
 </div>
-<div id="ref-Steiger:2004" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Steiger:2004" class="csl-entry" role="listitem">
 Steiger, James H. 2004. <span>“Beyond the <span class="math inline">\(F\)</span> Test: Effect Size Confidence Intervals and Tests of Close Fit in the Analysis of Variance and Contrast Analysis.”</span> <em>Psychological Methods</em> 9: 164–82. <a href="https://doi.org/10.1037/1082-989X.9.2.164">https://doi.org/10.1037/1082-989X.9.2.164</a>.
 </div>
 </div>
@@ -542,9 +526,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -609,6 +607,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

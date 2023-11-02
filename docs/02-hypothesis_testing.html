@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,13 +76,15 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="style.css">
@@ -92,11 +94,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-hypothesis_testing.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -104,113 +111,128 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></a>
+  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></a>
+  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a>
+  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></a>
+  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a>
+  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></a>
+  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></a>
+  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></a>
+  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></a>
+  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></a>
+  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link active" data-scroll-target="#hypothesis"><span class="toc-section-number">2.1</span>  Hypothesis</a></li>
-  <li><a href="#sampling-variability" id="toc-sampling-variability" class="nav-link" data-scroll-target="#sampling-variability"><span class="toc-section-number">2.2</span>  Sampling variability</a></li>
-  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests"><span class="toc-section-number">2.3</span>  Hypothesis testing</a>
+  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link active" data-scroll-target="#hypothesis"><span class="header-section-number">2.1</span> Hypothesis</a></li>
+  <li><a href="#sampling-variability" id="toc-sampling-variability" class="nav-link" data-scroll-target="#sampling-variability"><span class="header-section-number">2.2</span> Sampling variability</a></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests"><span class="header-section-number">2.3</span> Hypothesis testing</a>
   <ul class="collapse">
-  <li><a href="#hypothesis-1" id="toc-hypothesis-1" class="nav-link" data-scroll-target="#hypothesis-1"><span class="toc-section-number">2.3.1</span>  Hypothesis</a></li>
-  <li><a href="#test-statistic" id="toc-test-statistic" class="nav-link" data-scroll-target="#test-statistic"><span class="toc-section-number">2.3.2</span>  Test statistic</a></li>
-  <li><a href="#null-distribution-and-p-value" id="toc-null-distribution-and-p-value" class="nav-link" data-scroll-target="#null-distribution-and-p-value"><span class="toc-section-number">2.3.3</span>  Null distribution and <em>p</em>-value</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">2.3.4</span>  Conclusion</a></li>
+  <li><a href="#hypothesis-1" id="toc-hypothesis-1" class="nav-link" data-scroll-target="#hypothesis-1"><span class="header-section-number">2.3.1</span> Hypothesis</a></li>
+  <li><a href="#test-statistic" id="toc-test-statistic" class="nav-link" data-scroll-target="#test-statistic"><span class="header-section-number">2.3.2</span> Test statistic</a></li>
+  <li><a href="#null-distribution-and-p-value" id="toc-null-distribution-and-p-value" class="nav-link" data-scroll-target="#null-distribution-and-p-value"><span class="header-section-number">2.3.3</span> Null distribution and <em>p</em>-value</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.3.4</span> Conclusion</a></li>
   </ul></li>
-  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="toc-section-number">2.4</span>  Confidence intervals</a></li>
-  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="toc-section-number">2.5</span>  Conclusion</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">2.4</span> Confidence intervals</a></li>
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">2.5</span> Conclusion</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/02-hypothesis_testing.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -218,13 +240,10 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header">
-<h1 class="title display-7"><span id="hypothesis-testing" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></h1>
+<h1 class="title display-7"><span id="hypothesis-testing" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></h1>
 
 </header>
 
-<div class="cell" data-file="_common.R" data-hash="02-hypothesis_testing_cache/html/setup_f2e6f0bc74dd3b9be9370e9c93ff022d">
-
-</div>
 <p>In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework. One important aspect of the reproducibility crisis is the misuse of <span class="math inline">\(p\)</span>-values in journal articles: falsification of a null hypothesis is not enough to provide substantive findings for a theory.</p>
 <p>Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.</p>
 <div class="keyidea">
@@ -245,7 +264,7 @@ div.csl-indent {
 <div id="fig-xkcd2569" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/xkcd2569_hypothesis_generation.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.1: xkcd comic <a href="https://xkcd.com/2569/">2569 (Hypothesis generation) by Randall Munroe</a>. Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.1: xkcd comic <a href="https://xkcd.com/2569/">2569 (Hypothesis generation) by Randall Munroe</a>. Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
 </figure>
 </div>
 </div>
@@ -273,7 +292,7 @@ div.csl-indent {
 <div id="fig-cake-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/estimand.jpg" class="img-fluid figure-img" data-ref-parent="fig-cake"></p>
-<p></p><figcaption class="figure-caption">(a) Estimand</figcaption><p></p>
+<figcaption class="figure-caption">(a) Estimand</figcaption>
 </figure>
 </div>
 </div>
@@ -281,7 +300,7 @@ div.csl-indent {
 <div id="fig-cake-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/estimator.jpg" class="img-fluid figure-img" data-ref-parent="fig-cake"></p>
-<p></p><figcaption class="figure-caption">(b) Estimator</figcaption><p></p>
+<figcaption class="figure-caption">(b) Estimator</figcaption>
 </figure>
 </div>
 </div>
@@ -289,7 +308,7 @@ div.csl-indent {
 <div id="fig-cake-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/estimate.jpg" class="img-fluid figure-img" data-ref-parent="fig-cake"></p>
-<p></p><figcaption class="figure-caption">(c) Estimate</figcaption><p></p>
+<figcaption class="figure-caption">(c) Estimate</figcaption>
 </figure>
 </div>
 </div>
@@ -304,7 +323,7 @@ div.csl-indent {
 <div id="fig-xkcd605" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="figures/xkcd2581_health_stats.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.3: xkcd comic <a href="https://xkcd.com/2581/">2581 (Health Stats) by Randall Munroe</a>. Alt text: You will live on forever in our hearts, pushing a little extra blood toward our left hands now and then to give them a squeeze. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.3: xkcd comic <a href="https://xkcd.com/2581/">2581 (Health Stats) by Randall Munroe</a>. Alt text: You will live on forever in our hearts, pushing a little extra blood toward our left hands now and then to give them a squeeze. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
 </figure>
 </div>
 </div>
@@ -315,7 +334,7 @@ div.csl-indent {
 <div id="fig-samplevar" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/fig-samplevar-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.4: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.4: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.</figcaption>
 </figure>
 </div>
 </div>
@@ -334,7 +353,7 @@ S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (Y_i-\overline{Y})^2
 <div id="fig-unifsamp1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/fig-unifsamp1-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.5: Histograms for 10 random samples of size <span class="math inline">\(n=20\)</span> from a discrete uniform distribution.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.5: Histograms for 10 random samples of size <span class="math inline">\(n=20\)</span> from a discrete uniform distribution.</figcaption>
 </figure>
 </div>
 </div>
@@ -347,7 +366,7 @@ S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (Y_i-\overline{Y})^2
 <div id="fig-uniformsamp2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/fig-uniformsamp2-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.6: Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.6: Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).</figcaption>
 </figure>
 </div>
 </div>
@@ -406,7 +425,7 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 <div id="fig-power-plots" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/fig-power-plots-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.7: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.7: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right).</figcaption>
 </figure>
 </div>
 </div>
@@ -488,38 +507,36 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 <div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-rosen-table1_a46ce85c4dd4b722505a627897a9a88f">
 <div class="cell-output-display">
 <div id="tbl-rosen-table1" class="anchored">
-
-<table class="table" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;2.1:  Promotion recommandation to branch manager based on sex of the applicant. </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> male </th>
-   <th style="text-align:right;"> female </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;2.1: Promotion recommandation to branch manager based on sex of the applicant.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">male</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">female</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> promote </td>
-   <td style="text-align:right;"> 32 </td>
-   <td style="text-align:right;"> 19 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> hold file </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 30 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">promote</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hold file</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">30</td>
+</tr>
 </tbody>
 </table>
-
 </div>
+
+
 </div>
 </div>
 <p>The null hypothesis of interest here that sex has no impact, so the probability of promotion is the same for men and women. Let <span class="math inline">\(p_{\text{m}}\)</span> and <span class="math inline">\(p_{\text{w}}\)</span> denote these respective probabilities; we can thus write mathematically the null hypothesis as <span class="math inline">\(\mathscr{H}_0: p_{\text{m}} = p_{\text{w}}\)</span> against the alternative <span class="math inline">\(\mathscr{H}_a: p_{\text{m}} \neq p_{\text{w}}\)</span>.</p>
 <p>The test statistic typically employed for contingency tables is a chi-square test<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76%, compared to 19/49 or ~49% for female. While it seems that this difference of 16% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2% for male and 3.4% for female.</p>
 <p>If there was no discrimination based on sex, we would expect the proportion of people promoted to be the same overall; this is 51/93 =0.55 for the pooled sample. We could simply do a test for the mean difference, but rely instead on the Pearson contingency <span class="math inline">\(X^2_p\)</span> (aka chi-square) test, which compares the expected counts (based on equal promotion rates) to the observed counts, suitably standardized. If the discrepancy is large between expected and observed, than this casts doubt on the validity of the null hypothesis.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/example-chisq-test-rosen_c3271989fa6bf9379774b336f97884e1">
-
-</div>
 <p>If the counts of each cell are large, the null distribution of the chi-square test is well approximated by a <span class="math inline">\(\chi^2\)</span> distribution. The output of the test includes the value of the statistic, <span class="math inline">\(10.79\)</span>, the degrees of freedom of the <span class="math inline">\(\chi^2\)</span> approximation and the <em>p</em>-value, which gives the probability that a random draw from a <span class="math inline">\(\chi^2_1\)</span> distribution is larger than the observed test statistic <strong>assuming the null hypothesis is true</strong>. The <em>p</em>-value is very small, <span class="math inline">\(0.001\)</span>, which means such a result is quite unlikely to happen by chance if there was no sex-discrimination.</p>
 
 <!--
@@ -531,22 +548,24 @@ There are alternative test statistics that could be used, among which Fisher's t
 ::: {.cell-output-display}
 
 `````{=html}
-<table>
- <thead>
-  <tr>
-   <th style="text-align:right;"> estimate </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:left;"> method </th>
-  </tr>
- </thead>
+
+<table data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">method</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:right;"> 4.1 </td>
-   <td style="text-align:right;"> 0.0016 </td>
-   <td style="text-align:left;"> Fisher's Exact Test for Count Data </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">0.0016</td>
+<td style="text-align: left;">Fisher's Exact Test for Count Data</td>
+</tr>
 </tbody>
 </table>
+
 
 `````
 
@@ -556,45 +575,43 @@ There are alternative test statistics that could be used, among which Fisher's t
 
 -->
 <p>Another alternative to obtain a benchmark to assess the outlyingness of the observed odds ratio is to use simulations. Consider a database containing the raw data with 93 rows, one for each manager, with for each an indicator of <code>action</code> and the <code>sex</code> of the hypothetical employee presented in the task.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/dat-long-test-rosen_519bffb6abab31789c73320bd45ed96c">
-
-</div>
 <div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-dat-long-test-rosen-print_6ef0b43762ca4b2a255ec45d177f2a03">
 <div class="cell-output-display">
 <div id="tbl-dat-long-test-rosen-print" class="anchored">
-
-<table class="table" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;2.2:  First five rows of the database in long format for experiment 1 of Rosen and Jerdee. </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> action </th>
-   <th style="text-align:left;"> sex </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;2.2: First five rows of the database in long format for experiment 1 of Rosen and Jerdee.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">action</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">sex</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> promote </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> promote </td>
-   <td style="text-align:left;"> male </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> hold file </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">hold file</td>
+<td style="text-align: left;">female</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">promote</td>
+<td style="text-align: left;">female</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">promote</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hold file</td>
+<td style="text-align: left;">female</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hold file</td>
+<td style="text-align: left;">female</td>
+</tr>
 </tbody>
 </table>
-
 </div>
+
+
 </div>
 </div>
 <p>Under the null hypothesis, sex has no incidence on the action of the manager. This means we could get an idea of the “what-if” world by shuffling the sex labels repeatedly. Thus, we could obtain a benchmark by repeating the following steps multiple times:</p>
@@ -609,7 +626,7 @@ There are alternative test statistics that could be used, among which Fisher's t
 <div id="fig-infer-odds-ratio-permutation" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/fig-infer-odds-ratio-permutation-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.8: Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;2.8: Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.</figcaption>
 </figure>
 </div>
 </div>
@@ -655,7 +672,7 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/intconf-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<p></p><figcaption class="figure-caption">95% confidence intervals for the mean of a standard normal population for 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).</figcaption><p></p>
+<figcaption class="figure-caption">95% confidence intervals for the mean of a standard normal population for 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).</figcaption>
 </figure>
 </div>
 </div>
@@ -665,88 +682,84 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <p><span class="theorem-title"><strong>Example 2.5 (“The Surprise of Reaching Out”) </strong></span><span class="citation" data-cites="Liu.Rim.Min.Min:2022">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2022" role="doc-biblioref">2022+</a>)</span> studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.</p>
 </div>
 <p>We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of <code>other</code> (including non-binary people) is much higher than that of the general census, and the population skews quite young according to <a href="#tbl-LRMMS1-summarystat-a">Table&nbsp;<span>2.3</span></a>.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/LRMM22S1-prepare_86308eb3981354024aeed1af1159e091">
-
-</div>
 <div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-a_44ef874d2a89406100c57edda35f81d7">
 <div class="cell-output-display">
 <div id="tbl-LRMMS1-summarystat-a" class="anchored">
-
-<table class="table" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;2.3:  Summary statistics of the age of participants, and counts per gender </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> gender </th>
-   <th style="text-align:right;"> min </th>
-   <th style="text-align:right;"> max </th>
-   <th style="text-align:right;"> mean </th>
-   <th style="text-align:right;"> n </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;2.3: Summary statistics of the age of participants, and counts per gender</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">gender</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 78 </td>
-   <td style="text-align:right;"> 32.0 </td>
-   <td style="text-align:right;"> 105 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 68 </td>
-   <td style="text-align:right;"> 36.5 </td>
-   <td style="text-align:right;"> 92 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> other </td>
-   <td style="text-align:right;"> 24 </td>
-   <td style="text-align:right;"> 30 </td>
-   <td style="text-align:right;"> 27.7 </td>
-   <td style="text-align:right;"> 3 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">32.0</td>
+<td style="text-align: right;">105</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">36.5</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">other</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">27.7</td>
+<td style="text-align: right;">3</td>
+</tr>
 </tbody>
 </table>
-
 </div>
+
+
 </div>
 </div>
 <div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-b_79872cc86129df60148335ae1d4de7ce">
 <div class="cell-output-display">
 <div id="tbl-LRMMS1-summarystat-b" class="anchored">
-
-<table class="table" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;2.4:  Mean ratings, standard deviation and number of participants per experimental condition. </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> role </th>
-   <th style="text-align:right;"> mean </th>
-   <th style="text-align:right;"> sd </th>
-   <th style="text-align:right;"> n </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;2.4: Mean ratings, standard deviation and number of participants per experimental condition.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">role</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> initiator </td>
-   <td style="text-align:right;"> 5.50 </td>
-   <td style="text-align:right;"> 1.28 </td>
-   <td style="text-align:right;"> 103 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> responder </td>
-   <td style="text-align:right;"> 5.87 </td>
-   <td style="text-align:right;"> 1.27 </td>
-   <td style="text-align:right;"> 97 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">initiator</td>
+<td style="text-align: right;">5.50</td>
+<td style="text-align: right;">1.28</td>
+<td style="text-align: right;">103</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">responder</td>
+<td style="text-align: right;">5.87</td>
+<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">97</td>
+</tr>
 </tbody>
 </table>
-
 </div>
+
+
 </div>
 </div>
 <p>Since there are only two groups, initiator and responder, we are dealing with a pairwise comparison. The logical test one could use is a two sample <em>t</em>-test, or a variant thereof. Using Welch two sample <span class="math inline">\(t\)</span>-test statistic, both group average and standard deviation are estimated using the data provided and the latter are used to build a statistic. This explains the non-integer degrees of freedom.</p>
 <p>The software returns <span class="math inline">\(t(197.52) = -2.05\)</span>, <span class="math inline">\(p = .041\)</span>, which leads to the rejection of the null hypothesis of no difference in appreciation depending on the role of the individual (initiator or responder). The estimated mean difference is <span class="math inline">\(\Delta M = -0.37\)</span>, 95% CI <span class="math inline">\([-0.73, -0.01]\)</span>; since <span class="math inline">\(0\)</span> is not included in the confidence interval, we also reject the null hypothesis at level 5%. The estimate suggests that initiators underestimate the appreciation of reaching out.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/unnamed-chunk-19_20a9c07a5f80fe7b08b1f94e56047d14">
-
-</div>
 <p><strong>Recap</strong></p>
 <ul>
 <li>Model parameters: average expected appreciation score <span class="math inline">\(\mu_{\mathrm{i}}\)</span> and <span class="math inline">\(\mu_{\mathrm{r}}\)</span> of initiators and responder, respectively</li>
@@ -757,9 +770,6 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 </ul>
 <div id="exm-BrucksLevav22" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.6 (Virtual communication curbs creative idea generation) </strong></span>A Nature study performed an experiment to see how virtual communications teamwork by comparing the output both in terms of ideas generated during a brainstorming session by pairs and of the quality of ideas, as measured by external referees. The sample consisted of 301 pairs of participants who interacted via either videoconference or face-to-face.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/nbtests-BL22_d9506ef453379abaab608f8da37a0c13">
-
-</div>
 <p>The authors compared the number of creative ideas, a subset of the ideas generated with creativity score above average. The mean number of the number of creative ideas for face-to-face <span class="math inline">\(7.92\)</span> ideas (sd <span class="math inline">\(3.40\)</span>) relative to videoconferencing <span class="math inline">\(6.73\)</span> ideas (sd <span class="math inline">\(3.27\)</span>).</p>
 <p><span class="citation" data-cites="Brucks.Levav:2022">Brucks and Levav (<a href="references.html#ref-Brucks.Levav:2022" role="doc-biblioref">2022</a>)</span> used a negative binomial regression model: in their model, the expected number creative ideas generated is <span class="math display">\[\begin{align*}
 \mathsf{E}(\texttt{ncreative}) = \exp(\beta_0 + \beta_1 \texttt{video})
@@ -785,17 +795,17 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Brucks.Levav:2022" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Brucks.Levav:2022" class="csl-entry" role="listitem">
 Brucks, Melanie S., and Jonathan Levav. 2022. <span>“Virtual Communication Curbs Creative Idea Generation.”</span> <em>Nature</em> 605 (7908): 108–12. <a href="https://doi.org/10.1038/s41586-022-04643-y">https://doi.org/10.1038/s41586-022-04643-y</a>.
 </div>
-<div id="ref-Liu.Rim.Min.Min:2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Liu.Rim.Min.Min:2022" class="csl-entry" role="listitem">
 Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2022+. <span>“The Surprise of Reaching Out: Appreciated More Than We Think.”</span> <em>Journal of Personality and Social Psychology</em>, 2022+. <a href="https://doi.org/10.1037/pspi0000402">https://doi.org/10.1037/pspi0000402</a>.
 </div>
-<div id="ref-McElreath:2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-McElreath:2020" class="csl-entry" role="listitem">
 McElreath, R. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. 2nd ed. CRC Press. <a href="https://www.routledge.com/Statistical-Rethinking-A-Bayesian-Course-with-Examples-in-R-and-STAN/McElreath/p/book/9780367139919">https://www.routledge.com/Statistical-Rethinking-A-Bayesian-Course-with-Examples-in-R-and-STAN/McElreath/p/book/9780367139919</a>.
 </div>
-<div id="ref-Rosen:1974" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Rosen:1974" class="csl-entry" role="listitem">
 Rosen, B., and T. H. Jerdee. 1974. <span>“Influence of Sex Role Stereotypes on Personnel Decisions.”</span> <em>Journal of Applied Psychology</em> 59: 9–14.
 </div>
 </div>
@@ -843,9 +853,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -910,6 +934,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

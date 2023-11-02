@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -75,7 +75,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -87,11 +88,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -99,96 +105,111 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  <a href="./02-hypothesis_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></a>
+  <a href="./03-completely_randomized_trials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></a>
+  <a href="./04-contrasts_multipletesting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a>
+  <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></a>
+  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a>
+  <a href="./07-power_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></a>
+  <a href="./08-reproducibility_crisis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Replication crisis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></a>
+  <a href="./09-repeated.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></a>
+  <a href="./10-mixed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></a>
+  <a href="./11-causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></a>
+  <a href="./12-nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
@@ -197,60 +218,60 @@ div.csl-indent {
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header">
-<h1 class="title d-none d-lg-block display-7"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></h1>
+<h1 class="title display-7"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></h1>
 
 </header>
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-STAR2008" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-STAR2008" class="csl-entry" role="listitem">
 Achilles, C. M., Helen Pate Bain, Fred Bellott, Jayne Boyd-Zaharias,
 Jeremy Finn, John Folger, John Johnston, and Elizabeth Word. 2008.
 <span>“<span class="nocase">Tennessee’s Student Teacher Achievement
 Ratio (STAR) project</span>.”</span> Harvard Dataverse. <a href="https://doi.org/10.7910/DVN/SIWH9F">https://doi.org/10.7910/DVN/SIWH9F</a>.
 </div>
-<div id="ref-Aguinis:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Aguinis:2021" class="csl-entry" role="listitem">
 Aguinis, Herman, Isabel Villamor, and Ravi S. Ramani. 2021.
 <span>“<span>MT</span>urk Research: Review and Recommendations.”</span>
 <em>Journal of Management</em> 47 (4): 823–37. <a href="https://doi.org/10.1177/0149206320969787">https://doi.org/10.1177/0149206320969787</a>.
 </div>
-<div id="ref-Alexander2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Alexander2021" class="csl-entry" role="listitem">
 Alexander, Rohan. 2022. <em>Telling Stories with Data</em>. CRC Press.
 <a href="https://www.tellingstorieswithdata.com/">https://www.tellingstorieswithdata.com/</a>.
 </div>
-<div id="ref-Barnett:2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Barnett:2019" class="csl-entry" role="listitem">
 Barnett, Adrian Gerard, and Jonathan D Wren. 2019. <span>“Examination of
 <span>CI</span>s in Health and Medical Journals from 1976 to 2019: An
 Observational Study.”</span> <em>BMJ Open</em> 9 (11). <a href="https://doi.org/10.1136/bmjopen-2019-032506">https://doi.org/10.1136/bmjopen-2019-032506</a>.
 </div>
-<div id="ref-Baron.Kenny:1986" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Baron.Kenny:1986" class="csl-entry" role="listitem">
 Baron, R. M., and D. A. Kenny. 1986. <span>“The Moderator-Mediator
 Variable Distinction in Social Psychological Research: Conceptual,
 Strategic, and Statistical Considerations.”</span> <em>Journal of
 Personality and Social Psychology</em> 51 (6): 1173–82. <a href="https://doi.org/10.1037/0022-3514.51.6.1173">https://doi.org/10.1037/0022-3514.51.6.1173</a>.
 </div>
-<div id="ref-Baumann:1992" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Baumann:1992" class="csl-entry" role="listitem">
 Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992.
 <span>“Effect of Think-Aloud Instruction on Elementary Students’
 Comprehension Monitoring Abilities.”</span> <em>Journal of Reading
 Behavior</em> 24 (2): 143–72. <a href="https://doi.org/10.1080/10862969209547770">https://doi.org/10.1080/10862969209547770</a>.
 </div>
-<div id="ref-Berger:2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Berger:2018" class="csl-entry" role="listitem">
 Berger, Paul, Robert Maurer, and Giovana B Celli. 2018. <em>Experimental
 Design with Application in Management, Engineering, and the
 Sciences</em>. 2nd ed. Springer. <a href="https://doi.org/10.1007/978-3-319-64583-4">https://doi.org/10.1007/978-3-319-64583-4</a>.
 </div>
-<div id="ref-Box:1978" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Box:1978" class="csl-entry" role="listitem">
 Box, G. E. P., W. G. A. Hunter, and J. S. Hunter. 1978. <em>Statistics
 for Experimenters: An Introduction to Design, Data Analysis, and Model
 Building</em>. Wiley.
 </div>
-<div id="ref-Brodeur:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Brodeur:2021" class="csl-entry" role="listitem">
 Brodeur, Mathieu, Perrine Ruer, Pierre-Majorique Léger, and Sylvain
 Sénécal. 2021. <span>“Smartwatches Are More Distracting Than Mobile
 Phones While Driving: Results from an Experimental Study.”</span>
 <em>Accident Analysis &amp; Prevention</em> 149: 105846. <a href="https://doi.org/10.1016/j.aap.2020.105846">https://doi.org/10.1016/j.aap.2020.105846</a>.
 </div>
-<div id="ref-RANDHIE" class="csl-entry" role="doc-biblioentry">
+<div id="ref-RANDHIE" class="csl-entry" role="listitem">
 Brook, Robert H., Emmett B. Keeler, Kathleen N. Lohr, Joseph P.
 Newhouse, John E. Ware, William H. Rogers, Allyson Ross Davies, et al.
 2006. <em><a href="">The <span>H</span>ealth <span>I</span>nsurance
@@ -258,48 +279,48 @@ Newhouse, John E. Ware, William H. Rogers, Allyson Ross Davies, et al.
 Current Health Care Reform Debate</a></em>. Santa Monica, CA: RAND
 Corporation.
 </div>
-<div id="ref-Brucks.Levav:2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Brucks.Levav:2022" class="csl-entry" role="listitem">
 Brucks, Melanie S., and Jonathan Levav. 2022. <span>“Virtual
 Communication Curbs Creative Idea Generation.”</span> <em>Nature</em>
 605 (7908): 108–12. <a href="https://doi.org/10.1038/s41586-022-04643-y">https://doi.org/10.1038/s41586-022-04643-y</a>.
 </div>
-<div id="ref-Bullock.Green.Ha:2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Bullock.Green.Ha:2010" class="csl-entry" role="listitem">
 Bullock, J. G., Green D. P., and S. E. Ha. 2010. <span>“Journal of
 Personality and Social Psychology”</span> 98 (4): 550–58. <a href="https://doi.org/10.1037/a0018933">https://doi.org/10.1037/a0018933</a>.
 </div>
-<div id="ref-Card.Krueger:1994" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Card.Krueger:1994" class="csl-entry" role="listitem">
 Card, David, and Alan B. Krueger. 1994. <span>“Minimum Wages and
 Employment: A Case Study of the Fast-Food Industry in <span>N</span>ew
 <span>J</span>ersey and <span>P</span>ennsylvania.”</span> <em>The
 American Economic Review</em> 84 (4): 772–93. <a href="http://www.jstor.org/stable/2118030">http://www.jstor.org/stable/2118030</a>.
 </div>
-<div id="ref-Claerbout/Karrenbach:1992" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Claerbout/Karrenbach:1992" class="csl-entry" role="listitem">
 Claerbout, Jon F., and Martin Karrenbach. 1992. <span>“<span class="nocase">Electronic documents give reproducible research a new
 meaning</span>.”</span> <em>SEG Technical Program Expanded
 Abstracts</em>. https://doi.org/<a href="https://doi.org/10.1190/1.1822162">https://doi.org/10.1190/1.1822162</a>.
 </div>
-<div id="ref-Cohen:1988" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Cohen:1988" class="csl-entry" role="listitem">
 Cohen, J. 1988. <em>Statistical Power Analysis for the Behavioral
 Sciences</em>. 2nd ed. New York: Routledge. <a href="https://doi.org/10.4324/9780203771587">https://doi.org/10.4324/9780203771587</a>.
 </div>
-<div id="ref-Cox:1958" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Cox:1958" class="csl-entry" role="listitem">
 Cox, David R. 1958. <em>Planning of Experiments</em>. New York, NY:
 Wiley.
 </div>
-<div id="ref-Crump.Navarro.Suzuki:2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Crump.Navarro.Suzuki:2019" class="csl-entry" role="listitem">
 Crump, M. J. C., D. J. Navarro, and J. Suzuki. 2019. <em>Answering
 Questions with Data: Introductory Statistics for Psychology
 Students</em>. <a href="https://doi.org/10.17605/OSF.IO/JZE52">https://doi.org/10.17605/OSF.IO/JZE52</a>.
 </div>
-<div id="ref-Davison.Hinkley:1997" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Davison.Hinkley:1997" class="csl-entry" role="listitem">
 Davison, A. C., and D. V. Hinkley. 1997. <em>Bootstrap Methods and Their
 Application</em>. New York, NY: Cambridge University Press.
 </div>
-<div id="ref-Efron.Tibshirani:1993" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Efron.Tibshirani:1993" class="csl-entry" role="listitem">
 Efron, B., and R. J. Tibshirani. 1993. <em><span class="nocase">An
 Introduction to the Bootstrap</span></em>. Boca Raton, FL: CRC Press.
 </div>
-<div id="ref-Elliot:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Elliot:2021" class="csl-entry" role="listitem">
 Elliott, Emily M., Candice C. Morey, Angela M. AuBuchon, Nelson Cowan,
 Chris Jarrold, Eryn J. Adams, Meg Attwood, et al. 2021. <span>“Multilab
 Direct Replication of <span>F</span>lavell, <span>B</span>each, and
@@ -307,218 +328,219 @@ Direct Replication of <span>F</span>lavell, <span>B</span>each, and
 Task as a Function of Age.”</span> <em>Advances in Methods and Practices
 in Psychological Science</em> 4 (2): 1–20. <a href="https://doi.org/10.1177/25152459211018187">https://doi.org/10.1177/25152459211018187</a>.
 </div>
-<div id="ref-Esarey.Sumner:2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Esarey.Sumner:2018" class="csl-entry" role="listitem">
 Esarey, Justin, and Jane Lawrence Sumner. 2018. <span>“Marginal Effects
 in Interaction Models: Determining and Controlling the False Positive
 Rate.”</span> <em>Comparative Political Studies</em> 51 (9): 1144–76. <a href="https://doi.org/10.1177/0010414017730080">https://doi.org/10.1177/0010414017730080</a>.
 </div>
-<div id="ref-GPower3" class="csl-entry" role="doc-biblioentry">
+<div id="ref-GPower3" class="csl-entry" role="listitem">
 Faul, Franz, Edgar Erdfelder, Albert-Georg Lang, and Axel Buchner. 2007.
 <span>“<span>G*Power 3</span>: A Flexible Statistical Power Analysis
 Program for the Social, Behavioral, and Biomedical Sciences.”</span>
 <em>Behavior Research Methods</em> 39 (2): 175–91. <a href="https://doi.org/10.3758/BF03193146">https://doi.org/10.3758/BF03193146</a>.
 </div>
-<div id="ref-Fisher:1926" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Fisher:1926" class="csl-entry" role="listitem">
 Fisher, Ronald A. 1926. <span>“The Arrangement of Field
 Experiments.”</span> <em>Journal of the Ministry of Agriculture</em> 33:
 503–15. <a href="https://doi.org/10.23637/rothamsted.8v61q">https://doi.org/10.23637/rothamsted.8v61q</a>.
 </div>
-<div id="ref-Flavell:1966" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Flavell:1966" class="csl-entry" role="listitem">
 Flavell, John H., David R. Beach, and Jack M. Chinsky. 1966.
 <span>“Spontaneous Verbal Rehearsal in a Memory Task as a Function of
 Age.”</span> <em>Child Development</em> 37 (2): 283–99.
 </div>
-<div id="ref-Garcia:2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Garcia:2010" class="csl-entry" role="listitem">
 Garcia, Donna M., Michael T. Schmitt, Nyla R. Branscombe, and Naomi
 Ellemers. 2010. <span>“Women’s Reactions to Ingroup Members Who Protest
 Discriminatory Treatment: The Importance of Beliefs about Inequality and
 Response Appropriateness.”</span> <em>European Journal of Social
 Psychology</em> 40 (5): 733–45. <a href="https://doi.org/10.1002/ejsp.644">https://doi.org/10.1002/ejsp.644</a>.
 </div>
-<div id="ref-Gelman:2005" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gelman:2005" class="csl-entry" role="listitem">
 Gelman, Andrew. 2005. <span>“Analysis of Variance — Why It Is More
 Important Than Ever.”</span> <em>The Annals of Statistics</em> 33 (1):
 1–53. <a href="https://doi.org/10.1214/009053604000001048">https://doi.org/10.1214/009053604000001048</a>.
 </div>
-<div id="ref-Gelman.Loken:2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gelman.Loken:2014" class="csl-entry" role="listitem">
 Gelman, Andrew, and Eric Loken. 2014. <span>“The Statistical Crisis in
 Science.”</span> <em>American Scientist</em> 102: 460–65.
 </div>
-<div id="ref-Hariton.Locascio:2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hariton.Locascio:2018" class="csl-entry" role="listitem">
 Hariton, Eduardo, and Joseph J Locascio. 2018. <span>“Randomised
 Controlled Trials – the Gold Standard for Effectiveness
 Research.”</span> <em>BJOG: An International Journal of Obstetrics &amp;
 Gynaecology</em> 125 (13): 1716–16. https://doi.org/<a href="https://doi.org/10.1111/1471-0528.15199">https://doi.org/10.1111/1471-0528.15199</a>.
 </div>
-<div id="ref-Hedges:1981" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hedges:1981" class="csl-entry" role="listitem">
 Hedges, Larry V. 1981. <span>“Distribution Theory for
 <span>G</span>lass’s Estimator of Effect Size and Related
 Estimators.”</span> <em>Journal of Educational Statistics</em> 6 (2):
 107–28. <a href="https://doi.org/10.3102/10769986006002107">https://doi.org/10.3102/10769986006002107</a>.
 </div>
-<div id="ref-Imai:2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Imai:2010" class="csl-entry" role="listitem">
 Imai, Kosuke, Luke Keele, and Dustin Tingley. 2010. <span>“A General
 Approach to Causal Mediation Analysis.”</span> <em>Psychological
 Methods</em> 15 (4): 309–34. <a href="https://doi.org/10.1037/a0020761">https://doi.org/10.1037/a0020761</a>.
 </div>
-<div id="ref-Ioannidis:2005" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Ioannidis:2005" class="csl-entry" role="listitem">
 Ioannidis, John P. A. 2005. <span>“Why Most Published Research Findings
 Are False.”</span> <em>PLOS Medicine</em> 2 (8). <a href="https://doi.org/10.1371/journal.pmed.0020124">https://doi.org/10.1371/journal.pmed.0020124</a>.
 </div>
-<div id="ref-Johnson.Neyman:1936" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Johnson.Neyman:1936" class="csl-entry" role="listitem">
 Johnson, P. O., and J. Neyman. 1936. <span>“Tests of Certain Linear
 Hypotheses and Their Application to Some Educational Problems.”</span>
 <em>Statistical Research Memoirs</em> 1: 57–93.
 </div>
-<div id="ref-Damon.Molitor.Reif:2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Damon.Molitor.Reif:2019" class="csl-entry" role="listitem">
 Jones, Damon, David Molitor, and Julian Reif. 2019. <span>“What Do
 Workplace Wellness Programs Do? Evidence from the <span>I</span>llinois
 Workplace Wellness Study.”</span> <em>The Quarterly Journal of
 Economics</em> 134 (4): 1747–91. <a href="https://doi.org/10.1093/qje/qjz023">https://doi.org/10.1093/qje/qjz023</a>.
 </div>
-<div id="ref-Keppel/Wickens:2004" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Keppel/Wickens:2004" class="csl-entry" role="listitem">
 Keppel, G., and T. D. Wickens. 2004. <em>Design and Analysis: A
 Researcher’s Handbook</em>. Pearson Prentice Hall.
 </div>
-<div id="ref-HBR2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-HBR2017" class="csl-entry" role="listitem">
 Kohavi, Ron, and Stefan Thomke. 2017. <span>“The Surprising Power of
 Online Experiments.”</span> <em>Harvard Business Review</em>
 September–October: 74–82. <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">https://hbr.org/2017/09/the-surprising-power-of-online-experiments</a>.
 </div>
-<div id="ref-Kowal:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Kowal:2021" class="csl-entry" role="listitem">
 Kowal, Agata AND Kochan-Wójcik, Marta AND Groyecka-Bernard. 2021.
 <span>“When and How Does the Number of Children Affect Marital
 Satisfaction? An International Survey.”</span> <em>PLOS ONE</em> 16 (4):
 1–14. <a href="https://doi.org/10.1371/journal.pone.0249516">https://doi.org/10.1371/journal.pone.0249516</a>.
 </div>
-<div id="ref-Lakens:2013" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Lakens:2013" class="csl-entry" role="listitem">
 Lakens, Daniel. 2013. <span>“Calculating and Reporting Effect Sizes to
 Facilitate Cumulative Science: A Practical Primer for <span class="math inline"><em>t</em></span>-Tests and ANOVAs.”</span>
 <em>Frontiers in Psychology</em> 4: 863. <a href="https://doi.org/10.3389/fpsyg.2013.00863">https://doi.org/10.3389/fpsyg.2013.00863</a>.
 </div>
-<div id="ref-Lauter:1978" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Lauter:1978" class="csl-entry" role="listitem">
 Läuter, J. 1978. <span>“Sample Size Requirements for the <span class="math inline"><em>T</em><sup>2</sup></span> Test of
 <span>MANOVA</span> (Tables for One-Way Classification).”</span>
 <em>Biometrical Journal</em> 20 (4): 389–406. <a href="https://doi.org/10.1002/bimj.4710200410">https://doi.org/10.1002/bimj.4710200410</a>.
 </div>
-<div id="ref-Lee.Choi:2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Lee.Choi:2019" class="csl-entry" role="listitem">
 Lee, Kiljae, and Jungsil Choi. 2019. <span>“Image-Text Inconsistency
 Effect on Product Evaluation in Online Retailing.”</span> <em>Journal of
 Retailing and Consumer Services</em> 49: 279–88. <a href="https://doi.org/10.1016/j.jretconser.2019.03.015">https://doi.org/10.1016/j.jretconser.2019.03.015</a>.
 </div>
-<div id="ref-Liu.Rim.Min.Min:2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Liu.Rim.Min.Min:2022" class="csl-entry" role="listitem">
 Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2022+. <span>“The
 Surprise of Reaching Out: Appreciated More Than We Think.”</span>
 <em>Journal of Personality and Social Psychology</em>, 2022+. <a href="https://doi.org/10.1037/pspi0000402">https://doi.org/10.1037/pspi0000402</a>.
 </div>
-<div id="ref-Maglio.Polman:2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Maglio.Polman:2014" class="csl-entry" role="listitem">
 Maglio, Sam J., and Evan Polman. 2014. <span>“Spatial Orientation
 Shrinks and Expands Psychological Distance.”</span> <em>Psychological
 Science</em> 25 (7): 1345–52. <a href="https://doi.org/10.1177/0956797614530571">https://doi.org/10.1177/0956797614530571</a>.
 </div>
-<div id="ref-magnussonCohend" class="csl-entry" role="doc-biblioentry">
-Magnusson, Kristoffer. 2021. <em>Interpreting <span>C</span>ohen’s <span class="math inline"><em>d</em></span> Effect Size: An Interactive
-Visualization</em> (version 2.5.1). <a href="https://rpsychologist.com/cohend/">https://rpsychologist.com/cohend/</a>.
+<div id="ref-magnussonCohend" class="csl-entry" role="listitem">
+Magnusson, Kristoffer. 2021. <span>“Interpreting <span>C</span>ohen’s
+<span class="math inline"><em>d</em></span> Effect Size: An Interactive
+Visualization.”</span> <a href="https://rpsychologist.com/cohend/">https://rpsychologist.com/cohend/</a>.
 </div>
-<div id="ref-McElreath:2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-McElreath:2020" class="csl-entry" role="listitem">
 McElreath, R. 2020. <em>Statistical Rethinking: A Bayesian Course with
 Examples in r and Stan</em>. 2nd ed. CRC Press. <a href="https://www.routledge.com/Statistical-Rethinking-A-Bayesian-Course-with-Examples-in-R-and-STAN/McElreath/p/book/9780367139919">https://www.routledge.com/Statistical-Rethinking-A-Bayesian-Course-with-Examples-in-R-and-STAN/McElreath/p/book/9780367139919</a>.
 </div>
-<div id="ref-McQuire:2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-McQuire:2020" class="csl-entry" role="listitem">
 McQuire, Cheryl, R. Daniel, L. Hurt, A. Kemp, and S. Paranjothy. 2020.
 <span>“The Causal Web of Foetal Alcohol Spectrum Disorders: A Review and
 Causal Diagram.”</span> <em>European Child <span>&amp;</span> Adolescent
 Psychiatry</em> 29 (5): 575–94. <a href="https://doi.org/10.1007/s00787-018-1264-3">https://doi.org/10.1007/s00787-018-1264-3</a>.
 </div>
-<div id="ref-Nosek:2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Nosek:2015" class="csl-entry" role="listitem">
 Nosek, Brian, Johanna Cohoon, Mallory Kidwell, and Jeffrey Spies. 2015.
 <span>“Estimating the Reproducibility of Psychological Science.”</span>
 <em>Science</em> 349 (6251). <a href="https://doi.org/10.1126/science.aac4716">https://doi.org/10.1126/science.aac4716</a>.
 </div>
-<div id="ref-Oehlert:2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Oehlert:2010" class="csl-entry" role="listitem">
 Oehlert, Gary. 2000. <em>A First Course in Design and Analysis of
 Experiments</em>. W. H. Freeman. <a href="http://users.stat.umn.edu/~gary/Book.html">http://users.stat.umn.edu/~gary/Book.html</a>.
 </div>
-<div id="ref-Pearl:2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Pearl:2014" class="csl-entry" role="listitem">
 Pearl, Judea. 2014. <span>“Interpretation and Identification of Causal
 Mediation.”</span> <em>Psychological Methods</em> 19 (4): 459–81. <a href="https://doi.org/10.1037/a0036434">https://doi.org/10.1037/a0036434</a>.
 </div>
-<div id="ref-Pearl:2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Pearl:2016" class="csl-entry" role="listitem">
 Pearl, Judea, Maria Glymour, and Nicholas Jewell. 2016. <em>Causal
 Inference in Statistics: A Primer</em>. Chichester, UK: Wiley.
 </div>
-<div id="ref-Pratt:1959" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Pratt:1959" class="csl-entry" role="listitem">
 Pratt, John W. 1959. <span>“Remarks on Zeros and Ties in the
 <span>W</span>ilcoxon Signed Rank Procedures.”</span> <em>Journal of the
 American Statistical Association</em> 54 (287): 655–67. <a href="https://doi.org/10.1080/01621459.1959.10501526">https://doi.org/10.1080/01621459.1959.10501526</a>.
 </div>
-<div id="ref-Preacher.Hayes:2004" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Preacher.Hayes:2004" class="csl-entry" role="listitem">
 Preacher, Kristopher J., and Andrew F. Hayes. 2004.
 <span>“<span>SPSS</span> and <span>SAS</span> Procedures for Estimating
 Indirect Effects in Simple Mediation Models.”</span> <em>Behavior
 Research Methods, Instruments <span>&amp;</span> Computers</em> 36:
 717–31. <a href="https://doi.org/10.3758/BF03206553">https://doi.org/10.3758/BF03206553</a>.
 </div>
-<div id="ref-Rosen:1974" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Rosen:1974" class="csl-entry" role="listitem">
 Rosen, B., and T. H. Jerdee. 1974. <span>“Influence of Sex Role
 Stereotypes on Personnel Decisions.”</span> <em>Journal of Applied
 Psychology</em> 59: 9–14.
 </div>
-<div id="ref-Sharma.Tully.Cryder:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Sharma.Tully.Cryder:2021" class="csl-entry" role="listitem">
 Sharma, Eesha, Stephanie Tully, and Cynthia Cryder. 2021.
 <span>“Psychological Ownership of (Borrowed) Money.”</span> <em>Journal
 of Marketing Research</em> 58 (3): 497–514. <a href="https://doi.org/10.1177/0022243721993816">https://doi.org/10.1177/0022243721993816</a>.
 </div>
-<div id="ref-Song.Baicker:2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Song.Baicker:2019" class="csl-entry" role="listitem">
 Song, Zirui, and Katherine Baicker. 2019. <span>“<span class="nocase">Effect of a Workplace Wellness Program on Employee Health
 and Economic Outcomes: A Randomized Clinical Trial</span>.”</span>
 <em>JAMA</em> 321 (15): 1491–501. <a href="https://doi.org/10.1001/jama.2019.3307">https://doi.org/10.1001/jama.2019.3307</a>.
 </div>
-<div id="ref-Steiger:2004" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Steiger:2004" class="csl-entry" role="listitem">
 Steiger, James H. 2004. <span>“Beyond the <span class="math inline"><em>F</em></span> Test: Effect Size Confidence
 Intervals and Tests of Close Fit in the Analysis of Variance and
 Contrast Analysis.”</span> <em>Psychological Methods</em> 9: 164–82. <a href="https://doi.org/10.1037/1082-989X.9.2.164">https://doi.org/10.1037/1082-989X.9.2.164</a>.
 </div>
-<div id="ref-vanStekelenburg:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-vanStekelenburg:2021" class="csl-entry" role="listitem">
 Stekelenburg, Aart van, Gabi Schaap, Harm Veling, and Moniek Buijzen.
 2021. <span>“Boosting Understanding and Identification of Scientific
 Consensus Can Help to Correct False Beliefs.”</span> <em>Psychological
 Science</em> 32 (10): 1549–65. <a href="https://doi.org/10.1177/09567976211007788">https://doi.org/10.1177/09567976211007788</a>.
 </div>
-<div id="ref-mediationR" class="csl-entry" role="doc-biblioentry">
+<div id="ref-mediationR" class="csl-entry" role="listitem">
 Tingley, Dustin, Teppei Yamamoto, Kentaro Hirose, Luke Keele, and Kosuke
 Imai. 2014. <span>“<code>mediation</code>: <span>R</span> Package for
 Causal Mediation Analysis.”</span> <em>Journal of Statistical
 Software</em> 59 (5): 1–38. <a href="https://doi.org/10.18637/jss.v059.i05">https://doi.org/10.18637/jss.v059.i05</a>.
 </div>
-<div id="ref-Vanderweele:2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Vanderweele:2015" class="csl-entry" role="listitem">
 VanderWeele, Tyler. 2015. <em>Explanation in Causal Inference: Methods
 for Mediation and Interaction</em>. New York, NY: Oxford University
 Press.
 </div>
-<div id="ref-Weissgerber:2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Weissgerber:2015" class="csl-entry" role="listitem">
 Weissgerber, Tracey L., Natasa M. Milic, Stacey J. Winham, and Vesna D.
 Garovic. 2015. <span>“Beyond Bar and Line Graphs: Time for a New Data
 Presentation Paradigm.”</span> <em>PLOS Biology</em> 13 (4): 1–10. <a href="https://doi.org/10.1371/journal.pbio.1002128">https://doi.org/10.1371/journal.pbio.1002128</a>.
 </div>
-<div id="ref-Weissgerber:2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Weissgerber:2019" class="csl-entry" role="listitem">
 Weissgerber, Tracey L., Stacey J. Winham, Ethan P. Heinzen, Jelena S.
 Milin-Lazovic, Oscar Garcia-Valencia, Zoran Bukumiric, Marko D. Savic,
 Vesna D. Garovic, and Natasa M. Milic. 2019. <span>“Reveal, Don’t
 Conceal.”</span> <em>Circulation</em> 140 (18): 1506–18. <a href="https://doi.org/10.1161/CIRCULATIONAHA.118.037777">https://doi.org/10.1161/CIRCULATIONAHA.118.037777</a>.
 </div>
-<div id="ref-Yates:1964" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Yates:1964" class="csl-entry" role="listitem">
 Yates, F. 1964. <span>“Sir <span>R</span>onald <span>F</span>isher and
 the Design of Experiments.”</span> <em>Biometrics</em> 20 (2): 307–21.
 <a href="http://www.jstor.org/stable/2528399">http://www.jstor.org/stable/2528399</a>.
 </div>
-<div id="ref-Zhao.Lynch.Chen:2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Zhao.Lynch.Chen:2010" class="csl-entry" role="listitem">
 Zhao, Xinshu, Jr. Lynch John G., and Qimei Chen. 2010.
 <span>“Reconsidering <span>B</span>aron and <span>K</span>enny: Myths
 and Truths about Mediation Analysis.”</span> <em>Journal of Consumer
 Research</em> 37 (2): 197–206. <a href="https://doi.org/10.1086/651257">https://doi.org/10.1086/651257</a>.
 </div>
-<div id="ref-vanZwet:2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-vanZwet:2021" class="csl-entry" role="listitem">
 Zwet, Erik W. van, and Eric A. Cator. 2021. <span>“The Significance
 Filter, the Winner’s Curse and the Need to Shrink.”</span>
 <em>Statistica Neerlandica</em>. https://doi.org/<a href="https://doi.org/10.1111/stan.12241">https://doi.org/10.1111/stan.12241</a>.
@@ -555,9 +577,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -622,6 +658,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -674,4 +796,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/references.qmd" class="toc-action">Edit this page</a></p></div></div></div></div></footer></body></html>
