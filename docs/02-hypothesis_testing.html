@@ -83,6 +83,8 @@ div.csl-indent {
 
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="site_libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="site_libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -246,7 +248,16 @@ div.csl-indent {
 
 <p>In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework. One important aspect of the reproducibility crisis is the misuse of <span class="math inline">\(p\)</span>-values in journal articles: falsification of a null hypothesis is not enough to provide substantive findings for a theory.</p>
 <p>Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.</p>
-<div class="keyidea">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key concept
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>Learning objectives</strong>:</p>
 <ul>
 <li>Understanding the role of uncertainty in decision making.</li>
@@ -255,11 +266,12 @@ div.csl-indent {
 <li>Correctly interpreting <span class="math inline">\(p\)</span>-values and confidence intervals for a parameter.</li>
 </ul>
 </div>
+</div>
 <section id="hypothesis" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="hypothesis"><span class="header-section-number">2.1</span> Hypothesis</h2>
 <p>The first step of a design is formulating a research question. Generally, this hypothesis will specify potential differences between population characteristics due to some intervention (a treatment) that the researcher wants to quantify. This is the step during which researchers decide on sample size, choice of response variable and metric for the measurement, write down the study plan, etc.</p>
 <p>It is important to note that most research questions cannot be answered by simple tools. Researchers wishing to perform innovative methodological research should contact experts and consult with statisticians <strong>before</strong> they collect their data to get information on how best to proceed for what they have in mind so as to avoid the risk of making misleading and false claims based on incorrect analysis or data collection.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-xkcd2569_6fc3408d60f6e3fcfdd41f6cbc7e1733">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-xkcd2569_f431825893e6a8f4110a2dfe5f46fa60">
 <div class="cell-output-display">
 <div id="fig-xkcd2569" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -285,7 +297,7 @@ div.csl-indent {
 <li>an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary that is a proxy of our target.</li>
 <li>an estimate is a number, the numerical value obtained once we apply the formula to observed data.</li>
 </ul>
-<div id="fig-cake" class="cell quarto-layout-panel" data-hash="02-hypothesis_testing_cache/html/fig-cake_4e39be3b002e14923899805df9b209bf">
+<div id="fig-cake" class="cell quarto-layout-panel" data-hash="02-hypothesis_testing_cache/html/fig-cake_db0212831e18ae925bd0a4c918709b43">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
@@ -318,7 +330,7 @@ div.csl-indent {
 </div>
 <p>For example, we may use as estimand the population average of <span class="math inline">\(Y_1, \ldots\)</span>, say <span class="math inline">\(\mu\)</span>. The estimator will be sample mean, i.e., the sum of the elements in the sample divided by the sample size, <span class="math inline">\(\overline{Y}=(Y_1 + \cdots + Y_n)/n\)</span>. The estimate will be a numerical value, say 4.3.</p>
 <p>Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won’t get the exact same result every time, as in <a href="#fig-xkcd605">Figure&nbsp;<span>2.3</span></a>.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-xkcd605_9431b70ab2eebff62362d5a556a8d89b">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-xkcd605_b3f01654b74623065e39e1b3383410fd">
 <div class="cell-output-display">
 <div id="fig-xkcd605" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -329,11 +341,11 @@ div.csl-indent {
 </div>
 </div>
 <p>To illustrate this point, <a href="#fig-samplevar">Figure&nbsp;<span>2.4</span></a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, along with their sample mean <span class="math inline">\(\overline{y}\)</span>. Thus, sampling variability implies that the sample means of the subgroups will always differ even if they share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-samplevar_6568dcfab139e4234f3a6556292b7b7e">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-samplevar_ee3900adf02657b96faa22a186b9784b">
 <div class="cell-output-display">
 <div id="fig-samplevar" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-samplevar-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="02-hypothesis_testing_files/figure-html/fig-samplevar-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;2.4: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.</figcaption>
 </figure>
 </div>
@@ -348,11 +360,11 @@ S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (Y_i-\overline{Y})^2
 <p>The standard deviation <em>of a statistic</em> is termed <strong>standard error</strong>; it should not be confused with the standard deviation <span class="math inline">\(\sigma\)</span> of the population from which the sample observations <span class="math inline">\(Y_1, \ldots, Y_n\)</span> are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.</p>
 <div id="exm-samppropunif" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.2 (Sample proportion and uniform draws) </strong></span>To illustrate the concept of sampling variability, we follow the lead of <a href="https://www.crumplab.com/statistics/foundations-for-inference.html">Matthew Crump</a> and consider samples from a uniform distribution on <span class="math inline">\(\{1, 2, \ldots, 10\}\)</span> each number in this interval is equally likely to be sampled.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-unifsamp1_2d8a7de58526dd0e13d153f62bc76a1e">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-unifsamp1_e50b97f45320763cda4d005b31dd3172">
 <div class="cell-output-display">
 <div id="fig-unifsamp1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-unifsamp1-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="02-hypothesis_testing_files/figure-html/fig-unifsamp1-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;2.5: Histograms for 10 random samples of size <span class="math inline">\(n=20\)</span> from a discrete uniform distribution.</figcaption>
 </figure>
 </div>
@@ -361,11 +373,11 @@ S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (Y_i-\overline{Y})^2
 <p>Even if they are drawn from the same population, the 10 samples in <a href="#fig-unifsamp1">Figure&nbsp;<span>2.5</span></a> look quite different. The only thing at play here is the sample variability: since there are <span class="math inline">\(n=20\)</span> observations in total, there should be on average 10% of the observations in each of the 10 bins, but some bins are empty and others have more counts than expected. This fluctuation is due to randomness, or chance.</p>
 <p>How can we thus detect whether what we see is compatible with the model we think generated the data? The key is to collect more observations: the bar height is the sample proportion, an average of 0/1 values with ones indicating that the observation is in the bin and zero otherwise.</p>
 <p>Consider now what happens as we increase the sample size: the top panel of <a href="#fig-uniformsamp2">Figure&nbsp;<span>2.6</span></a> shows uniform samples for increasing samples size. The histogram looks more and more like the true underlying distribution (flat, each bin with equal frequency) as the sample size increases. The sample distribution of points is nearly indistinguishable from the theoretical one (straight line) when <span class="math inline">\(n=10 000\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The bottom panel, on the other hand, isn’t from a uniform distribution and larger samples come closer to the population distribution. We couldn’t have spotted this difference in the first two plots, since the sampling variability is too important; there, the lack of data in some bins could have been attributed to chance, as they are comparable with the graph for data that are truly uniform. This is in line with most practical applications, in which the limited sample size restricts our capacity to disentangle real differences from sampling variability. We must embrace this uncertainty: in the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-uniformsamp2_ddbd216e2e60cc9cfd5cfc2af2a36f06">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-uniformsamp2_21065b15c41bb8fe094a1cbeb304e221">
 <div class="cell-output-display">
 <div id="fig-uniformsamp2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-uniformsamp2-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="02-hypothesis_testing_files/figure-html/fig-uniformsamp2-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;2.6: Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).</figcaption>
 </figure>
 </div>
@@ -420,11 +432,11 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 <p>The <em>p</em>-value allows us to decide whether the observed value of the test statistic <span class="math inline">\(T\)</span> is plausible under <span class="math inline">\(\mathscr{H}_0\)</span>. Specifically, the <em>p</em>-value is the probability that the test statistic is equal or more extreme to the estimate computed from the data, assuming <span class="math inline">\(\mathscr{H}_0\)</span> is true. Suppose that based on a random sample <span class="math inline">\(Y_1, \ldots, Y_n\)</span> we obtain a statistic whose value <span class="math inline">\(T=t\)</span>. For a two-sided test <span class="math inline">\(\mathscr{H}_0:\theta=\theta_0\)</span> vs.&nbsp;<span class="math inline">\(\mathscr{H}_a:\theta \neq \theta_0\)</span>, the <em>p</em>-value is <span class="math inline">\(\mathsf{Pr}_0(|T| \geq |t|)\)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>How do we determine the null distribution given that the true data generating mechanism is unknown to us? We ask a statistician! In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the sample mean behaves like a normal random variable with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma/\sqrt{n}\)</span> for <span class="math inline">\(n\)</span> large enough. The central limit theorem has broader applications since most statistics can be viewed as some form of average or transformation thereof, a fact used to derive benchmarks for most commonly used tests. Most software use these approximations as proxy by default: the normal, Student’s <span class="math inline">\(t\)</span>, <span class="math inline">\(\chi^2\)</span> and <span class="math inline">\(F\)</span> distributions are the reference distributions that arise the most often.</p>
 <p><a href="#fig-power-plots">Figure&nbsp;<span>2.7</span></a> shows the distribution of <span class="math inline">\(p\)</span>-values for two scenarios: one in which there are no differences and the null is true, the other under an alternative. The probability of rejection is obtained by calculating the area under the density curve between zero and <span class="math inline">\(\alpha=0.1\)</span>, here 0.1 on the left. Under the null, the model is calibrated and the distribution of <em>p</em>-values is uniform (i.e., a flat rectangle of height 1), meaning all values in the unit interval are equally likely. Under the alternative (right), small <em>p</em>-values are more likely to be observed.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-power-plots_83a13a84b8829bc0d3404d6240425198">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-power-plots_17ec92bfe24bf2a0982623471887c022">
 <div class="cell-output-display">
 <div id="fig-power-plots" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-power-plots-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="02-hypothesis_testing_files/figure-html/fig-power-plots-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;2.7: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right).</figcaption>
 </figure>
 </div>
@@ -476,7 +488,16 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 <li>if <span class="math inline">\(P \geq \alpha\)</span>, we fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>.</li>
 </ul>
 <p>Do not mix up level of the test (a probability fixed beforehand by the researcher) and the <em>p</em>-value. If you do a test at level 5%, the probability of type I error (condemning an innocent by mistake) is by definition <span class="math inline">\(\alpha\)</span> and does not depend on the <em>p</em>-value. The latter is a conditional probability of observing a more extreme statistic given the null distribution <span class="math inline">\(\mathscr{H}_0\)</span> is true.</p>
-<div class="pitfall">
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pitfall
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The <a href="https://doi.org/10.1080/00031305.2016.1154108">American Statistical Association (ASA) published a list of principles</a> guiding (mis)interpretation of <em>p</em>-values, some of which are reproduced below:</p>
 <blockquote class="blockquote">
 <ol start="2" type="1">
@@ -499,12 +520,13 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 </ol>
 </blockquote>
 </div>
+</div>
 <div id="exm-rosenjerdee74" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.4 (Gender inequality and permutation tests) </strong></span>We consider data from <span class="citation" data-cites="Rosen:1974">Rosen and Jerdee (<a href="references.html#ref-Rosen:1974" role="doc-biblioref">1974</a>)</span>, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided.</p>
 <p>We are interested in Experiment 1 related to promotion of employees: managers were requested to decide on whether or not to promote an employee to become branch manager based on recommendations and ratings on potential for customer and employee relations.</p>
 <p>The authors intervention focused on the description of the nature (complexity) of the manager’s job (either simple or complex) and the sex of the candidate (male or female): all files were otherwise similar.</p>
 <p>We consider for simplicity only sex as a factor and aggregate over job for the <span class="math inline">\(n=93\)</span> replies. <a href="#tbl-rosen-table1">Table&nbsp;<span>2.1</span></a> shows the counts for each possibility.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-rosen-table1_a46ce85c4dd4b722505a627897a9a88f">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-rosen-table1_b8d9dcba8701a63a2b9b895eced67991">
 <div class="cell-output-display">
 <div id="tbl-rosen-table1" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -544,7 +566,7 @@ There are alternative test statistics that could be used, among which Fisher's t
 
 
 
-::: {#tbl-example-fisher-test-rosen .cell layout-align="center" tbl-cap='Fisher\'s exact test for experiment 1 of Rosen and Jerdee (1974)' hash='02-hypothesis_testing_cache/html/tbl-example-fisher-test-rosen_95df2a106a1f3a499f0062d63e4b1612'}
+::: {#tbl-example-fisher-test-rosen .cell tbl-cap='Fisher\'s exact test for experiment 1 of Rosen and Jerdee (1974)' hash='02-hypothesis_testing_cache/html/tbl-example-fisher-test-rosen_03708e5d1d5eb6865beb139c32f0132d'}
 ::: {.cell-output-display}
 
 `````{=html}
@@ -575,7 +597,7 @@ There are alternative test statistics that could be used, among which Fisher's t
 
 -->
 <p>Another alternative to obtain a benchmark to assess the outlyingness of the observed odds ratio is to use simulations. Consider a database containing the raw data with 93 rows, one for each manager, with for each an indicator of <code>action</code> and the <code>sex</code> of the hypothetical employee presented in the task.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-dat-long-test-rosen-print_6ef0b43762ca4b2a255ec45d177f2a03">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-dat-long-test-rosen-print_4cdfa8481d431287213f17f5aa42387f">
 <div class="cell-output-display">
 <div id="tbl-dat-long-test-rosen-print" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -621,11 +643,11 @@ There are alternative test statistics that could be used, among which Fisher's t
 <li>calculate a test statistic for the simulated table.</li>
 </ol>
 <p>As test statistic, we use odds ratio: the odds of an event is the ratio of the number of success over failure: in our example, this would be the number of promoted over held files. The odds of promotion for male is <span class="math inline">\(32/12\)</span>, whereas that of female is <span class="math inline">\(19/30\)</span>. The odds ratio for male versus female is thus <span class="math inline">\(\mathsf{OR}=(32/12) / (19/30)= 4.21\)</span>. Under the null hypothesis, <span class="math inline">\(\mathscr{H}_0: \mathsf{OR}= 1\)</span> (same probability of being promoted) (why?)</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/fig-infer-odds-ratio-permutation_d9de9b6e88c18f007d1f18e009603ff0">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-infer-odds-ratio-permutation_c8d40a78fff9b6c2a67f27db4c0005d6">
 <div class="cell-output-display">
 <div id="fig-infer-odds-ratio-permutation" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-infer-odds-ratio-permutation-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="02-hypothesis_testing_files/figure-html/fig-infer-odds-ratio-permutation-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;2.8: Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.</figcaption>
 </figure>
 </div>
@@ -648,13 +670,23 @@ There are alternative test statistics that could be used, among which Fisher's t
 </ul>
 <p>Following the APA guidelines, the <span class="math inline">\(\chi^2\)</span> statistic would be reported as <span class="math inline">\(\chi^2(1, n = 93) = 10.79\)</span>, <span class="math inline">\(p = .001\)</span> along with counts and sample proportions.</p>
 </div>
-<div class="pitfall">
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pitfall
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In the first experiment, managers were also asked to rank applications on their potential for both employee and customer relations using a Likert scale of six items ranging from (1) extremely unfavorable to (6) extremely favorable. However, only the averages are reported in Table 1 along with <span class="citation" data-cites="Rosen:1974">(<a href="references.html#ref-Rosen:1974" role="doc-biblioref">Rosen and Jerdee 1974</a>)</span></p>
 <blockquote class="blockquote">
 <p>Mean rating for the male candidate was 4.73 compared to a mean rating of 4.25 for the female candidate (<span class="math inline">\(F=4.76\)</span>, <span class="math inline">\(\text{df} = 1/80\)</span>, <span class="math inline">\(p &lt; .05\)</span>)</p>
 </blockquote>
 <p>The degrees of freedom (80) are much too few compared to the number of observations, implying non-response that isn’t discussed.</p>
 <p>Partial or selective reporting of statistical procedures hinders reproducibility. In general, the presentation should explicitly state the name of the test statistic employed, the sample size, mean and variance estimates, the null distribution used to assess significance and its parameters, if any. Without these, we are left to speculate.</p>
+</div>
 </div>
 </section>
 </section>
@@ -667,11 +699,11 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 \end{align*}\]</span> and where <span class="math inline">\(\theta\)</span> represents the postulated value for the fixed, but unknown value of the parameter. The critical values are quantile of the null distribution and are chosen so that the probability of being more extreme is <span class="math inline">\(\alpha\)</span>.</p>
 <p>The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, <span class="math inline">\(\widehat{\theta}\)</span> and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span>, are random: their values will vary from one sample to the next.</p>
 <p>For generic random samples, there is a <span class="math inline">\(1-\alpha\)</span> probability that <span class="math inline">\(\theta\)</span> is contained in the <strong>random</strong> confidence interval computed. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter <span class="math inline">\(\theta\)</span> is either inside the confidence interval or not. We can interpret confidence interval’s as follows: if we were to repeat the experiment multiple times, and calculate a <span class="math inline">\(1-\alpha\)</span> confidence interval each time, then roughly <span class="math inline">\(1-\alpha\)</span> of the calculated confidence intervals would contain the true value of <span class="math inline">\(\theta\)</span> in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the <em>procedure</em> we use to calculate confidence intervals and not in the actual values we obtain from a sample.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/intconf_1e8cb7b0f8489ec1bb09bc59d16cc9a4">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/intconf_2e0b39973ff7b67750ff7366c8c5fd9c">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/intconf-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="02-hypothesis_testing_files/figure-html/intconf-1.png" class="img-fluid figure-img" width="768"></p>
 <figcaption class="figure-caption">95% confidence intervals for the mean of a standard normal population for 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).</figcaption>
 </figure>
 </div>
@@ -682,7 +714,7 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <p><span class="theorem-title"><strong>Example 2.5 (“The Surprise of Reaching Out”) </strong></span><span class="citation" data-cites="Liu.Rim.Min.Min:2022">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2022" role="doc-biblioref">2022+</a>)</span> studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.</p>
 </div>
 <p>We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of <code>other</code> (including non-binary people) is much higher than that of the general census, and the population skews quite young according to <a href="#tbl-LRMMS1-summarystat-a">Table&nbsp;<span>2.3</span></a>.</p>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-a_44ef874d2a89406100c57edda35f81d7">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-a_b66ec9d926cc095b0667d86c75ab42b0">
 <div class="cell-output-display">
 <div id="tbl-LRMMS1-summarystat-a" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -701,21 +733,21 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <td style="text-align: left;">male</td>
 <td style="text-align: right;">18</td>
 <td style="text-align: right;">78</td>
-<td style="text-align: right;">32.0</td>
+<td style="text-align: right;">32.03</td>
 <td style="text-align: right;">105</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">female</td>
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">68</td>
-<td style="text-align: right;">36.5</td>
+<td style="text-align: right;">36.50</td>
 <td style="text-align: right;">92</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">other</td>
 <td style="text-align: right;">24</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">27.7</td>
+<td style="text-align: right;">27.67</td>
 <td style="text-align: right;">3</td>
 </tr>
 </tbody>
@@ -725,7 +757,7 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-b_79872cc86129df60148335ae1d4de7ce">
+<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-b_e949e1eb0fa80161fbbad1755f95fbd3">
 <div class="cell-output-display">
 <div id="tbl-LRMMS1-summarystat-b" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -788,10 +820,20 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <p>discern when the context is inapropriate for its answers. It just knows its own procedure […] It just does as it’s told.</p>
 </blockquote>
 <p>The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations. A <em>p</em>-value does not indicate whether the hypothesis is reasonable, whether the design is proper, whether the choice of measurement is adequate, etc.</p>
-<div class="yourturn">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Pick a journal paper (e.g., one of the dataset documented in the course webpage) and a particular study.</p>
 <p>Look up for the ingredients of the testing procedure (parameters, hypotheses, test statistic name and value, summary statistics, <em>p</em>-value, conclusion).</p>
 <p>You may encounter other measures, such as effect size, that will be discussed later.</p>
+</div>
 </div>
 
 

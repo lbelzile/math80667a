@@ -239,20 +239,23 @@
 \DeclareMathAlphabet{\mathcrl}{U}{rsfs}{m}{n}
 \usepackage{utopia}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
+\usepackage{pdfpages}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
 \makeatletter
 \makeatother
 \makeatletter
@@ -326,14 +329,28 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
+
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2023-11-02}
+\date{2023-11-17}
 
+
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0072ce}
+\definecolor{quarto-callout-important-color}{HTML}{00aec7}
+\definecolor{quarto-callout-warning-color}{HTML}{ff585d}
+\definecolor{quarto-callout-tip-color}{HTML}{00aec7}
+\definecolor{quarto-callout-caution-color}{HTML}{f3d03e}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{92c1e9}
+\definecolor{quarto-callout-important-color-frame}{HTML}{88dbdf}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{ffb1bb}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{88dbdf}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{f2f0a1}
 \begin{document}
-\frontmatter
-\maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, breakable, interior hidden, borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
+\includepdf{figures/coverpage.pdf}
+
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, frame hidden, enhanced, sharp corners, boxrule=0pt, interior hidden, breakable]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -356,8 +373,7 @@ the joint Ph.D.~program in Management.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on
-\texttt{r\ Sys.setlocale("LC\_TIME",\ "en\_CA.UTF-8");\ format(Sys.Date(),\ format\ =\ "\%A,\ \%B\ \%d\ \%Y")}.
+and were last compiled on Friday, November 17 2023.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -397,7 +413,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\textbf{Learning objectives}:
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -412,6 +428,8 @@ be \emph{comparatively stable} relative to the measurement variation.
   Understanding the rationale behind the requirements for good
   experimental studies.
 \end{itemize}
+
+\end{tcolorbox}
 
 \hypertarget{study-type}{%
 \section{Study type}\label{study-type}}
@@ -448,7 +466,7 @@ experimental manipulation.\footnote{The preceding paragraph shouldn't be
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/random_sample_assignment.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/random_sample_assignment.png}
 
 }
 
@@ -515,6 +533,8 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
 their product relative to the cheaper generic product offered by the
@@ -536,6 +556,8 @@ product. For the latter, define
   potential blocking factors
 \end{itemize}
 
+\end{tcolorbox}
+
 The main reason experiments should be preferred to collection of
 observational data is that they allow us, if they are conducted
 properly, to draw \textbf{causal conclusions} about the phenomenon of
@@ -553,8 +575,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\leavevmode\vadjust pre{\hypertarget{quasiexperiment}{}}%
-\textbf{Quasi experiments}
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -573,8 +594,9 @@ comparisons with neighbouring Eastern Pennsylvania counties by studying
 410 fast food outlets. The authors found no evidence of a negative
 impact on employment of this hike.
 
-\leavevmode\vadjust pre{\hypertarget{internalexternalvalidity}{}}%
-\textbf{Point of terminology: internal and external validity}
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -588,9 +610,10 @@ conclusions of a study: Figure~\ref{fig-openintrograph} shows that
 external validity is directly related to random sampling from the
 population
 
-\leavevmode\vadjust pre{\hypertarget{internalexternalvalidity}{}}%
-\textbf{Point of terminology: between-subjects and within-subjects
-designs}
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -603,6 +626,8 @@ ressources (it is cheaper to have fewer participants perform multiple
 tasks), observations from within-design are correlated and more subject
 to missingness and learning effects, all of which require special
 statistical treatment.
+
+\end{tcolorbox}
 
 \hypertarget{review-of-basic-concepts}{%
 \section{Review of basic concepts}\label{review-of-basic-concepts}}
@@ -629,7 +654,7 @@ representation for data is contingent on variable type. Specifically,
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/continuous_discrete.png}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/continuous_discrete.png}
 
 }
 
@@ -674,7 +699,7 @@ rather than as text (Monday, Tuesday, \(\ldots\)).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/nominal_ordinal_binary.png}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/nominal_ordinal_binary.png}
 
 }
 
@@ -711,7 +736,7 @@ resembles the density a normal distribution, which lead
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/hallgrimskirkja_reykjavik.jpg}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/hallgrimskirkja_reykjavik.jpg}
 
 }
 
@@ -742,7 +767,7 @@ mean and sample variance as key summary statistics.\footnote{The
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{01-introduction_files/figure-pdf/fig-normaldist-1.pdf}
+{\centering \includegraphics{01-introduction_files/figure-pdf/fig-normaldist-1.pdf}
 
 }
 
@@ -755,6 +780,8 @@ curve shows the normal distribution approximation based on the central
 limit theorem.}
 
 \end{figure}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -774,6 +801,8 @@ Choosing a particular instrument or metric could be in principle done by
 studying (apriori) the distribution of the values for the chosen metric
 using a pilot study: this will give researchers some grasp of the
 variability of those measures.
+
+\end{tcolorbox}
 
 At the heart of most analysis are measurements. The data presented in
 the course have been cleaned and oftentimes the choice of explanatory
@@ -820,6 +849,8 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 The
 \href{https://www.hec.ca/etudiants/mon-programme/baa/cohorte-agir/index.html}{Parcours
 AGIR} at HEC Montréal is a pilot project for Bachelor in Administration
@@ -831,6 +862,8 @@ method by comparing the results of the students with those of the rest
 of the bachelor program? List potential issues with this approach
 addressing the internal and external validity, generalizability, effect
 of lurking variables, etc.
+
+\end{tcolorbox}
 
 Because the individuals are selected at \textbf{random} to be part of
 the sample, the measurement of the characteristic of interest will also
@@ -860,8 +893,12 @@ the full story here.}
 
 \end{example}
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 What are the considerations that could guide you in determining the
 population of interest for your study?
+
+\end{tcolorbox}
 
 \hypertarget{sampling}{%
 \subsection{Sampling}\label{sampling}}
@@ -888,9 +925,13 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
 affect non-response in a systematic way.
+
+\end{tcolorbox}
 
 Before examining problems related to sampling, we review the main random
 sampling methods. The simplest is simple random sampling, whereby \(n\)
@@ -917,7 +958,7 @@ clusters (e.g., villages or classrooms).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{01-introduction_files/figure-pdf/fig-sampling-1.pdf}
+{\centering \includegraphics{01-introduction_files/figure-pdf/fig-sampling-1.pdf}
 
 }
 
@@ -934,9 +975,13 @@ sampled is \(1/3\), with the simple random sampling having a range of
 {[}\(0.22, 0.39\){]} among the strata, compared to {[}\(0.31, 0.33\){]}
 for the stratified sample.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
 the sample and a description of the population?
+
+\end{tcolorbox}
 
 There are other instances of sampling, most of which are non-random and
 to be avoided whenever possible. These include convenience samples,
@@ -963,7 +1008,7 @@ composition obtained from the census.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/continuous_discrete.png}
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{figures/continuous_discrete.png}
 
 }
 
@@ -993,7 +1038,7 @@ recollection of his contribution to the field.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/HFL-A1958.jpg}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/HFL-A1958.jpg}
 
 }
 
@@ -1315,6 +1360,8 @@ license}.}
 
 \end{figure}
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 \begin{itemize}
 \tightlist
 \item
@@ -1324,6 +1371,8 @@ license}.}
   What is the main benefit of experimental studies over observational
   studies?
 \end{itemize}
+
+\end{tcolorbox}
 
 \bookmarksetup{startatroot}
 
@@ -1348,6 +1397,8 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 \textbf{Learning objectives}:
 
 \begin{itemize}
@@ -1364,6 +1415,8 @@ of key ideas related to testing.
   Correctly interpreting \(p\)-values and confidence intervals for a
   parameter.
 \end{itemize}
+
+\end{tcolorbox}
 
 \hypertarget{hypothesis}{%
 \section{Hypothesis}\label{hypothesis}}
@@ -1570,7 +1623,7 @@ accounting for spurious results due to the background noise.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-samplevar-1.pdf}
+{\centering \includegraphics{02-hypothesis_testing_files/figure-pdf/fig-samplevar-1.pdf}
 
 }
 
@@ -1631,7 +1684,7 @@ to be sampled.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-unifsamp1-1.pdf}
+{\centering \includegraphics{02-hypothesis_testing_files/figure-pdf/fig-unifsamp1-1.pdf}
 
 }
 
@@ -1673,7 +1726,7 @@ helps us disentangle the signal from the noise.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-uniformsamp2-1.pdf}
+{\centering \includegraphics{02-hypothesis_testing_files/figure-pdf/fig-uniformsamp2-1.pdf}
 
 }
 
@@ -1910,7 +1963,7 @@ more likely to be observed.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-power-plots-1.pdf}
+{\centering \includegraphics{02-hypothesis_testing_files/figure-pdf/fig-power-plots-1.pdf}
 
 }
 
@@ -2015,6 +2068,8 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
 (mis)interpretation of \emph{p}-values, some of which are reproduced
@@ -2063,6 +2118,8 @@ below:
   of an effect or the importance of a result.
 \end{enumerate}
 \end{quote}
+
+\end{tcolorbox}
 
 \begin{example}[Gender inequality and permutation
 tests]\protect\hypertarget{exm-rosenjerdee74}{}\label{exm-rosenjerdee74}
@@ -2193,7 +2250,7 @@ being promoted) (why?)
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/fig-infer-odds-ratio-permutation-1.pdf}
+{\centering \includegraphics{02-hypothesis_testing_files/figure-pdf/fig-infer-odds-ratio-permutation-1.pdf}
 
 }
 
@@ -2250,6 +2307,8 @@ sample proportions.
 
 \end{example}
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
 Likert scale of six items ranging from (1) extremely unfavorable to (6)
@@ -2270,6 +2329,8 @@ reproducibility. In general, the presentation should explicitly state
 the name of the test statistic employed, the sample size, mean and
 variance estimates, the null distribution used to assess significance
 and its parameters, if any. Without these, we are left to speculate.
+
+\end{tcolorbox}
 
 \hypertarget{confidence-intervals}{%
 \section{Confidence intervals}\label{confidence-intervals}}
@@ -2311,7 +2372,7 @@ sample.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{02-hypothesis_testing_files/figure-pdf/intconf-1.pdf}
+{\centering \includegraphics{02-hypothesis_testing_files/figure-pdf/intconf-1.pdf}
 
 }
 
@@ -2363,9 +2424,9 @@ Table~\ref{tbl-LRMMS1-summarystat-a}.
 \toprule
 gender & min & max & mean & n\\
 \midrule
-male & 18 & 78 & 32.0 & 105\\
-female & 19 & 68 & 36.5 & 92\\
-other & 24 & 30 & 27.7 & 3\\
+male & 18 & 78 & 32.03 & 105\\
+female & 19 & 68 & 36.50 & 92\\
+other & 24 & 30 & 27.67 & 3\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2498,6 +2559,8 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
 
@@ -2507,6 +2570,8 @@ hypotheses, test statistic name and value, summary statistics,
 
 You may encounter other measures, such as effect size, that will be
 discussed later.
+
+\end{tcolorbox}
 
 \bookmarksetup{startatroot}
 
@@ -2623,22 +2688,18 @@ category changes depending on the parametrization.
 using different parametrizations. }\tabularnewline
 
 \centering
-\begin{tabular}{l|r|r|r}
-\hline
+\begin{tabular}{lrrr}
+\toprule
 group & mean & contrasts & sum-to-zero\\
-\hline
+\midrule
 intercept &  & 19.67 & 21.00\\
-\hline
-control 1 & 19.7 &  & -1.33\\
-\hline
-control 2 & 18.3 & -1.33 & -2.67\\
-\hline
-praise & 27.4 & 7.78 & 6.44\\
-\hline
-reprove & 23.4 & 3.78 & 2.44\\
-\hline
-ignore & 16.1 & -3.56 & \\
-\hline
+control 1 & 19.67 &  & -1.33\\
+control 2 & 18.33 & -1.33 & -2.67\\
+praise & 27.44 & 7.78 & 6.44\\
+reprove & 23.44 & 3.78 & 2.44\\
+\addlinespace
+ignore & 16.11 & -3.56 & \\
+\bottomrule
 \end{tabular}
 \end{table}
 
@@ -2690,9 +2751,14 @@ between sum of square. This quantity in itself varies with the sample
 size (the more observations, the larger it is) so we must standardize as
 usual this quantity so that we have a suitable benchmark.
 
-The \(F\)-statistic is \begin{align}
-F &= \frac{\text{between-group variability}}{\text{within-group variability}} \\&= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)} \label{eq-Fstatheuristic}
-\end{align}
+The \(F\)-statistic is
+
+\begin{equation}\protect\hypertarget{eq-Fstatheuristic}{}{
+\begin{split}
+F &= \frac{\text{between-group variability}}{\text{within-group variability}} \\
+&= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)} 
+\end{split}
+}\label{eq-Fstatheuristic}\end{equation}
 
 If there is no mean difference (null hypothesis), the numerator is an
 estimator of the population variance, and so is the denominator of eq.
@@ -2701,7 +2767,7 @@ average. However, the between sum of square is more variable and this
 induces skewness: for large enough sample, the null distribution of the
 \emph{F}-statistic is approximately an \emph{F}-distribution, whose
 shape is governed by two parameters named degrees of freedom which
-appear in \textbf{?@eq-Fstatheuristic} as scaling factors to ensure
+appear in Equation~\ref{eq-Fstatheuristic} as scaling factors to ensure
 proper standardization. The first degree of freedom is the number of
 restrictions imposed by the null hypothesis (\(K-1\), the number of
 groups minus one for the one-way analysis of variance), and the second
@@ -2724,7 +2790,7 @@ the difference in length is much smaller relative to the colored arrows.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-squareddistanova-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-squareddistanova-1.pdf}
 
 }
 
@@ -2765,7 +2831,7 @@ setting.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-Fdistpermut-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-Fdistpermut-1.pdf}
 
 }
 
@@ -2793,7 +2859,7 @@ conclusions.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-distributionFanova-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-distributionFanova-1.pdf}
 
 }
 
@@ -2823,7 +2889,7 @@ distributions.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-dynamiteplot-1.pdf}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-dynamiteplot-1.pdf}
 
 }
 
@@ -2893,7 +2959,7 @@ avoid artefacts.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/01-intro-boxplot.png}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/01-intro-boxplot.png}
 
 }
 
@@ -2946,7 +3012,7 @@ falling in the red area lead to rejection at level \(5\)\%.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-tcurve-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-tcurve-1.pdf}
 
 }
 
@@ -3045,7 +3111,7 @@ for violation of the assumptions.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-assumptions-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-assumptions-1.pdf}
 
 }
 
@@ -3140,7 +3206,7 @@ difference within each level).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-omittedlinearity-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-omittedlinearity-1.pdf}
 
 }
 
@@ -3182,31 +3248,49 @@ of freedom: it is equivalent to computing the one-way ANOVA
 \begin{Highlighting}[]
 \FunctionTok{bartlett.test}\NormalTok{(score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group,}
               \AttributeTok{data =}\NormalTok{ arithmetic)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Bartlett test of homogeneity of variances}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  score by group}
-\CommentTok{\#\textgreater{} Bartlett\textquotesingle{}s K{-}squared = 2, df = 4, p{-}value = 0.7}
+\end{Highlighting}
+\end{Shaded}
 
+\begin{verbatim}
+
+    Bartlett test of homogeneity of variances
+
+data:  score by group
+Bartlett's K-squared = 2.3515, df = 4, p-value = 0.6714
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{car}\SpecialCharTok{::}\FunctionTok{leveneTest}\NormalTok{(score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group,}
                 \AttributeTok{data =}\NormalTok{ arithmetic,}
                 \AttributeTok{center =}\NormalTok{ mean)}
-\CommentTok{\#\textgreater{} Levene\textquotesingle{}s Test for Homogeneity of Variance (center = mean)}
-\CommentTok{\#\textgreater{}       Df F value Pr(\textgreater{}F)}
-\CommentTok{\#\textgreater{} group  4    1.57    0.2}
-\CommentTok{\#\textgreater{}       40}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Levene's Test for Homogeneity of Variance (center = mean)
+      Df F value Pr(>F)
+group  4   1.569 0.2013
+      40               
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# compare with one{-}way ANOVA}
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ arithmetic)}
 \NormalTok{arithmetic}\SpecialCharTok{$}\NormalTok{absresid }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{(}\FunctionTok{resid}\NormalTok{(mod)) }\CommentTok{\#|y\_\{ik\}{-}mean\_k|}
 \FunctionTok{anova}\NormalTok{(}\FunctionTok{aov}\NormalTok{(absresid }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ arithmetic))}
-\CommentTok{\#\textgreater{} Analysis of Variance Table}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Response: absresid}
-\CommentTok{\#\textgreater{}           Df Sum Sq Mean Sq F value Pr(\textgreater{}F)}
-\CommentTok{\#\textgreater{} group      4   17.4    4.34    1.57    0.2}
-\CommentTok{\#\textgreater{} Residuals 40  110.6    2.77}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: absresid
+          Df  Sum Sq Mean Sq F value Pr(>F)
+group      4  17.354  4.3385   1.569 0.2013
+Residuals 40 110.606  2.7652               
+\end{verbatim}
 
 We can see in both cases that the \(p\)-values are large enough to
 dismiss any concern about the inequality of variance. However, should
@@ -3233,21 +3317,32 @@ overall variance).
 \CommentTok{\# Welch ANOVA}
 \FunctionTok{oneway.test}\NormalTok{(score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ arithmetic, }
             \AttributeTok{var.equal =} \ConstantTok{FALSE}\NormalTok{)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  One{-}way analysis of means (not assuming equal variances)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  score and group}
-\CommentTok{\#\textgreater{} F = 19, num df = 4, denom df = 20, p{-}value = 2e{-}06}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    One-way analysis of means (not assuming equal variances)
+
+data:  score and group
+F = 18.537, num df = 4.000, denom df = 19.807, p-value = 1.776e-06
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Usual F{-}test statistic}
 \FunctionTok{oneway.test}\NormalTok{(score }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ arithmetic, }
             \AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  One{-}way analysis of means}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  score and group}
-\CommentTok{\#\textgreater{} F = 15, num df = 4, denom df = 40, p{-}value = 1e{-}07}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    One-way analysis of means
+
+data:  score and group
+F = 15.268, num df = 4, denom df = 40, p-value = 1.163e-07
+\end{verbatim}
 
 Notice how the degrees of freedom of the denominator have decreased. If
 we use \texttt{pairwise.t.test} with argument \texttt{pool.sd=FALSE},
@@ -3264,7 +3359,7 @@ illustrates this.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}
 
 }
 
@@ -3344,7 +3439,7 @@ off with \(n=50\) for heavy-tailed data.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-clt-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-clt-1.pdf}
 
 }
 
@@ -3400,7 +3495,7 @@ factor 10.\footnote{The null distribution also changes with the sample
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{03-completely_randomized_trials_files/figure-pdf/fig-plotLevelIndep-1.pdf}
+{\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-plotLevelIndep-1.pdf}
 
 }
 
@@ -3429,6 +3524,9 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}}
 
+\hypertarget{contrasts}{%
+\section{Contrasts}\label{contrasts}}
+
 The analysis of variance model tests the (global) null hypothesis that
 the average of all groups is equal. In an experimental context, this
 implies one or more of the manipulation has a different effect from the
@@ -3438,21 +3536,17 @@ to a \emph{status quo}, or determine whether specific combinations work
 better than separately. The scientific question of interest that
 warranted the experiment may lead to a specific set of hypotheses, which
 can be formulated by researchers as comparisons between means of
-different subgroups.
-
-\hypertarget{contrasts}{%
-\section{Contrasts}\label{contrasts}}
-
-We can normally express these as \textbf{contrasts}. As
-\href{https://stat.ethz.ch/~meier}{Dr.~Lukas Meier} puts it, if the
-global \(F\)-test for equality of means is equivalent to a dimly lit
-room, contrasts are akin to spotlight that let one focus on particular
-aspects of differences in treatments.
+different subgroups. We can normally express these as
+\textbf{contrasts}. As \href{https://stat.ethz.ch/~meier}{Dr.~Lukas
+Meier} puts it, if the global \(F\)-test for equality of means is
+equivalent to a dimly lit room, contrasts are akin to spotlight that let
+one focus on particular aspects of differences in treatments.
 
 More formally speaking, a contrast is a linear combination of averages:
 in plain English, this means we assign a weight to each group average
-and add them up. We can then build a \(t\) statistic as usual by
-standardizing the resulting weighted sum of the group means.
+and add them up. We can then build a \(t\) statistic as usual by looking
+at the difference between our postulated value and the observed weighted
+mean, suitably standardized.
 
 Contrasts encode research question of interest: if \(c_i\) denotes the
 weight of group average \(\mu_i\) \((i=1, \ldots, K)\), then we can
@@ -3462,8 +3556,8 @@ numerical value \(a\) is typically zero. The sample estimate of the
 linear contrast is obtained by replacing the unknown population average
 \(\mu_i\) by the sample average of that group,
 \(\widehat{\mu}_i = \overline{y}_{i}\). We can easily obtain the
-standard error of the linear combination \(C\).\footnote{Should you need
-  the formula, the standard error assuming sample size of
+standard error of the linear combination \(C\).\footnote{Should you ever
+  need the formula, the standard error assuming subsample size of
   \(n_1, \ldots, n_K\) and a common variance \(\sigma^2\) is
   \(\sqrt{\mathsf{Va}(\widehat{C})}\), where
   \[\mathsf{Va}(\widehat{C}) = \widehat{\sigma}^2\left(\frac{c_1^2}{n_1} + \cdots + \frac{c_K^2}{n_K}\right).\]}
@@ -3476,28 +3570,25 @@ the sample: for example, one contrast that compares groups the first two
 groups versus one that compares the third and fourth is in effect using
 data from two disjoint samples, as contrasts will be based on sample
 averages. Whenever the contrasts vectors are orthogonal, the tests will
-be uncorrelated as they contain independent bits of information from the
-population.\footnote{The constraint \(c_1 + \cdots + c_K=0\) ensures
+be uncorrelated. Mathematically, if we let \(c_{i}\) and \(c^{*}_{i}\)
+denote weights attached to the mean of group \(i\) comprising \(n_i\)
+observations, contrasts are orthogonal if
+\(c_{1}c^{*}_{1}/n_1 + \cdots + c_{K}c^{*}_K/n_K = 0\); if the sample is
+balanced with the same number of observations in each group,
+\(n/K = n_1 =\cdots = n_K\) and we can only consider the dot product of
+the two contrast vectors.
+
+If we have \(K\) groups, there are \(K-1\) contrasts for pairwise
+differences, the last one being captured by the sample mean for the
+overall effect\footnote{The constraint \(c_1 + \cdots + c_K=0\) ensures
   that linear contrasts are orthogonal to the mean, which has weight
-  \(c_i=n_i/n\) and for balanced samples \(c_i =1/n\).} Mathematically,
-if we let \(c_{i}\) and \(c^{*}_{i}\) denote weights attached to the
-mean of group \(i\) comprising \(n_i\) observations, contrasts are
-orthogonal if \(c_{1}c^{*}_{1}/n_1 + \cdots + c_{K}c^{*}_K/n_K = 0\); if
-the sample is balanced with the same number of observations in each
-group, \(n/K = n_1 =\cdots = n_K\)\footnote{This is the dot product of
-  the two contrast vectors}. If we have \(K\) groups, there are \(K-1\)
-contrasts for pairwise differences, the last one being captured by the
-sample mean for the overall effect.If we care only about difference
-between groups (as opposed to the overall effect of all treatments), we
-impose a sum-to-zero constraint on the weights so
-\(c_1 + \cdots + c_K=0\). This ensures\footnote{The sample mean for a
-  balanced sample amounts to equi-weighted average of the groups, i.e.,
-  a contrast with weight vector \((1, 1, \ldots, 1)\). Thus, any
-  contrast whose elements sum to zero is orthogonal to the global mean.
-  End of the mathematical digression.} Keep in mind that, although
-independent tests are nice mathematically, contrasts should encode the
-hypothesis of interest to the researchers: we choose contrasts because
-they are meaningful, not because they are orthogonal.
+  \(c_i=n_i/n\) and for balanced samples \(c_i =1/n\).}. If we care only
+about difference between groups (as opposed to the overall effect of all
+treatments), we impose a sum-to-zero constraint on the weights so
+\(c_1 + \cdots + c_K=0\). Keep in mind that, although independent tests
+are nice mathematically, contrasts should encode the hypothesis of
+interest to the researchers: we choose contrasts because they are
+meaningful, not because they are orthogonal.
 
 The \texttt{arithmetic} data example considered five different treatment
 groups with 9 individuals in each. Two of them were control groups, one
@@ -3555,7 +3646,7 @@ latter is standardized.
 \centering
 \begin{tabular}{lrrrrr}
 \toprule
-contrast & estimate & std. error & df & lower conf. limit & upper conf. limit\\
+contrast & estimate & std. error & df & lower (CI) & upper (conf. limit)CI)\\
 \midrule
 control vs manip & -3.33 & 1.05 & 40 & -5.45 & -1.22\\
 praised vs reproved & 4.00 & 1.62 & 40 & 0.72 & 7.28\\
@@ -3607,7 +3698,7 @@ intervals for post-test 1. }\tabularnewline
 \centering
 \begin{tabular}{lrrrrr}
 \toprule
-Terms & Marginal mean & Standard error & Degrees of freedom & Lower limit (CI) & Upper limit (CI)\\
+terms & marg. mean & std. err. & dof & lower (CI) & upper (CI)\\
 \midrule
 DR & 6.68 & 0.68 & 63 & 5.32 & 8.04\\
 DRTA & 9.77 & 0.68 & 63 & 8.41 & 11.13\\
@@ -3648,7 +3739,15 @@ change). The vector of weights for
 \begin{Highlighting}[]
 \CommentTok{\# Identify the order of the level of the variables}
 \FunctionTok{with}\NormalTok{(BSJ92, }\FunctionTok{levels}\NormalTok{(group))}
-\CommentTok{\#\textgreater{} [1] "DR"   "DRTA" "TA"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "DR"   "DRTA" "TA"  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# DR, DRTA, TA (alphabetical)}
 \NormalTok{contrasts\_list }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
   \StringTok{"C1: DRTA+TA vs 2DR"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }
@@ -3674,7 +3773,7 @@ change). The vector of weights for
 \centering
 \begin{tabular}{lrrrrr}
 \toprule
-Contrast & Estimate & Standard error & Degrees of freedom & t statistic & p-value\\
+contrast & estimate & std. err. & dof & stat & p-value\\
 \midrule
 C1: DRTA+TA vs 2DR & 4.18 & 1.67 & 63 & 2.51 & 0.01\\
 C1: average (DRTA+TA) vs DR & 2.09 & 0.83 & 63 & 2.51 & 0.01\\
@@ -3689,7 +3788,7 @@ is a pairwise difference, we could have obtained the \(t\)-statistic
 directly from the pairwise contrasts using
 \texttt{pairs(emmeans\_post)}. Note that the two different ways of
 writing the comparison between \texttt{DR} and the average of the other
-two methods yield different point estimates, but same inference (meaning
+two methods yield different point estimates, but same inference (i.e.,
 the same \(p\)-values). For contrast \(C_{1b}\), we get half the
 estimate (but the standard error is also halved) and likewise for the
 second contrasts we get an estimate of
@@ -3725,16 +3824,6 @@ fields to dichotomise the result of every test depending on whether
 leads to selective reporting of findings.
 
 Not all tests are of interest, even if standard software will report all
-possible pairwise comparisons. However, the number of tests performed in
-the course of an analysis can be very large. Dr.~Yoav Benjamini
-investigated the number of tests performed in each study of the
-Psychology replication project (\protect\hyperlink{ref-Nosek:2015}{Nosek
-et al. 2015}): this number ranged from 4 to 700, with an average of 72
-per study. It is natural to ask then how many are spurious findings that
-correspond to type I errors. The paramount (absurd) illustration is the
-xkcd cartoon of Figure~\ref{fig-xkcdsignificant}.
-
-Not all tests are of interest, even if standard software will report all
 possible pairwise comparisons. If there are \(K\) groups to compare and
 any comparison is of interest, than we could performs \(\binom{K}{2}\)
 pairwise comparisons with \(\mathscr{H}_{0}: \mu_i = \mu_j\) for
@@ -3763,7 +3852,7 @@ The probability of making at least one type I error, say
 \(\alpha^{\star}\), is\footnote{The second line holds with independent
   observations, the second follows from the use of Boole's inequality
   and does not require independent tests.} \begin{align}
-\alpha^{\star} &= 1 – \text{probability of making no type I error} 
+\alpha^{\star} &= 1 - \text{probability of making no type I error} 
 \\ &= 1- (1-\alpha)^m
 \\ & \leq m\alpha
 \end{align}
@@ -3776,7 +3865,7 @@ meaningless results.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/xkcd882_significant.png}
+{\centering \includegraphics[width=1.8in,height=\textheight]{figures/xkcd882_significant.png}
 
 }
 
@@ -4015,7 +4104,7 @@ for the two by two design of Maglio and Polman
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
 \(b_2\) (\texttt{west})
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-\emph{row mean}
+row mean
 \end{minipage} \\
 \midrule\noalign{}
 \endfirsthead
@@ -4029,7 +4118,7 @@ for the two by two design of Maglio and Polman
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
 \(b_2\) (\texttt{west})
 \end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-\emph{row mean}
+row mean
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
@@ -4043,7 +4132,7 @@ for the two by two design of Maglio and Polman
 \(\mu_{3.}\) \\
 \(a_4\) (\texttt{Sherbourne}) & & \(\mu_{41}\) & \(\mu_{42}\) &
 \(\mu_{4.}\) \\
-\emph{column mean} & & \(\mu_{.1}\) & \(\mu_{.2}\) & \(\mu\) \\
+column mean & & \(\mu_{.1}\) & \(\mu_{.2}\) & \(\mu\) \\
 \end{longtable}
 
 The \(i\)th row mean represents the average response across all levels
@@ -4145,9 +4234,14 @@ interaction between station and direction of travel, in addition to a
 main effect for station. Formal hypothesis testing can help check this
 intuition.
 
+\begin{verbatim}
+`summarise()` has grouped output by 'direction'. You can override using the
+`.groups` argument.
+\end{verbatim}
+
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
+{\centering \includegraphics{05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
 
 }
 
@@ -4197,10 +4291,9 @@ combination of these, we can deduce the value for the last row mean. The
 model formulation in terms of difference from the global average or main
 effect ensures that we can test for main effects for factor \(A\) by
 setting \(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\). The
-\textbf{sum to zero} constraints,
+\(1 + n_a + n_b\) \textbf{sum to zero} constraints,
 \[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]
-restore identifiability as they imposes which imposes \(1 + n_a + n_b\)
-constraints.
+restore identifiability.
 
 The redundancy in information, due to the fact main effects are
 expressible as row and column averages, and the overall mean as the
@@ -4247,96 +4340,126 @@ effects of both factors add up.
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(likelihood }\SpecialCharTok{\textasciitilde{}}\NormalTok{ purchase}\SpecialCharTok{*}\NormalTok{debttype, }
            \AttributeTok{data =}\NormalTok{ STC21\_SS5)}
 \FunctionTok{model.tables}\NormalTok{(mod, }\AttributeTok{type =} \StringTok{"means"}\NormalTok{)}
-\CommentTok{\#\textgreater{} Tables of means}
-\CommentTok{\#\textgreater{} Grand mean}
-\CommentTok{\#\textgreater{}      }
-\CommentTok{\#\textgreater{} 4.88 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  purchase }
-\CommentTok{\#\textgreater{}     discretionary    need}
-\CommentTok{\#\textgreater{}             4.182   5.579}
-\CommentTok{\#\textgreater{} rep       751.000 750.000}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  debttype }
-\CommentTok{\#\textgreater{}      credit    loan}
-\CommentTok{\#\textgreater{}       5.127   4.631}
-\CommentTok{\#\textgreater{} rep 753.000 748.000}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  purchase:debttype }
-\CommentTok{\#\textgreater{}                debttype}
-\CommentTok{\#\textgreater{} purchase        credit loan }
-\CommentTok{\#\textgreater{}   discretionary   4.5    3.8}
-\CommentTok{\#\textgreater{}   rep           392.0  359.0}
-\CommentTok{\#\textgreater{}   need            5.7    5.4}
-\CommentTok{\#\textgreater{}   rep           361.0  389.0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Tables of means
+Grand mean
+         
+4.879747 
+
+ purchase 
+    discretionary    need
+            4.182   5.579
+rep       751.000 750.000
+
+ debttype 
+     credit    loan
+      5.127   4.631
+rep 753.000 748.000
+
+ purchase:debttype 
+               debttype
+purchase        credit loan 
+  discretionary   4.5    3.8
+  rep           392.0  359.0
+  need            5.7    5.4
+  rep           361.0  389.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Analysis of variance reveals }
 \CommentTok{\# non{-}significant interaction}
 \CommentTok{\# of purchase and type}
 \NormalTok{car}\SpecialCharTok{::}\FunctionTok{Anova}\NormalTok{(mod, }\AttributeTok{type =} \DecValTok{3}\NormalTok{)}
-\CommentTok{\#\textgreater{} Anova Table (Type III tests)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Response: likelihood}
-\CommentTok{\#\textgreater{}                   Sum Sq   Df F value  Pr(\textgreater{}F)    }
-\CommentTok{\#\textgreater{} (Intercept)         7974    1 1040.96 \textless{} 2e{-}16 ***}
-\CommentTok{\#\textgreater{} purchase             283    1   36.91 1.6e{-}09 ***}
-\CommentTok{\#\textgreater{} debttype              88    1   11.55  0.0007 ***}
-\CommentTok{\#\textgreater{} purchase:debttype     14    1    1.79  0.1817    }
-\CommentTok{\#\textgreater{} Residuals          11467 1497                    }
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Anova Table (Type III tests)
+
+Response: likelihood
+                   Sum Sq   Df   F value    Pr(>F)    
+(Intercept)        7974.0    1 1040.9610 < 2.2e-16 ***
+purchase            282.8    1   36.9137 1.563e-09 ***
+debttype             88.5    1   11.5483 0.0006959 ***
+purchase:debttype    13.7    1    1.7852 0.1817132    
+Residuals         11467.4 1497                        
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Main effects}
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }
                  \AttributeTok{specs =} \StringTok{"debttype"}\NormalTok{,}
                  \AttributeTok{contr =} \StringTok{"pairwise"}\NormalTok{)}
-\CommentTok{\#\textgreater{} $emmeans}
-\CommentTok{\#\textgreater{}  debttype emmean    SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  credit     5.12 0.101 1497     4.93     5.32}
-\CommentTok{\#\textgreater{}  loan       4.63 0.101 1497     4.43     4.83}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: purchase }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} $contrasts}
-\CommentTok{\#\textgreater{}  contrast      estimate    SE   df t.ratio p.value}
-\CommentTok{\#\textgreater{}  credit {-} loan    0.496 0.143 1497   3.470  0.0005}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: purchase}
-  
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+NOTE: Results may be misleading due to involvement in interactions
+\end{verbatim}
+
+\begin{verbatim}
+$emmeans
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     5.12 0.101 1497     4.93     5.32
+ loan       4.63 0.101 1497     4.43     4.83
+
+Results are averaged over the levels of: purchase 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast      estimate    SE   df t.ratio p.value
+ credit - loan    0.496 0.143 1497   3.469  0.0005
+
+Results are averaged over the levels of: purchase 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Pairwise comparisons within levels of purchase}
 \CommentTok{\# Simple effect}
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }
                  \AttributeTok{specs =} \FunctionTok{c}\NormalTok{(}\StringTok{"purchase"}\NormalTok{, }\StringTok{"debttype"}\NormalTok{),}
                  \AttributeTok{by =} \StringTok{"purchase"}\NormalTok{,}
                  \AttributeTok{contr =} \StringTok{"pairwise"}\NormalTok{)}
-\CommentTok{\#\textgreater{} $emmeans}
-\CommentTok{\#\textgreater{} purchase = discretionary:}
-\CommentTok{\#\textgreater{}  debttype emmean    SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  credit     4.51 0.140 1497     4.24     4.78}
-\CommentTok{\#\textgreater{}  loan       3.82 0.146 1497     3.54     4.11}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} purchase = need:}
-\CommentTok{\#\textgreater{}  debttype emmean    SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  credit     5.74 0.146 1497     5.45     6.02}
-\CommentTok{\#\textgreater{}  loan       5.43 0.140 1497     5.16     5.71}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} $contrasts}
-\CommentTok{\#\textgreater{} purchase = discretionary:}
-\CommentTok{\#\textgreater{}  contrast      estimate    SE   df t.ratio p.value}
-\CommentTok{\#\textgreater{}  credit {-} loan    0.687 0.202 1497   3.400  0.0007}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} purchase = need:}
-\CommentTok{\#\textgreater{}  contrast      estimate    SE   df t.ratio p.value}
-\CommentTok{\#\textgreater{}  credit {-} loan    0.305 0.202 1497   1.510  0.1318}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+$emmeans
+purchase = discretionary:
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     4.51 0.140 1497     4.24     4.78
+ loan       3.82 0.146 1497     3.54     4.11
+
+purchase = need:
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     5.74 0.146 1497     5.45     6.02
+ loan       5.43 0.140 1497     5.16     5.71
+
+Confidence level used: 0.95 
+
+$contrasts
+purchase = discretionary:
+ contrast      estimate    SE   df t.ratio p.value
+ credit - loan    0.687 0.202 1497   3.398  0.0007
+
+purchase = need:
+ contrast      estimate    SE   df t.ratio p.value
+ credit - loan    0.305 0.202 1497   1.508  0.1318
+\end{verbatim}
+
 In the analysis of variance table, we only focus on the last line with
 the sum of squares for \texttt{purchase:debttype}. The \(F\) statistic
-is 1.785; using the \(\mathsf{F}\) (1, 1497) distribution as benchmark,
-we obtain a \(p\)-value of 0.18 so there is no evidence the effect of
-purchase depends on debt type.
+is 1.7852164; using the \(\mathsf{F}\) (1, 1497) distribution as
+benchmark, we obtain a \(p\)-value of 0.18 so there is no evidence the
+effect of purchase depends on debt type.
 
 We can thus pool data and look at the effect of debt type (\texttt{loan}
 or \texttt{credit}) overall by combining the results for all purchase
@@ -4358,7 +4481,7 @@ effects suggest that the label has an impact on perception only for
 discretionary expenses rather than needed ones, which runs
 counter-intuitively with the lack of interaction.
 
-\textbf{Summary}:
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -4389,6 +4512,8 @@ counter-intuitively with the lack of interaction.
   The number of observations increases quickly with the dimension as we
   increase the number of factors considered.
 \end{itemize}
+
+\end{tcolorbox}
 
 \bookmarksetup{startatroot}
 
@@ -4450,7 +4575,7 @@ experimental condition are the same.\footnote{If not, this implies that
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ancovadifftrend-1.pdf}
+{\centering \includegraphics{06-blocking_files/figure-pdf/fig-ancovadifftrend-1.pdf}
 
 }
 
@@ -4481,7 +4606,7 @@ scales.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ancovaresid-1.pdf}
+{\centering \includegraphics{06-blocking_files/figure-pdf/fig-ancovaresid-1.pdf}
 
 }
 
@@ -4574,9 +4699,9 @@ Residuals & 259.18 & 94 &  & \\
 \toprule
 term & sum. sq. & df & stat & p-value\\
 \midrule
-familiarity & 55.9 & 1 & 25.60 & < .001\\
-consistency & 9.8 & 1 & 4.49 & .037\\
-Residuals & 203.2 & 93 &  & \\
+familiarity & 55.94 & 1 & 25.60 & < .001\\
+consistency & 9.80 & 1 & 4.49 & .037\\
+Residuals & 203.24 & 93 &  & \\
 \bottomrule
 \end{tabular}
 
@@ -4588,7 +4713,7 @@ Residuals & 203.2 & 93 &  & \\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ANCOVA-demo-1.pdf}
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-ANCOVA-demo-1.pdf}
 
 }
 
@@ -4704,8 +4829,8 @@ condition & 2 & 42.5 & < .001\\
 \toprule
 term & df & stat & p-value\\
 \midrule
-prior & 1 & 289 & < .001\\
-condition & 2 & 57 & < .001\\
+prior & 1 & 289.2 & < .001\\
+condition & 2 & 57.0 & < .001\\
 \bottomrule
 \end{tabular}
 
@@ -4738,9 +4863,9 @@ Holm-\/-Bonferroni}\begin{minipage}[t]{\linewidth}
 \toprule
 contrast & estimate & std.error & df & statistic & p.value\\
 \midrule
-consensus vs control & -12.0 & 4.0 & 558 & -3.01 & .003\\
-consensus vs BoostPlus & 16.3 & 4.7 & 546 & 3.49 & .001\\
-BoostPlus vs control & -28.3 & 4.4 & 506 & -6.49 & < .001\\
+consensus vs control & -11.98 & 4.0 & 557.54 & -3.007 & .003\\
+consensus vs BoostPlus & 16.31 & 4.7 & 546.36 & 3.490 & < .001\\
+BoostPlus vs control & -28.29 & 4.4 & 505.44 & -6.489 & < .001\\
 \bottomrule
 \end{tabular}
 
@@ -4758,9 +4883,9 @@ BoostPlus vs control & -28.3 & 4.4 & 506 & -6.49 & < .001\\
 \toprule
 contrast & estimate & std.error & df & statistic & p.value\\
 \midrule
-consensus vs control & -11.8 & 3.3 & 543 & -3.54 & < .001\\
-consensus vs BoostPlus & 17.5 & 4.3 & 524 & 4.11 & < .001\\
-BoostPlus vs control & -29.3 & 3.9 & 459 & -7.45 & < .001\\
+consensus vs control & -11.84 & 3.3 & 543.06 & -3.544 & < .001\\
+consensus vs BoostPlus & 17.47 & 4.3 & 523.60 & 4.108 & < .001\\
+BoostPlus vs control & -29.30 & 3.9 & 458.62 & -7.454 & < .001\\
 \bottomrule
 \end{tabular}
 
@@ -4803,7 +4928,7 @@ post & control & 30.91 & 2.56\\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-vanStekS3-1.pdf}
+{\centering \includegraphics{06-blocking_files/figure-pdf/fig-vanStekS3-1.pdf}
 
 }
 
@@ -4813,6 +4938,8 @@ experiment beliefs on genetically engineered food.}
 \end{figure}
 
 \end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 Stekelenburg et al. (\protect\hyperlink{ref-vanStekelenburg:2021}{2021})
 split their data to do pairwise comparisons two at the time (thus taking
@@ -4830,6 +4957,10 @@ experimental condition \(i\) and \(j\), again potentially leading to
 distortions. With large samples, this may be unconsequential, but
 illustrates caveats of subsample analyses.
 
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
 many start from completely disbelieving of genetically engineered food
@@ -4841,9 +4972,11 @@ It does not tell the whole picture! One could investigate whether the
 strength of religious or political beliefs, or how much participants
 trust scientists, could explain some of the observed differences.
 
+\end{tcolorbox}
+
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-vanStekS3f1-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{06-blocking_files/figure-pdf/fig-vanStekS3f1-1.pdf}
 
 }
 
@@ -4852,7 +4985,7 @@ posterior belief score.}
 
 \end{figure}
 
-\textbf{Summary}:
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -4878,6 +5011,10 @@ posterior belief score.}
   slope for ANCOVA).
 \end{itemize}
 
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 \begin{itemize}
 \tightlist
 \item
@@ -4891,6 +5028,8 @@ Block what you can and randomize what you cannot.
 
 Explain the main benefit of blocking for confounding variables (when
 possible) over randomization.
+
+\end{tcolorbox}
 
 \bookmarksetup{startatroot}
 
@@ -5219,7 +5358,7 @@ hypothesis is false.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power1-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power1-1.pdf}
 
 }
 
@@ -5232,7 +5371,7 @@ alternative distribution which is in the rejection area (in white).}
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power2-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power2-1.pdf}
 
 }
 
@@ -5246,7 +5385,7 @@ to the null distribution (full line).}
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power3-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{07-power_effect_files/figure-pdf/fig-power3-1.pdf}
 
 }
 
@@ -5499,7 +5638,7 @@ percentage of \emph{p}-values smaller than \(\alpha\). We can vary the
 sample size and see how many observations we need per group to achieve
 the desired level of power.
 
-\textbf{Summary}:
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -5522,6 +5661,8 @@ the desired level of power.
   sample size for a study or replication.
 \end{itemize}
 
+\end{tcolorbox}
+
 \bookmarksetup{startatroot}
 
 \hypertarget{replication-crisis}{%
@@ -5532,6 +5673,8 @@ of existing methodological papers to assess the robustness of their
 findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
+
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -5544,6 +5687,8 @@ This chapter examines some of the causes of this lack of replicability.
 \item
   Listing strategies for enhancing reproducibility.
 \end{itemize}
+
+\end{tcolorbox}
 
 We adopt the terminology of Claerbout and Karrenbach
 (\protect\hyperlink{ref-Claerboutux2fKarrenbach:1992}{1992}): a study is
@@ -5561,7 +5706,7 @@ Turing Way} and presented in Figure~\ref{fig-turingrepdo}.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/turing_way.jpg}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/turing_way.jpg}
 
 }
 
@@ -5624,7 +5769,7 @@ and reporting selected results.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/RPP_psycho_repro.png}
+{\centering \includegraphics[width=0.7\textwidth,height=\textheight]{figures/RPP_psycho_repro.png}
 
 }
 
@@ -5652,7 +5797,7 @@ not published is called the \textbf{file-drawer} problem.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/vanZwet_Cator-zvalues.png}
+{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{figures/vanZwet_Cator-zvalues.png}
 
 }
 
@@ -5716,7 +5861,7 @@ retrieve former versions if you make mistakes at some point.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/reproducibility.png}
+{\centering \includegraphics[width=0.6\textwidth,height=\textheight]{figures/reproducibility.png}
 
 }
 
@@ -5744,7 +5889,7 @@ require the following to be reported in all published papers:
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/Nature_reporting_statistics.png}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/Nature_reporting_statistics.png}
 
 }
 
@@ -5818,8 +5963,12 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
+
+\end{tcolorbox}
 
 \hypertarget{non-representative-samples}{%
 \subsection{Non-representative
@@ -5841,7 +5990,7 @@ exhibit different opinions, levels of skills, etc. than most.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/samplingbias.jpg}
+{\centering \includegraphics[width=0.65\textwidth,height=\textheight]{figures/samplingbias.jpg}
 
 }
 
@@ -5857,8 +6006,8 @@ The same can be said of panels of students recruited in universities
 classes, who are more young, educated and perhaps may infer through
 backward induction the purpose of the study and answer accordingly.
 
-\hypertarget{summary}{%
-\section{Summary}\label{summary}}
+\hypertarget{summary-3}{%
+\section{Summary}\label{summary-3}}
 
 Operating in an open-science environment should be seen as an
 opportunity to make better science, offer more opportunities to increase
@@ -5873,9 +6022,13 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, toptitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, colback=white, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, breakable, bottomtitle=1mm, coltitle=black, titlerule=0mm, arc=.35mm, opacitybacktitle=0.6, rightrule=.15mm, bottomrule=.15mm, toprule=.15mm]
+
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
 to improve the reproducibility of your study?
+
+\end{tcolorbox}
 
 \bookmarksetup{startatroot}
 
@@ -6002,13 +6155,16 @@ the cross-tabs of the counts
 \begin{Highlighting}[]
 \FunctionTok{data}\NormalTok{(AA21, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
 \FunctionTok{xtabs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{stimulus }\SpecialCharTok{+}\NormalTok{ id, }\AttributeTok{data =}\NormalTok{ AA21)}
-\CommentTok{\#\textgreater{}         id}
-\CommentTok{\#\textgreater{} stimulus  1  2  3  4  5  6  7  8  9 10 11 12}
-\CommentTok{\#\textgreater{}     real 30 32 34 32 38 29 36 36 40 30 39 33}
-\CommentTok{\#\textgreater{}     GAN1 32 31 40 33 38 29 39 31 39 28 35 34}
-\CommentTok{\#\textgreater{}     GAN2 31 33 37 34 38 29 34 36 40 33 35 32}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+        id
+stimulus  1  2  3  4  5  6  7  8  9 10 11 12
+    real 30 32 34 32 38 29 36 36 40 30 39 33
+    GAN1 32 31 40 33 38 29 39 31 39 28 35 34
+    GAN2 31 33 37 34 38 29 34 36 40 33 35 32
+\end{verbatim}
 
 The experimental manipulation is encoded in the \texttt{stimuli}, with
 levels control (\texttt{real}) for real facial images, whereas the
@@ -6099,17 +6255,20 @@ was exposed to the \(n_a\) experimental conditions, can be written
   \AttributeTok{data =}\NormalTok{ AA21\_m)}
 \CommentTok{\# Print ANOVA table}
 \FunctionTok{summary}\NormalTok{(fixedmod)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Error: id}
-\CommentTok{\#\textgreater{}           Df Sum Sq Mean Sq F value Pr(\textgreater{}F)}
-\CommentTok{\#\textgreater{} Residuals 11    188    17.1               }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Error: id:stimulus}
-\CommentTok{\#\textgreater{}           Df Sum Sq Mean Sq F value Pr(\textgreater{}F)}
-\CommentTok{\#\textgreater{} stimulus   2    1.9    0.97     0.5   0.62}
-\CommentTok{\#\textgreater{} Residuals 22   43.0    1.96}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+Error: id
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 11  187.8   17.07               
+
+Error: id:stimulus
+          Df Sum Sq Mean Sq F value Pr(>F)
+stimulus   2   1.94  0.9704   0.496  0.615
+Residuals 22  43.03  1.9557               
+\end{verbatim}
 
 Since the design is balanced after averaging, we can use \texttt{aov} in
 \textbf{R}: we need to specify the subject identifier within
@@ -6164,37 +6323,52 @@ replications.
 \NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(}
     \AttributeTok{spec =} \StringTok{"stimulus"}\NormalTok{, }
     \AttributeTok{contr =}\NormalTok{ cont\_vec)}
-\CommentTok{\#\textgreater{} $emmeans}
-\CommentTok{\#\textgreater{}  stimulus emmean    SE df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  real      {-}10.8 0.942 11    {-}12.8    {-}8.70}
-\CommentTok{\#\textgreater{}  GAN1      {-}10.8 0.651 11    {-}12.3    {-}9.40}
-\CommentTok{\#\textgreater{}  GAN2      {-}10.3 0.662 11    {-}11.8    {-}8.85}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} $contrasts}
-\CommentTok{\#\textgreater{}  contrast    estimate    SE df t.ratio p.value}
-\CommentTok{\#\textgreater{}  real vs GAN   {-}0.202 0.552 11  {-}0.366  0.7210}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$emmeans
+ stimulus emmean    SE df lower.CL upper.CL
+ real      -10.8 0.942 11    -12.8    -8.70
+ GAN1      -10.8 0.651 11    -12.3    -9.40
+ GAN2      -10.3 0.662 11    -11.8    -8.85
+
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate    SE df t.ratio p.value
+ real vs GAN   -0.202 0.552 11  -0.366  0.7213
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Incorrect output {-} }
 \CommentTok{\# note the wrong degrees of freedom}
 \NormalTok{fixedmod }\SpecialCharTok{|\textgreater{}} 
 \NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(}
     \AttributeTok{spec =} \StringTok{"stimulus"}\NormalTok{, }
     \AttributeTok{contr =}\NormalTok{ cont\_vec)}
-\CommentTok{\#\textgreater{} $emmeans}
-\CommentTok{\#\textgreater{}  stimulus emmean    SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  real      {-}10.8 0.763 16.2    {-}12.4    {-}9.15}
-\CommentTok{\#\textgreater{}  GAN1      {-}10.8 0.763 16.2    {-}12.4    {-}9.21}
-\CommentTok{\#\textgreater{}  GAN2      {-}10.3 0.763 16.2    {-}11.9    {-}8.69}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Warning: EMMs are biased unless design is perfectly balanced }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} $contrasts}
-\CommentTok{\#\textgreater{}  contrast    estimate    SE df t.ratio p.value}
-\CommentTok{\#\textgreater{}  real vs GAN   {-}0.202 0.494 22  {-}0.409  0.6870}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Note: re-fitting model with sum-to-zero contrasts
+\end{verbatim}
+
+\begin{verbatim}
+$emmeans
+ stimulus emmean    SE   df lower.CL upper.CL
+ real      -10.8 0.763 16.2    -12.4    -9.15
+ GAN1      -10.8 0.763 16.2    -12.4    -9.21
+ GAN2      -10.3 0.763 16.2    -11.9    -8.69
+
+Warning: EMMs are biased unless design is perfectly balanced 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate    SE df t.ratio p.value
+ real vs GAN   -0.202 0.494 22  -0.409  0.6867
+\end{verbatim}
 
 \hypertarget{sphericity-assumption}{%
 \subsection{Sphericity assumption}\label{sphericity-assumption}}
@@ -6231,10 +6405,12 @@ benchmark.
 An idea due to Box is to correct the degrees of freedom of the
 \(\mathsf{F}(\nu_1, \nu_2)\) distribution by multiplying them by a
 common factor \(\epsilon<1\) and use
-\(\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)\). Since the \(F\) statistic
-is a ratio of variances, the \(\epsilon\) term would cancel. Using the
-scaled \(\mathsf{F}\) distribution leads to larger \(p\)-values, thus
-accounting for the correlation.
+\(\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)\) as null distribution
+instead to benchmark our statistics and determine how extreme our
+observed one is. Since the \(F\) statistic is a ratio of variances, the
+\(\epsilon\) terms would cancel. Using the scaled \(\mathsf{F}\)
+distribution leads to larger \(p\)-values, thus accounting for the
+correlation.
 
 There are three widely used corrections: Greenhouse--Geisser,
 Huynh--Feldt and Box correction, which divides by \(\nu_1\) both degrees
@@ -6248,32 +6424,35 @@ of sphericity and the \(p\) values from using either correction method
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{summary}\NormalTok{(afexmod)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Univariate Type III Repeated{-}Measures ANOVA Assuming Sphericity}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}             Sum Sq num Df Error SS den Df F value  Pr(\textgreater{}F)    }
-\CommentTok{\#\textgreater{} (Intercept)   4073      1      188     11   238.6 8.4e{-}09 ***}
-\CommentTok{\#\textgreater{} stimulus         2      2       43     22     0.5    0.62    }
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Mauchly Tests for Sphericity}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          Test statistic p{-}value}
-\CommentTok{\#\textgreater{} stimulus          0.678   0.143}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Greenhouse{-}Geisser and Huynh{-}Feldt Corrections}
-\CommentTok{\#\textgreater{}  for Departure from Sphericity}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          GG eps Pr(\textgreater{}F[GG])}
-\CommentTok{\#\textgreater{} stimulus  0.757       0.57}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}          HF eps Pr(\textgreater{}F[HF])}
-\CommentTok{\#\textgreater{} stimulus  0.851      0.587}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
+
+            Sum Sq num Df Error SS den Df  F value    Pr(>F)    
+(Intercept) 4073.1      1  187.814     11 238.5554 8.373e-09 ***
+stimulus       1.9      2   43.026     22   0.4962    0.6155    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+         Test statistic p-value
+stimulus        0.67814 0.14341
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+          GG eps Pr(>F[GG])
+stimulus 0.75651     0.5667
+
+            HF eps Pr(>F[HF])
+stimulus 0.8514944  0.5872648
+\end{verbatim}
 
 We consider a model with both within-subject and between-subject
 factors. Data for a study on visual acuity of participants. The data
@@ -6370,12 +6549,12 @@ setting, this can be formalized using Hasse diagram
 
 We can produce an interaction plot to see what comes out: since we can't
 draw in four dimensions, we map visual acuity and adaptation level to
-panels and use different colours for the position. The figure looks
+panels with different colours for the position. The figure looks
 different from the paper, seemingly because their \(y\)-axis is flipped.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{09-repeated_files/figure-pdf/fig-LBJ-interactionplot-1.pdf}
+{\centering \includegraphics{09-repeated_files/figure-pdf/fig-LBJ-interactionplot-1.pdf}
 
 }
 
@@ -6419,12 +6598,12 @@ leftover variability. Because these equivalent to the sum of square
 decomposition results in multiple matrices, there are multiple ways of
 constructing test statistics. Wilk's \(\Lambda\) is the most popular
 choice. Another common choice, which leads to a statistic giving lower
-power but more robust to departure from model assumptions is Pillai's
-trace.
+power but which is also more robust to departure from model assumptions
+is Pillai's trace.
 
 The MANOVA model assumes that the covariance matrices are the same
-within each experimental condition. Under normality assumption, we can
-use Box's \(M\) statistic to test the hypothesis.
+within each experimental condition. We can use Box's \(M\) statistic to
+test the normality hypothesis.
 
 \hypertarget{data-format}{%
 \subsection{Data format}\label{data-format}}
@@ -6434,14 +6613,14 @@ associated to each experimental condition in different columns of a data
 frame or spreadsheet, with lines containing participants identifiers.
 Such data are said to be in \textbf{wide format}, since there are
 multiple measurements in each row. While this format is suitable for
-multivariate models, many statistical routines will instead expect data
-to be in \textbf{long format}, for which there is a single measurement
-per line. Figure~\ref{fig-longvswide} illustrates the difference between
-the two formats.
+storate, many statistical routines will instead expect data to be in
+\textbf{long format}, for which there is a single measurement per line.
+Figure~\ref{fig-longvswide} illustrates the difference between the two
+formats.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/original-dfs-tidy.png}
+{\centering \includegraphics[width=0.5\textwidth,height=\textheight]{figures/original-dfs-tidy.png}
 
 }
 
@@ -6482,7 +6661,7 @@ the response vector for the \(i\)th observation of group \(k\); then, we
 can decompose the variance as \begin{align*} &
 \underset{\text{total variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})^\top} \\\qquad &= \underset{\text{within variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)^\top} + \underset{\text{between variance}}{\sum_{k=1}^K n_g(\boldsymbol{\mu}_{k} - \widehat{\boldsymbol{\mu}})(\widehat{\boldsymbol{\mu}}_k - \widehat{\boldsymbol{\mu}})^\top}
 \end{align*} defining covariance matrix estimators. If we write
-\(\widehat{\boldsymbol{\Sigma}}_T\),
+\(\widehat{\boldsymbol{\Sigma}}_T,\)
 \(\widehat{\boldsymbol{\Sigma}}_W\), and
 \(\widehat{\boldsymbol{\Sigma}}_B\) for respectively the total, within
 and between variance estimators, we can build a statistic from these
@@ -6509,8 +6688,8 @@ constructed, including
 All four criteria lead to equivalent statistics and the same
 \(p\)-values if \(K=2\).
 
-With a two-way balanced MANOVA, we can perform simlar decomposition for
-each factor or interaction, with
+With a two-way balanced MANOVA, we can perform a similar decomposition
+for each factor or interaction, with
 \[\widehat{\boldsymbol{\Sigma}}_T = \widehat{\boldsymbol{\Sigma}}_A + \widehat{\boldsymbol{\Sigma}}_B + \widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W.\]
 
 Wilk's \(\Lambda\) is based on taking the ratio of the determinant of
@@ -6578,26 +6757,37 @@ labelled \texttt{rep.meas} by default.
 \CommentTok{\# Test the multivariate model against}
 \CommentTok{\# equal mean (X = \textasciitilde{}1)}
 \FunctionTok{anova}\NormalTok{(mlm, }\AttributeTok{X =} \SpecialCharTok{\textasciitilde{}}\DecValTok{1}\NormalTok{, }\AttributeTok{test =} \StringTok{"Spherical"}\NormalTok{)}
-\CommentTok{\#\textgreater{} Analysis of Variance Table}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Contrasts orthogonal to}
-\CommentTok{\#\textgreater{} \textasciitilde{}1}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Greenhouse{-}Geisser epsilon: 0.7565}
-\CommentTok{\#\textgreater{} Huynh{-}Feldt epsilon:        0.8515}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}             Df   F num Df den Df Pr(\textgreater{}F) G{-}G Pr H{-}F Pr}
-\CommentTok{\#\textgreater{} (Intercept)  1 0.5      2     22  0.615  0.567  0.587}
-\CommentTok{\#\textgreater{} Residuals   11}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+
+Contrasts orthogonal to
+~1
+
+Greenhouse-Geisser epsilon: 0.7565
+Huynh-Feldt epsilon:        0.8515
+
+            Df      F num Df den Df  Pr(>F)  G-G Pr  H-F Pr
+(Intercept)  1 0.4962      2     22 0.61549 0.56666 0.58726
+Residuals   11                                             
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Follow{-}up contrast comparisons}
 \FunctionTok{library}\NormalTok{(emmeans)}
 \NormalTok{emm\_mlm }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(mlm, }\AttributeTok{specs =} \StringTok{"rep.meas"}\NormalTok{) }
 \NormalTok{emm\_mlm }\SpecialCharTok{|\textgreater{}} \FunctionTok{contrast}\NormalTok{(}\AttributeTok{method =} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{)))}
-\CommentTok{\#\textgreater{}  contrast         estimate    SE df t.ratio p.value}
-\CommentTok{\#\textgreater{}  c(1, {-}0.5, {-}0.5)   {-}0.202 0.552 11  {-}0.366  0.7210}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+ contrast         estimate    SE df t.ratio p.value
+ c(1, -0.5, -0.5)   -0.202 0.552 11  -0.366  0.7213
+\end{verbatim}
 
 We can check that the output is the same in this case as the
 within-subject analysis of variance model fitted previously with the
@@ -6615,7 +6805,7 @@ We could obtain the estimated covariance matrix of the fitted model by
 extracting the residuals \(Y_{ik} - \widehat{\mu}_k\) and computing the
 empirical covariance. The results shows a strong dependence between
 tests 1 and 3 (correlation of 0.39), but much weaker dependence with
-test2.
+test 2.
 
 Let us compute the multivariate analysis of variance model
 
@@ -6633,48 +6823,51 @@ Let us compute the multivariate analysis of variance model
 \CommentTok{\# mtest}
 \CommentTok{\# Get all statistics and univariate tests}
 \FunctionTok{summary}\NormalTok{(car}\SpecialCharTok{::}\FunctionTok{Anova}\NormalTok{(mmod), }\AttributeTok{univariate =} \ConstantTok{TRUE}\NormalTok{)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Type II MANOVA Tests:}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Sum of squares and products for error:}
-\CommentTok{\#\textgreater{}           posttest1 posttest2 posttest3}
-\CommentTok{\#\textgreater{} posttest1     640.5      30.8       498}
-\CommentTok{\#\textgreater{} posttest2      30.8     356.4      {-}104}
-\CommentTok{\#\textgreater{} posttest3     498.3    {-}104.4      2512}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\CommentTok{\#\textgreater{}  }
-\CommentTok{\#\textgreater{} Term: group }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Sum of squares and products for the hypothesis:}
-\CommentTok{\#\textgreater{}           posttest1 posttest2 posttest3}
-\CommentTok{\#\textgreater{} posttest1    108.12      6.67     190.6}
-\CommentTok{\#\textgreater{} posttest2      6.67     95.12      56.7}
-\CommentTok{\#\textgreater{} posttest3    190.61     56.65     357.3}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Multivariate Tests: group}
-\CommentTok{\#\textgreater{}                  Df test stat approx F num Df den Df   Pr(\textgreater{}F)    }
-\CommentTok{\#\textgreater{} Pillai            2     0.408     5.30      6    124 0.000068 ***}
-\CommentTok{\#\textgreater{} Wilks             2     0.632     5.24      6    122 0.000078 ***}
-\CommentTok{\#\textgreater{} Hotelling{-}Lawley  2     0.519     5.19      6    120 0.000089 ***}
-\CommentTok{\#\textgreater{} Roy               2     0.318     6.58      3     62  0.00062 ***}
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Type II Sums of Squares}
-\CommentTok{\#\textgreater{}           df posttest1 posttest2 posttest3}
-\CommentTok{\#\textgreater{} group      2       108      95.1       357}
-\CommentTok{\#\textgreater{} residuals 63       641     356.4      2512}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  F{-}tests}
-\CommentTok{\#\textgreater{}       posttest1 posttest2 posttest3}
-\CommentTok{\#\textgreater{} group      5.32      8.41      4.48}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  p{-}values}
-\CommentTok{\#\textgreater{}       posttest1 posttest2 posttest3}
-\CommentTok{\#\textgreater{} group 0.007     0.0006    0.015}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+Type II MANOVA Tests:
+
+Sum of squares and products for error:
+          posttest1  posttest2 posttest3
+posttest1 640.50000   30.77273  498.3182
+posttest2  30.77273  356.40909 -104.3636
+posttest3 498.31818 -104.36364 2511.6818
+
+------------------------------------------
+ 
+Term: group 
+
+Sum of squares and products for the hypothesis:
+           posttest1 posttest2 posttest3
+posttest1 108.121212  6.666667 190.60606
+posttest2   6.666667 95.121212  56.65152
+posttest3 190.606061 56.651515 357.30303
+
+Multivariate Tests: group
+                 Df test stat approx F num Df den Df     Pr(>F)    
+Pillai            2 0.4082468 5.300509      6    124 6.7654e-05 ***
+Wilks             2 0.6320200 5.243287      6    122 7.7744e-05 ***
+Hotelling-Lawley  2 0.5185169 5.185169      6    120 8.9490e-05 ***
+Roy               2 0.3184494 6.581288      3     62 0.00062058 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+ Type II Sums of Squares
+          df posttest1 posttest2 posttest3
+group      2    108.12    95.121     357.3
+residuals 63    640.50   356.409    2511.7
+
+ F-tests
+      posttest1 posttest2 posttest3
+group      5.32      8.41      4.48
+
+ p-values
+      posttest1  posttest2  posttest3 
+group 0.00734676 0.00058043 0.01515115
+\end{verbatim}
 
 By default, we get Pillai's trace statistic. Here, there is clear
 evidence of differences between groups of observations regardless of the
@@ -6706,7 +6899,7 @@ between groups. Figure~\ref{fig-lindiscrim} shows the new coordinates.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{09-repeated_files/figure-pdf/fig-lindiscrim-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{09-repeated_files/figure-pdf/fig-lindiscrim-1.pdf}
 
 }
 
@@ -6744,13 +6937,16 @@ others.
 \CommentTok{\# Must transpose the residuals }
 \CommentTok{\# to get a 3 by n matrix}
 \NormalTok{mvnormtest}\SpecialCharTok{::}\FunctionTok{mshapiro.test}\NormalTok{(}\AttributeTok{U =} \FunctionTok{t}\NormalTok{(}\FunctionTok{resid}\NormalTok{(mmod)))}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Shapiro{-}Wilk normality test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  Z}
-\CommentTok{\#\textgreater{} W = 1, p{-}value = 0.06}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    Shapiro-Wilk normality test
+
+data:  Z
+W = 0.96464, p-value = 0.05678
+\end{verbatim}
 
 The second assumption is that the covariance matrix is the same for all
 individuals, regardless of their experimental group assignment. We could
@@ -6767,13 +6963,16 @@ heterogeneity.
 \NormalTok{     biotools}\SpecialCharTok{::}\FunctionTok{boxM}\NormalTok{(}
        \AttributeTok{data =} \FunctionTok{cbind}\NormalTok{(posttest1, posttest2, posttest3),}
        \AttributeTok{grouping =}\NormalTok{ group))}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Box\textquotesingle{}s M{-}test for Homogeneity of Covariance Matrices}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  cbind(posttest1, posttest2, posttest3)}
-\CommentTok{\#\textgreater{} Chi{-}Sq (approx.) = 15, df = 12, p{-}value = 0.2}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    Box's M-test for Homogeneity of Covariance Matrices
+
+data:  cbind(posttest1, posttest2, posttest3)
+Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241
+\end{verbatim}
 
 In our example, there is limited evidence against any of those model
 assumptions. We should of course also check the assumptions of the
@@ -6950,7 +7149,7 @@ them accordingly.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{10-mixed_files/figure-pdf/fig-aafulldat-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{10-mixed_files/figure-pdf/fig-aafulldat-1.pdf}
 
 }
 
@@ -6981,21 +7180,24 @@ arbitrarily) measurements below a latency of minus 40.
 \NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(latency }\SpecialCharTok{\textgreater{}} \SpecialCharTok{{-}}\DecValTok{40}\NormalTok{))}
 \CommentTok{\# Output parameter estimates}
 \FunctionTok{print}\NormalTok{(mixedmod)}
-\CommentTok{\#\textgreater{} Linear mixed model fit by REML [\textquotesingle{}lmerModLmerTest\textquotesingle{}]}
-\CommentTok{\#\textgreater{} Formula: latency \textasciitilde{} stimulus + (1 | id) + (1 | id:stimulus)}
-\CommentTok{\#\textgreater{}    Data: dplyr::filter(hecedsm::AA21, latency \textgreater{} {-}40)}
-\CommentTok{\#\textgreater{} REML criterion at convergence: 8008}
-\CommentTok{\#\textgreater{} Random effects:}
-\CommentTok{\#\textgreater{}  Groups      Name        Std.Dev.}
-\CommentTok{\#\textgreater{}  id:stimulus (Intercept) 0.737   }
-\CommentTok{\#\textgreater{}  id          (Intercept) 2.268   }
-\CommentTok{\#\textgreater{}  Residual                6.223   }
-\CommentTok{\#\textgreater{} Number of obs: 1227, groups:  id:stimulus, 36; id, 12}
-\CommentTok{\#\textgreater{} Fixed Effects:}
-\CommentTok{\#\textgreater{} (Intercept)    stimulus1    stimulus2  }
-\CommentTok{\#\textgreater{}     {-}10.537       {-}0.253       {-}0.139}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Linear mixed model fit by REML ['lmerModLmerTest']
+Formula: latency ~ stimulus + (1 | id) + (1 | id:stimulus)
+   Data: dplyr::filter(hecedsm::AA21, latency > -40)
+REML criterion at convergence: 8007.913
+Random effects:
+ Groups      Name        Std.Dev.
+ id:stimulus (Intercept) 0.7371  
+ id          (Intercept) 2.2679  
+ Residual                6.2235  
+Number of obs: 1227, groups:  id:stimulus, 36; id, 12
+Fixed Effects:
+(Intercept)    stimulus1    stimulus2  
+   -10.5374      -0.2529      -0.1394  
+\end{verbatim}
 
 We see that there is quite a bit of heterogeneity between participants
 and per stimulus participant pair, albeit less so for the interaction.
@@ -7004,9 +7206,9 @@ All estimated variance terms are rather large.
 We can also look globally at the statistical evidence for the
 
 \begin{verbatim}
-#> Type III Analysis of Variance Table with Satterthwaite's method
-#>          Sum Sq Mean Sq NumDF DenDF F value Pr(>F)
-#> stimulus   65.6    32.8     2  23.3    0.85   0.44
+Type III Analysis of Variance Table with Satterthwaite's method
+         Sum Sq Mean Sq NumDF  DenDF F value Pr(>F)
+stimulus  65.62   32.81     2 23.337  0.8471 0.4414
 \end{verbatim}
 
 The global \(F\) test of significance for stimulus is based on an
@@ -7065,12 +7267,15 @@ estimates.
                            \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"no"}\NormalTok{, }\StringTok{"yes"}\NormalTok{)),}
     \AttributeTok{age =} \FunctionTok{factor}\NormalTok{(age)) }\CommentTok{\# drop unused age levels}
 \FunctionTok{xtabs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ verbalization, }\AttributeTok{data =}\NormalTok{ MULTI21\_D2\_sub)}
-\CommentTok{\#\textgreater{}      verbalization}
-\CommentTok{\#\textgreater{} age    no yes}
-\CommentTok{\#\textgreater{}   5yo 106 334}
-\CommentTok{\#\textgreater{}   6yo  56 450}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+     verbalization
+age    no yes
+  5yo 106 334
+  6yo  56 450
+\end{verbatim}
 
 Given that we have multiple students of every age group, we can include
 two-way and three-way interactions in the \(2^3\) design. We also
@@ -7113,56 +7318,85 @@ doesn't add much to the correlation.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{anova}\NormalTok{(hmod, }\AttributeTok{ddf =} \StringTok{"Kenward{-}Roger"}\NormalTok{)}
-\CommentTok{\#\textgreater{} Type III Analysis of Variance Table with Kenward{-}Roger\textquotesingle{}s method}
-\CommentTok{\#\textgreater{}                          Sum Sq Mean Sq NumDF DenDF F value Pr(\textgreater{}F)    }
-\CommentTok{\#\textgreater{} age                       20.50   20.50     1   459   30.05  7e{-}08 ***}
-\CommentTok{\#\textgreater{} timing                     3.25    3.25     1   469    4.76   0.03 *  }
-\CommentTok{\#\textgreater{} verbalization             13.61   13.61     1   459   19.94  1e{-}05 ***}
-\CommentTok{\#\textgreater{} age:timing                 0.24    0.24     1   469    0.36   0.55    }
-\CommentTok{\#\textgreater{} age:verbalization          0.08    0.08     1   462    0.12   0.72    }
-\CommentTok{\#\textgreater{} timing:verbalization       2.64    2.64     1   469    3.88   0.05 *  }
-\CommentTok{\#\textgreater{} age:timing:verbalization   0.27    0.27     1   469    0.40   0.53    }
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Type III Analysis of Variance Table with Kenward-Roger's method
+                          Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+age                      20.5045 20.5045     1 459.37 30.0507 6.955e-08 ***
+timing                    3.2464  3.2464     1 469.00  4.7579   0.02966 *  
+verbalization            13.6053 13.6053     1 459.45 19.9395 1.007e-05 ***
+age:timing                0.2434  0.2434     1 469.00  0.3567   0.55062    
+age:verbalization         0.0849  0.0849     1 462.08  0.1245   0.72439    
+timing:verbalization      2.6443  2.6443     1 469.00  3.8754   0.04959 *  
+age:timing:verbalization  0.2699  0.2699     1 469.00  0.3955   0.52972    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Check estimated marginal means for age}
 \NormalTok{emm }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(hmod, }\AttributeTok{specs =} \StringTok{"age"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+NOTE: Results may be misleading due to involvement in interactions
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{emm}
-\CommentTok{\#\textgreater{}  age emmean     SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  5yo   1.85 0.0914 35.8     1.67     2.04}
-\CommentTok{\#\textgreater{}  6yo   2.44 0.1053 60.9     2.23     2.65}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: timing, verbalization }
-\CommentTok{\#\textgreater{} Degrees{-}of{-}freedom method: kenward{-}roger }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ age emmean     SE   df lower.CL upper.CL
+ 5yo   1.85 0.0914 35.8     1.67     2.04
+ 6yo   2.44 0.1053 60.9     2.23     2.66
+
+Results are averaged over the levels of: timing, verbalization 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Pairwise differences}
 \NormalTok{pairdiff }\OtherTok{\textless{}{-}}\NormalTok{ emm }\SpecialCharTok{|\textgreater{}} \FunctionTok{pairs}\NormalTok{()}
 \NormalTok{pairdiff}
-\CommentTok{\#\textgreater{}  contrast  estimate    SE  df t.ratio p.value}
-\CommentTok{\#\textgreater{}  5yo {-} 6yo    {-}0.59 0.108 459  {-}5.480  \textless{}.0001}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: timing, verbalization }
-\CommentTok{\#\textgreater{} Degrees{-}of{-}freedom method: kenward{-}roger}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+ contrast  estimate    SE  df t.ratio p.value
+ 5yo - 6yo    -0.59 0.108 459  -5.482  <.0001
+
+Results are averaged over the levels of: timing, verbalization 
+Degrees-of-freedom method: kenward-roger 
+\end{verbatim}
 
 The type III ANOVA table shows that there is no evidence of interaction
 between task order, age and verbalization (no three-interaction) and a
 very small difference for timing and verbalization. Thus, we could
 compute the estimated marginal means (95\% confidence interval) for age
-with an estimated correct number of words of 1.854 (1.669, 2.04) words
-out of 5 for the 5 years olds and 2.445 (2.234, 2.655) words for six
-years old. Note that, despite the very large number children in the
-experiment, the degrees of freedom from the Kenward--Roger method are
-much fewer, respectively 35.827 and 60.944 for five and six years old.
+with an estimated correct number of words of 1.8543233 (1.6689094,
+2.0397372) words out of 5 for the 5 years olds and 2.4446996 (2.2340654,
+2.6553337) words for six years old. Note that, despite the very large
+number children in the experiment, the degrees of freedom from the
+Kenward--Roger method are much fewer, respectively 35.8271155 and
+60.943758 for five and six years old.
 
 The \(t\)-test for the pairwise difference of the marginal effect is
-0.59 words with standard error 0.108. Judging from the output, the
-degrees of freedom calculation for the pairwise \(t\)-test are erroneous
---- they seem to be some average between the number of entries for the
-five years old (440) and six years old (506), but this fails to account
-for the fact that each kid is featured twice. Given the large magnitude
-of the ratio, this still amounts to strong result provided the standard
-error is correct.
+0.5903763 words with standard error 0.1076964. Judging from the output,
+the degrees of freedom calculation for the pairwise \(t\)-test are
+erroneous --- they seem to be some average between the number of entries
+for the five years old (440) and six years old (506), but this fails to
+account for the fact that each kid is featured twice. Given the large
+magnitude of the ratio, this still amounts to strong result provided the
+standard error is correct.
 
 We can easily see the limited interaction and strong main effects from
 the interaction plot in Figure~\ref{fig-interactionrecall}. The
@@ -7171,7 +7405,7 @@ inbalance.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{10-mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
+{\centering \includegraphics{10-mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
 
 }
 
@@ -7198,7 +7432,7 @@ relations, many of which are simply artefact of population growth.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/xkcd552_correlation.png}
+{\centering \includegraphics[width=0.65\textwidth,height=\textheight]{figures/xkcd552_correlation.png}
 
 }
 
@@ -7604,7 +7838,7 @@ where the null is true (\(X\) affects both \(M\) and \(Y\)).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/fig-sobelsimu-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/fig-sobelsimu-1.pdf}
 
 }
 
@@ -7660,7 +7894,7 @@ percentile method.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/bootstrap-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/bootstrap-1.pdf}
 
 }
 
@@ -7706,7 +7940,7 @@ We can unpack the model assumptions for the linear mediation model.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/dag1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/dag1.png}
 
 }
 
@@ -7729,7 +7963,7 @@ mediation effect on \(X\) is due to \(M_1\).
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.45\textwidth,height=\textheight]{figures/dag2.pdf}
+{\centering \includegraphics[width=0.4\textwidth,height=\textheight]{figures/dag2.png}
 
 }
 
@@ -7811,6 +8045,13 @@ in both mediator and outcome model (see Table 1 of Lee and Choi
            \AttributeTok{data =}\NormalTok{ LC19\_S2)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Registered S3 methods overwritten by 'broom':
+  method            from  
+  tidy.glht         jtools
+  tidy.summary.glht jtools
+\end{verbatim}
 
 \hypertarget{tbl-coefsmediation}{}
 \begin{table}
@@ -7967,7 +8208,7 @@ Residuals & 159.22 & 123 &  & \\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/unnamed-chunk-16-1.pdf}
+{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/unnamed-chunk-16-1.pdf}
 
 }
 
@@ -8005,12 +8246,13 @@ individual and collective protests, since these are the most similar.
   \AttributeTok{modx =}\NormalTok{ sexism, }\CommentTok{\# moderator}
   \AttributeTok{control.fdr =} \ConstantTok{TRUE}\NormalTok{,}
   \AttributeTok{mod.range =} \FunctionTok{range}\NormalTok{(db}\SpecialCharTok{$}\NormalTok{sexism)) }
+\NormalTok{jn}\SpecialCharTok{$}\NormalTok{plot}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{11-causal-inference_files/figure-pdf/fig-jn-1.pdf}
+{\centering \includegraphics{11-causal-inference_files/figure-pdf/fig-jn-1.pdf}
 
 }
 
@@ -8022,16 +8264,12 @@ protest and no protest as a function of sexism.}
 The cutoff value is 4.20 with control for the false discovery rate and
 4.15 without. The interval is not extended beyond the range of value for
 sexism, as these are not possible given the Likert scale (which starts
-at 1).
-
-In this example, the moderator is not experimentally manipulated, but it
-could be. More complicated mediation model could include interactions
-between treatment effects or moderators and covariates, with external
-variables, leading to moderated mediation.
-
-Interactions can be considered for pretty much any statistical model,
-but the usual assumptions need to hold for inference to be approximately
-valid.
+at 1). In this example, the moderator is not experimentally manipulated,
+but it could be. More complicated mediation models could include
+interactions between treatment effects or moderators and covariates,
+with external variables, leading to moderated mediation. Interactions
+can be considered for pretty much any statistical model, but the usual
+assumptions need to hold for inference to be approximately valid.
 
 \bookmarksetup{startatroot}
 
@@ -8185,25 +8423,12 @@ assigned in a random order. The data can be found in the
 A quick inspection reveals that the data are balanced with four tasks
 and 31 individuals. We can view the within-subject design with a single
 replication as a complete block design (with \texttt{id} as block) and
-\texttt{task} as experimental manipulation.
-
-How could we compare the different tasks? The data here are clearly very
-far from normally distributed and there are notable outliers among the
-residuals, as evidenced by @ref(fig:fig-normqqplot). Conclusions
-probably wouldn't be affected by using an analysis of variance, but it
-may be easier to convince reviewers that the findings are solid by
+\texttt{task} as experimental manipulation. The data here are clearly
+far from normally distributed and there are notable outliers in the
+upper right tail. While conclusions probably wouldn't be affected by
+using an analysis of variance to compare the average time per task, but
+it may be easier to convince reviewers that the findings are solid by
 ressorting to nonparametric procedures.
-
-\begin{figure}[ht!]
-
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{12-nonparametric_files/figure-pdf/fig-normqqplot-1.pdf}
-
-}
-
-\caption{\label{fig-normqqplot}Normal quantile-quantile plot of the
-block design. There are many outliers}
-
-\end{figure}
 
 Both the Friedman and the Quade tests are obtained by computing ranks
 within each block (participant) and then performing a two-way analysis
@@ -8232,7 +8457,7 @@ The Friedman test is obtained by replacing observations by the rank
 within each block (so rather than the number of violations per task, we
 compute the rank among the four tasks). The Friedman's test statistic is
 \(18.97\) and is compared to a benchmark \(\chi^2_3\) distribution,
-yielding a \(p\)-value of \(0\).
+yielding a \(p\)-value of \(\ensuremath{3\times 10^{-4}}\).
 
 We can also obtain effect sizes for the rank test, termed Kendall's
 \(W\). A value of 1 indicates complete agreement in the ranking: here,
@@ -8258,15 +8483,18 @@ likewise for the five other pairwise comparisons and then adjust
   \AttributeTok{values\_from =}\NormalTok{ nviolation)}
 \NormalTok{coin}\SpecialCharTok{::}\FunctionTok{wilcoxsign\_test}\NormalTok{(phone }\SpecialCharTok{\textasciitilde{}}\NormalTok{ watch,}
                       \AttributeTok{data =}\NormalTok{ smartwatch)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Asymptotic Wilcoxon{-}Pratt Signed{-}Rank Test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  y by x (pos, neg) }
-\CommentTok{\#\textgreater{}   stratified by block}
-\CommentTok{\#\textgreater{} Z = 0.4, p{-}value = 0.7}
-\CommentTok{\#\textgreater{} alternative hypothesis: true mu is not equal to 0}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    Asymptotic Wilcoxon-Pratt Signed-Rank Test
+
+data:  y by x (pos, neg) 
+     stratified by block
+Z = 0.35399, p-value = 0.7233
+alternative hypothesis: true mu is not equal to 0
+\end{verbatim}
 
 You can think of the test as performing a paired \(t\)-test for the 31
 signed ranks \(R_i =\mathsf{sign}(D_i) \mathsf{rank}(|D_i|)\) and
@@ -8313,19 +8541,22 @@ rank-sum test.
   \AttributeTok{data =}\NormalTok{ BL22\_E, }
   \AttributeTok{conf.int =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{mww}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Asymptotic Wilcoxon{-}Mann{-}Whitney Test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  partner\_time by cond (f2f, video)}
-\CommentTok{\#\textgreater{} Z = {-}6, p{-}value = 1e{-}10}
-\CommentTok{\#\textgreater{} alternative hypothesis: true mu is not equal to 0}
-\CommentTok{\#\textgreater{} 95 percent confidence interval:}
-\CommentTok{\#\textgreater{}  {-}50.7 {-}25.9}
-\CommentTok{\#\textgreater{} sample estimates:}
-\CommentTok{\#\textgreater{} difference in location }
-\CommentTok{\#\textgreater{}                  {-}37.8}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    Asymptotic Wilcoxon-Mann-Whitney Test
+
+data:  partner_time by cond (f2f, video)
+Z = -6.4637, p-value = 1.022e-10
+alternative hypothesis: true mu is not equal to 0
+95 percent confidence interval:
+ -50.694 -25.908
+sample estimates:
+difference in location 
+               -37.808 
+\end{verbatim}
 
 The output of the test includes, in addition to the \(p\)-value for the
 null hypothesis that both median time are the same, a confidence

@@ -3,14 +3,20 @@ project:
   output-dir: docs
 execute: 
   cache: true
-  freeze: true
+  freeze: false
   echo: false
   eval: true
 bibliography: MATH80667A.bib
 highlight: tango
 split_bib: no
 title-block-style: none
-
+language:
+  en:
+    callout-tip-title: "Your turn"
+    callout-note-title: "Thinking outside the box"
+    callout-warning-title: "Coding exercice"
+    callout-important-title: "Key concept"
+    callout-caution-title: "Pitfall"
 
 preview:
   port: 3200
@@ -67,7 +73,9 @@ format:
     papersize: letter
     template-partials: 
       - before-body.tex
+      - title.tex
     include-in-header: preamble.tex
+    include-before-body: coverpage.tex
     pdf-engine: pdflatex
     citation-package: natbib
     keep-tex: true

@@ -86,8 +86,8 @@ knitr::kable(as.data.frame(confint(contrasts_res)),
                            "estimate",
                            "std. error",
                            "df",
-                           "lower conf. limit",
-                           "upper conf. limit")) |>
+                           "lower (CI)",
+                           "upper (conf. limit)CI)")) |>
   kableExtra::kable_styling()
 ```
 
@@ -122,12 +122,12 @@ emmeans_post <- emmeans(object = mod_post,
 kable(emmeans_post,
       digits = c(2,2,2,0,2,2),
       booktabs = TRUE,
-      col.names = c("Terms",
-                    "Marginal mean",
-                    "Standard error",
-                    "Degrees of freedom",
-                    "Lower limit (CI)",
-                    "Upper limit (CI)")) |>
+      col.names = c("terms",
+                    "marg. mean",
+                    "std. err.",
+                    "dof",
+                    "lower (CI)",
+                    "upper (CI)")) |>
   kableExtra::kable_styling()
 ```
 
@@ -181,11 +181,11 @@ contrasts_summary_post <- summary(contrasts_post)
 kable(contrasts_post,
       booktabs = TRUE,
       digits = c(2,2,2,0,2,2),
-      col.names = c("Contrast",
-                    "Estimate",
-                    "Standard error",
-                    "Degrees of freedom",
-                    "t statistic",
+      col.names = c("contrast",
+                    "estimate",
+                    "std. err.",
+                    "dof",
+                    "stat",
                     "p-value")) |>
   kableExtra::kable_styling()
 ```
@@ -213,7 +213,7 @@ The number of tests performed in the course of an analysis can be very large. Y.
 
 We can also assess mathematically the problem. Assume for simplicity that all tests are independent^[This is the case if tests are based on different data, or if the contrasts considered are orthogonal under normality.] and that each test is conducted at level $\alpha$. The probability of making at least one type I error, say $\alpha^{\star}$, is^[The second line holds with independent observations, the second follows from the use of Boole's inequality and does not require independent tests.]
 \begin{align}
-\alpha^{\star} &= 1 – \text{probability of making no type I error} 
+\alpha^{\star} &= 1 - \text{probability of making no type I error} 
 \\ &= 1- (1-\alpha)^m
 \\ & \leq m\alpha
 \end{align}

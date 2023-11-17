@@ -215,7 +215,8 @@ Whereas the null alternative corresponds to a single value (equality in mean), t
 #| cache: true
 #| echo: false
 #| fig.width: 7.0
-#| fig.height: 5.0
+#| out-width: '80%'
+#| fig.height: 4.0
 #| fig-cap: Comparison between null distribution (full curve) and a specific alternative
 #|   for a *t*-test (dashed line). The power corresponds to the area under the curve
 #|   of the density of the alternative distribution which is in the rejection area (in
@@ -241,7 +242,8 @@ ggplot(region) +
 #| cache: true
 #| echo: false
 #| fig.width: 7.0
-#| fig.height: 5.0
+#| fig.height: 4.0
+#| out-width: '80%'
 #| fig-cap: 'Increase in power due to an increase in the mean difference between the
 #|   null and alternative hypothesis. Power is the area in the rejection region (in white)
 #|   under the alternative distribution (dashed): the latter is more shifted to the right
@@ -268,7 +270,8 @@ p1
 #| cache: true
 #| echo: false
 #| fig.width: 7.0
-#| fig.height: 5.0
+#| fig.height: 4.0
+#| out-width: '80%'
 #| fig-cap: 'Increase of power due to an increase in the sample size or a decrease of
 #|   standard deviation of the population: the null distribution (full line) is more
 #|   concentrated. Power is given by the area (white) under the curve of the alternative
@@ -489,9 +492,9 @@ At the end, we calculate the proportion of tests that lead to a rejection of the
 
 
 
-:::keyidea
+:::{.callout-important}
 
-**Summary**:
+## **Summary**
 
 * Effect sizes are used to provide a standardized measure of the strength of a result, independent of the design and the sample size.
 * There are two classes: standardized differences and proportions of variance.

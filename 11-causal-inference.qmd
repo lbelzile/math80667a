@@ -11,7 +11,7 @@
 
 ```{r}
 #| label: fig-xkcd2569
-#| out-width: '80%'
+#| out-width: '65%'
 #| fig-cap: 'xkcd comic [552 (Correlation) by Randall Munroe](https://xkcd.com/552/).
 #|   Alt text: Correlation doesn''t imply causation, but it does waggle its eyebrows
 #|   suggestively and gesture furtively while mouthing ''look over there''. Cartoon reprinted
@@ -201,6 +201,7 @@ To see this, let's generate data with a binary treatment and normally distribute
 #| label: fig-sobelsimu
 #| echo: false
 #| eval: true
+#| out-width: '80%'
 #| cache: true
 #| fig-cap: "Null distribution of Sobel's statistic against approximate asymptotic normal distribution with 20 observations $\\alpha=0$, $\\gamma=0.1$ and normal random errors."
 sobel <- function(data){
@@ -259,6 +260,7 @@ Nowadays, the asymptotic approximation (sometimes misnamed delta method^[The lat
 #| label: bootstrap
 #| echo: false
 #| eval: true
+#| out-width: '80%'
 #| cache: true
 #| fig-cap: "Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines)."
 set.seed(80667)
@@ -337,6 +339,7 @@ We can unpack the model assumptions for the linear mediation model.
 #| label: fig-dag1
 #| eval: true
 #| echo: false
+#| out-width: '80%'
 #| fig-cap: "Directed acyclic graph representing observational settings (left) and experimental settings in which assignment is random given covariates measured pre-treatments (right). The 'no unmeasured confounder' assumption postulates such confounders are included (with the correct parametric form) in the regression models."
 knitr::include_graphics("figures/dag1.png")
 ```
@@ -345,7 +348,7 @@ Another problem would be to claim that variable $M$ is a mediator when in truth 
 
 ```{r}
 #| label: fig-dag2
-#| out-width: '45%'
+#| out-width: '40%'
 #| eval: true
 #| echo: false
 #| fig-cap: "Directed acyclic graph showing multiple mediators."
@@ -500,6 +503,7 @@ knitr::kable(tab_anova,
 #| echo: false
 #| warning: false
 #| message: false
+#| out-width: '80%'
 ggplot(data = GSBE10,
        aes(x = sexism,
            y = respeval,
@@ -523,6 +527,8 @@ To illustrate the method, we dichotomize the manipulation pooling individual and
 ```{r}
 #| eval: true
 #| echo: true
+#| fig-cap: "Johnson--Neyman plot for difference between protest and no protest as a function of sexism."
+#| label: fig-jn
 library(interactions)
 db <- GSBE10 |> 
   dplyr::mutate(
@@ -534,18 +540,8 @@ jn <- johnson_neyman(
   modx = sexism, # moderator
   control.fdr = TRUE,
   mod.range = range(db$sexism)) 
-```
-
-```{r}
-#| eval: true
-#| echo: false
-#| fig-cap: "Johnson--Neyman plot for difference between protest and no protest as a function of sexism."
-#| label: fig-jn
 jn$plot
 ```
 
-The cutoff value is 4.20 with control for the false discovery rate and 4.15 without. The interval is not extended beyond the range of value for sexism, as these are not possible given the Likert scale (which starts at 1).
 
-In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation model could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation.
-
-Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.
+The cutoff value is 4.20 with control for the false discovery rate and 4.15 without. The interval is not extended beyond the range of value for sexism, as these are not possible given the Likert scale (which starts at 1). In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation models could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation. Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.

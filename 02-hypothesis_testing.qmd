@@ -13,7 +13,7 @@ In most applied domains, empirical evidences drive the advancement of the field 
 Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.
 
 
-:::keyidea
+::: {.callout-important}
 
 **Learning objectives**:
 
@@ -73,7 +73,7 @@ We call numerical summaries of the data **statistics**. Its important to disting
 
 ```{r}
 #| label: fig-cake
-#| out.width: '33%'
+#| out-width: '33%'
 #| fig-cap: "[Estimand](https://www.flickr.com/photos/darkdwarf/16563489881) (left), estimator (middle) and [estimate](https://www.flickr.com/photos/bensutherland/14685548773) (right) illustrated with cakes and based on an original idea of Simon Grund. Cake photos shared under [CC BY-NC 2.0 license](https://creativecommons.org/licenses/by-nc/2.0/)."
 #| fig-subcap: 
 #|  - "Estimand"
@@ -93,7 +93,7 @@ Because the inputs of the estimator are random, the output is also random and ch
 
 ```{r}
 #| label: fig-xkcd605
-#| out.width: 70%
+#| out-width: 70%
 #| fig-cap: 'xkcd comic [2581 (Health Stats) by Randall Munroe](https://xkcd.com/2581/).
 #|   Alt text: You will live on forever in our hearts, pushing a little extra blood toward
 #|   our left hands now and then to give them a squeeze. Cartoon reprinted under the
@@ -120,11 +120,12 @@ ggplot(data = samp,
   geom_point() +
   geom_jitter() +
   labs(col = "sample", y = "observations", x = "sample number") +
-  theme(legend.position = "none") +
   stat_summary(fun = mean,
                geom = "point",
                shape = 95,
-               size = 20)
+               size = 20) +
+  theme_classic() + 
+  theme(legend.position = "none")
 ```
 
 We can clearly see from @fig-samplevar that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average $\mu$ than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.
@@ -162,7 +163,8 @@ ggplot(df, aes(x = x, y = after_stat(density))) +
   geom_histogram(bins=10, color="white",)+
   facet_wrap(~sample, nrow = 2)+
   labs(y = "sample proportion", x = "") +
-  scale_x_continuous(breaks=c(0,5,10))
+  scale_x_continuous(breaks=c(0,5,10)) +
+  theme_classic() 
 ```
 
 Even if they are drawn from the same population, the 10 samples in @fig-unifsamp1 look quite different. The only thing at play here is the sample variability: since there are $n=20$ observations in total, there should be on average 10% of the observations in each of the 10 bins, but some bins are empty and others have more counts than expected. This fluctuation is due to randomness, or chance. 
@@ -200,14 +202,16 @@ g1 <- ggplot(df |> dplyr::filter(group == "alternative"), aes(x = x, y = after_s
   facet_wrap(~sample, nrow = 1,
              labeller = label_wrap_gen(multi_line=FALSE))+
   labs(y = "proportion", x = "") +
-  scale_x_continuous(breaks=c(0,5,10))
+  scale_x_continuous(breaks=c(0,5,10)) +
+  theme_classic() 
 g2 <- ggplot(df %>% filter(group == "null"), aes(x = x, y = after_stat(density))) +
   geom_hline(yintercept = 0.1, col = "gray", lty = 2) +
   geom_histogram(bins = 10, color="white", fill = 4)+
   facet_wrap(~sample, nrow = 1,
              labeller = label_wrap_gen(multi_line=FALSE))+
   labs(y = "proportion", x = "") +
-  scale_x_continuous(breaks=c(0,5,10))
+  scale_x_continuous(breaks=c(0,5,10)) +
+  theme_classic() 
 g2 / g1
 ```
 
@@ -315,7 +319,8 @@ g1a <- ggplot() +
   scale_x_continuous(expand = c(0,0), 
                      limits = c(0,1),
                      breaks = sort(c(0.1, seq(0,1, by= 0.25))),
-                     labels = c("0","0.1","0.25","0.5", "0.75", "1"))
+                     labels = c("0","0.1","0.25","0.5", "0.75", "1")) +
+  theme_classic() 
 # g1b <- ggplot() +
 #   geom_vline(xintercept = 0.1, lty = 2, alpha = 0.2) + 
 #   geom_segment(data = data.frame(x = 0, xend = 0.1, y = cdf_wald(0.1, ncp = 0)), 
@@ -334,7 +339,8 @@ g2a <- ggplot() +
   scale_x_continuous(expand = c(0,0), 
                      limits = c(0,1),
                      breaks = sort(c(0.1, seq(0,1, by= 0.25))),
-                     labels = c("0","0.1","0.25","0.5", "0.75", "1"))
+                     labels = c("0","0.1","0.25","0.5", "0.75", "1")) +
+  theme_classic() 
 
 g3a <- ggplot() +
   geom_function(fun = power_wald, args = list(ncp = 0.5), xlim = c(0,1), n = 10001) +
@@ -348,7 +354,8 @@ g3a <- ggplot() +
   scale_x_continuous(expand = c(0,0), 
                      limits = c(0,1),
                      breaks = sort(c(0.1, seq(0,1, by= 0.25))),
-                     labels = c("0","0.1","0.25","0.5", "0.75", "1"))
+                     labels = c("0","0.1","0.25","0.5", "0.75", "1")) +
+  theme_classic() 
 # g3b <- ggplot() +
 #   geom_vline(xintercept = 0.1, lty = 2, alpha = 0.2) + 
 #   geom_segment(data = data.frame(x = 0, xend = 0.1, y = cdf_wald(0.1, ncp = 0.5)), 
@@ -373,7 +380,8 @@ g4 <- ggplot() +
     scale_y_continuous(expand = c(0,0), 
                      limits = c(0,1),
                      breaks = seq(0,1, by= 0.25),
-                     labels = c("0","0.25","0.5", "0.75", "1"))
+                     labels = c("0","0.25","0.5", "0.75", "1")) +
+  theme_classic() 
 # (g1a + g1b) / (g3a + g3b)
 g1a + g3a
 ```
@@ -418,7 +426,7 @@ To make a decision, we compare our *p*-value $P$ with the level of the test $\al
 
 Do not mix up level of the test (a probability fixed beforehand by the researcher) and the *p*-value. If you do a test at level 5\%, the probability of type I error (condemning an innocent by mistake) is by definition $\alpha$ and does not depend on the *p*-value. The latter is a conditional probability of observing a more extreme statistic given the null distribution $\mathscr{H}_0$ is true.
 
-:::pitfall
+:::{.callout-caution}
 The [American Statistical Association (ASA) published a 
 list of principles](https://doi.org/10.1080/00031305.2016.1154108) guiding (mis)interpretation of _p_-values, some of which are reproduced below:
 
@@ -558,7 +566,8 @@ ggplot(data = null_dist, # a tibble with a single variable, 'stat'
   labs(x = "odds ratio") + # give meaningful label
   geom_vline(data = obs_stat, # add vertical line
              mapping = aes(xintercept = stat), # position on x-axis of line
-             color = "red") # color
+             color = "red")  +
+  theme_classic() # color
 # Obtain the p-value
 pval <- null_dist %>%
   get_p_value(obs_stat = obs_stat, 
@@ -592,7 +601,7 @@ Following the APA guidelines, the $\chi^2$ statistic would be reported as `r sup
 
 :::
 
-:::pitfall
+:::{.callout-caution}
 
 In the first experiment, managers were also asked to rank applications on their potential for both employee and customer relations using a Likert scale of six items ranging from (1) extremely unfavorable to (6) extremely favorable. However, only the averages are reported in Table 1 along with [@Rosen:1974]
 
@@ -653,6 +662,7 @@ ggplot(data = confint_dat,
   labs(x = "replicate study",
        y = "",
        col = "") +
+  theme_classic() +
   theme(legend.position = "bottom",
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
@@ -800,7 +810,7 @@ Richard McElreath in the [first chapter](http://xcelab.net/rmpubs/sr2/statistica
 The responsibility therefore lies with the user to correctly use statistical procedures and be aware of their limitations. A _p_-value does not indicate whether the hypothesis is reasonable, whether the design is proper, whether the choice of measurement is adequate, etc.
 
 
-::: yourturn
+:::{.callout-tip}
 
 Pick a journal paper (e.g., one of the dataset documented in the course webpage) and a particular study. 
 

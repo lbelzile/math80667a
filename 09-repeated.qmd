@@ -290,6 +290,7 @@ With repeated measures, it is sometimes convenient to store measurements associa
 #| fig-cap: "Long versus wide-format for data tables (illustration by Garrick Aden-Buie)."
 #| echo: false
 #| eval: true
+#| out-width: '50%'
 knitr::include_graphics(path = "figures/original-dfs-tidy.png")
 ```
 
@@ -411,6 +412,7 @@ This amounts to compute the weights $\boldsymbol{w}$ such, that, computing $\bol
 ```{r}
 #| eval: true
 #| echo: false
+#| out-width: '80%'
 #| label: fig-lindiscrim
 #| fig-cap: "Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group."
 discrim <- MASS::lda(group ~ posttest1 + posttest2 + posttest3,

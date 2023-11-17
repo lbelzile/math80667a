@@ -53,13 +53,13 @@ This, it turns out, is a special case of linear regression model. We could build
 For example, in the @Maglio.Polman:2014 study, we could gather observations for each factor combination in a table, where `direction` is the row and `station` the column.
 
 
-|  $A$ `station` | $B$ `direction`| $b_1$ (`east`) | $b_2$ (`west`)| *row mean* |
+|  $A$ `station` | $B$ `direction`| $b_1$ (`east`) | $b_2$ (`west`)| row mean |
 |------------|-|:----------:|:-----:|:-----:|
 | $a_1$ (`Spadina`) | |$\mu_{11}$ | $\mu_{12}$ | $\mu_{1.}$ |
 |  $a_2$ (`St. George`)  | | $\mu_{21}$ | $\mu_{22}$ | $\mu_{2.}$ |
 | $a_3$ (`Bloor-Yonge`) | | $\mu_{31}$ | $\mu_{32}$ | $\mu_{3.}$ |
 | $a_4$ (`Sherbourne`) | | $\mu_{41}$ | $\mu_{42}$ | $\mu_{4.}$ |
-|*column mean* | | $\mu_{.1}$ | $\mu_{.2}$ | $\mu$ |
+| column mean | | $\mu_{.1}$ | $\mu_{.2}$ | $\mu$ |
 
 : Conceptual depiction of cell average for the two by two design of @Maglio.Polman:2014 {#tbl-cellmeansMP14}
 
@@ -281,9 +281,9 @@ To get the simple effects, we give both variables in `specs` as factors for whic
 :::
 
 
-:::keyidea
+:::{.callout-important}
 
-**Summary**:
+## **Summary**
 
 * Complete factorial designs consist of experiments in which we manipulate multiple experimental factors at once and collect observations for each subgroup.
 * Factorial designs are more efficient than running repeatedly one-way analysis of variance with the same sample size per group.

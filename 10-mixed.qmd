@@ -58,6 +58,7 @@ We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smili
 #| label: fig-aafulldat
 #| fig-cap: "Jittered scatterplot of individual measurements per participant and stimulus type."
 #| eval: true
+#| out-width: '80%'
 #| echo: false
 ggplot(data = hecedsm::AA21,
        aes(x = id,
@@ -65,7 +66,8 @@ ggplot(data = hecedsm::AA21,
            colour = stimulus,
            y = latency)) +
     geom_point(position = "jitter") +
-  theme_classic()
+  theme_classic() +
+  theme(legend.position = "bottom")
 ```
 
 @fig-aafulldat shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.

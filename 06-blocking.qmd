@@ -192,6 +192,9 @@ knitr::kable(tab_ancova,
 #| fig-cap: "Scatterplot of product evaluation as a function of the familiarity score, split by experimental manipulation."
 #| eval: true
 #| echo: false
+#| out-width: '70%'
+#| fig-width: 8
+#| fig-height: 6
 #| message: false
 #| warning: false
 set.seed(1234)
@@ -466,7 +469,7 @@ ggplot(data = SSVB21_S3_summary,
 :::
 
 
-:::pitfall
+:::{.callout-caution}
 @vanStekelenburg:2021 split their data to do pairwise comparisons two at the time (thus taking roughly two-third of the data to perform a two sample _t_-test with each pair). Although it does not impact their conclusion, this approach is conceptually incorrect: if the variance was equal, we would want to use all observations to estimate it (so their approach would be suboptimal, since we would estimate the variance three times with smaller samples).
 
 On the contrary, using a model that assumes equal variance when it is not the case leads to distortion: the variance we estimate will be some sort of average of the variability $\sigma_i$ and $\sigma_j$ in experimental condition $i$ and $j$, again potentially leading to distortions. With large samples, this may be unconsequential, but illustrates caveats of subsample analyses.
@@ -474,14 +477,17 @@ On the contrary, using a model that assumes equal variance when it is not the ca
 
 :::
 
-:::pitfall
+:::{.callout-caution}
 
 @fig-vanStekS3f1 shows the relationship between prior and posterior score. The data show clear difference between individuals: many start from completely disbelieving of genetically engineered food and change their mind (sometimes drastically), there are many people who do not change idea at all and have similar scores, and many who give a posterior score of zero. This heterogeneity in the data illustrates the danger of only looking at the summary statistics and comparing averages. It does not tell the whole picture! One could investigate whether the strength of religious or political beliefs, or how much participants trust scientists, could explain some of the observed differences.
+
+:::
 
 ```{r}
 #| label: fig-vanStekS3f1
 #| echo: false
 #| eval: true
+#| out-width: '80%'
 #| fig-cap: "Scatterplot of negated prior and posterior belief score."
 # Scatterplot of data
 ggplot(data = SSVB21_S3,
@@ -494,8 +500,6 @@ ggplot(data = SSVB21_S3,
   theme_classic() +
   theme(legend.position = "bottom")
 ```
-
-:::
 
 
 <!-- Dean, Voss, Daguliic (2017), Section 10.2 -->
@@ -516,9 +520,9 @@ Also for power calculations (partial)
 
 
 
-:::keyidea
+:::{.callout-important}
 
-**Summary**:
+## **Summary**
 
 * Inclusion of blocking factor and continuous covariates may help filtering out unwanted variability.
 * These are typically concomitant variables (measured alongside the response variable).
@@ -531,7 +535,7 @@ Also for power calculations (partial)
 
 
 
-::: yourturn
+:::{.callout-tip}
 
 - @Box:1978 write on page 103 the following motto:
 

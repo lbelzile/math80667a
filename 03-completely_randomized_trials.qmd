@@ -14,6 +14,7 @@
 #| warning: false
 library(dplyr)
 library(tibble)
+theme_set(theme_classic())
 ```
 
 This chapter focuses on experiments where potentially multiple factors of interest are manipulated by the experimenter to study their impact. If the allocation of observational units to each treatment combination is completely random, the resulting experiment is a completely randomized design.
@@ -99,7 +100,8 @@ summary_stats <- summary_stats |>
 options(knitr.kable.NA = '')
 
 knitr::kable(summary_stats,
-  digits = c(0,2,2,2)) |>
+  digits = c(0,2,2,2),
+  booktabs = TRUE) |>
   kableExtra::kable_styling()
 ```
 
@@ -148,9 +150,13 @@ The term on the left is a measure of the variability for the null model $(\mu_1 
 We can measure how much worst we do with the alternative model (different average per group) relative to the null by calculating the between sum of square. This quantity in itself varies with the sample size (the more observations, the larger it is) so we must standardize as usual this quantity so that we have a suitable benchmark. 
 
 The $F$-statistic is 
-\begin{align}
-F &= \frac{\text{between-group variability}}{\text{within-group variability}} \\&= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)} \label{eq-Fstatheuristic}
-\end{align}
+
+$$
+\begin{split}
+F &= \frac{\text{between-group variability}}{\text{within-group variability}} \\
+&= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)} 
+\end{split}
+$$ {#eq-Fstatheuristic}
 
 If there is no mean difference (null hypothesis), the numerator is an estimator of the population variance, and so is the denominator of eq. \ref{eq-Fstatheuristic} and the ratio of the two is approximately 1 on average. However, the between sum of square is more variable and this induces skewness: for large enough sample, the null distribution of the _F_-statistic is approximately an _F_-distribution, whose shape is governed by two parameters named degrees of freedom which appear in @eq-Fstatheuristic as scaling factors to ensure proper standardization. The first degree of freedom is the number of restrictions imposed by the null hypothesis ($K-1$, the number of groups minus one for the one-way analysis of variance), and the second degree of freedom is the number of observations minus the number of *parameters estimates* for the mean ($n-K$, where $n$ is the overall sample size and $K$ is the number of groups).^[There are only $K$ parameter estimates for the mean, since the overall mean is full determined by the other averages with $n\widehat{\mu} =n_1\widehat{\mu}_1 + \cdots + n_K \widehat{\mu}_K$.]
 
@@ -250,6 +256,7 @@ g2 <- ggplot() +
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position = "none")
+theme_set(theme_classic())
 g1 + g2
 ```  
   
@@ -483,6 +490,9 @@ How to represent data for a one-way analysis in a publication? The purpose of th
 #|   showing the sample average with one standard error above and below, and dot plot
 #|   with the sample mean (right).'
 #| message: false
+#| fig-width: 10
+#| fig-height: 4
+#| out-width: '90%'
 summary_stats <- 
   arithmetic |> 
   group_by(group) |>
@@ -511,7 +521,6 @@ g2 <- ggplot(data = summary_stats,
     geom_point(mapping = aes(y = mean),
              pch = "|",
              size = 6,
-             linewidth = 2,
              position = position_nudge(y = -0.1)) + 
   geom_errorbar(mapping = aes(ymin = lower, 
                               ymax = upper),
@@ -550,6 +559,7 @@ Observations beyond the whiskers are represented by dots or circles, sometimes t
 #| label: fig-boxplot
 #| fig-cap: Box-and-whiskers plot
 #| echo: false
+#| out-width: '80%'
 knitr::include_graphics('figures/01-intro-boxplot.png')
 ```
 
@@ -575,6 +585,7 @@ where $\widehat{\mu}_i$ and $n_i$ are respectively the sample average and the nu
 ```{r}
 #| label: fig-tcurve
 #| eval: true
+#| out-width: '80%'
 #| fig-cap: "Student-_t_ null distribution and rejection region for a _t_-test."
 ggplot() +
   coord_cartesian(xlim = c(-5,5), 
@@ -601,7 +612,8 @@ ggplot() +
     stat_function(fun = dt, 
     xlim = c(-5,5),
                 args = list(df = 40), n = 1000) + 
-       theme_classic() + labs(y = "density", x = "")
+    labs(y = "density", x = "") +
+       theme_classic() 
 ```
 
 
@@ -681,9 +693,9 @@ ggplot(data = fake_data, aes(x = group, y = response, col = group)) +
                            x = group, 
                            col = group),
              shape = 95, size = 10, stroke = 2) + 
-  theme(legend.position = "none") + 
-  labs(y = "")
-
+  labs(y = "") +
+  theme_classic() +
+  theme(legend.position = "none") 
 ```
 
 More generally, the test statistic may make further assumptions. The $F$-test of the global null $\mu_1 = \cdots \mu_K$ assumes that the $i$th observation of group $k$, say $y_{ik}$, has average $\mathsf{E}(Y_{ik}) = \mu_k$ and variance $\mathsf{Va}(Y_{ik}) = \sigma^2$. The latter is estimated using all of the residuals, with $\widehat{\sigma}^2 = \sum_k\sum_i (y_{ik} - \widehat{\mu}_k)^2/(n-K)$. Under these assumptions, the $F$-test statistic for the global null $\mu_1 = \cdots = \mu_K$ is the most powerful because it uses all of the data to get a more precise estimation of the variability. Generally, there may be other considerations than power that may guide the choice of test statistic, including robustness (sensitivity to extremes and outliers). For unequal variance, other statistics than the $F$-test statistic may be more powerful. 
@@ -875,7 +887,7 @@ g2 <- ggplot(data = tibble("pvalue" = pvalsW),
   # bin into 20 compartments,
   # specifying boundaries to avoid artifacts
   geom_histogram(breaks = seq(0, 1, by = 0.05),
-                 aes(y = stat(width*density)),
+                 aes(y = after_stat(width*density)),
                  alpha = 0.2) +
   stat_function(fun = function(x){0.05}, #uniform distribution
                 col = "blue") +
@@ -885,6 +897,7 @@ g2 <- ggplot(data = tibble("pvalue" = pvalsW),
    scale_x_continuous(expand = c(0, 0),
                       limits = c(0, 1),
                       breaks = c(0,0.5,1)) 
+theme_set(theme_classic())
 g1 + g2
 ```
 
@@ -990,6 +1003,7 @@ What is the impact of dependence between measurements? Heuristically, correlated
 #| echo: false
 #| eval: true
 #| cache: true
+if(!"matRes.RData" %in% list.files(path = "./figures")){
 set.seed(1234)
 n <- 25
 ng <- c(2,3,5,10)
@@ -1014,6 +1028,11 @@ for(j in seq_along(ng)){
   }
  }
 }
+save(list = c("matRes", "correlation", "ng"), file = "figures/matRes.RData")
+} else{
+  load(file = "figures/matRes.RData")
+}
+
 
 ```
 

@@ -60,13 +60,11 @@ str(BRLS21_T3)
 xtabs(~ task + id, data = BRLS21_T3)
 ```
 
-A quick inspection reveals that the data are balanced with four tasks and 31 individuals. We can view the within-subject design with a single replication as a complete block design (with `id` as block) and `task` as experimental manipulation.
-
-How could we compare the different tasks? The data here are clearly very far from normally distributed and there are notable outliers among the residuals, as evidenced by \@ref(fig:fig-normqqplot). Conclusions probably wouldn't be affected by using an analysis of variance, but it may be easier to convince reviewers that the findings are solid by ressorting to nonparametric procedures.
+A quick inspection reveals that the data are balanced with four tasks and 31 individuals. We can view the within-subject design with a single replication as a complete block design (with `id` as block) and `task` as experimental manipulation. The data here are clearly far from normally distributed and there are notable outliers in the upper right tail. While conclusions probably wouldn't be affected by using an analysis of variance to compare the average time per task, but it may be easier to convince reviewers that the findings are solid by ressorting to nonparametric procedures.
 
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: false
 #| fig-align: 'center'
 #| fig-width: 8

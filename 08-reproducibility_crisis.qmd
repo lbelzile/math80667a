@@ -9,7 +9,9 @@
 
 In recent years, many team efforts have performed so-called replications of existing methodological papers to assess the robustness of their findings. Perhaps unsurprisingly, many replications failed to yield anything like what authors used to claim, or found much weaker findings. This chapter examines some of the causes of this lack of replicability.
 
-:::keyidea
+:::{.callout-important}
+
+## Learning objectives
 
 * Defining replicability and reproducibility.
 * Understanding the scale of the replication crisis.
@@ -28,6 +30,7 @@ We adopt the terminology of @Claerbout/Karrenbach:1992: a study is said to be **
 #| echo: false
 #| fig-cap: Definition of different dimensions of reproducible research (from The Turing
 #|   Way project, illustration by Scriberia).
+#| out-width: '80%'
 knitr::include_graphics("figures/turing_way.jpg")
 ```
 
@@ -48,6 +51,7 @@ Such findings show that the peer-review procedure is not foolproof: the "publish
 #| fig-cap: Figure 2 from @Nosek:2015, showing scatterplot of effect sizes for the original
 #|   and the replication study by power, with rugs and density plots by significance
 #|   at the 5% level.
+#| out-width: '70%'
 knitr::include_graphics("figures/RPP_psycho_repro.png")
 ```
 
@@ -58,6 +62,7 @@ Another problem is selective reporting. Because a large emphasis is placed on st
 #| echo: false
 #| fig-cap: Figure from @vanZwet:2021 based on results of @Barnett:2019; histogram of
 #|   $z$-scores from one million studies from Medline.
+#| out-width: '60%'
 knitr::include_graphics("figures/vanZwet_Cator-zvalues.png")
 ```
 
@@ -83,6 +88,7 @@ Version control keeps records of changes to your file and can help you retrieve 
 #| echo: false
 #| fig-cap: Tweet showing widespread problems related to unintentional changes to raw
 #|   data by software.
+#| out-width: '60%'
 knitr::include_graphics("figures/reproducibility.png")
 ```
 
@@ -96,6 +102,7 @@ To enforce reproducibility, many journals now have policy regarding data, materi
 #| echo: false
 #| fig-cap: Screenshot of the Nature Reporting summary for statistics, reproduced under
 #|   the CC BY 4.0 license.
+#| out-width: '80%'
 knitr::include_graphics("figures/Nature_reporting_statistics.png")
 ```
 
@@ -126,7 +133,7 @@ The level $\alpha=5$\% is essentially arbitrary and dates back to @Fisher:1926, 
 
 
 
-::: outsidethebox
+:::{.callout-note}
 
 Methods that pool together results, such as meta-analysis, are sensitive to selective reporting. Why does it matter?
 
@@ -144,6 +151,7 @@ A more important criticism is that the people who answer those surveys are not r
 #| label: fig-samplingbias
 #| echo: false
 #| fig-cap: "Sampling bias. Artwork by [Jonathan Hey (Sketchplanations)](https://sketchplanations.com/sampling-bias) shared under the [CC BY-NC 4.0 license](http://creativecommons.org/licenses/by-nc/4.0/)."
+#| out-width: '65%'
 knitr::include_graphics('figures/samplingbias.jpg')
 ```
 The same can be said of panels of students recruited in universities classes, who are more young, educated and perhaps may infer through backward induction the purpose of the study and answer accordingly.
@@ -154,7 +162,7 @@ Operating in an open-science environment should be seen as an opportunity to mak
 
 There are many platforms for preregistering studies and sharing preanalysis plans, scripts and data, with different level of formality. One such is the [Research Box](https://researchbox.org/).
 
-::: yourturn
+:::{.callout-tip}
 
 Reflect on your workflow as applied researcher when designing and undertaking experiments. Which practical aspects could you improve upon to improve the reproducibility of your study?
 

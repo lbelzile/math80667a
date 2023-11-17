@@ -252,8 +252,16 @@ div.csl-indent {
 <p>effects under investigation tend to be masked by fluctuations outside the experimenter’s control.</p>
 </blockquote>
 <p>The purpose of experiments is to arrange data collection so as to be capable of disentangling the differences due to treatment from those due to the (often large) intrinsic variation of the measurements. We typically expect differences between treatments (and thus the effect) to be <em>comparatively stable</em> relative to the measurement variation.</p>
-<div class="keyidea">
-<p><strong>Learning objectives</strong>:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Learning objectives</strong>:
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Learning the terminology associated to experiments.</li>
 <li>Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population.</li>
@@ -261,15 +269,16 @@ div.csl-indent {
 <li>Understanding the rationale behind the requirements for good experimental studies.</li>
 </ul>
 </div>
+</div>
 <section id="study-type" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="study-type"><span class="header-section-number">1.1</span> Study type</h2>
 <p>There are two main categories of studies: observational and experimental. The main difference between the two is treatment assignment. In observational studies, a feature or potential cause is measured, but not assigned by the experimenter. By contrast, the treatment assignment mechanism is fully determined by the experimenter in the latter case.</p>
 <p>For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to <em>directly</em> establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the experimental manipulation.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-openintrograph_83b1235e02774886b4e1e16d7c87dab3">
+<div class="cell" data-hash="01-introduction_cache/html/fig-openintrograph_5cbfcf5404bd604d26afc6b003432f26">
 <div class="cell-output-display">
 <div id="fig-openintrograph" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="figures/random_sample_assignment.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="figures/random_sample_assignment.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption class="figure-caption">Figure&nbsp;1.1: Two by two classification matrix for experiments based on sampling and study type. Source: Mine Çetinkaya-Rundel and OpenIntro, distributed under the <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA license</a>.</figcaption>
 </figure>
 </div>
@@ -294,7 +303,16 @@ div.csl-indent {
 Potential confounders for this experiment include the strength of individuals, which reflects their prior exposure to the topic, knowledge, maturity, etc. This could be measured using a preliminary exam before assignment of students to class groups is completed. Additional factors worth controlling for include timing of the classroom (morning, afternoon, evening classes) and instructors.
 -->
 </div>
-<div class="yourturn">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The marketing department of a company wants to know the value of its brand by determining how much more customers are willing to pay for their product relative to the cheaper generic product offered by the store. Economic theory suggests a substitution effect: while customers may prefer the brand product, they will switch to the generic version if the price tag is too high. To check this theory, one could design an experiment.</p>
 <p>As a researcher, how would you conduct this study? Identify a specific product. For the latter, define</p>
 <ul>
@@ -303,25 +321,53 @@ Potential confounders for this experiment include the strength of individuals, w
 <li>potential blocking factors</li>
 </ul>
 </div>
+</div>
 <p>The main reason experiments should be preferred to collection of observational data is that they allow us, if they are conducted properly, to draw <strong>causal conclusions</strong> about the phenomenon of interest. If we take a random sample from the population of interest, split it randomly and manipulate only certain aspects, then all differences between groups must be due to those changes.</p>
 <p>As <span class="citation" data-cites="Hariton.Locascio:2018">Hariton and Locascio (<a href="references.html#ref-Hariton.Locascio:2018" role="doc-biblioref">2018</a>)</span> put it:</p>
 <blockquote class="blockquote">
 <p>Randomised controlled trials (RCTs) are the reference standard for studying causal relationships between interventions and outcomes as randomisation eliminates much of the bias inherent with other study designs</p>
 </blockquote>
-<div id="quasiexperiment" class="pitfall">
-<p><strong>Quasi experiments</strong></p>
+<div id="quasiexperiment" class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Quasi experiments</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Sometimes, it is impossible or unethical to conduct an experiment. This seemingly precludes study many social phenomena, such as the effect on women and infantile mortality of strict bans on abortions. When changes in legislation occur (such as the Supreme court overturning Roe and Wade), this offers a window to compare neighbouring states.</p>
 <p>Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Economic Sciences for his work in experimental economics. One of his most cited paper is <span class="citation" data-cites="Card.Krueger:1994">Card and Krueger (<a href="references.html#ref-Card.Krueger:1994" role="doc-biblioref">1994</a>)</span>, a study that looked at the impact of an increase in minimum wage on employment figures. <span class="citation" data-cites="Card.Krueger:1994">Card and Krueger (<a href="references.html#ref-Card.Krueger:1994" role="doc-biblioref">1994</a>)</span> used a planned increase of the minimum wage of $0.80 USD in New Jersey to make comparisons with neighbouring Eastern Pennsylvania counties by studying 410 fast food outlets. The authors found no evidence of a negative impact on employment of this hike.</p>
 </div>
-<div id="internalexternalvalidity" class="keyidea" name="Point of terminology">
-<p><strong>Point of terminology: internal and external validity</strong></p>
+</div>
+<div id="internalexternalvalidity" class="callout callout-style-default callout-important callout-titled" name="Point of terminology">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Point of terminology: internal and external validity</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>A study from which we can study causal relationships is said to have <strong>internal validity</strong>. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other aspects, not covered in the class, that can threaten internal validity.</p>
 <p><strong>External validity</strong> refers directly to generalizability of the conclusions of a study: <a href="#fig-openintrograph">Figure&nbsp;<span>1.1</span></a> shows that external validity is directly related to random sampling from the population</p>
 </div>
-<div id="internalexternalvalidity" class="keyidea" name="Point of terminology">
-<p><strong>Point of terminology: between-subjects and within-subjects designs</strong></p>
+</div>
+<div id="internalexternalvalidity" class="callout callout-style-default callout-important callout-titled" name="Point of terminology">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Point of terminology: between-subjects and within-subjects designs</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In between-subjects designs, subjects are randomly assigned to only one of the different experimental conditions. On the contrary, participants receive many or all of the experimental treatments in a within-subjects design, the order of assignment of the conditions typically being random.</p>
 <p>While within-subject designs allow for a better use of available ressources (it is cheaper to have fewer participants perform multiple tasks), observations from within-design are correlated and more subject to missingness and learning effects, all of which require special statistical treatment.</p>
+</div>
 </div>
 </section>
 <section id="review-of-basic-concepts" class="level2" data-number="1.3">
@@ -333,11 +379,11 @@ Potential confounders for this experiment include the strength of individuals, w
 <li>a <strong>variable</strong> represents a characteristic of the population, for example the sex of an individual, the price of an item, etc.</li>
 <li>an <strong>observation</strong> is a set of measures (variables) collected under identical conditions for an individual or at a given time.</li>
 </ul>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/variablesquanti_575e0007d3901fb78fb5884c9068c6a1">
+<div class="cell" data-hash="01-introduction_cache/html/variablesquanti_5f8dbc61c0b4ecb61d4f5d7fb62b9213">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="figures/continuous_discrete.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="figures/continuous_discrete.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption class="figure-caption">Illustration of continuous (left) and discrete variables (right). Artwork by Allison Horst <a href="https://creativecommons.org/licenses/by/4.0/">shared under the CC BY 4.0 license</a>.</figcaption>
 </figure>
 </div>
@@ -349,11 +395,11 @@ Potential confounders for this experiment include the strength of individuals, w
 <li>a continuous variable can take (in theory) an infinite possible number of values, even when measurements are rounded or measured with a limited precision (time, width, mass). In many case, we could also consider discrete variables as continuous if they take enough values (e.g., money).</li>
 </ul>
 <p>Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using arbitrary encoding for the levels: for modelling, these variables taking <span class="math inline">\(K\)</span> possible values (or levels) must be transformed into a set of <span class="math inline">\(K-1\)</span> binary variables <span class="math inline">\(T_1, \ldots, T_K\)</span>, each of which corresponds to the logical group <span class="math inline">\(k\)</span> (yes = 1, no = 0), the omitted level corresponding to a baseline when all of the <span class="math inline">\(K-1\)</span> indicators are zero. Failing to declare categorical variables in your software is a common mistake, especially when these are saved in the database using integers (1,2, <span class="math inline">\(\ldots\)</span>) rather than as text (Monday, Tuesday, <span class="math inline">\(\ldots\)</span>).</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/variablescateg_ea9bdeb4aa8c1b864bf74467bced9c58">
+<div class="cell" data-hash="01-introduction_cache/html/variablescateg_f99d6cafd96c13eb2bcea2c1633406cf">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="figures/nominal_ordinal_binary.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="figures/nominal_ordinal_binary.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption class="figure-caption">Examples of categorical nominal (left), ordinal (middle) and binary (right) variables. Artwork by <a href="https://www.allisonhorst.com/">Allison Horst</a> shared under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>.</figcaption>
 </figure>
 </div>
@@ -365,11 +411,11 @@ Potential confounders for this experiment include the strength of individuals, w
 </div>
 <div class="example" name="Normal distribution">
 <p>Mathematical theory suggests that, under general conditions, the distribution of a sample average is approximately distributed according to a normal (aka Gaussian) distribution: this result is central to most of statistics. Normally distributed data are continuous; the distribution is characterized by a bell curve, light tails and it is symmetric around it’s mean. The shape of the facade of Hallgrímskirkja church in Reykjavik, shown in <a href="#fig-Hallfrimskirkja">Figure&nbsp;<span>1.2</span></a>, closely resembles the density a normal distribution, which lead <a href="https://sites.google.com/view/khoavu-umn/home">Khoa Vu</a> to call it ‘a normal church’ (chuckles).</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-Hallfrimskirkja_da4077791dc500b1c5dd4628b4eb213e">
+<div class="cell" data-hash="01-introduction_cache/html/fig-Hallfrimskirkja_3f06bac0907a2cd893dc8c29f9260fc7">
 <div class="cell-output-display">
 <div id="fig-Hallfrimskirkja" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="figures/hallgrimskirkja_reykjavik.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="figures/hallgrimskirkja_reykjavik.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption class="figure-caption">Figure&nbsp;1.2: Photography of the <a href="https://www.flickr.com/photos/dvdhaven/6350588233">Hallgrímskirkja church in Reykjavik, Iceland</a> by Dolf van der Haven, reproduced under a <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-ND-NC 2.0 license</a>.</figcaption>
 </figure>
 </div>
@@ -377,21 +423,31 @@ Potential confounders for this experiment include the strength of individuals, w
 </div>
 <p>The normal distribution is fully characterized by two parameters: the average <span class="math inline">\(\mu\)</span> and the standard deviation <span class="math inline">\(\sigma\)</span>. The left panel of <a href="#fig-normaldist">Figure&nbsp;<span>1.3</span></a> shows an arbitrary continuous distribution and the values of a random sample of <span class="math inline">\(n=1000\)</span> draws. The right panel shows the histogram of the sample mean value based on a very large number of random samples of size <span class="math inline">\(n=25\)</span>, drawn from the same distribution. The superimposed black curve is a normal density curve whose parameters match those given by the central limit theorem: the approximation is seemingly quite accurate.</p>
 <p>This fact explains the omnipresence of the normal distribution in introductory data science courses, as well as the prevalence of sample mean and sample variance as key summary statistics.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-normaldist_76ef49ea6257049285702c6ce65aad4c">
+<div class="cell" data-hash="01-introduction_cache/html/fig-normaldist_55173835804eb97d6f6c511e8b8cfa0c">
 <div class="cell-output-display">
 <div id="fig-normaldist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="01-introduction_files/figure-html/fig-normaldist-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="01-introduction_files/figure-html/fig-normaldist-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;1.3: Graphical representation of the distribution of a continuous variable, with histogram of a sample of <span class="math inline">\(n=1000\)</span> observations drawn from the distribution (left) and distribution of the sample mean, obtained by repeatedly drawing random sample of <span class="math inline">\(n=25\)</span> observations and computing their average (right). The curve shows the normal distribution approximation based on the central limit theorem.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div class="outsidethebox">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>One key aspect, often neglected in studies, is the discussion of the metric used for measurement of the response. While previous research may have identified instruments (like questionnaires) and particular wording for studying a particular aspect of individuals, there is a lot of free room for researchers to choose from that may impact conclusions. For example, if one uses a Likert scale, what should be the range of the scale? Too coarse a choice may lead to limited capability to detect, but more truthfulness, while there may be larger intrinsic measurement with a finer scale.</p>
 <p>Likewise, many continuous measures (say fMRI signal) can be discretized to provide a single numerical value. Choosing the average signal, range, etc. as outcome variable may lead to different conclusions.</p>
 <p>Choosing a particular instrument or metric could be in principle done by studying (apriori) the distribution of the values for the chosen metric using a pilot study: this will give researchers some grasp of the variability of those measures.</p>
+</div>
 </div>
 <p>At the heart of most analysis are measurements. The data presented in the course have been cleaned and oftentimes the choice of explanatory variables and experimental factor<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is evident from the context. In applications, however, this choice is not always trivial.</p>
 </section>
@@ -404,17 +460,37 @@ Potential confounders for this experiment include the strength of individuals, w
 <p>One spoonful can reflect the taste of the whole pot, if the soup is well-stirred</p>
 </blockquote>
 <p>A <strong>sample</strong> is a sub-group of individuals drawn at random from the population. We won’t focus on data collection, but keep in mind the following information: for a sample to be good, it must be representative of the population under study.</p>
-<div class="yourturn" name="Confounding">
+<div class="callout callout-style-default callout-tip callout-titled" name="Confounding">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The <a href="https://www.hec.ca/etudiants/mon-programme/baa/cohorte-agir/index.html">Parcours AGIR</a> at HEC Montréal is a pilot project for Bachelor in Administration students that was initiated to study the impact of flipped classroom and active learning on performance.</p>
 <p>Do you think we can draw conclusions about the efficacy of this teaching method by comparing the results of the students with those of the rest of the bachelor program? List potential issues with this approach addressing the internal and external validity, generalizability, effect of lurking variables, etc.</p>
+</div>
 </div>
 <p>Because the individuals are selected at <strong>random</strong> to be part of the sample, the measurement of the characteristic of interest will also be random and change from one sample to the next. While larger samples typically carry more information, sample size is not a guarantee of quality, as the following example demonstrates.</p>
 <div id="exm-Galluppoll" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1.2 (Polling for the 1936 USA Presidential Election) </strong></span><em>The Literary Digest</em> surveyed 10 millions people by mail to know voting preferences for the 1936 USA Presidential Election. A sizeable share, 2.4 millions answered, giving Alf Landon (57%) over incumbent President Franklin D. Roosevelt (43%). The latter nevertheless won in a landslide election with 62% of votes cast, a 19% forecast error. <a href="https://www.jstor.org/stable/2749114">Biased sampling and differential non-response are mostly responsible for the error:</a> the sampling frame was built using ``phone number directories, drivers’ registrations, club memberships, etc.’’, all of which skewed the sample towards rich upper class white people more susceptible to vote for the GOP.</p>
 <p>In contrast, Gallup correctly predicted the outcome by polling (only) 50K inhabitants. <a href="https://medium.com/@ozanozbey/how-not-to-sample-11579793dac">Read the full story here.</a></p>
 </div>
-<div class="outsidethebox">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>What are the considerations that could guide you in determining the population of interest for your study?</p>
+</div>
 </div>
 </section>
 <section id="sampling" class="level3" data-number="1.3.3">
@@ -422,18 +498,28 @@ Potential confounders for this experiment include the strength of individuals, w
 <p>Because sampling is costly, we can only collect limited information about the variable of interest, drawing from the population through a sampling frame (phone books, population register, etc.) Good sampling frames can be purchased from sampling firms.</p>
 <p>In general, <em>randomization</em> is necessary in order to obtain a <strong>representative</strong> sample<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, one that match the characteristics of the population. Failing to randomize leads to introduction of bias and generally the conclusions drawn from a study won’t be generalizable.</p>
 <p>Even when observational units are selected at random to participate, there may be <strong>bias</strong> introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.</p>
-<div class="outsidethebox">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Reflect on the choice of platform used to collect answers and think about how it could influence the composition of the sample returned or affect non-response in a systematic way.</p>
+</div>
 </div>
 <p>Before examining problems related to sampling, we review the main random sampling methods. The simplest is simple random sampling, whereby <span class="math inline">\(n\)</span> units are drawn completely at random (uniformly) from the <span class="math inline">\(N\)</span> elements of the sampling frame. The second most common scheme is stratified sampling, whereby a certain numbers of units are drawn uniformly from strata, namely subgroups (e.g., gender). Finally, cluster sampling consists in sampling only from some of these subgroups.</p>
 <div class="example" name="Illustration of sampling schemes">
 <p>Suppose we wish to look at student satisfaction regarding the material taught in an introductory statistics course offered to multiple sections. The population consists of all students enrolled in the course in a given semester and this list provides the sampling frame. We can define strata to consist of class group. A simple random sample would be obtaining by sampling randomly abstracting from class groups, a stratified sample by drawing randomly a number from each class group and a cluster sampling by drawing all students from selected class groups. Cluster sampling is mostly useful if all groups are similar and if the costs associated to sampling from multiple strata are expensive.</p>
 <p><a href="#fig-sampling">Figure&nbsp;<span>1.4</span></a> shows three sampling schemes: the middle corresponds to stratum (e.g., age bands) whereas the right contains clusters (e.g., villages or classrooms).</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-sampling_d264afa65dfe22fc0fa8154845a60dac">
+<div class="cell" data-hash="01-introduction_cache/html/fig-sampling_43f0397e17803743a8c247950fca3955">
 <div class="cell-output-display">
 <div id="fig-sampling" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="01-introduction_files/figure-html/fig-sampling-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="01-introduction_files/figure-html/fig-sampling-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;1.4: Illustration of three sampling schemes from nine groups: simple random sampling (left), stratified sampling (middle) and cluster sampling (right).</figcaption>
 </figure>
 </div>
@@ -441,16 +527,26 @@ Potential confounders for this experiment include the strength of individuals, w
 </div>
 <p>Stratified sampling is typically superior if we care about having similar proportions of sampled in each group and is useful for reweighting: in <a href="#fig-sampling">Figure&nbsp;<span>1.4</span></a>, the true proportion of sampled is <span class="math inline">\(1/3\)</span>, with the simple random sampling having a range of [<span class="math inline">\(0.22, 0.39\)</span>] among the strata, compared to [<span class="math inline">\(0.31, 0.33\)</span>] for the stratified sample.</p>
 </div>
-<div class="outsidethebox">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?</p>
+</div>
 </div>
 <p>There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.</p>
 <p>In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon’s Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review <span class="citation" data-cites="Aguinis:2021">(<a href="references.html#ref-Aguinis:2021" role="doc-biblioref">Aguinis, Villamor, and Ramani 2021</a>)</span>. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census.</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-samplingbias_ab8b236c640f3d43c8215d8fadcfa343">
+<div class="cell" data-hash="01-introduction_cache/html/fig-samplingbias_83c7765974a341b665ad07f2592fd5a6">
 <div class="cell-output-display">
 <div id="fig-samplingbias" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="figures/continuous_discrete.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="figures/continuous_discrete.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption class="figure-caption">Figure&nbsp;1.5: Sampling bias. Artwork by Jonathan Hey <a href="https://sketchplanations.com/sampling-bias">(Sketchplanations)</a>, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-SA 4.0</a></figcaption>
 </figure>
 </div>
@@ -463,11 +559,11 @@ Potential confounders for this experiment include the strength of individuals, w
 <p>The field of experimental design has a long history, starting with agricultural field trials.</p>
 <div id="exm-agriculturalfieldtrials" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1.3 (Agricultural field trials at the Rothamsted Research Station.) </strong></span>The <a href="https://www.rothamsted.ac.uk/">Rothamsted Research Station</a> in the UK has been conducting experiments since 1843. Ronald A. Fisher, who worked 14 years at Rothamsted from 1919, developed much of the statistical theory underlying experimental design, inspired from his work there. <span class="citation" data-cites="Yates:1964">Yates (<a href="references.html#ref-Yates:1964" role="doc-biblioref">1964</a>)</span> provides a recollection of his contribution to the field.</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-rothamsted_2c9a2750e6db2ef52249fd7d9ba1c168">
+<div class="cell" data-hash="01-introduction_cache/html/fig-rothamsted_b3374c340c19764ee570b0055d3b0f60">
 <div class="cell-output-display">
 <div id="fig-rothamsted" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="figures/HFL-A1958.jpg" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="figures/HFL-A1958.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption class="figure-caption">Figure&nbsp;1.6: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield-Ley-Arable-1-1">1958 plan for the Highfield Ley–Arable Experiment</a>. Source: Rothamsted Research Station, reproduced under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>.</figcaption>
 </figure>
 </div>
@@ -541,7 +637,7 @@ Potential confounders for this experiment include the strength of individuals, w
 </blockquote>
 <p>Even if we believe a factor to have no effect, it may be wise to introduce it in the experiment to check this assumption: if it is not a source of variability, it shouldn’t impact the findings and at the same time would provide some more robustness.</p>
 <p>If we look at a continuous treatment, than it is probably only safe to draw conclusions within the range of doses administered. Comic in <a href="02-hypothesis_testing.html#fig-xkcd605">Figure&nbsp;<span>2.3</span></a> is absurd, but makes this point.</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-xkcd605_0983b47aa045aa897534404932825897">
+<div class="cell" data-hash="01-introduction_cache/html/fig-xkcd605_abd5cb643276a272a11f233872ff698a">
 <div class="cell-output-display">
 <div id="fig-xkcd605" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -562,7 +658,7 @@ Potential confounders for this experiment include the strength of individuals, w
 <h3 data-number="1.5.4" class="anchored" data-anchor-id="simplicity"><span class="header-section-number">1.5.4</span> Simplicity</h3>
 <p>The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. <a href="#fig-xkcd2400">Figure&nbsp;<span>1.8</span></a> shows an <a href="https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png">hypothetical graph</a> on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.</p>
 <p>Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs, requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.</p>
-<div class="cell" data-layout-align="center" data-hash="01-introduction_cache/html/fig-xkcd2400_80b2be6d457c81e700474ce6328cb6ca">
+<div class="cell" data-hash="01-introduction_cache/html/fig-xkcd2400_73a89ef447a1686cd6068d772450d612">
 <div class="cell-output-display">
 <div id="fig-xkcd2400" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -572,11 +668,21 @@ Potential confounders for this experiment include the strength of individuals, w
 </div>
 </div>
 </div>
-<div class="yourturn">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Define the following terms in your own word: experimental unit, factor, treatment.</li>
 <li>What is the main benefit of experimental studies over observational studies?</li>
 </ul>
+</div>
 </div>
 
 

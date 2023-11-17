@@ -17,9 +17,9 @@ This course covers experimental designs.  In an experiment, the researcher manip
 The purpose of experiments is to arrange data collection so as to be capable of disentangling the differences due to treatment from those due to the (often large) intrinsic variation of the measurements. We typically expect differences between treatments (and thus the effect) to be *comparatively stable* relative to the measurement variation. 
 
 
-::: {.keyidea}
+::: {.callout-important}
 
-**Learning objectives**:
+## **Learning objectives**:
 
 - Learning the terminology associated to experiments.
 - Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population.
@@ -45,6 +45,7 @@ For example, an economist studying the impact of interest rates on the price of 
 #|   type. Source: Mine Çetinkaya-Rundel and OpenIntro, distributed under the [CC BY-SA
 #|   license](https://creativecommons.org/licenses/by-sa/3.0/us/).'
 #| echo: false
+#| out-width: '80%'
 knitr::include_graphics("figures/random_sample_assignment.png")
 ```
 
@@ -72,7 +73,7 @@ Potential confounders for this experiment include the strength of individuals, w
 
 :::
 
-::: {.yourturn}
+::: {.callout-tip}
 
 The marketing department of a company wants to know the value of its brand by determining how much more customers are willing to pay for their product relative to the cheaper generic product offered by the store. Economic theory suggests a substitution effect: while customers may prefer the brand  product, they will switch to the generic version if the price tag is too high. To check this theory, one could design an experiment.
 
@@ -92,9 +93,9 @@ The main reason experiments should be preferred to collection of observational d
 relationships between interventions and outcomes as randomisation eliminates much of
 the bias inherent with other study designs
 
-::: {.pitfall #quasiexperiment}
+::: {.callout-caution #quasiexperiment}
 
-**Quasi experiments**
+## **Quasi experiments**
 
 Sometimes, it is impossible or unethical to conduct an experiment. This seemingly precludes study many social phenomena, such as the effect on women and infantile mortality of strict bans on abortions. When changes in legislation occur (such as the Supreme court overturning Roe and Wade), this offers a window to compare neighbouring states.
 
@@ -102,9 +103,9 @@ Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Ec
 
 :::
 
-::: {.keyidea #internalexternalvalidity name="Point of terminology"}
+::: {.callout-important #internalexternalvalidity name="Point of terminology"}
 
-**Point of terminology: internal and external validity**
+## **Point of terminology: internal and external validity**
 
 
 A study from which we can study causal relationships is said to have **internal validity**. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other aspects, not covered in the class, that can threaten internal validity.
@@ -113,9 +114,9 @@ A study from which we can study causal relationships is said to have **internal 
 
 :::
 
-::: {.keyidea #internalexternalvalidity name="Point of terminology"}
+::: {.callout-important #internalexternalvalidity name="Point of terminology"}
 
-**Point of terminology: between-subjects and within-subjects designs**
+## **Point of terminology: between-subjects and within-subjects designs**
 
 In between-subjects designs, subjects are randomly assigned to only one of the different
 experimental conditions. On the contrary, participants receive many or all of the experimental treatments in a within-subjects design, the order of assignment of the conditions typically being random.
@@ -142,6 +143,7 @@ The choice of statistical model and test depends on the underlying type of the d
 #| fig-cap: Illustration of continuous (left) and discrete variables (right). Artwork
 #|   by Allison Horst [shared under the CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
 #| echo: false
+#| out-width: '80%'
 knitr::include_graphics('figures/continuous_discrete.png')
 ```
 
@@ -156,6 +158,7 @@ Categorical variables take only a finite of values. They are regrouped in two gr
 #| label: variablescateg
 #| echo: false
 #| fig-cap: "Examples of categorical nominal (left), ordinal (middle) and binary (right) variables. Artwork by [Allison Horst](https://www.allisonhorst.com/) shared under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)."
+#| out-width: '80%'
 knitr::include_graphics('figures/nominal_ordinal_binary.png')
 ```
 
@@ -178,6 +181,7 @@ Mathematical theory suggests that, under general conditions, the distribution of
 #| label: fig-Hallfrimskirkja
 #| fig-cap: "Photography of the [Hallgrímskirkja church in Reykjavik, Iceland](https://www.flickr.com/photos/dvdhaven/6350588233) by Dolf van der Haven, reproduced under a [CC BY-ND-NC 2.0 license](https://creativecommons.org/licenses/by-nc-nd/2.0/)."
 #| echo: false
+#| out-width: '80%'
 knitr::include_graphics("figures/hallgrimskirkja_reykjavik.jpg")
 ```
 
@@ -223,9 +227,10 @@ meandat <- replicate(n = 1e4,
 g1 <- ggplot(data = data.frame(samp)) + 
   geom_histogram(aes(x=samp, y = after_stat(density)),
                  bins = 30) +
-  xlab("")
+  xlab("") +
+  theme_classic()
   # geom_function(fun = densmixt, colour = "black",
-  #               n = 1001)
+  #               n = 1001) 
 g2 <- ggplot(data = data.frame(x = meandat)) + 
   geom_histogram(aes(x=x, y = after_stat(density)),
                  bins = 30) +
@@ -233,7 +238,8 @@ g2 <- ggplot(data = data.frame(x = meandat)) +
                 args = list(mean = theo_mean,
                             sd = sqrt(theo_var/ns)),
                  n = 1001) +
-  xlab("")
+  xlab("") +
+  theme_classic()
 
 g1 + g2
 ```
@@ -242,7 +248,7 @@ g1 + g2
 :::
 
 
-::: {.outsidethebox}
+::: {.callout-note}
 
 One key aspect, often neglected in studies, is the discussion of the metric used for measurement of the response. While previous research may have identified instruments (like questionnaires) and particular wording for studying a particular aspect of individuals, there is a lot of free room for researchers to choose from that may impact conclusions. For example, if one uses a Likert scale, what should be the range of the scale? Too coarse a choice may lead to limited capability to detect, but more truthfulness, while there may 
 be larger intrinsic measurement with a finer scale.
@@ -270,7 +276,7 @@ In general, we therefore consider only **samples** to gather the information we 
 
 A **sample** is a sub-group of individuals drawn at random from the population. We won't focus on data collection, but keep in mind the following information: for a sample to be good, it must be representative of the population under study.
 
-::: {.yourturn name="Confounding"}
+::: {.callout-tip name="Confounding"}
 The [Parcours  AGIR](https://www.hec.ca/etudiants/mon-programme/baa/cohorte-agir/index.html) at HEC Montréal is a pilot project for Bachelor in Administration students that was initiated to study the impact of flipped classroom and active learning on performance.
 
 Do you think we can draw conclusions about the efficacy of this teaching method by comparing the results of the students with those of the rest of the bachelor program? List potential issues with this approach addressing the internal and external validity, generalizability, effect of lurking variables, etc.
@@ -287,7 +293,7 @@ In contrast, Gallup correctly predicted the outcome by polling (only) 50K inhabi
 :::
 
 
-::: {.outsidethebox}
+::: {.callout-note}
 
 What are the considerations that could guide you in determining the population of interest for your study?
 
@@ -302,7 +308,7 @@ In general, *randomization* is necessary in order to obtain a **representative**
 
 Even when observational units are selected at random to participate, there may be **bias** introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.
 
-::: {.outsidethebox}
+::: {.callout-note}
 
 Reflect on the choice of platform used to collect answers and think about how it could influence the composition of the sample returned or affect non-response in a systematic way.
 
@@ -393,7 +399,7 @@ Stratified sampling is typically superior if we care about having similar propor
 
 :::
 
-::: {.outsidethebox}
+::: {.callout-note}
 
 The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?
 
@@ -408,6 +414,7 @@ In recent years, there has been a proliferation of studies employing data obtain
 #| eval: true
 #| echo: false
 #| fig-cap: "Sampling bias. Artwork by Jonathan Hey [(Sketchplanations)](https://sketchplanations.com/sampling-bias), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-nc/4.0/)"
+#| out-width: '70%'
 knitr::include_graphics('figures/continuous_discrete.png')
 ```
 
@@ -427,6 +434,7 @@ The field of experimental design has a long history, starting with agricultural 
 #| echo: false
 #| fig-cap: '[1958 plan for the Highfield Ley--Arable Experiment](http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield-Ley-Arable-1-1).
 #|   Source: Rothamsted Research Station,  reproduced under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).'
+#| out-width: '80%'
 knitr::include_graphics("figures/HFL-A1958.jpg")
 ```
 
@@ -559,7 +567,7 @@ Randomization justifies the use of the statistical tools we will use under very 
 knitr::include_graphics("figures/xkcd2400_statistics.png")
 ```
 
-::: {.yourturn}
+::: {.callout-tip}
 
 - Define the following terms in your own word: experimental unit, factor, treatment.
 - What is the main benefit of experimental studies over observational studies?
