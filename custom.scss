@@ -55,6 +55,14 @@ $link-hover-color: $lavender;
 $monokai-bg: #2e3440;
 
 
+$callout-color-note: #0072ce;
+$callout-color-important: #00aec7;
+$callout-color-tip: #00aec7;
+$callout-color-caution: #f3d03e;
+$callout-color-warning: #ff585d;
+$callout-color-frame: #acacac;
+
+
 /*-- scss:rules --*/
 h2 {
   border-bottom: none;
@@ -156,18 +164,5 @@ pre.text, pre.sourceCode, .cell-output pre {
 pre.text {
   color: #000;
 }
-
-
-$callout-color-note: #0072ce;
-$callout-color-important: #00aec7;
-$callout-color-tip: #00aec7;
-$callout-color-caution: #f3d03e;
-$callout-color-warning: #ff585d;
-$callout-color-frame: #acacac;
-$callout-note-color-frame: #92c1e9;
-$callout-important-color-frame: 88dbdf;
-$callout-warning-color-frame: #ffb1bb;
-$callout-tip-color-frame: #88dbdf;
-$callout-caution-color-frame: f2f0a1;
 
 
