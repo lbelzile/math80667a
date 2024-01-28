@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -197,7 +197,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link">
+  <a href="./06-blocking_ancova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span></a>
   </div>
 </li>
@@ -268,9 +268,9 @@ div.csl-indent {
 
 <p>In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for <span class="math inline">\(t\)</span>-tests or analysis of variance models need not hold. This chapter presents <strong>nonparametric tests</strong>.</p>
 <p>If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size <span class="math inline">\(n\)</span>, where rank 1 denotes the smallest observation and rank <span class="math inline">\(n\)</span> the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations (8,2,1,2) gives ranks (4, 2.5., 1, 2.5) if we assign the average rank to ties.</p>
-<p>When are nonparametric tests used? The answer is that they are robust (meaning their conclusions are less affected) by departure from distributional assumptions (data are normal) and by outliers. In large samples, the central limit theorem kicks in and the behaviour of most group average is normal. However, in small samples, the quality of the <span class="math inline">\(p\)</span>-value approximate depends more critically on whether the model assumptions hold or not.</p>
-<p>All of what has been covered so far is part of parametric statistics: we assume summary statistics behave in a particular way and utilize the probabilistic model from which these originate to describe the range of likely outcomes under the null hypothesis. As ranks are simply numbers between <span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span> (if there are no ties), no matter how data are generated, we can typically assess the repartition of those integers under the null hypothesis. There is no free lunch: while rank-based tests require fewer modelling assumptions, but they have lower power than their parametric counterparts <em>if</em> the assumption underlying these tests are validated.</p>
-<p>In short: the more you are willing to assume, the more information you can squeeze out of your problem. However, the inference can be fragile so you have to decide on a trade-off between efficiency (keeping all numerical records) and robustness (e.g., keeping only the signs or the ranking of the data).</p>
+<p>When are nonparametric tests used? The answer is that they are robust (meaning their conclusions are less affected) by departure from distributional assumptions (e.g., data are normally distributed) and by outliers. In large samples, the central limit theorem kicks in and the behaviour of most group average is normal. However, in small samples, the quality of the <span class="math inline">\(p\)</span>-value approximate depends more critically on whether the model assumptions hold or not.</p>
+<p>All of what has been covered so far is part of parametric statistics: we assume summary statistics behave in a particular way and utilize the probabilistic model from which these originate to describe the range of likely outcomes under the null hypothesis. As ranks are simply numbers between <span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span> (if there are no ties), no matter how data are generated, we can typically assess the repartition of those integers under the null hypothesis. There is no free lunch: while rank-based tests require fewer modelling assumptions, they have lower power than their parametric counterparts <em>if</em> the assumption underlying these tests are validated.</p>
+<p>In short: the more assumptions you are willing to assume, the more information you can squeeze out of your problem. However, the inference can be fragile so you have to decide on a trade-off between efficiency (keeping all numerical records) and robustness (e.g., keeping only the signs or the ranking of the data).</p>
 <p>The following list nonparametric tests and their popular parametric equivalent.</p>
 <ul>
 <li>sign test: an alternative to a one-sample <span class="math inline">\(t\)</span>-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences). Only uses the sign of the difference, minimal assumptions but not powerful</li>

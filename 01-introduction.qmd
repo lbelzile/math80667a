@@ -277,7 +277,7 @@ In general, we therefore consider only **samples** to gather the information we 
 A **sample** is a sub-group of individuals drawn at random from the population. We won't focus on data collection, but keep in mind the following information: for a sample to be good, it must be representative of the population under study.
 
 ::: {.callout-tip name="Confounding"}
-The [Parcours  AGIR](https://www.hec.ca/etudiants/mon-programme/baa/cohorte-agir/index.html) at HEC Montréal is a pilot project for Bachelor in Administration students that was initiated to study the impact of flipped classroom and active learning on performance.
+The [Parcours  AGIR](https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html) at HEC Montréal is a pilot project for Bachelor in Administration students that was initiated to study the impact of flipped classroom and active learning on performance.
 
 Do you think we can draw conclusions about the efficacy of this teaching method by comparing the results of the students with those of the rest of the bachelor program? List potential issues with this approach addressing the internal and external validity, generalizability, effect of lurking variables, etc.
 :::

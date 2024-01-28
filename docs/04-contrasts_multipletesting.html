@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -202,7 +202,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-blocking.html" class="sidebar-item-text sidebar-link">
+  <a href="./06-blocking_ancova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span></a>
   </div>
 </li>
@@ -265,7 +265,8 @@ div.csl-indent {
   <li><a href="#multiple-testing" id="toc-multiple-testing" class="nav-link" data-scroll-target="#multiple-testing"><span class="header-section-number">4.2</span> Multiple testing</a>
   <ul class="collapse">
   <li><a href="#bonferronis-procedure" id="toc-bonferronis-procedure" class="nav-link" data-scroll-target="#bonferronis-procedure"><span class="header-section-number">4.2.1</span> Bonferroni’s procedure</a></li>
-  <li><a href="#holm-bonferronis-procedure" id="toc-holm-bonferronis-procedure" class="nav-link" data-scroll-target="#holm-bonferronis-procedure"><span class="header-section-number">4.2.2</span> Holm-Bonferroni’s procedure</a></li>
+  <li><a href="#holmbonferronis-procedure" id="toc-holmbonferronis-procedure" class="nav-link" data-scroll-target="#holmbonferronis-procedure"><span class="header-section-number">4.2.2</span> Holm–Bonferroni’s procedure</a></li>
+  <li><a href="#multiple-testing-methods-for-analysis-of-variance" id="toc-multiple-testing-methods-for-analysis-of-variance" class="nav-link" data-scroll-target="#multiple-testing-methods-for-analysis-of-variance"><span class="header-section-number">4.2.3</span> Multiple testing methods for analysis of variance</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/04-contrasts_multipletesting.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
@@ -278,14 +279,32 @@ div.csl-indent {
 
 </header>
 
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key concept
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Learning objectives</strong>:</p>
+<ul>
+<li>Specifying contrast weights to test for differences between groups</li>
+<li>Understanding the problem of multiple testing and the danger for selective reporting</li>
+<li>Adjusting for multiple testing to control the global error rate.</li>
+</ul>
+</div>
+</div>
 <section id="contrasts" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="contrasts"><span class="header-section-number">4.1</span> Contrasts</h2>
-<p>The analysis of variance model tests the (global) null hypothesis that the average of all groups is equal. In an experimental context, this implies one or more of the manipulation has a different effect from the others on the mean response. Oftentimes, this isn’t interesting in itself: we could be interested in comparing different options relative to a <em>status quo</em>, or determine whether specific combinations work better than separately. The scientific question of interest that warranted the experiment may lead to a specific set of hypotheses, which can be formulated by researchers as comparisons between means of different subgroups. We can normally express these as <strong>contrasts</strong>. As <a href="https://stat.ethz.ch/~meier">Dr.&nbsp;Lukas Meier</a> puts it, if the global <span class="math inline">\(F\)</span>-test for equality of means is equivalent to a dimly lit room, contrasts are akin to spotlight that let one focus on particular aspects of differences in treatments.</p>
-<p>More formally speaking, a contrast is a linear combination of averages: in plain English, this means we assign a weight to each group average and add them up. We can then build a <span class="math inline">\(t\)</span> statistic as usual by looking at the difference between our postulated value and the observed weighted mean, suitably standardized.</p>
-<p>Contrasts encode research question of interest: if <span class="math inline">\(c_i\)</span> denotes the weight of group average <span class="math inline">\(\mu_i\)</span> <span class="math inline">\((i=1, \ldots, K)\)</span>, then we can write the contrast as <span class="math inline">\(C = c_1 \mu_1 + \cdots + c_K \mu_K\)</span> with the null hypothesis <span class="math inline">\(\mathscr{H}_0: C=a\)</span> for a two-sided alternative. The numerical value <span class="math inline">\(a\)</span> is typically zero. The sample estimate of the linear contrast is obtained by replacing the unknown population average <span class="math inline">\(\mu_i\)</span> by the sample average of that group, <span class="math inline">\(\widehat{\mu}_i = \overline{y}_{i}\)</span>. We can easily obtain the standard error of the linear combination <span class="math inline">\(C\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Suppose we perform an analysis of variance and the <span class="math inline">\(F\)</span>-test for the (global) null hypothesis that the averages of all groups are equal is very large: we reject the null hypothesis in favour of the alternative, which states that at least one of the group average is different. The follow-up question will be where these differences lie. Indeed, in an experimental context, this implies one or more of the manipulation has a different effect from the others on the mean response. Oftentimes, this isn’t interesting in itself: we could be interested in comparing different options relative to a <em>status quo</em> (e.g., for new drugs or medical treatment), or determine whether specific combinations work better than separately, or find the best treatment by comparing all pairs.</p>
+<p>The scientific question of interest that warranted the experiment may lead to a specific set of hypotheses, which can be formulated by researchers as comparisons between means of different subgroups. We can normally express these as <strong>contrasts</strong>. As <a href="https://stat.ethz.ch/~meier">Dr.&nbsp;Lukas Meier</a> puts it, if the global <span class="math inline">\(F\)</span>-test for equality of means is equivalent to a dimly lit room, contrasts are akin to spotlight that let one focus on particular aspects of differences in treatments.</p>
+<p>Formally speaking, a contrast is a linear combination of averages: in plain English, this means we assign a weight to each group average and add them up, and then compare that summary to a postulated value <span class="math inline">\(a\)</span>, typically zero. Contrasts encode research question of interest: if <span class="math inline">\(c_i\)</span> denotes the weight of group average <span class="math inline">\(\mu_i\)</span> <span class="math inline">\((i=1, \ldots, K)\)</span>, then we can write the contrast as <span class="math inline">\(C = c_1 \mu_1 + \cdots + c_K \mu_K\)</span> with the null hypothesis <span class="math inline">\(\mathscr{H}_0: C=a\)</span> for a two-sided alternative. The sample estimate of the linear contrast is obtained by replacing the unknown population average <span class="math inline">\(\mu_i\)</span> by the sample average of that group, <span class="math inline">\(\widehat{\mu}_i = \overline{y}_{i}\)</span>. We can easily obtain the standard error of the linear combination <span class="math inline">\(C\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We can then build a <span class="math inline">\(t\)</span> statistic as usual by looking at the difference between our postulated value and the observed weighted mean, suitably standardized. If the global <span class="math inline">\(F\)</span>-test leads to rejection of the null, there exists a contrast which is significant at the same level.</p>
 <section id="orthogonal-contrasts" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="orthogonal-contrasts"><span class="header-section-number">4.1.1</span> Orthogonal contrasts</h3>
-<p>Sometimes, linear contrasts encode disjoint bits of information about the sample: for example, one contrast that compares groups the first two groups versus one that compares the third and fourth is in effect using data from two disjoint samples, as contrasts will be based on sample averages. Whenever the contrasts vectors are orthogonal, the tests will be uncorrelated. Mathematically, if we let <span class="math inline">\(c_{i}\)</span> and <span class="math inline">\(c^{*}_{i}\)</span> denote weights attached to the mean of group <span class="math inline">\(i\)</span> comprising <span class="math inline">\(n_i\)</span> observations, contrasts are orthogonal if <span class="math inline">\(c_{1}c^{*}_{1}/n_1 + \cdots + c_{K}c^{*}_K/n_K = 0\)</span>; if the sample is balanced with the same number of observations in each group, <span class="math inline">\(n/K = n_1 =\cdots = n_K\)</span> and we can only consider the dot product of the two contrast vectors.</p>
+<p>Sometimes, linear contrasts encode disjoint bits of information about the sample: for example, one contrast that compares groups the first two groups versus one that compares the third and fourth is in effect using data from two disjoint samples, as contrasts are based on sample averages. Whenever the contrasts vectors are orthogonal, the tests will be uncorrelated. Mathematically, if we let <span class="math inline">\(c_{i}\)</span> and <span class="math inline">\(c^{*}_{i}\)</span> denote weights attached to the mean of group <span class="math inline">\(i\)</span> comprising <span class="math inline">\(n_i\)</span> observations, contrasts are orthogonal if <span class="math inline">\(c_{1}c^{*}_{1}/n_1 + \cdots + c_{K}c^{*}_K/n_K = 0\)</span>; if the sample is balanced with the same number of observations in each group, <span class="math inline">\(n/K = n_1 =\cdots = n_K\)</span>, we can consider the dot product of the two contrast vectors and neglect the subsample sizes.</p>
 <p>If we have <span class="math inline">\(K\)</span> groups, there are <span class="math inline">\(K-1\)</span> contrasts for pairwise differences, the last one being captured by the sample mean for the overall effect<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. If we care only about difference between groups (as opposed to the overall effect of all treatments), we impose a sum-to-zero constraint on the weights so <span class="math inline">\(c_1 + \cdots + c_K=0\)</span>. Keep in mind that, although independent tests are nice mathematically, contrasts should encode the hypothesis of interest to the researchers: we choose contrasts because they are meaningful, not because they are orthogonal.</p>
 <div class="example" name="Contrasts for encouragement on teaching">
 <p>The <code>arithmetic</code> data example considered five different treatment groups with 9 individuals in each. Two of them were control groups, one received praise, another was reproved and the last was ignored.</p>
@@ -500,15 +519,142 @@ div.csl-indent {
 <p>We can look at these differences; since <code>DRTA</code> versus <code>TA</code> is a pairwise difference, we could have obtained the <span class="math inline">\(t\)</span>-statistic directly from the pairwise contrasts using <code>pairs(emmeans_post)</code>. Note that the two different ways of writing the comparison between <code>DR</code> and the average of the other two methods yield different point estimates, but same inference (i.e., the same <span class="math inline">\(p\)</span>-values). For contrast <span class="math inline">\(C_{1b}\)</span>, we get half the estimate (but the standard error is also halved) and likewise for the second contrasts we get an estimate of <span class="math inline">\(\mu_{\mathrm{DRTA}} - \mu_{\mathrm{TA}}\)</span> in the first case (<span class="math inline">\(C_2\)</span>) and <span class="math inline">\(\mu_{\mathrm{TA}} - \mu_{\mathrm{DRTA}}\)</span>: the difference in group averages is the same up to sign.</p>
 <p>What is the conclusion of our analysis of contrasts? It looks like the methods involving teaching aloud have a strong impact on reading comprehension relative to only directed reading. The evidence is not as strong when we compare the method that combines directed reading-thinking activity and thinking aloud.</p>
 </div>
+<div id="exm-paperorplastic" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.2 (Paper or plastic) </strong></span><span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> consider consumer bias when assessing how eco-friendly packages are. Items such as cereal are packaged in plastic bags, which themselves are covered in a box. They conjecture (and find) that consumers tend to view the packaging as being more eco-friendly when the amount of cardboard or paper surrounding the box is large, relative to the sole plastic package. We consider the data Study 2A, which measures the perceived environmental friendliness (PEF) as a function of the proportion of paper wrapping (either none, half of the area of the plastic, equal or twice). The authors are interested in comparing none with other choices.</p>
+<p>If <span class="math inline">\(\mu_{0}, \mu_{0.5}, \mu_{1}, \mu_2\)</span> denote the true mean of the PEF score as a function of the proportion of paper, we are interested in pairwise differences, but only relative to the reference <span class="math inline">\(\mu_{0}\)</span>: <span class="math display">\[\begin{align*}
+\mu_0 = \mu_{0.5}  &amp; \iff 1\mu_0 - 1\mu_{0.5} + 0\mu_{1} + 0 \mu_{2} = 0\\
+\mu_0 = \mu_{1} &amp; \iff 1\mu_0 + 0\mu_{0.5} -1\mu_{1} + 0 \mu_{2} = 0\\
+\mu_0 = \mu_{2} &amp; \iff 1\mu_0 + 0\mu_{0.5} + 0\mu_{1} -1 \mu_{2} = 0
+\end{align*}\]</span> so contrast vectors <span class="math inline">\((1, -1, 0, 0)\)</span>, <span class="math inline">\((1, 0, -1, 0)\)</span> and <span class="math inline">\((1, 0, 0, -1)\)</span> would allow one to test the hypothesis.</p>
+<div class="cell" data-hash="04-contrasts_multipletesting_cache/html/unnamed-chunk-8_5131d81901628b2b7da2ad04cef33009">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(SKD23_S2A, <span class="at">package =</span> <span class="st">"hecedsm"</span>) <span class="co"># load data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>linmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(pef <span class="sc">~</span> proportion, <span class="at">data =</span> SKD23_S2A) <span class="co"># fit simple linear regression</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(linmod) <span class="co"># check for significance of slope</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(linmod) <span class="co"># extract intercept and slope</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>anovamod <span class="ot">&lt;-</span> <span class="fu">lm</span>(pef <span class="sc">~</span> <span class="fu">factor</span>(proportion), <span class="at">data =</span> SKD23_S2A) <span class="co"># one-way ANOVA</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>margmean <span class="ot">&lt;-</span> anovamod <span class="sc">|&gt;</span>  emmeans<span class="sc">::</span><span class="fu">emmeans</span>(<span class="at">specs =</span> <span class="st">"proportion"</span>) <span class="co"># group means</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>contrastlist <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="co"># specify contrast vectors</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">refvshalf =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">refvsone =</span>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">refvstwo =</span>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute contrasts relative to reference </span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>margmean <span class="sc">|&gt;</span> emmeans<span class="sc">::</span><span class="fu">contrast</span>(<span class="at">method =</span> contrastlist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The group averages are reported in <a href="#tbl-print-groupmeans-PEF">Table&nbsp;<span>4.4</span></a>, match those reported by the authors in the paper. They suggest an increased perceived environmental friendliness as the amount of paper used in the wrapping increases. We could fit a simple regression model to assess the average change, treating the proportion as a continuous explanatory variable. The estimated slope for the change in PEF score, which ranges from 1 to 7 in increments of 0.25, is 0.53 per area of paper. There is however strong evidence, given the data, that the change isn’t quite linear, as the fit of the linear regression model is significantly worse than the corresponding linear model.</p>
+<div class="cell" data-hash="04-contrasts_multipletesting_cache/html/tbl-print-groupmeans-PEF_fcca7ab8021a25461c07d36a4f201412">
+<div class="cell-output-display">
+<div id="tbl-print-groupmeans-PEF" class="anchored">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;4.4: Estimated group averages of PEF per proportion with standard errors</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">proportion</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">marg. mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std. err.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower (CI)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper (CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">2.16</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">1.98</td>
+<td style="text-align: right;">2.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2.91</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">2.73</td>
+<td style="text-align: right;">3.09</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">3.06</td>
+<td style="text-align: right;">0.092</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">2.88</td>
+<td style="text-align: right;">3.24</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">3.34</td>
+<td style="text-align: right;">0.089</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">3.17</td>
+<td style="text-align: right;">3.52</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="cell" data-hash="04-contrasts_multipletesting_cache/html/tbl-print-contrast-PEF_a019bbc8ec02a78230d750de0dc2973d">
+<div class="cell-output-display">
+<div id="tbl-print-contrast-PEF" class="anchored">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;4.5: Estimated contrasts for differences of PEF to no paper.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std. err.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">refvshalf</td>
+<td style="text-align: right;">-0.75</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">-5.71</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">refvsone</td>
+<td style="text-align: right;">-0.90</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">-6.89</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">refvstwo</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">-9.20</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p>All differences reported in <a href="#tbl-print-contrast-PEF">Table&nbsp;<span>4.5</span></a> are significant and positive, in line with the researcher’s hypothesis.</p>
+</div>
 </section>
 </section>
 <section id="multiple-testing" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="multiple-testing"><span class="header-section-number">4.2</span> Multiple testing</h2>
 <p>Beyond looking at the global null, we will be interested in a set of contrast statistics and typically this number can be large-ish. There is however a catch in starting to test multiple hypothesis at once.</p>
-<p>If you do a <strong>single</strong> hypothesis test and the testing procedure is well calibrated (meaning that the model model assumptions hold), there is a probability of <span class="math inline">\(\alpha\)</span> of making a type I error if the null is true, meaning when there is no difference between averages in the underlying population. The problem of the above approach is that the more you look, the higher the chance of finding something: with 20 independent tests, we expect that, on average, one of them will yield a <span class="math inline">\(p\)</span>-value less than 5%. This, coupled with the tendency in the many fields to dichotomise the result of every test depending on whether <span class="math inline">\(p \leq \alpha\)</span> (statistically significant at level <span class="math inline">\(\alpha\)</span> or not leads to selective reporting of findings.</p>
-<p>Not all tests are of interest, even if standard software will report all possible pairwise comparisons. If there are <span class="math inline">\(K\)</span> groups to compare and any comparison is of interest, than we could performs <span class="math inline">\(\binom{K}{2}\)</span> pairwise comparisons with <span class="math inline">\(\mathscr{H}_{0}: \mu_i = \mu_j\)</span> for <span class="math inline">\(i \neq j\)</span>. For <span class="math inline">\(K=3\)</span>, there are three such comparisons, 10 pairwise comparisons if <span class="math inline">\(K=5\)</span> and 45 pairwise comparisons if <span class="math inline">\(K=10\)</span>. Thus, some ‘discoveries’ are bound to be spurious.</p>
-<p>The number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project <span class="citation" data-cites="Nosek:2015">(<a href="references.html#ref-Nosek:2015" role="doc-biblioref">Nosek et al. 2015</a>)</span>: this number ranged from 4 to 700, with an average of 72 — most studies did not account for the fact they were performing multiple tests or selected the model. It is natural to ask then how many results are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in <a href="#fig-xkcdsignificant">Figure&nbsp;<span>4.1</span></a>: note how there is little scientific backing for the theory (thus such test shouldn’t be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.</p>
-<p>We can also assess mathematically the problem. Assume for simplicity that all tests are independent<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> and that each test is conducted at level <span class="math inline">\(\alpha\)</span>. The probability of making at least one type I error, say <span class="math inline">\(\alpha^{\star}\)</span>, is<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="math display">\[\begin{align}
+<p>If you do a <strong>single</strong> hypothesis test and the testing procedure is well calibrated (meaning that the model model assumptions hold), <span class="math inline">\(p\)</span>-values are generated uniformly on the interval <span class="math inline">\([0,1]\)</span> and there is a probability of <span class="math inline">\(\alpha\)</span> of making a type I error (i.e., concluding in favour of the alternative and rejecting the null incorrectly) if the null is true. The problem of the above approach is that the more tests you perform, the higher the chance of finding (incorrectly) something: with 20 independent tests, we expect that, on average, one of them will yield a <span class="math inline">\(p\)</span>-value less than 5% even if this is a fluke. The problem with multiple testing is not so much that it occurs, but more than researchers tend to report selectively findings and only give the results of tests for which <span class="math inline">\(p \leq \alpha\)</span>, even if these are typically the product of chance. This makes most findings will not replicate: if we rerun the experiment, we will typically not find the same result.</p>
+<p>There is an infinite potential number of contrasts with more than two factos. Not all tests are of interest: standard software will report all possible pairwise comparisons, but this may not be of interest as showcased in <a href="#exm-paperorplastic">Example&nbsp;<span>4.3</span></a>. If there are <span class="math inline">\(K\)</span> groups to compare and any comparison is of interest, than we could performs <span class="math inline">\(\binom{K}{2}\)</span> pairwise comparisons with <span class="math inline">\(\mathscr{H}_{0}: \mu_i = \mu_j\)</span> for <span class="math inline">\(i \neq j\)</span>. For <span class="math inline">\(K=3\)</span>, there are three such comparisons, 10 pairwise comparisons if <span class="math inline">\(K=5\)</span> and 45 pairwise comparisons if <span class="math inline">\(K=10\)</span>. The number of pairwise comparisons grows quickly.</p>
+<p>The number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project <span class="citation" data-cites="Nosek:2015">(<a href="references.html#ref-Nosek:2015" role="doc-biblioref">Nosek et al. 2015</a>)</span>: this number ranged from 4 to 700, with an average of 72 — most studies did not account for the fact they were performing multiple tests or selected the model and thus some ‘discoveries’ are bound to be spurious. It is natural to ask then how many results are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in <a href="#fig-xkcdsignificant">Figure&nbsp;<span>4.1</span></a>: note how there is little scientific backing for the theory (thus such test shouldn’t be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.</p>
+<p>We can also assess mathematically the problem. Assume for simplicity that all tests are independent<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, then the probability of any rejecting the null incorrectly is <span class="math inline">\(\alpha\)</span>, but larger over the collection (with tests <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, we could reject by mistake if <span class="math inline">\(A\)</span> is a type I error and <span class="math inline">\(B\)</span> isn’t, or vice-versa, or if both are incorrect rejections.</p>
+<p>The probability of making at least one type I error if each test is conducted at level <span class="math inline">\(\alpha\)</span>, say <span class="math inline">\(\alpha^{\star}\)</span>, is<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="math display">\[\begin{align}
 \alpha^{\star} &amp;= 1 - \text{probability of making no type I error}
 \\ &amp;= 1- (1-\alpha)^m
 \\ &amp; \leq m\alpha
@@ -524,7 +670,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>It is sensible to try and reduce or bound the number of false positive or control the probability of getting spurious findings. We consider a <strong>family</strong> of <span class="math inline">\(m\)</span> null hypothesis <span class="math inline">\(\mathscr{H}_{01}, \ldots, \mathscr{H}_{0m}\)</span> tested. The family is simply a collection of <span class="math inline">\(m\)</span> hypothesis tests: the exact set depends on the context, but this comprises all hypothesis that are scientifically relevant and could be reported. These comparisons are called <strong>pre-planned comparisons</strong>: they should be chosen before the experiment takes place and pre-registered to avoid data dredging and selective reporting. The number of planned comparisons should be kept small relative to the number of parameters: for a one-way ANOVA, a general rule of thumb is to make no more comparisons than the number of groups, <span class="math inline">\(K\)</span>.</p>
+<p>It is sensible to try and reduce or bound the number of false positive or control the probability of getting spurious findings. We consider a <strong>family</strong> of <span class="math inline">\(m\)</span> null hypothesis <span class="math inline">\(\mathscr{H}_{01}, \ldots, \mathscr{H}_{0m}\)</span>, i.e.&nbsp;a collection of <span class="math inline">\(m\)</span> hypothesis tests. The exact set depends on the context, but this comprises all hypothesis that are scientifically relevant and could be reported. These comparisons are called <strong>pre-planned comparisons</strong>: they should be chosen before the experiment takes place and pre-registered to avoid data dredging and selective reporting. The number of planned comparisons should be kept small relative to the number of parameters: for a one-way ANOVA, a general rule of thumb is to make no more comparisons than the number of groups, <span class="math inline">\(K\)</span>.</p>
 <p>Suppose that we perform <span class="math inline">\(m\)</span> hypothesis tests in a study and define binary indicators <span class="math display">\[\begin{align}
 R_i &amp;= \begin{cases} 1 &amp; \text{if we reject the null hypothesis }  \mathscr{H}_{0i} \\
 0 &amp; \text{if we fail to reject } \mathscr{H}_{0i}
@@ -532,24 +678,140 @@ R_i &amp;= \begin{cases} 1 &amp; \text{if we reject the null hypothesis }  \math
 V_i &amp;=\begin{cases} 1 &amp; \text{type I error for } \mathscr{H}_{0i}\quad  (R_i=1 \text{ and  }\mathscr{H}_{0i} \text{ is true}) \\ 0 &amp; \text{otherwise}.
 \end{cases}
 \end{align}\]</span> With this notation, <span class="math inline">\(R=R_1 + \cdots + R_m\)</span> simply encodes the total number of rejections (<span class="math inline">\(0 \leq R \leq m\)</span>), and <span class="math inline">\(V = V_1 + \cdots + V_m\)</span> is the number of null hypothesis rejected by mistake (<span class="math inline">\(0 \leq V \leq R\)</span>).</p>
-<p>The <strong>familywise error rate</strong> is the probability of making at least one type I error per family, <span class="math display">\[\begin{align*}
+<p>The <strong>familywise error rate</strong> is the probability of making at least one type I error for the whole collection or test, in other words per family, is <span class="math display">\[\begin{align*}
 \mathsf{FWER} = \Pr(V \geq 1).
 \end{align*}\]</span> To control the familywise error rate, one must be more stringent in rejecting the null and perform each test with a smaller level <span class="math inline">\(\alpha\)</span> so that the overall or simultaneous probability is less than <span class="math inline">\(\mathsf{FWER}\)</span>.</p>
 <section id="bonferronis-procedure" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="bonferronis-procedure"><span class="header-section-number">4.2.1</span> Bonferroni’s procedure</h3>
-<p>The easiest way to control for multiple testing is to perform each test at level <span class="math inline">\(\alpha/m\)</span>, thereby ensuring that the family-wise error is controlled at level <span class="math inline">\(\alpha\)</span>.</p>
-<p>The Bonferroni adjustment also controls the <strong>per-family error rate</strong>, which is the expected (theoretical average) number of false positive <span class="math inline">\(\mathsf{PFER} = \mathsf{E}(V)\)</span>. The latter is a more stringent criterion than the familywise error rate because <span class="math inline">\(\Pr(V \geq 1) \leq \mathsf{E}(V)\)</span>: the familywise error rate does not make a distinction between having one or multiple type I errors.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
-<p>Why is Bonferroni’s procedure popular? It is conceptually easy to understand and simple, and it applies to any design and regardless of the dependence between the tests. However, the number of tests to adjust for, <span class="math inline">\(m\)</span>, must be prespecified and the procedure leads to low power when the size of the family is large. Moreover, if our sole objective is to control for the familywise error rate, then there are other procedures that are always better in the sense that they still control the <span class="math inline">\(\mathsf{FWER}\)</span> while leading to increased capacity of detection when the null is false.</p>
+<p>The easiest way to control for multiple testing is to perform each test at level <span class="math inline">\(\alpha/m\)</span>, thereby ensuring that the family-wise error is controlled at level <span class="math inline">\(\alpha\)</span>. This is a good option if <span class="math inline">\(m\)</span> is small and the Bonferroni adjustment also controls the <strong>per-family error rate</strong>, which is the expected (theoretical average) number of false positive <span class="math inline">\(\mathsf{PFER} = \mathsf{E}(V)\)</span>. The latter is a more stringent criterion than the familywise error rate because <span class="math inline">\(\Pr(V \geq 1) \leq \mathsf{E}(V)\)</span>: the familywise error rate does not make a distinction between having one or multiple type I errors.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>Why is Bonferroni’s procedure popular? It is conceptually easy to understand and simple, and it applies to any design and regardless of the dependence between the tests. However, the number of tests to adjust for, <span class="math inline">\(m\)</span>, must be prespecified and the procedure leads to low power when the size of the family is large, meaning it makes detection of non-null effects more difficult. Moreover, if our sole objective is to control for the familywise error rate, then there are other procedures that are always better in the sense that they still control the <span class="math inline">\(\mathsf{FWER}\)</span> while leading to increased capacity of detection when the null is false.</p>
 <p>If the raw (i.e., unadjusted) <span class="math inline">\(p\)</span>-values are reported, we reject hypothesis <span class="math inline">\(\mathscr{H}_{0i}\)</span> if <span class="math inline">\(m \times p_i \ge \alpha\)</span>: operationally, we multiply each <span class="math inline">\(p\)</span>-value by <span class="math inline">\(m\)</span> and reject if the result exceeds <span class="math inline">\(\alpha\)</span>.</p>
 </section>
-<section id="holm-bonferronis-procedure" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="holm-bonferronis-procedure"><span class="header-section-number">4.2.2</span> Holm-Bonferroni’s procedure</h3>
-<p>The idea of Holm’s procedure is to use a sharper inequality bound and amounts to performing tests at different levels, with more stringent for smaller <span class="math inline">\(p\)</span>-values.</p>
-<p>Order the <span class="math inline">\(p\)</span>-values of the family of <span class="math inline">\(m\)</span> tests from smallest to largest <span class="math inline">\(p_{(1)} \leq \cdots \leq p_{(m)}\)</span> and test sequentially the hypotheses. Coupling Holm’s method with Bonferroni’s procedure, we compare <span class="math inline">\(p_{(1)}\)</span> to <span class="math inline">\(\alpha_{(1)} = \alpha/m\)</span>, <span class="math inline">\(p_{(2)}\)</span> to <span class="math inline">\(\alpha_{(2)}=\alpha/(m-1)\)</span>, etc.</p>
-<p>If all of the <span class="math inline">\(p\)</span>-values are less than their respective levels, than we still reject each null hypothesis. Otherwise, we reject all the tests whose <span class="math inline">\(p\)</span>-values exceeds the smallest nonsignificant one. If <span class="math inline">\(p_{(j)} \geq \alpha_{(j)}\)</span> but <span class="math inline">\(p_{(i)} \leq \alpha_{(i)}\)</span> for <span class="math inline">\(i=1, \ldots, j-1\)</span> (all smaller <span class="math inline">\(p\)</span>-values), we reject the associated hypothesis <span class="math inline">\(\mathscr{H}_{0(1)}, \ldots, \mathscr{H}_{0(j-1)}\)</span> but fail to reject <span class="math inline">\(\mathscr{H}_{0(j)}, \ldots, \mathscr{H}_{0(m)}\)</span>.</p>
-<p>This procedure doesn’t control the per-family error rate, but is uniformly more powerful and thus leads to increased detection than Bonferroni’s method.</p>
-<p>To see this, consider a family of <span class="math inline">\(m=3\)</span> <span class="math inline">\(p\)</span>-values with values <span class="math inline">\(0.01\)</span>, <span class="math inline">\(0.04\)</span> and <span class="math inline">\(0.02\)</span>. Bonferroni’s adjustment would lead us to reject the second and third hypotheses at level <span class="math inline">\(\alpha=0.05\)</span>, but not Holm-Bonferroni.</p>
-<p><strong>To be continued</strong>…</p>
+<section id="holmbonferronis-procedure" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="holmbonferronis-procedure"><span class="header-section-number">4.2.2</span> Holm–Bonferroni’s procedure</h3>
+<p>The idea of Holm’s procedure is to use a sharper inequality bound and amounts to performing tests at different levels, with more stringent for smaller <span class="math inline">\(p\)</span>-values. To perform Holm–Bonferroni,</p>
+<ol type="1">
+<li>order the <span class="math inline">\(p\)</span>-values of the family of <span class="math inline">\(m\)</span> tests from smallest to largest, <span class="math inline">\(p_{(1)} \leq \cdots \leq p_{(m)}\)</span></li>
+<li>test sequentially the hypotheses: coupling Holm’s method with Bonferroni’s procedure, we compare <span class="math inline">\(p_{(1)}\)</span> to <span class="math inline">\(\alpha_{(1)} = \alpha/m\)</span>, <span class="math inline">\(p_{(2)}\)</span> to <span class="math inline">\(\alpha_{(2)}=\alpha/(m-1)\)</span>, etc. If <span class="math inline">\(p_{(j)} \geq \alpha_{(j)}\)</span> but <span class="math inline">\(p_{(i)} \leq \alpha_{(i)}\)</span> for <span class="math inline">\(i=1, \ldots, j-1\)</span> (all smaller <span class="math inline">\(p\)</span>-values), we reject the associated hypothesis <span class="math inline">\(\mathscr{H}_{0(1)}, \ldots, \mathscr{H}_{0(j-1)}\)</span> but fail to reject <span class="math inline">\(\mathscr{H}_{0(j)}, \ldots, \mathscr{H}_{0(m)}\)</span>.</li>
+</ol>
+<p>If all of the <span class="math inline">\(p\)</span>-values are less than their respective levels, than we still reject each null hypothesis. Otherwise, we reject all the tests whose <span class="math inline">\(p\)</span>-values exceeds the smallest nonsignificant one. This procedure doesn’t control the per-family error rate, but is uniformly more powerful (lingo to say that it’s universally better for control) and thus leads to increased detection than Bonferroni’s method. To see this, consider a family of <span class="math inline">\(m=3\)</span> <span class="math inline">\(p\)</span>-values with values <span class="math inline">\(0.01\)</span>, <span class="math inline">\(0.04\)</span> and <span class="math inline">\(0.02\)</span>. Bonferroni’s adjustment would lead us to reject the second and third hypotheses at level <span class="math inline">\(\alpha=0.05\)</span>, but not Holm-Bonferroni.</p>
+</section>
+<section id="multiple-testing-methods-for-analysis-of-variance" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="multiple-testing-methods-for-analysis-of-variance"><span class="header-section-number">4.2.3</span> Multiple testing methods for analysis of variance</h3>
+<p>There are specialized procedures for the analysis of variance problem that leverages some of the assumptions (equal variance, large sample approximation for the distribution of means). There are three scenarios</p>
+<ol type="1">
+<li>Dunnett’s method for comparison to a reference or control group, controlling only for <span class="math inline">\(K-1\)</span> pairwise differences</li>
+<li>Tukey’s range procedure, also termed <em>honestly significant difference</em> (HSD), for <strong>all</strong> pairwise differences. We can obtain control on the type I error by looking at what happens between the minimum and maximum group averages under the null.</li>
+<li>Scheffe’s method for contrasts. This is useful when the number of contrasts of interest is not specified apriori.</li>
+</ol>
+<p>If the global <span class="math inline">\(F\)</span>-test does not find differences at level <span class="math inline">\(\alpha\)</span>, then Scheffe’s method will also find no significant contrast <span class="math inline">\(\alpha\)</span> but nothing can be said about other methods. Generally, the more tests we control the type error for, the more conservative the procedures are.</p>
+<p>In <strong>R</strong>, we can use the <code>multcomp</code> or <code>emmeans</code> packages for the tests to adjust, or compute results manually. The test statistics do not change, only the benchmark null distribution is different. <a href="#fig-references-multtest">Figure&nbsp;<span>4.2</span></a> shows what the <span class="math inline">\(p\)</span>-value would be depending on how we control for contrasts. For reasonable values, we get larger <span class="math inline">\(p\)</span>-values for the methods that provide control.</p>
+<div class="cell" data-hash="04-contrasts_multipletesting_cache/html/fig-references-multtest_eb49ddd8fdfe019a50a115b568476ee1">
+<div class="cell-output-display">
+<div id="fig-references-multtest" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="04-contrasts_multipletesting_files/figure-html/fig-references-multtest-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.2: P-value as a function of the squared t-statistic for a contrast for no adjustment (full line), Tukey’s HSD (dashed line) and Scheffe’s adjustment (dotted).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="exm-paperorplastic" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.3 (Multiple testing for paper or plastic) </strong></span><span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> considered pairwise difference relative to the control where only plastic wrapping is used. We could use either Bonferroni, Holm–Bonferoni or Dunnett’s method. Since the <span class="math inline">\(p\)</span>-values are tiny (less than <span class="math inline">\(10^{-4}\)</span>), this has no impact on the conclusions whatsoever. To better appreciate the impact in small samples, we subsample 20 observation per group to inflate <span class="math inline">\(p\)</span>-values. We can also see differences by inspecting the width of the confidence intervals for the pairwise differences to the reference group: more conservative references lead to wider intervals.</p>
+<div class="cell" data-hash="04-contrasts_multipletesting_cache/html/unnamed-chunk-14_8406b9f50622c8ddaaf478019e2c90e9">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(SKD23_S2A, <span class="at">package =</span> <span class="st">"hecedsm"</span>) <span class="co"># load data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>) <span class="co"># Set seed for reproducibility</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>SKD23_S2A_sub <span class="ot">&lt;-</span> SKD23_S2A <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a categorical variable (factor) and ensure reference is 0</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># By default, it would be (first alphanumerical value of labels)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">propfact =</span> <span class="fu">relevel</span>(<span class="fu">factor</span>(proportion), <span class="at">ref =</span> <span class="st">"0"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample only fourty observations by group -</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for illustration purposes only, otherwise p-values are too small</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">by =</span> propfact)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>anovamod <span class="ot">&lt;-</span> <span class="fu">lm</span>(pef <span class="sc">~</span> propfact, <span class="at">data =</span> SKD23_S2A_sub) </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>margmean <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  anovamod, <span class="co"># fitted model</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 'specs': vector with names of factors to adjust for</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="st">"propfact"</span>) </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>contrastlist <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="co"># specify contrast vectors</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">refvshalf =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">refvsone =</span>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">refvstwo =</span>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">&lt;-</span> margmean <span class="sc">|&gt;</span> <span class="fu">contrast</span>(<span class="at">method =</span> contrastlist)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Bonferroni and Holm-Bonferroni adjustments</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(contrasts, <span class="at">adjust =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE df t.ratio p.value
+ refvshalf   -0.450 0.331 76  -1.359  0.5346
+ refvsone    -1.150 0.331 76  -3.473  0.0026
+ refvstwo    -0.662 0.331 76  -2.001  0.1470
+
+P value adjustment: bonferroni method for 3 tests </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(contrasts, <span class="at">adjust =</span> <span class="st">"holm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE df t.ratio p.value
+ refvshalf   -0.450 0.331 76  -1.359  0.1782
+ refvsone    -1.150 0.331 76  -3.473  0.0026
+ refvstwo    -0.662 0.331 76  -2.001  0.0980
+
+P value adjustment: holm method for 3 tests </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that the p-values for the latter are equal or smaller</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjustments for ANOVA to get simultaneous statements</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of groups minus 1 for Scheffe (correct here)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This 'rank' often needs to be manually specified in multi-way ANOVA</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(contrasts, <span class="at">adjust =</span> <span class="st">"scheffe"</span>, <span class="at">scheffe.rank =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE df t.ratio p.value
+ refvshalf   -0.450 0.331 76  -1.359  0.6070
+ refvsone    -1.150 0.331 76  -3.473  0.0104
+ refvstwo    -0.662 0.331 76  -2.001  0.2696
+
+P value adjustment: scheffe method with rank 3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This would be the better option here</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(contrasts, <span class="at">adjust =</span> <span class="st">"dunnett"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE df t.ratio p.value
+ refvshalf   -0.450 0.331 76  -1.359  0.3934
+ refvsone    -1.150 0.331 76  -3.473  0.0025
+ refvstwo    -0.662 0.331 76  -2.001  0.1260
+
+P value adjustment: dunnettx method for 3 tests </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The less you adjust for, the smaller the p-values</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For Tukey, use 'contrast(method = "pairwise")' instead</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Since we have a small number of pairwise comparisons</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We could use the less stringent of Holm-Bonferroni and Dunnett's</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The latter provides shorter intervals here.</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>contrasts <span class="sc">|&gt;</span> <span class="fu">confint</span>(<span class="at">adjust =</span> <span class="st">"dunnett"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE df lower.CL upper.CL
+ refvshalf   -0.450 0.331 76    -1.25    0.348
+ refvsone    -1.150 0.331 76    -1.95   -0.352
+ refvstwo    -0.662 0.331 76    -1.46    0.135
+
+Confidence level used: 0.95 
+Conf-level adjustment: dunnettx method for 3 estimates </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="sc">|&gt;</span> <span class="fu">confint</span>(<span class="at">adjust =</span> <span class="st">"holm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE df lower.CL upper.CL
+ refvshalf   -0.450 0.331 76    -1.26    0.361
+ refvsone    -1.150 0.331 76    -1.96   -0.339
+ refvstwo    -0.662 0.331 76    -1.47    0.148
+
+Confidence level used: 0.95 
+Conf-level adjustment: bonferroni method for 3 estimates </code></pre>
+</div>
+</div>
+<p>We can see that more stringent adjustments lead to higher <span class="math inline">\(p\)</span>-values and wider intervals.</p>
+</div>
+<p>If we wanted to perform tests for multiple variables, or for subgroups, we can obtain overall control by using a procedure in each subset with a lower <span class="math inline">\(\alpha\)</span>, and combining the overall errors afterwards. If the data arise from different independent samples, the tests are indeed independent.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -558,6 +820,9 @@ Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992. <span>“Effe
 </div>
 <div id="ref-Nosek:2015" class="csl-entry" role="listitem">
 Nosek, Brian, Johanna Cohoon, Mallory Kidwell, and Jeffrey Spies. 2015. <span>“Estimating the Reproducibility of Psychological Science.”</span> <em>Science</em> 349 (6251). <a href="https://doi.org/10.1126/science.aac4716">https://doi.org/10.1126/science.aac4716</a>.
+</div>
+<div id="ref-Sokolova.Krishna.Doring:2023" class="csl-entry" role="listitem">
+Sokolova, Tatiana, Aradhna Krishna, and Tim Döring. 2023. <span>“Paper Meets Plastic: The Perceived Environmental Friendliness of Product Packaging.”</span> <em>Journal of Consumer Research</em> 50 (3): 468–91. <a href="https://doi.org/10.1093/jcr/ucad008">https://doi.org/10.1093/jcr/ucad008</a>.
 </div>
 </div>
 </section>

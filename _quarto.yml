@@ -36,7 +36,7 @@ book:
   - 03-completely_randomized_trials.qmd
   - 04-contrasts_multipletesting.qmd
   - 05-interactions_multiway.qmd
-  - 06-blocking.qmd
+  - 06-blocking_ancova.qmd
   - 07-power_effect.qmd
   - 08-reproducibility_crisis.qmd
   - 09-repeated.qmd
