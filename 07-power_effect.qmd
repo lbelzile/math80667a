@@ -107,22 +107,22 @@ There are different estimators of $d$ depending on whether or not the pooled var
 For these different estimators, it is possible to obtain (asymmetric) confidence intervals or tolerance intervals.^[By using the pivot method, e.g.,  @Steiger:2004, and relating the effect size to the noncentrality parameter of the null distribution, whether $\mathsf{St}$, $\mathsf{F}$ or $\chi^2$.]
 
 
-::: {.example #LiuRimMinMin2022E1effect name="The Surprise of Reaching Out"}
+::: {.example #LiuRimMinMin2023E1effect name="The Surprise of Reaching Out"}
 
 
 ```{r}
 #| eval: true
 #| echo: false
-data(LRMM22_S1, package = "hecedsm")
+data(LRMM23_S1, package = "hecedsm")
 ttest <- t.test(appreciation ~ role, 
-                data = LRMM22_S1,
+                data = LRMM23_S1,
                 var.equal = TRUE)
 effect <- effectsize::hedges_g(appreciation ~ role, 
-                data = LRMM22_S1, pooled_sd = TRUE)
+                data = LRMM23_S1, pooled_sd = TRUE)
 ```
 
 
-We consider a two-sample $t$-test for the study of @Liu.Rim.Min.Min:2022 discussed in @exm-LiuRimMinMin2022E1. The difference in average response index is `r round(as.numeric(diff(ttest$estimate)), 3)`, indicating that the responder have a higher score. The $p$-value is `r round(ttest$p.value,3)`, showing a small effect. 
+We consider a two-sample $t$-test for the study of @Liu.Rim.Min.Min:2023 discussed in @exm-LiuRimMinMin2023E1. The difference in average response index is `r round(as.numeric(diff(ttest$estimate)), 3)`, indicating that the responder have a higher score. The $p$-value is `r round(ttest$p.value,3)`, showing a small effect. 
 
 If we consider the standardized difference $d$, the group means are `r round(effect$Hedges_g, 3)` standard deviations apart based on Hedge's $g$, with an associated 95% confidence interval of [`r round(effect$CI_low, 3)`, `r round(effect$CI_high, 3)`]: thus, the difference found is small (using @Cohen:1988's convention) and there is a large uncertainty surrounding it. 
 
@@ -131,14 +131,14 @@ There is a $`r round(pnorm(effect$Hedges_g/sqrt(2))*100,0)`$% probability that a
 ```{r}
 #| eval: false
 #| echo: true
-data(LRMM22_S1, package = "hecedsm")
+data(LRMM23_S1, package = "hecedsm")
 ttest <- t.test(
   appreciation ~ role, 
-  data = LRMM22_S1,
+  data = LRMM23_S1,
   var.equal = TRUE)
 effect <- effectsize::hedges_g(
   appreciation ~ role, 
-  data = LRMM22_S1, 
+  data = LRMM23_S1, 
   pooled_sd = TRUE)
 ```
 

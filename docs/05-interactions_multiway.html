@@ -377,11 +377,7 @@ div.csl-indent {
 <p>It’s clear from <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> that looking only at the average of <span class="math inline">\(A\)</span> alone (the main effect) isn’t instructive when we are in the presence of an interaction: rather, we should be comparing the values of <span class="math inline">\(A\)</span> for <span class="math inline">\(b_1\)</span> separately than those for <span class="math inline">\(b_2\)</span>, and vice-versa using simple effects, otherwise our conclusions may be misleading.</p>
 <div class="example" name="Interaction plots for Maglio and Polman (2014)">
 <p>The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on <a href="#fig-interactionplotMP">Figure&nbsp;<span>5.2</span></a>, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.</p>
-<div class="cell" data-hash="05-interactions_multiway_cache/html/fig-interactionplotMP_3b648ba5f880acc5fd2fd8177bbc25a3">
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'direction'. You can override using the
-`.groups` argument.</code></pre>
-</div>
+<div class="cell" data-hash="05-interactions_multiway_cache/html/fig-interactionplotMP_38bd5c332fb9984ad8fc5cb4587b5dcd">
 <div class="cell-output-display">
 <div id="fig-interactionplotMP" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -414,12 +410,12 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 <p>Fitting the model including the interaction between factors ensures that we keep the additivity assumption and that our conclusions aren’t misleading: the price to pay is additional mean parameters to be estimated, which isn’t an issue if you collect enough data, but can be critical when data collection is extremely costly and only a few runs are allowed.</p>
 <p>In <strong>R</strong>, we include both factors in a formula as <code>response ~ factorA * factorB</code>, the <code>*</code> symbol indicating that both are allowed to interact; in the main effect model, we would use instead <code>+</code> to reflect that the effects of both factors add up.</p>
 <div class="cell" data-hash="05-interactions_multiway_cache/html/unnamed-chunk-4_dbb9bbe8adf5f1cf48fc61ed1b758b38">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing Supplementary Study 5</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of Sharma, Tully, and Cryder (2021)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(STC21_SS5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(likelihood <span class="sc">~</span> purchase<span class="sc">*</span>debttype, </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> STC21_SS5)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing Supplementary Study 5</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of Sharma, Tully, and Cryder (2021)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(STC21_SS5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(likelihood <span class="sc">~</span> purchase<span class="sc">*</span>debttype, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> STC21_SS5)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tables of means
 Grand mean
@@ -444,10 +440,10 @@ purchase        credit loan
   need            5.7    5.4
   rep           361.0  389.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance reveals </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># non-significant interaction</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># of purchase and type</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance reveals </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># non-significant interaction</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># of purchase and type</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type III tests)
 
@@ -461,10 +457,10 @@ Residuals         11467.4 1497
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="st">"debttype"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="st">"debttype"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
 </div>
@@ -483,12 +479,12 @@ $contrasts
 
 Results are averaged over the levels of: purchase </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise comparisons within levels of purchase</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effect</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"purchase"</span>, <span class="st">"debttype"</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="st">"purchase"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise comparisons within levels of purchase</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effect</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"purchase"</span>, <span class="st">"debttype"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="st">"purchase"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$emmeans
 purchase = discretionary:

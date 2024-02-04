@@ -346,7 +346,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-01-28}
+\date{2024-02-03}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -364,7 +364,7 @@
 \begin{document}
 \includepdf{figures/coverpage.pdf}
 
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, interior hidden, frame hidden, boxrule=0pt, breakable, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, sharp corners, interior hidden, frame hidden, borderline west={3pt}{0pt}{shadecolor}, breakable]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -387,7 +387,7 @@ the joint Ph.D.~program in Management.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on Sunday, January 28 2024.
+and were last compiled on Saturday, February 03 2024.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -427,7 +427,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -547,7 +547,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -589,7 +589,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, toptitle=1mm, colframe=quarto-callout-caution-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -610,7 +610,7 @@ impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -626,8 +626,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -795,7 +795,7 @@ limit theorem.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, colframe=quarto-callout-note-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -863,7 +863,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -907,7 +907,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, colframe=quarto-callout-note-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -939,7 +939,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, colframe=quarto-callout-note-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -989,7 +989,7 @@ sampled is \(1/3\), with the simple random sampling having a range of
 {[}\(0.22, 0.39\){]} among the strata, compared to {[}\(0.31, 0.33\){]}
 for the stratified sample.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, colframe=quarto-callout-note-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1374,7 +1374,7 @@ license}.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -1411,7 +1411,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \textbf{Learning objectives}:
 
@@ -2082,7 +2082,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, colframe=quarto-callout-caution-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2321,7 +2321,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, colframe=quarto-callout-caution-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2408,9 +2408,9 @@ the \emph{p}-value is smaller than \(\alpha\), our null value \(\theta\)
 will be outside of the confidence interval and vice-versa.
 
 \begin{example}[``The Surprise of Reaching
-Out'']\protect\hypertarget{exm-LiuRimMinMin2022E1}{}\label{exm-LiuRimMinMin2022E1}
+Out'']\protect\hypertarget{exm-LiuRimMinMin2023E1}{}\label{exm-LiuRimMinMin2023E1}
 
-Liu et al. (\protect\hyperlink{ref-Liu.Rim.Min.Min:2022}{2022+}) studies
+Liu et al. (\protect\hyperlink{ref-Liu.Rim.Min.Min:2023}{2023}) studies
 social interactions and the impact of surprise on people reaching out if
 this contact is unexpected. Experiment 1 focuses on questionnaires where
 the experimental condition is the perceived appreciation of reaching out
@@ -2573,7 +2573,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -3538,7 +3538,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \textbf{Learning objectives}:
 
@@ -4579,11 +4579,6 @@ interaction between station and direction of travel, in addition to a
 main effect for station. Formal hypothesis testing can help check this
 intuition.
 
-\begin{verbatim}
-`summarise()` has grouped output by 'direction'. You can override using the
-`.groups` argument.
-\end{verbatim}
-
 \begin{figure}[ht!]
 
 {\centering \includegraphics{05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
@@ -4826,7 +4821,7 @@ effects suggest that the label has an impact on perception only for
 discretionary expenses rather than needed ones, which runs
 counter-intuitively with the lack of interaction.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -4920,7 +4915,7 @@ experimental condition are the same.\footnote{If not, this implies that
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_ancova_files/figure-pdf/fig-ancovadifftrend-1.pdf}
+{\centering \includegraphics{06-blocking_ancova_files/figure-pdf/fig-ancovadifftrend-1.pdf}
 
 }
 
@@ -4951,7 +4946,7 @@ scales.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_ancova_files/figure-pdf/fig-ancovaresid-1.pdf}
+{\centering \includegraphics{06-blocking_ancova_files/figure-pdf/fig-ancovaresid-1.pdf}
 
 }
 
@@ -5044,9 +5039,9 @@ Residuals & 259.18 & 94 &  & \\
 \toprule
 term & sum. sq. & df & stat & p-value\\
 \midrule
-familiarity & 55.9 & 1 & 25.60 & < .001\\
-consistency & 9.8 & 1 & 4.49 & .037\\
-Residuals & 203.2 & 93 &  & \\
+familiarity & 55.94 & 1 & 25.60 & < .001\\
+consistency & 9.80 & 1 & 4.49 & .037\\
+Residuals & 203.24 & 93 &  & \\
 \bottomrule
 \end{tabular}
 
@@ -5174,8 +5169,8 @@ condition & 2 & 42.5 & < .001\\
 \toprule
 term & df & stat & p-value\\
 \midrule
-prior & 1 & 289 & < .001\\
-condition & 2 & 57 & < .001\\
+prior & 1 & 289.2 & < .001\\
+condition & 2 & 57.0 & < .001\\
 \bottomrule
 \end{tabular}
 
@@ -5208,9 +5203,9 @@ Holm-\/-Bonferroni}\begin{minipage}[t]{\linewidth}
 \toprule
 contrast & estimate & std.error & df & statistic & p.value\\
 \midrule
-consensus vs control & -12.0 & 4.0 & 558 & -3.01 & .003\\
-consensus vs BoostPlus & 16.3 & 4.7 & 546 & 3.49 & < .001\\
-BoostPlus vs control & -28.3 & 4.4 & 505 & -6.49 & < .001\\
+consensus vs control & -11.98 & 4.0 & 557.54 & -3.007 & .003\\
+consensus vs BoostPlus & 16.31 & 4.7 & 546.36 & 3.490 & < .001\\
+BoostPlus vs control & -28.29 & 4.4 & 505.44 & -6.489 & < .001\\
 \bottomrule
 \end{tabular}
 
@@ -5228,9 +5223,9 @@ BoostPlus vs control & -28.3 & 4.4 & 505 & -6.49 & < .001\\
 \toprule
 contrast & estimate & std.error & df & statistic & p.value\\
 \midrule
-consensus vs control & -11.8 & 3.3 & 543 & -3.54 & < .001\\
-consensus vs BoostPlus & 17.5 & 4.3 & 524 & 4.11 & < .001\\
-BoostPlus vs control & -29.3 & 3.9 & 459 & -7.45 & < .001\\
+consensus vs control & -11.84 & 3.3 & 543.06 & -3.544 & < .001\\
+consensus vs BoostPlus & 17.47 & 4.3 & 523.60 & 4.108 & < .001\\
+BoostPlus vs control & -29.30 & 3.9 & 458.62 & -7.454 & < .001\\
 \bottomrule
 \end{tabular}
 
@@ -5273,7 +5268,7 @@ post & control & 30.91 & 2.56\\
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{06-blocking_ancova_files/figure-pdf/fig-vanStekS3-1.pdf}
+{\centering \includegraphics{06-blocking_ancova_files/figure-pdf/fig-vanStekS3-1.pdf}
 
 }
 
@@ -5284,7 +5279,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, colframe=quarto-callout-caution-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Stekelenburg et al. (\protect\hyperlink{ref-vanStekelenburg:2021}{2021})
 split their data to do pairwise comparisons two at the time (thus taking
@@ -5304,7 +5299,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, colframe=quarto-callout-caution-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -5330,7 +5325,7 @@ posterior belief score.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -5358,7 +5353,7 @@ posterior belief score.}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -5505,10 +5500,10 @@ confidence intervals or tolerance intervals.\footnote{By using the pivot
   null distribution, whether \(\mathsf{St}\), \(\mathsf{F}\) or
   \(\chi^2\).}
 
-\leavevmode\vadjust pre{\hypertarget{LiuRimMinMin2022E1effect}{}}%
+\leavevmode\vadjust pre{\hypertarget{LiuRimMinMin2023E1effect}{}}%
 We consider a two-sample \(t\)-test for the study of Liu et al.
-(\protect\hyperlink{ref-Liu.Rim.Min.Min:2022}{2022+}) discussed in
-Example~\ref{exm-LiuRimMinMin2022E1}. The difference in average response
+(\protect\hyperlink{ref-Liu.Rim.Min.Min:2023}{2023}) discussed in
+Example~\ref{exm-LiuRimMinMin2023E1}. The difference in average response
 index is 0.371, indicating that the responder have a higher score. The
 \(p\)-value is 0.041, showing a small effect.
 
@@ -5527,14 +5522,14 @@ responder observations will exceed the median of the initiator (Cohen's
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{data}\NormalTok{(LRMM22\_S1, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(LRMM23\_S1, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
 \NormalTok{ttest }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(}
 \NormalTok{  appreciation }\SpecialCharTok{\textasciitilde{}}\NormalTok{ role, }
-  \AttributeTok{data =}\NormalTok{ LRMM22\_S1,}
+  \AttributeTok{data =}\NormalTok{ LRMM23\_S1,}
   \AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{effect }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{hedges\_g}\NormalTok{(}
 \NormalTok{  appreciation }\SpecialCharTok{\textasciitilde{}}\NormalTok{ role, }
-  \AttributeTok{data =}\NormalTok{ LRMM22\_S1, }
+  \AttributeTok{data =}\NormalTok{ LRMM23\_S1, }
   \AttributeTok{pooled\_sd =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -5983,7 +5978,7 @@ percentage of \emph{p}-values smaller than \(\alpha\). We can vary the
 sample size and see how many observations we need per group to achieve
 the desired level of power.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -6019,7 +6014,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, toptitle=1mm, colframe=quarto-callout-important-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -6308,7 +6303,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, colframe=quarto-callout-note-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -6367,7 +6362,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, toptitle=1mm, left=2mm, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, colback=white, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toprule=.15mm, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, arc=.35mm, coltitle=black, opacitybacktitle=0.6, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, bottomtitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, opacitybacktitle=0.6, breakable, coltitle=black, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, colframe=quarto-callout-tip-color-frame, left=2mm, arc=.35mm, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -9140,10 +9135,10 @@ on Product Evaluation in Online Retailing.''} \emph{Journal of Retailing
 and Consumer Services} 49: 279--88.
 \url{https://doi.org/10.1016/j.jretconser.2019.03.015}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Liu.Rim.Min.Min:2022}{}}%
-Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2022+. {``The
+\leavevmode\vadjust pre{\hypertarget{ref-Liu.Rim.Min.Min:2023}{}}%
+Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2023. {``The
 Surprise of Reaching Out: Appreciated More Than We Think.''}
-\emph{Journal of Personality and Social Psychology}, 2022+.
+\emph{Journal of Personality and Social Psychology} 124 (4): 754--71.
 \url{https://doi.org/10.1037/pspi0000402}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Maglio.Polman:2014}{}}%

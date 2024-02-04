@@ -676,11 +676,11 @@ If we are only interested in the binary decision rule reject/fail to reject $\ma
 
 
 
-::: {#exm-LiuRimMinMin2022E1}
+::: {#exm-LiuRimMinMin2023E1}
 
 ## "The Surprise of Reaching Out"
 
-@Liu.Rim.Min.Min:2022 studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.
+@Liu.Rim.Min.Min:2023 studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.
 
 :::
 
@@ -690,21 +690,21 @@ We can begin by inspecting summary statistics for the sociodemographic variables
 #| eval: true
 #| echo: false
 #| label: LRMM22S1-prepare
-data(LRMM22_S1, package = "hecedsm")
-# head(LRMM22_S1)
-tab1 <- LRMM22_S1 |>
+data(LRMM23_S1, package = "hecedsm")
+# head(LRMM23_S1)
+tab1 <- LRMM23_S1 |>
   dplyr::group_by(gender) |>
   dplyr::summarize(min = min(age),
                    max = max(age),
                    mean = mean(age),
                    n = dplyr::n())
-tab2 <- LRMM22_S1  |>
+tab2 <- LRMM23_S1  |>
   dplyr::group_by(role) |>
   dplyr::summarize(mean = mean(appreciation),
                    sd = sd(appreciation),
                    n = dplyr::n())
 ttest <- t.test(appreciation ~ role, 
-                data = LRMM22_S1,
+                data = LRMM23_S1,
                 var.equal = FALSE)
 ```
 
@@ -738,9 +738,9 @@ The software returns `r papaja::apa_print(ttest)$statistic`, which leads to the 
 #| eval: false
 #| echo: false
 t.test(appreciation ~ role, 
-       data = LRMM22_S1, var.equal = TRUE)
+       data = LRMM23_S1, var.equal = TRUE)
 coin::wilcox_test(appreciation ~ role,  
-                  data = LRMM22_S1)
+                  data = LRMM23_S1)
 ```
 
 

@@ -179,6 +179,8 @@ The hypothesis of interest is the interaction; for the time being, we can simply
 #| label: fig-interactionplotMP
 #| eval: true
 #| echo: false
+#| message: false
+#| warning: false
 #| fig.cap: "Interaction plot for Study 1 of @Maglio.Polman:2014, showing group averages and 95% confidence intervals for the means. Observations are overlaid on the graph."
 data(MP14_S1, package = "hecedsm")
 model <- aov(distance ~ direction*station, 

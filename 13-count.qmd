@@ -64,13 +64,13 @@ counts_5vs7 <- xtabs(
 chisq.test(counts_5vs7)
 effectsize::cramers_v(chisq.test(counts_5vs7))
 
-data(DA22_E2, package = "hecedsm")
+data(DA23_E2, package = "hecedsm")
 # How many observations?
-nrow(DA22_E2)
-tabs <- with(DA22_E2, table(purchased, format))
+nrow(DA23_E2)
+tabs <- with(DA23_E2, table(purchased, format))
 chisq.test(tabs, correct = FALSE)
 # In the paper, all participants were included for this test but other were excluded at a latter stage. 
-# DA22_E2 only includes the subset
+# DA23_E2 only includes the subset
 
 
 
