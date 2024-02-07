@@ -9,14 +9,14 @@
 
 We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously. Before jumping into the statistical analysis, let us discuss briefly some examples that will be covered in the sequel.
 
-:::{.example name="Psychological ownership of borrowed money"}
+:::{#exm-STC21 name="Psychological ownership of borrowed money"}
 
 Supplemental Study 5 from @Sharma.Tully.Cryder:2021 checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.
 
 
 :::
 
-:::{.example name="Spatial orientation shrinks and expands psychological distance"}
+:::{#exm-MP14 name="Spatial orientation shrinks and expands psychological distance"}
 
 @Maglio.Polman:2014 measured the subjective distance on travel based on the direction of travel. They conducted an experiment in the Toronto subway green line, asking commuters from Bay station to answer the question "How far away does the [name] station feel to you?" using a 7 point Likert scale ranging from very close (1) to very far (7). The stations name were one of Spadina, St. George, Bloor--Yonge and Sherbourne (from West to East).
 
@@ -72,7 +72,7 @@ Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observa
 
 ## Interactions
 
-Table @tbl-cellmeansMP14 shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either `direction` or `station` as sole factor.
+@tbl-cellmeansMP14 shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either `direction` or `station` as sole factor.
 
 We will use particular terminology to refer to these:
 
@@ -169,9 +169,9 @@ ggplot(all_22s,
 
 To better understand, we consider the average response and suppose we have access to the true population average for each sub-treatment. We can then represent the population using a line graph with the two factors, one being mapped to color and another to the $x$-axis. @fig-2by2 shows what happens under all possible scenarios with a 2 by 2 design. When there is no overall effect, the mean is constant.  If there isn't a main effect of $A$, the average of the two mean response for $a_1$ and $a_2$ are the same, etc. Interactions are depicted by **non-parallel lines**. 
 
-It's clear from @fig-2by2 that looking only at the average of $A$ alone (the main effect) isn't instructive when we are in the presence of an interaction: rather, we should be comparing the values of $A$ for $b_1$ separately than those for $b_2$, and vice-versa using simple effects, otherwise our conclusions may be misleading.  
+It's clear from @fig-2by2 that looking only at the average of $A$ alone (the main effect) isn't instructive when we are in the presence of an interaction: rather, we should be comparing the values of $A$ for $b_1$ separately than those for $b_2$, and vice-versa, using simple effects, otherwise our conclusions may be misleading.  
 
-:::{.example name="Interaction plots for Maglio and Polman (2014)"}
+:::{#exm-MP14-interaction name="Interaction plots for Maglio and Polman (2014)"}
 
 The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on @fig-interactionplotMP, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.
 
@@ -274,7 +274,7 @@ emmeans::emmeans(mod,
 
 ```
 
-In the analysis of variance table, we only focus on the last line with the sum of squares for `purchase:debttype`. The $F$ statistic is `r car::Anova(mod, type = 3)[4,3]`; using the $\mathsf{F}$ (`r car::Anova(mod, type = 3)[4,2]`, `r car::Anova(mod, type = 3)[5,2]`) distribution as benchmark, we obtain a $p$-value of `r format.pval(car::Anova(mod, type = 3)[4,4], digits=2)` so there is no evidence the effect of purchase depends on debt type.
+In the analysis of variance table, we focus exclusively on the last line with the sum of squares for `purchase:debttype`. The $F$ statistic is `r round(car::Anova(mod, type = 3)[4,3],2)`; using the $\mathsf{F}$ (`r car::Anova(mod, type = 3)[4,2]`, `r car::Anova(mod, type = 3)[5,2]`) distribution as benchmark, we obtain a $p$-value of `r format.pval(car::Anova(mod, type = 3)[4,4], digits=2)` so there is no evidence the effect of purchase depends on debt type.
 
 We can thus pool data and look at the effect of debt type (`loan` or `credit`) overall by combining the results for all purchase types, one of the planned comparison reported in the Supplementary material. To do this in **R** with the `emmeans` package, we use the `emmeans` function and we quote the factor of interest (i.e., the one we want to keep) in `specs`. By default, this will compute the estimate marginal means: the `contr = "pairwise"` indicates that we want the difference between the two, which gives us the contrasts.
 
