@@ -163,7 +163,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -256,19 +256,19 @@ div.csl-indent {
 </div>
 </div>
 <p>The left panel of <a href="#fig-ancovadifftrend">Figure&nbsp;<span>6.1</span></a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of <a href="#fig-ancovadifftrend">Figure&nbsp;<span>6.1</span></a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
-<p><a href="#fig-ancovaresid">Figure&nbsp;<span>6.2</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel; note that the <span class="math inline">\(y\)</span>-axes have different scales.</p>
-<div class="cell" data-hash="06-blocking_ancova_cache/html/fig-ancovaresid_47b8e789a1c85b90c01dd547882128ce">
+<p><a href="#fig-ancovaresid">Figure&nbsp;<span>6.2</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel.</p>
+<div class="cell" data-hash="06-blocking_ancova_cache/html/fig-ancovaresid_3d0ecdb9ba0f6020f4333a771a3e5a7b">
 <div class="cell-output-display">
 <div id="fig-ancovaresid" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="06-blocking_ancova_files/figure-html/fig-ancovaresid-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.2: Response after subtracting mean (left) and after detrending (right).</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.2: Response after subtracting mean (left) and after detrending and centering the mean (right).</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.</p>
-<div id="leechoi" class="example" name="Inconsistency of product description and image in online retailing">
+<div id="leechoi" name="Inconsistency of product description and image in online retailing">
 <p><span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
 <p>One way to account for familiarity when comparing the mean is to use a linear regression with familiarity as another explanatory variable. The expected value of the product evaluation is <span id="eq-vS"><span class="math display">\[
 \mathsf{E}(\texttt{prodeval}) = \beta_0 + \beta_1 \texttt{familiarity} + \beta_2 \texttt{consistency},
@@ -567,7 +567,7 @@ div.csl-indent {
 </div>
 </div>
 <p><a href="#tbl-contraststabSSVB">Table&nbsp;<span>6.3</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3">Figure&nbsp;<span>6.4</span></a>, helps decrease background noise.</p>
-<div class="cell" data-hash="06-blocking_ancova_cache/html/tbl-vanStekS3_394d918d1794067d7496d790091e0771">
+<div class="cell" data-hash="06-blocking_ancova_cache/html/tbl-vanStekS3_b16ddde6284e6754eea4f523b4c7592d">
 <div class="cell-output-display">
 <div id="tbl-vanStekS3" class="anchored">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
@@ -989,7 +989,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./05-interactions_multiway.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

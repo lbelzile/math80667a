@@ -1,4 +1,4 @@
-# Complete factorial designs
+# Multiway factorial designs
 
 ```{r}
 #| label: setup
@@ -30,7 +30,7 @@ As there are four stations and two directions of travel (a 4 by 2 design), the s
 ## Efficiency of multiway analysis of variance.
 
 
-Consider the setting of @Sharma.Tully.Cryder:2021 and suppose we want to check the impact of debt and collect a certain number of observations in each group. If we suspected the label had an influence, we could run a one-way analysis of variance for each spending type separately (thus, two one-way ANOVA each with two groups). We could do likewise if we wanted instead to focus on whether the spending was discretionary in nature or not, for each label: together, this would give a total of eight sets of observations. Combining the two factors allows us to halve the number of groups/samples we collect in this simple setting: this highlights the efficiency of running an experiment modifying all of these instances at once, over a series of one-way analysis of variance. This concept extends to higher dimension when we manipulate two or more factors. Factorial designs allow us to study the impact of multiple variables simultaneously with **fewer overall observations**. 
+Consider the setting of @Sharma.Tully.Cryder:2021 and suppose we want to check the impact of debt and collect a certain number of observations in each group. If we suspected the label had an influence, we could run a one-way analysis of variance for each spending type separately (thus, two one-way ANOVA each with two groups). We could do likewise if we wanted instead to focus on whether the spending was discretionary in nature or not, for each label: together, this would give a total of eight sets of observations. Combining the two factors allows us to halve the number of groups/samples we collect in this simple setting: this highlights the efficiency of running an experiment modifying all of these instances at once, over a series of one-way analysis of variance. This concept extends to higher dimension when we manipulate two or more factors. Factorial designs allow us to study the impact of multiple variables simultaneously with **fewer overall observations** than running experiments separately for each factor. 
 
 
 
@@ -67,8 +67,17 @@ The $i$th row mean represents the average response across all levels of $B$,
 $\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b$ and similarly for the average of the $j$th column, $\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.$ Finally, the overall average is 
 $$\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.$$
 
-Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means $\widehat{\mu}_{i.}$, $\widehat{\mu}_{.j}$ and $\widehat{\mu}$. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.
+Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observations in their group and we would use the above formula to obtain estimates of the row, column and overall means $\widehat{\mu}_{i.}$, $\widehat{\mu}_{.j}$ and $\widehat{\mu}$. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.
 
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-balance-MP14
+#| tbl-cap: "Repartition of the sample for Study 1 of Maglio and Polman (2014)."
+data(MP14_S1, package = 'hecedsm')
+knitr::kable(xtabs(~ direction + station, data = MP14_S1), )
+```
+Looking at @tbl-balance-MP14, we can see that the number of observations is not exactly the same. In general, attrition and non-response can lead to unequal cell sample size, but you should strive to gather roughly equal number of observations. The main consequence is that different decompositions of the variance will lead to different tests, whereas no such ambiguity exists for balanced data.
 
 ## Interactions
 
@@ -78,13 +87,14 @@ We will use particular terminology to refer to these:
 
 - **simple effects**: difference between levels of one in a fixed combination of others. Simple effects are comparing cell averages within a given row or column.
 - **main effects**: differences relative to average for each condition of a factor. Main effects are row/column averages.
-- **interaction effects**: when simple effects differ depending on levels of another factor. Interactions effects are difference relative to the row or column average.
+- **interaction effects**: when simple effects differ depending on levels of another factor. Interactions effects are differences relative to the row or column average.
 
 In other words, an interaction occurs when some experimental factors, when coupled together, have different impacts than the superposition of each. An interaction between two factors occurs when the average effect of one independent variable depends on the level of the other.
 
 If there is a significant interaction, the main effects are **not** of interest since they are misleading. Rather, we will compute the simple effects by making the comparison one at level at the time.
 
 In our example of @Maglio.Polman:2014, a simple effect would be comparing the distance between Spadina and Sherbourne for east. The main effect for the direction would be the average perceived distance for east and for west. Finally, the interaction would measure how much these differ by station depending on direction.
+
 
 
 
@@ -215,6 +225,8 @@ mean_tab <- MP14_S1 |>
 
 ## Model parametrization
 
+The following section is technical and may be omitted. 
+
 The model parametrized in terms of subgroup or cell average is okay in @eq-twowayasoneway, but it doesn't help us if we want to check for the presence of main effects and interaction, even if it would be possible to specify the contrasts required to test these hypotheses. We can however express the model in terms of main effects and interactions. 
 
 We consider the alternative formulation
@@ -224,8 +236,8 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 where
 
 - $\mu$ is the average of all subgroup averages, termed overall mean.
-- $\alpha_i = \mu_{i.} - \mu$ is the mean of level $A_i$ minus the overall mean.
-- $\beta_j  = \mu_{.j} - \mu$ is the mean of level $B_j$ minus overall mean.
+- $\alpha_i = \mu_{i.} - \mu$ is the mean of level $A_i$ minus the overall mean (row mean).
+- $\beta_j  = \mu_{.j} - \mu$ is the mean of level $B_j$ minus overall mean (column mean).
 - $(\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu$ is the interaction term for $A_i$ and $B_j$ which encodes the effect of both variable not already captured by the main effects.
 
 A rapid calculation shows that there are more coefficients than the number of cells and subgroups ($n_an_b$ cells overall) in our table. The model is **overparametrized**: to get away with this, we impose constraints to remove redundancies. The idea is that if we know $n_a-1$ of the mean for factor $A$ and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor $A$ by setting $\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0$. The $1 +  n_a + n_b$ **sum to zero** constraints,
@@ -233,9 +245,9 @@ $$\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=
 
 The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.
 
-**To be continued**...
 
-:::{.example name="Testing for Psychological ownership of borrowed money"}
+
+:::{.example name="Testing for psychological ownership of borrowed money"}
 
 
 @Sharma.Tully.Cryder:2021 first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors `debttype` and `purchase`), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.
@@ -269,8 +281,8 @@ emmeans::emmeans(mod,
 # Simple effect
 emmeans::emmeans(mod, 
                  specs = c("purchase", "debttype"),
-                 by = "purchase",
-                 contr = "pairwise")
+                 by = "purchase") |> 
+  emmeans::contrast("pairwise")
 
 ```
 
@@ -282,6 +294,170 @@ To get the simple effects, we give both variables in `specs` as factors for whic
 
 :::
 
+
+
+:::{.example name="Spatial perception of distance in the Toronto subway"}
+
+@Maglio.Polman:2014 considered the relative perception of distance from Bay station in Toronto. We modify the data so that we consider station distance in direction of travel (rather than station names). The categorical variable `stdist` has labels $(-2, -1, +1, +2$) for stations Spadina, St. Georges, Bloor-Yonge, Sherbourne in direction East, and opposite signs in the other direction: see @fig-Torontosubway for the map. We are interested in knowing whether two stations behind (`stdist`$=-2$) is perceived the same as two stations ahead (`stdist`$=+2$).
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-Torontosubway
+#| fig-cap: "Simplified depiction of the Toronto metro stations used in the experiment, based on work by Craftwerker on Wikipedia, distributed under CC-BY-SA 4.0."
+knitr::include_graphics("figures/Toronto_subway.png")
+```
+
+
+```{r}
+MP14_S1 <- MP14_S1 |>
+  dplyr::mutate(stdist = factor(dplyr::case_when(
+    station == "Spadina" & direction == "east" ~ "-2",
+    station == "Spadina" & direction == "west" ~ "+2",
+    station == "St. George" & direction == "east" ~ "-1",
+    station == "St. George" & direction == "west" ~ "+1",
+    station == "Bloor-Yonge" & direction == "east" ~ "+1",
+    station == "Bloor-Yonge" & direction == "west" ~ "-1",
+    station == "Sherbourne" & direction == "east" ~ "+2",
+    station == "Sherbourne" & direction == "west" ~ "-2"))) |>
+  dplyr::mutate(stdist = relevel(stdist, ref = "-2"))
+```
+
+```{r}
+#| eval: false
+#| echo: true
+# Set up parametrization to sum-to-zero for categorical factors
+options(contrasts = c("contr.sum", "contr.poly"))
+library(emmeans)
+mod <- lm(distance ~ stdist * direction, data = MP14_S1) 
+car::Anova(mod, type = 2)
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-ANOVA2-MP14
+#| tbl-cap: "Analysis of variance (type II effects) for the Maglio and Polman (2014) reformated data."
+options(contrasts = c("contr.sum", "contr.poly"))
+library(emmeans)
+options(knitr.kable.NA = '')
+mod <- lm(distance ~ stdist * direction, data = MP14_S1) 
+broom::tidy(car::Anova(mod, type = 2)) |>
+  dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  knitr::kable(digits = 2, col.names = c("term", "sum of squares","df","stat","p-value"), booktabs = TRUE, linesep = "")
+```
+
+We look at the analysis of variance in @tbl-ANOVA2-MP14 to see what the perception of distance is. The $F$-tests suggest that there is no interaction, and no effect of direction of travel although there is an uninteresting main effect of station distance (of course, two station apart is considered further from Bay than one station apart).
+
+Since there is no interaction, we can collapse the data to a one-way ANOVA with a single factor (station distance) and consider contrasts. Say we are interested in testing the perception of distance, by looking at average distance of pairs at equal distance $\mu_{-1} = \mu_{+1}$ and $\mu_{-2} = \mu_{+2}$.
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-interactionMP
+#| fig-cap: "Interaction plot for the reformated data from Maglio and Polman (2014) with 95% confidence intervals."
+emm <- emmeans(mod, specs = c("stdist","direction"))
+emmip(emm, formula = ~ stdist | direction,
+               CIs = TRUE) +
+  labs(x = "station distance") + 
+  theme_classic()
+```
+
+If we have categories are in the order $(-2, -1, +1, +2)$, the contrast weights are $(-1, 0, 0, 1)$ and $(0, -1, 1, 0)$ or a multiple thereof; the two contrasts are orthogonal. @tbl-contrast-MP14 shows the result of the hypothesis tests: both are significant, even applying a Bonferroni correction. This supports the hypothesis of @Maglio.Polman:2014.
+
+```{r}
+#| eval: false
+#| echo: false
+#| label: contrast-MP14
+emmeans(mod, specs = c("stdist")) |>
+  contrast(list("two dist" = c(-1, 0, 0, 1), 
+                "one dist" = c(0, -1, 1, 0)))
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-contrast-MP14
+#| warning: false
+#| message: false
+#| tbl-cap: "Contrasts for comparing the perceived distance for stations at the same distance on the network, but in opposition directions to that of travel."
+emmeans(mod, specs = c("stdist")) |>
+  contrast(list("two dist" = c(-1, 0, 0, 1), 
+                "one dist" = c(0, -1, 1, 0))) |>
+  broom::tidy() |> 
+  dplyr::select(c("contrast", "estimate", "std.error","statistic","p.value")) |>
+  dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |> 
+  knitr::kable(
+    col.names  = c("contrast","estimate","std. error", "stat", "p-value"),
+    booktabs = TRUE, 
+    digits = 2)
+```
+:::
+
+It is important to understand that any multiway ANOVA with two or more factor can be collapsed into a single one-way ANOVA: this is notably useful when there is a control group which is not related to the factor levels, as no manipulation takes place. The use of contrasts becomes critical since we can write any test for main effects, interactions using the latter through weighting.
+
+:::{#exm-LKUK24 name="Perceptions of cultural appropriation by ideology"}
+
+We consider a three-way ANOVA from @Lin.Kim.Uduehi.Keinan:2024. Their Study 4 focused on cultural appropriation for soul food recipe cookbook from Chef Dax, who was either black (or not), manipulating the description of the way he obtained the recipes (by peeking without permission in kitchens, by asking permission or no mention for control). Authors postulated that the perception of appropriation would vary by political ideology (liberal or conservative). The study results in a 3 by 2 by 2 three-way between-subject ANOVA.
+
+For the $K$-way ANOVA, we always start with estimating the full model with all $K$-way interaction (provided there are enough data to estimate the latter, which implies there are repetitions). If the latter is significant, we can fix one or more factor levels and compare the others.
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-anova-LKUK24
+#| tbl-cap: "Analysis of variance table (type II decomposition) for the data from Study 4 of Lin et al. (2024)." 
+options(contrasts = c("contr.sum", "contr.poly"))
+data(LKUK24_S4, package = "hecedsm")
+mod <- lm(appropriation ~ politideo * chefdax * brandaction,
+   data = LKUK24_S4)
+options(knitr.kable.NA = '')
+broom::tidy(car::Anova(mod, type = 2)) |>
+  dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  knitr::kable(digits = 2, 
+               col.names = c("term", "sum of squares","df","stat","p-value"),
+               booktabs = TRUE, 
+               linesep = "")
+```
+
+If we consider @tbl-anova-LKUK24, we find that there is no three-way interaction and, omitting the latter and focusing on lower-level, a single two-way interaction between political ideology and the race of Chef Dax. We cannot interpret the $p$-value for the main effect of `brandaction`, but we could look at the marginal means.
+
+Based on the data, we will collapse data to a one-way ANOVA comparing the three levels of `brandaction` and a 2 by 2 two-way ANOVA for the other two factors. The results are obtained by averaging over the missing factor.
+
+We are interested in comparing the perception between the race of Chef Dax (black or not, as Southern Soul food cooking is more likely to be associated with cultural appropriation is Chef Dax is not black. We proceed with `emmeans` by computing the marginal means separately for each of the four subcategories, but compare the race of Chef Dax separately for liberals and conservatives due to the presence of the interaction.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+data(LKUK24_S4, package = "hecedsm")
+mod <- lm(appropriation ~ politideo * chefdax * brandaction,
+   data = LKUK24_S4)
+# Marginal means for political ideology/Chef Dax
+emm_racebypolit <- emmeans(mod, specs = "chefdax", by = "politideo")
+emm_racebypolit |> pairs() #shortcut for contrast("pairwise")
+```
+We see that the liberals are much more likely to view Chef Dax cookbook as an instance of cultural appropriation if he is not black; there is limited evidence of any difference between conservatives and liberal when Chef Dax is black. Both differences are statistically significative, but the differences (and thus evidence of an effect) is much stronger for left-leaning respondents.
+
+We can look next at the brand action: we expect participants will view peeking less favorably than if Chef Dax asked for permission to publish the recipes. It's tricky to know the effect of the control, as we are not bringing the point to the attention of participants in this instance.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+# Marginal mean for brandaction
+emm_brand <- emmeans(mod, specs = c("brandaction")) 
+emm_brand
+# Joint test for the main effect of brandaction
+emm_brand |> pairs() |> joint_tests()
+```
+
+A joint $F$-test, obtained by collapsing everything to a one-way ANOVA, shows that there are indeed differences. However, note that the averages of the three actions are much smaller than for race.
+
+:::
 
 :::{.callout-important}
 

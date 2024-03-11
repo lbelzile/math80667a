@@ -346,7 +346,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-02-06}
+\date{2024-03-10}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -364,7 +364,7 @@
 \begin{document}
 \includepdf{figures/coverpage.pdf}
 
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, frame hidden, sharp corners, borderline west={3pt}{0pt}{shadecolor}, breakable, boxrule=0pt, interior hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, enhanced, sharp corners, frame hidden, interior hidden, breakable, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -387,7 +387,7 @@ the joint Ph.D.~program in Management.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on Saturday, February 03 2024.
+and were last compiled on Sunday, March 10 2024.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -427,7 +427,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -547,7 +547,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toprule=.15mm, leftrule=.75mm]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -589,7 +589,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, toprule=.15mm, leftrule=.75mm]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -610,7 +610,7 @@ impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, toprule=.15mm, leftrule=.75mm]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -626,8 +626,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, toprule=.15mm, leftrule=.75mm]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -795,7 +795,7 @@ limit theorem.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toprule=.15mm, leftrule=.75mm]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -863,7 +863,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toprule=.15mm, leftrule=.75mm]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -907,7 +907,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toprule=.15mm, leftrule=.75mm]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -939,7 +939,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toprule=.15mm, leftrule=.75mm]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -989,7 +989,7 @@ sampled is \(1/3\), with the simple random sampling having a range of
 {[}\(0.22, 0.39\){]} among the strata, compared to {[}\(0.31, 0.33\){]}
 for the stratified sample.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toprule=.15mm, leftrule=.75mm]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1374,7 +1374,7 @@ license}.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -1411,7 +1411,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toprule=.15mm, leftrule=.75mm]
 
 \textbf{Learning objectives}:
 
@@ -2082,7 +2082,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toprule=.15mm, leftrule=.75mm]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2321,7 +2321,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toprule=.15mm, leftrule=.75mm]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2573,7 +2573,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toprule=.15mm, leftrule=.75mm]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -2660,6 +2660,9 @@ equals \(\mu\). Thus, if we know any \(K-1\) of
 \(\{\delta_1, \ldots, \delta_K\}\), we automatically can deduce the last
 one.
 
+\begin{example}[Impact of encouragement on
+teaching]\protect\hypertarget{exm-impacteaching3}{}\label{exm-impacteaching3}
+
 In \textbf{R}, the \texttt{lm} function fits a linear model based on a
 formula of the form \texttt{response\ \textasciitilde{}\ explanatory}.
 If the explanatory is categorical (i.e., a factor), the parameters of
@@ -2716,6 +2719,8 @@ ignore & 16.11 & -3.56 & \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\end{example}
 
 We can still assess the hypothesis by comparing the sample means in each
 group, which are noisy estimates of the population mean: their inherent
@@ -3048,6 +3053,9 @@ confidence interval for \(\delta_{ij}\), \begin{align*}
 \mathsf{CI} = \left[\widehat{\delta}_{ij} - \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right), \widehat{\delta}_{ij} - \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right)\right].
 \end{align*}
 
+\begin{example}[Pairwise
+comparison]\protect\hypertarget{exm-pairwisecomp}{}\label{exm-pairwisecomp}
+
 We consider the pairwise average difference in scores between the
 praised (group C) and the reproved (group D) of the \texttt{arithmetic}
 study. The sample averages are respectively \(\widehat{\mu}_C = 27.4\)
@@ -3065,6 +3073,8 @@ If we take as null hypothesis \(\mathscr{H}_0: \delta_{CD}=0\), the
 null hypothesis at level \(\alpha=0.05\) to conclude that there is a
 significant difference (at level \(\alpha=0.05\)) between the average
 scores of students praised and reproved.
+
+\end{example}
 
 \hypertarget{model-assumptions}{%
 \section{Model assumptions}\label{model-assumptions}}
@@ -3150,6 +3160,9 @@ of test statistic, including robustness (sensitivity to extremes and
 outliers). For unequal variance, other statistics than the \(F\)-test
 statistic may be more powerful.
 
+\begin{example}[Additivity and
+transformations]\protect\hypertarget{exm-additivity}{}\label{exm-additivity}
+
 Chapter 2 of Cox (\protect\hyperlink{ref-Cox:1958}{1958}) discusses the
 assumption of additivity and provides useful examples showing when it
 cannot be taken for granted. One of them, Example 2.3, is a scenario in
@@ -3175,6 +3188,8 @@ transformations: Cox (\protect\hyperlink{ref-Cox:1958}{1958}) discusses
 the transformation \(\log\{(x+0.5)/(100.5-x)\}\) to reduce the warping
 due to scale.
 
+\end{example}
+
 Another example is in experiments where the effect of treatment is
 multiplicative, so that the output is of the form \begin{align*}
 \begin{pmatrix} \text{quantity depending only } \\ 
@@ -3185,6 +3200,9 @@ multiplicative, so that the output is of the form \begin{align*}
 \end{align*} Usually, this arises for positive responses and treatments,
 in which case taking natural logarithms on both sides, with
 \(\log(xy) = \log x + \log y\) yielding again an additive decomposition.
+
+\begin{example}[Inadequacy of additivity based on
+context]\protect\hypertarget{exm-additivity-counter}{}\label{exm-additivity-counter}
 
 This example is adapted from Cox
 (\protect\hyperlink{ref-Cox:1958}{1958}), Example 2.2. Children
@@ -3204,6 +3222,8 @@ experiment and the population, we would estimate an average reduction of
 this quantity is artificial, and a better measure would be that symptoms
 are for the treatment are 2/3 of those of the control (the ratio of
 proportions).
+
+\end{example}
 
 Equation~\ref{eq-additivefn} also implies that the effect of the
 treatment is constant for all individuals. This often isn't the case: in
@@ -3371,6 +3391,11 @@ proportion of type I error is not the nominal level \(\alpha\) as
 claimed) and potential loss of power. The following toy example
 illustrates this.
 
+\begin{example}[Violation of the null hypothesis of equal
+variance]\protect\hypertarget{exm-violation-equal-varince}{}\label{exm-violation-equal-varince}
+
+~
+
 \begin{figure}[ht!]
 
 {\centering \includegraphics{03-completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}
@@ -3401,6 +3426,8 @@ on false premises! While the size distortion is not always as striking,
 heterogeneity should be accounted in the design by requiring sufficient
 sample sizes (whenever costs permits) in each group to be able to
 estimate the variance reliably and using an adequate statistic.
+
+\end{example}
 
 There are alternative graphical ways of checking the assumption of equal
 variance, many including the standardized residuals
@@ -3485,11 +3512,16 @@ characteristics or more simply in the case of repeated measurements.
 Random assignment to treatment is thus key to ensure that the measure
 holds, and ensuring at the measurement phase that there is no spillover.
 
+\begin{example}[Independence of
+measurements]\protect\hypertarget{exm-indep}{}\label{exm-indep}
+
 There are many hidden ways in which measurements can impact the
 response. Physical devices that need to be calibrated before use
 (scales, microscope) require tuning: if measurements are done by
 different experimenters or on different days, it may impact and add
 systematic shift in means for the whole batch.
+
+\end{example}
 
 Special care must be taken whenever group testing is used, and blocking
 for potential impacts can salvage an analysis.
@@ -3538,7 +3570,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toprule=.15mm, leftrule=.75mm]
 
 \textbf{Learning objectives}:
 
@@ -3560,7 +3592,7 @@ testing}\label{contrasts-multiple-testing}}
 
 Suppose we perform an analysis of variance and the \(F\)-test for the
 (global) null hypothesis that the averages of all groups are equal is
-very large: we reject the null hypothesis in favour of the alternative,
+very large: we reject the null hypothesis in favor of the alternative,
 which states that at least one of the group average is different. The
 follow-up question will be where these differences lie. Indeed, in an
 experimental context, this implies one or more of the manipulation has a
@@ -4326,8 +4358,8 @@ independent.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{complete-factorial-designs}{%
-\chapter{Complete factorial designs}\label{complete-factorial-designs}}
+\hypertarget{multiway-factorial-designs}{%
+\chapter{Multiway factorial designs}\label{multiway-factorial-designs}}
 
 We next consider experiments and designs in which there are multiple
 factors being manipulated by the experimenter simultaneously. Before
@@ -4388,7 +4420,7 @@ modifying all of these instances at once, over a series of one-way
 analysis of variance. This concept extends to higher dimension when we
 manipulate two or more factors. Factorial designs allow us to study the
 impact of multiple variables simultaneously with \textbf{fewer overall
-observations}.
+observations} than running experiments separately for each factor.
 
 The drawback is that as we increase the number of factors, the total
 number of subgroups increases: with a complete design\footnote{By
@@ -4498,13 +4530,36 @@ overall average is
 \[\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.\]
 
 Each subgroup average \(\mu_{ij}\) will be estimated as the sample mean
-of observations in their group and we would use the above formulae to
+of observations in their group and we would use the above formula to
 obtain estimates of the row, column and overall means
 \(\widehat{\mu}_{i.}\), \(\widehat{\mu}_{.j}\) and \(\widehat{\mu}\). If
 the sample is balanced, meaning the number of observations is the same,
 these will be the same as summing over all observations in a row, column
 or table and then averaging. In general setup, however, we will give
 equal weight to each subgroup average.
+
+\hypertarget{tbl-balance-MP14}{}
+\begin{table}
+\caption{\label{tbl-balance-MP14}Repartition of the sample for Study 1 of Maglio and Polman (2014). }\tabularnewline
+
+\centering
+\begin{tabular}{l|r|r|r|r}
+\hline
+  & Spadina & St. George & Bloor-Yonge & Sherbourne\\
+\hline
+east & 26 & 26 & 23 & 26\\
+\hline
+west & 25 & 25 & 26 & 25\\
+\hline
+\end{tabular}
+\end{table}
+
+Looking at Table~\ref{tbl-balance-MP14}, we can see that the number of
+observations is not exactly the same. In general, attrition and
+non-response can lead to unequal cell sample size, but you should strive
+to gather roughly equal number of observations. The main consequence is
+that different decompositions of the variance will lead to different
+tests, whereas no such ambiguity exists for balanced data.
 
 \hypertarget{interactions}{%
 \section{Interactions}\label{interactions}}
@@ -4528,8 +4583,8 @@ We will use particular terminology to refer to these:
   condition of a factor. Main effects are row/column averages.
 \item
   \textbf{interaction effects}: when simple effects differ depending on
-  levels of another factor. Interactions effects are difference relative
-  to the row or column average.
+  levels of another factor. Interactions effects are differences
+  relative to the row or column average.
 \end{itemize}
 
 In other words, an interaction occurs when some experimental factors,
@@ -4594,7 +4649,7 @@ intuition.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics{05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{05-interactions_multiway_files/figure-pdf/fig-interactionplotMP-1.pdf}
 
 }
 
@@ -4609,6 +4664,8 @@ Observations are overlaid on the graph.}
 
 \hypertarget{model-parametrization}{%
 \section{Model parametrization}\label{model-parametrization}}
+
+The following section is technical and may be omitted.
 
 The model parametrized in terms of subgroup or cell average is okay in
 Equation~\ref{eq-twowayasoneway}, but it doesn't help us if we want to
@@ -4627,10 +4684,10 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
   \(\mu\) is the average of all subgroup averages, termed overall mean.
 \item
   \(\alpha_i = \mu_{i.} - \mu\) is the mean of level \(A_i\) minus the
-  overall mean.
+  overall mean (row mean).
 \item
   \(\beta_j = \mu_{.j} - \mu\) is the mean of level \(B_j\) minus
-  overall mean.
+  overall mean (column mean).
 \item
   \((\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu\) is the
   interaction term for \(A_i\) and \(B_j\) which encodes the effect of
@@ -4654,8 +4711,6 @@ The redundancy in information, due to the fact main effects are
 expressible as row and column averages, and the overall mean as the
 average of all observations, will arise again when we consider degrees
 of freedom for tests.
-
-\textbf{To be continued}\ldots{}
 
 Sharma, Tully, and Cryder
 (\protect\hyperlink{ref-Sharma.Tully.Cryder:2021}{2021}) first proceeded
@@ -4695,120 +4750,76 @@ effects of both factors add up.
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(likelihood }\SpecialCharTok{\textasciitilde{}}\NormalTok{ purchase}\SpecialCharTok{*}\NormalTok{debttype, }
            \AttributeTok{data =}\NormalTok{ STC21\_SS5)}
 \FunctionTok{model.tables}\NormalTok{(mod, }\AttributeTok{type =} \StringTok{"means"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-Tables of means
-Grand mean
-         
-4.879747 
-
- purchase 
-    discretionary    need
-            4.182   5.579
-rep       751.000 750.000
-
- debttype 
-     credit    loan
-      5.127   4.631
-rep 753.000 748.000
-
- purchase:debttype 
-               debttype
-purchase        credit loan 
-  discretionary   4.5    3.8
-  rep           392.0  359.0
-  need            5.7    5.4
-  rep           361.0  389.0
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\#\textgreater{} Tables of means}
+\CommentTok{\#\textgreater{} Grand mean}
+\CommentTok{\#\textgreater{}      }
+\CommentTok{\#\textgreater{} 4.88 }
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}  purchase }
+\CommentTok{\#\textgreater{}     discretionary    need}
+\CommentTok{\#\textgreater{}             4.182   5.579}
+\CommentTok{\#\textgreater{} rep       751.000 750.000}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}  debttype }
+\CommentTok{\#\textgreater{}      credit    loan}
+\CommentTok{\#\textgreater{}       5.127   4.631}
+\CommentTok{\#\textgreater{} rep 753.000 748.000}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{}  purchase:debttype }
+\CommentTok{\#\textgreater{}                debttype}
+\CommentTok{\#\textgreater{} purchase        credit loan }
+\CommentTok{\#\textgreater{}   discretionary   4.5    3.8}
+\CommentTok{\#\textgreater{}   rep           392.0  359.0}
+\CommentTok{\#\textgreater{}   need            5.7    5.4}
+\CommentTok{\#\textgreater{}   rep           361.0  389.0}
 \CommentTok{\# Analysis of variance reveals }
 \CommentTok{\# non{-}significant interaction}
 \CommentTok{\# of purchase and type}
 \NormalTok{car}\SpecialCharTok{::}\FunctionTok{Anova}\NormalTok{(mod, }\AttributeTok{type =} \DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-Anova Table (Type III tests)
-
-Response: likelihood
-                   Sum Sq   Df   F value    Pr(>F)    
-(Intercept)        7974.0    1 1040.9610 < 2.2e-16 ***
-purchase            282.8    1   36.9137 1.563e-09 ***
-debttype             88.5    1   11.5483 0.0006959 ***
-purchase:debttype    13.7    1    1.7852 0.1817132    
-Residuals         11467.4 1497                        
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\#\textgreater{} Anova Table (Type III tests)}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Response: likelihood}
+\CommentTok{\#\textgreater{}                   Sum Sq   Df F value  Pr(\textgreater{}F)    }
+\CommentTok{\#\textgreater{} (Intercept)         7974    1 1040.96 \textless{} 2e{-}16 ***}
+\CommentTok{\#\textgreater{} purchase             283    1   36.91 1.6e{-}09 ***}
+\CommentTok{\#\textgreater{} debttype              88    1   11.55  0.0007 ***}
+\CommentTok{\#\textgreater{} purchase:debttype     14    1    1.79  0.1817    }
+\CommentTok{\#\textgreater{} Residuals          11467 1497                    }
+\CommentTok{\#\textgreater{} {-}{-}{-}}
+\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
 \CommentTok{\# Main effects}
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }
                  \AttributeTok{specs =} \StringTok{"debttype"}\NormalTok{,}
                  \AttributeTok{contr =} \StringTok{"pairwise"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-NOTE: Results may be misleading due to involvement in interactions
-\end{verbatim}
-
-\begin{verbatim}
-$emmeans
- debttype emmean    SE   df lower.CL upper.CL
- credit     5.12 0.101 1497     4.93     5.32
- loan       4.63 0.101 1497     4.43     4.83
-
-Results are averaged over the levels of: purchase 
-Confidence level used: 0.95 
-
-$contrasts
- contrast      estimate    SE   df t.ratio p.value
- credit - loan    0.496 0.143 1497   3.469  0.0005
-
-Results are averaged over the levels of: purchase 
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
+\CommentTok{\#\textgreater{} $emmeans}
+\CommentTok{\#\textgreater{}  debttype emmean    SE   df lower.CL upper.CL}
+\CommentTok{\#\textgreater{}  credit     5.12 0.101 1497     4.93     5.32}
+\CommentTok{\#\textgreater{}  loan       4.63 0.101 1497     4.43     4.83}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Results are averaged over the levels of: purchase }
+\CommentTok{\#\textgreater{} Confidence level used: 0.95 }
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} $contrasts}
+\CommentTok{\#\textgreater{}  contrast      estimate    SE   df t.ratio p.value}
+\CommentTok{\#\textgreater{}  credit {-} loan    0.496 0.143 1497   3.470  0.0005}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Results are averaged over the levels of: purchase}
+  
 \CommentTok{\# Pairwise comparisons within levels of purchase}
 \CommentTok{\# Simple effect}
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }
                  \AttributeTok{specs =} \FunctionTok{c}\NormalTok{(}\StringTok{"purchase"}\NormalTok{, }\StringTok{"debttype"}\NormalTok{),}
-                 \AttributeTok{by =} \StringTok{"purchase"}\NormalTok{,}
-                 \AttributeTok{contr =} \StringTok{"pairwise"}\NormalTok{)}
+                 \AttributeTok{by =} \StringTok{"purchase"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(}\StringTok{"pairwise"}\NormalTok{)}
+\CommentTok{\#\textgreater{} purchase = discretionary:}
+\CommentTok{\#\textgreater{}  contrast      estimate    SE   df t.ratio p.value}
+\CommentTok{\#\textgreater{}  credit {-} loan    0.687 0.202 1497   3.400  0.0007}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} purchase = need:}
+\CommentTok{\#\textgreater{}  contrast      estimate    SE   df t.ratio p.value}
+\CommentTok{\#\textgreater{}  credit {-} loan    0.305 0.202 1497   1.510  0.1318}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-$emmeans
-purchase = discretionary:
- debttype emmean    SE   df lower.CL upper.CL
- credit     4.51 0.140 1497     4.24     4.78
- loan       3.82 0.146 1497     3.54     4.11
-
-purchase = need:
- debttype emmean    SE   df lower.CL upper.CL
- credit     5.74 0.146 1497     5.45     6.02
- loan       5.43 0.140 1497     5.16     5.71
-
-Confidence level used: 0.95 
-
-$contrasts
-purchase = discretionary:
- contrast      estimate    SE   df t.ratio p.value
- credit - loan    0.687 0.202 1497   3.398  0.0007
-
-purchase = need:
- contrast      estimate    SE   df t.ratio p.value
- credit - loan    0.305 0.202 1497   1.508  0.1318
-\end{verbatim}
 
 In the analysis of variance table, we focus exclusively on the last line
 with the sum of squares for \texttt{purchase:debttype}. The \(F\)
@@ -4836,7 +4847,231 @@ effects suggest that the label has an impact on perception only for
 discretionary expenses rather than needed ones, which runs
 counter-intuitively with the lack of interaction.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+Maglio and Polman (\protect\hyperlink{ref-Maglio.Polman:2014}{2014})
+considered the relative perception of distance from Bay station in
+Toronto. We modify the data so that we consider station distance in
+direction of travel (rather than station names). The categorical
+variable \texttt{stdist} has labels \((-2, -1, +1, +2\)) for stations
+Spadina, St.~Georges, Bloor-Yonge, Sherbourne in direction East, and
+opposite signs in the other direction: see
+Figure~\ref{fig-Torontosubway} for the map. We are interested in knowing
+whether two stations behind (\texttt{stdist}\(=-2\)) is perceived the
+same as two stations ahead (\texttt{stdist}\(=+2\)).
+
+\begin{figure}[ht!]
+
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{figures/Toronto_subway.png}
+
+}
+
+\caption{\label{fig-Torontosubway}Simplified depiction of the Toronto
+metro stations used in the experiment, based on work by Craftwerker on
+Wikipedia, distributed under CC-BY-SA 4.0.}
+
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set up parametrization to sum{-}to{-}zero for categorical factors}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{contrasts =} \FunctionTok{c}\NormalTok{(}\StringTok{"contr.sum"}\NormalTok{, }\StringTok{"contr.poly"}\NormalTok{))}
+\FunctionTok{library}\NormalTok{(emmeans)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stdist }\SpecialCharTok{*}\NormalTok{ direction, }\AttributeTok{data =}\NormalTok{ MP14\_S1) }
+\NormalTok{car}\SpecialCharTok{::}\FunctionTok{Anova}\NormalTok{(mod, }\AttributeTok{type =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{tbl-ANOVA2-MP14}{}
+\begin{table}
+\caption{\label{tbl-ANOVA2-MP14}Analysis of variance (type II effects) for the Maglio and Polman (2014)
+reformated data. }\tabularnewline
+
+\centering
+\begin{tabular}{lrrrl}
+\toprule
+term & sum of squares & df & stat & p-value\\
+\midrule
+stdist & 121.87 & 3 & 37.86 & <0.001\\
+direction & 0.38 & 1 & 0.35 & 0.55\\
+stdist:direction & 5.70 & 3 & 1.77 & 0.15\\
+Residuals & 208.15 & 194 &  & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We look at the analysis of variance in Table~\ref{tbl-ANOVA2-MP14} to
+see what the perception of distance is. The \(F\)-tests suggest that
+there is no interaction, and no effect of direction of travel although
+there is an uninteresting main effect of station distance (of course,
+two station apart is considered further from Bay than one station
+apart).
+
+Since there is no interaction, we can collapse the data to a one-way
+ANOVA with a single factor (station distance) and consider contrasts.
+Say we are interested in testing the perception of distance, by looking
+at average distance of pairs at equal distance \(\mu_{-1} = \mu_{+1}\)
+and \(\mu_{-2} = \mu_{+2}\).
+
+\begin{figure}[ht!]
+
+{\centering \includegraphics[width=0.85\textwidth,height=\textheight]{05-interactions_multiway_files/figure-pdf/fig-interactionMP-1.pdf}
+
+}
+
+\caption{\label{fig-interactionMP}Interaction plot for the reformated
+data from Maglio and Polman (2014) with 95\% confidence intervals.}
+
+\end{figure}
+
+If we have categories are in the order \((-2, -1, +1, +2)\), the
+contrast weights are \((-1, 0, 0, 1)\) and \((0, -1, 1, 0)\) or a
+multiple thereof; the two contrasts are orthogonal.
+Table~\ref{tbl-contrast-MP14} shows the result of the hypothesis tests:
+both are significant, even applying a Bonferroni correction. This
+supports the hypothesis of Maglio and Polman
+(\protect\hyperlink{ref-Maglio.Polman:2014}{2014}).
+
+\hypertarget{tbl-contrast-MP14}{}
+\begin{table}
+\caption{\label{tbl-contrast-MP14}Contrasts for comparing the perceived distance for stations at the same
+distance on the network, but in opposition directions to that of travel. }\tabularnewline
+
+\centering
+\begin{tabular}{lrrrl}
+\toprule
+contrast & estimate & std. error & stat & p-value\\
+\midrule
+two dist & -1.12 & 0.21 & -5.47 & <0.001\\
+one dist & -0.86 & 0.21 & -4.13 & <0.001\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+It is important to understand that any multiway ANOVA with two or more
+factor can be collapsed into a single one-way ANOVA: this is notably
+useful when there is a control group which is not related to the factor
+levels, as no manipulation takes place. The use of contrasts becomes
+critical since we can write any test for main effects, interactions
+using the latter through weighting.
+
+\begin{example}[Perceptions of cultural appropriation by
+ideology]\protect\hypertarget{exm-LKUK24}{}\label{exm-LKUK24}
+
+We consider a three-way ANOVA from Lin et al.
+(\protect\hyperlink{ref-Lin.Kim.Uduehi.Keinan:2024}{2024}). Their Study
+4 focused on cultural appropriation for soul food recipe cookbook from
+Chef Dax, who was either black (or not), manipulating the description of
+the way he obtained the recipes (by peeking without permission in
+kitchens, by asking permission or no mention for control). Authors
+postulated that the perception of appropriation would vary by political
+ideology (liberal or conservative). The study results in a 3 by 2 by 2
+three-way between-subject ANOVA.
+
+For the \(K\)-way ANOVA, we always start with estimating the full model
+with all \(K\)-way interaction (provided there are enough data to
+estimate the latter, which implies there are repetitions). If the latter
+is significant, we can fix one or more factor levels and compare the
+others.
+
+\hypertarget{tbl-anova-LKUK24}{}
+\begin{table}
+\caption{\label{tbl-anova-LKUK24}Analysis of variance table (type II decomposition) for the data from
+Study 4 of Lin et al. (2024). }\tabularnewline
+
+\centering
+\begin{tabular}{lrrrl}
+\toprule
+term & sum of squares & df & stat & p-value\\
+\midrule
+politideo & 48.49 & 1 & 21.35 & <0.001\\
+chefdax & 473.72 & 1 & 208.61 & <0.001\\
+brandaction & 34.24 & 2 & 7.54 & <0.001\\
+politideo:chefdax & 65.00 & 1 & 28.63 & <0.001\\
+politideo:brandaction & 1.56 & 2 & 0.34 & 0.71\\
+chefdax:brandaction & 0.62 & 2 & 0.14 & 0.87\\
+politideo:chefdax:brandaction & 0.66 & 2 & 0.15 & 0.86\\
+Residuals & 1587.33 & 699 &  & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+If we consider Table~\ref{tbl-anova-LKUK24}, we find that there is no
+three-way interaction and, omitting the latter and focusing on
+lower-level, a single two-way interaction between political ideology and
+the race of Chef Dax. We cannot interpret the \(p\)-value for the main
+effect of \texttt{brandaction}, but we could look at the marginal means.
+
+Based on the data, we will collapse data to a one-way ANOVA comparing
+the three levels of \texttt{brandaction} and a 2 by 2 two-way ANOVA for
+the other two factors. The results are obtained by averaging over the
+missing factor.
+
+We are interested in comparing the perception between the race of Chef
+Dax (black or not, as Southern Soul food cooking is more likely to be
+associated with cultural appropriation is Chef Dax is not black. We
+proceed with \texttt{emmeans} by computing the marginal means separately
+for each of the four subcategories, but compare the race of Chef Dax
+separately for liberals and conservatives due to the presence of the
+interaction.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(LKUK24\_S4, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(appropriation }\SpecialCharTok{\textasciitilde{}}\NormalTok{ politideo }\SpecialCharTok{*}\NormalTok{ chefdax }\SpecialCharTok{*}\NormalTok{ brandaction,}
+   \AttributeTok{data =}\NormalTok{ LKUK24\_S4)}
+\CommentTok{\# Marginal means for political ideology/Chef Dax}
+\NormalTok{emm\_racebypolit }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(mod, }\AttributeTok{specs =} \StringTok{"chefdax"}\NormalTok{, }\AttributeTok{by =} \StringTok{"politideo"}\NormalTok{)}
+\NormalTok{emm\_racebypolit }\SpecialCharTok{|\textgreater{}} \FunctionTok{pairs}\NormalTok{() }\CommentTok{\#shortcut for contrast("pairwise")}
+\CommentTok{\#\textgreater{} politideo = conservative:}
+\CommentTok{\#\textgreater{}  contrast          estimate    SE  df t.ratio p.value}
+\CommentTok{\#\textgreater{}  not black {-} black     0.71 0.206 699   3.440  0.0006}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} politideo = liberal:}
+\CommentTok{\#\textgreater{}  contrast          estimate    SE  df t.ratio p.value}
+\CommentTok{\#\textgreater{}  not black {-} black     2.03 0.136 699  15.000  \textless{}.0001}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Results are averaged over the levels of: brandaction}
+\end{Highlighting}
+\end{Shaded}
+
+We see that the liberals are much more likely to view Chef Dax cookbook
+as an instance of cultural appropriation if he is not black; there is
+limited evidence of any difference between conservatives and liberal
+when Chef Dax is black. Both differences are statistically
+significative, but the differences (and thus evidence of an effect) is
+much stronger for left-leaning respondents.
+
+We can look next at the brand action: we expect participants will view
+peeking less favorably than if Chef Dax asked for permission to publish
+the recipes. It's tricky to know the effect of the control, as we are
+not bringing the point to the attention of participants in this
+instance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Marginal mean for brandaction}
+\NormalTok{emm\_brand }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(mod, }\AttributeTok{specs =} \FunctionTok{c}\NormalTok{(}\StringTok{"brandaction"}\NormalTok{)) }
+\NormalTok{emm\_brand}
+\CommentTok{\#\textgreater{}  brandaction emmean    SE  df lower.CL upper.CL}
+\CommentTok{\#\textgreater{}  peeking       2.56 0.107 699     2.35     2.77}
+\CommentTok{\#\textgreater{}  permission    2.29 0.105 699     2.09     2.50}
+\CommentTok{\#\textgreater{}  control       2.07 0.108 699     1.86     2.28}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} Results are averaged over the levels of: politideo, chefdax }
+\CommentTok{\#\textgreater{} Confidence level used: 0.95}
+\CommentTok{\# Joint test for the main effect of brandaction}
+\NormalTok{emm\_brand }\SpecialCharTok{|\textgreater{}} \FunctionTok{pairs}\NormalTok{() }\SpecialCharTok{|\textgreater{}} \FunctionTok{joint\_tests}\NormalTok{()}
+\CommentTok{\#\textgreater{}  model term df1 df2 F.ratio p.value}
+\CommentTok{\#\textgreater{}  contrast     2 699   5.090  0.0064}
+\end{Highlighting}
+\end{Shaded}
+
+A joint \(F\)-test, obtained by collapsing everything to a one-way
+ANOVA, shows that there are indeed differences. However, note that the
+averages of the three actions are much smaller than for race.
+
+\end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -4956,8 +5191,7 @@ conditions, makes comparison hazardous at best in the right-hand panel.
 Figure~\ref{fig-ancovaresid} shows that, due to the strong correlation,
 the variability of the measurements is smaller on the right-hand panel
 (corresponding to the analysis of covariance model) than for the centred
-response on the left-hand panel; note that the \(y\)-axes have different
-scales.
+response on the left-hand panel.
 
 \begin{figure}[ht!]
 
@@ -4966,7 +5200,7 @@ scales.
 }
 
 \caption{\label{fig-ancovaresid}Response after subtracting mean (left)
-and after detrending (right).}
+and after detrending and centering the mean (right).}
 
 \end{figure}
 
@@ -5275,7 +5509,6 @@ prior & consensus & 56.32 & 1.67\\
 prior & control & 56.49 & 1.68\\
 post & BoostPlus & 2.62 & 3.53\\
 post & consensus & 18.93 & 3.06\\
-\addlinespace
 post & control & 30.91 & 2.56\\
 \bottomrule
 \end{tabular}
@@ -5294,7 +5527,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toprule=.15mm, leftrule=.75mm]
 
 Stekelenburg et al. (\protect\hyperlink{ref-vanStekelenburg:2021}{2021})
 split their data to do pairwise comparisons two at the time (thus taking
@@ -5314,7 +5547,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-caution-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toprule=.15mm, leftrule=.75mm]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -5340,7 +5573,7 @@ posterior belief score.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -5368,7 +5601,7 @@ posterior belief score.}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -5993,7 +6226,7 @@ percentage of \emph{p}-values smaller than \(\alpha\). We can vary the
 sample size and see how many observations we need per group to achieve
 the desired level of power.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -6029,7 +6262,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, toprule=.15mm, leftrule=.75mm]
 
 \begin{itemize}
 \tightlist
@@ -6318,7 +6551,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toprule=.15mm, leftrule=.75mm]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -6377,7 +6610,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, opacityback=0, coltitle=black, bottomtitle=1mm, colback=white, left=2mm, rightrule=.15mm, breakable, opacitybacktitle=0.6, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, titlerule=0mm, arc=.35mm, toprule=.15mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, breakable, left=2mm, opacityback=0, coltitle=black, arc=.35mm, colback=white, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toprule=.15mm, leftrule=.75mm]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -9149,6 +9382,12 @@ Lee, Kiljae, and Jungsil Choi. 2019. {``Image-Text Inconsistency Effect
 on Product Evaluation in Online Retailing.''} \emph{Journal of Retailing
 and Consumer Services} 49: 279--88.
 \url{https://doi.org/10.1016/j.jretconser.2019.03.015}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Lin.Kim.Uduehi.Keinan:2024}{}}%
+Lin, Jason D, Nicole You Jeung Kim, Esther Uduehi, and Anat Keinan.
+2024. {``{Culture for Sale: Unpacking Consumer Perceptions of Cultural
+Appropriation}.''} \emph{Journal of Consumer Research}.
+\url{https://doi.org/10.1093/jcr/ucad076}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Liu.Rim.Min.Min:2023}{}}%
 Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2023. {``The
