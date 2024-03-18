@@ -40,19 +40,56 @@ Random effects would proceed to directly estimate the variability arising from d
 @Oehlert:2010 identifies the following step to perform a mixed model
 
 1. Identify sources of variation
-2. Identify whether factors are crossed are nested
+2. Identify whether factors are crossed or nested
 3. Determine whether factors should be fixed or random
 4. Figure out which interactions can exist and whether they can be fitted.
 
-To fit the model, identifiers of subjects must be declared as factors (categorical variables).
+Sources of variations are all factors (including identifiers) which could influence the response. 
 
-We say to factors are nested ($A$ within $B$) when one can only coexist within the levels of the other: this has implications, for we cannot have interaction between the two. In between-subject experiments, factors are crossed, meaning we can assign an experimental unit or a subject to each factor combination and thus interactions can occur.  For example, subjects are nested in between-level factors.
+We say to factors are nested ($A$ within $B$) when one can only coexist within the levels of the other: this has implications, for we cannot have interaction between the two. In between-subject experiments, subjects are nested in between-subject factors and the experimental factors are crossed, meaning we can assign an experimental unit or a subject to each factor combination. Interactions can occur for the between-subject factors, although we need participants in each subcategory to estimate them.
 
-The next step will be in determining whether we have enough observations to support the inclusion of a random term. In a pure within-subject design, we could not include an interaction between subject and the within-factor unless we have multiple replications for each subject, as is the case here. We can therefore include both subject identifier and experimental factor, as well as their interaction. Note that in `lme4` package, the random effects are specified inside parenthesis.
+:::{.example "Temporal distancing in peace prospects"}
+
+We consider a three-way mixed design from Study 5 of @Halevy.Berson:2022. The research studied how temporal distance impacted the prospects of peace by presenting participants with a fictional scenario in which two tribes in a fictional country, Velvetia, where either at war or peace and asking what they think the outcome would be in the near and distance future. Participants rated the likeliness using a Likert scale  ranging from extremely unlikely (1) to extremely likely (7) for the question
+
+>There is currently [war/peace] between the two tribes in Velvetia. Thinking about [next year/in 20 years], how likely is it that there will be [war/peace] in Velvetia?
+
+Each participant was assigned to a single combination of the current state `curstate` and the predicted outcome `predout` and answered the question for both temporal horizon, `tempdist`. A rapid examination shows that we have a complete design: there are participants assigned to each subcategory of the between-subject factors.
+
+
+```{r}
+#| eval: true
+#| echo: true
+data(HB22_S5, package = "hecedsm")
+xtabs(~ curstate + predout, data = HB22_S5)
+```
+
+1. The sources of variation are participants `id`, between-subject factors `predout` and `curstate` and within-subjects factor `tempdist`.
+2. Between subject factors `predout` and `curstate` are crossed, whereas `tempdist` is nested within `id`.
+3. `id` is random, whereas `predout`, `curstate` and `tempdist` are fixed effects
+4. We can have interactions between the three experimental factors  `predout`, `curstate` and `tempdist` since the database contains instances of both of the former together, and since each person gets two `tempdist` levels. However, no interaction are possible between `id` and `tempdist` (due to lack of replication), or between between-subject factors and identifiers.
+
+With data in long format, meaning each line contains a single response and characteristics are repeated per row, with an ` software will automatically capture the random effect. We can fit the equivalent of the repeated measure mixed ANOVA using a linear mixed model in **R**, by simply specifying a random intercept for the participant `id`. The full model with the three-way interaction includes eight components for the mean and two variant component (residual variance, and subject-specific variance).
+
+```{r}
+# In R, two packages offer linear mixed model fit via (RE)ML
+# lme4 is more modern (and reliable?), but does not allow for unequal variant
+lme4::lmer(likelihood ~ curstate*predout*tempdist + (1 | id),
+     data = HB22_S5)
+#  Note that in `lme4` package, the random effects are specified inside parenthesis
+# nlme offers the possibility to acount for unequal variance per group
+# Random effects are specified in `random` with formula notation, and a | to indicate
+nlme::lme(likelihood ~ curstate*predout*tempdist, random = ~ 1 | id, data = HB22_S5)
+```
+
+
+:::
+
+
 
 :::{ .example name="Happy fakes, remixed"}
 
-We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly.
+We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly. To fit the model, identifiers of subjects must be declared as factors (categorical variables). If we have repeated measurements of the within-subject factor, we may consider adding a random effect for the interaction between the subject and the within-subject factor.
 
 ```{r}
 #| label: fig-aafulldat
@@ -75,13 +112,12 @@ ggplot(data = hecedsm::AA21,
 ```{r}
 #| eval: true
 #| echo: true
-library(lmerTest) 
-# fit and tests for mixed models
+library(lmerTest) # Package to fit and tests for mixed models
 options(contrasts = c("contr.sum", "contr.poly"))
 mixedmod <- lmer(
   latency ~ stimulus + 
     (1 | id) + # random effect for subject
-    (1 | id:stimulus), 
+    (1 | id:stimulus), # interaction id and stimuluss
   # random effect for interaction 
   data = hecedsm::AA21 |> #remove outliers
     dplyr::filter(latency > -40))
@@ -89,9 +125,8 @@ mixedmod <- lmer(
 print(mixedmod)
 ```
 
-We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large.
-
-We can also look globally at the statistical evidence for the 
+The model includes a fixed effect for stimulus, and variance terms for `stimulus` (nested within `id`) and subject identifier `id`.
+We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large. We can also look globally at the statistical evidence for the difference between the various stimuli.
 
 ```{r}
 # Global effect of different faces
@@ -100,7 +135,7 @@ We can also look globally at the statistical evidence for the
 anova(mixedmod)
 ```
 
-The global $F$ test of significance for stimulus is based on an approximation; the denominator degrees of freedom for the approximate $F$ statistic are based on Satterthwaite's method, which provides a correction. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in @fig-aafulldat.
+The global $F$ test of significance for stimulus is based on an approximation that accounts for the correlation between observations; the denominator degrees of freedom for the approximate $F$ statistic are based on Satterthwaite's method. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in @fig-aafulldat.
 
 :::
 

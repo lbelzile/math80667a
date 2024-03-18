@@ -8,7 +8,7 @@
 options(digits=2)
 ```
 
-So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments, the latter being presented in random order to avoid confounding. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions. 
+So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions. 
 
 
 
@@ -19,14 +19,13 @@ For example, consider a study performed at Tech3Lab that looks at the reaction t
 In a between-subjects design, subjects are **nested** within experimental condition, as a subject can only be assigned a single treatment. In a within-subjects designs, experimental factors and subjects are **crossed**: it is possible to observed all combination of subject and experimental conditions.
 
 
-By including multiple conditions, we can filter out effect due to subject, much like with blocking: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.
+By including multiple conditions, we can filter out the effect due to subject, much like with blocking: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.
 
-There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming more fluent as manipulations go on), period effects (practice of fatigue, e.g., leading to a decrease in acuity), permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).
+There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming better as manipulations go on), period effects (fatigue, a decrease in acuity), and permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).
 
-To minimize potential biases, there are multiple strategies one can use. While can randomize the order of treatment conditions among subjects to reduce confounding, or use a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.
+To minimize potential biases, there are multiple strategies one can use. Tasks are normally presented in random order among subjects to avoid confounding, or using a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.
 
-
-Due to fatigue or learning effects, randomization of the order of the within-subject experimental conditions. If each is assigned a single time, one good way to do this is via **counterbalancing**. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions $A, B, C$, we have six possible orderings (either $ABC$, $ACB$, $BAC$, $BCA$, $CAB$ or $CBA$). Much like other forms of randomization, this helps us remove confounding effects and let's us estimate what is the average effect of task ordering on the response. 
+ If each subject is assigned to an experimental condition only once, one good way to do this is via **counterbalancing**. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions $A, B, C$, we have six possible orderings (either $ABC$, $ACB$, $BAC$, $BCA$, $CAB$ or $CBA$). Much like other forms of randomization, this helps us remove confounding effects and let's us estimate what is the average effect of task ordering on the response. 
 
 There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in @fig-xkcd2569. 
 
@@ -472,4 +471,23 @@ In our example, there is limited evidence against any of those model assumptions
 
 Since all of the multivariate statistics can be transformed for a comparison with a univariate $\mathsf{F}$ distribution, we can estimate partial effect size as before. The package `effectsize` offers a measure of partial $\widehat{\eta}^2$ for the multivariate tests.^[I must confess I haven't checked whether the output is sensical.]
 
-Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free **G**${}^{*}$**Power** software [@GPower3] also offers some tools. See also @Lauter:1978 for pairwise comparisons.
+Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free **G**${}^{*}$**Power** software [@GPower3] also offers some tools. See also @Lauter:1978 for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group $j=1, \ldots, J$, which shows that the number increases rapidly with the dimension of the response vector $p$. As usual, smaller effect sizes are more difficult to detect.
+
+```{r tablepowersamplesize, echo = FALSE, eval = TRUE, output = "asis"}
+library(tidyverse)
+tab <- data.frame(
+n = c(13,16,18,21,26,33,38,42,44,56,66,72,98,125,145,160,14,18,21,23,29,37,44,48,50,64,74,84,115,145,165,185,16,21,24,27,34,44,52,58,60,76,90,100,135,170,200,230),
+ngroups = factor(rep(3:5, each = 16)),
+ndep = factor(rep(c(2L,4L,6L,8L), length.out = 3*16)),
+effects = factor(rep(rep(c("very large", "large", "medium", "small"), each = 4), length.out = 3*16))
+)
+
+tab_pivot <- tab %>% pivot_wider(values_from = "n", 
+                    names_from = c("ndep","ngroups"))
+library(kableExtra)
+kbl(tab_pivot,
+    col.names = c("effect size \\ p",rep(c("2","4","6","8"), length.out = 12))) %>%
+  kable_classic() %>%
+  add_header_above(c(" " = 1, "3 groups" = 4, "4 groups" = 4, "5 groups" = 4))
+```
+
