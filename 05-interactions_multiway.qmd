@@ -235,8 +235,9 @@ The redundancy in information, due to the fact main effects are expressible as r
 
 **To be continued**...
 
-:::{.example name="Testing for Psychological ownership of borrowed money"}
+:::{#exm-borrowed-money-test}
 
+## Testing for Psychological ownership of borrowed money
 
 @Sharma.Tully.Cryder:2021 first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors `debttype` and `purchase`), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.
 

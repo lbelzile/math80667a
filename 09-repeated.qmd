@@ -51,7 +51,10 @@ Multivariate analysis of variance (MANOVA) leads to procedures that are analogou
 
 We introduce the concept of repeated measure and within-subject ANOVA with an example.
 
-:::{ .example name="Happy fakes"}
+:::{#exm-happyfakes}
+
+## Happy fakes
+
 We consider an experiment conducted in a graduate course at HEC, *Information Technologies and Neuroscience*, in which PhD students gathered electroencephalography (EEG) data. The project focused on human perception of deepfake image created by a generative adversarial network: Amirabdolahian and Ali-Adeeb (2021) expected the attitude towards real and computer generated image of people smiling to change.
 
 The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. Repeated measures were collected on 9 participants given in the database `AA21`, who were expected to look at 120 faces. Not all participants completed the full trial, as can be checked by looking at the cross-tabs of the counts
@@ -70,10 +73,10 @@ Since our research question is whether images generated from generative adversar
 #| eval: true
 #| echo: false
 #| label: fig-GANfaces
-#| out-width: '25%'
+#| out-width: '100%'
 #| fig-align: 'center'
 #| layout-ncol: 3
-#| fig-cap: "Example of faces presented in Amirabdolahian and Ali-Adeeb (2021)."
+#| fig-cap: "Examples of faces presented in Amirabdolahian and Ali-Adeeb (2021)."
 #| fig-subcap: 
 #|  - real
 #|  - slightly modified
@@ -197,7 +200,9 @@ Using the `afex` functions, we get the result for Mauchly's test of sphericity a
 summary(afexmod)
 ```
 
-:::{ .example name="Visual acuity"}
+:::{ #exm-visualacuity}
+
+## Visual acuity
 
 We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection.  The mixed analysis of variance includes the experimental factors `adaptation` (2 levels, within), `fontsize` (4 levels, within), `position` (5 levels, within) and visual  `acuity` (2 levels, between). There are a total of 1760 measurements for 44 participants in `LBJ17_S1A`, balanced.
 The within-subject factors give a total of 40 measurements ($2 \times 4 \times 5$) per participant; all of these factors are crossed and we can estimate interactions for them. The subjects are nested within visual acuity groups, The participants were dichotomized in two groups based on their visual acuity, obtained from preliminary checks, using a median split.
@@ -329,7 +334,9 @@ In order to fit a model with a multivariate response, we first need to pivot the
 
 Once the data are in a suitable format, we fit the multivariate model with the `lm` function using the sum-to-zero constraints, here imposed globally by changing the `contrasts` option. Syntax-wise, the only difference with the univariate case is that the response on the left of the tilde sign (`~`) is now a matrix composed by binding together the vectors with the different responses.
 
-:::{ .example name="Happy fakes - multivariate"}
+:::{#exm-happyfakemulti}
+
+## A multivariate take on "Happy fakes"
 
 We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.
 
@@ -367,7 +374,9 @@ emm_mlm |> contrast(method = list(c(1,-0.5,-0.5)))
 We can check that the output is the same in this case as the within-subject analysis of variance model fitted previously with the `afex` package.
 :::
 
-:::{ .example name="Teaching to read"}
+:::{#exm-baumann-multi}
+
+## Teaching to read
 
 We consider a between-subject repeated measure multivariate analysis of variance model with the @Baumann:1992. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).
 

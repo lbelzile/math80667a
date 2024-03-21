@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.21">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 2&nbsp; Hypothesis testing</title>
+<title>Experimental design and statistical methods – 2&nbsp; Hypothesis testing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -66,7 +67,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -75,19 +82,44 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="site_libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="site_libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -98,12 +130,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-hypothesis_testing.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-hypothesis_testing.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -113,13 +145,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -217,7 +249,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -236,7 +268,7 @@ div.csl-indent {
   <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">2.4</span> Confidence intervals</a></li>
   <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">2.5</span> Conclusion</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/02-hypothesis_testing.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/02-hypothesis_testing.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -245,6 +277,7 @@ div.csl-indent {
 <h1 class="title display-7"><span id="hypothesis-testing" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></h1>
 
 </header>
+
 
 <p>In most applied domains, empirical evidences drive the advancement of the field and data from well designed experiments contribute to the built up of science. In order to draw conclusions in favour or against a theory, researchers turn (often unwillingly) to statistics to back up their claims. This has led to the prevalence of the use of the null hypothesis statistical testing (NHST) framework. One important aspect of the reproducibility crisis is the misuse of <span class="math inline">\(p\)</span>-values in journal articles: falsification of a null hypothesis is not enough to provide substantive findings for a theory.</p>
 <p>Because introductory statistics course typically present hypothesis tests without giving much thoughts to the underlying construction principles of such procedures, users often have a reductive view of statistics as a catalogue of pre-determined procedures. To make a culinary analogy, users focus on learning recipes rather than trying to understand the basics of cookery. This chapter focuses on understanding of key ideas related to testing.</p>
@@ -271,12 +304,16 @@ Key concept
 <h2 data-number="2.1" class="anchored" data-anchor-id="hypothesis"><span class="header-section-number">2.1</span> Hypothesis</h2>
 <p>The first step of a design is formulating a research question. Generally, this hypothesis will specify potential differences between population characteristics due to some intervention (a treatment) that the researcher wants to quantify. This is the step during which researchers decide on sample size, choice of response variable and metric for the measurement, write down the study plan, etc.</p>
 <p>It is important to note that most research questions cannot be answered by simple tools. Researchers wishing to perform innovative methodological research should contact experts and consult with statisticians <strong>before</strong> they collect their data to get information on how best to proceed for what they have in mind so as to avoid the risk of making misleading and false claims based on incorrect analysis or data collection.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-xkcd2569_f431825893e6a8f4110a2dfe5f46fa60">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-xkcd2569" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/xkcd2569_hypothesis_generation.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.1: xkcd comic <a href="https://xkcd.com/2569/">2569 (Hypothesis generation) by Randall Munroe</a>. Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+<div id="fig-xkcd2569" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xkcd2569-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/xkcd2569_hypothesis_generation.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xkcd2569-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: xkcd comic <a href="https://xkcd.com/2569/">2569 (Hypothesis generation) by Randall Munroe</a>. Alt text: Frazzled scientists are requesting that everyone please stop generating hypotheses for a little bit while they work through the backlog. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -287,7 +324,7 @@ Key concept
 <p>Given data, a researcher will be interested in estimating particular characteristics of the population. We can characterize the set of all potential values their measurements can take, together with their frequency, via a distribution.</p>
 <p>The purpose of this section is to illustrate how we cannot simply use raw differences between groups to make meaningful comparisons: due to sampling variability, samples will be alike even if they are generated in the same way, but there will be always be differences between their summary statistics. Such differences tend to attenuate (or increase) as we collect more sample. Inherent to this is the fact that as we gather more data (and thus more information) about our target, the portrait becomes more precise. This is ultimately what allows us to draw meaningful conclusions but, in order to do so, we need first to determine what is likely or plausible and could be a stroke of luck, and what is not likely to occur solely due to randomness.</p>
 <div id="exm-ABtest" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.1 (A/B testing) </strong></span>Consider two webpage design: one is the current version (<em>status quo</em>) and the other implementation contains a clickable banner in a location where eyetracker suggest that viewers eyes spend more time or attention. The number of clicks on those headlines are what generate longer viewing, and thus higher revenues from advertisement. The characteristic of interest here would be the average click conversation rate for each of the webpage design.</p>
+<p><span class="theorem-title"><strong>Example 2.1 (A/B testing)</strong></span> Consider two webpage design: one is the current version (<em>status quo</em>) and the other implementation contains a clickable banner in a location where eyetracker suggest that viewers eyes spend more time or attention. The number of clicks on those headlines are what generate longer viewing, and thus higher revenues from advertisement. The characteristic of interest here would be the average click conversation rate for each of the webpage design.</p>
 <p>It is fairly simple to redirect traffic so that a random fraction gets assigned to the new design for study. After a suitable period of time, the data can be analyzed to see if the new webpage generates more clicks.</p>
 </div>
 <p>An hypothesis test will focus on one or multiple of these characteristics. Suppose for simplicity that we have only two groups, control and treatment, whose population averages are <span class="math inline">\(\mu_C\)</span> and <span class="math inline">\(\mu_T\)</span> we wish to compare. People commonly look at the difference in average, say <span class="math inline">\(\delta=\mu_T - \mu_C\)</span> as a measure of the effectiveness of the treatment.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If we properly randomized observations in each subgroup and nothing else changes, then this measures the impact of the treatment. Because we only have a sample at hand and not the whole population, we don’t know for sure the values of <span class="math inline">\(\mu_C\)</span> and <span class="math inline">\(\mu_T\)</span>. These quantities exist, but are unknown to us so the best we can do is estimate them using our sample. If we have a random sample from the population, then the characteristics of the sample will be (noisy) proxys of those of the population.</p>
@@ -297,61 +334,85 @@ Key concept
 <li>an estimator is the procedure or formula telling us how to transform the sample data into a numerical summary that is a proxy of our target.</li>
 <li>an estimate is a number, the numerical value obtained once we apply the formula to observed data.</li>
 </ul>
-<div id="fig-cake" class="cell quarto-layout-panel" data-hash="02-hypothesis_testing_cache/html/fig-cake_db0212831e18ae925bd0a4c918709b43">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-cake-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/estimand.jpg" class="img-fluid figure-img" data-ref-parent="fig-cake"></p>
-<figcaption class="figure-caption">(a) Estimand</figcaption>
+<div id="fig-cake" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cake" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-cake-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cake-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/estimand.jpg" class="img-fluid figure-img" style="width:33.0%" data-ref-parent="fig-cake">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cake-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Estimand
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-cake-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/estimator.jpg" class="img-fluid figure-img" data-ref-parent="fig-cake"></p>
-<figcaption class="figure-caption">(b) Estimator</figcaption>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cake" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-cake-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cake-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/estimator.jpg" class="img-fluid figure-img" style="width:33.0%" data-ref-parent="fig-cake">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cake-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Estimator
+</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-cake-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/estimate.jpg" class="img-fluid figure-img" data-ref-parent="fig-cake"></p>
-<figcaption class="figure-caption">(c) Estimate</figcaption>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-cake" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div id="fig-cake-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cake-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/estimate.jpg" class="img-fluid figure-img" style="width:33.0%" data-ref-parent="fig-cake">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cake-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Estimate
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.2: <a href="https://www.flickr.com/photos/darkdwarf/16563489881">Estimand</a> (left), estimator (middle) and <a href="https://www.flickr.com/photos/bensutherland/14685548773">estimate</a> (right) illustrated with cakes and based on an original idea of Simon Grund. Cake photos shared under <a href="https://creativecommons.org/licenses/by-nc/2.0/">CC BY-NC 2.0 license</a>.</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: <a href="https://www.flickr.com/photos/darkdwarf/16563489881">Estimand</a> (left), estimator (middle) and <a href="https://www.flickr.com/photos/bensutherland/14685548773">estimate</a> (right) illustrated with cakes and based on an original idea of Simon Grund. Cake photos shared under <a href="https://creativecommons.org/licenses/by-nc/2.0/">CC BY-NC 2.0 license</a>.
+</figcaption>
 </figure>
 </div>
 <p>For example, we may use as estimand the population average of <span class="math inline">\(Y_1, \ldots\)</span>, say <span class="math inline">\(\mu\)</span>. The estimator will be sample mean, i.e., the sum of the elements in the sample divided by the sample size, <span class="math inline">\(\overline{Y}=(Y_1 + \cdots + Y_n)/n\)</span>. The estimate will be a numerical value, say 4.3.</p>
-<p>Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won’t get the exact same result every time, as in <a href="#fig-xkcd605">Figure&nbsp;<span>2.3</span></a>.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-xkcd605_b3f01654b74623065e39e1b3383410fd">
+<p>Because the inputs of the estimator are random, the output is also random and change from one sample to the next: even if you repeat a recipe, you won’t get the exact same result every time, as in <a href="#fig-xkcd605" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-xkcd605</span></a>.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-xkcd605" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/xkcd2581_health_stats.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.3: xkcd comic <a href="https://xkcd.com/2581/">2581 (Health Stats) by Randall Munroe</a>. Alt text: You will live on forever in our hearts, pushing a little extra blood toward our left hands now and then to give them a squeeze. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+<div id="fig-xkcd605" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xkcd605-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/xkcd2581_health_stats.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xkcd605-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: xkcd comic <a href="https://xkcd.com/2581/">2581 (Health Stats) by Randall Munroe</a>. Alt text: You will live on forever in our hearts, pushing a little extra blood toward our left hands now and then to give them a squeeze. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>To illustrate this point, <a href="#fig-samplevar">Figure&nbsp;<span>2.4</span></a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, along with their sample mean <span class="math inline">\(\overline{y}\)</span>. Thus, sampling variability implies that the sample means of the subgroups will always differ even if they share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-samplevar_ee3900adf02657b96faa22a186b9784b">
+<p>To illustrate this point, <a href="#fig-samplevar" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-samplevar</span></a> shows five simple random samples of size <span class="math inline">\(n=10\)</span> drawn from an hypothetical population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, along with their sample mean <span class="math inline">\(\overline{y}\)</span>. Thus, sampling variability implies that the sample means of the subgroups will always differ even if they share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-samplevar" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-samplevar-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.4: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.</figcaption>
+<div id="fig-samplevar" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-samplevar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-hypothesis_testing_files/figure-html/fig-samplevar-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-samplevar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: Five samples of size <span class="math inline">\(n=10\)</span> drawn from a common population with mean <span class="math inline">\(\mu\)</span> (horizontal line). The colored segments show the sample means of each sample.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>We can clearly see from <a href="#fig-samplevar">Figure&nbsp;<span>2.4</span></a> that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average <span class="math inline">\(\mu\)</span> than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.</p>
+<p>We can clearly see from <a href="#fig-samplevar" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-samplevar</span></a> that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average <span class="math inline">\(\mu\)</span> than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.</p>
 <p>Values of the sample mean don’t tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it’s true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average in repeated samples. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.</p>
 <p>To get an idea of how certain something is, we have to consider the variability of an observation <span class="math inline">\(Y_i\)</span>. This variance of an observation drawn from the population is typically denoted <span class="math inline">\(\sigma^2\)</span> and it’s square root, the standard deviation, by <span class="math inline">\(\sigma\)</span>.</p>
 <p>The sample variance <span class="math inline">\(S_n\)</span> is an estimator of the standard deviation <span class="math inline">\(\sigma\)</span>, where <span class="math display">\[\begin{align*}
@@ -359,26 +420,34 @@ S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (Y_i-\overline{Y})^2
 \end{align*}\]</span> is the sum of squared difference between observations and the sample average, scaled by a factor proportional to the sample size.</p>
 <p>The standard deviation <em>of a statistic</em> is termed <strong>standard error</strong>; it should not be confused with the standard deviation <span class="math inline">\(\sigma\)</span> of the population from which the sample observations <span class="math inline">\(Y_1, \ldots, Y_n\)</span> are drawn. Both standard deviation and standard error are expressed in the same units as the measurements, so are easier to interpret than variance. Since the standard error is a function of the sample size, it is however good practice to report the estimated standard deviation in reports.</p>
 <div id="exm-samppropunif" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.2 (Sample proportion and uniform draws) </strong></span>To illustrate the concept of sampling variability, we follow the lead of <a href="https://www.crumplab.com/statistics/foundations-for-inference.html">Matthew Crump</a> and consider samples from a uniform distribution on <span class="math inline">\(\{1, 2, \ldots, 10\}\)</span> each number in this interval is equally likely to be sampled.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-unifsamp1_e50b97f45320763cda4d005b31dd3172">
+<p><span class="theorem-title"><strong>Example 2.2 (Sample proportion and uniform draws)</strong></span> To illustrate the concept of sampling variability, we follow the lead of <a href="https://www.crumplab.com/statistics/foundations-for-inference.html">Matthew Crump</a> and consider samples from a uniform distribution on <span class="math inline">\(\{1, 2, \ldots, 10\}\)</span> each number in this interval is equally likely to be sampled.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-unifsamp1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-unifsamp1-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.5: Histograms for 10 random samples of size <span class="math inline">\(n=20\)</span> from a discrete uniform distribution.</figcaption>
+<div id="fig-unifsamp1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unifsamp1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-hypothesis_testing_files/figure-html/fig-unifsamp1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unifsamp1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.5: Histograms for 10 random samples of size <span class="math inline">\(n=20\)</span> from a discrete uniform distribution.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Even if they are drawn from the same population, the 10 samples in <a href="#fig-unifsamp1">Figure&nbsp;<span>2.5</span></a> look quite different. The only thing at play here is the sample variability: since there are <span class="math inline">\(n=20\)</span> observations in total, there should be on average 10% of the observations in each of the 10 bins, but some bins are empty and others have more counts than expected. This fluctuation is due to randomness, or chance.</p>
+<p>Even if they are drawn from the same population, the 10 samples in <a href="#fig-unifsamp1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-unifsamp1</span></a> look quite different. The only thing at play here is the sample variability: since there are <span class="math inline">\(n=20\)</span> observations in total, there should be on average 10% of the observations in each of the 10 bins, but some bins are empty and others have more counts than expected. This fluctuation is due to randomness, or chance.</p>
 <p>How can we thus detect whether what we see is compatible with the model we think generated the data? The key is to collect more observations: the bar height is the sample proportion, an average of 0/1 values with ones indicating that the observation is in the bin and zero otherwise.</p>
-<p>Consider now what happens as we increase the sample size: the top panel of <a href="#fig-uniformsamp2">Figure&nbsp;<span>2.6</span></a> shows uniform samples for increasing samples size. The histogram looks more and more like the true underlying distribution (flat, each bin with equal frequency) as the sample size increases. The sample distribution of points is nearly indistinguishable from the theoretical one (straight line) when <span class="math inline">\(n=10 000\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The bottom panel, on the other hand, isn’t from a uniform distribution and larger samples come closer to the population distribution. We couldn’t have spotted this difference in the first two plots, since the sampling variability is too important; there, the lack of data in some bins could have been attributed to chance, as they are comparable with the graph for data that are truly uniform. This is in line with most practical applications, in which the limited sample size restricts our capacity to disentangle real differences from sampling variability. We must embrace this uncertainty: in the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-uniformsamp2_21065b15c41bb8fe094a1cbeb304e221">
+<p>Consider now what happens as we increase the sample size: the top panel of <a href="#fig-uniformsamp2" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-uniformsamp2</span></a> shows uniform samples for increasing samples size. The histogram looks more and more like the true underlying distribution (flat, each bin with equal frequency) as the sample size increases. The sample distribution of points is nearly indistinguishable from the theoretical one (straight line) when <span class="math inline">\(n=10 000\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The bottom panel, on the other hand, isn’t from a uniform distribution and larger samples come closer to the population distribution. We couldn’t have spotted this difference in the first two plots, since the sampling variability is too important; there, the lack of data in some bins could have been attributed to chance, as they are comparable with the graph for data that are truly uniform. This is in line with most practical applications, in which the limited sample size restricts our capacity to disentangle real differences from sampling variability. We must embrace this uncertainty: in the next section, we outline how hypothesis testing helps us disentangle the signal from the noise.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-uniformsamp2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-uniformsamp2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.6: Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).</figcaption>
+<div id="fig-uniformsamp2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uniformsamp2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-hypothesis_testing_files/figure-html/fig-uniformsamp2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniformsamp2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.6: Histograms of data from a uniform distribution (top) and non-uniform (bottom) with increasing sample sizes of 10, 100, 1000 and 10 000 (from left to right).
+</figcaption>
 </figure>
 </div>
 </div>
@@ -406,9 +475,9 @@ S^2_n &amp;= \frac{1}{n-1} \sum_{i=1}^n (Y_i-\overline{Y})^2
 </ul>
 <section id="hypothesis-1" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="hypothesis-1"><span class="header-section-number">2.3.1</span> Hypothesis</h3>
-<p>In statistical tests we have two hypotheses: the null hypothesis (<span class="math inline">\(\mathscr{H}_0\)</span>) and the alternative hypothesis (<span class="math inline">\(\mathscr{H}_a\)</span>). Usually, the null hypothesis (the ‘status quo’) is a single numerical value. The alternative is what we’re really interested in testing. In <a href="#fig-samplevar">Figure&nbsp;<span>2.4</span></a>, we could consider whether all five groups have the same mean <span class="math inline">\(\mathscr{H}_0: \mu_1 = \mu_2 = \cdots = \mu_5\)</span> against the alternative that at least two of them are different. These two outcomes are mutually exclusive and cover all possible scenarios. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> in favor of <span class="math inline">\(\mathscr{H}_a\)</span>, subject to some pre-specified risk of error: while we know that the differences are just due to sampling variability in <a href="#fig-samplevar">Figure&nbsp;<span>2.4</span></a> because the data is simulated, in practice we need to assess the evidence using a numerical summary.</p>
+<p>In statistical tests we have two hypotheses: the null hypothesis (<span class="math inline">\(\mathscr{H}_0\)</span>) and the alternative hypothesis (<span class="math inline">\(\mathscr{H}_a\)</span>). Usually, the null hypothesis (the ‘status quo’) is a single numerical value. The alternative is what we’re really interested in testing. In <a href="#fig-samplevar" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-samplevar</span></a>, we could consider whether all five groups have the same mean <span class="math inline">\(\mathscr{H}_0: \mu_1 = \mu_2 = \cdots = \mu_5\)</span> against the alternative that at least two of them are different. These two outcomes are mutually exclusive and cover all possible scenarios. A statistical hypothesis test allows us to decide whether or not our data provides enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> in favor of <span class="math inline">\(\mathscr{H}_a\)</span>, subject to some pre-specified risk of error: while we know that the differences are just due to sampling variability in <a href="#fig-samplevar" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-samplevar</span></a> because the data is simulated, in practice we need to assess the evidence using a numerical summary.</p>
 <div id="exm-abtest-cont" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3 (A/B testing (continued)) </strong></span>We follow-up with our A/B test experiment. Given <span class="math inline">\(\mu_1\)</span> the population average click conversation rate for the current webpage and <span class="math inline">\(\mu_2\)</span>, that of the redesign, we are interested in the <em>one-sided hypothesis</em> that <span class="math inline">\(\mathscr{H}_0: \mu_2 \leq \mu_1\)</span> against the alternative (that we are trying to prove) <span class="math inline">\(\mathscr{H}_a: \mu_2 &gt; \mu_1\)</span>. In choosing as null hypothesis that the new design is no better or worst, we are putting all our weight to make sure the changes carry forward if there is overwhelming evidence that the new design is better and allow us to generate more revenues, given the costs associated to changes to the interface and the resulting disruption.</p>
+<p><span class="theorem-title"><strong>Example 2.3 (A/B testing (continued))</strong></span> We follow-up with our A/B test experiment. Given <span class="math inline">\(\mu_1\)</span> the population average click conversation rate for the current webpage and <span class="math inline">\(\mu_2\)</span>, that of the redesign, we are interested in the <em>one-sided hypothesis</em> that <span class="math inline">\(\mathscr{H}_0: \mu_2 \leq \mu_1\)</span> against the alternative (that we are trying to prove) <span class="math inline">\(\mathscr{H}_a: \mu_2 &gt; \mu_1\)</span>. In choosing as null hypothesis that the new design is no better or worst, we are putting all our weight to make sure the changes carry forward if there is overwhelming evidence that the new design is better and allow us to generate more revenues, given the costs associated to changes to the interface and the resulting disruption.</p>
 <p>One-sided hypothesis are directional: we care only about a specific direction, and so here <span class="math inline">\(\mathscr{H}_a: \mu_2 &gt; \mu_1\)</span>. Indeed, if the experiment suggests that the conversion rate is worst with the new webpage design, we won’t go forward.</p>
 <p>Since neither of these population averages <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span> are known to us, we can work instead with <span class="math inline">\(\mathscr{H}_0: \mu_2-\mu_1 \geq 0\)</span>. We can use as estimator for the difference <span class="math inline">\(\mu_2-\mu_1\)</span> the difference in sample average in each subgroup.</p>
 <p>The null hypothesis here is an interval, but it suffices the consider the most beneficial scenario, which is <span class="math inline">\(\mu_2-\mu_1=0\)</span>. Indeed, if we can disprove that there is no difference and see an increase of the click rate with the updated version, all more extreme cases are automatically discarded in favour of the alternative that the new design is better.</p>
@@ -431,13 +500,17 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 <h3 data-number="2.3.3" class="anchored" data-anchor-id="null-distribution-and-p-value"><span class="header-section-number">2.3.3</span> Null distribution and <em>p</em>-value</h3>
 <p>The <em>p</em>-value allows us to decide whether the observed value of the test statistic <span class="math inline">\(T\)</span> is plausible under <span class="math inline">\(\mathscr{H}_0\)</span>. Specifically, the <em>p</em>-value is the probability that the test statistic is equal or more extreme to the estimate computed from the data, assuming <span class="math inline">\(\mathscr{H}_0\)</span> is true. Suppose that based on a random sample <span class="math inline">\(Y_1, \ldots, Y_n\)</span> we obtain a statistic whose value <span class="math inline">\(T=t\)</span>. For a two-sided test <span class="math inline">\(\mathscr{H}_0:\theta=\theta_0\)</span> vs.&nbsp;<span class="math inline">\(\mathscr{H}_a:\theta \neq \theta_0\)</span>, the <em>p</em>-value is <span class="math inline">\(\mathsf{Pr}_0(|T| \geq |t|)\)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>How do we determine the null distribution given that the true data generating mechanism is unknown to us? We ask a statistician! In simple cases, it might be possible to enumerate all possible outcomes and thus quantity the degree of outlyingness of our observed statistic. In more general settings, we can resort to simulations or to probability theory: the central limit theorem says that the sample mean behaves like a normal random variable with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma/\sqrt{n}\)</span> for <span class="math inline">\(n\)</span> large enough. The central limit theorem has broader applications since most statistics can be viewed as some form of average or transformation thereof, a fact used to derive benchmarks for most commonly used tests. Most software use these approximations as proxy by default: the normal, Student’s <span class="math inline">\(t\)</span>, <span class="math inline">\(\chi^2\)</span> and <span class="math inline">\(F\)</span> distributions are the reference distributions that arise the most often.</p>
-<p><a href="#fig-power-plots">Figure&nbsp;<span>2.7</span></a> shows the distribution of <span class="math inline">\(p\)</span>-values for two scenarios: one in which there are no differences and the null is true, the other under an alternative. The probability of rejection is obtained by calculating the area under the density curve between zero and <span class="math inline">\(\alpha=0.1\)</span>, here 0.1 on the left. Under the null, the model is calibrated and the distribution of <em>p</em>-values is uniform (i.e., a flat rectangle of height 1), meaning all values in the unit interval are equally likely. Under the alternative (right), small <em>p</em>-values are more likely to be observed.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-power-plots_17ec92bfe24bf2a0982623471887c022">
+<p><a href="#fig-power-plots" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-power-plots</span></a> shows the distribution of <span class="math inline">\(p\)</span>-values for two scenarios: one in which there are no differences and the null is true, the other under an alternative. The probability of rejection is obtained by calculating the area under the density curve between zero and <span class="math inline">\(\alpha=0.1\)</span>, here 0.1 on the left. Under the null, the model is calibrated and the distribution of <em>p</em>-values is uniform (i.e., a flat rectangle of height 1), meaning all values in the unit interval are equally likely. Under the alternative (right), small <em>p</em>-values are more likely to be observed.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-power-plots" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-power-plots-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.7: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right).</figcaption>
+<div id="fig-power-plots" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power-plots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-hypothesis_testing_files/figure-html/fig-power-plots-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-plots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.7: Density of <em>p</em>-values under the null hypothesis (left) and under an alternative with a signal-to-noise ratio of 0.5 (right).
+</figcaption>
 </figure>
 </div>
 </div>
@@ -452,7 +525,7 @@ T = \frac{\text{estimated effect}- \text{postulated effect}}{\text{estimated eff
 </section>
 <section id="conclusion" class="level3" data-number="2.3.4">
 <h3 data-number="2.3.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.3.4</span> Conclusion</h3>
-<p>The <em>p</em>-value allows us to make a decision about the null hypothesis. If <span class="math inline">\(\mathscr{H}_0\)</span> is true, the <em>p</em>-value follows a uniform distribution, as shown in <a href="#fig-power-plots">Figure&nbsp;<span>2.7</span></a>. <a href="https://xkcd.com/1478/">Thus, if the <em>p</em>-value is small</a>, this means observing an outcome more extreme than <span class="math inline">\(T=t\)</span> is unlikely, and so we’re inclined to think that <span class="math inline">\(\mathscr{H}_0\)</span> is not true. There’s always some underlying risk that we’re making a mistake when we make a decision. In statistic, there are <a href="https://xkcd.com/2303/">two type of errors</a>:</p>
+<p>The <em>p</em>-value allows us to make a decision about the null hypothesis. If <span class="math inline">\(\mathscr{H}_0\)</span> is true, the <em>p</em>-value follows a uniform distribution, as shown in <a href="#fig-power-plots" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-power-plots</span></a>. <a href="https://xkcd.com/1478/">Thus, if the <em>p</em>-value is small</a>, this means observing an outcome more extreme than <span class="math inline">\(T=t\)</span> is unlikely, and so we’re inclined to think that <span class="math inline">\(\mathscr{H}_0\)</span> is not true. There’s always some underlying risk that we’re making a mistake when we make a decision. In statistic, there are <a href="https://xkcd.com/2303/">two type of errors</a>:</p>
 <ul>
 <li>type I error: we reject the null hypothesis <span class="math inline">\(\mathscr{H}_0\)</span> when the null is true,</li>
 <li>type II error: we fail to reject the null hypothesis <span class="math inline">\(\mathscr{H}_0\)</span> when the alternative is true.</li>
@@ -522,15 +595,20 @@ Pitfall
 </div>
 </div>
 <div id="exm-rosenjerdee74" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.4 (Gender inequality and permutation tests) </strong></span>We consider data from <span class="citation" data-cites="Rosen:1974">Rosen and Jerdee (<a href="references.html#ref-Rosen:1974" role="doc-biblioref">1974</a>)</span>, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided.</p>
+<p><span class="theorem-title"><strong>Example 2.4 (Gender inequality and permutation tests)</strong></span> We consider data from <span class="citation" data-cites="Rosen:1974">Rosen and Jerdee (<a href="#ref-Rosen:1974" role="doc-biblioref">1974</a>)</span>, who look at sex role stereotypes and their impacts on promotion and opportunities for women candidates. The experiment took place in 1972 and the experimental units, which consisted of 95 male bank supervisors, were submitted to various memorandums and asked to provide ratings or decisions based on the information provided.</p>
 <p>We are interested in Experiment 1 related to promotion of employees: managers were requested to decide on whether or not to promote an employee to become branch manager based on recommendations and ratings on potential for customer and employee relations.</p>
 <p>The authors intervention focused on the description of the nature (complexity) of the manager’s job (either simple or complex) and the sex of the candidate (male or female): all files were otherwise similar.</p>
-<p>We consider for simplicity only sex as a factor and aggregate over job for the <span class="math inline">\(n=93\)</span> replies. <a href="#tbl-rosen-table1">Table&nbsp;<span>2.1</span></a> shows the counts for each possibility.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-rosen-table1_b8d9dcba8701a63a2b9b895eced67991">
+<p>We consider for simplicity only sex as a factor and aggregate over job for the <span class="math inline">\(n=93\)</span> replies. <a href="#tbl-rosen-table1" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-rosen-table1</span></a> shows the counts for each possibility.</p>
+<div class="cell">
+<div id="tbl-rosen-table1" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rosen-table1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Promotion recommandation to branch manager based on sex of the applicant.
+</figcaption>
+<div aria-describedby="tbl-rosen-table1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-rosen-table1" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;2.1: Promotion recommandation to branch manager based on sex of the applicant.</caption>
+<div>
+<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -551,57 +629,56 @@ Pitfall
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</div>
+</figure>
 </div>
 </div>
 <p>The null hypothesis of interest here that sex has no impact, so the probability of promotion is the same for men and women. Let <span class="math inline">\(p_{\text{m}}\)</span> and <span class="math inline">\(p_{\text{w}}\)</span> denote these respective probabilities; we can thus write mathematically the null hypothesis as <span class="math inline">\(\mathscr{H}_0: p_{\text{m}} = p_{\text{w}}\)</span> against the alternative <span class="math inline">\(\mathscr{H}_a: p_{\text{m}} \neq p_{\text{w}}\)</span>.</p>
 <p>The test statistic typically employed for contingency tables is a chi-square test<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, which compares the overall proportions of promoted to that in for each subgroup. The sample proportion for male is 32/42 = ~76%, compared to 19/49 or ~49% for female. While it seems that this difference of 16% is large, it could be spurious: the standard error for the sample proportions is roughly 3.2% for male and 3.4% for female.</p>
 <p>If there was no discrimination based on sex, we would expect the proportion of people promoted to be the same overall; this is 51/93 =0.55 for the pooled sample. We could simply do a test for the mean difference, but rely instead on the Pearson contingency <span class="math inline">\(X^2_p\)</span> (aka chi-square) test, which compares the expected counts (based on equal promotion rates) to the observed counts, suitably standardized. If the discrepancy is large between expected and observed, than this casts doubt on the validity of the null hypothesis.</p>
 <p>If the counts of each cell are large, the null distribution of the chi-square test is well approximated by a <span class="math inline">\(\chi^2\)</span> distribution. The output of the test includes the value of the statistic, <span class="math inline">\(10.79\)</span>, the degrees of freedom of the <span class="math inline">\(\chi^2\)</span> approximation and the <em>p</em>-value, which gives the probability that a random draw from a <span class="math inline">\(\chi^2_1\)</span> distribution is larger than the observed test statistic <strong>assuming the null hypothesis is true</strong>. The <em>p</em>-value is very small, <span class="math inline">\(0.001\)</span>, which means such a result is quite unlikely to happen by chance if there was no sex-discrimination.</p>
-
 <!--
 There are alternative test statistics that could be used, among which Fisher's test. The latter assumes that the row and sum totals are fixed (that is, the number of promoted/withheld files and male/female are fixed at the design stage) and uses this to derive the exact probability of observing this particular configuration if the proportion of success was the same. The numerical value of Fisher's exact test statistic is different from that of the chi-square test for contingency tables, but so is the null distribution^[The null distribution for Fisher's exact test is hypergeometric. This fact is well known in combinatorics.]. On the contrary, the _p_-value is very close to the one reported for the $\chi^2$ test in @tbl-example-chisq-test-rosen.
 
 
 
-::: {#tbl-example-fisher-test-rosen .cell tbl-cap='Fisher\'s exact test for experiment 1 of Rosen and Jerdee (1974)' hash='02-hypothesis_testing_cache/html/tbl-example-fisher-test-rosen_03708e5d1d5eb6865beb139c32f0132d'}
+
+
+
+
+::: {#tbl-example-fisher-test-rosen .cell tbl-cap='Fisher\'s exact test for experiment 1 of Rosen and Jerdee (1974)'}
 ::: {.cell-output-display}
 
-`````{=html}
 
-<table data-quarto-postprocess="true">
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">method</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">4.1</td>
-<td style="text-align: right;">0.0016</td>
-<td style="text-align: left;">Fisher's Exact Test for Count Data</td>
-</tr>
-</tbody>
-</table>
+| estimate| p.value|method                             |
+|--------:|-------:|:----------------------------------|
+|      4.1|  0.0016|Fisher's Exact Test for Count Data |
 
-
-`````
 
 :::
 :::
+
+
+
+
 
 
 -->
 <p>Another alternative to obtain a benchmark to assess the outlyingness of the observed odds ratio is to use simulations. Consider a database containing the raw data with 93 rows, one for each manager, with for each an indicator of <code>action</code> and the <code>sex</code> of the hypothetical employee presented in the task.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-dat-long-test-rosen-print_4cdfa8481d431287213f17f5aa42387f">
+<div class="cell">
+<div id="tbl-dat-long-test-rosen-print" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dat-long-test-rosen-print-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.2: First five rows of the database in long format for experiment 1 of Rosen and Jerdee.
+</figcaption>
+<div aria-describedby="tbl-dat-long-test-rosen-print-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-dat-long-test-rosen-print" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;2.2: First five rows of the database in long format for experiment 1 of Rosen and Jerdee.</caption>
+<div>
+<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">action</th>
@@ -631,9 +708,12 @@ There are alternative test statistics that could be used, among which Fisher's t
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</div>
+</figure>
 </div>
 </div>
 <p>Under the null hypothesis, sex has no incidence on the action of the manager. This means we could get an idea of the “what-if” world by shuffling the sex labels repeatedly. Thus, we could obtain a benchmark by repeating the following steps multiple times:</p>
@@ -643,17 +723,21 @@ There are alternative test statistics that could be used, among which Fisher's t
 <li>calculate a test statistic for the simulated table.</li>
 </ol>
 <p>As test statistic, we use odds ratio: the odds of an event is the ratio of the number of success over failure: in our example, this would be the number of promoted over held files. The odds of promotion for male is <span class="math inline">\(32/12\)</span>, whereas that of female is <span class="math inline">\(19/30\)</span>. The odds ratio for male versus female is thus <span class="math inline">\(\mathsf{OR}=(32/12) / (19/30)= 4.21\)</span>. Under the null hypothesis, <span class="math inline">\(\mathscr{H}_0: \mathsf{OR}= 1\)</span> (same probability of being promoted) (why?)</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/fig-infer-odds-ratio-permutation_c8d40a78fff9b6c2a67f27db4c0005d6">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-infer-odds-ratio-permutation" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="02-hypothesis_testing_files/figure-html/fig-infer-odds-ratio-permutation-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.8: Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.</figcaption>
+<div id="fig-infer-odds-ratio-permutation" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-infer-odds-ratio-permutation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-hypothesis_testing_files/figure-html/fig-infer-odds-ratio-permutation-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-infer-odds-ratio-permutation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.8: Histogram of the simulated null distribution of the odds ratio statistic obtained using a permutation test; the vertical red line indicates the sample odds ratio.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The histogram in <a href="#fig-infer-odds-ratio-permutation">Figure&nbsp;<span>2.8</span></a> shows the distribution of the odds ratio based on 10 000 permutations. Reassuringly, we again get roughly the same approximate <em>p</em>-value, here 0.002.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>The histogram in <a href="#fig-infer-odds-ratio-permutation" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-infer-odds-ratio-permutation</span></a> shows the distribution of the odds ratio based on 10 000 permutations. Reassuringly, we again get roughly the same approximate <em>p</em>-value, here 0.002.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
 <p>The article concluded (in light of the above and further experiments)</p>
 <blockquote class="blockquote">
 <p>Results confirmed the hypothesis that male administrators tend to discriminate against female employees in personnel decisions involving promotion, development, and supervision.</p>
@@ -680,7 +764,7 @@ Pitfall
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the first experiment, managers were also asked to rank applications on their potential for both employee and customer relations using a Likert scale of six items ranging from (1) extremely unfavorable to (6) extremely favorable. However, only the averages are reported in Table 1 along with <span class="citation" data-cites="Rosen:1974">(<a href="references.html#ref-Rosen:1974" role="doc-biblioref">Rosen and Jerdee 1974</a>)</span></p>
+<p>In the first experiment, managers were also asked to rank applications on their potential for both employee and customer relations using a Likert scale of six items ranging from (1) extremely unfavorable to (6) extremely favorable. However, only the averages are reported in Table 1 along with <span class="citation" data-cites="Rosen:1974">(<a href="#ref-Rosen:1974" role="doc-biblioref">Rosen and Jerdee 1974</a>)</span></p>
 <blockquote class="blockquote">
 <p>Mean rating for the male candidate was 4.73 compared to a mean rating of 4.25 for the female candidate (<span class="math inline">\(F=4.76\)</span>, <span class="math inline">\(\text{df} = 1/80\)</span>, <span class="math inline">\(p &lt; .05\)</span>)</p>
 </blockquote>
@@ -699,26 +783,31 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 \end{align*}\]</span> and where <span class="math inline">\(\theta\)</span> represents the postulated value for the fixed, but unknown value of the parameter. The critical values are quantile of the null distribution and are chosen so that the probability of being more extreme is <span class="math inline">\(\alpha\)</span>.</p>
 <p>The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, <span class="math inline">\(\widehat{\theta}\)</span> and <span class="math inline">\(\mathrm{se}(\widehat{\theta})\)</span>, are random: their values will vary from one sample to the next.</p>
 <p>For generic random samples, there is a <span class="math inline">\(1-\alpha\)</span> probability that <span class="math inline">\(\theta\)</span> is contained in the <strong>random</strong> confidence interval computed. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter <span class="math inline">\(\theta\)</span> is either inside the confidence interval or not. We can interpret confidence interval’s as follows: if we were to repeat the experiment multiple times, and calculate a <span class="math inline">\(1-\alpha\)</span> confidence interval each time, then roughly <span class="math inline">\(1-\alpha\)</span> of the calculated confidence intervals would contain the true value of <span class="math inline">\(\theta\)</span> in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the <em>procedure</em> we use to calculate confidence intervals and not in the actual values we obtain from a sample.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/intconf_2e0b39973ff7b67750ff7366c8c5fd9c">
+<div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="02-hypothesis_testing_files/figure-html/intconf-1.png" class="img-fluid figure-img" width="768"></p>
-<figcaption class="figure-caption">95% confidence intervals for the mean of a standard normal population for 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).</figcaption>
+<figcaption>95% confidence intervals for the mean of a standard normal population for 100 random samples. On average, 5% of these intervals fail to include the true mean value of zero (in red).</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>If we are only interested in the binary decision rule reject/fail to reject <span class="math inline">\(\mathscr{H}_0\)</span>, the confidence interval is equivalent to a <em>p</em>-value since it leads to the same conclusion. Whereas the <span class="math inline">\(1-\alpha\)</span> confidence interval gives the set of all values for which the test statistic doesn’t provide enough evidence to reject <span class="math inline">\(\mathscr{H}_0\)</span> at level <span class="math inline">\(\alpha\)</span>, the <em>p</em>-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the <em>p</em>-value is smaller than <span class="math inline">\(\alpha\)</span>, our null value <span class="math inline">\(\theta\)</span> will be outside of the confidence interval and vice-versa.</p>
 <div id="exm-LiuRimMinMin2023E1" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.5 (“The Surprise of Reaching Out”) </strong></span><span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span> studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.</p>
+<p><span class="theorem-title"><strong>Example 2.5 (“The Surprise of Reaching Out”)</strong></span> <span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span> studies social interactions and the impact of surprise on people reaching out if this contact is unexpected. Experiment 1 focuses on questionnaires where the experimental condition is the perceived appreciation of reaching out to someone (vs being reached to). The study used a questionnaire administered to 200 American adults recruited on the Prolific Academic platform. The response index consists of the average of four questions measured on a Likert scale ranging from 1 to 7, with higher values indicating higher appreciation.</p>
 </div>
-<p>We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of <code>other</code> (including non-binary people) is much higher than that of the general census, and the population skews quite young according to <a href="#tbl-LRMMS1-summarystat-a">Table&nbsp;<span>2.3</span></a>.</p>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-a_b66ec9d926cc095b0667d86c75ab42b0">
+<p>We can begin by inspecting summary statistics for the sociodemographic variables (gender and age) to assess whether the sample is representative of the general population as a whole. The proportion of <code>other</code> (including non-binary people) is much higher than that of the general census, and the population skews quite young according to <a href="#tbl-LRMMS1-summarystat-a" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-LRMMS1-summarystat-a</span></a>.</p>
+<div class="cell">
+<div id="tbl-LRMMS1-summarystat-a" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-LRMMS1-summarystat-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.3: Summary statistics of the age of participants, and counts per gender
+</figcaption>
+<div aria-describedby="tbl-LRMMS1-summarystat-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-LRMMS1-summarystat-a" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;2.3: Summary statistics of the age of participants, and counts per gender</caption>
+<div>
+<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">gender</th>
@@ -752,16 +841,24 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 </tr>
 </tbody>
 </table>
-</div>
 
 
 </div>
 </div>
-<div class="cell" data-hash="02-hypothesis_testing_cache/html/tbl-LRMMS1-summarystat-b_e949e1eb0fa80161fbbad1755f95fbd3">
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-LRMMS1-summarystat-b" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-LRMMS1-summarystat-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.4: Mean ratings, standard deviation and number of participants per experimental condition.
+</figcaption>
+<div aria-describedby="tbl-LRMMS1-summarystat-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-LRMMS1-summarystat-b" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;2.4: Mean ratings, standard deviation and number of participants per experimental condition.</caption>
+<div>
+<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">role</th>
@@ -785,9 +882,12 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</div>
+</figure>
 </div>
 </div>
 <p>Since there are only two groups, initiator and responder, we are dealing with a pairwise comparison. The logical test one could use is a two sample <em>t</em>-test, or a variant thereof. Using Welch two sample <span class="math inline">\(t\)</span>-test statistic, both group average and standard deviation are estimated using the data provided and the latter are used to build a statistic. This explains the non-integer degrees of freedom.</p>
@@ -801,9 +901,9 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <li>Conclusion: reject the null hypothesis, average appreciation score differs depending on the role</li>
 </ul>
 <div id="exm-BrucksLevav22" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.6 (Virtual communication curbs creative idea generation) </strong></span>A Nature study performed an experiment to see how virtual communications teamwork by comparing the output both in terms of ideas generated during a brainstorming session by pairs and of the quality of ideas, as measured by external referees. The sample consisted of 301 pairs of participants who interacted via either videoconference or face-to-face.</p>
+<p><span class="theorem-title"><strong>Example 2.6 (Virtual communication curbs creative idea generation)</strong></span> A Nature study performed an experiment to see how virtual communications teamwork by comparing the output both in terms of ideas generated during a brainstorming session by pairs and of the quality of ideas, as measured by external referees. The sample consisted of 301 pairs of participants who interacted via either videoconference or face-to-face.</p>
 <p>The authors compared the number of creative ideas, a subset of the ideas generated with creativity score above average. The mean number of the number of creative ideas for face-to-face <span class="math inline">\(7.92\)</span> ideas (sd <span class="math inline">\(3.40\)</span>) relative to videoconferencing <span class="math inline">\(6.73\)</span> ideas (sd <span class="math inline">\(3.27\)</span>).</p>
-<p><span class="citation" data-cites="Brucks.Levav:2022">Brucks and Levav (<a href="references.html#ref-Brucks.Levav:2022" role="doc-biblioref">2022</a>)</span> used a negative binomial regression model: in their model, the expected number creative ideas generated is <span class="math display">\[\begin{align*}
+<p><span class="citation" data-cites="Brucks.Levav:2022">Brucks and Levav (<a href="#ref-Brucks.Levav:2022" role="doc-biblioref">2022</a>)</span> used a negative binomial regression model: in their model, the expected number creative ideas generated is <span class="math display">\[\begin{align*}
 \mathsf{E}(\texttt{ncreative}) = \exp(\beta_0 + \beta_1 \texttt{video})
 \end{align*}\]</span> where <span class="math inline">\(\texttt{video}=0\)</span> if the pair are in the same room and <span class="math inline">\(\texttt{video}=1\)</span> if they interact instead via videoconferencing.</p>
 <p>The mean number of ideas for videoconferencing is thus <span class="math inline">\(\exp(\beta_1)\)</span> times that of the face-to-face: the estimate of the multiplicative factor is <span class="math inline">\(\exp(\beta_1)\)</span> is <span class="math inline">\(0.85\)</span> 95% CI <span class="math inline">\([0.77, 0.94]\)</span>.</p>
@@ -815,7 +915,7 @@ W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
 <section id="conclusion-1" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">2.5</span> Conclusion</h2>
 <p>This chapter has focused on presenting the tools of the trade and some examples outlining the key ingredients that are common to any statistical procedure and the reporting of the latter. The reader is not expected to know which test statistic to adopt, but rather should understand at this stage how our ability to do (scientific) discoveries depends on a number of factors.</p>
-<p>Richard McElreath in the <a href="http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf">first chapter</a> of his book <span class="citation" data-cites="McElreath:2020">(<a href="references.html#ref-McElreath:2020" role="doc-biblioref">McElreath 2020</a>)</span> draws a parallel between statistical tests and golems (i.e., robots): neither</p>
+<p>Richard McElreath in the <a href="http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf">first chapter</a> of his book <span class="citation" data-cites="McElreath:2020">(<a href="#ref-McElreath:2020" role="doc-biblioref">McElreath 2020</a>)</span> draws a parallel between statistical tests and golems (i.e., robots): neither</p>
 <blockquote class="blockquote">
 <p>discern when the context is inapropriate for its answers. It just knows its own procedure […] It just does as it’s told.</p>
 </blockquote>
@@ -837,7 +937,7 @@ Your turn
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Brucks.Levav:2022" class="csl-entry" role="listitem">
 Brucks, Melanie S., and Jonathan Levav. 2022. <span>“Virtual Communication Curbs Creative Idea Generation.”</span> <em>Nature</em> 605 (7908): 108–12. <a href="https://doi.org/10.1038/s41586-022-04643-y">https://doi.org/10.1038/s41586-022-04643-y</a>.
 </div>
@@ -947,10 +1047,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -960,8 +1077,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -973,7 +1099,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1017,6 +1266,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1042,6 +1292,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1103,12 +1379,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01-introduction.html" class="pagination-link">
+      <a href="./01-introduction.html" class="pagination-link" aria-label="Introduction">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03-completely_randomized_trials.html" class="pagination-link">
+      <a href="./03-completely_randomized_trials.html" class="pagination-link" aria-label="Completely randomized designs">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1117,4 +1393,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/02-hypothesis_testing.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

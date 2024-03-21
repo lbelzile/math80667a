@@ -47,7 +47,9 @@ The most common parametrization for the linear model is in terms of **difference
 
 An equivalent formulation writes for each treatment group the average of subpopulation $j$ as $\mu_j = \mu + \delta_j$, where $\delta_j$ is the difference between the treatment average $\mu_j$ and the global average of all groups. Imposing the constraint $\delta_1 + \cdots + \delta_K=0$ ensures that the average of effects equals $\mu$. Thus, if we know any $K-1$ of $\{\delta_1, \ldots, \delta_K\}$, we automatically can deduce the last one. 
 
-:::{ .example name="Impact of encouragement on teaching"}
+:::{#exm-teaching1}
+
+## Impact of encouragement on teaching
 
 In **R**, the `lm` function fits a linear model based on a formula of the form `response ~ explanatory`. If the explanatory is categorical (i.e., a factor), the parameters of this model are the intercept, which is the sample average of the baseline group and the other parameters are simply contrasts, i.e., the $a_i$'s.
 
@@ -627,7 +629,9 @@ which is equivalent upon rearranging to the $(1-\alpha)$ confidence interval for
 \end{align*}
 
 
-:::{.example name="Pairwise comparison"}
+:::{#exm-pairwise-calcul}
+
+## Calculation of pairwise comparisons
 
 We consider the pairwise average difference in scores between the praised (group C) and the reproved (group D) of the `arithmetic` study. The sample averages are respectively $\widehat{\mu}_C = 27.4$ and $\widehat{\mu}_D = 23.4$ and the estimated pooled standard deviation for the five groups is $1.15$. Thus, the estimated average difference between groups $C$ and $D$ is $\widehat{\delta}_{CD} = 4$ and the standard error for the difference is $\mathsf{se}(\widehat{\delta}_{CD}) = 1.6216$; all of these are calculated by software.
 
@@ -704,7 +708,9 @@ More generally, the test statistic may make further assumptions. The $F$-test of
 
  
 
-:::{ .example name="Additivity and transformations"}
+:::{#exm-additivity-transfo}
+
+## Additivity and transformations
 
 Chapter 2 of @Cox:1958 discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarten students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a **paired experiment** and take as outcome the difference in sociability scores at the beginning and at the end of the school year. 
 
@@ -722,7 +728,9 @@ Another example is in experiments where the effect of treatment is multiplicativ
 \end{align*}
 Usually, this arises for positive responses and treatments, in which case taking natural logarithms on both sides, with $\log(xy) = \log x + \log y$ yielding again an additive decomposition.
 
-:::{ .example name="Inadequacy of additivity based on context"}
+:::{#exm-additivity-context}
+
+## Inadequacy of additivity based on context
 
 This example is adapted from @Cox:1958, Example 2.2. Children suffering from attention deficit hyperactivity disorder (ADHD) may receive medication to increase their attention span, measured on a scale of 0 to 100, with 0 indicating normal attention span. An experiment can be designed to assess the impact of a standardized dose in a laboratory by comparing performances of students on a series of task before and after, when to a placebo. To make a case, suppose that students with ADHD fall into two categories: low symptoms and strong symptoms. In the low symptom group, the average attention is 8 per cent with the drug and 12 per cent with the placebo, whereas for people with strong symptoms, the average is 40 per cent among treated and 60 per cent with the placebo. If these two categories are equally represented in the experiment and the population, we would estimate an average reduction of 12 percent in the score (thus higher attention span among treated). Yet, this quantity is artificial, and a better measure would be that symptoms are for the treatment are 2/3 of those of the control (the ratio of proportions).
 
@@ -836,8 +844,9 @@ g1 <- ggplot(data = fakesamp, mapping = aes(x = group, y = response, col = group
 
 What are the impacts of unequal variance if we use the $F$-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level $\alpha$ as claimed) and potential loss of power. The following toy example illustrates this.
 
-:::{ .example name="Violation of the null hypothesis of equal variance"}
+:::{#exm-heterogeneity}
 
+## Violation of the null hypothesis of equal variance
 
 
 ```{r}
@@ -988,7 +997,9 @@ It is important to keep in mind that all statistical statements are typically ap
 
 While I am not allowed to talk of independence as a Quebecer^[All credits for this pun are due to C. Genest], this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample.  Independence may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.
 
-:::{ .example name="Independence of measurements"}
+:::{#exm-measurementindep}
+
+## Independence of measurements
 
 There are many hidden ways in which measurements can impact the response. Physical devices that need to be calibrated before use (scales, microscope) require tuning: if measurements are done by different experimenters or on different days, it may impact and add systematic shift in means for the whole batch.
 

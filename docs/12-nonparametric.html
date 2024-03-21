@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.21">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 12&nbsp; Nonparametric tests</title>
+<title>Experimental design and statistical methods – 12&nbsp; Nonparametric tests</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,6 +116,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -117,6 +125,33 @@ div.csl-indent {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -127,12 +162,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-nonparametric.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-nonparametric.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -142,13 +177,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -246,7 +281,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -256,7 +291,7 @@ div.csl-indent {
   <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link active" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">12.1</span> Wilcoxon signed rank test</a></li>
   <li><a href="#wilcoxon-rank-sum-test-and-kruskalwallis-test" id="toc-wilcoxon-rank-sum-test-and-kruskalwallis-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test-and-kruskalwallis-test"><span class="header-section-number">12.2</span> Wilcoxon rank sum test and Kruskal–Wallis test</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/12-nonparametric.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/12-nonparametric.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -265,6 +300,7 @@ div.csl-indent {
 <h1 class="title display-7"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></h1>
 
 </header>
+
 
 <p>In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for <span class="math inline">\(t\)</span>-tests or analysis of variance models need not hold. This chapter presents <strong>nonparametric tests</strong>.</p>
 <p>If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size <span class="math inline">\(n\)</span>, where rank 1 denotes the smallest observation and rank <span class="math inline">\(n\)</span> the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations (8,2,1,2) gives ranks (4, 2.5., 1, 2.5) if we assign the average rank to ties.</p>
@@ -288,11 +324,11 @@ div.csl-indent {
 <p>The most common use of the signed rank test is for paired samples for which the response is measured on a numeric or ordinal scale. Let <span class="math inline">\(Y_{ij}\)</span> denote measurement <span class="math inline">\(j\)</span> of person <span class="math inline">\(i\)</span> and the matching observation <span class="math inline">\(Y_{kj}\)</span>. For each pair <span class="math inline">\(i=1, \ldots, n\)</span>, we can compute the difference <span class="math inline">\(D_i = Y_{ij}-Y_{ik}\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If we assume there is no difference between the distributions of the values taken, then the distribution of the difference <span class="math inline">\(D_j\)</span> is symmetric around zero under the null hypothesis.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The statistic tests thus tests whether the median is zero.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>Once we have the new differences <span class="math inline">\(D_1, \ldots, D_n\)</span>, we take absolute values and compute their ranks, <span class="math inline">\(R_i = \mathsf{rank}|D_i|\)</span>. The test statistic is formed by computing the sum of the ranks <span class="math inline">\(R_i\)</span> associated with positive differences <span class="math inline">\(D_i&gt;0\)</span>. How does this test statistic work as a summary of evidence? If there was no difference we expect roughly half of the centered observations or paired difference to be positive and half to be negative. The sum of positive ranks should be close to the average rank: for a two-sided test, large or small sums are evidence against the null hypothesis that there is no difference between groups.</p>
 <p>In management sciences, Likert scales are frequently used as response. The drawback of this approach, unless the response is the average of multiple questions, is that there will be ties and potentially zero differences <span class="math inline">\(D_j=0\)</span>. There are subtleties associated with testing, since the signed rank assumes that all differences are either positive or negative. The <code>coin</code> package in <strong>R</strong> deals correctly with such instances, but it is important to specify the treatment of such values.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
-<div class="example" name="Smartwatches and other distractions">
-<p>We consider a within-subject design from <span class="citation" data-cites="Brodeur:2021">Brodeur et al. (<a href="references.html#ref-Brodeur:2021" role="doc-biblioref">2021</a>)</span>, who conducted an experiment at Tech3Lab to check distraction while driving from different devices including smartwatches using a virtual reality environment. The authors wanted to investigate whether smartwatches were more distracting than cellphones while driving. Using a simulator, they ran a within-subject design where each participant was assigned to a distraction (phone, using a speaker, texting while driving or smartwatch) while using a driving simulator. The response is the number of road safety violations conducted on the segment. Each task was assigned in a random order. The data can be found in the <code>BRLS21_T3</code> dataset in package <code>hecedsm</code>.</p>
+<div id="exm-smartwatch" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.1 (Smartwatches and other distractions)</strong></span> We consider a within-subject design from <span class="citation" data-cites="Brodeur:2021">Brodeur et al. (<a href="#ref-Brodeur:2021" role="doc-biblioref">2021</a>)</span>, who conducted an experiment at Tech3Lab to check distraction while driving from different devices including smartwatches using a virtual reality environment. The authors wanted to investigate whether smartwatches were more distracting than cellphones while driving. Using a simulator, they ran a within-subject design where each participant was assigned to a distraction (phone, using a speaker, texting while driving or smartwatch) while using a driving simulator. The response is the number of road safety violations conducted on the segment. Each task was assigned in a random order. The data can be found in the <code>BRLS21_T3</code> dataset in package <code>hecedsm</code>.</p>
 <p>A quick inspection reveals that the data are balanced with four tasks and 31 individuals. We can view the within-subject design with a single replication as a complete block design (with <code>id</code> as block) and <code>task</code> as experimental manipulation. The data here are clearly far from normally distributed and there are notable outliers in the upper right tail. While conclusions probably wouldn’t be affected by using an analysis of variance to compare the average time per task, but it may be easier to convince reviewers that the findings are solid by ressorting to nonparametric procedures.</p>
 <p>Both the Friedman and the Quade tests are obtained by computing ranks within each block (participant) and then performing a two-way analysis of variance. The Friedman test is less powerful than Quade’s with a small number of groups. Both are applicable for block designs with a single factor.</p>
-<div class="cell" data-hash="12-nonparametric_cache/html/unnamed-chunk-4_cbf43939e0718d969aaacab8e7df32bc">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BRLS21_T3, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>friedman <span class="ot">&lt;-</span> coin<span class="sc">::</span><span class="fu">friedman_test</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  nviolation <span class="sc">~</span> task <span class="sc">|</span> id,</span>
@@ -306,26 +342,24 @@ div.csl-indent {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">blocks =</span> <span class="st">"id"</span>, </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> BRLS21_T3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The Friedman test is obtained by replacing observations by the rank within each block (so rather than the number of violations per task, we compute the rank among the four tasks). The Friedman’s test statistic is <span class="math inline">\(18.97\)</span> and is compared to a benchmark <span class="math inline">\(\chi^2_3\)</span> distribution, yielding a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(3\times 10^{-4}\)</span>.</p>
+<p>The Friedman test is obtained by replacing observations by the rank within each block (so rather than the number of violations per task, we compute the rank among the four tasks). The Friedman’s test statistic is <span class="math inline">\(18.97\)</span> and is compared to a benchmark <span class="math inline">\(\chi^2_3\)</span> distribution, yielding a <span class="math inline">\(p\)</span>-value of <span class="math inline">\(0\)</span>.</p>
 <p>We can also obtain effect sizes for the rank test, termed Kendall’s <span class="math inline">\(W\)</span>. A value of 1 indicates complete agreement in the ranking: here, this would occur if the ranking of the number of violations was the same for each participant. The estimated agreement (effect size) is <span class="math inline">\(0.2\)</span>.</p>
 <p>The test reveals significant differences in the number of road safety violations across tasks. We could therefore perform all pairwise differences using the signed-rank test and adjust <span class="math inline">\(p\)</span>-values to correct for the fact we have performed six hypothesis tests.</p>
 <p>To do this, we modify the data and map them to wide-format (each line corresponds to an individual). We can then feed the data to compute differences, here for <code>phone</code> vs <code>watch</code>. We could proceed likewise for the five other pairwise comparisons and then adjust <span class="math inline">\(p\)</span>-values.</p>
-<div class="cell" data-hash="12-nonparametric_cache/html/unnamed-chunk-5_a0e3cb25d61380164da262bfe661dc16">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>smartwatch <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> BRLS21_T3,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> task,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> nviolation)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">::</span><span class="fu">wilcoxsign_test</span>(phone <span class="sc">~</span> watch,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> smartwatch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Asymptotic Wilcoxon-Pratt Signed-Rank Test
-
-data:  y by x (pos, neg) 
-     stratified by block
-Z = 0.35399, p-value = 0.7233
-alternative hypothesis: true mu is not equal to 0</code></pre>
-</div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> smartwatch)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Asymptotic Wilcoxon-Pratt Signed-Rank Test</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  y by x (pos, neg) </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   stratified by block</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Z = 0.4, p-value = 0.7</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mu is not equal to 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can think of the test as performing a paired <span class="math inline">\(t\)</span>-test for the 31 signed ranks <span class="math inline">\(R_i =\mathsf{sign}(D_i) \mathsf{rank}(|D_i|)\)</span> and testing whether the mean is zero. The <span class="math inline">\(p\)</span>-value obtained by doing this after discarding zeros is <span class="math inline">\(0.73\)</span>, which is pretty much the same as the more complicated approximation.</p>
 </div>
@@ -334,31 +368,29 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <h2 data-number="12.2" class="anchored" data-anchor-id="wilcoxon-rank-sum-test-and-kruskalwallis-test"><span class="header-section-number">12.2</span> Wilcoxon rank sum test and Kruskal–Wallis test</h2>
 <p>These testing procedures are the nonparametric analog of the one-way analysis in a between-subject design. One could be interested in computing the differences between experimental conditions (pairwise) or overall if there are <span class="math inline">\(K \geq 2\)</span> experimental conditions. To this effect, we simply pool all observations, rank them and compare the average rank in each group. We can track what should be the repartition of data if there was no difference between groups (all ranks should be somehow uniformly distributed among the <span class="math inline">\(K\)</span> groups). If there are groups with larger averages than others, than this is evidence.</p>
 <p>In the two-sample case, we may also be interested in providing an estimator of the difference between condition. To this effect, we can compute the average of pairwise differences between observations of each pair of groups: those are called Walsh’s averages. The Hodges–Lehmann estimate of location is simply the median of Walsh’s averages and we can use the Walsh’s averages themselves to obtain a confidence interval.</p>
-<div class="example" name="Virtual communications">
-<p><span class="citation" data-cites="Brucks.Levav:2022">Brucks and Levav (<a href="references.html#ref-Brucks.Levav:2022" role="doc-biblioref">2022</a>)</span> measure the attention of participants based on condition using an eyetracker. We compare the time spend looking at the partner by experimental condition (face-to-face or videoconferencing). The authors used a Kruskal–Wallis test, but this is equivalent to Wilcoxon’s rank-sum test.</p>
-<div class="cell" data-hash="12-nonparametric_cache/html/unnamed-chunk-7_3c11a452d200db11bbe2529f8074c60a">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BL22_E, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mww <span class="ot">&lt;-</span> coin<span class="sc">::</span><span class="fu">wilcox_test</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  partner_time <span class="sc">~</span> cond, </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> BL22_E, </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>welch <span class="ot">&lt;-</span> <span class="fu">t.test</span>(partner_time <span class="sc">~</span> cond, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> BL22_E, </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>mww</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Asymptotic Wilcoxon-Mann-Whitney Test
-
-data:  partner_time by cond (f2f, video)
-Z = -6.4637, p-value = 1.022e-10
-alternative hypothesis: true mu is not equal to 0
-95 percent confidence interval:
- -50.694 -25.908
-sample estimates:
-difference in location 
-               -37.808 </code></pre>
-</div>
+<div id="exm-virtual-communications" class="theorem example">
+<p><span class="theorem-title"><strong>Example 12.2 (Virtual communications)</strong></span> <span class="citation" data-cites="Brucks.Levav:2022">Brucks and Levav (<a href="#ref-Brucks.Levav:2022" role="doc-biblioref">2022</a>)</span> measure the attention of participants based on condition using an eyetracker. We compare the time spend looking at the partner by experimental condition (face-to-face or videoconferencing). The authors used a Kruskal–Wallis test, but this is equivalent to Wilcoxon’s rank-sum test.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BL22_E, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mww <span class="ot">&lt;-</span> coin<span class="sc">::</span><span class="fu">wilcox_test</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  partner_time <span class="sc">~</span> cond, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> BL22_E, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>welch <span class="ot">&lt;-</span> <span class="fu">t.test</span>(partner_time <span class="sc">~</span> cond, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> BL22_E, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>mww</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Asymptotic Wilcoxon-Mann-Whitney Test</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  partner_time by cond (f2f, video)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Z = -6, p-value = 1e-10</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mu is not equal to 0</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -50.7 -25.9</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; difference in location </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  -37.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The output of the test includes, in addition to the <span class="math inline">\(p\)</span>-value for the null hypothesis that both median time are the same, a confidence interval for the time difference (in seconds). The Hodges–Lehmann estimate of location is <span class="math inline">\(-37.81\)</span> seconds, with a 95% confidence interval for the difference of <span class="math inline">\([-50.69, -25.91]\)</span> seconds.</p>
 <p>These can be compared with the usual Welch’s two-sample <span class="math inline">\(t\)</span>-test with unequal variance. The estimated mean difference is <span class="math inline">\(-39.69\)</span> seconds for face-to-face vs group video, with a 95% confidence interval of <span class="math inline">\([-52.93, -26.45]\)</span>.</p>
@@ -366,7 +398,7 @@ difference in location
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Brodeur:2021" class="csl-entry" role="listitem">
 Brodeur, Mathieu, Perrine Ruer, Pierre-Majorique Léger, and Sylvain Sénécal. 2021. <span>“Smartwatches Are More Distracting Than Mobile Phones While Driving: Results from an Experimental Study.”</span> <em>Accident Analysis &amp; Prevention</em> 149: 105846. <a href="https://doi.org/10.1016/j.aap.2020.105846">https://doi.org/10.1016/j.aap.2020.105846</a>.
 </div>
@@ -384,7 +416,7 @@ Pratt, John W. 1959. <span>“Remarks on Zeros and Ties in the <span>W</span>ilc
 <li id="fn1"><p>With one sample, we postulate a median <span class="math inline">\(\mu_0\)</span> and set <span class="math inline">\(D_i = Y_{i} - \mu_0\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>We could subtract likewise <span class="math inline">\(\mu_0\)</span> from the paired difference if we assume the distributions are <span class="math inline">\(\mu_0\)</span> units apart.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>When using ranks, we cannot talk about the mean of the distribution, but rather about quantiles.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>For example, are zero difference discarded prior to ranking, as suggested by Wilcoxon, or kept for the ranking and discarded after, as proposed by <span class="citation" data-cites="Pratt:1959">Pratt (<a href="references.html#ref-Pratt:1959" role="doc-biblioref">1959</a>)</span>? We also need to deal with ties, as the distribution of numbers changes with ties. If this seems complicated to you, well it is… so much that the default implementation in <strong>R</strong> is unreliable. <a href="https://www.stat.umn.edu/geyer/5601/examp/signrank.html">Charles Geyer</a> illustrate the problems with the <em>zero fudge</em>, but the point is quite technical. His notes make a clear case that you can’t trust default software, even if it’s been sitting around for a long time.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>For example, are zero difference discarded prior to ranking, as suggested by Wilcoxon, or kept for the ranking and discarded after, as proposed by <span class="citation" data-cites="Pratt:1959">Pratt (<a href="#ref-Pratt:1959" role="doc-biblioref">1959</a>)</span>? We also need to deal with ties, as the distribution of numbers changes with ties. If this seems complicated to you, well it is… so much that the default implementation in <strong>R</strong> is unreliable. <a href="https://www.stat.umn.edu/geyer/5601/examp/signrank.html">Charles Geyer</a> illustrate the problems with the <em>zero fudge</em>, but the point is quite technical. His notes make a clear case that you can’t trust default software, even if it’s been sitting around for a long time.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -468,10 +500,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -481,8 +530,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -494,7 +552,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -538,6 +719,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -563,6 +745,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -624,12 +832,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./11-causal-inference.html" class="pagination-link">
+      <a href="./11-causal-inference.html" class="pagination-link" aria-label="Causal inference">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
+      <a href="./references.html" class="pagination-link" aria-label="References">
         <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -638,4 +846,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/12-nonparametric.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

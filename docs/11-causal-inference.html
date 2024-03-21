@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.21">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 11&nbsp; Causal inference</title>
+<title>Experimental design and statistical methods – 11&nbsp; Causal inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,19 +116,44 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="site_libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="site_libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -132,12 +164,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11-causal-inference.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11-causal-inference.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -147,13 +179,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -251,7 +283,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -267,7 +299,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#moderation-and-interactions" id="toc-moderation-and-interactions" class="nav-link" data-scroll-target="#moderation-and-interactions"><span class="header-section-number">11.4</span> Moderation and interactions</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/11-causal-inference.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/11-causal-inference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -277,68 +309,84 @@ div.csl-indent {
 
 </header>
 
-<p>A pet peeve of statisticians is to state that correlation (or association) between two phenomena is not the same as causation. For example, weather forecasts of rain and the number of people carrying umbrellas in the streets are positively correlated, but the relationship is directed: if I intervene as an experimenter and force everyone around to carry umbrellas, it won’t impact weather forecasts nor the weather itself. The website <a href="https://tylervigen.com/spurious-correlations">Spurious correlations</a> by Tyler Vigen shows multiple graphs of absurd non-causal relations, many of which are simply artefact of population growth.</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-xkcd2569_2fe610b57e539254d77d66b3639842d4">
+
+<p>A pet peeve of statisticians is to state that correlation (or association) between two phenomena is not the same as causation. For example, weather forecasts of rain and the number of people carrying umbrellas in the streets are positively correlated, but the relationship is directed: if I intervene as an experimenter and force everyone around to carry umbrellas, it will impact neither weather forecasts nor the weather itself. The website <a href="https://tylervigen.com/spurious-correlations">Spurious correlations</a> by Tyler Vigen shows multiple graphs of absurd non-causal relations, many of which are simply artifact of population growth.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-xkcd2569" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/xkcd552_correlation.png" class="img-fluid figure-img" style="width:65.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.1: xkcd comic <a href="https://xkcd.com/552/">552 (Correlation) by Randall Munroe</a>. Alt text: Correlation doesn’t imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing ‘look over there’. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+<div id="fig-xkcd2569" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xkcd2569-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/xkcd552_correlation.png" class="img-fluid figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xkcd2569-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: xkcd comic <a href="https://xkcd.com/552/">552 (Correlation) by Randall Munroe</a>. Alt text: Correlation doesn’t imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing ‘look over there’. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Causal inference is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables. Such action may be conceptual: we can imagine for example looking at student’s success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as <strong>potential outcomes</strong>.</p>
-<p>The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span>. We focus on the hidden assumptions that can undermine causal claims of mediation.</p>
+<p><strong>Causal inference</strong> is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables. Such action may be conceptual: we can imagine for example looking at student’s success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as <strong>potential outcomes</strong>.</p>
+<p>The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span>. We focus on the hidden assumptions that can undermine causal claims in linear mediation models.</p>
 <section id="basics-of-causal-inference" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="basics-of-causal-inference"><span class="header-section-number">11.1</span> Basics of causal inference</h2>
-<p>In an experiment, we can manipulate assignment to treatment <span class="math inline">\(a\)</span> and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by <span class="math inline">\(Y\)</span>, then we are effectively comparing <span class="math inline">\((Y \mid X)\)</span> for different values of the action set <span class="math inline">\(X\)</span> (for example, <span class="math inline">\(X\)</span> could be an experimental factor. We talk about causation when for treatment (<span class="math inline">\(X=j\)</span>) and control (<span class="math inline">\(X=0\)</span>), the distributions of <span class="math inline">\((Y \mid X=j)\)</span> differs from that of <span class="math inline">\((Y \mid X=0)\)</span>. The fundamental problem of causal inference is that, while we would like to study the impact of every action on our response, we can only observe the outcome for treatment <span class="math inline">\(j\)</span>, written <span class="math inline">\((Y_i \mid X=j)\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>Rather than look at the individual treatment effect, we must focus on the population effects. The most common measure of causation is the <strong>average treatment effect</strong>, which is the difference between the population averages of treatment group <span class="math inline">\(j\)</span> and the control group, <span class="math display">\[\begin{align*}
+<p>In an experiment, we can manipulate assignment to treatment <span class="math inline">\(X\)</span> and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by <span class="math inline">\(Y\)</span>, then we are effectively comparing <span class="math inline">\((Y \mid X)\)</span> for different values of the experimental treatment set <span class="math inline">\(X\)</span> (more generally, these are referred to as action sets). We talk about causation when for treatment (<span class="math inline">\(X=j\)</span>) and control (<span class="math inline">\(X=0\)</span>), the distributions of <span class="math inline">\((Y \mid X=j)\)</span> differs from that of <span class="math inline">\((Y \mid X=0)\)</span>. The fundamental problem of causal inference is that, while we would like to study the impact of every action on our response, we can only observe the outcome for treatment <span class="math inline">\(j\)</span>, written <span class="math inline">\((Y_i \mid X=j)\)</span>, for a given individual.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Rather than look at the individual treatment effect difference, we must focus on the population effects. The most common measure of causation is the <strong>average treatment effect</strong>, which is the difference between the population averages of treatment group <span class="math inline">\(j\)</span> and the control group, <span class="math display">\[\begin{align*}
 \textsf{ATE}_j = \mathsf{E}(Y \mid X=j) - \mathsf{E}(Y \mid X=0)
-\end{align*}\]</span> In experimental designs, we can target the average treatment effect if our subjects comply with their treatment assignment and if we randomize the effect and use a random sample which is representative of the population.</p>
-<p>In many fields, the unconditional effect is not interesting enough to warrant publication free of other explanatory variables. It may be that the effect of the treatment is not the same for everyone: for example, a study on gender discrimination may reveal different perceptions depending on gender, in which case the average treatment effect might not be a sensible measure and we could look at conditional effects. We may also be interested in seeing how different mechanisms and pathways are impacted by treatment and how this affects the response. <span class="citation" data-cites="Vanderweele:2015">VanderWeele (<a href="references.html#ref-Vanderweele:2015" role="doc-biblioref">2015</a>)</span> provides an excellent non-technical overview of mediation and interaction.</p>
+\end{align*}\]</span> In experimental designs, we can target the average treatment effect if we randomize the effect <span class="math inline">\(X=j\)</span>, if our subjects comply with their treatment assignment, and more importantly if we use a random sample which is representative of the population.</p>
+<p>In many fields, the unconditional effect is not interesting enough to warrant publication free of other explanatory variables. It may be that the effect of the treatment is not the same for everyone and depends on some covariate <span class="math inline">\(Z\)</span>: for example, a study on gender discrimination may reveal different perceptions depending on gender <span class="math inline">\(Z\)</span>, in which case the average treatment effect might not be a sensible measure and we could look at conditional effects. We may also be interested in seeing how different mechanisms and pathways are impacted by treatment and how this affects the response. The conditional average treatment effect looks at the average difference <span class="math display">\[\begin{align*}
+\textsf{CATE}_j = \mathsf{E}(Y \mid X=j, Z = z) - \mathsf{E}(Y \mid X=0, Z = z)
+\end{align*}\]</span></p>
+<p><span class="citation" data-cites="Vanderweele:2015">VanderWeele (<a href="#ref-Vanderweele:2015" role="doc-biblioref">2015</a>)</span> provides an excellent non-technical overview of mediation and interaction.</p>
 <!--
 TODO: write about conditional average treatment effect (CATE) and local average treatment effect. Discuss noncompliance and potential selection effects (selection on colliders)
 -->
 <p>Causal inference requires a logical conceptual model of the interrelation between the variables. We will look at directed acyclic graphs to explain concepts of confounding, collision and mediation and how they can influence our conclusions.</p>
-<p>To illustrate the relationship between variables, we use diagrams consisting of directed acyclic graph (DAG). A DAG is a graph with no cycle: each node represents a variable of interest and these are linked with directed edges indicating the nature of the relation (if <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span>, then <span class="math inline">\(X \to Y\)</span>). Directed acyclic graphs are used to represent the data generating process that causes interdependencies, while abstracting from the statistical description of the model. This depiction of the conceptual model helps to formalize and identify the assumptions of the model. To identify a causal effect of a variable <span class="math inline">\(X\)</span> on some response <span class="math inline">\(Y\)</span>, we need to isolate the effect from that of other potential causes. <a href="#fig-daggity">Figure&nbsp;<span>11.2</span></a> shows an example of DAG in a real study; the latter is a simplification or abstraction of a world view, but is already rather complicated.</p>
+<p>To illustrate the relationship between variables, we use diagrams consisting of directed acyclic graph (DAG). A DAG is a graph with no cycle: each node represents a variable of interest and these are linked with directed edges indicating the nature of the relation (if <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span>, then <span class="math inline">\(X \to Y\)</span>). Directed acyclic graphs are used to represent the data generating process that causes interdependencies, while abstracting from the statistical description of the model. This depiction of the conceptual model helps to formalize and identify the assumptions of the model. To identify a causal effect of a variable <span class="math inline">\(X\)</span> on some response <span class="math inline">\(Y\)</span>, we need to isolate the effect from that of other potential causes. <a href="#fig-daggity" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-daggity</span></a> shows an example of DAG in a real study; the latter is a simplification or abstraction of a world view, but is already rather complicated.</p>
 <!--https://bookdown.org/mike/data_analysis/causal-inference.html-->
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-daggity_4d900ca596d06309231a097bc959dfa3">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-daggity" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/dagitty-model.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.2: Directed acyclic graph of <span class="citation" data-cites="McQuire:2020">McQuire et al. (<a href="references.html#ref-McQuire:2020" role="doc-biblioref">2020</a>)</span> reproduction by <a href="https://www.andrewheiss.com/">Andrew Heiss</a>, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</figcaption>
+<div id="fig-daggity" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-daggity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/dagitty-model.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daggity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2: Directed acyclic graph of <span class="citation" data-cites="McQuire:2020">McQuire et al. (<a href="#ref-McQuire:2020" role="doc-biblioref">2020</a>)</span> reproduction by <a href="https://www.andrewheiss.com/">Andrew Heiss</a>, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>At a theoretical level, the DAG will help identify which paths and relations to control through conditioning arguments to strip the relation to that of interest. Judea Pearl <span class="citation" data-cites="Pearl:2016">(e.g., <a href="references.html#ref-Pearl:2016" role="doc-biblioref">Pearl, Glymour, and Jewell 2016</a>)</span> identifies three potential relations between triples of (sets of) variables:</p>
+<p>At a theoretical level, the DAG will help identify which paths and relations to control through conditioning arguments to strip the relation to that of interest. Judea Pearl <span class="citation" data-cites="Pearl:2016">(e.g., <a href="#ref-Pearl:2016" role="doc-biblioref">Pearl, Glymour, and Jewell 2016</a>)</span> identifies three potential relations between triples of (sets of) variables:</p>
 <ul>
 <li>chains (<span class="math inline">\(X \to Z\to Y\)</span>),</li>
 <li>forks (<span class="math inline">\(Z \leftarrow X \rightarrow Y\)</span>) and</li>
 <li>reverse forks (<span class="math inline">\(Z \rightarrow X \leftarrow Y\)</span>).</li>
 </ul>
-<p>These are represented in <a href="#fig-causalrelations">Figure&nbsp;<span>11.3</span></a>. In the graph, <span class="math inline">\(X\)</span> represents an explanatory variable, typically the experimental factor, <span class="math inline">\(Y\)</span> is the response and <span class="math inline">\(Z\)</span> is another variable whose role depends on the logical flow between variables (collider, confounder or mediator).</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-causalrelations_9b0d24915df856bfa9fae449cd5e4a27">
+<p>These are represented in <a href="#fig-causalrelations" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-causalrelations</span></a>. In the graph, <span class="math inline">\(X\)</span> represents an explanatory variable, typically the experimental factor, <span class="math inline">\(Y\)</span> is the response and <span class="math inline">\(Z\)</span> is another variable whose role depends on the logical flow between variables (collider, confounder or mediator).</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-causalrelations" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/causal_dag_aheiss.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.3: Type of causal relations by Andrew Heiss, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</figcaption>
+<div id="fig-causalrelations" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-causalrelations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/causal_dag_aheiss.jpg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-causalrelations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.3: Type of causal relations by Andrew Heiss, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>In an experimental design, confounding effects from the experimental treatment <span class="math inline">\(X\)</span> to the response <span class="math inline">\(Y\)</span> are controlled by randomization or sample selection: all incoming arrows inside <span class="math inline">\(X\)</span> from other variables are removed. If we include additional variables in the model which happen to be colliders, then we won’t recover the causal effect of interest. Addition of mediators will let us filter the effect due to <span class="math inline">\(Z\)</span> from the direct effect of <span class="math inline">\(X\)</span>.</p>
 <p>It is <em>essential</em> to determine via logic or otherwise (experiments can help!) the direction of the relationship, lest we run into trouble. Many statistical models commonly used, including regression models, cannot provide an answer to a problem that is philosophical or conceptual in nature. Indeed, correlation is symmetric and insufficient to infer the direction of the arrows in the directed acyclic graph.</p>
-<p>The conclusions we will draw from statistical models depend on the nature of the relation. For example, in an observational setting, we could eliminate the effect of a confounding variable by controlling in a regression model or by stratifying for different values of the confounders in order to extract the causal estimate of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. However, the same strategy with a collider would backfire and we would get erroneous conclusions: <span class="citation" data-cites="Kowal:2021">Kowal (<a href="references.html#ref-Kowal:2021" role="doc-biblioref">2021</a>)</span> reportedly found out married couples with more children were less happy. As Richard McElreath hinted, controlling for marriage (through sample selection) is incorrect since unhappy couples tend to divorce, but families with many children are less likely to divorce!</p>
+<p>The conclusions we will draw from statistical models depend on the nature of the relation. For example, in an observational setting, we could eliminate the effect of a confounding variable by controlling in a regression model or by stratifying for different values of the confounders in order to extract the causal estimate of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. However, the same strategy with a collider would backfire and we would get erroneous conclusions: <span class="citation" data-cites="Kowal:2021">Kowal (<a href="#ref-Kowal:2021" role="doc-biblioref">2021</a>)</span> reportedly found out married couples with more children were less happy. As Richard McElreath hinted, controlling for marriage (through sample selection) is incorrect since unhappy couples tend to divorce, but families with many children are less likely to divorce!</p>
 <p>In a randomized experiment, we can check the average outcome of a manipulation by comparing groups: assuming random sampling, these conclusions can be broadly generalized to the population of interest from which the sample is drawn. However, it may be that the effect of the treatment depends on other variables: cultural differences, gender or education may change. In the statistical model, inclusion of interaction terms (typically product of the moderator variable with the factor encoding the experimental sub-condition) will allow us to estimate those differences.</p>
 </section>
 <section id="mediation" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="mediation"><span class="header-section-number">11.2</span> Mediation</h2>
 <p>In order to do inference and tests relations, we need to add to our logical causal model represented by a directed acyclic graph a data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won’t be verifiable.</p>
-<p>To define in full generality the treatment and mediation effect, we need to consider the potential outcome framework. Following <span class="citation" data-cites="Pearl:2014">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span>, we use <span class="math inline">\(Y_i(x, m)\)</span> to denote the potential outcome for individual <span class="math inline">\(i\)</span> with explanatory or experimental covariate/factor <span class="math inline">\(x\)</span> and mediator <span class="math inline">\(m\)</span>. Likewise, <span class="math inline">\(M_i(x)\)</span> is the potential mediator when applying treatment level <span class="math inline">\(x\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>To define in full generality the treatment and mediation effect, we need to consider the potential outcome framework. Following <span class="citation" data-cites="Pearl:2014">Pearl (<a href="#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span>, we use <span class="math inline">\(Y_i(x, m)\)</span> to denote the potential outcome for individual <span class="math inline">\(i\)</span> with explanatory or experimental covariate/factor <span class="math inline">\(x\)</span> and mediator <span class="math inline">\(m\)</span>. Likewise, <span class="math inline">\(M_i(x)\)</span> is the potential mediator when applying treatment level <span class="math inline">\(x\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>The <strong>total effect</strong> measures the overall impact of changes in outcome <span class="math inline">\(Y\)</span> (both through <span class="math inline">\(M\)</span> and directly) when experimentally manipulating <span class="math inline">\(X\)</span>, <span class="math display">\[\begin{align*}\mathsf{TE}(x, x^*) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x^*)],
 \end{align*}\]</span> where <span class="math inline">\(x^*\)</span> is the factor level of the reference or control and <span class="math inline">\(x\)</span> is another treatment value. This definition generalizes when <span class="math inline">\(X\)</span> is a continuous variable.</p>
 <p>The <strong>average controlled directed effect</strong> measures the flow along <span class="math inline">\(X \rightarrow Y\)</span>, disabling the pathway <span class="math inline">\(X \to M \to Y\)</span> by fixing the mediatior: it is <span class="math display">\[\begin{align*}
@@ -357,15 +405,19 @@ Y_i(x', m), M_i(x) \perp\mkern-10mu\perp X_i \mid W_i = w.
 \end{align*}\]</span> In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don’t change.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, mediation is independent of potential outcomes, <span class="math display">\[\begin{align*}
 Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, W_i = w
-\end{align*}\]</span> The set of assumptions from <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="Pearl:2014">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span> are equivalent under randomization of treatment assignment, as we consider thereafter.</p>
-<p>The total effect can be written <span class="math display">\[\mathsf{TE}(x, x^*) = \mathsf{NDE}(x, x^*) - \mathsf{NIE}(x^*, x).\]</span> In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as <span class="math inline">\(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)</span> <span class="citation" data-cites="Pearl:2014">(<a href="references.html#ref-Pearl:2014" role="doc-biblioref">Pearl 2014</a>)</span>.</p>
-<p>When measuring effects in psychology and marketing, it will often be the case that the conceptual causal model includes variables that cannot be directly measured. The proxy, as in <a href="#fig-xkcd2652">Figure&nbsp;<span>11.4</span></a>, add an additional layer of complexity and potential sources of confounding.</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-xkcd2652_02c1637c87296486afa4f10416eeb364">
+\end{align*}\]</span> The set of assumptions from <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="Pearl:2014">Pearl (<a href="#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span> are equivalent under randomization of treatment assignment, as we consider thereafter.</p>
+<p>The total effect can be written <span class="math display">\[\mathsf{TE}(x, x^*) = \mathsf{NDE}(x, x^*) - \mathsf{NIE}(x^*, x).\]</span> In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as <span class="math inline">\(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)</span> <span class="citation" data-cites="Pearl:2014">(<a href="#ref-Pearl:2014" role="doc-biblioref">Pearl 2014</a>)</span>.</p>
+<p>When measuring effects in psychology and marketing, it will often be the case that the conceptual causal model includes variables that cannot be directly measured. The proxy, as in <a href="#fig-xkcd2652" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-xkcd2652</span></a>, add an additional layer of complexity and potential sources of confounding.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-xkcd2652" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/xkcd2652_proxy_variable.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.4: xkcd comic <a href="https://xkcd.com/2652/">2652 (Proxy Variable) by Randall Munroe</a>. Alt text: Our work has produced great answers. Now someone just needs to figure out which questions they go with. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+<div id="fig-xkcd2652" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xkcd2652-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/xkcd2652_proxy_variable.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xkcd2652-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.4: xkcd comic <a href="https://xkcd.com/2652/">2652 (Proxy Variable) by Randall Munroe</a>. Alt text: Our work has produced great answers. Now someone just needs to figure out which questions they go with. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -373,7 +425,7 @@ Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, W_i = w
 </section>
 <section id="linear-mediation-model" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="linear-mediation-model"><span class="header-section-number">11.3</span> Linear mediation model</h2>
-<p>One of the most popular model in social sciences is the linear mediation model, popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> although the method predates this publication. Another inferential approach, suggested by <span class="citation" data-cites="Preacher.Hayes:2004">Preacher and Hayes (<a href="references.html#ref-Preacher.Hayes:2004" role="doc-biblioref">2004</a>)</span>, uses the same model with different test statistics and is extremely popular because it comes with software; Hayes’ <a href="https://www.processmacro.org/index.html">PROCESS macros for SAS, SPSS and <strong>R</strong></a> have lead to the widespread adoption by researchers. <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="references.html#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span> list limitations of the approach and provide examples of instances in which the model does not have a meaningful causal interpretation.</p>
+<p>One of the most popular model in social sciences is the linear mediation model, popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> although the method predates this publication. Another inferential approach, suggested by <span class="citation" data-cites="Preacher.Hayes:2004">Preacher and Hayes (<a href="#ref-Preacher.Hayes:2004" role="doc-biblioref">2004</a>)</span>, uses the same model with different test statistics and is extremely popular because it comes with software; Hayes’ <a href="https://www.processmacro.org/index.html">PROCESS macros for SAS, SPSS and <strong>R</strong></a> have lead to the widespread adoption by researchers. <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span> list limitations of the approach and provide examples of instances in which the model does not have a meaningful causal interpretation.</p>
 <p>The linear mediation model assumes that the effect of mediation and treatment is additive and that the response measurement is continuous. Consider covariates <span class="math inline">\(\mathbf{Z}\)</span>, experimental factor <span class="math inline">\(\mathbf{X}\)</span> corresponding to treatment and postulated mediator variable <span class="math inline">\(M\)</span>, assumed continuous. Given <strong>uncorrelated</strong> unobserved noise variables <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span>, we specify linear regression models, <span class="math display">\[\begin{align*}
 M \mid X=x &amp;= c_M + \alpha x + \varepsilon_M,\\
 Y \mid X=x, M=m &amp;=  c_Y + \beta x + \gamma m + \mathbf{z}^\top\boldsymbol{\omega} + \varepsilon_Y
@@ -382,77 +434,89 @@ Y \mid X=x, M=m &amp;=  c_Y + \beta x + \gamma m + \mathbf{z}^\top\boldsymbol{\o
 Y \mid X=x &amp;= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
 &amp;= c_Y' + \tau X + \varepsilon_Y'
 \end{align}\]</span> These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression (ordinary least squares).</p>
-<p>The sequential ignorability in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization, as shown in <a href="#fig-dag1">Figure&nbsp;<span>11.6</span></a>. This means <span class="math inline">\(\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y\)</span> must be independent and, as a result, error terms should also be uncorrelated.</p>
-<p>In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients <span class="math inline">\(\alpha\gamma\)</span>. Absence of mediation implies the product is zero. <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> recommended using Sobel’s test statistic, a Wald-test of the form <span class="math display">\[\begin{align*}
+<p>The sequential ignorability in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-dag1</span></a>. This means <span class="math inline">\(\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y\)</span> must be independent and, as a result, error terms should also be uncorrelated.</p>
+<p>In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients <span class="math inline">\(\alpha\gamma\)</span>. Absence of mediation implies the product is zero. <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> recommended using Sobel’s test statistic, a Wald-test of the form <span class="math display">\[\begin{align*}
 S  = \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} =  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} \stackrel{\cdot}{\sim}\mathsf{No}(0,1)
 \end{align*}\]</span> where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math inline">\(\widehat{\gamma}\)</span> and their variance <span class="math inline">\(\mathsf{Va}(\widehat{\alpha})\)</span> and <span class="math inline">\(\mathsf{Va}(\widehat{\gamma})\)</span> can be obtained from the estimated coefficients and standard errors.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The Sobel’s statistic <span class="math inline">\(S\)</span> is approximately standard normal in large samples, but the approximation is sometimes crude.</p>
 <p>In the linear mediation causal model, we can estimate the total causal effect of <span class="math inline">\(X\)</span>, labelled <span class="math inline">\(\tau\)</span>, by running the linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> as there is no confounding affecting treatment <span class="math inline">\(X\)</span> in a completely randomized experimental design. This strategy isn’t valid with observational data unless we adjust for confounders. Under no unmeasured confounders and linearity, the product <span class="math inline">\(\alpha\gamma\)</span> is also equal to the difference between the total effect and the <strong>natural direct effect</strong>, <span class="math inline">\(\tau - \beta\)</span>.</p>
-<p><span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> suggested for <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> continuous breaking down the task in three separate steps:</p>
+<p><span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> suggested for <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> continuous breaking down the task in three separate steps:</p>
 <ol type="1">
 <li>fit a linear regression of <span class="math inline">\(M\)</span> on <span class="math inline">\(X\)</span> to estimate <span class="math inline">\(\alpha\)</span></li>
 <li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> to estimate <span class="math inline">\(\tau\)</span></li>
 <li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> to estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>.</li>
 </ol>
-<p>In the “<span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> approach”, we test <span class="math inline">\(\mathscr{H}_0: \alpha=0\)</span>, <span class="math inline">\(\mathscr{H}_0: \tau=0\)</span> and <span class="math inline">\(\mathscr{H}_0: \gamma=0\)</span> against the two-sided alternative. This approach has caveats since mediation refers to the relation <span class="math inline">\(X \to M \to Y\)</span>, so we only need to consider (joint tests of) <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> (the total effect could be zero because <span class="math inline">\(\beta = -\alpha\gamma\)</span> even if there is mediation). <span class="citation" data-cites="Zhao.Lynch.Chen:2010">Zhao, Lynch, and Chen (<a href="references.html#ref-Zhao.Lynch.Chen:2010" role="doc-biblioref">2010</a>)</span> review the typology of mediation.</p>
+<p>In the “<span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> approach”, we test <span class="math inline">\(\mathscr{H}_0: \alpha=0\)</span>, <span class="math inline">\(\mathscr{H}_0: \tau=0\)</span> and <span class="math inline">\(\mathscr{H}_0: \gamma=0\)</span> against the two-sided alternative. This approach has caveats since mediation refers to the relation <span class="math inline">\(X \to M \to Y\)</span>, so we only need to consider (joint tests of) <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> (the total effect could be zero because <span class="math inline">\(\beta = -\alpha\gamma\)</span> even if there is mediation). <span class="citation" data-cites="Zhao.Lynch.Chen:2010">Zhao, Lynch, and Chen (<a href="#ref-Zhao.Lynch.Chen:2010" role="doc-biblioref">2010</a>)</span> review the typology of mediation.</p>
 <ol type="1">
 <li>complementary mediation when both direct and indirect effects are of the same sign and non-zero.</li>
 <li>competitive mediation when direct and indirect effects are of opposite signs.</li>
 <li>indirect-only mediation when the direct effect of <span class="math inline">\(X \to Y\)</span> is null, but the effect <span class="math inline">\(X \to M \to Y\)</span> isn’t.</li>
 </ol>
-<p>Previous definitions popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> still found in old papers include “full mediation” for instances where <span class="math inline">\(\beta=0\)</span> and partial mediation if the direct effect is less than the total effect, meaning <span class="math inline">\(\beta &lt; \tau\)</span>.</p>
+<p>Previous definitions popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> still found in old papers include “full mediation” for instances where <span class="math inline">\(\beta=0\)</span> and partial mediation if the direct effect is less than the total effect, meaning <span class="math inline">\(\beta &lt; \tau\)</span>.</p>
 <p>To see this, let’s generate data with a binary treatment and normally distributed mediators and response with no confounding (so the data generating process matches exactly the formulation fo Baron–Kenny. We set <span class="math inline">\(\alpha=2\)</span>, <span class="math inline">\(\beta = 1/2\)</span> and <span class="math inline">\(\gamma=0\)</span>. This is an instance where the null is true (<span class="math inline">\(X\)</span> affects both <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>).</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-sobelsimu_2c7929c79f0de278b10268aabd4b7ad0">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-sobelsimu" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="11-causal-inference_files/figure-html/fig-sobelsimu-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.5: Null distribution of Sobel’s statistic against approximate asymptotic normal distribution with 20 observations <span class="math inline">\(\alpha=0\)</span>, <span class="math inline">\(\gamma=0.1\)</span> and normal random errors.</figcaption>
+<div id="fig-sobelsimu" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sobelsimu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-causal-inference_files/figure-html/fig-sobelsimu-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sobelsimu-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.5: Null distribution of Sobel’s statistic against approximate asymptotic normal distribution with 20 observations <span class="math inline">\(\alpha=0\)</span>, <span class="math inline">\(\gamma=0.1\)</span> and normal random errors.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>If we knew exactly the model that generated <span class="math inline">\(X\)</span>, <span class="math inline">\(M\)</span>, <span class="math inline">\(Y\)</span> and the relations between them, we could simulate multiple datasets like in <a href="#fig-sobelsimu">Figure&nbsp;<span>11.5</span></a> with <span class="math inline">\(n=20\)</span> observations and compare the test statistic we obtained with the simulation-based null distribution with <span class="math inline">\(\alpha\gamma=0\)</span>. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. An alternative is the bootstrap, a form of simulation-based inference. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See <span class="citation" data-cites="Efron.Tibshirani:1993">Efron and Tibshirani (<a href="references.html#ref-Efron.Tibshirani:1993" role="doc-biblioref">1993</a>)</span> and <span class="citation" data-cites="Davison.Hinkley:1997">Davison and Hinkley (<a href="references.html#ref-Davison.Hinkley:1997" role="doc-biblioref">1997</a>)</span> for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by <span class="citation" data-cites="Preacher.Hayes:2004">Preacher and Hayes (<a href="references.html#ref-Preacher.Hayes:2004" role="doc-biblioref">2004</a>)</span> consists in repeating the following <span class="math inline">\(B\)</span> times:</p>
+<p>If we knew exactly the model that generated <span class="math inline">\(X\)</span>, <span class="math inline">\(M\)</span>, <span class="math inline">\(Y\)</span> and the relations between them, we could simulate multiple datasets like in <a href="#fig-sobelsimu" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-sobelsimu</span></a> with <span class="math inline">\(n=20\)</span> observations and compare the test statistic we obtained with the simulation-based null distribution with <span class="math inline">\(\alpha\gamma=0\)</span>. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. An alternative is the bootstrap, a form of simulation-based inference. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See <span class="citation" data-cites="Efron.Tibshirani:1993">Efron and Tibshirani (<a href="#ref-Efron.Tibshirani:1993" role="doc-biblioref">1993</a>)</span> and <span class="citation" data-cites="Davison.Hinkley:1997">Davison and Hinkley (<a href="#ref-Davison.Hinkley:1997" role="doc-biblioref">1997</a>)</span> for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by <span class="citation" data-cites="Preacher.Hayes:2004">Preacher and Hayes (<a href="#ref-Preacher.Hayes:2004" role="doc-biblioref">2004</a>)</span> consists in repeating the following <span class="math inline">\(B\)</span> times:</p>
 <ol type="1">
 <li>sample <span class="math inline">\(n\)</span> observations <strong>with replacement</strong>, i.e., a tuple (<span class="math inline">\(X_i, M_i, Y_i)\)</span>, from the original data .</li>
 <li>compute the natural indirect effect <span class="math inline">\(\widehat{\alpha}\cdot\widehat{\gamma}\)</span> on each simulated sample</li>
 </ol>
 <p>For a two-sided test at level <span class="math inline">\(\alpha\)</span>, compute the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap statistics <span class="math inline">\(\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B\)</span>. For example, if the level is <span class="math inline">\(\alpha=5\)</span>% and we generate <span class="math inline">\(B=1000\)</span> bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.</p>
 <p>Nowadays, the asymptotic approximation (sometimes misnamed delta method<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/bootstrap_8166a88e973dcbec1f9fb2b627b0e871">
+<div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="11-causal-inference_files/figure-html/bootstrap-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines).</figcaption>
+<figcaption>Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines).</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The nonparametric percentile bootstrap confidence interval for <span class="math inline">\(\alpha\gamma\)</span> is [-0.08, 1.71] and thus we fail to reject the null hypothesis <span class="math inline">\(\mathscr{H}_0: \alpha \gamma=0\)</span>.</p>
-<p>The inference scheme is popular, but we could also rely on different models and use the definitions of the causal effects to perform simulation-based inference; see Appendix D of <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span>. The latter fit two models for the mediator and the outcome, then estimate parameters. In large samples, the parameter estimators are approximately multivariate Gaussian and we can simulate parameters, use the parametric model to generate new data and potential outcomes. The average causal mediation effect can be estimated empirically based on the simulated potential outcomes.</p>
+<p>The inference scheme is popular, but we could also rely on different models and use the definitions of the causal effects to perform simulation-based inference; see Appendix D of <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="#ref-Imai:2010" role="doc-biblioref">2010</a>)</span>. The latter fit two models for the mediator and the outcome, then estimate parameters. In large samples, the parameter estimators are approximately multivariate Gaussian and we can simulate parameters, use the parametric model to generate new data and potential outcomes. The average causal mediation effect can be estimated empirically based on the simulated potential outcomes.</p>
 <section id="model-assumptions" class="level3" data-number="11.3.1">
 <h3 data-number="11.3.1" class="anchored" data-anchor-id="model-assumptions"><span class="header-section-number">11.3.1</span> Model assumptions</h3>
 <p>We can unpack the model assumptions for the linear mediation model.</p>
 <ol type="1">
-<li>The <em>no unmeasured confounders</em> assumption. Plainly stated, there are no unobserved confounders and thus the error terms <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> are independent. Additionally, when we consider observational data, we must make sure there is hidden confounders affecting either the <span class="math inline">\(M \to X\)</span> and the <span class="math inline">\(X \to Y\)</span> relation, as shown in <a href="#fig-dag1">Figure&nbsp;<span>11.6</span></a>. We can include covariates in the regression models to palliate to this, but we must only include the minimal set of confounders (and no additional mediator or collider chain).</li>
+<li>The <em>no unmeasured confounders</em> assumption. Plainly stated, there are no unobserved confounders and thus the error terms <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> are independent. Additionally, when we consider observational data, we must make sure there is hidden confounders affecting either the <span class="math inline">\(M \to X\)</span> and the <span class="math inline">\(X \to Y\)</span> relation, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-dag1</span></a>. We can include covariates in the regression models to palliate to this, but we must only include the minimal set of confounders (and no additional mediator or collider chain).</li>
 </ol>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-dag1_2cb9f76b203b4aea38a0c3f4384aef3f">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-dag1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/dag1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.6: Directed acyclic graph representing observational settings (left) and experimental settings in which assignment is random given covariates measured pre-treatments (right). The ‘no unmeasured confounder’ assumption postulates such confounders are included (with the correct parametric form) in the regression models.</figcaption>
+<div id="fig-dag1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/dag1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.6: Directed acyclic graph representing observational settings (left) and experimental settings in which assignment is random given covariates measured pre-treatments (right). The ‘no unmeasured confounder’ assumption postulates such confounders are included (with the correct parametric form) in the regression models.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Another problem would be to claim that variable <span class="math inline">\(M\)</span> is a mediator when in truth part of the effect on the outcome is due to change in another mediator. <a href="#fig-dag2">Figure&nbsp;<span>11.7</span></a> shows an instance with no confounding, but multiple mediators, say <span class="math inline">\(M_1\)</span> and <span class="math inline">\(M_2\)</span>: the latter mediates the relation <span class="math inline">\(M_1 \to Y\)</span>. The linear mediation model would capture the total effect of <span class="math inline">\(M_1\)</span>, but it would be incorrect to claim that the mediation effect on <span class="math inline">\(X\)</span> is due to <span class="math inline">\(M_1\)</span>.</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-dag2_4901eb6130c36263e3b00f147505d876">
+<p>Another problem would be to claim that variable <span class="math inline">\(M\)</span> is a mediator when in truth part of the effect on the outcome is due to change in another mediator. <a href="#fig-dag2" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-dag2</span></a> shows an instance with no confounding, but multiple mediators, say <span class="math inline">\(M_1\)</span> and <span class="math inline">\(M_2\)</span>: the latter mediates the relation <span class="math inline">\(M_1 \to Y\)</span>. The linear mediation model would capture the total effect of <span class="math inline">\(M_1\)</span>, but it would be incorrect to claim that the mediation effect on <span class="math inline">\(X\)</span> is due to <span class="math inline">\(M_1\)</span>.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-dag2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/dag2.png" class="img-fluid figure-img" style="width:40.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.7: Directed acyclic graph showing multiple mediators.</figcaption>
+<div id="fig-dag2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dag2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/dag2.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.7: Directed acyclic graph showing multiple mediators.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -461,117 +525,107 @@ S  = \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\wi
 <li>The <strong>linearity assumption</strong> implies that the linear models are correctly specified and that the effect of the covariates are linear. This means that, <em>ceteris paribus</em>, the effect of an increase of one unit of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> is the same regardless of the value of <span class="math inline">\(M\)</span>. It also doesn’t depend on the level of other variables (no interaction). If the model isn’t properly specified, the linear model coefficients will capture the best linear predictor given the design and the coefficients may not be meaningful.</li>
 </ol>
 <p>The linearity assumption also implies that the effect is the same for every individual, so there is no treatment heterogeneity or measurement error which could lead to attenuation bias.</p>
-<p>Following <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="references.html#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span>, we index the regression equations by individual <span class="math inline">\(i\)</span> <span class="math display">\[\begin{align*}
+<p>Following <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span>, we index the regression equations by individual <span class="math inline">\(i\)</span> <span class="math display">\[\begin{align*}
 M_i\mid X_i=x &amp;= c_M + \alpha_i x + \varepsilon_{Mi},\\
 Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\boldsymbol{\omega} + \varepsilon_{Yi}
 \end{align*}\]</span> If <span class="math inline">\(\alpha_i\)</span> differ from one observation to the next, the average estimated by the regression could be positive, negative or null. Even in the latter case, we could have <span class="math inline">\(\gamma_i\)</span> and <span class="math inline">\(\alpha_i\)</span> positive for some observation, or both negatives so that they cancel out even if there is complementary mediation.</p>
-<p>We could easily expand the model to include nonlinear effects (not for the treatment or mediator) and potential interactions, but the linear model approach will be limited. <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> details a more general approach for parametric models based on simulations, as well as a nonparametric approach. Both are less restrictive than the <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> model.</p>
+<p>We could easily expand the model to include nonlinear effects (not for the treatment or mediator) and potential interactions, but the linear model approach will be limited. <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> details a more general approach for parametric models based on simulations, as well as a nonparametric approach. Both are less restrictive than the <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> model.</p>
 <p>The main benefit of experimental designs is that it deconfounds the relation between treatment and other variables, but adding spurious variables could create feedback and lead to inconsistent conclusions. It’s not clear that the mediator can be manipulated experimentally, and even if it could be to estimate the <span class="math inline">\(\gamma\)</span>, one must make sure the relation is the same absent of <span class="math inline">\(X\)</span>. For example, we could estimate the indirect effect term by manipulating jointly (if possible) (<span class="math inline">\(X, M\)</span>) but even then the linearity assumption must hold for the estimates to correspond to our linear causal mediation model.</p>
 </section>
 <section id="example" class="level3" data-number="11.3.2">
 <h3 data-number="11.3.2" class="anchored" data-anchor-id="example"><span class="header-section-number">11.3.2</span> Example</h3>
-<p>Study 2 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
-<p>The experimental variable is the consistency of the product description and depiction, with <code>fluency</code> leading to “processing disfluency” that is expected to impact negatively judgment ratings. Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span>).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
-<div class="cell" data-hash="11-causal-inference_cache/html/unnamed-chunk-10_5ce36e2dbea61bb5b611636a9820ee61">
+<p>Study 2 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
+<p>The experimental variable is the consistency of the product description and depiction, with <code>fluency</code> leading to “processing disfluency” that is expected to impact negatively judgment ratings. Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span>).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LC19_S2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>YsMX <span class="ot">&lt;-</span> <span class="fu">lm</span>(prodeval <span class="sc">~</span> fluency <span class="sc">+</span> consistency <span class="sc">+</span> familiarity,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>MsX <span class="ot">&lt;-</span> <span class="fu">lm</span>(fluency <span class="sc">~</span> consistency <span class="sc">+</span> familiarity,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div>
+<div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 methods overwritten by 'broom':
   method            from  
   tidy.glht         jtools
   tidy.summary.glht jtools</code></pre>
 </div>
-<div id="tbl-coefsmediation" class="cell tbl-parent quarto-layout-panel anchored" data-hash="11-causal-inference_cache/html/tbl-coefsmediation_3df82344700e0193ae36832efdbc7b63">
-<div class="panel-caption table-caption">
-<p>Coefficients of the mediation (left) and outcome (right) models.</p>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<table class="kable_wrapper table table-sm table-striped small" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
+<div id="tbl-coefsmediation" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coefsmediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.1: Coefficients of the mediation (left) and outcome (right) models.
+</figcaption>
+<div aria-describedby="tbl-coefsmediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="kable_wrapper">
 <tbody>
-<tr class="odd">
-<td style="text-align: left;"><table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<tr>
+<td>
+<table class="do-not-create-environment cell table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">std.error</th>
+<th style="text-align: left;">x</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">5.23</td>
-<td style="text-align: right;">0.27</td>
+<td style="text-align: left;">|term | estimate| std.error|</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">consistency</td>
-<td style="text-align: right;">0.48</td>
-<td style="text-align: right;">0.24</td>
+<td style="text-align: left;">|:———–|——–:|———:|</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">familiarity</td>
-<td style="text-align: right;">0.08</td>
-<td style="text-align: right;">0.06</td>
+<td style="text-align: left;">|(Intercept) | 5.23| 0.27|</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">|consistency | 0.48| 0.24|</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">|familiarity | 0.08| 0.06|</td>
 </tr>
 </tbody>
-</table></td>
-<td style="text-align: left;"><table data-quarto-postprocess="true" class="table table-sm table-striped small">
+</table>
+</td>
+<td>
+<table class="do-not-create-environment cell table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">std.error</th>
+<th style="text-align: left;">x</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">3.04</td>
-<td style="text-align: right;">0.53</td>
+<td style="text-align: left;">|term | estimate| std.error|</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">fluency</td>
-<td style="text-align: right;">0.60</td>
-<td style="text-align: right;">0.09</td>
+<td style="text-align: left;">|:———–|——–:|———:|</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">consistency</td>
-<td style="text-align: right;">0.29</td>
-<td style="text-align: right;">0.22</td>
+<td style="text-align: left;">|(Intercept) | 3.04| 0.53|</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">familiarity</td>
-<td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.05</td>
+<td style="text-align: left;">|fluency | 0.60| 0.09|</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">|consistency | 0.29| 0.22|</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">|familiarity | 0.09| 0.05|</td>
 </tr>
 </tbody>
-</table></td>
+</table>
+</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-
-
-</div>
-</div>
+</figure>
 </div>
 </div>
 <p>We can extract the effects directly from the outcome: the natural indirect effect estimate is <span class="math inline">\(\widehat{\alpha}\widehat{\gamma} = 0.48 \times 0.60\)</span> and the direct effect is <span class="math inline">\(\widehat{\beta} = 0.29\)</span>.</p>
-<p>To get confidence intervals, we can use the <code>mediate</code> package <span class="citation" data-cites="mediationR">(<a href="references.html#ref-mediationR" role="doc-biblioref">Tingley et al. 2014</a>)</span>. The function requires the parametric model for the mediation and outcome, as well as a series of specification (the number of bootstrap samples, the type of confidence interval, the names of the levels for categorical treatment, etc.)</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/unnamed-chunk-12_aab85a4d05ae63aaf9968b3e7b385b9a">
+<p>To get confidence intervals, we can use the <code>mediate</code> package <span class="citation" data-cites="mediationR">(<a href="#ref-mediationR" role="doc-biblioref">Tingley et al. 2014</a>)</span>. The function requires the parametric model for the mediation and outcome, as well as a series of specification (the number of bootstrap samples, the type of confidence interval, the names of the levels for categorical treatment, etc.)</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mediation, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>linmed <span class="ot">&lt;-</span> <span class="fu">mediate</span>(</span>
@@ -579,17 +633,22 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\b
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.y =</span> YsMX,</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat =</span> <span class="st">"consistency"</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediator =</span> <span class="st">"fluency"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sims =</span> 5000L,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sims =</span> <span class="dv">5000</span>L,</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.ci.type =</span> <span class="st">"bca"</span>, <span class="co"># bias-corrected and accelerated (bca)</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">control.value =</span> <span class="st">"inconsistent"</span>,</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat.value =</span> <span class="st">"consistent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="11-causal-inference_cache/html/tbl-mediation_6eec5cdda7cee467a5eeb694ee9ae73d">
+<div class="cell">
+<div id="tbl-mediation" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.2: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% confidence intervals and p-values with the percentile method based on 5000 bootstrap samples.
+</figcaption>
+<div aria-describedby="tbl-mediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-mediation" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;11.1: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% confidence intervals and p-values with the percentile method based on 5000 bootstrap samples.</caption>
+<div>
+<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -630,9 +689,12 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\b
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</div>
+</figure>
 </div>
 </div>
 <p>Using the <code>summary</code> method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article.</p>
@@ -644,21 +706,26 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\b
 <p>In a blocking design, covariates are included that have an impact on the outcome to filter out variability, but with the assumption that they do not influence the effect of treatment. With moderators, we include the interaction.</p>
 <p>If we have an experimental factor <span class="math inline">\(X\)</span> which is binary or categorical, the resulting model is a simple analysis of variance model and we can test the significance of the interaction term to assess the moderating effect of <span class="math inline">\(W\)</span>.</p>
 <p>If <span class="math inline">\(W\)</span> is a mean-centered continuous variable and <span class="math inline">\(X\)</span> a categorical variable with <span class="math inline">\(k=1, \ldots, K\)</span> levels using the sum-to-zero parametrization, the linear model <span class="math display">\[\mathsf{E}\{Y \mid \mathsf{do}(X) = k, W\} = \mu + \alpha_k + (\beta + \gamma_k)W + \varepsilon,\]</span> includes different slopes for <span class="math inline">\(W\)</span> in each experimental group, as well as different intercepts (<span class="math inline">\(\mu + \alpha_k\)</span>) for group <span class="math inline">\(k\)</span>.</p>
-<p>As an example, we consider <span class="citation" data-cites="Garcia:2010">Garcia et al. (<a href="references.html#ref-Garcia:2010" role="doc-biblioref">2010</a>)</span>. These data are from a study on gender discrimination. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).</p>
+<p>As an example, we consider <span class="citation" data-cites="Garcia:2010">Garcia et al. (<a href="#ref-Garcia:2010" role="doc-biblioref">2010</a>)</span>. These data are from a study on gender discrimination. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).</p>
 <p>The postulated mediator variable is <code>sexism</code>, the average of 6 Likert scales for the Modern Sexism Scale assessing pervasiveness of gender discrimination. We consider participants’ evaluation of the appropriateness of the response of the fictional character.</p>
 <p>We fit the linear model with the interaction and display the observed slopes</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/unnamed-chunk-14_f08c7b3ffee65f8a86c2a56fc9140d25">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(GSBE10, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lin_moder <span class="ot">&lt;-</span> <span class="fu">lm</span>(respeval <span class="sc">~</span> protest<span class="sc">*</span>sexism, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> GSBE10)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin_moder) <span class="co"># coefficients</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(lin_moder, <span class="at">type =</span> <span class="dv">3</span>) <span class="co"># tests</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="11-causal-inference_cache/html/tbl-testsmoder_08b4c915cc2146c8a715b004a987f589">
+<div class="cell">
+<div id="tbl-testsmoder" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-testsmoder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.3: Analysis of variance table for the linear moderation model.
+</figcaption>
+<div aria-describedby="tbl-testsmoder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-testsmoder" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;11.2: Analysis of variance table for the linear moderation model.</caption>
+<div>
+<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
@@ -699,20 +766,27 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\b
 </tr>
 </tbody>
 </table>
-</div>
 
 
 </div>
 </div>
-<div class="cell" data-hash="11-causal-inference_cache/html/unnamed-chunk-16_b3324147a8ae159f45686a93719ffb73">
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="11-causal-inference_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" style="width:80.0%"></p>
+<div>
+<figure class="figure">
+<p><img src="11-causal-inference_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Because of the interaction, comparing the levels of the experimental factor only makes sense if we fix the value of sexism (since the slopes are not parallel) and won’t necessarily be reliable outside of the range of observed values of sexism. We could look at quantiles and differences at the mean sexism,<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> or one standard deviation away.</p>
-<p>We may be interested in the range of values of the predictor <span class="math inline">\(W\)</span> for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson–Neyman method <span class="citation" data-cites="Johnson.Neyman:1936">(<a href="references.html#ref-Johnson.Neyman:1936" role="doc-biblioref">Johnson and Neyman 1936</a>)</span> considers this range, but this leads to multiple testing problems since we probe the model repeatedly. <span class="citation" data-cites="Esarey.Sumner:2018">Esarey and Sumner (<a href="references.html#ref-Esarey.Sumner:2018" role="doc-biblioref">2018</a>)</span> offer a method that provides control for the false discovery rate.</p>
+<p>We may be interested in the range of values of the predictor <span class="math inline">\(W\)</span> for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson–Neyman method <span class="citation" data-cites="Johnson.Neyman:1936">(<a href="#ref-Johnson.Neyman:1936" role="doc-biblioref">Johnson and Neyman 1936</a>)</span> considers this range, but this leads to multiple testing problems since we probe the model repeatedly. <span class="citation" data-cites="Esarey.Sumner:2018">Esarey and Sumner (<a href="#ref-Esarey.Sumner:2018" role="doc-biblioref">2018</a>)</span> offer a method that provides control for the false discovery rate.</p>
 <p>To illustrate the method, we dichotomize the manipulation pooling individual and collective protests, since these are the most similar.</p>
-<div class="cell" data-hash="11-causal-inference_cache/html/fig-jn_e8b45b687b5915f0f70980578c4a3892">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> GSBE10 <span class="sc">|&gt;</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
@@ -726,10 +800,14 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\b
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod.range =</span> <span class="fu">range</span>(db<span class="sc">$</span>sexism)) </span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>jn<span class="sc">$</span>plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-jn" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="11-causal-inference_files/figure-html/fig-jn-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11.8: Johnson–Neyman plot for difference between protest and no protest as a function of sexism.</figcaption>
+<div id="fig-jn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-jn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-causal-inference_files/figure-html/fig-jn-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.8: Johnson–Neyman plot for difference between protest and no protest as a function of sexism.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -737,7 +815,7 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\b
 <p>The cutoff value is 4.20 with control for the false discovery rate and 4.15 without. The interval is not extended beyond the range of value for sexism, as these are not possible given the Likert scale (which starts at 1). In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation models could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation. Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Baron.Kenny:1986" class="csl-entry" role="listitem">
 Baron, R. M., and D. A. Kenny. 1986. <span>“The Moderator-Mediator Variable Distinction in Social Psychological Research: Conceptual, Strategic, and Statistical Considerations.”</span> <em>Journal of Personality and Social Psychology</em> 51 (6): 1173–82. <a href="https://doi.org/10.1037/0022-3514.51.6.1173">https://doi.org/10.1037/0022-3514.51.6.1173</a>.
 </div>
@@ -884,10 +962,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -897,8 +992,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -910,7 +1014,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -954,6 +1181,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -979,6 +1207,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1040,12 +1294,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./10-mixed.html" class="pagination-link">
+      <a href="./10-mixed.html" class="pagination-link" aria-label="Introduction to mixed models">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./12-nonparametric.html" class="pagination-link">
+      <a href="./12-nonparametric.html" class="pagination-link" aria-label="Nonparametric tests">
         <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1054,4 +1308,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/11-causal-inference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

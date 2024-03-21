@@ -7,19 +7,66 @@
 #| message: false
 ```
 
-The previous chapter dealt with factorial experiments in which all experimental factors are of interest. In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. These are instances of **blocking factors**: variables that impact the measurements's variability, but that are not of direct interest. By filtering their effect out and looking at the residual variability that is unexplained by the blocking factors. Block designs reduce the error term, at the cost of including and estimating additional parameters (group average or slope). 
 
-We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors.^[We can always check for this assumption.] Thus, we will be interested mostly in marginal effects.
 
-A related design includes a continuous covariate to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn't necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called **analysis of covariance**, an instance of a linear model.
-
+The previous chapter dealt with factorial experiments in which all experimental factors are of interest. It is possible to use measurements concomitant to the data collection (for example, value to a test before we complete the group assignment for the manipulation) to get a measure of the relative strength of students. The more correlated these measures are with the response, the more we can explain the data. We then proceed with the random assignment of our experimental units to different conditions. 
 
 Including blocking factor or covariates should in principle increase power and our ability to detect real differences due to experimental manipulations, provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn't be used to assign treatment.
+
+## Blocking factors
+
+ In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. 
+These are instances of **blocking factors**: variables that impact the measurement variability, but that are not of direct interest. By filtering their effect out and looking at the residual variability that is unexplained by the blocking factors. Block designs reduce the error term, at the cost of including and estimating additional parameters (group averages). Experimental units are typically assigned to blocking factor using stratified sampling to ensure comparisons can be made.
+
+We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors.^[We can always check for this assumption.] Thus, we will be interested mostly in main effects of the experimental factors.
+
+:::{#exm-reachingout}
+
+## The surprise of reaching out: paired data as blocking factors
+
+We consider paired data from Study 3 of @Liu.Rim.Min.Min:2023, who looked at the appreciation of people reaching out to them in a unsolicited manner. The data includes the appreciation score of both responder and initiator, along with sociodemographic variables (age and gender).
+
+While a paired $t$-test is the natural (and arguably simplest way) to compare the difference in appreciation scores, we reformat the data to long format (one response per line), with a categorical variable `role` indicating the role of the participant and `dyad`, a dummy number indicating which participants belong to which pair. We then fit an analysis of variance model to the scores with both `dyad` and `role`. The $F$-tests for the main effects indicate that the dyads (66 additional parameters, since there are 67 pairs) filter out significant part of the variability. If we consider estimated marginal means and look at the $p$-value and the pairwise difference between initiator and respondent, we find exactly the same statistic, degrees of freedom and $p$-value for the pairwise difference as the paired $t$-test.
+
+
+```{r}
+#| echo: true
+#| eval: true
+data(LRMM23_S3, package = "hecedsm")
+# Paired t-tests
+with(LRMM23_S3, t.test(apprec_init, apprec_resp, paired = TRUE))
+# Cast data to long format - one response/participant per line
+LRMM23_S3l <- LRMM23_S3 |>
+  dplyr::mutate(dyad = factor(dplyr::row_number())) |> 
+  tidyr::pivot_longer(
+    cols = !dyad, 
+    names_to = c(".value", "role"),
+    names_sep = "\\_")
+# Format of the data
+head(LRMM23_S3l)
+# Treat dyad as a factor and fit two-way ANOVA model
+mod <- lm(apprec ~ role + dyad, data = LRMM23_S3l)
+# Global tests of main effects (balanced data)
+anova(mod) # There seems to be significant variability filtered out by 'id'
+# Compute pairwise difference for main effect of 'role'
+emmeans::emmeans(mod, spec = "role") |>
+  emmeans::contrast("pairwise")
+
+```
+
+
+:::
+
+
+
 
 
 ## Analysis of covariance {#ancova}
 
-In an analysis of covariance, we include a linear component for a (continuous) covariate, with the purpose again to reduce residual error. A prime example is prior/post experiment measurements, whereby we monitor the change in outcome due to the manipulation.
+
+A related design includes a continuous covariate to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn't necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called **analysis of covariance**, although as analysis of variance models, they are nothing but linear regression models.
+
+In an analysis of covariance, we include a linear component for a (continuous) covariate, with the purpose again to reduce residual error and increase power. A prime example is prior/post experiment measurements, whereby we monitor the change in outcome due to the manipulation. This post by Solomon Kurz [[link]](https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/) nicely illustrates the added benefits of using covariates when there is strong correlation between your response and the latter
 
 In such setting, it may seem logical to take the difference in post and prior score as response: this is showcased in @exm-vanStek and @Baumann:1992, an analysis of which is presented on [the course website](https://edsm.rbind.io/example/06-ancova/). 
 
@@ -118,7 +165,9 @@ g3 + g4 +
 
 We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.
 
-::: {.example #leechoi name="Inconsistency of product description and image in online retailing"}
+::: {#exm-leechoi}
+
+## Inconsistency of product description and image in online retailing
 
 @Lee.Choi:2019 measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.
 

@@ -11,10 +11,9 @@ Many experiments can have binary outcomes: aggregating these results by factor l
 
 
 
+:::{#exm-racial-chisq}
 
-Pearson's goodness of fit examines discrepancies
-
-:::{ .example}
+## Racial discrimination in hiring
 
 We consider a  study from @Bertrand.Mullainathain:2004, who study racial discrimination in hiring based on the consonance of applicants names; a similar example was recently featured in selection at the [M.Sc. level from *Ondes*](https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf). The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.
 

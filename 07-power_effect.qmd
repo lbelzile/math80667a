@@ -11,7 +11,7 @@ In social studies, it is common to write a paper containing multiple studies on 
 
 We may also wish replicate a study by using the same material and re-run an experiment. For the replication to be somewhat successful (or at least reliable), one needs to determine beforehand how many participants should be recruited in the study. 
 
-We could think for an example of comparing statistics or $p$-values, which are by construction standardized unitless measures, making them comparable across study. Test statistics show how outlying observed differences between experimental conditions relative to a null hypothesis, typically that of no effect (equal mean in each subgroup). However, statistics are usually a function of both the sample size (the number of observations in each experimental condition) and the effect size (how large the standardized differences between groups are), making them unsuitable for describing differences.
+We could think for an example of comparing statistics or $p$-values, which are by construction standardized unit less measures, making them comparable across study. Test statistics show how outlying observed differences between experimental conditions relative to a null hypothesis, typically that of no effect (equal mean in each subgroup). However, statistics are usually a function of both the sample size (the number of observations in each experimental condition) and the effect size (how large the standardized differences between groups are), making them unsuitable for describing differences.
 
 
 
@@ -78,7 +78,7 @@ p1 + p2 + plot_layout(guides = 'collect') & theme(legend.position = 'bottom')
 ```
 
 
- @fig-effectsize shows an example with the sampling distributions of the difference in mean under the null (curve centered at zero) and the true alternative (mean difference of two).  The area in white under the curve represents the power, which is larger with larger sample size and coincides with smaller average $p$-values for the testing procedure. 
+@fig-effectsize shows an example with the sampling distributions of the difference in mean under the null (curve centered at zero) and the true alternative (mean difference of two).  The area in white under the curve represents the power, which is larger with larger sample size and coincides with smaller average $p$-values for the testing procedure. 
  
  One could argue that, on the surface, every null hypothesis is wrong and that, with a sufficiently large number of observation, all observed differences eventually become "statistically significant". This has to do with the fact that we become more and more certain of the estimated means of each experimental sub-condition. Statistical significance of a testing procedure does not translate into practical relevance, which itself depends on the scientific question at hand.
 For example, consider the development of a new drug for commercialization by Health Canada: what is the minimum difference between two treatments that would be large enough to justify commercialization of the new drug? If the effect is small but it leads to many lives saved, would it still be relevant? Such decision involve a trade-off between efficacy of new treatment relative to the status quo, the cost of the drug, the magnitude of the improvement, etc.
@@ -107,8 +107,9 @@ There are different estimators of $d$ depending on whether or not the pooled var
 For these different estimators, it is possible to obtain (asymmetric) confidence intervals or tolerance intervals.^[By using the pivot method, e.g.,  @Steiger:2004, and relating the effect size to the noncentrality parameter of the null distribution, whether $\mathsf{St}$, $\mathsf{F}$ or $\chi^2$.]
 
 
-::: {.example #LiuRimMinMin2023E1effect name="The Surprise of Reaching Out"}
+::: {#exm-LiuRimMinMin2023E1effect}
 
+## Effect sizes for "The Surprise of Reaching Out"
 
 ```{r}
 #| eval: true
@@ -173,6 +174,49 @@ Unfortunately, $\widehat{R}{}^2$ is an upward biased estimator (too large on ave
 $$\widehat{\omega}^2 = \frac{\nu_1 (F-1)}{\nu_1(F-1)+n}.$$
 Since the $F$ statistic is approximately 1 on average, this measure removes the mode. Both $\widehat{\omega}^2$ and $\widehat{\epsilon}^2$ have been reported to be less biased and thus preferable as estimators of the true proportion of variance [@Lakens:2013].
 
+:::{#exm-calculation-effect-anova}
+
+## Computing effect size for a between-subject one-way ANOVA
+
+Consider the one-way analysis of variance model for the "Degrees of Reading Power" cloze test, from @Baumann:1992. The response records the number of correctly answered items, ranging from 0 to 56. 
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+data(BSJ92, package = "hecedsm")
+# Fit ANOVA model
+mod_post <- lm(posttest3 ~ group, data = BSJ92)
+# Extract in data frame format the ANOVA table
+anova_table <- broom::tidy(anova(mod_post))
+Fstat <- anova_table$statistic[1]
+dfs <- anova_table$df
+# Output estimated value of eta-squared
+(eta_sq <- Fstat * dfs[1] / (Fstat * dfs[1] + dfs[2]))
+# Compare with coefficient of determination from regression
+summary(mod_post)$r.squared
+# Compare with output from R package 'effectsize'
+effectsize::eta_squared(mod_post)$Eta2
+# Compare with omega-squared value - the latter is smaller
+(omega_sq <- pmax(0, dfs[1]*(Fstat-1)/ (dfs[1]*(Fstat-1) + nobs(mod_post))))
+effectsize::omega_squared(mod_post)$Omega2
+```
+We can also compute effect size for contrasts. Since these take individuall the form of $t$-tests, we can use `emmeans` to obtain corresponding effect sizes, which are Cohen's $d$.
+
+```{r}
+#| eval: true
+#| echo: true
+emmeans::emmeans(mod_post, specs = "group") |> 
+  emmeans::contrast(list(C1 = c(-1, 0.5, 0.5), 
+                         C2 = c(0, 1, -1))) |>
+# Specify estimated std. deviation of data and degrees of freedom 
+  emmeans::eff_size(sigma = sigma(mod_post), edf = dfs[2])
+```
+
+:::
+
+
 ### Partial effects and variance decomposition
 
 In a multiway design with several factors, we may want to estimate the effect of separate factors or interactions. In such cases, we can break down the variability explained by manipulations per effect. The effect size for such models are build by comparing the variance explained by the effect $\sigma^2_{\text{effect}}$. 
@@ -191,10 +235,83 @@ Lastly, it is customary to report effect sizes that include the variability of b
 
 For example, if $A$ is the experimental factor whose main effect is of interest, $B$ is a blocking factor and $C$ is another experimental factor, use
 $$\eta_{\langle A \rangle}^2 = \frac{\sigma^2_A}{\sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}}.$$
-as generalized partial effect. In **R**, most effect sizes for variance proportion have a `generalized` argument to which the vector of names of blocking factor can be passed. The reason for including blocking factors and random effects is that they would not necessarily be available in a replication. 
+as generalized partial effect.  The reason for including blocking factors and random effects is that they would not necessarily be available in a replication. 
 The correct effect size measure to calculate and to report depends on the design, and there are numerous estimators that can be utilized. Since they are related to one another, it is oftentimes possible to compute them directly from the output or convert. The formula highlight the importance of reporting (with enough precision) exactly the values of the test statistic.
 
+:::{#exm-blocking}
 
+In **R**, the `effectsize` package functions, which are displayed prominently in this chapter, have a `generalized` argument to which the vector of names of blocking factor can be passed. We use the one-way analysis of variance from @exm-reachingout for illustrating the calculation. Once again, the output matches the output of the package.
+
+```{r}
+#| eval: true
+#| echo: false
+data(LRMM23_S3, package = "hecedsm")
+LRMM23_S3l <- LRMM23_S3 |>
+  dplyr::mutate(dyad = factor(dplyr::row_number())) |> 
+  tidyr::pivot_longer(
+    cols = !dyad, 
+    names_to = c(".value", "role"),
+    names_sep = "\\_")
+```
+
+```{r}
+#| eval: true
+#| echo: true
+mod_block <- lm(apprec ~ role + dyad, data = LRMM23_S3l)
+anova_tab <- broom::tidy(anova(mod_block))
+# Compute the generalized effect size - variance are estimated
+# based on sum of squared termes in the ANOVA table
+with(anova_tab, sumsq[1]/sum(sumsq))
+# We can use the 'effectsize' package, specifying the blocking factor
+# through argument 'generalized'
+eff <- effectsize::eta_squared(model = mod_block, generalized = "dyad")
+# Extract the generalized eta-squared effect size for 'role' for comparison
+eff$Eta2_generalized[1]
+```
+
+
+
+:::
+
+
+:::{.callout-caution}
+
+Measures of effect size are estimated based on data, but unlike summary statistics such as the mean and variance, tend to be very noisy in small samples and the uncertainty remains significant for larger samples. To show this, I simulated datasets for a two sample $t$-test: there is no effect for the control group, but the true effect for the treatment group is $d=0.2$. With balanced data ($n/2$ observations in each group) power is maximised. @fig-effectsizedispersion shows the estimated sample size for $B=100$ replications of the experiment at samples of size $n=10, 12, \ldots, 250$. The horizontal lines at $0$ represent no effect: the proportion of values which show effects that are of opposite sign to the truth is still significant at $n=250$ observations, and the variability seems to decrease very slowly. For smaller samples, the effect sizes are erratic and, although they are centered at the true value, most of them are severely inflated.
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| cache: true
+#| label: fig-effectsizedispersion
+#| fig-cap: "Dispersion of estimated effect size for data with a true mean dispersion of $d=0.2$, for different sample size."
+n <- seq(10, 250, by = 2)
+B <- 100L
+results <- matrix(nrow = B, ncol = length(n))
+for(i in seq_along(n)){
+  for(b in seq_len(B)){
+  set.seed((i-1)*B + b)
+   results[b,i] <- effectsize::cohens_d(rnorm(n[i]/2), rnorm(n[i]/2, 0.2))$Cohens_d
+  }
+}
+colnames(results) <- paste0("n_", n)
+df_effects <- data.frame(results) |> 
+  tidyr::pivot_longer(
+    cols = tidyr::everything(),
+    names_to = "n", 
+    names_prefix = "n_",
+    values_to = "effectsize") |>
+  dplyr::mutate(n = as.integer(n))
+ggplot(data = df_effects,
+       aes(y = -effectsize, x = n)) +
+  geom_point() +
+  geom_hline(yintercept = c(0,0.2), col = c(2,"white")) + 
+  labs(y = "Cohen's d", x = "sample size") +
+  theme_minimal()
+```
+
+
+:::
 
 ## Power
 
@@ -472,13 +589,138 @@ pf(q = cutoff,  df1 = df1, df2 = df2,
     ncp = Delta, lower.tail = FALSE)
 ```
 
+### Power calculations
+
+
 In practice, a software will return these quantities and inform us about the power. Note that these results are trustworthy provided the model assumptions are met, otherwise they may be misleading.
 
-The most difficult question when trying to estimate sample size for a study is determining which value to use for the effect size. One could opt for a value reported elsewhere for a similar scale to estimate the variability and provide educated guesses for the mean differences. Another option is to run a pilot study and use the resulting estimates to inform about sensible values, perhaps using confidence intervals to see the range of plausible effect sizes.
+The most difficult question when trying to estimate sample size for a study is determining which value to use for the effect size. One could opt for a value reported elsewhere for a similar scale to estimate the variability and provide educated guesses for the mean differences. Another option is to run a pilot study and use the resulting estimates to inform about sensible values, perhaps using confidence intervals to see the range of plausible effect sizes. Keep in mind the findings from @fig-effectsizedispersion.
 
 Reliance on estimated effect sizes reported in the literature is debatable: many such effects are inflated as a result of the file-drawer problem and, as such, can lead to unreasonably high expectations about power. 
 
-The `WebPower` package in **R** offers a comprehensive solution for conducting power studies, as is the free software [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower).
+The `WebPower` package in **R** offers a comprehensive solution for conducting power studies, as does the free software [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). We present a range of examples from a replication study: the following quotes are taken from the [Reproducibility Project: Psychology](https://osf.io/ezcuj/).
+
+:::{#exm-poweranova1}
+
+## Power calculation for between subject ANOVA
+
+The following extract of [Jesse Chandler's replication](https://osf.io/sd4uv/) concerns Study 4b by @Janiszewski.Uy:2008, which considers a $2 \times 2$ between-subject ANOVA.
+
+> In Study 4a there are two effects of theoretical interest, a substantial main effect of anchor precision that replicates the first three studies and a small interaction (between precision and motivation within which people can adjust) that is not central to the paper. The main effect of anchor precision (effect size  $\eta^2_p=0.55$) would require a sample size of $10$ for $80$% power, $12$ for $90$% power, and $14$ for $95$% power. The interaction (effect size $\eta^2_p=0.11$) would require a sample size of $65$ for $80$% power, $87$ for $90$% power, and $107$ for $95$% power. There was also a theoretically uninteresting main effect of motivation (people adjust more when told to adjust more). 
+
+In order to replicate, we must first convert estimates of $\eta^2_p$ to Cohen's $f$, which is the input accepted by both `WebPower` and G*Power. We compute the sample size for power 95% for both the main effect and the interaction: in practice, we would pick the smaller of the two (or equivalently the larger resulting sample size estimate) should we wish to replicate both findings. 
+
+```{r}
+#| eval: true
+#| echo: true
+f <- effectsize::eta2_to_f(0.55) # convert eta-squared to Cohen's f
+ng <- 4 # number of groups for the ANOVA
+ceiling(WebPower::wp.kanova(ndf = 1, ng = ng, f = f, power = 0.95)$n)
+f <- effectsize::eta2_to_f(0.11)
+ceiling(WebPower::wp.kanova(ndf = 1, ng = ng, f = f, power = 0.95)$n)
+```
+
+We can see that the numbers match the calculations from the replication (up to rounding).
+
+:::
+
+:::{#exm-power-within}
+
+## Power calculation for mixed design
+
+Repeated measures ANOVA have different characteristics from between-subject design in that measurements are correlated, and we can also provide correction for sphericity. These additional parameters need to specified by users. In `WebPower`, the `wp.rmanova` function. We need to specify the number of measurements per person, the number of groups, the value $\epsilon$ for the sphericity correction, e.g., the output of Greenhouse--Geisser or Huynh--Feldt and the type of effect for between-subject factor, within-subject factor or an interaction between the two.
+
+> The result that is object of this replication is the interaction between item strength (massed vs. spaced presentation) and condition (directed forgetting vs. control). The dependent variable is the proportion of correctly remembered items from the stimulus set (List 1). "(..) The interaction was significant, $F(1,94)=4.97$, $p <.05$, $\mathrm{MSE} =0.029$, $\eta^2=0.05$, (...)". (p. 412). Power analysis (G*Power (Version 3.1): ANOVA: Repeated measures, within-between interaction with a zero correlation between the repeated measures) indicated that sample sizes for $80$%, $90$% and $95$% power were respectively $78$, $102$ and $126$.
+
+We are thus considering a $2 \times 2$ within-between design. The estimated effect size is $\widehat{\eta}^2_p=0.05$, with Cohen's $f$, where the value is multiplied by a constant $C$; [see the WebPower page](https://webpower.psychstat.org/wiki/manual/power_of_rmanova) which depends on the number of groups, the number of repeated measurements $K$ and their correlation $\rho$. For the interaction, the correction factor is $C = \sqrt{K/(1-\rho)}$: taking $K=2$ and $\rho=0$, we get a Cohen's $f$ of `r round(effectsize::eta2_to_f(0.05), 2)`. We calculate the sample size for a power of 90% changing $\rho$: if we change the correlation in the calculation from zero to $0.5$, we can see that there is a significant decrease in the sample size.
+
+```{r}
+#| eval: true
+#| echo: true
+f <- effectsize::eta2_to_f(0.05) # convert eta-squared to Cohen's f
+rho <- 0 # correlation between measurements
+K <- 2L # number of repeated measurements
+round(WebPower::wp.rmanova(type = 2, # interaction 
+                           nm = K, # number of measurement per subject
+                           ng = 2, # number of groups for between,
+                           f = f*sqrt(K/(1-rho)), # scaled effect size
+                           power = 0.9)$n) # requested power
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: '100%'
+#| fig-cap: "Screenshot of G*Power for the calculation of the sample size to replicate the interaction in a repeated measures (within-between) analysis of variance."
+#| label: fig-Gpower
+knitr::include_graphics("figures/GPower.png")
+```
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-rmanova
+#| fig-align: 'center'
+#| fig-cap: "Sample size requirement for a within-between interaction in a two by two (within-between) ANOVa with an effect size of $\\widehat{\\eta}^2_p = 0.05$ as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer."
+rho_seq <- seq(-0.5, 0.9, by = 0.01)
+samp90 <- sapply(rho_seq, function(rho){
+round(WebPower::wp.rmanova(type = 2, # interaction 
+                           nm = K, # number of measurement per subject
+                           ng = 2, # number of groups for between,
+                           f = f*sqrt(K/(1-rho)), # scaled effect size
+                           power = 0.9)$n)}) 
+samp80 <- sapply(rho_seq, function(rho){
+round(WebPower::wp.rmanova(type = 2, # interaction 
+                           nm = K, # number of measurement per subject
+                           ng = 2, # number of groups for between,
+                           f = f*sqrt(K/(1-rho)), # scaled effect size
+                           power = 0.8)$n)}) 
+samp95 <- sapply(rho_seq, function(rho){
+round(WebPower::wp.rmanova(type = 2, # interaction 
+                           nm = K, # number of measurement per subject
+                           ng = 2, # number of groups for between,
+                           f = f*sqrt(K/(1-rho)), # scaled effect size
+                           power = 0.95)$n)}) 
+ggplot(data = data.frame(rho = rho_seq, n80 = samp80, n90 = samp90, n95 = samp95) |>
+         tidyr::pivot_longer(cols = !rho, 
+                             names_prefix = "n",
+                             names_to = "power",
+                             values_to = "n"),
+       aes(x = rho, y = n, col = power)) +
+  geom_line() +
+  scale_y_continuous(limits = c(0, max(samp95) + 1),
+                     expand = c(0,0)) + 
+  labs(x = "correlation between measurements",
+       y = "sample size",
+       color = "power (%)") +
+  scale_color_viridis_d() +
+  theme_classic()
+```
+We can see that the more correlated the response, the smaller sample size requirement according to @fig-rmanova. Higher power requirement leads to larger data collection efforts.
+
+:::
+
+:::{#exm-power-ttest}
+
+## Power calculation for a two sample $t$-test
+
+We consider a two-sample comparison, as these arise frequently from contrasts. The replication wishes to replicate a study whose estimated effect size was a Cohen's $d$ of $\widehat{d} = 0.451$. Using a two-tailed test with a balanced sample and $\alpha = 0.05$ type I error rate, we obtain $258$ participants. Note that some software, as below, report the sample size by group so the total sample size is twice the number reported.
+
+
+```{r}
+#| eval: true
+#| echo: true
+2*ceiling(WebPower::wp.t(
+  type = "two.sample",
+  alternative = "two.sided",
+  d = 0.451, # Cohen's f
+  power = 0.95)$n) # power requirement
+```
+
+The function also allows us to figure out the effect size one could obtain for given power and fixed sample size, by replacing `d` with the latter via arguments `n1` and `n2`.
+
+:::
 
 ### Power in complex designs
 

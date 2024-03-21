@@ -27,7 +27,7 @@ The scientific question of interest that warranted the experiment may lead to a 
 
 
 Formally speaking, a contrast is a linear combination of averages: in plain English, this means we assign a weight to each group average and add them up, and then compare that summary to a postulated value $a$, typically zero. 
-Contrasts encode research question of interest: if $c_i$ denotes the weight of group average $\mu_i$ $(i=1, \ldots, K)$, then we can write the contrast as $C = c_1 \mu_1 + \cdots + c_K \mu_K$ with the null hypothesis $\mathscr{H}_0: C=a$ for a two-sided alternative. The sample estimate of the linear contrast is obtained by replacing the unknown population average $\mu_i$ by the sample average of that group, $\widehat{\mu}_i = \overline{y}_{i}$. We can easily obtain the standard error of the linear combination $C$.^[Should you ever need the formula, the standard error assuming subsample size of $n_1, \ldots, n_K$ and a common variance $\sigma^2$ is $\sqrt{\mathsf{Va}(\widehat{C})}$, where $$\mathsf{Va}(\widehat{C}) = \widehat{\sigma}^2\left(\frac{c_1^2}{n_1} + \cdots + \frac{c_K^2}{n_K}\right).$$] We can then build a $t$ statistic as usual by looking at the difference between our postulated value and the observed weighted mean, suitably standardized. If the global $F$-test leads to rejection of the null, there exists a contrast which is significant at the same level.
+Contrasts encode research question of interest: if $c_i$ denotes the weight of group average $\mu_i$ $(i=1, \ldots, K)$, then we can write the contrast as $C = c_1 \mu_1 + \cdots + c_K \mu_K$ with the null hypothesis $\mathscr{H}_0: C=a$ for a two-sided alternative. The sample estimate of the linear contrast is obtained by replacing the unknown population average $\mu_i$ by the sample average of that group, $\widehat{\mu}_i = \overline{y}_{i}$. We can easily obtain the standard error of the linear combination $C.$^[Should you ever need the formula, the standard error assuming subsample size of $n_1, \ldots, n_K$ and a common variance $\sigma^2$ is $\sqrt{\mathsf{Va}(\widehat{C})}$, where $$\mathsf{Va}(\widehat{C}) = \widehat{\sigma}^2\left(\frac{c_1^2}{n_1} + \cdots + \frac{c_K^2}{n_K}\right).$$] We can then build a $t$ statistic as usual by looking at the difference between our postulated value and the observed weighted mean, suitably standardized. If the global $F$-test leads to rejection of the null, there exists a contrast which is significant at the same level.
 
 
 ### Orthogonal contrasts
@@ -38,7 +38,9 @@ If we have $K$ groups, there are $K-1$ contrasts for pairwise differences, the l
 
 
 
-:::{ .example name="Contrasts for encouragement on teaching"}
+:::{#exm-contrast-teaching}
+
+## Contrasts for encouragement on teaching
 
 The `arithmetic` data example considered five different treatment groups with 9 individuals in each. Two of them were control groups, one received praise, another was reproved and the last was ignored.
 

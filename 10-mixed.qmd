@@ -50,7 +50,9 @@ We say to factors are nested ($A$ within $B$) when one can only coexist within t
 
 The next step will be in determining whether we have enough observations to support the inclusion of a random term. In a pure within-subject design, we could not include an interaction between subject and the within-factor unless we have multiple replications for each subject, as is the case here. We can therefore include both subject identifier and experimental factor, as well as their interaction. Note that in `lme4` package, the random effects are specified inside parenthesis.
 
-:::{ .example name="Happy fakes, remixed"}
+:::{#exm-happy-fakes-revisited}
+
+## Happy fakes, remixed
 
 We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly.
 
@@ -104,7 +106,10 @@ The global $F$ test of significance for stimulus is based on an approximation; t
 
 :::
 
-:::{ .example name="Verbalization and memorization"}
+:::{#exm-verbalization-memorization}
+
+## Verbalization and memorization
+
 We consider a replication study of @Elliot:2021,
 which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The replication was performed in 17 different school labs, adapting a protocol of @Flavell:1966, with an overall sample of 977 child partaking in the experiment.
 

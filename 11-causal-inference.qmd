@@ -7,7 +7,7 @@
 #| message: false
 ```
 
- A pet peeve of statisticians is to state that correlation (or association) between two phenomena is not the same as causation. For example, weather forecasts of rain and the number of people carrying umbrellas in the streets are positively correlated, but the relationship is directed: if I intervene as an experimenter and force everyone around to carry umbrellas, it won't impact weather forecasts nor the weather itself. The website [Spurious correlations](https://tylervigen.com/spurious-correlations) by Tyler Vigen shows multiple graphs of absurd non-causal relations, many of which are simply artefact of population growth.
+A pet peeve of statisticians is to state that correlation (or association) between two phenomena is not the same as causation. For example, weather forecasts of rain and the number of people carrying umbrellas in the streets are positively correlated, but the relationship is directed: if I intervene as an experimenter and force everyone around to carry umbrellas, it will impact neither weather forecasts nor the weather itself. The website [Spurious correlations](https://tylervigen.com/spurious-correlations) by Tyler Vigen shows multiple graphs of absurd non-causal relations, many of which are simply artifact of population growth.
 
 ```{r}
 #| label: fig-xkcd2569
@@ -20,22 +20,28 @@ knitr::include_graphics("figures/xkcd552_correlation.png")
 ```
 
 
-Causal inference is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables.  Such action may be conceptual: we can imagine for example looking at student's success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as **potential outcomes**. 
+**Causal inference** is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables.  Such action may be conceptual: we can imagine for example looking at student's success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as **potential outcomes**. 
 
 
-The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by @Baron.Kenny:1986. We focus on the hidden assumptions that can undermine causal claims of mediation.
+The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by @Baron.Kenny:1986. We focus on the hidden assumptions that can undermine causal claims in linear mediation models.
 
 ## Basics of causal inference
 
-In an experiment, we can manipulate assignment to treatment $a$ and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid X)$ for different values of the action set $X$ (for example, $X$ could be an experimental factor. We talk about causation when for treatment ($X=j$) and control ($X=0$), the distributions of $(Y \mid X=j)$ differs from that of $(Y \mid X=0)$. The fundamental problem of causal inference is that, while we would like to study the impact of every action on our response, we can only observe the outcome for treatment $j$, written $(Y_i \mid X=j)$.^[In a within-subject design, the analog is that a single ordering can be presented.] 
+In an experiment, we can manipulate assignment to treatment $X$ and randomize units to each value of the treatment to avoid undue effects from other variables. The potential outcomes applies in between-subject design because experimental units are assigned to a single treatment, whereas in within-subject designs a single ordering is presented. If we denote the outcome by $Y$, then we are effectively comparing $(Y \mid X)$ for different values of the experimental treatment set $X$ (more generally, these are referred to as action sets). We talk about causation when for treatment ($X=j$) and control ($X=0$), the distributions of $(Y \mid X=j)$ differs from that of $(Y \mid X=0)$. The fundamental problem of causal inference is that, while we would like to study the impact of every action on our response, we can only observe the outcome for treatment $j$, written $(Y_i \mid X=j)$, for a given individual.^[In a within-subject design, the analog is that a single ordering can be presented.] 
 
-Rather than look at the individual treatment effect, we must focus on the population effects. The most common measure of causation is the **average treatment effect**, which is the difference between the population averages of treatment group $j$ and the control group,
+
+Rather than look at the individual treatment effect difference, we must focus on the population effects. The most common measure of causation is the **average treatment effect**, which is the difference between the population averages of treatment group $j$ and the control group,
 \begin{align*}
 \textsf{ATE}_j = \mathsf{E}(Y \mid X=j) - \mathsf{E}(Y \mid X=0)
 \end{align*}
-In experimental designs, we can target the average treatment effect if our subjects comply with their treatment assignment and if we randomize the effect and use a random sample which is representative of the population.
+In experimental designs, we can target the average treatment effect  if we randomize the effect $X=j$, if our subjects comply with their treatment assignment, and more importantly if we use a random sample which is representative of the population.
 
-In many fields, the unconditional effect is not interesting enough to warrant publication free of other explanatory variables. It may be that the effect of the treatment is not the same for everyone: for example, a study on gender discrimination may reveal different perceptions depending on gender, in which case the average treatment effect might not be a sensible measure and we could look at conditional effects. We may also be interested in seeing how different mechanisms and pathways are impacted by treatment and how this affects the response. @Vanderweele:2015 provides an excellent non-technical overview of mediation and interaction.
+In many fields, the unconditional effect is not interesting enough to warrant publication free of other explanatory variables. It may be that the effect of the treatment is not the same for everyone and depends on some covariate $Z$: for example, a study on gender discrimination may reveal different perceptions depending on gender $Z$, in which case the average treatment effect might not be a sensible measure and we could look at conditional effects. We may also be interested in seeing how different mechanisms and pathways are impacted by treatment and how this affects the response. The conditional average treatment effect looks at the average difference
+\begin{align*}
+\textsf{CATE}_j = \mathsf{E}(Y \mid X=j, Z = z) - \mathsf{E}(Y \mid X=0, Z = z)
+\end{align*}
+
+@Vanderweele:2015 provides an excellent non-technical overview of mediation and interaction.
 
 
 
@@ -370,16 +376,20 @@ We could easily expand the model to include nonlinear effects (not for the treat
 
 The main benefit of experimental designs is that it deconfounds the relation between treatment and other variables, but adding spurious variables could create feedback and lead to inconsistent conclusions. It's not clear that the mediator can be manipulated experimentally, and even if it could be to estimate the $\gamma$, one must make sure the relation is the same absent of $X$. For example, we could estimate the indirect effect term by manipulating jointly (if possible) ($X, M$) but even then the linearity assumption must hold for the estimates to correspond to our linear causal mediation model. 
 
-### Example
+:::{#exm-inconsistency}
+
+### Fluency as mediator of product evaluation
 
 Study 2 of @Lee.Choi:2019 focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.
 
 The experimental variable is the consistency of the product description and depiction, with `fluency` leading to "processing disfluency" that is expected to impact negatively judgment ratings.
-Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of @Lee.Choi:2019).^[Incidentally, reporting the coefficients allows in a Table allows one to retro-engineer the model and ensure reproducibility.]
+Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of @Lee.Choi:2019).
 
 ```{r}
 #| eval: true
 #| echo: true
+#| message: false
+#| warning: false
 data(LC19_S2, package = "hecedsm")
 YsMX <- lm(prodeval ~ fluency + consistency + familiarity,
            data = LC19_S2)
@@ -393,14 +403,15 @@ MsX <- lm(fluency ~ consistency + familiarity,
 #| eval: true
 #| echo: false
 #| cache: true
+#| message: false
+#| warning: false
 coefs1 <- summary(YsMX) |> broom::tidy() 
 coefs1$term[3] <- c("consistency")
 coefs2 <- summary(MsX) |> broom::tidy()
 coefs2$term[2] <- c("consistency")
 kab1 <- knitr::kable(coefs1[,1:3], digits = 2, booktabs = TRUE)
 kab2 <- knitr::kable(coefs2[,1:3], digits = 2, booktabs = TRUE)
-knitr::kables(x = list(kab2, kab1)) |>
-  kableExtra::kable_styling()
+knitr::kables(x = list(kab2, kab1))
 ```
 
 We can extract the effects directly from the outcome: the natural indirect effect estimate is $\widehat{\alpha}\widehat{\gamma} = 0.48 \times 0.60$ and the direct effect is $\widehat{\beta} = 0.29$.
@@ -449,6 +460,7 @@ knitr::kable(smat,
 
 Using the `summary` method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article.
 
+:::
 
 ## Moderation and interactions
 

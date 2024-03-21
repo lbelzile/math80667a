@@ -48,7 +48,9 @@ In management sciences, Likert scales are frequently used as response. The drawb
 
 
 
-:::{ .example name="Smartwatches and other distractions"}
+:::{#exm-smartwatch}
+
+## Smartwatches and other distractions
 
 We consider a within-subject design from @Brodeur:2021, who conducted an experiment at Tech3Lab to check distraction while driving from different devices including smartwatches using a virtual reality environment. The authors wanted to investigate whether smartwatches were more distracting than cellphones while driving. Using a simulator, they ran a within-subject design where each participant was assigned to a distraction (phone, using a speaker, texting while driving or smartwatch) while using a  driving simulator. The response is the number of road safety violations conducted on the segment. Each task was assigned in a random order. The data can be found in the `BRLS21_T3` dataset in package `hecedsm`.
 
@@ -155,7 +157,9 @@ These testing procedures are the nonparametric analog of the one-way analysis in
 
 In the two-sample case, we may also be interested in providing an estimator of the difference between condition. To this effect, we can compute the average of pairwise differences between observations of each pair of groups: those are called Walsh's averages. The Hodges--Lehmann estimate of location is simply the median of Walsh's averages and we can use the Walsh's averages themselves to obtain a confidence interval.
 
-:::{ .example  name="Virtual communications"}
+:::{#exm-virtual-communications}
+
+## Virtual communications
 
 @Brucks.Levav:2022 measure the attention of participants based on condition using an eyetracker. We compare the time spend looking at the partner by experimental condition (face-to-face or videoconferencing). The authors used a Kruskal--Wallis test, but this is equivalent to Wilcoxon's rank-sum test.
 
