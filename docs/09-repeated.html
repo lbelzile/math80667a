@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.21">
+<meta name="generator" content="quarto-1.5.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -125,7 +125,7 @@ div.csl-indent {
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -229,7 +229,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -314,18 +314,7 @@ window.Quarto = {
 
 </header>
 
-<<<<<<< HEAD
 
-<p>So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments, the latter being presented in random order to avoid confounding. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions.</p>
-<p>For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes.</p>
-<p>In a between-subjects design, subjects are <strong>nested</strong> within experimental condition, as a subject can only be assigned a single treatment. In a within-subjects designs, experimental factors and subjects are <strong>crossed</strong>: it is possible to observed all combination of subject and experimental conditions.</p>
-<p>By including multiple conditions, we can filter out effect due to subject, much like with blocking: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.</p>
-<p>There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming more fluent as manipulations go on), period effects (practice of fatigue, e.g., leading to a decrease in acuity), permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).</p>
-<p>To minimize potential biases, there are multiple strategies one can use. While can randomize the order of treatment conditions among subjects to reduce confounding, or use a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.</p>
-<p>Due to fatigue or learning effects, randomization of the order of the within-subject experimental conditions. If each is assigned a single time, one good way to do this is via <strong>counterbalancing</strong>. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions <span class="math inline">\(A, B, C\)</span>, we have six possible orderings (either <span class="math inline">\(ABC\)</span>, <span class="math inline">\(ACB\)</span>, <span class="math inline">\(BAC\)</span>, <span class="math inline">\(BCA\)</span>, <span class="math inline">\(CAB\)</span> or <span class="math inline">\(CBA\)</span>). Much like other forms of randomization, this helps us remove confounding effects and let’s us estimate what is the average effect of task ordering on the response.</p>
-<p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in <a href="#fig-xkcd2569" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-xkcd2569</span></a>.</p>
-<div class="cell">
-=======
 <p>So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions.</p>
 <p>For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes.</p>
 <p>In a between-subjects design, subjects are <strong>nested</strong> within experimental condition, as a subject can only be assigned a single treatment. In a within-subjects designs, experimental factors and subjects are <strong>crossed</strong>: it is possible to observed all combination of subject and experimental conditions.</p>
@@ -333,9 +322,8 @@ window.Quarto = {
 <p>There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming better as manipulations go on), period effects (fatigue, a decrease in acuity), and permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).</p>
 <p>To minimize potential biases, there are multiple strategies one can use. Tasks are normally presented in random order among subjects to avoid confounding, or using a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.</p>
 <p>If each subject is assigned to an experimental condition only once, one good way to do this is via <strong>counterbalancing</strong>. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions <span class="math inline">\(A, B, C\)</span>, we have six possible orderings (either <span class="math inline">\(ABC\)</span>, <span class="math inline">\(ACB\)</span>, <span class="math inline">\(BAC\)</span>, <span class="math inline">\(BCA\)</span>, <span class="math inline">\(CAB\)</span> or <span class="math inline">\(CBA\)</span>). Much like other forms of randomization, this helps us remove confounding effects and let’s us estimate what is the average effect of task ordering on the response.</p>
-<p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in <a href="11-causal-inference.html#fig-xkcd2569">Figure&nbsp;<span>11.1</span></a>.</p>
-<div class="cell" data-hash="09-repeated_cache/html/fig-xkcd2569_8ed776c94bac829337ae09a61265fb43">
->>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
+<p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in <a href="11-causal-inference.html#fig-xkcd2569" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>.</p>
+<div class="cell">
 <div class="cell-output-display">
 <div id="fig-xkcd2569" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -715,7 +703,7 @@ Table&nbsp;9.1: Analysis of variance for the four-way model with partial effect 
 </div>
 <p>This is the most complicated model we tested so far: there are four experimental factor being manipulated at once, and all interactions of order two, three and four are included!</p>
 <p>The fourth order interaction isn’t statistically significant: this means that we can legitimately marginalize over and look at each of the four three-way ANOVA designs in turn. We can also see that the third order interaction <code>adaptation:fontsize:position</code> and <code>acuity:adaptation:position</code> are not really meaningful.</p>
-<p>The following paragraph is technical and can be skipped. One difficult bit with designs including both within-subject and between-subject factors is the degrees of freedom and the correct sum of square terms to use to calculate the <span class="math inline">\(F\)</span> statistics for each hypothesis of interest. The correct setup is to use the next sum of square (and the associated degrees of freedom) from this. For any main effect or interaction, we count the number of instances of this particular (e.g., 10 for the interaction between position and adaptation). We subtract the number of mean parameter used to estimate means and differences in mean (1 global mean, 4 means for position, 1 for adaptation), which gives <span class="math inline">\(4=10-6\)</span> degrees of freedom. Next, this term is compared to the mean square which contains only subject (here via acuity levels, since subjects are nested within acuity) and the corresponding variables; the correct mean square is for <code>acuity:adaptation:position</code>. In the balanced design setting, this can be formalized using Hasse diagram <span class="citation" data-cites="Oehlert:2010">(<a href="#ref-Oehlert:2010" role="doc-biblioref">Oehlert 2000</a>)</span>.</p>
+<p>The following paragraph is technical and can be skipped. One difficult bit with designs including both within-subject and between-subject factors is the degrees of freedom and the correct sum of square terms to use to calculate the <span class="math inline">\(F\)</span> statistics for each hypothesis of interest. The correct setup is to use the next sum of square (and the associated degrees of freedom) from this. For any main effect or interaction, we count the number of instances of this particular (e.g., 10 for the interaction between position and adaptation). We subtract the number of mean parameter used to estimate means and differences in mean (1 global mean, 4 means for position, 1 for adaptation), which gives <span class="math inline">\(4=10-6\)</span> degrees of freedom. Next, this term is compared to the mean square which contains only subject (here via acuity levels, since subjects are nested within acuity) and the corresponding variables; the correct mean square is for <code>acuity:adaptation:position</code>. In the balanced design setting, this can be formalized using Hasse diagram <span class="citation" data-cites="Oehlert:2010">(<a href="references.html#ref-Oehlert:2010" role="doc-biblioref">Oehlert 2000</a>)</span>.</p>
 <p>We can produce an interaction plot to see what comes out: since we can’t draw in four dimensions, we map visual acuity and adaptation level to panels with different colours for the position. The figure looks different from the paper, seemingly because their <span class="math inline">\(y\)</span>-axis is flipped.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -743,7 +731,7 @@ Figure&nbsp;9.3: Interaction plot for visual acuity levels.
 <p>The MANOVA model assumes that the covariance matrices are the same within each experimental condition. We can use Box’s <span class="math inline">\(M\)</span> statistic to test the normality hypothesis.</p>
 <section id="data-format" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="data-format"><span class="header-section-number">9.2.1</span> Data format</h3>
-<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for storate, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. <a href="#fig-longvswide" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-longvswide</span></a> illustrates the difference between the two formats.</p>
+<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for storate, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. <a href="#fig-longvswide" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> illustrates the difference between the two formats.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-longvswide" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -759,7 +747,7 @@ Figure&nbsp;9.4: Long versus wide-format for data tables (illustration by Garric
 </div>
 </div>
 <p>Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant.</p>
-<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed <a href="#sec-modelassumptionsindependence" class="quarto-xref"><span class="quarto-unresolved-ref">sec-modelassumptionsindependence</span></a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
+<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed <a href="03-completely_randomized_trials.html#sec-modelassumptionsindependence" class="quarto-xref"><span>Section 3.4.4</span></a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
 </section>
 <section id="mathematical-complement" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="mathematical-complement"><span class="header-section-number">9.2.2</span> Mathematical complement</h3>
@@ -827,7 +815,7 @@ Residuals   11                                             </code></pre>
 <p>We can check that the output is the same in this case as the within-subject analysis of variance model fitted previously with the <code>afex</code> package.</p>
 </div>
 <div id="exm-baumann-multi" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.4 (Teaching to read)</strong></span> We consider a between-subject repeated measure multivariate analysis of variance model with the <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).</p>
+<p><span class="theorem-title"><strong>Example 9.4 (Teaching to read)</strong></span> We consider a between-subject repeated measure multivariate analysis of variance model with the <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).</p>
 <p>We could obtain the estimated covariance matrix of the fitted model by extracting the residuals <span class="math inline">\(Y_{ik} - \widehat{\mu}_k\)</span> and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test 2.</p>
 <p>Let us compute the multivariate analysis of variance model</p>
 <div class="cell">
@@ -893,7 +881,7 @@ group 0.00734676 0.00058043 0.01515115</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">lda</span>(group <span class="sc">~</span> posttest1 <span class="sc">+</span> posttest2 <span class="sc">+</span> posttest3,</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> BSJ92)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This amounts to compute the weights <span class="math inline">\(\boldsymbol{w}\)</span> such, that, computing <span class="math inline">\(\boldsymbol{w}^\top\boldsymbol{Y}\)</span> creating a composite score by adding up weighted components that leads to maximal separation between groups. <a href="#fig-lindiscrim" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-lindiscrim</span></a> shows the new coordinates.</p>
+<p>This amounts to compute the weights <span class="math inline">\(\boldsymbol{w}\)</span> such, that, computing <span class="math inline">\(\boldsymbol{w}^\top\boldsymbol{Y}\)</span> creating a composite score by adding up weighted components that leads to maximal separation between groups. <a href="#fig-lindiscrim" class="quarto-xref">Figure&nbsp;<span>9.5</span></a> shows the new coordinates.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-lindiscrim" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -947,23 +935,19 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 <section id="power-and-effect-size" class="level3" data-number="9.2.5">
 <h3 data-number="9.2.5" class="anchored" data-anchor-id="power-and-effect-size"><span class="header-section-number">9.2.5</span> Power and effect size</h3>
 <p>Since all of the multivariate statistics can be transformed for a comparison with a univariate <span class="math inline">\(\mathsf{F}\)</span> distribution, we can estimate partial effect size as before. The package <code>effectsize</code> offers a measure of partial <span class="math inline">\(\widehat{\eta}^2\)</span> for the multivariate tests.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<<<<<<< HEAD
-<p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation" data-cites="GPower3">(<a href="#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation" data-cites="Lauter:1978">Läuter (<a href="#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons.</p>
-=======
 <p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation" data-cites="GPower3">(<a href="references.html#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation" data-cites="Lauter:1978">Läuter (<a href="references.html#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group <span class="math inline">\(j=1, \ldots, J\)</span>, which shows that the number increases rapidly with the dimension of the response vector <span class="math inline">\(p\)</span>. As usual, smaller effect sizes are more difficult to detect.</p>
-<div class="cell" data-hash="09-repeated_cache/html/tablepowersamplesize_ae1eb9f5ed66705ffe5dac1787110b29">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ✔ lubridate 1.9.3     ✔ tibble    3.2.1
-✔ purrr     1.0.2     ✔ tidyr     1.3.0
-✔ readr     2.1.4     
+✔ purrr     1.0.2     ✔ tidyr     1.3.1
+✔ readr     2.1.5     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter()     masks stats::filter()
 ✖ dplyr::group_rows() masks kableExtra::group_rows()
 ✖ dplyr::lag()        masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="cell-output-display">
-<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<div>
+<table class="lightable-classic table" data-quarto-postprocess="true">
 <colgroup>
 <col style="width: 7%">
 <col style="width: 7%">
@@ -1074,16 +1058,14 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 
 
 </div>
-</div>
->>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Baumann:1992" class="csl-entry" role="listitem">
 Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992. <span>“Effect of Think-Aloud Instruction on Elementary Students’ Comprehension Monitoring Abilities.”</span> <em>Journal of Reading Behavior</em> 24 (2): 143–72. <a href="https://doi.org/10.1080/10862969209547770">https://doi.org/10.1080/10862969209547770</a>.
 </div>
 <div id="ref-GPower3" class="csl-entry" role="listitem">
-Faul, Franz, Edgar Erdfelder, Albert-Georg Lang, and Axel Buchner. 2007. <span>“<span>G*Power 3</span>: A Flexible Statistical Power Analysis Program for the Social, Behavioral, and Biomedical Sciences.”</span> <em>Behavior Research Methods</em> 39 (2): 175–91. <a href="https://doi.org/10.3758/BF03193146">https://doi.org/10.3758/BF03193146</a>.
+Faul, Franz, Edgar Erdfelder, Albert-Georg Lang, and Axel Buchner. 2007. <span>“<span>G</span>: A Flexible Statistical Power Analysis Program for the Social, Behavioral, and Biomedical Sciences.”</span> <em>Behavior Research Methods</em> 39 (2): 175–91. <a href="https://doi.org/10.3758/BF03193146">https://doi.org/10.3758/BF03193146</a>.
 </div>
 <div id="ref-Lauter:1978" class="csl-entry" role="listitem">
 Läuter, J. 1978. <span>“Sample Size Requirements for the <span class="math inline">\(T^2\)</span> Test of <span>MANOVA</span> (Tables for One-Way Classification).”</span> <em>Biometrical Journal</em> 20 (4): 389–406. <a href="https://doi.org/10.1002/bimj.4710200410">https://doi.org/10.1002/bimj.4710200410</a>.
@@ -1138,18 +1120,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1181,7 +1152,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
@@ -1189,7 +1182,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

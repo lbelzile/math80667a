@@ -75,7 +75,7 @@ Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observa
 #| label: tbl-balance-MP14
 #| tbl-cap: "Repartition of the sample for Study 1 of Maglio and Polman (2014)."
 data(MP14_S1, package = 'hecedsm')
-knitr::kable(xtabs(~ direction + station, data = MP14_S1), )
+knitr::kable(xtabs(~ direction + station, data = MP14_S1), booktabs = TRUE)
 ```
 Looking at @tbl-balance-MP14, we can see that the number of observations is not exactly the same. In general, attrition and non-response can lead to unequal cell sample size, but you should strive to gather roughly equal number of observations. The main consequence is that different decompositions of the variance will lead to different tests, whereas no such ambiguity exists for balanced data.
 

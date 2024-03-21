@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.21">
+<meta name="generator" content="quarto-1.5.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -125,7 +125,7 @@ div.csl-indent {
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -229,7 +229,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -311,7 +311,7 @@ window.Quarto = {
 <p>In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. These are instances of <strong>blocking factors</strong>: variables that impact the measurement variability, but that are not of direct interest. By filtering their effect out and looking at the residual variability that is unexplained by the blocking factors. Block designs reduce the error term, at the cost of including and estimating additional parameters (group averages). Experimental units are typically assigned to blocking factor using stratified sampling to ensure comparisons can be made.</p>
 <p>We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is <strong>no interaction</strong> between experimental factor and blocking factors.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Thus, we will be interested mostly in main effects of the experimental factors.</p>
 <div id="exm-reachingout" class="theorem example">
-<p><span class="theorem-title"><strong>Example 6.1 (The surprise of reaching out: paired data as blocking factors)</strong></span> We consider paired data from Study 3 of <span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span>, who looked at the appreciation of people reaching out to them in a unsolicited manner. The data includes the appreciation score of both responder and initiator, along with sociodemographic variables (age and gender).</p>
+<p><span class="theorem-title"><strong>Example 6.1 (The surprise of reaching out: paired data as blocking factors)</strong></span> We consider paired data from Study 3 of <span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span>, who looked at the appreciation of people reaching out to them in a unsolicited manner. The data includes the appreciation score of both responder and initiator, along with sociodemographic variables (age and gender).</p>
 <p>While a paired <span class="math inline">\(t\)</span>-test is the natural (and arguably simplest way) to compare the difference in appreciation scores, we reformat the data to long format (one response per line), with a categorical variable <code>role</code> indicating the role of the participant and <code>dyad</code>, a dummy number indicating which participants belong to which pair. We then fit an analysis of variance model to the scores with both <code>dyad</code> and <code>role</code>. The <span class="math inline">\(F\)</span>-tests for the main effects indicate that the dyads (66 additional parameters, since there are 67 pairs) filter out significant part of the variability. If we consider estimated marginal means and look at the <span class="math inline">\(p\)</span>-value and the pairwise difference between initiator and respondent, we find exactly the same statistic, degrees of freedom and <span class="math inline">\(p\)</span>-value for the pairwise difference as the paired <span class="math inline">\(t\)</span>-test.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LRMM23_S3, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
@@ -381,7 +381,7 @@ Results are averaged over the levels of: dyad </code></pre>
 <h2 data-number="6.2" class="anchored" data-anchor-id="ancova"><span class="header-section-number">6.2</span> Analysis of covariance</h2>
 <p>A related design includes a continuous covariate to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn’t necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called <strong>analysis of covariance</strong>, although as analysis of variance models, they are nothing but linear regression models.</p>
 <p>In an analysis of covariance, we include a linear component for a (continuous) covariate, with the purpose again to reduce residual error and increase power. A prime example is prior/post experiment measurements, whereby we monitor the change in outcome due to the manipulation. This post by Solomon Kurz <a href="https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/">[link]</a> nicely illustrates the added benefits of using covariates when there is strong correlation between your response and the latter</p>
-<p>In such setting, it may seem logical to take the difference in post and prior score as response: this is showcased in <a href="#exm-vanStek" class="quarto-xref">Example&nbsp;<span class="quarto-unresolved-ref">exm-vanStek</span></a> and <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>, an analysis of which is presented on <a href="https://edsm.rbind.io/example/06-ancova/">the course website</a>.</p>
+<p>In such setting, it may seem logical to take the difference in post and prior score as response: this is showcased in <a href="#exm-vanStek" class="quarto-xref">Example&nbsp;<span>6.3</span></a> and <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>, an analysis of which is presented on <a href="https://edsm.rbind.io/example/06-ancova/">the course website</a>.</p>
 <p>When we add a covariate, we need the latter to have a strong linear correlation for the inclusion to make sense. We can assess graphically whether the relationship is linear, and whether the slopes for each experimental condition are the same.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -397,9 +397,8 @@ Figure&nbsp;6.1: Simulated data from two groups with an analysis of covariance m
 </div>
 </div>
 </div>
-<<<<<<< HEAD
-<p>The left panel of <a href="#fig-ancovadifftrend" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ancovadifftrend</span></a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of <a href="#fig-ancovadifftrend" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ancovadifftrend</span></a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
-<p><a href="#fig-ancovaresid" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ancovaresid</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel; note that the <span class="math inline">\(y\)</span>-axes have different scales.</p>
+<p>The left panel of <a href="#fig-ancovadifftrend" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of <a href="#fig-ancovadifftrend" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
+<p><a href="#fig-ancovaresid" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel; note that the <span class="math inline">\(y\)</span>-axes have different scales.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-ancovaresid" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -410,33 +409,18 @@ Figure&nbsp;6.1: Simulated data from two groups with an analysis of covariance m
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ancovaresid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6.2: Response after subtracting mean (left) and after detrending (right).
 </figcaption>
-=======
-<p>The left panel of <a href="#fig-ancovadifftrend">Figure&nbsp;<span>6.1</span></a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of <a href="#fig-ancovadifftrend">Figure&nbsp;<span>6.1</span></a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
-<p><a href="#fig-ancovaresid">Figure&nbsp;<span>6.2</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel.</p>
-<div class="cell" data-hash="06-blocking_ancova_cache/html/fig-ancovaresid_3d0ecdb9ba0f6020f4333a771a3e5a7b">
-<div class="cell-output-display">
-<div id="fig-ancovaresid" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="06-blocking_ancova_files/figure-html/fig-ancovaresid-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.2: Response after subtracting mean (left) and after detrending and centering the mean (right).</figcaption>
->>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 </figure>
 </div>
 </div>
 </div>
 <p>We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.</p>
-<<<<<<< HEAD
 <div id="exm-leechoi" class="theorem example">
-<p><span class="theorem-title"><strong>Example 6.2 (Inconsistency of product description and image in online retailing)</strong></span> <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
-=======
-<div id="leechoi" name="Inconsistency of product description and image in online retailing">
-<p><span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
->>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
+<p><span class="theorem-title"><strong>Example 6.2 (Inconsistency of product description and image in online retailing)</strong></span> <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
 <p>One way to account for familiarity when comparing the mean is to use a linear regression with familiarity as another explanatory variable. The expected value of the product evaluation is <span id="eq-vS"><span class="math display">\[
 \mathsf{E}(\texttt{prodeval}) = \beta_0 + \beta_1 \texttt{familiarity} + \beta_2 \texttt{consistency},
 \tag{6.1}\]</span></span> where <span class="math inline">\(\texttt{familiarity}\)</span> is the score from 1 to 7 and <span class="math inline">\(\texttt{consistency}\)</span> is a binary indicator equal to one if the output is inconsistent and zero otherwise. The coefficient <span class="math inline">\(\beta_2\)</span> thus measures the difference between product evaluation rating for consistent vs inconsistent displays, for the same familiarity score.</p>
 <p>We can look at coefficient (standard error) estimates <span class="math inline">\(\widehat{\beta}_2 = -0.64 (0.302)\)</span>. No difference between groups would mean <span class="math inline">\(\beta_2=0\)</span> and we can build a test statistic by looking at the standardized regression coefficient <span class="math inline">\(t = \widehat{\beta}_2/\mathsf{se}(\widehat{\beta}_2)\)</span>. The result output is <span class="math inline">\(b = -0.64\)</span>, 95% CI <span class="math inline">\([-1.24, -0.04]\)</span>, <span class="math inline">\(t(93) = -2.12\)</span>, <span class="math inline">\(p = .037\)</span>. We reject the null hypothesis of equal product evaluation for both display at level 5%: there is evidence that there is a small difference, with people giving on average a score that is 0.64 points smaller (on a scale of 1 to 9) when presented with conflicting descriptions and images.</p>
-<p>We can compare the analysis of variance table obtained by fitting the model with and without <span class="math inline">\(\texttt{familiarity}\)</span>. <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-anovatabLC19S1</span></a> shows that the effect of consistency is small and not significant and a two-sample <em>t</em>-test shows no evidence of difference between the average familiarity score in both experimental conditions (<span class="math inline">\(p\)</span>-value of <span class="math inline">\(.532\)</span>). However, we can explain roughly one fifth of the residual variability by the familiarity with the brand (see the sum of squares in <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-anovatabLC19S1</span></a>): removing the latter leads to a higher signal-to-noise ratio for the impact of consistency, at the expense of a loss of one degree of freedom. Thus, it appears that the manipulation was successful.</p>
+<p>We can compare the analysis of variance table obtained by fitting the model with and without <span class="math inline">\(\texttt{familiarity}\)</span>. <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span>6.1</span></a> shows that the effect of consistency is small and not significant and a two-sample <em>t</em>-test shows no evidence of difference between the average familiarity score in both experimental conditions (<span class="math inline">\(p\)</span>-value of <span class="math inline">\(.532\)</span>). However, we can explain roughly one fifth of the residual variability by the familiarity with the brand (see the sum of squares in <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span>6.1</span></a>): removing the latter leads to a higher signal-to-noise ratio for the impact of consistency, at the expense of a loss of one degree of freedom. Thus, it appears that the manipulation was successful.</p>
 <div class="cell">
 <div id="tbl-anovatabLC19S1" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -537,11 +521,11 @@ Figure&nbsp;6.3: Scatterplot of product evaluation as a function of the familiar
 </div>
 </div>
 </div>
-<p><a href="#fig-ANCOVA-demo" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ANCOVA-demo</span></a> shows that people more familiar with the product or brand tend to have a more positive product evaluation, as postulated by the authors. The graph also shows two straight lines corresponding to the fit of a linear model with different intercept and slope for each display group: there is little material difference, one needs to assess formally whether a single linear relationship as the one postulated in <a href="#eq-vS" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-vS</span></a> can adequately characterize the relation in both groups.</p>
+<p><a href="#fig-ANCOVA-demo" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> shows that people more familiar with the product or brand tend to have a more positive product evaluation, as postulated by the authors. The graph also shows two straight lines corresponding to the fit of a linear model with different intercept and slope for each display group: there is little material difference, one needs to assess formally whether a single linear relationship as the one postulated in <a href="#eq-vS" class="quarto-xref">Equation&nbsp;<span>6.1</span></a> can adequately characterize the relation in both groups.</p>
 <p>To this effect, we fit a linear model with different slopes in each group, and compare the fit of the latter with the analysis of covariance model that includes a single slope for both groups: we can then test if the slopes are the same, or alternatively if the difference between the slopes is zero. The <em>t</em>-statistic indicates no difference in slope (<span class="math inline">\(p\)</span>-value of <span class="math inline">\(.379\)</span>), thus the assumption is reasonable. Levene’s test for homogeneity of variance indicates no discernible difference between groups. Thus, it appears there is a difference in perception of product quality due to the manipulation.</p>
 </div>
 <div id="exm-vanStek" class="theorem example">
-<p><span class="theorem-title"><strong>Example 6.3 (Effect of scientific consensus on false beliefs)</strong></span> We consider Study 3 of <span class="citation" data-cites="vanStekelenburg:2021">Stekelenburg et al. (<a href="#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span>, who studied changes in perception of people holding false beliefs or denying (to some extent) the scientific consensus by presenting them with news article showcasing information about various phenomena. The experimental manipulation consisted in presenting boosting, a form of training to help readers identify and establish whether scientifists were truly expert in the domain of interest, how strong was the consensus, etc.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p><span class="theorem-title"><strong>Example 6.3 (Effect of scientific consensus on false beliefs)</strong></span> We consider Study 3 of <span class="citation" data-cites="vanStekelenburg:2021">Stekelenburg et al. (<a href="references.html#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span>, who studied changes in perception of people holding false beliefs or denying (to some extent) the scientific consensus by presenting them with news article showcasing information about various phenomena. The experimental manipulation consisted in presenting boosting, a form of training to help readers identify and establish whether scientifists were truly expert in the domain of interest, how strong was the consensus, etc.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>The third and final experiment of the paper focused on genetically modified organisms: it is a replication of Study 2, but with a control group (since there were no detectable difference between experimental conditions <code>Boost</code> and <code>BoostPlus</code>) and a larger sample size (because Study 2 was underpowered).</p>
 <p>The data include 854 observations with <code>prior</code>, the negative of the prior belief score of the participant, the <code>post</code> experiment score for the veracity of the claim. Both were measured using a visual scale ranging from -100 (I am 100% certain this is false) to 100 (I am 100% certain this is true), with 0 (I don’t know) in the middle. Only people with negative prior beliefs were recruited to the study. The three experimental conditions were <code>BoostPlus</code>, <code>consensus</code> and a <code>control</code> group. Note that the scores in the data have been negated, meaning that negative posterior scores indicate agreement with the consensus on GMO.</p>
 <p>Preliminary checks suggest that, although the slopes for prior beliefs could plausibly be the same in each group and the data are properly randomized, there is evidence of unequal variance for the changes in score. As such, we fit a model with mean <span class="math display">\[\begin{align*}
@@ -624,7 +608,7 @@ Table&nbsp;6.2: Analysis of variance tables
 </figure>
 </div>
 </div>
-<p>Repeating the exercise of comparing the amount of evidence for comparison with and without inclusion of a covariate shows that the value of the test statistic is larger (<a href="#tbl-anovatabSSVB" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-anovatabSSVB</span></a>), indicative of stronger evidence with the analysis of covariance model: the conclusion would be unaffected with such large sample sizes. We of course care very little for the global <span class="math inline">\(F\)</span> test of equality of mean, as the previous study had shown large differences. What is more interesting here is quantifying the change between conditions.</p>
+<p>Repeating the exercise of comparing the amount of evidence for comparison with and without inclusion of a covariate shows that the value of the test statistic is larger (<a href="#tbl-anovatabSSVB" class="quarto-xref">Table&nbsp;<span>6.2</span></a>), indicative of stronger evidence with the analysis of covariance model: the conclusion would be unaffected with such large sample sizes. We of course care very little for the global <span class="math inline">\(F\)</span> test of equality of mean, as the previous study had shown large differences. What is more interesting here is quantifying the change between conditions.</p>
 <div class="cell">
 <div id="tbl-contraststabSSVB" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -723,11 +707,10 @@ Table&nbsp;6.3: Pairwise contrasts with <em>p</em>-values adjusted using Holm–
 </div>
 </div>
 </div>
-<<<<<<< HEAD
 </figure>
 </div>
 </div>
-<p><a href="#tbl-contraststabSSVB" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-contraststabSSVB</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-vanStekS3</span></a>, helps decrease background noise.</p>
+<p><a href="#tbl-contraststabSSVB" class="quarto-xref">Table&nbsp;<span>6.3</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3" class="quarto-xref">Figure&nbsp;<span>6.4</span></a>, helps decrease background noise.</p>
 <div class="cell">
 <div id="tbl-vanStekS3" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -735,10 +718,6 @@ Table&nbsp;6.3: Pairwise contrasts with <em>p</em>-values adjusted using Holm–
 Table&nbsp;6.4: Summary statistics of belief as a function of time of measurement and experimental condition.
 </figcaption>
 <div aria-describedby="tbl-vanStekS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-=======
-<p><a href="#tbl-contraststabSSVB">Table&nbsp;<span>6.3</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3">Figure&nbsp;<span>6.4</span></a>, helps decrease background noise.</p>
-<div class="cell" data-hash="06-blocking_ancova_cache/html/tbl-vanStekS3_b16ddde6284e6754eea4f523b4c7592d">
->>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 <div class="cell-output-display">
 <div>
 <table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
@@ -822,7 +801,7 @@ Pitfall
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="citation" data-cites="vanStekelenburg:2021">Stekelenburg et al. (<a href="#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span> split their data to do pairwise comparisons two at the time (thus taking roughly two-third of the data to perform a two sample <em>t</em>-test with each pair). Although it does not impact their conclusion, this approach is conceptually incorrect: if the variance was equal, we would want to use all observations to estimate it (so their approach would be suboptimal, since we would estimate the variance three times with smaller samples).</p>
+<p><span class="citation" data-cites="vanStekelenburg:2021">Stekelenburg et al. (<a href="references.html#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span> split their data to do pairwise comparisons two at the time (thus taking roughly two-third of the data to perform a two sample <em>t</em>-test with each pair). Although it does not impact their conclusion, this approach is conceptually incorrect: if the variance was equal, we would want to use all observations to estimate it (so their approach would be suboptimal, since we would estimate the variance three times with smaller samples).</p>
 <p>On the contrary, using a model that assumes equal variance when it is not the case leads to distortion: the variance we estimate will be some sort of average of the variability <span class="math inline">\(\sigma_i\)</span> and <span class="math inline">\(\sigma_j\)</span> in experimental condition <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, again potentially leading to distortions. With large samples, this may be unconsequential, but illustrates caveats of subsample analyses.</p>
 </div>
 </div>
@@ -836,7 +815,7 @@ Pitfall
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#fig-vanStekS3f1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-vanStekS3f1</span></a> shows the relationship between prior and posterior score. The data show clear difference between individuals: many start from completely disbelieving of genetically engineered food and change their mind (sometimes drastically), there are many people who do not change idea at all and have similar scores, and many who give a posterior score of zero. This heterogeneity in the data illustrates the danger of only looking at the summary statistics and comparing averages. It does not tell the whole picture! One could investigate whether the strength of religious or political beliefs, or how much participants trust scientists, could explain some of the observed differences.</p>
+<p><a href="#fig-vanStekS3f1" class="quarto-xref">Figure&nbsp;<span>6.5</span></a> shows the relationship between prior and posterior score. The data show clear difference between individuals: many start from completely disbelieving of genetically engineered food and change their mind (sometimes drastically), there are many people who do not change idea at all and have similar scores, and many who give a posterior score of zero. This heterogeneity in the data illustrates the danger of only looking at the summary statistics and comparing averages. It does not tell the whole picture! One could investigate whether the strength of religious or political beliefs, or how much participants trust scientists, could explain some of the observed differences.</p>
 </div>
 </div>
 <div class="cell">
@@ -898,7 +877,7 @@ Your turn
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><span class="citation" data-cites="Box:1978">Box, Hunter, and Hunter (<a href="#ref-Box:1978" role="doc-biblioref">1978</a>)</span> write on page 103 the following motto:</li>
+<li><span class="citation" data-cites="Box:1978">Box, Hunter, and Hunter (<a href="references.html#ref-Box:1978" role="doc-biblioref">1978</a>)</span> write on page 103 the following motto:</li>
 </ul>
 <blockquote class="blockquote">
 <p>Block what you can and randomize what you cannot.</p>
@@ -908,7 +887,7 @@ Your turn
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Baumann:1992" class="csl-entry" role="listitem">
 Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992. <span>“Effect of Think-Aloud Instruction on Elementary Students’ Comprehension Monitoring Abilities.”</span> <em>Journal of Reading Behavior</em> 24 (2): 143–72. <a href="https://doi.org/10.1080/10862969209547770">https://doi.org/10.1080/10862969209547770</a>.
 </div>
@@ -972,18 +951,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1015,7 +983,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
@@ -1023,7 +1013,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1348,13 +1338,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-<<<<<<< HEAD
       <a href="./05-interactions_multiway.html" class="pagination-link" aria-label="Complete factorial designs">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span>
-=======
-      <a href="./05-interactions_multiway.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span>
->>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
       </a>          
   </div>
   <div class="nav-page nav-page-next">
