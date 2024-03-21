@@ -229,7 +229,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -397,6 +397,7 @@ Figure&nbsp;6.1: Simulated data from two groups with an analysis of covariance m
 </div>
 </div>
 </div>
+<<<<<<< HEAD
 <p>The left panel of <a href="#fig-ancovadifftrend" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ancovadifftrend</span></a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of <a href="#fig-ancovadifftrend" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ancovadifftrend</span></a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
 <p><a href="#fig-ancovaresid" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-ancovaresid</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel; note that the <span class="math inline">\(y\)</span>-axes have different scales.</p>
 <div class="cell">
@@ -409,13 +410,28 @@ Figure&nbsp;6.1: Simulated data from two groups with an analysis of covariance m
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ancovaresid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6.2: Response after subtracting mean (left) and after detrending (right).
 </figcaption>
+=======
+<p>The left panel of <a href="#fig-ancovadifftrend">Figure&nbsp;<span>6.1</span></a> shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of <a href="#fig-ancovadifftrend">Figure&nbsp;<span>6.1</span></a> shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.</p>
+<p><a href="#fig-ancovaresid">Figure&nbsp;<span>6.2</span></a> shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel.</p>
+<div class="cell" data-hash="06-blocking_ancova_cache/html/fig-ancovaresid_3d0ecdb9ba0f6020f4333a771a3e5a7b">
+<div class="cell-output-display">
+<div id="fig-ancovaresid" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-blocking_ancova_files/figure-html/fig-ancovaresid-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6.2: Response after subtracting mean (left) and after detrending and centering the mean (right).</figcaption>
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 </figure>
 </div>
 </div>
 </div>
 <p>We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.</p>
+<<<<<<< HEAD
 <div id="exm-leechoi" class="theorem example">
 <p><span class="theorem-title"><strong>Example 6.2 (Inconsistency of product description and image in online retailing)</strong></span> <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
+=======
+<div id="leechoi" name="Inconsistency of product description and image in online retailing">
+<p><span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 <p>One way to account for familiarity when comparing the mean is to use a linear regression with familiarity as another explanatory variable. The expected value of the product evaluation is <span id="eq-vS"><span class="math display">\[
 \mathsf{E}(\texttt{prodeval}) = \beta_0 + \beta_1 \texttt{familiarity} + \beta_2 \texttt{consistency},
 \tag{6.1}\]</span></span> where <span class="math inline">\(\texttt{familiarity}\)</span> is the score from 1 to 7 and <span class="math inline">\(\texttt{consistency}\)</span> is a binary indicator equal to one if the output is inconsistent and zero otherwise. The coefficient <span class="math inline">\(\beta_2\)</span> thus measures the difference between product evaluation rating for consistent vs inconsistent displays, for the same familiarity score.</p>
@@ -707,6 +723,7 @@ Table&nbsp;6.3: Pairwise contrasts with <em>p</em>-values adjusted using Holm–
 </div>
 </div>
 </div>
+<<<<<<< HEAD
 </figure>
 </div>
 </div>
@@ -718,6 +735,10 @@ Table&nbsp;6.3: Pairwise contrasts with <em>p</em>-values adjusted using Holm–
 Table&nbsp;6.4: Summary statistics of belief as a function of time of measurement and experimental condition.
 </figcaption>
 <div aria-describedby="tbl-vanStekS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+=======
+<p><a href="#tbl-contraststabSSVB">Table&nbsp;<span>6.3</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3">Figure&nbsp;<span>6.4</span></a>, helps decrease background noise.</p>
+<div class="cell" data-hash="06-blocking_ancova_cache/html/tbl-vanStekS3_b16ddde6284e6754eea4f523b4c7592d">
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 <div class="cell-output-display">
 <div>
 <table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
@@ -1327,8 +1348,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+<<<<<<< HEAD
       <a href="./05-interactions_multiway.html" class="pagination-link" aria-label="Complete factorial designs">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span>
+=======
+      <a href="./05-interactions_multiway.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span>
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
       </a>          
   </div>
   <div class="nav-page nav-page-next">

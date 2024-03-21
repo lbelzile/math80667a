@@ -229,7 +229,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -314,6 +314,7 @@ window.Quarto = {
 
 </header>
 
+<<<<<<< HEAD
 
 <p>So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments, the latter being presented in random order to avoid confounding. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions.</p>
 <p>For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes.</p>
@@ -324,6 +325,17 @@ window.Quarto = {
 <p>Due to fatigue or learning effects, randomization of the order of the within-subject experimental conditions. If each is assigned a single time, one good way to do this is via <strong>counterbalancing</strong>. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions <span class="math inline">\(A, B, C\)</span>, we have six possible orderings (either <span class="math inline">\(ABC\)</span>, <span class="math inline">\(ACB\)</span>, <span class="math inline">\(BAC\)</span>, <span class="math inline">\(BCA\)</span>, <span class="math inline">\(CAB\)</span> or <span class="math inline">\(CBA\)</span>). Much like other forms of randomization, this helps us remove confounding effects and let’s us estimate what is the average effect of task ordering on the response.</p>
 <p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in <a href="#fig-xkcd2569" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-xkcd2569</span></a>.</p>
 <div class="cell">
+=======
+<p>So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions.</p>
+<p>For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes.</p>
+<p>In a between-subjects design, subjects are <strong>nested</strong> within experimental condition, as a subject can only be assigned a single treatment. In a within-subjects designs, experimental factors and subjects are <strong>crossed</strong>: it is possible to observed all combination of subject and experimental conditions.</p>
+<p>By including multiple conditions, we can filter out the effect due to subject, much like with blocking: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.</p>
+<p>There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming better as manipulations go on), period effects (fatigue, a decrease in acuity), and permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).</p>
+<p>To minimize potential biases, there are multiple strategies one can use. Tasks are normally presented in random order among subjects to avoid confounding, or using a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.</p>
+<p>If each subject is assigned to an experimental condition only once, one good way to do this is via <strong>counterbalancing</strong>. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions <span class="math inline">\(A, B, C\)</span>, we have six possible orderings (either <span class="math inline">\(ABC\)</span>, <span class="math inline">\(ACB\)</span>, <span class="math inline">\(BAC\)</span>, <span class="math inline">\(BCA\)</span>, <span class="math inline">\(CAB\)</span> or <span class="math inline">\(CBA\)</span>). Much like other forms of randomization, this helps us remove confounding effects and let’s us estimate what is the average effect of task ordering on the response.</p>
+<p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in <a href="11-causal-inference.html#fig-xkcd2569">Figure&nbsp;<span>11.1</span></a>.</p>
+<div class="cell" data-hash="09-repeated_cache/html/fig-xkcd2569_8ed776c94bac829337ae09a61265fb43">
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 <div class="cell-output-display">
 <div id="fig-xkcd2569" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -935,7 +947,135 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 <section id="power-and-effect-size" class="level3" data-number="9.2.5">
 <h3 data-number="9.2.5" class="anchored" data-anchor-id="power-and-effect-size"><span class="header-section-number">9.2.5</span> Power and effect size</h3>
 <p>Since all of the multivariate statistics can be transformed for a comparison with a univariate <span class="math inline">\(\mathsf{F}\)</span> distribution, we can estimate partial effect size as before. The package <code>effectsize</code> offers a measure of partial <span class="math inline">\(\widehat{\eta}^2\)</span> for the multivariate tests.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<<<<<<< HEAD
 <p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation" data-cites="GPower3">(<a href="#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation" data-cites="Lauter:1978">Läuter (<a href="#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons.</p>
+=======
+<p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation" data-cites="GPower3">(<a href="references.html#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation" data-cites="Lauter:1978">Läuter (<a href="references.html#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group <span class="math inline">\(j=1, \ldots, J\)</span>, which shows that the number increases rapidly with the dimension of the response vector <span class="math inline">\(p\)</span>. As usual, smaller effect sizes are more difficult to detect.</p>
+<div class="cell" data-hash="09-repeated_cache/html/tablepowersamplesize_ae1eb9f5ed66705ffe5dac1787110b29">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.0
+✔ readr     2.1.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()     masks stats::filter()
+✖ dplyr::group_rows() masks kableExtra::group_rows()
+✖ dplyr::lag()        masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="cell-output-display">
+<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide;"></th>
+<th colspan="4" data-quarto-table-cell-role="th" style="text-align: center; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+3 groups
+</div></th>
+<th colspan="4" data-quarto-table-cell-role="th" style="text-align: center; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+4 groups
+</div></th>
+<th colspan="4" data-quarto-table-cell-role="th" style="text-align: center; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #111111; margin-bottom: -1px; ">
+5 groups
+</div></th>
+</tr>
+<tr class="odd">
+<th style="text-align: left;" data-quarto-table-cell-role="th">effect size \ p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">4</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">6</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">8</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">4</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">6</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">8</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">4</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">6</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">very large</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">large</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">medium</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">small</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">115</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">230</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">

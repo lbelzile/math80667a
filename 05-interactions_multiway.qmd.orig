@@ -1,4 +1,4 @@
-# Complete factorial designs
+# Multiway factorial designs
 
 ```{r}
 #| label: setup
@@ -30,7 +30,7 @@ As there are four stations and two directions of travel (a 4 by 2 design), the s
 ## Efficiency of multiway analysis of variance.
 
 
-Consider the setting of @Sharma.Tully.Cryder:2021 and suppose we want to check the impact of debt and collect a certain number of observations in each group. If we suspected the label had an influence, we could run a one-way analysis of variance for each spending type separately (thus, two one-way ANOVA each with two groups). We could do likewise if we wanted instead to focus on whether the spending was discretionary in nature or not, for each label: together, this would give a total of eight sets of observations. Combining the two factors allows us to halve the number of groups/samples we collect in this simple setting: this highlights the efficiency of running an experiment modifying all of these instances at once, over a series of one-way analysis of variance. This concept extends to higher dimension when we manipulate two or more factors. Factorial designs allow us to study the impact of multiple variables simultaneously with **fewer overall observations**. 
+Consider the setting of @Sharma.Tully.Cryder:2021 and suppose we want to check the impact of debt and collect a certain number of observations in each group. If we suspected the label had an influence, we could run a one-way analysis of variance for each spending type separately (thus, two one-way ANOVA each with two groups). We could do likewise if we wanted instead to focus on whether the spending was discretionary in nature or not, for each label: together, this would give a total of eight sets of observations. Combining the two factors allows us to halve the number of groups/samples we collect in this simple setting: this highlights the efficiency of running an experiment modifying all of these instances at once, over a series of one-way analysis of variance. This concept extends to higher dimension when we manipulate two or more factors. Factorial designs allow us to study the impact of multiple variables simultaneously with **fewer overall observations** than running experiments separately for each factor. 
 
 
 
@@ -67,7 +67,7 @@ The $i$th row mean represents the average response across all levels of $B$,
 $\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b$ and similarly for the average of the $j$th column, $\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.$ Finally, the overall average is 
 $$\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.$$
 
-Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means $\widehat{\mu}_{i.}$, $\widehat{\mu}_{.j}$ and $\widehat{\mu}$. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.
+Each subgroup average $\mu_{ij}$ will be estimated as the sample mean of observations in their group and we would use the above formula to obtain estimates of the row, column and overall means $\widehat{\mu}_{i.}$, $\widehat{\mu}_{.j}$ and $\widehat{\mu}$. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.
 
 ```{r}
 #| eval: true
@@ -236,8 +236,8 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 where
 
 - $\mu$ is the average of all subgroup averages, termed overall mean.
-- $\alpha_i = \mu_{i.} - \mu$ is the mean of level $A_i$ minus the overall mean.
-- $\beta_j  = \mu_{.j} - \mu$ is the mean of level $B_j$ minus overall mean.
+- $\alpha_i = \mu_{i.} - \mu$ is the mean of level $A_i$ minus the overall mean (row mean).
+- $\beta_j  = \mu_{.j} - \mu$ is the mean of level $B_j$ minus overall mean (column mean).
 - $(\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu$ is the interaction term for $A_i$ and $B_j$ which encodes the effect of both variable not already captured by the main effects.
 
 A rapid calculation shows that there are more coefficients than the number of cells and subgroups ($n_an_b$ cells overall) in our table. The model is **overparametrized**: to get away with this, we impose constraints to remove redundancies. The idea is that if we know $n_a-1$ of the mean for factor $A$ and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor $A$ by setting $\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0$. The $1 +  n_a + n_b$ **sum to zero** constraints,
@@ -245,9 +245,13 @@ $$\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=
 
 The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.
 
-**To be continued**...
 
+<<<<<<< HEAD
 :::{#exm-borrowed-money-test}
+=======
+
+:::{.example name="Testing for psychological ownership of borrowed money"}
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 
 ## Testing for Psychological ownership of borrowed money
 
@@ -282,8 +286,8 @@ emmeans::emmeans(mod,
 # Simple effect
 emmeans::emmeans(mod, 
                  specs = c("purchase", "debttype"),
-                 by = "purchase",
-                 contr = "pairwise")
+                 by = "purchase") |> 
+  emmeans::contrast("pairwise")
 
 ```
 

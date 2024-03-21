@@ -129,7 +129,7 @@ g2 + g1 +
 
 The left panel of @fig-ancovadifftrend shows the ideal situation for an analysis of covariate: the relationship between response and covariate is linear with strong correlation, with the same slope and overlapping support. Since the slopes are the same, we can compare the difference  in average (the vertical difference between slopes at any level of the covariate) because the latter is constant, so this depiction is useful. By contrast, the right-hand panel of @fig-ancovadifftrend shows an interaction between the covariate and the experimental groups, different slopes: there, the effect of the experimental condition increases with the level of the covariate. One may also note that the lack of overlap in the support, the set of values taken by the covariate, for the two experimental conditions, makes comparison hazardous at best in the right-hand panel.
 
-@fig-ancovaresid shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel; note that the $y$-axes have different scales.
+@fig-ancovaresid shows that, due to the strong correlation, the variability of the measurements is smaller on the right-hand panel (corresponding to the analysis of covariance model) than for the centred response on the left-hand panel.
 
 
 ```{r}
@@ -137,7 +137,7 @@ The left panel of @fig-ancovadifftrend shows the ideal situation for an analysis
 #| echo: false
 #| eval: true
 #| cache: true
-#| fig-cap: "Response after subtracting mean (left) and after detrending (right)."
+#| fig-cap: "Response after subtracting mean (left) and after detrending and centering the mean (right)."
 g3 <- ggplot(data = dat,
              aes(color = group,
                  x = group,
@@ -147,7 +147,7 @@ g3 <- ggplot(data = dat,
   labs(y = "centered response",
        subtitle = "ANOVA")+
   theme_classic()
-dat$resid <- resid(lm(response ~ covariate,
+dat$resid <- resid(lm(response ~ group + covariate,
          data = dat))
 
 g4 <- ggplot(data = dat,
@@ -167,9 +167,13 @@ g3 + g4 +
 
 We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.
 
+<<<<<<< HEAD
 ::: {#exm-leechoi}
 
 ## Inconsistency of product description and image in online retailing
+=======
+::: {#exm-leechoi-ancova #leechoi name="Inconsistency of product description and image in online retailing"}
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
 
 @Lee.Choi:2019 measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.
 

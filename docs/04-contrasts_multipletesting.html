@@ -229,7 +229,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-interactions_multiway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -332,7 +332,7 @@ Key concept
 </div>
 <section id="contrasts" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="contrasts"><span class="header-section-number">4.1</span> Contrasts</h2>
-<p>Suppose we perform an analysis of variance and the <span class="math inline">\(F\)</span>-test for the (global) null hypothesis that the averages of all groups are equal is very large: we reject the null hypothesis in favour of the alternative, which states that at least one of the group average is different. The follow-up question will be where these differences lie. Indeed, in an experimental context, this implies one or more of the manipulation has a different effect from the others on the mean response. Oftentimes, this isn’t interesting in itself: we could be interested in comparing different options relative to a <em>status quo</em> (e.g., for new drugs or medical treatment), or determine whether specific combinations work better than separately, or find the best treatment by comparing all pairs.</p>
+<p>Suppose we perform an analysis of variance and the <span class="math inline">\(F\)</span>-test for the (global) null hypothesis that the averages of all groups are equal is very large: we reject the null hypothesis in favor of the alternative, which states that at least one of the group average is different. The follow-up question will be where these differences lie. Indeed, in an experimental context, this implies one or more of the manipulation has a different effect from the others on the mean response. Oftentimes, this isn’t interesting in itself: we could be interested in comparing different options relative to a <em>status quo</em> (e.g., for new drugs or medical treatment), or determine whether specific combinations work better than separately, or find the best treatment by comparing all pairs.</p>
 <p>The scientific question of interest that warranted the experiment may lead to a specific set of hypotheses, which can be formulated by researchers as comparisons between means of different subgroups. We can normally express these as <strong>contrasts</strong>. As <a href="https://stat.ethz.ch/~meier">Dr.&nbsp;Lukas Meier</a> puts it, if the global <span class="math inline">\(F\)</span>-test for equality of means is equivalent to a dimly lit room, contrasts are akin to spotlight that let one focus on particular aspects of differences in treatments.</p>
 <p>Formally speaking, a contrast is a linear combination of averages: in plain English, this means we assign a weight to each group average and add them up, and then compare that summary to a postulated value <span class="math inline">\(a\)</span>, typically zero. Contrasts encode research question of interest: if <span class="math inline">\(c_i\)</span> denotes the weight of group average <span class="math inline">\(\mu_i\)</span> <span class="math inline">\((i=1, \ldots, K)\)</span>, then we can write the contrast as <span class="math inline">\(C = c_1 \mu_1 + \cdots + c_K \mu_K\)</span> with the null hypothesis <span class="math inline">\(\mathscr{H}_0: C=a\)</span> for a two-sided alternative. The sample estimate of the linear contrast is obtained by replacing the unknown population average <span class="math inline">\(\mu_i\)</span> by the sample average of that group, <span class="math inline">\(\widehat{\mu}_i = \overline{y}_{i}\)</span>. We can easily obtain the standard error of the linear combination <span class="math inline">\(C.\)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We can then build a <span class="math inline">\(t\)</span> statistic as usual by looking at the difference between our postulated value and the observed weighted mean, suitably standardized. If the global <span class="math inline">\(F\)</span>-test leads to rejection of the null, there exists a contrast which is significant at the same level.</p>
 <section id="orthogonal-contrasts" class="level3" data-number="4.1.1">
@@ -1337,8 +1337,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+<<<<<<< HEAD
       <a href="./05-interactions_multiway.html" class="pagination-link" aria-label="Complete factorial designs">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span> <i class="bi bi-arrow-right-short"></i>
+=======
+      <a href="./05-interactions_multiway.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span> <i class="bi bi-arrow-right-short"></i>
+>>>>>>> 315a67ca0a9d6d141aa081ff310046943cd022ad
       </a>
   </div>
 </nav>
