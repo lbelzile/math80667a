@@ -48,7 +48,9 @@ Sources of variations are all factors (including identifiers) which could influe
 
 We say to factors are nested ($A$ within $B$) when one can only coexist within the levels of the other: this has implications, for we cannot have interaction between the two. In between-subject experiments, subjects are nested in between-subject factors and the experimental factors are crossed, meaning we can assign an experimental unit or a subject to each factor combination. Interactions can occur for the between-subject factors, although we need participants in each subcategory to estimate them.
 
-:::{.example "Temporal distancing in peace prospects"}
+:::{#exm-tempdist}
+
+## Temporal distancing in peace prospects
 
 We consider a three-way mixed design from Study 5 of @Halevy.Berson:2022. The research studied how temporal distance impacted the prospects of peace by presenting participants with a fictional scenario in which two tribes in a fictional country, Velvetia, where either at war or peace and asking what they think the outcome would be in the near and distance future. Participants rated the likeliness using a Likert scale  ranging from extremely unlikely (1) to extremely likely (7) for the question
 

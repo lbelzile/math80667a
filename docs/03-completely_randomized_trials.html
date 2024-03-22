@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods – 3&nbsp; Completely randomized designs</title>
+<title>Experimental design and statistical methods - 3&nbsp; Completely randomized designs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,44 +109,19 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
+
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="site_libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="site_libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -164,12 +132,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-completely_randomized_trials.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-completely_randomized_trials.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -179,13 +147,13 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -283,7 +251,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -305,7 +273,7 @@ window.Quarto = {
   <li><a href="#sec-modelassumptionsindependence" id="toc-sec-modelassumptionsindependence" class="nav-link" data-scroll-target="#sec-modelassumptionsindependence"><span class="header-section-number">3.4.4</span> Independence</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/03-completely_randomized_trials.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/03-completely_randomized_trials.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -314,7 +282,6 @@ window.Quarto = {
 <h1 class="title display-7"><span id="CRT" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span></h1>
 
 </header>
-
 
 <p>This chapter focuses on experiments where potentially multiple factors of interest are manipulated by the experimenter to study their impact. If the allocation of observational units to each treatment combination is completely random, the resulting experiment is a completely randomized design.</p>
 <p>The one-way analysis of variance describes the most simple experimental setup one can consider: completely randomized experiments with one factor, in which we are solely interested in the effect of a single treatment variable with multiple levels.</p>
@@ -332,26 +299,21 @@ window.Quarto = {
 <p>The most common parametrization for the linear model is in terms of <strong>differences to a baseline</strong>, say <span class="math inline">\(T_1\)</span>. The theoretical average of each group is written as <span class="math inline">\(\mu_1 + a_i\)</span> for treatment <span class="math inline">\(T_i\)</span>, where <span class="math inline">\(a_1=0\)</span> for <span class="math inline">\(T_1\)</span> and <span class="math inline">\(a_i = \mu_i-\mu_1\)</span> otherwise. The parameters are <span class="math inline">\(\mu_1, a_2, \ldots, a_K\)</span>.</p>
 <p>An equivalent formulation writes for each treatment group the average of subpopulation <span class="math inline">\(j\)</span> as <span class="math inline">\(\mu_j = \mu + \delta_j\)</span>, where <span class="math inline">\(\delta_j\)</span> is the difference between the treatment average <span class="math inline">\(\mu_j\)</span> and the global average of all groups. Imposing the constraint <span class="math inline">\(\delta_1 + \cdots + \delta_K=0\)</span> ensures that the average of effects equals <span class="math inline">\(\mu\)</span>. Thus, if we know any <span class="math inline">\(K-1\)</span> of <span class="math inline">\(\{\delta_1, \ldots, \delta_K\}\)</span>, we automatically can deduce the last one.</p>
 <div id="exm-teaching1" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.1 (Impact of encouragement on teaching)</strong></span> In <strong>R</strong>, the <code>lm</code> function fits a linear model based on a formula of the form <code>response ~ explanatory</code>. If the explanatory is categorical (i.e., a factor), the parameters of this model are the intercept, which is the sample average of the baseline group and the other parameters are simply contrasts, i.e., the <span class="math inline">\(a_i\)</span>’s.</p>
+<p><span class="theorem-title"><strong>Example 3.1 (Impact of encouragement on teaching) </strong></span>In <strong>R</strong>, the <code>lm</code> function fits a linear model based on a formula of the form <code>response ~ explanatory</code>. If the explanatory is categorical (i.e., a factor), the parameters of this model are the intercept, which is the sample average of the baseline group and the other parameters are simply contrasts, i.e., the <span class="math inline">\(a_i\)</span>’s.</p>
 <p>The sum-to-zero parametrization is obtained with <code>contrasts = list(... = contr.sum)</code>, where the ellipsis is replaced by the name of the categorical variable; an easier alternative is <code>aov</code>, which enforces this parametrization by default. With the sum-to-zero parametrization, the intercept is the average of each treatment average, <span class="math inline">\((\widehat{\mu}_1 + \cdots + \widehat{\mu}_5)/5\)</span>; this need not coincide with the (overall) mean of the response <span class="math inline">\(\widehat{\mu} = \overline{y}\)</span> unless the sample the number of observations in each group is the same.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The other coefficients of the sum-to-zero parametrization are the differences between this intercept and the group means.</p>
 <p>We show the function call to fit a one-way ANOVA in the different parametrizations along with the sample average of each arithmetic group (the two controls who were taught separately and the groups that were praised, reproved and ignored in the third class). Note that the omitted category changes depending on the parametrization.</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/arithmeticParam_d97f546359a6d47c7f212a9e890cd226">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mod_contrast <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> group, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> arithmetic)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mod_sum2zero <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> group, </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> arithmetic,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">group =</span> contr.sum))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div id="tbl-tableanovaparam" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tableanovaparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.1: Coefficients of the analysis of variance model for the arithmetic scores using different parametrizations.
-</figcaption>
-<div aria-describedby="tbl-tableanovaparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/tbl-tableanovaparam_6879c0ddd6119d278b89d8378b664ace">
 <div class="cell-output-display">
-<div>
-<table class="table do-not-create-environment cell table-sm table-striped small" data-quarto-postprocess="true">
+<div id="tbl-tableanovaparam" class="anchored">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;3.1: Coefficients of the analysis of variance model for the arithmetic scores using different parametrizations.</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">group</th>
@@ -399,12 +361,9 @@ Table&nbsp;3.1: Coefficients of the analysis of variance model for the arithmeti
 </tr>
 </tbody>
 </table>
+</div>
 
 
-</div>
-</div>
-</div>
-</figure>
 </div>
 </div>
 </div>
@@ -413,7 +372,7 @@ Table&nbsp;3.1: Coefficients of the analysis of variance model for the arithmeti
 <section id="sum-of-squares-decomposition" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="sum-of-squares-decomposition"><span class="header-section-number">3.1.2</span> Sum of squares decomposition</h3>
 <p>The following section can be safely skipped on first reading: it attempts to shed some light into how the <span class="math inline">\(F\)</span>-test statistic works as a summary of evidence, as it isn’t straightforward in the way it appears.</p>
-<p>The usual notation for the sum of squares decomposition is as follows: suppose <span class="math inline">\(y_{ik}\)</span> represents the <span class="math inline">\(i\)</span>th person in the <span class="math inline">\(k\)</span>th treatment group (<span class="math inline">\(k=1, \ldots, K\)</span>) and the sample size <span class="math inline">\(n\)</span> can be split between groups as <span class="math inline">\(n_1, \ldots, n_K\)</span>; in the case of a balanced sample, <span class="math inline">\(n_1=\cdots=n_K = n/K\)</span> and the number of observations in each group is the same. We denote by <span class="math inline">\(\widehat{\mu}_k\)</span> the sample average in group <span class="math inline">\(k\)</span> and <span class="math inline">\(\widehat{\mu}\)</span> the overall average <span class="math inline">\((y_{11} + \cdots + y_{n_KK})/n = \sum_k  \sum_i y_{ik}/n\)</span>, where <span class="math inline">\(\sum_i\)</span> denotes the sum over all individuals in the group.</p>
+<p>The usual notation for the sum of squares decomposition is as follows: suppose <span class="math inline">\(y_{ik}\)</span> represents the <span class="math inline">\(i\)</span>th person in the <span class="math inline">\(k\)</span>th treatment group (<span class="math inline">\(k=1, \ldots, K\)</span>) and the sample size <span class="math inline">\(n\)</span> can be split between groups as <span class="math inline">\(n_1, \ldots, n_K\)</span>; in the case of a balanced sample, <span class="math inline">\(n_1=\cdots=n_K = n/K\)</span> and the number of observations in each group is the same. We denote by <span class="math inline">\(\widehat{\mu}_k\)</span> the sample average in group <span class="math inline">\(k\)</span> and <span class="math inline">\(\widehat{\mu}\)</span> the overall average <span class="math inline">\((y_{11} + \cdots + y_{n_KK})/n = \sum_k \sum_i y_{ik}/n\)</span>, where <span class="math inline">\(\sum_i\)</span> denotes the sum over all individuals in the group.</p>
 <p>Under the null model, all groups have the same mean, so the natural estimator for the latter is the sample average of the pooled sample <span class="math inline">\(\widehat{\mu}\)</span> and likewise the group averages <span class="math inline">\(\widehat{\mu}_1, \ldots, \widehat{\mu}_K\)</span> are the best estimators for the group averages if each group has a (potentially) different mean. The more complex model, which has more parameters, will always fit better because it has more possibility to accommodate differences observed in a group, even if these are spurious. The sum of squares measures the (squared) distance between the observation and the fitted values, with the terminology total, within and between sum of squares linked to the decomposition <span class="math display">\[\begin{align*}
 \underset{\text{total sum of squares} }{\sum_{i}\sum_{k} (y_{ik} - \widehat{\mu})^2} &amp;= \underset{\text{within sum of squares} }{\sum_i \sum_k (y_{ik} - \widehat{\mu}_k)^2} +  \underset{\text{between sum of squares} }{\sum_k n_i (\widehat{\mu}_k - \widehat{\mu})^2}.
 \end{align*}\]</span> The term on the left is a measure of the variability for the null model <span class="math inline">\((\mu_1 = \cdots = \mu_K)\)</span> under which all observations are predicted by the overall average <span class="math inline">\(\widehat{\mu}\)</span>. The within sum of squares measures the distance between observations and their group mean, which describes the alternative model in which each group has (potentially) a different average, but the same variability.</p>
@@ -425,50 +384,38 @@ F &amp;= \frac{\text{between-group variability}}{\text{within-group variability}
 &amp;= \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-K)}
 \end{split}
 \tag{3.1}\]</span></span></p>
-<p>If there is no mean difference (null hypothesis), the numerator is an estimator of the population variance, and so is the denominator of eq. <span class="math inline">\(\ref{eq-Fstatheuristic}\)</span> and the ratio of the two is approximately 1 on average. However, the between sum of square is more variable and this induces skewness: for large enough sample, the null distribution of the <em>F</em>-statistic is approximately an <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom which appear in <a href="#eq-Fstatheuristic" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> as scaling factors to ensure proper standardization. The first degree of freedom is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one for the one-way analysis of variance), and the second degree of freedom is the number of observations minus the number of <em>parameters estimates</em> for the mean (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p><a href="#fig-squareddistanova" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.</p>
-<div class="cell">
+<p>If there is no mean difference (null hypothesis), the numerator is an estimator of the population variance, and so is the denominator of eq. <span class="math inline">\(\ref{eq-Fstatheuristic}\)</span> and the ratio of the two is approximately 1 on average. However, the between sum of square is more variable and this induces skewness: for large enough sample, the null distribution of the <em>F</em>-statistic is approximately an <em>F</em>-distribution, whose shape is governed by two parameters named degrees of freedom which appear in <a href="#eq-Fstatheuristic">Equation&nbsp;<span>3.1</span></a> as scaling factors to ensure proper standardization. The first degree of freedom is the number of restrictions imposed by the null hypothesis (<span class="math inline">\(K-1\)</span>, the number of groups minus one for the one-way analysis of variance), and the second degree of freedom is the number of observations minus the number of <em>parameters estimates</em> for the mean (<span class="math inline">\(n-K\)</span>, where <span class="math inline">\(n\)</span> is the overall sample size and <span class="math inline">\(K\)</span> is the number of groups).<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p><a href="#fig-squareddistanova">Figure&nbsp;<span>3.1</span></a> shows how the difference between these distances can encompass information that the null is wrong. The sum of squares is obtained by computing the squared length of these vectors and adding them up. The left panel shows strong signal-to-noise ratio, so that, on average, the black segments are much longer than the colored ones. This indicates that the model obtained by letting each group have its own mean is much better than the other. The picture in the right panel is not as clear: on average, the colored arrows are shorter, but the difference in length is much smaller relative to the colored arrows.</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-squareddistanova_4d98aee843d3fe2bc412ac2ee333b9c6">
 <div class="cell-output-display">
-<div id="fig-squareddistanova" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-squareddistanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-squareddistanova-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-squareddistanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean.
-</figcaption>
+<div id="fig-squareddistanova" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-squareddistanova-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.1: Observations drawn from three groups from a model with a strong (left) and weak (right) signal-to-noise ratio, along with their sample mean (colored horizontal segments) and the overall average (horizontal line). Arrows indicate the magnitude of the difference between the observation and the (group/average) mean.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The <span class="math inline">\(F\)</span>-distribution is what we call a <strong>large sample approximation</strong> to the behaviour of the statistic if there is truly no difference between group averages (and if model assumptions are satisfied): it tells us what to expect if there is nothing going on. The quality of the approximation depends on the sample size in each group: it is more accurate when there are more observations in each group, as average estimation becomes more reliable<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
-<p>As was alluded to in the last chapter, large sample approximations are not the only option for assessing the null, but they are cheap and easy to obtain. If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to <a href="https://www.jwilber.me/permutationtest/">generate those alternative samples by simply shuffling the labels</a>. We see in <a href="#fig-Fdistpermut" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> that the histogram of the <span class="math inline">\(F\)</span>-statistic values obtained from 1000 permutations closely matches that of the large-sample <span class="math inline">\(F\)</span>-distribution when there are on average 20 observations per group (right), so the computational burden associated with running this simulation outweights the benefits. However, with smaller samples (left), the large sample approximation appears underdispersed relative to the permutation-based distribution, with more extreme outcomes; the latter should be viewed as more accurate in this setting.</p>
-<div class="cell">
+<p>As was alluded to in the last chapter, large sample approximations are not the only option for assessing the null, but they are cheap and easy to obtain. If the distributions are the same under the null and alternative except for a location shift, we could instead resort to a permutation-based approach to <a href="https://www.jwilber.me/permutationtest/">generate those alternative samples by simply shuffling the labels</a>. We see in <a href="#fig-Fdistpermut">Figure&nbsp;<span>3.2</span></a> that the histogram of the <span class="math inline">\(F\)</span>-statistic values obtained from 1000 permutations closely matches that of the large-sample <span class="math inline">\(F\)</span>-distribution when there are on average 20 observations per group (right), so the computational burden associated with running this simulation outweights the benefits. However, with smaller samples (left), the large sample approximation appears underdispersed relative to the permutation-based distribution, with more extreme outcomes; the latter should be viewed as more accurate in this setting.</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-Fdistpermut_187388dba6647725a442eed4c5723f26">
 <div class="cell-output-display">
-<div id="fig-Fdistpermut" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Fdistpermut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-Fdistpermut-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Fdistpermut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.2: One-way analysis of variance for a sample of size 20 (left) and 100 (right), split in five groups. The histograms shows the computed test values based on 1000 permutations, which are compared to the density of the large-sample <em>F</em>-distribution.
-</figcaption>
+<div id="fig-Fdistpermut" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-Fdistpermut-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.2: One-way analysis of variance for a sample of size 20 (left) and 100 (right), split in five groups. The histograms shows the computed test values based on 1000 permutations, which are compared to the density of the large-sample <em>F</em>-distribution.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>More interestingly perhaps is what happens to the values taken by the statistic when not all of the averages are the same. We can see in <a href="#fig-distributionFanova" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> that, when there are some difference between group means, the values taken by the statistic for a random sample are more to the right than the null distribution: the larger those differences, the more the curve will shift to the right and the more often we will obtain a value in the rejection region (in red).</p>
+<p>More interestingly perhaps is what happens to the values taken by the statistic when not all of the averages are the same. We can see in <a href="#fig-distributionFanova">Figure&nbsp;<span>3.3</span></a> that, when there are some difference between group means, the values taken by the statistic for a random sample are more to the right than the null distribution: the larger those differences, the more the curve will shift to the right and the more often we will obtain a value in the rejection region (in red).</p>
 <p>If there are only two groups, then one can show that the <span class="math inline">\(F\)</span>-statistic is mathematically equivalent to squaring the <span class="math inline">\(t\)</span>-statistic: the null distributions are <span class="math inline">\(\mathsf{St}(n-K)\)</span> and <span class="math inline">\(\mathsf{F}(1, n-K)\)</span> and lead to the same <span class="math inline">\(p\)</span>-values and thus same statistical inference and conclusions.</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-distributionFanova_23935d1ab6ab9c002ffcce7b8122c38e">
 <div class="cell-output-display">
-<div id="fig-distributionFanova" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-distributionFanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-distributionFanova-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distributionFanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.3: Distribution of the <span class="math inline">\(F\)</span>-test statistic for the one-way analysis of variance when the true group means are equal (top) and under a specific alternative when they are not (bottom). Any value falling within the red region leads to rejection of the null hypothesis at level <span class="math inline">\(\alpha=0.05\)</span>.
-</figcaption>
+<div id="fig-distributionFanova" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-distributionFanova-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.3: Distribution of the <span class="math inline">\(F\)</span>-test statistic for the one-way analysis of variance when the true group means are equal (top) and under a specific alternative when they are not (bottom). Any value falling within the red region leads to rejection of the null hypothesis at level <span class="math inline">\(\alpha=0.05\)</span>.</figcaption>
 </figure>
 </div>
 </div>
@@ -478,39 +425,31 @@ Figure&nbsp;3.3: Distribution of the <span class="math inline">\(F\)</span>-test
 <section id="graphical-representation" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="graphical-representation"><span class="header-section-number">3.2</span> Graphical representation</h2>
 <p>How to represent data for a one-way analysis in a publication? The purpose of the visualization is to provide intuition that extends beyond the reported descriptive statistics and to check the model assumptions. Most of the time, we will be interested in averages and dispersion, but plotting the raw data can be insightful. It is also important to keep in mind that summary statistics are estimators of population quantities that are perhaps unreliable (much too variable) in small samples to be meaningful quantities. Since the mean estimates will likely be reported in the text, the graphics should be used to convey additional information about the data. If the samples are extremely large, then graphics will be typically be used to present salient features of the distributions.</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-dynamiteplot_566670dbb0cbd3042e07385a6cbcdbbe">
 <div class="cell-output-display">
-<div id="fig-dynamiteplot" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-dynamiteplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-dynamiteplot-1.png" class="img-fluid figure-img" style="width:90.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dynamiteplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.4: Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right).
-</figcaption>
+<div id="fig-dynamiteplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-dynamiteplot-1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.4: Two graphical representations of the arithmetic data: dynamite plot (left) showing the sample average with one standard error above and below, and dot plot with the sample mean (right).</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>In a one-way analysis of variance, the outcome is a continuous numerical variable, whereas the treatment or explanatory is a categorical variable. Basic graphics include dot plots, histograms and density plots, or rugs for the raw data.</p>
 <p>Typically, scatterplots are not a good option because observations get overlaid. There are multiple workarounds, involving transparency, bubble plots for discrete data with ties, adding noise (jitter) to every observation or drawing values using a thin line (rugs) if the data are continuous and take on few distinct values.</p>
-<p>Journals are plagued with poor vizualisations, a prime example of which is the infamous <a href="https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/">dynamite plot</a>: it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of <a href="#fig-dynamiteplot" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms, and a five number summary of nine observations isn’t really necessary so boxplot are useless. <span class="citation" data-cites="Weissgerber:2015">Weissgerber et al. (<a href="references.html#ref-Weissgerber:2015" role="doc-biblioref">2015</a>)</span> discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.</p>
+<p>Journals are plagued with poor vizualisations, a prime example of which is the infamous <a href="https://simplystatistics.org/2019/02/21/dynamite-plots-must-die/">dynamite plot</a>: it consists of a bar plot with one standard error interval. The problem with this (or with other summary statistics) is that they hide precious information about the spread and values taken by the data, as many different data could give rise to the same average while being quite different in nature. The height of the bar is the sample average and the bars extend beyond one standard error: this makes little sense as we end up comparing areas, whereas the mean is a single number. The right panel of <a href="#fig-dynamiteplot">Figure&nbsp;<span>3.4</span></a> shows instead a dot plot for the data, i.e., sample values with ties stacked for clarity, along with the sample average and a 95% confidence interval for the latter as a line underneath. In this example, there are not enough observations per group to produce histograms, and a five number summary of nine observations isn’t really necessary so boxplot are useless. <span class="citation" data-cites="Weissgerber:2015">Weissgerber et al. (<a href="references.html#ref-Weissgerber:2015" role="doc-biblioref">2015</a>)</span> discusses alternative solutions and can be referenced when fighting reviewers who insist on bad visualizations.</p>
 <p>If we have a lot of data, it sometimes help to represent selected summary statistics or group data. A box-and-whiskers plot (or boxplot) is a commonly used graphic representing the whole data distribution using five numbers</p>
 <ul>
 <li>The box gives the quartiles, say <span class="math inline">\(q_1\)</span>, <span class="math inline">\(q_2\)</span> (median) and <span class="math inline">\(q_3\)</span> of the distribution: 50% of the observations are smaller or larger than <span class="math inline">\(q_2\)</span>, 25% are smaller than <span class="math inline">\(q_1\)</span> and 75% are smaller than <span class="math inline">\(q_3\)</span> for the sample.</li>
 <li>The whiskers extend up to <span class="math inline">\(1.5\)</span> times the box width (<span class="math inline">\(q_3-q_1\)</span>) (so the largest observation that is smaller than <span class="math inline">\(q_3+1.5(q_3-q_1)\)</span>, etc.)</li>
 </ul>
 <p>Observations beyond the whiskers are represented by dots or circles, sometimes termed outliers. However, beware of this terminology: the larger the sample size, the more values will fall outside the whiskers (about 0.7% for normal data). This is a drawback of boxplots, which were conceived at a time where big data didn’t exist. If you want to combine boxplots with the raw data, remove the display of outliers to avoid artefacts.</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-boxplot_2358785e59a078e9b892481dd53324ab">
 <div class="cell-output-display">
-<div id="fig-boxplot" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/01-intro-boxplot.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.5: Box-and-whiskers plot
-</figcaption>
+<div id="fig-boxplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/01-intro-boxplot.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.5: Box-and-whiskers plot</figcaption>
 </figure>
 </div>
 </div>
@@ -524,17 +463,13 @@ Figure&nbsp;3.5: Box-and-whiskers plot
 <p>Assuming equal variances, the two-sample <span class="math inline">\(t\)</span>-test statistic is <span class="math display">\[\begin{align*}
 t_{ij} = \frac{(\widehat{\mu}_i - \widehat{\mu}_j) - 0}{\mathsf{se}(\widehat{\mu}_i - \widehat{\mu}_j)} =\frac{\widehat{\mu}_i - \widehat{\mu}_j}{\widehat{\sigma} \left(\frac{1}{n_i} + \frac{1}{n_j}\right)^{1/2}},
 \end{align*}\]</span> where <span class="math inline">\(\widehat{\mu}_i\)</span> and <span class="math inline">\(n_i\)</span> are respectively the sample average and the number of observations of group <span class="math inline">\(i\)</span>, and <span class="math inline">\(\widehat{\sigma}\)</span> is the estimator of the standard deviation derived using the whole sample (assuming equal variance). As usual, the denominator of <span class="math inline">\(t_{ij}\)</span> is the standard error of the <span class="math inline">\(\widehat{\mu}_i - \widehat{\mu}_j\)</span>, whose postulated difference is zero. We can compare the value of the observed statistic to a Student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-K\)</span> degrees of freedom, denoted <span class="math inline">\(\mathsf{St}(n-K)\)</span>. For a two-sided alternative, we reject if <span class="math inline">\(|t_{ij}| &gt; \mathfrak{t}_{1-\alpha/2}\)</span>, for <span class="math inline">\(\mathfrak{t}_{1-\alpha/2}\)</span> the <span class="math inline">\(1-\alpha/2\)</span> quantile of <span class="math inline">\(\mathsf{St}(n-K)\)</span>.</p>
-<p><a href="#fig-tcurve" class="quarto-xref">Figure&nbsp;<span>3.6</span></a> shows the density of the benchmark distribution for pairwise comparisons in mean for the <code>arithmetic</code> data. The blue area under the curve defines the set of values for which we fail to reject the null hypothesis, whereas all values of the test statistic falling in the red area lead to rejection at level <span class="math inline">\(5\)</span>%.</p>
-<div class="cell">
+<p><a href="#fig-tcurve">Figure&nbsp;<span>3.6</span></a> shows the density of the benchmark distribution for pairwise comparisons in mean for the <code>arithmetic</code> data. The blue area under the curve defines the set of values for which we fail to reject the null hypothesis, whereas all values of the test statistic falling in the red area lead to rejection at level <span class="math inline">\(5\)</span>%.</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-tcurve_d8dac365ce2467627da7edc57288a83d">
 <div class="cell-output-display">
-<div id="fig-tcurve" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-tcurve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-tcurve-1.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tcurve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.6: Student-<em>t</em> null distribution and rejection region for a <em>t</em>-test.
-</figcaption>
+<div id="fig-tcurve" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-tcurve-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.6: Student-<em>t</em> null distribution and rejection region for a <em>t</em>-test.</figcaption>
 </figure>
 </div>
 </div>
@@ -545,7 +480,7 @@ Figure&nbsp;3.6: Student-<em>t</em> null distribution and rejection region for a
 \mathsf{CI} = \left[\widehat{\delta}_{ij} - \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right), \widehat{\delta}_{ij} - \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right)\right].
 \end{align*}\]</span></p>
 <div id="exm-pairwise-calcul" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.2 (Calculation of pairwise comparisons)</strong></span> We consider the pairwise average difference in scores between the praised (group C) and the reproved (group D) of the <code>arithmetic</code> study. The sample averages are respectively <span class="math inline">\(\widehat{\mu}_C = 27.4\)</span> and <span class="math inline">\(\widehat{\mu}_D = 23.4\)</span> and the estimated pooled standard deviation for the five groups is <span class="math inline">\(1.15\)</span>. Thus, the estimated average difference between groups <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> is <span class="math inline">\(\widehat{\delta}_{CD} = 4\)</span> and the standard error for the difference is <span class="math inline">\(\mathsf{se}(\widehat{\delta}_{CD}) = 1.6216\)</span>; all of these are calculated by software.</p>
+<p><span class="theorem-title"><strong>Example 3.2 (Calculation of pairwise comparisons) </strong></span>We consider the pairwise average difference in scores between the praised (group C) and the reproved (group D) of the <code>arithmetic</code> study. The sample averages are respectively <span class="math inline">\(\widehat{\mu}_C = 27.4\)</span> and <span class="math inline">\(\widehat{\mu}_D = 23.4\)</span> and the estimated pooled standard deviation for the five groups is <span class="math inline">\(1.15\)</span>. Thus, the estimated average difference between groups <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> is <span class="math inline">\(\widehat{\delta}_{CD} = 4\)</span> and the standard error for the difference is <span class="math inline">\(\mathsf{se}(\widehat{\delta}_{CD}) = 1.6216\)</span>; all of these are calculated by software.</p>
 <p>If we take as null hypothesis <span class="math inline">\(\mathscr{H}_0: \delta_{CD}=0\)</span>, the <span class="math inline">\(t\)</span> statistic is <span class="math display">\[\begin{align*}t=\frac{\widehat{\delta}_{CD} - 0}{\mathsf{se}(\widehat{\delta}_{CD})} = \frac{4}{1.6216}=2.467
 \end{align*}\]</span> and the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(p=0.018\)</span>. We therefore reject the null hypothesis at level <span class="math inline">\(\alpha=0.05\)</span> to conclude that there is a significant difference (at level <span class="math inline">\(\alpha=0.05\)</span>) between the average scores of students praised and reproved.</p>
 </div>
@@ -566,25 +501,21 @@ Figure&nbsp;3.6: Student-<em>t</em> null distribution and rejection region for a
 \end{pmatrix}
 \tag{3.3}\]</span></span></p>
 <p>This <strong>additive</strong> decomposition further assumes that each unit is unaffected by the treatment of the other units and that the average effect of the treatment is constant. Thus, it is justified to use difference in sample mean to estimate the treatment effect since on average, the individual effect is zero.</p>
-<p>The decomposition of observations in terms of group average and mean-zero noise in <a href="#eq-onewayanova" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> suggests that we could plot the error term <span class="math inline">\(\varepsilon_{ik}\)</span> against observations, or against other factors or explanatories, to see if there is any unusual structure unexplained by the model and indicating problems with the randomization or additivity. However, we do not have access to <span class="math inline">\(\varepsilon_{ik}\)</span> since both the true group mean <span class="math inline">\(\mu_k\)</span> and the error <span class="math inline">\(\varepsilon_{ik}\)</span> are unknown. However, a good proxy is the <strong>ordinary residual</strong> <span class="math inline">\(e_{ik} = y_{ik} - \widehat{\mu}_k\)</span> where <span class="math inline">\(\widehat{\mu}_k\)</span> is the sample mean of all observations in experimental group <span class="math inline">\(k\)</span>. By construction, the sample mean of the residuals will be zero, but local deviations may indicate violations of the analysis (for example, plotting residuals against time could show a learning effect).</p>
+<p>The decomposition of observations in terms of group average and mean-zero noise in <a href="#eq-onewayanova">Equation&nbsp;<span>3.2</span></a> suggests that we could plot the error term <span class="math inline">\(\varepsilon_{ik}\)</span> against observations, or against other factors or explanatories, to see if there is any unusual structure unexplained by the model and indicating problems with the randomization or additivity. However, we do not have access to <span class="math inline">\(\varepsilon_{ik}\)</span> since both the true group mean <span class="math inline">\(\mu_k\)</span> and the error <span class="math inline">\(\varepsilon_{ik}\)</span> are unknown. However, a good proxy is the <strong>ordinary residual</strong> <span class="math inline">\(e_{ik} = y_{ik} - \widehat{\mu}_k\)</span> where <span class="math inline">\(\widehat{\mu}_k\)</span> is the sample mean of all observations in experimental group <span class="math inline">\(k\)</span>. By construction, the sample mean of the residuals will be zero, but local deviations may indicate violations of the analysis (for example, plotting residuals against time could show a learning effect).</p>
 <p>Many graphical diagnostics use residuals, i.e., some variant of the observations minus the group mean <span class="math inline">\(y_{ik} - \widehat{\mu}_k\)</span>, to look for violation of the assumptions.</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-assumptions_29e716810adc82d77484bb0a7d022cf1">
 <div class="cell-output-display">
-<div id="fig-assumptions" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-assumptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-assumptions-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-assumptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.7: Data satisfying the assumptions of the one-way analysis of variance model, with additive effects, independent observations and common variance.
-</figcaption>
+<div id="fig-assumptions" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-assumptions-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.7: Data satisfying the assumptions of the one-way analysis of variance model, with additive effects, independent observations and common variance.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>More generally, the test statistic may make further assumptions. The <span class="math inline">\(F\)</span>-test of the global null <span class="math inline">\(\mu_1 = \cdots \mu_K\)</span> assumes that the <span class="math inline">\(i\)</span>th observation of group <span class="math inline">\(k\)</span>, say <span class="math inline">\(y_{ik}\)</span>, has average <span class="math inline">\(\mathsf{E}(Y_{ik}) = \mu_k\)</span> and variance <span class="math inline">\(\mathsf{Va}(Y_{ik}) = \sigma^2\)</span>. The latter is estimated using all of the residuals, with <span class="math inline">\(\widehat{\sigma}^2 = \sum_k\sum_i (y_{ik} - \widehat{\mu}_k)^2/(n-K)\)</span>. Under these assumptions, the <span class="math inline">\(F\)</span>-test statistic for the global null <span class="math inline">\(\mu_1 = \cdots = \mu_K\)</span> is the most powerful because it uses all of the data to get a more precise estimation of the variability. Generally, there may be other considerations than power that may guide the choice of test statistic, including robustness (sensitivity to extremes and outliers). For unequal variance, other statistics than the <span class="math inline">\(F\)</span>-test statistic may be more powerful.</p>
 <div id="exm-additivity-transfo" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.3 (Additivity and transformations)</strong></span> Chapter 2 of <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarten students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a <strong>paired experiment</strong> and take as outcome the difference in sociability scores at the beginning and at the end of the school year.</p>
+<p><span class="theorem-title"><strong>Example 3.3 (Additivity and transformations) </strong></span>Chapter 2 of <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the assumption of additivity and provides useful examples showing when it cannot be taken for granted. One of them, Example 2.3, is a scenario in which the experimental units are participants and they are asked to provide a ranking of different kindergarten students on their capacity to interact with others in games, ranked on a scale of 0 to 100. A random group of students receives additional orthopedagogical support, while the balance is in the business-as-usual setting (control group). Since there are intrinsic differences at the student level, one could consider a <strong>paired experiment</strong> and take as outcome the difference in sociability scores at the beginning and at the end of the school year.</p>
 <p>One can expect the treatment to have more impact on people with low sociability skills who were struggling to make contacts: a student who scored 50 initially might see an improvement of 20 points with support relative to 10 in the business-as-usual scenario, whereas another who is well integrated and scored high initially may see an improvement of only 5 more had (s)he been assigned to the support group. This implies that the treatment effects are not constant over the scale, a violation of the additivity assumption. One way to deal with this is via transformations: <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> discusses the transformation <span class="math inline">\(\log\{(x+0.5)/(100.5-x)\}\)</span> to reduce the warping due to scale.</p>
 </div>
 <p>Another example is in experiments where the effect of treatment is multiplicative, so that the output is of the form <span class="math display">\[\begin{align*}
@@ -595,19 +526,15 @@ Figure&nbsp;3.7: Data satisfying the assumptions of the one-way analysis of vari
 \text{on the treatment used}\end{pmatrix}
 \end{align*}\]</span> Usually, this arises for positive responses and treatments, in which case taking natural logarithms on both sides, with <span class="math inline">\(\log(xy) = \log x + \log y\)</span> yielding again an additive decomposition.</p>
 <div id="exm-additivity-context" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.4 (Inadequacy of additivity based on context)</strong></span> This example is adapted from <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span>, Example 2.2. Children suffering from attention deficit hyperactivity disorder (ADHD) may receive medication to increase their attention span, measured on a scale of 0 to 100, with 0 indicating normal attention span. An experiment can be designed to assess the impact of a standardized dose in a laboratory by comparing performances of students on a series of task before and after, when to a placebo. To make a case, suppose that students with ADHD fall into two categories: low symptoms and strong symptoms. In the low symptom group, the average attention is 8 per cent with the drug and 12 per cent with the placebo, whereas for people with strong symptoms, the average is 40 per cent among treated and 60 per cent with the placebo. If these two categories are equally represented in the experiment and the population, we would estimate an average reduction of 12 percent in the score (thus higher attention span among treated). Yet, this quantity is artificial, and a better measure would be that symptoms are for the treatment are 2/3 of those of the control (the ratio of proportions).</p>
+<p><span class="theorem-title"><strong>Example 3.4 (Inadequacy of additivity based on context) </strong></span>This example is adapted from <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span>, Example 2.2. Children suffering from attention deficit hyperactivity disorder (ADHD) may receive medication to increase their attention span, measured on a scale of 0 to 100, with 0 indicating normal attention span. An experiment can be designed to assess the impact of a standardized dose in a laboratory by comparing performances of students on a series of task before and after, when to a placebo. To make a case, suppose that students with ADHD fall into two categories: low symptoms and strong symptoms. In the low symptom group, the average attention is 8 per cent with the drug and 12 per cent with the placebo, whereas for people with strong symptoms, the average is 40 per cent among treated and 60 per cent with the placebo. If these two categories are equally represented in the experiment and the population, we would estimate an average reduction of 12 percent in the score (thus higher attention span among treated). Yet, this quantity is artificial, and a better measure would be that symptoms are for the treatment are 2/3 of those of the control (the ratio of proportions).</p>
 </div>
-<p><a href="#eq-additivefn" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> also implies that the effect of the treatment is constant for all individuals. This often isn’t the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable. The solution to this would be to setup a more complex model (two-way analysis of variance, general linear model) or stratify by the explanatory variable (for example, compute the difference within each level).</p>
-<div class="cell">
+<p><a href="#eq-additivefn">Equation&nbsp;<span>3.3</span></a> also implies that the effect of the treatment is constant for all individuals. This often isn’t the case: in an experimental study on the impact of teaching delivery type (online, hybrid, in person), it may be that the response to the choice of delivery mode depends on the different preferences of learning types (auditory, visual, kinestetic, etc.) Thus, recording additional measurements that are susceptible to interact may be useful; likewise, treatment allotment must factor in this variability should we wish to make it detectable. The solution to this would be to setup a more complex model (two-way analysis of variance, general linear model) or stratify by the explanatory variable (for example, compute the difference within each level).</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-omittedlinearity_bab0b06b20a90ef72573154df71309d7">
 <div class="cell-output-display">
-<div id="fig-omittedlinearity" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-omittedlinearity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-omittedlinearity-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-omittedlinearity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.8: Difference in average response; while the treatment seems to lead to a decrease in the response variable, a stratification by age group reveals this only occurs in the younger population aged less than 25 years, with a seemingly reversed effect for the older adults. Thus, the marginal model implied by the one-way analysis of variance is misleading.
-</figcaption>
+<div id="fig-omittedlinearity" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-omittedlinearity-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.8: Difference in average response; while the treatment seems to lead to a decrease in the response variable, a stratification by age group reveals this only occurs in the younger population aged less than 25 years, with a seemingly reversed effect for the older adults. Thus, the marginal model implied by the one-way analysis of variance is misleading.</figcaption>
 </figure>
 </div>
 </div>
@@ -617,7 +544,7 @@ Figure&nbsp;3.8: Difference in average response; while the treatment seems to le
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="heterogeneity"><span class="header-section-number">3.4.2</span> Heterogeneity</h3>
 <p>The one-way ANOVA builds on the fact that the variance in each group is equal, so that upon recentering, we can estimate it from the variance of the residuals <span class="math inline">\(y_{ik} - \widehat{\mu}_k\)</span>. Specifically, the unbiased variance estimator is the denominator of the <span class="math inline">\(F\)</span>-statistic formula, i.e., the within sum of squares divided by <span class="math inline">\(n-K\)</span> with <span class="math inline">\(n\)</span> the total number of observations and <span class="math inline">\(K\)</span> the number of groups under comparison.</p>
 <p>For the time being, we consider hypothesis tests for the homogeneity (equal) variance assumption. The most commonly used tests are Bartlett’s test<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and Levene’s test (a more robust alternative, less sensitive to outliers). For both tests, the null distribution is <span class="math inline">\(\mathscr{H}_0: \sigma^2_1 = \cdots = \sigma^2_K\)</span> against the alternative that at least two differ. The Bartlett test statistic has a <span class="math inline">\(\chi^2\)</span> null distribution with <span class="math inline">\(K-1\)</span> degrees of freedom, whereas Levene’s test has an <span class="math inline">\(F\)</span>-distribution with (<span class="math inline">\(K-1\)</span>, <span class="math inline">\(n-K\)</span>) degrees of freedom: it is equivalent to computing the one-way ANOVA <span class="math inline">\(F\)</span>-statistic with the absolute value of the centered residuals, <span class="math inline">\(|y_{ik} - \widehat{\mu}_k|\)</span>, as observations.</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/unnamed-chunk-16_087a3e07738177636c7be5a9476c30dc">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(score <span class="sc">~</span> group,</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> arithmetic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -651,7 +578,7 @@ Residuals 40 110.606  2.7652               </code></pre>
 </div>
 <p>We can see in both cases that the <span class="math inline">\(p\)</span>-values are large enough to dismiss any concern about the inequality of variance. However, should the latter be a problem, we can proceed with a test statistic that does not require variances to be equal. The most common choice is a modification due to Satterthwaite called Welch’s ANOVA. It is most commonly encountered in the case of two groups (<span class="math inline">\(K=2\)</span>) and is the default option in <strong>R</strong> with <code>t.test</code> or <code>oneway.test</code>.</p>
 <p>What happens with the example of the arithmetic data when we use this instead of the usual <span class="math inline">\(F\)</span> statistic? Here, the evidence is overwhelming so no changes to the conclusion. Generally, the only drawback of using Welch’s ANOVA over the usual <span class="math inline">\(F\)</span> statistic is the need to have enough observations in each of the group to reliably estimate a separate variance<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. For Welch’s ANOVA, we have to estimate <span class="math inline">\(2K\)</span> parameters (one mean and one variance per group), rather than <span class="math inline">\(K+1\)</span> parameters for the one-way ANOVA (one mean per group, one overall variance).</p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/welchvsF_457c5577911ab7f553a4851b52ac2b1b">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch ANOVA</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> arithmetic, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -676,40 +603,32 @@ F = 15.268, num df = 4, denom df = 40, p-value = 1.163e-07</code></pre>
 <p>Notice how the degrees of freedom of the denominator have decreased. If we use <code>pairwise.t.test</code> with argument <code>pool.sd=FALSE</code>, this amounts to running Welch <span class="math inline">\(t\)</span>-tests separately for each pair of variable.</p>
 <p>What are the impacts of unequal variance if we use the <span class="math inline">\(F\)</span>-test instead? For one, the pooled variance will be based on a weighted average of the variance in each group, where the weight is a function of the sample size. This can lead to size distortion (meaning that the proportion of type I error is not the nominal level <span class="math inline">\(\alpha\)</span> as claimed) and potential loss of power. The following toy example illustrates this.</p>
 <div id="exm-heterogeneity" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.5 (Violation of the null hypothesis of equal variance)</strong></span> &nbsp;</p>
-<div class="cell">
+<p><span class="theorem-title"><strong>Example 3.5 (Violation of the null hypothesis of equal variance) </strong></span>&nbsp;</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-simuWelchnull_90de3591f60c5dc1d0433347c6690505">
 <div class="cell-output-display">
-<div id="fig-simuWelchnull" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-simuWelchnull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-simuWelchnull-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simuWelchnull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.9: Histogram of the null distribution of <span class="math inline">\(p\)</span>-values obtained through simulation using the classical analysis of variance <span class="math inline">\(F\)</span>-test (left) and Welch’s unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>. The uniform distribution would have 5% in each of the 20 bins used for the display.
-</figcaption>
+<div id="fig-simuWelchnull" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-simuWelchnull-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.9: Histogram of the null distribution of <span class="math inline">\(p\)</span>-values obtained through simulation using the classical analysis of variance <span class="math inline">\(F\)</span>-test (left) and Welch’s unequal variance alternative (right), based on 10 000 simulations. Each simulated sample consist of 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>. The uniform distribution would have 5% in each of the 20 bins used for the display.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>We consider for simplicity a problem with <span class="math inline">\(K=2\)</span> groups, which is the two-sample <span class="math inline">\(t\)</span>-test. We simulated 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>, comparing the distribution of the <span class="math inline">\(p\)</span>-values for the Welch and the <span class="math inline">\(F\)</span>-test statistics. <a href="#fig-simuWelchnull" class="quarto-xref">Figure&nbsp;<span>3.9</span></a> shows the results. The percentage of <span class="math inline">\(p\)</span>-values less than <span class="math inline">\(\alpha=0.05\)</span> based on 10 000 replicates is estimated to be 4.76% for the Welch statistic, not far from the level. By contrast, we reject 28.95% of the time with the one-way ANOVA global <span class="math inline">\(F\)</span>-test: this is a large share of innocents sentenced to jail based on false premises! While the size distortion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.</p>
+<p>We consider for simplicity a problem with <span class="math inline">\(K=2\)</span> groups, which is the two-sample <span class="math inline">\(t\)</span>-test. We simulated 50 observations from a <span class="math inline">\(\mathsf{No}(0, 1)\)</span> distribution and 10 observations from <span class="math inline">\(\mathsf{No}(0, 9)\)</span>, comparing the distribution of the <span class="math inline">\(p\)</span>-values for the Welch and the <span class="math inline">\(F\)</span>-test statistics. <a href="#fig-simuWelchnull">Figure&nbsp;<span>3.9</span></a> shows the results. The percentage of <span class="math inline">\(p\)</span>-values less than <span class="math inline">\(\alpha=0.05\)</span> based on 10 000 replicates is estimated to be 4.76% for the Welch statistic, not far from the level. By contrast, we reject 28.95% of the time with the one-way ANOVA global <span class="math inline">\(F\)</span>-test: this is a large share of innocents sentenced to jail based on false premises! While the size distortion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.</p>
 </div>
 <p>There are alternative graphical ways of checking the assumption of equal variance, many including the standardized residuals <span class="math inline">\(r_{ik} = (y_{ik} - \widehat{\mu}_k)/\widehat{\sigma}\)</span> against the fitted values <span class="math inline">\(\widehat{\mu}_k\)</span>. We will cover these in later sections.</p>
 <p>Oftentimes, unequal variance occurs because the model is not additive. You could use variance-stabilizing transformations (e.g., log for multiplicative effects) to ensure approximately equal variance in each group. Another option is to use a model that is suitable for the type of response you have (including count and binary data). Lastly, it may be necessary to explicitly model the variance in more complex design (including repeated measures) where there is a learning effect over time and variability decreases as a result. Consult an expert if needed.</p>
 </section>
 <section id="normality" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="normality"><span class="header-section-number">3.4.3</span> Normality</h3>
-<p>There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parametric) models like the one-way analysis of variance. With normal data and equal variances, the eponymous distributions of the <span class="math inline">\(F\)</span> and <span class="math inline">\(t\)</span> tests are exact: knowing the exact distribution does no harm and is convenient for mathematical derivations. However, it should be stressed that this condition is <strong>unnecessary</strong>: the results hold approximately for large samples by virtue of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This <a href="http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html">applet</a> lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in <a href="#fig-Fdistpermut" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>, where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.</p>
-<p>While many authors may advocate rules of thumbs (sample size of <span class="math inline">\(n&gt;20\)</span> or <span class="math inline">\(n&gt;30\)</span> per group, say), these rules are arbitrary: the approximation is not much worst at <span class="math inline">\(n=19\)</span> than at <span class="math inline">\(n=20\)</span>. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. <a href="#fig-clt" class="quarto-xref">Figure&nbsp;<span>3.10</span></a> shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with <span class="math inline">\(n=5\)</span> observations (bottom left), the approximation is not bad but it may still be very far off with <span class="math inline">\(n=50\)</span> for heavy-tailed data.</p>
-<div class="cell">
+<p>There is a persistent yet incorrect claim in the literature that the data (either response, explanatory or both) must be normal in order to use (so-called parametric) models like the one-way analysis of variance. With normal data and equal variances, the eponymous distributions of the <span class="math inline">\(F\)</span> and <span class="math inline">\(t\)</span> tests are exact: knowing the exact distribution does no harm and is convenient for mathematical derivations. However, it should be stressed that this condition is <strong>unnecessary</strong>: the results hold approximately for large samples by virtue of the central limit theorem. This probability results dictates that, under general conditions nearly universally met, the sample mean behaves like a normal distribution in large samples. This <a href="http://195.134.76.37/applets/AppletCentralLimit/Appl_CentralLimit2.html">applet</a> lets you explore the impact of the underlying population from which the data are drawn and the interplay with the sample size before the central limit theorem kicks in. You can view this in <a href="#fig-Fdistpermut">Figure&nbsp;<span>3.2</span></a>, where the simulated and theoretical large-sample distributions are undistinguishable with approximately 20 observations per group.</p>
+<p>While many authors may advocate rules of thumbs (sample size of <span class="math inline">\(n&gt;20\)</span> or <span class="math inline">\(n&gt;30\)</span> per group, say), these rules are arbitrary: the approximation is not much worst at <span class="math inline">\(n=19\)</span> than at <span class="math inline">\(n=20\)</span>. How large must the sample size be for the approximation to hold? It largely depends on the distribution in the population: the more extremes, skewness, etc. you have, the larger the number of observation must be in order for the approximation to be valid. <a href="#fig-clt">Figure&nbsp;<span>3.10</span></a> shows a skewed to the right bimodal distribution and the distribution of the sample mean under repeated sampling. Even with <span class="math inline">\(n=5\)</span> observations (bottom left), the approximation is not bad but it may still be very far off with <span class="math inline">\(n=50\)</span> for heavy-tailed data.</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-clt_d8ae93ce4ac3a746f67a28b5c2da897b">
 <div class="cell-output-display">
-<div id="fig-clt" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-clt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-clt-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.10: Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases.
-</figcaption>
+<div id="fig-clt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-clt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.10: Graphical representation of the central limit theorem. Top left: density of the underlying population from which samples are drawn. Top right: a sample of 20 observations with its sample mean (vertical red). Bottom panels: histogram of sample averages for samples of size 5 (left) and 20 (right) with normal approximation superimposed. As the sample size increases, the normal approximation for the mean is more accurate and the standard error decreases.</figcaption>
 </figure>
 </div>
 </div>
@@ -720,28 +639,24 @@ Figure&nbsp;3.10: Graphical representation of the central limit theorem. Top lef
 <h3 data-number="3.4.4" class="anchored" data-anchor-id="sec-modelassumptionsindependence"><span class="header-section-number">3.4.4</span> Independence</h3>
 <p>While I am not allowed to talk of independence as a Quebecer<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, this simply means that knowing the value of one observation tells us nothing about the value of any other in the sample. Independence may fail to hold in case of group structure (family dyads, cluster sampling) which have common characteristics or more simply in the case of repeated measurements. Random assignment to treatment is thus key to ensure that the measure holds, and ensuring at the measurement phase that there is no spillover.</p>
 <div id="exm-measurementindep" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.6 (Independence of measurements)</strong></span> There are many hidden ways in which measurements can impact the response. Physical devices that need to be calibrated before use (scales, microscope) require tuning: if measurements are done by different experimenters or on different days, it may impact and add systematic shift in means for the whole batch.</p>
+<p><span class="theorem-title"><strong>Example 3.6 (Independence of measurements) </strong></span>There are many hidden ways in which measurements can impact the response. Physical devices that need to be calibrated before use (scales, microscope) require tuning: if measurements are done by different experimenters or on different days, it may impact and add systematic shift in means for the whole batch.</p>
 </div>
 <p>Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.</p>
 <p>What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the <span class="math inline">\(F\)</span>-test is the sample variance, which is based on the within sum of squares divided by <span class="math inline">\(n-K\)</span>. If each observation is counted 10 times, say, then the real number of measurements is <span class="math inline">\(n\)</span> but the <span class="math inline">\(F\)</span> statistic gets multiplied by a factor 10.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<div class="cell">
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-plotLevelIndep_071beb81e89e2bcfee219fd79a85e4cb">
 <div class="cell-output-display">
-<div id="fig-plotLevelIndep" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-plotLevelIndep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-completely_randomized_trials_files/figure-html/fig-plotLevelIndep-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plotLevelIndep-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.11: Percentage of rejection of the null hypothesis for the <span class="math inline">\(F\)</span>-test of equality of means for the one way ANOVA with data generated with equal mean and variance from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%.
-</figcaption>
+<div id="fig-plotLevelIndep" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-completely_randomized_trials_files/figure-html/fig-plotLevelIndep-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3.11: Percentage of rejection of the null hypothesis for the <span class="math inline">\(F\)</span>-test of equality of means for the one way ANOVA with data generated with equal mean and variance from an equicorrelation model (within group observations are correlated, between group observations are independent). The nominal level of the test is 5%.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The lack of independence can also have drastic consequences on inference and lead to false conclusions: <a href="#fig-plotLevelIndep" class="quarto-xref">Figure&nbsp;<span>3.11</span></a> shows an example with correlated samples within group (or equivalently repeated measurements from individuals) with 25 observations per group. The <span class="math inline">\(y\)</span>-axis shows the proportion of times the null is rejected when it shouldn’t be. Here, since the data are generated from the null model (equal mean) with equal variance, the inflation in the number of spurious discoveries, false alarm or type I error is alarming and the inflation is substantial even with very limited correlation between measurements.</p>
+<p>The lack of independence can also have drastic consequences on inference and lead to false conclusions: <a href="#fig-plotLevelIndep">Figure&nbsp;<span>3.11</span></a> shows an example with correlated samples within group (or equivalently repeated measurements from individuals) with 25 observations per group. The <span class="math inline">\(y\)</span>-axis shows the proportion of times the null is rejected when it shouldn’t be. Here, since the data are generated from the null model (equal mean) with equal variance, the inflation in the number of spurious discoveries, false alarm or type I error is alarming and the inflation is substantial even with very limited correlation between measurements.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Cox:1958" class="csl-entry" role="listitem">
 Cox, David R. 1958. <em>Planning of Experiments</em>. New York, NY: Wiley.
 </div>
@@ -804,7 +719,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -836,50 +762,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -889,17 +776,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -911,130 +789,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1078,7 +833,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1104,32 +858,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1191,12 +919,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02-hypothesis_testing.html" class="pagination-link" aria-label="Hypothesis testing">
+      <a href="./02-hypothesis_testing.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04-contrasts_multipletesting.html" class="pagination-link" aria-label="Contrasts and multiple testing">
+      <a href="./04-contrasts_multipletesting.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1205,5 +933,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/03-completely_randomized_trials.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+</body></html>

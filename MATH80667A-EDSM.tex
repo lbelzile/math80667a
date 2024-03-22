@@ -240,20 +240,6 @@
 \usepackage{utopia}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 \usepackage{pdfpages}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 \makeatletter
 \@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
 \@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
@@ -346,7 +332,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-03-17}
+\date{2024-03-21}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -364,7 +350,7 @@
 \begin{document}
 \includepdf{figures/coverpage.pdf}
 
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, boxrule=0pt, sharp corners, borderline west={3pt}{0pt}{shadecolor}, enhanced, frame hidden, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, breakable, interior hidden, frame hidden, enhanced]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -387,7 +373,7 @@ the joint Ph.D.~program in Management.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on Sunday, March 17 2024.
+and were last compiled on Thursday, March 21 2024.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -413,8 +399,7 @@ observations.
 This course covers experimental designs. In an experiment, the
 researcher manipulates one or more features (say the complexity of a
 text the person must read, or the type of advertisement campaign
-displayed, etc.) to study their impact. In general, however
-(\protect\hyperlink{ref-Cox:1958}{Cox 1958})
+displayed, etc.) to study their impact. In general, however (Cox 1958)
 
 \begin{quote}
 effects under investigation tend to be masked by fluctuations outside
@@ -427,7 +412,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -547,7 +532,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacitybacktitle=0.6, rightrule=.15mm]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -579,8 +564,7 @@ interest. If we take a random sample from the population of interest,
 split it randomly and manipulate only certain aspects, then all
 differences between groups must be due to those changes.
 
-As Hariton and Locascio
-(\protect\hyperlink{ref-Hariton.Locascio:2018}{2018}) put it:
+As Hariton and Locascio (2018) put it:
 
 \begin{quote}
 Randomised controlled trials (RCTs) are the reference standard for
@@ -589,7 +573,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, opacitybacktitle=0.6, rightrule=.15mm]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -599,18 +583,16 @@ Wade), this offers a window to compare neighbouring states.
 
 Canadian economist David Card was co-awarded the 2021 Nobel Memorial
 Prize in Economic Sciences for his work in experimental economics. One
-of his most cited paper is Card and Krueger
-(\protect\hyperlink{ref-Card.Krueger:1994}{1994}), a study that looked
+of his most cited paper is Card and Krueger (1994), a study that looked
 at the impact of an increase in minimum wage on employment figures. Card
-and Krueger (\protect\hyperlink{ref-Card.Krueger:1994}{1994}) used a
-planned increase of the minimum wage of \$0.80 USD in New Jersey to make
-comparisons with neighbouring Eastern Pennsylvania counties by studying
-410 fast food outlets. The authors found no evidence of a negative
-impact on employment of this hike.
+and Krueger (1994) used a planned increase of the minimum wage of \$0.80
+USD in New Jersey to make comparisons with neighbouring Eastern
+Pennsylvania counties by studying 410 fast food outlets. The authors
+found no evidence of a negative impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, opacitybacktitle=0.6, rightrule=.15mm]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -626,8 +608,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, opacitybacktitle=0.6, rightrule=.15mm]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -666,19 +648,6 @@ representation for data is contingent on variable type. Specifically,
   under identical conditions for an individual or at a given time.
 \end{itemize}
 
-\begin{figure}[ht!]
-
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/continuous_discrete.png}
-
-}
-
-\caption{Illustration of continuous (left) and discrete variables
-(right). Artwork by Allison Horst
-\href{https://creativecommons.org/licenses/by/4.0/}{shared under the CC
-BY 4.0 license}.}
-
-\end{figure}
-
 Most of the models we will deal with are so-called regression models, in
 which the mean of a quantitative variable is a function of other
 variables, termed explanatories. There are two types of numerical
@@ -711,19 +680,6 @@ categorical variables in your software is a common mistake, especially
 when these are saved in the database using integers (1,2, \(\ldots\))
 rather than as text (Monday, Tuesday, \(\ldots\)).
 
-\begin{figure}[ht!]
-
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/nominal_ordinal_binary.png}
-
-}
-
-\caption{Examples of categorical nominal (left), ordinal (middle) and
-binary (right) variables. Artwork by
-\href{https://www.allisonhorst.com/}{Allison Horst} shared under the
-\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0 license}.}
-
-\end{figure}
-
 We can characterize the set of all potential values their measurements
 can take, together with their frequency, via a \textbf{distribution}.
 The latter can be represented graphically using an histogram or a
@@ -733,9 +689,17 @@ density plot\footnote{Since continuous data can take any value in the
   the higher the curve, the more likely the outcome.} if the data are
 continuous, or a bar plot for discrete or categorical measurements.
 
+\begin{example}[Die
+toss]\protect\hypertarget{exm-dietoss}{}\label{exm-dietoss}
+
 The distribution of outcomes of a die toss is discrete and takes values
 \(1, \ldots, 6\). Each outcome is equally likely with probability
 \(1/6\).
+
+\end{example}
+
+\begin{example}[Normal
+distribution]\protect\hypertarget{exm-normaldist}{}\label{exm-normaldist}
 
 Mathematical theory suggests that, under general conditions, the
 distribution of a sample average is approximately distributed according
@@ -795,7 +759,9 @@ limit theorem.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacitybacktitle=0.6, rightrule=.15mm]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -863,7 +829,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacitybacktitle=0.6, rightrule=.15mm]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -907,7 +873,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacitybacktitle=0.6, rightrule=.15mm]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -939,7 +905,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacitybacktitle=0.6, rightrule=.15mm]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -954,6 +920,9 @@ of the sampling frame. The second most common scheme is stratified
 sampling, whereby a certain numbers of units are drawn uniformly from
 strata, namely subgroups (e.g., gender). Finally, cluster sampling
 consists in sampling only from some of these subgroups.
+
+\begin{example}[Sampling schemes in a
+picture]\protect\hypertarget{exm-samplingscheme}{}\label{exm-samplingscheme}
 
 Suppose we wish to look at student satisfaction regarding the material
 taught in an introductory statistics course offered to multiple
@@ -989,7 +958,9 @@ sampled is \(1/3\), with the simple random sampling having a range of
 {[}\(0.22, 0.39\){]} among the strata, compared to {[}\(0.31, 0.33\){]}
 for the stratified sample.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacitybacktitle=0.6, rightrule=.15mm]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1008,17 +979,17 @@ understand how they relate to the latter.
 In recent years, there has been a proliferation of studies employing
 data obtained from web experimentation plateforms such as Amazon's
 Mechanical Turk (MTurk), to the point that the Journal of Management
-commissioned a review (\protect\hyperlink{ref-Aguinis:2021}{Aguinis,
-Villamor, and Ramani 2021}). These samples are subject to self-selection
-bias and articles using them should be read with a healthy dose of
-skepticism. Unless good manipulation checks are conducted (e.g., to
-ensure participants are faithful and answer in a reasonable amount of
-time), I would reserve these tools for paired samples (e.g., asking
-people to perform multiple tasks presented in random order) for which
-the composition of the population is less important. To make sure your
-sample matches the target population, you can use statistical tests and
-informal comparison and compare the distribution of individuals with the
-composition obtained from the census.
+commissioned a review (Aguinis, Villamor, and Ramani 2021). These
+samples are subject to self-selection bias and articles using them
+should be read with a healthy dose of skepticism. Unless good
+manipulation checks are conducted (e.g., to ensure participants are
+faithful and answer in a reasonable amount of time), I would reserve
+these tools for paired samples (e.g., asking people to perform multiple
+tasks presented in random order) for which the composition of the
+population is less important. To make sure your sample matches the
+target population, you can use statistical tests and informal comparison
+and compare the distribution of individuals with the composition
+obtained from the census.
 
 \begin{figure}[ht!]
 
@@ -1047,8 +1018,8 @@ The \href{https://www.rothamsted.ac.uk/}{Rothamsted Research Station} in
 the UK has been conducting experiments since 1843. Ronald A. Fisher, who
 worked 14 years at Rothamsted from 1919, developed much of the
 statistical theory underlying experimental design, inspired from his
-work there. Yates (\protect\hyperlink{ref-Yates:1964}{1964}) provides a
-recollection of his contribution to the field.
+work there. Yates (1964) provides a recollection of his contribution to
+the field.
 
 \begin{figure}[ht!]
 
@@ -1076,15 +1047,15 @@ Most modern experiments happen online, with tech companies running
 thousands of experiments on an ongoing basis in order to discover
 improvement to their interfaces that lead to increased profits. An
 \href{https://hbr.org/2017/09/the-surprising-power-of-online-experiments}{Harvard
-Business Review article} (\protect\hyperlink{ref-HBR2017}{Kohavi and
-Thomke 2017}) details how small tweaks to the display of advertisements
-in the Microsoft Bing search engine landing page lead to a whooping 12\%
-increase in revenues. Such randomized control trials, termed A/B
-experiments, involve splitting incoming traffic into separate groups;
-each group will see different views of the webpage that differ only ever
-slightly. The experimenters then compare traffic and click revenues. At
-large scale, even small effects can have major financial consequences
-and can be learned despite the large variability in customer behaviour.
+Business Review article} (Kohavi and Thomke 2017) details how small
+tweaks to the display of advertisements in the Microsoft Bing search
+engine landing page lead to a whooping 12\% increase in revenues. Such
+randomized control trials, termed A/B experiments, involve splitting
+incoming traffic into separate groups; each group will see different
+views of the webpage that differ only ever slightly. The experimenters
+then compare traffic and click revenues. At large scale, even small
+effects can have major financial consequences and can be learned despite
+the large variability in customer behaviour.
 
 \end{example}
 
@@ -1094,19 +1065,16 @@ for policy making.
 \begin{example}[Experiments on wellness
 programs]\protect\hypertarget{exm-experimentvsobservations}{}\label{exm-experimentvsobservations}
 
-Song and Baicker (\protect\hyperlink{ref-Song.Baicker:2019}{2019})
-conducted a large randomized trial over a period of 18 months to study
-the impact of wellness programs in US companies. The industry, worth
-more than 8 billions USD, has significantly increased following the
-passage of the Affordable Care Act, aka Obamacare. The findings are
-vulgarized in
+Song and Baicker (2019) conducted a large randomized trial over a period
+of 18 months to study the impact of wellness programs in US companies.
+The industry, worth more than 8 billions USD, has significantly
+increased following the passage of the Affordable Care Act, aka
+Obamacare. The findings are vulgarized in
 \href{https://hms.harvard.edu/news/do-wellness-programs-work}{a press
 release by Jake Miller from Harvard News \& Research}: they show that,
 while there was seemingly an impact on physical activity and well-being,
 there were no evidence of changes in absenteeism, job tenure and job
-performance. Jones, Molitor, and Reif
-(\protect\hyperlink{ref-Damon.Molitor.Reif:2019}{2019}) reach similar
-conclusion.
+performance. Jones, Molitor, and Reif (2019) reach similar conclusion.
 
 \end{example}
 
@@ -1118,10 +1086,9 @@ increased job duration, reduced medical spendings.
 
 The Tennessee's Student Teacher Achievement Ratio
 \href{(https://dss.princeton.edu/catalog/resource1589)}{(STAR)} project
-(\protect\hyperlink{ref-STAR2008}{Achilles et al. 2008}) is another
-important example of large scale experiment with broad ramifications.
-The study suggested that smaller class sizes lead to better outcomes of
-pupils.
+(Achilles et al. 2008) is another important example of large scale
+experiment with broad ramifications. The study suggested that smaller
+class sizes lead to better outcomes of pupils.
 
 \begin{quote}
 Over 7,000 students in 79 schools were randomly assigned into one of 3
@@ -1140,12 +1107,12 @@ programs]\protect\hypertarget{exm-randcorp}{}\label{exm-randcorp}
 
 In a large-scale
 \href{https://www.rand.org/health-care/projects/hie.html}{multiyear
-experiment conducted by the RAND Corporation}
-(\protect\hyperlink{ref-RANDHIE}{Brook et al. 2006}), participants who
-paid for a share of their health care used fewer health services than a
-comparison group given free care. The study concluded that cost sharing
-reduced ``inappropriate or unnecessary'' medical care (overutilization),
-but also reduced ``appropriate or needed'' medical care.
+experiment conducted by the RAND Corporation} (Brook et al. 2006),
+participants who paid for a share of their health care used fewer health
+services than a comparison group given free care. The study concluded
+that cost sharing reduced ``inappropriate or unnecessary'' medical care
+(overutilization), but also reduced ``appropriate or needed'' medical
+care.
 
 \begin{quote}
 The HIE was a large-scale, randomized experiment conducted between 1971
@@ -1188,18 +1155,16 @@ experiment.
 There are many other great examples in
 \href{https://tellingstorieswithdata.com/08-hunt.html\#rct-examples}{the
 dedicated section of Chapter 10 of \emph{Telling stories with data} by
-Rohan Alexander} (\protect\hyperlink{ref-Alexander2021}{Alexander
-2022}). Section 1.4 of Berger, Maurer, and Celli
-(\protect\hyperlink{ref-Berger:2018}{2018}) also lists various
-applications of experimental designs in a variety of fields.
+Rohan Alexander} (Alexander 2022). Section 1.4 of Berger, Maurer, and
+Celli (2018) also lists various applications of experimental designs in
+a variety of fields.
 
 \hypertarget{requirements-for-good-experiments}{%
 \section{Requirements for good
 experiments}\label{requirements-for-good-experiments}}
 
-Section 1.2 of Cox (\protect\hyperlink{ref-Cox:1958}{1958}) describes
-the various requirements that are necessary for experiments to be
-useful. These are
+Section 1.2 of Cox (1958) describes the various requirements that are
+necessary for experiments to be useful. These are
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1223,12 +1188,17 @@ error}\label{absence-of-systematic-error}}
 This point requires careful planning and listing potential confounding
 variables that could affect the response.
 
+\begin{example}[Systematic
+example]\protect\hypertarget{exm-systematicerror}{}\label{exm-systematicerror}
+
 Suppose we wish to consider the differences in student performance
 between two instructors. If the first teaches only morning classes,
 while the second only teaches in the evening, it will be impossible to
 disentangle the effect of timing with that of instructor performance.
 Such comparisons should only be undertaken if there is compelling prior
 evidence that timing does not impact the outcome of interest.
+
+\end{example}
 
 The first point raised by Cox is thus that we
 
@@ -1252,12 +1222,12 @@ independent of one another also comes out as corollary.
 \hypertarget{variability}{%
 \subsection{Variability}\label{variability}}
 
-The second point listed by Cox (\protect\hyperlink{ref-Cox:1958}{1958})
-is that of the variability of estimator. Much of the precision can be
-captured by the signal-to-noise ratio, in which the difference in mean
-treatment is divided by its standard error, a form of effect size. The
-intuition should be that it's easier to detect something when the signal
-is large and the background noise is low. The latter is a function of
+The second point listed by Cox (1958) is that of the variability of
+estimator. Much of the precision can be captured by the signal-to-noise
+ratio, in which the difference in mean treatment is divided by its
+standard error, a form of effect size. The intuition should be that it's
+easier to detect something when the signal is large and the background
+noise is low. The latter is a function of
 
 \begin{enumerate}
 \def\labelenumi{(\alph{enumi})}
@@ -1316,6 +1286,8 @@ license}.}
 
 \end{figure}
 
+\begin{example}[Generalizability]\protect\hypertarget{exm-generalizability}{}\label{exm-generalizability}
+
 Replication studies done in university often draw participants from
 students enrolled in the institutions. The findings are thus not
 necessarily robust if extrapolated to the whole population if there are
@@ -1323,17 +1295,24 @@ characteristics for which they have strong (familiarity to technology,
 acquaintance with administrative system, political views, etc). These
 samples are often \textbf{convenience samples}.
 
-Example 1.9 in Cox (\protect\hyperlink{ref-Cox:1958}{1958}) mentions
-recollections of ``Student''\footnote{William Sealy Gosset} on
-Spratt-Archer barley, a new variety of barley that performed well in
-experiments and whose culture the Irish Department of Agriculture
-encouraged. Fuelled by a district skepticism with the new variety, the
-Department ran an experiment comparing the yield of the Spratt-Archer
-barley with that of the native race. Their findings surprised the
-experimenters: the native barley grew more quickly and was more
-resistant to weeds, leading to higher yields. It was concluded that the
-initial experiments were misleading because Spratt-Archer barley had
-been experimented in well-farmed areas, exempt of nuisance.
+\end{example}
+
+\begin{example}[Spratt-Archer barley in
+Ireland]\protect\hypertarget{exm-spratt}{}\label{exm-spratt}
+
+Example 1.9 in Cox (1958) mentions recollections of
+``Student''\footnote{William Sealy Gosset} on Spratt-Archer barley, a
+new variety of barley that performed well in experiments and whose
+culture the Irish Department of Agriculture encouraged. Fuelled by a
+district skepticism with the new variety, the Department ran an
+experiment comparing the yield of the Spratt-Archer barley with that of
+the native race. Their findings surprised the experimenters: the native
+barley grew more quickly and was more resistant to weeds, leading to
+higher yields. It was concluded that the initial experiments were
+misleading because Spratt-Archer barley had been experimented in
+well-farmed areas, exempt of nuisance.
+
+\end{example}
 
 \hypertarget{simplicity}{%
 \subsection{Simplicity}\label{simplicity}}
@@ -1374,7 +1353,7 @@ license}.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -1411,7 +1390,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \textbf{Learning objectives}:
 
@@ -2082,7 +2061,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacitybacktitle=0.6, rightrule=.15mm]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2138,8 +2117,7 @@ below:
 \begin{example}[Gender inequality and permutation
 tests]\protect\hypertarget{exm-rosenjerdee74}{}\label{exm-rosenjerdee74}
 
-We consider data from Rosen and Jerdee
-(\protect\hyperlink{ref-Rosen:1974}{1974}), who look at sex role
+We consider data from Rosen and Jerdee (1974), who look at sex role
 stereotypes and their impacts on promotion and opportunities for women
 candidates. The experiment took place in 1972 and the experimental
 units, which consisted of 95 male bank supervisors, were submitted to
@@ -2321,13 +2299,13 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacitybacktitle=0.6, rightrule=.15mm]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
 Likert scale of six items ranging from (1) extremely unfavorable to (6)
 extremely favorable. However, only the averages are reported in Table 1
-along with (\protect\hyperlink{ref-Rosen:1974}{Rosen and Jerdee 1974})
+along with (Rosen and Jerdee 1974)
 
 \begin{quote}
 Mean rating for the male candidate was 4.73 compared to a mean rating of
@@ -2410,15 +2388,14 @@ will be outside of the confidence interval and vice-versa.
 \begin{example}[``The Surprise of Reaching
 Out'']\protect\hypertarget{exm-LiuRimMinMin2023E1}{}\label{exm-LiuRimMinMin2023E1}
 
-Liu et al. (\protect\hyperlink{ref-Liu.Rim.Min.Min:2023}{2023}) studies
-social interactions and the impact of surprise on people reaching out if
-this contact is unexpected. Experiment 1 focuses on questionnaires where
-the experimental condition is the perceived appreciation of reaching out
-to someone (vs being reached to). The study used a questionnaire
-administered to 200 American adults recruited on the Prolific Academic
-platform. The response index consists of the average of four questions
-measured on a Likert scale ranging from 1 to 7, with higher values
-indicating higher appreciation.
+Liu et al. (2023) studies social interactions and the impact of surprise
+on people reaching out if this contact is unexpected. Experiment 1
+focuses on questionnaires where the experimental condition is the
+perceived appreciation of reaching out to someone (vs being reached to).
+The study used a questionnaire administered to 200 American adults
+recruited on the Prolific Academic platform. The response index consists
+of the average of four questions measured on a Likert scale ranging from
+1 to 7, with higher values indicating higher appreciation.
 
 \end{example}
 
@@ -2516,9 +2493,9 @@ generated with creativity score above average. The mean number of the
 number of creative ideas for face-to-face \(7.92\) ideas (sd \(3.40\))
 relative to videoconferencing \(6.73\) ideas (sd \(3.27\)).
 
-Brucks and Levav (\protect\hyperlink{ref-Brucks.Levav:2022}{2022}) used
-a negative binomial regression model: in their model, the expected
-number creative ideas generated is \begin{align*}
+Brucks and Levav (2022) used a negative binomial regression model: in
+their model, the expected number creative ideas generated is
+\begin{align*}
 \mathsf{E}(\texttt{ncreative}) = \exp(\beta_0 + \beta_1 \texttt{video})
 \end{align*} where \(\texttt{video}=0\) if the pair are in the same room
 and \(\texttt{video}=1\) if they interact instead via videoconferencing.
@@ -2558,9 +2535,8 @@ depends on a number of factors.
 
 Richard McElreath in the
 \href{http://xcelab.net/rmpubs/sr2/statisticalrethinking2_chapters1and2.pdf}{first
-chapter} of his book (\protect\hyperlink{ref-McElreath:2020}{McElreath
-2020}) draws a parallel between statistical tests and golems (i.e.,
-robots): neither
+chapter} of his book (McElreath 2020) draws a parallel between
+statistical tests and golems (i.e., robots): neither
 
 \begin{quote}
 discern when the context is inapropriate for its answers. It just knows
@@ -2573,7 +2549,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacitybacktitle=0.6, rightrule=.15mm]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -2661,7 +2637,7 @@ equals \(\mu\). Thus, if we know any \(K-1\) of
 one.
 
 \begin{example}[Impact of encouragement on
-teaching]\protect\hypertarget{exm-impacteaching3}{}\label{exm-impacteaching3}
+teaching]\protect\hypertarget{exm-teaching1}{}\label{exm-teaching1}
 
 In \textbf{R}, the \texttt{lm} function fits a linear model based on a
 formula of the form \texttt{response\ \textasciitilde{}\ explanatory}.
@@ -2946,9 +2922,8 @@ with the sample average and a 95\% confidence interval for the latter as
 a line underneath. In this example, there are not enough observations
 per group to produce histograms, and a five number summary of nine
 observations isn't really necessary so boxplot are useless. Weissgerber
-et al. (\protect\hyperlink{ref-Weissgerber:2015}{2015}) discusses
-alternative solutions and can be referenced when fighting reviewers who
-insist on bad visualizations.
+et al. (2015) discusses alternative solutions and can be referenced when
+fighting reviewers who insist on bad visualizations.
 
 If we have a lot of data, it sometimes help to represent selected
 summary statistics or group data. A box-and-whiskers plot (or boxplot)
@@ -2986,10 +2961,10 @@ avoid artefacts.
 
 \end{figure}
 
-Weissgerber et al. (\protect\hyperlink{ref-Weissgerber:2019}{2019})
-contains many examples of how to build effective visualizations,
-including highlighting particular aspects using color, jittering,
-transparency and how to adequately select the display zone.
+Weissgerber et al. (2019) contains many examples of how to build
+effective visualizations, including highlighting particular aspects
+using color, jittering, transparency and how to adequately select the
+display zone.
 
 \hypertarget{pairwise-tests}{%
 \section{Pairwise tests}\label{pairwise-tests}}
@@ -3053,8 +3028,8 @@ confidence interval for \(\delta_{ij}\), \begin{align*}
 \mathsf{CI} = \left[\widehat{\delta}_{ij} - \mathfrak{t}_{1-\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right), \widehat{\delta}_{ij} - \mathfrak{t}_{\alpha/2}\mathsf{se}\left(\widehat{\delta}_{ij}\right)\right].
 \end{align*}
 
-\begin{example}[Pairwise
-comparison]\protect\hypertarget{exm-pairwisecomp}{}\label{exm-pairwisecomp}
+\begin{example}[Calculation of pairwise
+comparisons]\protect\hypertarget{exm-pairwise-calcul}{}\label{exm-pairwise-calcul}
 
 We consider the pairwise average difference in scores between the
 praised (group C) and the reproved (group D) of the \texttt{arithmetic}
@@ -3099,7 +3074,7 @@ variance \(\sigma^2\).
 \subsection{Additivity}\label{additivity}}
 
 The basic assumption of most designs is that we can decompose the
-outcome into two components (\protect\hyperlink{ref-Cox:1958}{Cox 1958})
+outcome into two components (Cox 1958)
 \begin{equation}\protect\hypertarget{eq-additivefn}{}{
 \begin{pmatrix} \text{quantity depending} \\
  \text{on the treatment used}\end{pmatrix} +
@@ -3161,20 +3136,19 @@ outliers). For unequal variance, other statistics than the \(F\)-test
 statistic may be more powerful.
 
 \begin{example}[Additivity and
-transformations]\protect\hypertarget{exm-additivity}{}\label{exm-additivity}
+transformations]\protect\hypertarget{exm-additivity-transfo}{}\label{exm-additivity-transfo}
 
-Chapter 2 of Cox (\protect\hyperlink{ref-Cox:1958}{1958}) discusses the
-assumption of additivity and provides useful examples showing when it
-cannot be taken for granted. One of them, Example 2.3, is a scenario in
-which the experimental units are participants and they are asked to
-provide a ranking of different kindergarten students on their capacity
-to interact with others in games, ranked on a scale of 0 to 100. A
-random group of students receives additional orthopedagogical support,
-while the balance is in the business-as-usual setting (control group).
-Since there are intrinsic differences at the student level, one could
-consider a \textbf{paired experiment} and take as outcome the difference
-in sociability scores at the beginning and at the end of the school
-year.
+Chapter 2 of Cox (1958) discusses the assumption of additivity and
+provides useful examples showing when it cannot be taken for granted.
+One of them, Example 2.3, is a scenario in which the experimental units
+are participants and they are asked to provide a ranking of different
+kindergarten students on their capacity to interact with others in
+games, ranked on a scale of 0 to 100. A random group of students
+receives additional orthopedagogical support, while the balance is in
+the business-as-usual setting (control group). Since there are intrinsic
+differences at the student level, one could consider a \textbf{paired
+experiment} and take as outcome the difference in sociability scores at
+the beginning and at the end of the school year.
 
 One can expect the treatment to have more impact on people with low
 sociability skills who were struggling to make contacts: a student who
@@ -3184,9 +3158,8 @@ well integrated and scored high initially may see an improvement of only
 5 more had (s)he been assigned to the support group. This implies that
 the treatment effects are not constant over the scale, a violation of
 the additivity assumption. One way to deal with this is via
-transformations: Cox (\protect\hyperlink{ref-Cox:1958}{1958}) discusses
-the transformation \(\log\{(x+0.5)/(100.5-x)\}\) to reduce the warping
-due to scale.
+transformations: Cox (1958) discusses the transformation
+\(\log\{(x+0.5)/(100.5-x)\}\) to reduce the warping due to scale.
 
 \end{example}
 
@@ -3202,26 +3175,24 @@ in which case taking natural logarithms on both sides, with
 \(\log(xy) = \log x + \log y\) yielding again an additive decomposition.
 
 \begin{example}[Inadequacy of additivity based on
-context]\protect\hypertarget{exm-additivity-counter}{}\label{exm-additivity-counter}
+context]\protect\hypertarget{exm-additivity-context}{}\label{exm-additivity-context}
 
-This example is adapted from Cox
-(\protect\hyperlink{ref-Cox:1958}{1958}), Example 2.2. Children
-suffering from attention deficit hyperactivity disorder (ADHD) may
-receive medication to increase their attention span, measured on a scale
-of 0 to 100, with 0 indicating normal attention span. An experiment can
-be designed to assess the impact of a standardized dose in a laboratory
-by comparing performances of students on a series of task before and
-after, when to a placebo. To make a case, suppose that students with
-ADHD fall into two categories: low symptoms and strong symptoms. In the
-low symptom group, the average attention is 8 per cent with the drug and
-12 per cent with the placebo, whereas for people with strong symptoms,
-the average is 40 per cent among treated and 60 per cent with the
-placebo. If these two categories are equally represented in the
-experiment and the population, we would estimate an average reduction of
-12 percent in the score (thus higher attention span among treated). Yet,
-this quantity is artificial, and a better measure would be that symptoms
-are for the treatment are 2/3 of those of the control (the ratio of
-proportions).
+This example is adapted from Cox (1958), Example 2.2. Children suffering
+from attention deficit hyperactivity disorder (ADHD) may receive
+medication to increase their attention span, measured on a scale of 0 to
+100, with 0 indicating normal attention span. An experiment can be
+designed to assess the impact of a standardized dose in a laboratory by
+comparing performances of students on a series of task before and after,
+when to a placebo. To make a case, suppose that students with ADHD fall
+into two categories: low symptoms and strong symptoms. In the low
+symptom group, the average attention is 8 per cent with the drug and 12
+per cent with the placebo, whereas for people with strong symptoms, the
+average is 40 per cent among treated and 60 per cent with the placebo.
+If these two categories are equally represented in the experiment and
+the population, we would estimate an average reduction of 12 percent in
+the score (thus higher attention span among treated). Yet, this quantity
+is artificial, and a better measure would be that symptoms are for the
+treatment are 2/3 of those of the control (the ratio of proportions).
 
 \end{example}
 
@@ -3392,7 +3363,7 @@ claimed) and potential loss of power. The following toy example
 illustrates this.
 
 \begin{example}[Violation of the null hypothesis of equal
-variance]\protect\hypertarget{exm-violation-equal-varince}{}\label{exm-violation-equal-varince}
+variance]\protect\hypertarget{exm-heterogeneity}{}\label{exm-heterogeneity}
 
 ~
 
@@ -3513,7 +3484,7 @@ Random assignment to treatment is thus key to ensure that the measure
 holds, and ensuring at the measurement phase that there is no spillover.
 
 \begin{example}[Independence of
-measurements]\protect\hypertarget{exm-indep}{}\label{exm-indep}
+measurements]\protect\hypertarget{exm-measurementindep}{}\label{exm-measurementindep}
 
 There are many hidden ways in which measurements can impact the
 response. Physical devices that need to be calibrated before use
@@ -3570,7 +3541,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \textbf{Learning objectives}:
 
@@ -3623,7 +3594,7 @@ typically zero. Contrasts encode research question of interest: if
 of the linear contrast is obtained by replacing the unknown population
 average \(\mu_i\) by the sample average of that group,
 \(\widehat{\mu}_i = \overline{y}_{i}\). We can easily obtain the
-standard error of the linear combination \(C\).\footnote{Should you ever
+standard error of the linear combination \(C.\)\footnote{Should you ever
   need the formula, the standard error assuming subsample size of
   \(n_1, \ldots, n_K\) and a common variance \(\sigma^2\) is
   \(\sqrt{\mathsf{Va}(\widehat{C})}\), where
@@ -3661,6 +3632,9 @@ treatments), we impose a sum-to-zero constraint on the weights so
 are nice mathematically, contrasts should encode the hypothesis of
 interest to the researchers: we choose contrasts because they are
 meaningful, not because they are orthogonal.
+
+\begin{example}[Contrasts for encouragement on
+teaching]\protect\hypertarget{exm-contrast-teaching}{}\label{exm-contrast-teaching}
 
 The \texttt{arithmetic} data example considered five different treatment
 groups with 9 individuals in each. Two of them were control groups, one
@@ -3726,12 +3700,13 @@ praised vs reproved & 4.00 & 1.62 & 40 & 0.72 & 7.28\\
 \end{tabular}
 \end{table}
 
+\end{example}
+
 \begin{example}[Teaching to
 read]\protect\hypertarget{exm-teachingtoread}{}\label{exm-teachingtoread}
 
-We consider data from Baumann, Seifert-Kessell, and Jones
-(\protect\hyperlink{ref-Baumann:1992}{1992}). The abstract of the paper
-provides a brief description of the study
+We consider data from Baumann, Seifert-Kessell, and Jones (1992). The
+abstract of the paper provides a brief description of the study
 
 \begin{quote}
 This study investigated the effectiveness of explicit instruction in
@@ -3779,9 +3754,8 @@ TA & 7.77 & 0.68 & 63 & 6.41 & 9.13\\
 \end{tabular}
 \end{table}
 
-The purpose of Baumann, Seifert-Kessell, and Jones
-(\protect\hyperlink{ref-Baumann:1992}{1992}) was to make a particular
-comparison between treatment groups. From the abstract:
+The purpose of Baumann, Seifert-Kessell, and Jones (1992) was to make a
+particular comparison between treatment groups. From the abstract:
 
 \begin{quote}
 The primary quantitative analyses involved two planned orthogonal
@@ -3791,8 +3765,7 @@ measures: (a) an error detection test, (b) a comprehension monitoring
 questionnaire, and (c) a modified cloze test.
 \end{quote}
 
-The hypothesis of Baumann, Seifert-Kessell, and Jones
-(\protect\hyperlink{ref-Baumann:1992}{1992}) is
+The hypothesis of Baumann, Seifert-Kessell, and Jones (1992) is
 \(\mathscr{H}_0: \mu_{\mathrm{TA}} + \mu_{\mathrm{DRTA}} = 2 \mu_{\mathrm{DRA}}\)
 or, rewritten slightly, \begin{align*}
 \mathscr{H}_0: - 2 \mu_{\mathrm{DR}} + \mu_{\mathrm{DRTA}} + \mu_{\mathrm{TA}} = 0.
@@ -3879,17 +3852,16 @@ reading-thinking activity and thinking aloud.
 \begin{example}[Paper or
 plastic]\protect\hypertarget{exm-paperorplastic}{}\label{exm-paperorplastic}
 
-Sokolova, Krishna, and Döring
-(\protect\hyperlink{ref-Sokolova.Krishna.Doring:2023}{2023}) consider
-consumer bias when assessing how eco-friendly packages are. Items such
-as cereal are packaged in plastic bags, which themselves are covered in
-a box. They conjecture (and find) that consumers tend to view the
-packaging as being more eco-friendly when the amount of cardboard or
-paper surrounding the box is large, relative to the sole plastic
-package. We consider the data Study 2A, which measures the perceived
-environmental friendliness (PEF) as a function of the proportion of
-paper wrapping (either none, half of the area of the plastic, equal or
-twice). The authors are interested in comparing none with other choices.
+Sokolova, Krishna, and Döring (2023) consider consumer bias when
+assessing how eco-friendly packages are. Items such as cereal are
+packaged in plastic bags, which themselves are covered in a box. They
+conjecture (and find) that consumers tend to view the packaging as being
+more eco-friendly when the amount of cardboard or paper surrounding the
+box is large, relative to the sole plastic package. We consider the data
+Study 2A, which measures the perceived environmental friendliness (PEF)
+as a function of the proportion of paper wrapping (either none, half of
+the area of the plastic, equal or twice). The authors are interested in
+comparing none with other choices.
 
 If \(\mu_{0}, \mu_{0.5}, \mu_{1}, \mu_2\) denote the true mean of the
 PEF score as a function of the proportion of paper, we are interested in
@@ -4003,11 +3975,10 @@ grows quickly.
 
 The number of tests performed in the course of an analysis can be very
 large. Y. Benjamini investigated the number of tests performed in each
-study of the Psychology replication project
-(\protect\hyperlink{ref-Nosek:2015}{Nosek et al. 2015}): this number
-ranged from 4 to 700, with an average of 72 --- most studies did not
-account for the fact they were performing multiple tests or selected the
-model and thus some `discoveries' are bound to be spurious. It is
+study of the Psychology replication project (Nosek et al. 2015): this
+number ranged from 4 to 700, with an average of 72 --- most studies did
+not account for the fact they were performing multiple tests or selected
+the model and thus some `discoveries' are bound to be spurious. It is
 natural to ask then how many results are spurious findings that
 correspond to type I errors. The paramount (absurd) illustration is the
 cartoon presented in Figure~\ref{fig-xkcdsignificant}: note how there is
@@ -4209,16 +4180,15 @@ Tukey's HSD (dashed line) and Scheffe's adjustment (dotted).}
 \begin{example}[Multiple testing for paper or
 plastic]\protect\hypertarget{exm-paperorplastic}{}\label{exm-paperorplastic}
 
-Sokolova, Krishna, and Döring
-(\protect\hyperlink{ref-Sokolova.Krishna.Doring:2023}{2023}) considered
-pairwise difference relative to the control where only plastic wrapping
-is used. We could use either Bonferroni, Holm--Bonferoni or Dunnett's
-method. Since the \(p\)-values are tiny (less than \(10^{-4}\)), this
-has no impact on the conclusions whatsoever. To better appreciate the
-impact in small samples, we subsample 20 observation per group to
-inflate \(p\)-values. We can also see differences by inspecting the
-width of the confidence intervals for the pairwise differences to the
-reference group: more conservative references lead to wider intervals.
+Sokolova, Krishna, and Döring (2023) considered pairwise difference
+relative to the control where only plastic wrapping is used. We could
+use either Bonferroni, Holm--Bonferoni or Dunnett's method. Since the
+\(p\)-values are tiny (less than \(10^{-4}\)), this has no impact on the
+conclusions whatsoever. To better appreciate the impact in small
+samples, we subsample 20 observation per group to inflate \(p\)-values.
+We can also see differences by inspecting the width of the confidence
+intervals for the pairwise differences to the reference group: more
+conservative references lead to wider intervals.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4358,8 +4328,8 @@ independent.
 
 \bookmarksetup{startatroot}
 
-\hypertarget{multiway-factorial-designs}{%
-\chapter{Multiway factorial designs}\label{multiway-factorial-designs}}
+\hypertarget{complete-factorial-designs}{%
+\chapter{Complete factorial designs}\label{complete-factorial-designs}}
 
 We next consider experiments and designs in which there are multiple
 factors being manipulated by the experimenter simultaneously. Before
@@ -4369,8 +4339,7 @@ examples that will be covered in the sequel.
 \begin{example}[Psychological ownership of borrowed
 money]\protect\hypertarget{exm-STC21}{}\label{exm-STC21}
 
-Supplemental Study 5 from Sharma, Tully, and Cryder
-(\protect\hyperlink{ref-Sharma.Tully.Cryder:2021}{2021}) checks the
+Supplemental Study 5 from Sharma, Tully, and Cryder (2021) checks the
 psychological perception of borrowing money depending on the label. The
 authors conducted a 2 by 2 between-subject comparison (two-way ANOVA)
 varying the type of debt (whether the money was advertised as credit or
@@ -4384,13 +4353,13 @@ Likert scale from 1 to 9.
 \begin{example}[Spatial orientation shrinks and expands psychological
 distance]\protect\hypertarget{exm-MP14}{}\label{exm-MP14}
 
-Maglio and Polman (\protect\hyperlink{ref-Maglio.Polman:2014}{2014})
-measured the subjective distance on travel based on the direction of
-travel. They conducted an experiment in the Toronto subway green line,
-asking commuters from Bay station to answer the question ``How far away
-does the {[}name{]} station feel to you?'' using a 7 point Likert scale
-ranging from very close (1) to very far (7). The stations name were one
-of Spadina, St.~George, Bloor--Yonge and Sherbourne (from West to East).
+Maglio and Polman (2014) measured the subjective distance on travel
+based on the direction of travel. They conducted an experiment in the
+Toronto subway green line, asking commuters from Bay station to answer
+the question ``How far away does the {[}name{]} station feel to you?''
+using a 7 point Likert scale ranging from very close (1) to very far
+(7). The stations name were one of Spadina, St.~George, Bloor--Yonge and
+Sherbourne (from West to East).
 
 As there are four stations and two directions of travel (a 4 by 2
 design), the scientific question of interest for subjective measures of
@@ -4405,8 +4374,7 @@ considered equidistant, and similarly for the other two.
 \section{Efficiency of multiway analysis of
 variance.}\label{efficiency-of-multiway-analysis-of-variance.}}
 
-Consider the setting of Sharma, Tully, and Cryder
-(\protect\hyperlink{ref-Sharma.Tully.Cryder:2021}{2021}) and suppose we
+Consider the setting of Sharma, Tully, and Cryder (2021) and suppose we
 want to check the impact of debt and collect a certain number of
 observations in each group. If we suspected the label had an influence,
 we could run a one-way analysis of variance for each spending type
@@ -4420,7 +4388,7 @@ modifying all of these instances at once, over a series of one-way
 analysis of variance. This concept extends to higher dimension when we
 manipulate two or more factors. Factorial designs allow us to study the
 impact of multiple variables simultaneously with \textbf{fewer overall
-observations} than running experiments separately for each factor.
+observations}.
 
 The drawback is that as we increase the number of factors, the total
 number of subgroups increases: with a complete design\footnote{By
@@ -4466,9 +4434,8 @@ could build contrasts for comparing group averages, but it will more
 convenient to reparametrize the model so that hypotheses of interest are
 directly expressed in terms of the parameters.
 
-For example, in the Maglio and Polman
-(\protect\hyperlink{ref-Maglio.Polman:2014}{2014}) study, we could
-gather observations for each factor combination in a table, where
+For example, in the Maglio and Polman (2014) study, we could gather
+observations for each factor combination in a table, where
 \texttt{direction} is the row and \texttt{station} the column.
 
 \hypertarget{tbl-cellmeansMP14}{}
@@ -4479,8 +4446,7 @@ gather observations for each factor combination in a table, where
   >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1795}}
   >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1795}}@{}}
 \caption{\label{tbl-cellmeansMP14}Conceptual depiction of cell average
-for the two by two design of Maglio and Polman
-(\protect\hyperlink{ref-Maglio.Polman:2014}{2014})}\tabularnewline
+for the two by two design of Maglio and Polman (2014)}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \(A\) \texttt{station}
@@ -4530,7 +4496,7 @@ overall average is
 \[\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.\]
 
 Each subgroup average \(\mu_{ij}\) will be estimated as the sample mean
-of observations in their group and we would use the above formula to
+of observations in their group and we would use the above formulae to
 obtain estimates of the row, column and overall means
 \(\widehat{\mu}_{i.}\), \(\widehat{\mu}_{.j}\) and \(\widehat{\mu}\). If
 the sample is balanced, meaning the number of observations is the same,
@@ -4543,14 +4509,13 @@ equal weight to each subgroup average.
 \caption{\label{tbl-balance-MP14}Repartition of the sample for Study 1 of Maglio and Polman (2014). }\tabularnewline
 
 \centering
-\begin{tabular}{l|r|r|r|r}
-\hline
+\begin{tabular}{lrrrr}
+\toprule
   & Spadina & St. George & Bloor-Yonge & Sherbourne\\
-\hline
+\midrule
 east & 26 & 26 & 23 & 26\\
-\hline
 west & 25 & 25 & 26 & 25\\
-\hline
+\bottomrule
 \end{tabular}
 \end{table}
 
@@ -4596,12 +4561,11 @@ If there is a significant interaction, the main effects are \textbf{not}
 of interest since they are misleading. Rather, we will compute the
 simple effects by making the comparison one at level at the time.
 
-In our example of Maglio and Polman
-(\protect\hyperlink{ref-Maglio.Polman:2014}{2014}), a simple effect
-would be comparing the distance between Spadina and Sherbourne for east.
-The main effect for the direction would be the average perceived
-distance for east and for west. Finally, the interaction would measure
-how much these differ by station depending on direction.
+In our example of Maglio and Polman (2014), a simple effect would be
+comparing the distance between Spadina and Sherbourne for east. The main
+effect for the direction would be the average perceived distance for
+east and for west. Finally, the interaction would measure how much these
+differ by station depending on direction.
 
 \begin{figure}[ht!]
 
@@ -4612,9 +4576,7 @@ how much these differ by station depending on direction.
 \caption{\label{fig-2by2}Interaction plots (line graphs) for example
 patterns for means for each of the possible kinds of general outcomes in
 a 2 by 2 design. Illustration adapted from Figure 10.2 of Crump,
-Navarro, and Suzuki
-(\protect\hyperlink{ref-Crump.Navarro.Suzuki:2019}{2019}) by Matthew
-Crump (CC BY-SA 4.0 license).}
+Navarro, and Suzuki (2019) by Matthew Crump (CC BY-SA 4.0 license).}
 
 \end{figure}
 
@@ -4654,9 +4616,8 @@ intuition.
 }
 
 \caption{\label{fig-interactionplotMP}Interaction plot for Study 1 of
-Maglio and Polman (\protect\hyperlink{ref-Maglio.Polman:2014}{2014}),
-showing group averages and 95\% confidence intervals for the means.
-Observations are overlaid on the graph.}
+Maglio and Polman (2014), showing group averages and 95\% confidence
+intervals for the means. Observations are overlaid on the graph.}
 
 \end{figure}
 
@@ -4684,10 +4645,10 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
   \(\mu\) is the average of all subgroup averages, termed overall mean.
 \item
   \(\alpha_i = \mu_{i.} - \mu\) is the mean of level \(A_i\) minus the
-  overall mean (row mean).
+  overall mean.
 \item
   \(\beta_j = \mu_{.j} - \mu\) is the mean of level \(B_j\) minus
-  overall mean (column mean).
+  overall mean.
 \item
   \((\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu\) is the
   interaction term for \(A_i\) and \(B_j\) which encodes the effect of
@@ -4712,14 +4673,17 @@ expressible as row and column averages, and the overall mean as the
 average of all observations, will arise again when we consider degrees
 of freedom for tests.
 
-Sharma, Tully, and Cryder
-(\protect\hyperlink{ref-Sharma.Tully.Cryder:2021}{2021}) first proceeded
-with the test for the interaction. Since there are one global average
-and two main effect (additional difference in average for both factors
-\texttt{debttype} and \texttt{purchase}), the interaction involves one
-degree of freedom since we go from a model with three parameters
-describing the mean to one that has a different average for each of the
-four subgroups.
+\textbf{To be continued}\ldots{}
+
+\begin{example}[Testing for Psychological ownership of borrowed
+money]\protect\hypertarget{exm-borrowed-money-test}{}\label{exm-borrowed-money-test}
+
+Sharma, Tully, and Cryder (2021) first proceeded with the test for the
+interaction. Since there are one global average and two main effect
+(additional difference in average for both factors \texttt{debttype} and
+\texttt{purchase}), the interaction involves one degree of freedom since
+we go from a model with three parameters describing the mean to one that
+has a different average for each of the four subgroups.
 
 The reason why this is first test to carry out is that if the effect of
 one factor depends on the level of the other, as shown in
@@ -4836,12 +4800,26 @@ Results are averaged over the levels of: purchase
 \CommentTok{\# Simple effect}
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }
                  \AttributeTok{specs =} \FunctionTok{c}\NormalTok{(}\StringTok{"purchase"}\NormalTok{, }\StringTok{"debttype"}\NormalTok{),}
-                 \AttributeTok{by =} \StringTok{"purchase"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
-\NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(}\StringTok{"pairwise"}\NormalTok{)}
+                 \AttributeTok{by =} \StringTok{"purchase"}\NormalTok{,}
+                 \AttributeTok{contr =} \StringTok{"pairwise"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
+$emmeans
+purchase = discretionary:
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     4.51 0.140 1497     4.24     4.78
+ loan       3.82 0.146 1497     3.54     4.11
+
+purchase = need:
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     5.74 0.146 1497     5.45     6.02
+ loan       5.43 0.140 1497     5.16     5.71
+
+Confidence level used: 0.95 
+
+$contrasts
 purchase = discretionary:
  contrast      estimate    SE   df t.ratio p.value
  credit - loan    0.687 0.202 1497   3.398  0.0007
@@ -4877,13 +4855,14 @@ effects suggest that the label has an impact on perception only for
 discretionary expenses rather than needed ones, which runs
 counter-intuitively with the lack of interaction.
 
-Maglio and Polman (\protect\hyperlink{ref-Maglio.Polman:2014}{2014})
-considered the relative perception of distance from Bay station in
-Toronto. We modify the data so that we consider station distance in
-direction of travel (rather than station names). The categorical
-variable \texttt{stdist} has labels \((-2, -1, +1, +2\)) for stations
-Spadina, St.~Georges, Bloor-Yonge, Sherbourne in direction East, and
-opposite signs in the other direction: see
+\end{example}
+
+Maglio and Polman (2014) considered the relative perception of distance
+from Bay station in Toronto. We modify the data so that we consider
+station distance in direction of travel (rather than station names). The
+categorical variable \texttt{stdist} has labels \((-2, -1, +1, +2\)) for
+stations Spadina, St.~Georges, Bloor-Yonge, Sherbourne in direction
+East, and opposite signs in the other direction: see
 Figure~\ref{fig-Torontosubway} for the map. We are interested in knowing
 whether two stations behind (\texttt{stdist}\(=-2\)) is perceived the
 same as two stations ahead (\texttt{stdist}\(=+2\)).
@@ -4957,8 +4936,7 @@ contrast weights are \((-1, 0, 0, 1)\) and \((0, -1, 1, 0)\) or a
 multiple thereof; the two contrasts are orthogonal.
 Table~\ref{tbl-contrast-MP14} shows the result of the hypothesis tests:
 both are significant, even applying a Bonferroni correction. This
-supports the hypothesis of Maglio and Polman
-(\protect\hyperlink{ref-Maglio.Polman:2014}{2014}).
+supports the hypothesis of Maglio and Polman (2014).
 
 \hypertarget{tbl-contrast-MP14}{}
 \begin{table}
@@ -4986,9 +4964,8 @@ using the latter through weighting.
 \begin{example}[Perceptions of cultural appropriation by
 ideology]\protect\hypertarget{exm-LKUK24}{}\label{exm-LKUK24}
 
-We consider a three-way ANOVA from Lin et al.
-(\protect\hyperlink{ref-Lin.Kim.Uduehi.Keinan:2024}{2024}). Their Study
-4 focused on cultural appropriation for soul food recipe cookbook from
+We consider a three-way ANOVA from Lin et al. (2024). Their Study 4
+focused on cultural appropriation for soul food recipe cookbook from
 Chef Dax, who was either black (or not), manipulating the description of
 the way he obtained the recipes (by peeking without permission in
 kitchens, by asking permission or no mention for control). Authors
@@ -5115,7 +5092,7 @@ averages of the three actions are much smaller than for race.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -5156,28 +5133,13 @@ averages of the three actions are much smaller than for race.
 error}\label{designs-to-reduce-the-error}}
 
 The previous chapter dealt with factorial experiments in which all
-experimental factors are of interest. In many instances, some of the
-characteristics of observational units are not of interest: for example,
-EEG measurements of participants in a lab may differ due to time of the
-day, to the lab technician, etc. These are instances of \textbf{blocking
-factors}: variables that impact the measurements's variability, but that
-are not of direct interest. By filtering their effect out and looking at
-the residual variability that is unexplained by the blocking factors.
-Block designs reduce the error term, at the cost of including and
-estimating additional parameters (group average or slope).
-
-We will analyse block designs in the same as we did for multi-way
-analysis of variance model, with one notable exception. Typically, we
-will assume that there is \textbf{no interaction} between experimental
-factor and blocking factors.\footnote{We can always check for this
-  assumption.} Thus, we will be interested mostly in marginal effects.
-
-A related design includes a continuous covariate to the analysis of
-variance, whose slope governs the relationship with the response. The
-strict inclusion isn't necessary to draw valid causal conclusion, but
-adding the term helps again reduce the residual variability. Such a
-design was historically called \textbf{analysis of covariance}, an
-instance of a linear model.
+experimental factors are of interest. It is possible to use measurements
+concomitant to the data collection (for example, value to a test before
+we complete the group assignment for the manipulation) to get a measure
+of the relative strength of students. The more correlated these measures
+are with the response, the more we can explain the data. We then proceed
+with the random assignment of our experimental units to different
+conditions.
 
 Including blocking factor or covariates should in principle increase
 power and our ability to detect real differences due to experimental
@@ -5186,18 +5148,158 @@ with the response. Generally, they are not needed for valid inference,
 which is guaranteed by randomization, and shouldn't be used to assign
 treatment.
 
+\hypertarget{blocking-factors}{%
+\section{Blocking factors}\label{blocking-factors}}
+
+In many instances, some of the characteristics of observational units
+are not of interest: for example, EEG measurements of participants in a
+lab may differ due to time of the day, to the lab technician, etc. These
+are instances of \textbf{blocking factors}: variables that impact the
+measurement variability, but that are not of direct interest. By
+filtering their effect out and looking at the residual variability that
+is unexplained by the blocking factors. Block designs reduce the error
+term, at the cost of including and estimating additional parameters
+(group averages). Experimental units are typically assigned to blocking
+factor using stratified sampling to ensure comparisons can be made.
+
+We will analyse block designs in the same as we did for multi-way
+analysis of variance model, with one notable exception. Typically, we
+will assume that there is \textbf{no interaction} between experimental
+factor and blocking factors.\footnote{We can always check for this
+  assumption.} Thus, we will be interested mostly in main effects of the
+experimental factors.
+
+\begin{example}[The surprise of reaching out: paired data as blocking
+factors]\protect\hypertarget{exm-reachingout}{}\label{exm-reachingout}
+
+We consider paired data from Study 3 of Liu et al. (2023), who looked at
+the appreciation of people reaching out to them in a unsolicited manner.
+The data includes the appreciation score of both responder and
+initiator, along with sociodemographic variables (age and gender).
+
+While a paired \(t\)-test is the natural (and arguably simplest way) to
+compare the difference in appreciation scores, we reformat the data to
+long format (one response per line), with a categorical variable
+\texttt{role} indicating the role of the participant and \texttt{dyad},
+a dummy number indicating which participants belong to which pair. We
+then fit an analysis of variance model to the scores with both
+\texttt{dyad} and \texttt{role}. The \(F\)-tests for the main effects
+indicate that the dyads (66 additional parameters, since there are 67
+pairs) filter out significant part of the variability. If we consider
+estimated marginal means and look at the \(p\)-value and the pairwise
+difference between initiator and respondent, we find exactly the same
+statistic, degrees of freedom and \(p\)-value for the pairwise
+difference as the paired \(t\)-test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(LRMM23\_S3, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\CommentTok{\# Paired t{-}tests}
+\FunctionTok{with}\NormalTok{(LRMM23\_S3, }\FunctionTok{t.test}\NormalTok{(apprec\_init, apprec\_resp, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Paired t-test
+
+data:  apprec_init and apprec_resp
+t = -4.6042, df = 66, p-value = 1.94e-05
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.6633265 -0.2620466
+sample estimates:
+mean difference 
+     -0.4626866 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Cast data to long format {-} one response/participant per line}
+\NormalTok{LRMM23\_S3l }\OtherTok{\textless{}{-}}\NormalTok{ LRMM23\_S3 }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{dyad =} \FunctionTok{factor}\NormalTok{(dplyr}\SpecialCharTok{::}\FunctionTok{row\_number}\NormalTok{())) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{  tidyr}\SpecialCharTok{::}\FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{!}\NormalTok{dyad, }
+    \AttributeTok{names\_to =} \FunctionTok{c}\NormalTok{(}\StringTok{".value"}\NormalTok{, }\StringTok{"role"}\NormalTok{),}
+    \AttributeTok{names\_sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{\_"}\NormalTok{)}
+\CommentTok{\# Format of the data}
+\FunctionTok{head}\NormalTok{(LRMM23\_S3l)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 6 x 5
+  dyad  role  apprec   age gender
+  <fct> <chr>  <int> <dbl> <fct> 
+1 1     resp       4    20 male  
+2 1     init       4    20 male  
+3 2     resp       5    20 female
+4 2     init       5    24 female
+5 3     resp       5    21 female
+6 3     init       4    21 female
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Treat dyad as a factor and fit two{-}way ANOVA model}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(apprec }\SpecialCharTok{\textasciitilde{}}\NormalTok{ role }\SpecialCharTok{+}\NormalTok{ dyad, }\AttributeTok{data =}\NormalTok{ LRMM23\_S3l)}
+\CommentTok{\# Global tests of main effects (balanced data)}
+\FunctionTok{anova}\NormalTok{(mod) }\CommentTok{\# There seems to be significant variability filtered out by \textquotesingle{}id\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: apprec
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+role       1  7.172  7.1716 21.1985  1.94e-05 ***
+dyad      66 51.970  0.7874  2.3275 0.0003759 ***
+Residuals 66 22.328  0.3383                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compute pairwise difference for main effect of \textquotesingle{}role\textquotesingle{}}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }\AttributeTok{spec =} \StringTok{"role"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(}\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ contrast    estimate  SE df t.ratio p.value
+ init - resp   -0.463 0.1 66  -4.604  <.0001
+
+Results are averaged over the levels of: dyad 
+\end{verbatim}
+
+\end{example}
+
 \hypertarget{ancova}{%
 \section{Analysis of covariance}\label{ancova}}
 
+A related design includes a continuous covariate to the analysis of
+variance, whose slope governs the relationship with the response. The
+strict inclusion isn't necessary to draw valid causal conclusion, but
+adding the term helps again reduce the residual variability. Such a
+design was historically called \textbf{analysis of covariance}, although
+as analysis of variance models, they are nothing but linear regression
+models.
+
 In an analysis of covariance, we include a linear component for a
-(continuous) covariate, with the purpose again to reduce residual error.
-A prime example is prior/post experiment measurements, whereby we
-monitor the change in outcome due to the manipulation.
+(continuous) covariate, with the purpose again to reduce residual error
+and increase power. A prime example is prior/post experiment
+measurements, whereby we monitor the change in outcome due to the
+manipulation. This post by Solomon Kurz
+\href{https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/}{{[}link{]}}
+nicely illustrates the added benefits of using covariates when there is
+strong correlation between your response and the latter
 
 In such setting, it may seem logical to take the difference in post and
 prior score as response: this is showcased in Example~\ref{exm-vanStek}
-and Baumann, Seifert-Kessell, and Jones
-(\protect\hyperlink{ref-Baumann:1992}{1992}), an analysis of which is
+and Baumann, Seifert-Kessell, and Jones (1992), an analysis of which is
 presented on \href{https://edsm.rbind.io/example/06-ancova/}{the course
 website}.
 
@@ -5235,7 +5337,8 @@ conditions, makes comparison hazardous at best in the right-hand panel.
 Figure~\ref{fig-ancovaresid} shows that, due to the strong correlation,
 the variability of the measurements is smaller on the right-hand panel
 (corresponding to the analysis of covariance model) than for the centred
-response on the left-hand panel.
+response on the left-hand panel; note that the \(y\)-axes have different
+scales.
 
 \begin{figure}[ht!]
 
@@ -5244,7 +5347,7 @@ response on the left-hand panel.
 }
 
 \caption{\label{fig-ancovaresid}Response after subtracting mean (left)
-and after detrending and centering the mean (right).}
+and after detrending (right).}
 
 \end{figure}
 
@@ -5252,16 +5355,18 @@ We present two examples of analysis of covariance, showing how the
 inclusion of covariates helps disentangle differences between
 experimental conditions.
 
-\leavevmode\vadjust pre{\hypertarget{leechoi}{}}%
-Lee and Choi (\protect\hyperlink{ref-Lee.Choi:2019}{2019}) measured the
-impact of discrepancies between descriptions and visual depiction of
-items in online retail. They performed an experiment in which
-participants were presented with descriptions of a product (a set of six
-toothbrushes) that was either consistent or inconsistent with the
-description. The authors postulated that a discrepancy could lead to
-lower appreciation score, measured using three Likert scales. They also
-suspected that the familiarity with the product brand should impact
-ratings, and controlled for the latter using another question.
+\begin{example}[Inconsistency of product description and image in online
+retailing]\protect\hypertarget{exm-leechoi}{}\label{exm-leechoi}
+
+Lee and Choi (2019) measured the impact of discrepancies between
+descriptions and visual depiction of items in online retail. They
+performed an experiment in which participants were presented with
+descriptions of a product (a set of six toothbrushes) that was either
+consistent or inconsistent with the description. The authors postulated
+that a discrepancy could lead to lower appreciation score, measured
+using three Likert scales. They also suspected that the familiarity with
+the product brand should impact ratings, and controlled for the latter
+using another question.
 
 One way to account for familiarity when comparing the mean is to use a
 linear regression with familiarity as another explanatory variable. The
@@ -5374,14 +5479,15 @@ test for homogeneity of variance indicates no discernible difference
 between groups. Thus, it appears there is a difference in perception of
 product quality due to the manipulation.
 
+\end{example}
+
 \begin{example}[Effect of scientific consensus on false
 beliefs]\protect\hypertarget{exm-vanStek}{}\label{exm-vanStek}
 
-We consider Study 3 of Stekelenburg et al.
-(\protect\hyperlink{ref-vanStekelenburg:2021}{2021}), who studied
-changes in perception of people holding false beliefs or denying (to
-some extent) the scientific consensus by presenting them with news
-article showcasing information about various phenomena. The experimental
+We consider Study 3 of Stekelenburg et al. (2021), who studied changes
+in perception of people holding false beliefs or denying (to some
+extent) the scientific consensus by presenting them with news article
+showcasing information about various phenomena. The experimental
 manipulation consisted in presenting boosting, a form of training to
 help readers identify and establish whether scientifists were truly
 expert in the domain of interest, how strong was the consensus,
@@ -5571,16 +5677,15 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacitybacktitle=0.6, rightrule=.15mm]
 
-Stekelenburg et al. (\protect\hyperlink{ref-vanStekelenburg:2021}{2021})
-split their data to do pairwise comparisons two at the time (thus taking
-roughly two-third of the data to perform a two sample \emph{t}-test with
-each pair). Although it does not impact their conclusion, this approach
-is conceptually incorrect: if the variance was equal, we would want to
-use all observations to estimate it (so their approach would be
-suboptimal, since we would estimate the variance three times with
-smaller samples).
+Stekelenburg et al. (2021) split their data to do pairwise comparisons
+two at the time (thus taking roughly two-third of the data to perform a
+two sample \emph{t}-test with each pair). Although it does not impact
+their conclusion, this approach is conceptually incorrect: if the
+variance was equal, we would want to use all observations to estimate it
+(so their approach would be suboptimal, since we would estimate the
+variance three times with smaller samples).
 
 On the contrary, using a model that assumes equal variance when it is
 not the case leads to distortion: the variance we estimate will be some
@@ -5591,7 +5696,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, bottomrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacitybacktitle=0.6, rightrule=.15mm]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -5617,7 +5722,7 @@ posterior belief score.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -5645,13 +5750,12 @@ posterior belief score.}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
 \item
-  Box, Hunter, and Hunter (\protect\hyperlink{ref-Box:1978}{1978}) write
-  on page 103 the following motto:
+  Box, Hunter, and Hunter (1978) write on page 103 the following motto:
 \end{itemize}
 
 \begin{quote}
@@ -5680,7 +5784,7 @@ least reliable), one needs to determine beforehand how many participants
 should be recruited in the study.
 
 We could think for an example of comparing statistics or \(p\)-values,
-which are by construction standardized unitless measures, making them
+which are by construction standardized unit less measures, making them
 comparable across study. Test statistics show how outlying observed
 differences between experimental conditions relative to a null
 hypothesis, typically that of no effect (equal mean in each subgroup).
@@ -5757,16 +5861,16 @@ T =  \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} \left(\frac{1}{n
 \end{align*} where \(\widehat{\sigma}\) is the pooled sample size
 estimator. The first term,
 \(\widehat{d}_s = (\widehat{\mu}_2 - \widehat{\mu}_1)/\widehat{\sigma}\),
-is termed Cohen's \(d\) (\protect\hyperlink{ref-Cohen:1988}{Cohen 1988})
-and it measures the standardized difference between groups, a form of
-signal-to-noise ratio. As the sample size gets larger and larger, the
-sample mean and pooled sample variance become closer and closer to the
-true population values \(\mu_1\), \(\mu_2\) and \(\sigma\); at the same
-time, the statistic \(T\) becomes bigger as \(n\) becomes larger because
-of the second term.\footnote{If we consider a balanced sample,
-  \(n_1 = n_2 = n/2\) we can rewrite the statistic as
-  \(T = \sqrt{n} \widehat{d}_s/2\) and the statement that \(T\)
-  increases with \(n\) on average becomes more obvious.}
+is termed Cohen's \(d\) (Cohen 1988) and it measures the standardized
+difference between groups, a form of signal-to-noise ratio. As the
+sample size gets larger and larger, the sample mean and pooled sample
+variance become closer and closer to the true population values
+\(\mu_1\), \(\mu_2\) and \(\sigma\); at the same time, the statistic
+\(T\) becomes bigger as \(n\) becomes larger because of the second
+term.\footnote{If we consider a balanced sample, \(n_1 = n_2 = n/2\) we
+  can rewrite the statistic as \(T = \sqrt{n} \widehat{d}_s/2\) and the
+  statement that \(T\) increases with \(n\) on average becomes more
+  obvious.}
 
 The difference \(d=(\mu_1-\mu_2)/\sigma\) has an obvious interpretation:
 a distance of \(a\) indicates that the means of the two groups are \(a\)
@@ -5777,34 +5881,34 @@ of thumbs. Alongside \(d\), there are many commonly reported metrics
 that are simple transformations of \(d\) describing the observed
 difference. This interactive
 \href{https://rpsychologist.com/cohend/}{applet} by Kristoffer Magnusson
-(\protect\hyperlink{ref-magnussonCohend}{Magnusson 2021}) shows the
-visual impact of changing the value of \(d\) along. There are different
-estimators of \(d\) depending on whether or not the pooled variance
-estimator is used. Cohen's \(d\), is upward biased, meaning it gives
-values that are on average larger than the truth. Hedge's \(g\)
-(\protect\hyperlink{ref-Hedges:1981}{Hedges 1981}) offers a
-bias-correction and should always be preferred as an estimator.
+(Magnusson 2021) shows the visual impact of changing the value of \(d\)
+along. There are different estimators of \(d\) depending on whether or
+not the pooled variance estimator is used. Cohen's \(d\), is upward
+biased, meaning it gives values that are on average larger than the
+truth. Hedge's \(g\) (Hedges 1981) offers a bias-correction and should
+always be preferred as an estimator.
 
 For these different estimators, it is possible to obtain (asymmetric)
 confidence intervals or tolerance intervals.\footnote{By using the pivot
-  method, e.g., Steiger (\protect\hyperlink{ref-Steiger:2004}{2004}),
-  and relating the effect size to the noncentrality parameter of the
-  null distribution, whether \(\mathsf{St}\), \(\mathsf{F}\) or
-  \(\chi^2\).}
+  method, e.g., Steiger (2004), and relating the effect size to the
+  noncentrality parameter of the null distribution, whether
+  \(\mathsf{St}\), \(\mathsf{F}\) or \(\chi^2\).}
 
-\leavevmode\vadjust pre{\hypertarget{LiuRimMinMin2023E1effect}{}}%
-We consider a two-sample \(t\)-test for the study of Liu et al.
-(\protect\hyperlink{ref-Liu.Rim.Min.Min:2023}{2023}) discussed in
-Example~\ref{exm-LiuRimMinMin2023E1}. The difference in average response
-index is 0.371, indicating that the responder have a higher score. The
-\(p\)-value is 0.041, showing a small effect.
+\begin{example}[Effect sizes for ``The Surprise of Reaching
+Out'']\protect\hypertarget{exm-LiuRimMinMin2023E1effect}{}\label{exm-LiuRimMinMin2023E1effect}
+
+~
+
+We consider a two-sample \(t\)-test for the study of Liu et al. (2023)
+discussed in Example~\ref{exm-LiuRimMinMin2023E1}. The difference in
+average response index is 0.371, indicating that the responder have a
+higher score. The \(p\)-value is 0.041, showing a small effect.
 
 If we consider the standardized difference \(d\), the group means are
 -0.289 standard deviations apart based on Hedge's \(g\), with an
 associated 95\% confidence interval of {[}-0.567, -0.011{]}: thus, the
-difference found is small (using Cohen
-(\protect\hyperlink{ref-Cohen:1988}{1988})'s convention) and there is a
-large uncertainty surrounding it.
+difference found is small (using Cohen (1988)'s convention) and there is
+a large uncertainty surrounding it.
 
 There is a \(42\)\% probability that an observation drawn at random from
 the responder condition will exceed an observation drawn at random of
@@ -5826,6 +5930,8 @@ responder observations will exceed the median of the initiator (Cohen's
 \end{Highlighting}
 \end{Shaded}
 
+\end{example}
+
 \hypertarget{ratio-and-proportion-of-variance}{%
 \subsection{Ratio and proportion of
 variance}\label{ratio-and-proportion-of-variance}}
@@ -5835,9 +5941,9 @@ ratio of the variance due to an effect (say differences in means
 relative to the overall mean) relative to the background level of noise
 as measured by the variance.
 
-One common measure employed in software is Cohen's \emph{f}
-(\protect\hyperlink{ref-Cohen:1988}{Cohen 1988}), which for a one-way
-ANOVA (equal variance \(\sigma^2\)) with more than two groups, \[
+One common measure employed in software is Cohen's \emph{f} (Cohen
+1988), which for a one-way ANOVA (equal variance \(\sigma^2\)) with more
+than two groups, \[
 f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigma^2_{\text{effect}}}{\sigma^2},
 \] a weighted sum of squared difference relative to the overall mean
 \(\mu\). \(\sigma^2_{\text{effect}}\) is a measure of the variability
@@ -5885,15 +5991,106 @@ experimental conditions.
 
 Unfortunately, \(\widehat{R}{}^2\) is an upward biased estimator (too
 large on average), leading to optimistic measures. Another estimator of
-\(\eta^2\) that is recommended in Keppel and Wickens
-(\protect\hyperlink{ref-Keppelux2fWickens:2004}{2004}) for power
+\(\eta^2\) that is recommended in Keppel and Wickens (2004) for power
 calculations is \(\widehat{\omega}^2\), which is
 \[\widehat{\omega}^2 = \frac{\nu_1 (F-1)}{\nu_1(F-1)+n}.\] Since the
 \(F\) statistic is approximately 1 on average, this measure removes the
 mode. Both \(\widehat{\omega}^2\) and \(\widehat{\epsilon}^2\) have been
 reported to be less biased and thus preferable as estimators of the true
-proportion of variance (\protect\hyperlink{ref-Lakens:2013}{Lakens
-2013}).
+proportion of variance (Lakens 2013).
+
+\begin{example}[Computing effect size for a between-subject one-way
+ANOVA]\protect\hypertarget{exm-calculation-effect-anova}{}\label{exm-calculation-effect-anova}
+
+Consider the one-way analysis of variance model for the ``Degrees of
+Reading Power'' cloze test, from Baumann, Seifert-Kessell, and Jones
+(1992). The response records the number of correctly answered items,
+ranging from 0 to 56.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(BSJ92, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\CommentTok{\# Fit ANOVA model}
+\NormalTok{mod\_post }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(posttest3 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ group, }\AttributeTok{data =}\NormalTok{ BSJ92)}
+\CommentTok{\# Extract in data frame format the ANOVA table}
+\NormalTok{anova\_table }\OtherTok{\textless{}{-}}\NormalTok{ broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(}\FunctionTok{anova}\NormalTok{(mod\_post))}
+\NormalTok{Fstat }\OtherTok{\textless{}{-}}\NormalTok{ anova\_table}\SpecialCharTok{$}\NormalTok{statistic[}\DecValTok{1}\NormalTok{]}
+\NormalTok{dfs }\OtherTok{\textless{}{-}}\NormalTok{ anova\_table}\SpecialCharTok{$}\NormalTok{df}
+\CommentTok{\# Output estimated value of eta{-}squared}
+\NormalTok{(eta\_sq }\OtherTok{\textless{}{-}}\NormalTok{ Fstat }\SpecialCharTok{*}\NormalTok{ dfs[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (Fstat }\SpecialCharTok{*}\NormalTok{ dfs[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ dfs[}\DecValTok{2}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1245399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare with coefficient of determination from regression}
+\FunctionTok{summary}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{r.squared}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1245399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare with output from R package \textquotesingle{}effectsize\textquotesingle{}}
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{Eta2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1245399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare with omega{-}squared value {-} the latter is smaller}
+\NormalTok{(omega\_sq }\OtherTok{\textless{}{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, dfs[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{(Fstat}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{ (dfs[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{(Fstat}\DecValTok{{-}1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{nobs}\NormalTok{(mod\_post))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.0954215
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{omega\_squared}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{Omega2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.0954215
+\end{verbatim}
+
+We can also compute effect size for contrasts. Since these take
+individuall the form of \(t\)-tests, we can use \texttt{emmeans} to
+obtain corresponding effect sizes, which are Cohen's \(d\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod\_post, }\AttributeTok{specs =} \StringTok{"group"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{C1 =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }
+                         \AttributeTok{C2 =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{))) }\SpecialCharTok{|\textgreater{}}
+\CommentTok{\# Specify estimated std. deviation of data and degrees of freedom }
+\NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{eff\_size}\NormalTok{(}\AttributeTok{sigma =} \FunctionTok{sigma}\NormalTok{(mod\_post), }\AttributeTok{edf =}\NormalTok{ dfs[}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ contrast effect.size  SE df lower.CL upper.CL
+ C1 - C2        0.317 0.4 63   -0.482     1.12
+
+sigma used for effect sizes: 6.314 
+Confidence level used: 0.95 
+\end{verbatim}
+
+\end{example}
 
 \hypertarget{partial-effects-and-variance-decomposition}{%
 \subsection{Partial effects and variance
@@ -5922,11 +6119,11 @@ where \(n\) is the overall sample size and \(F_\text{effect}\) and the
 corresponding degrees of freedom could be the statistic associated to
 the main effects \(A\) and \(B\), or the interaction term \(AB\). In
 \textbf{R}, the \texttt{effectsize} package reports these estimates with
-one-sided confidence intervals derived using the pivot method
-(\protect\hyperlink{ref-Steiger:2004}{Steiger 2004}).\footnote{The
-  confidence intervals are based on the \(\mathsf{F}\) distribution, by
-  changing the non-centrality parameter and inverting the distribution
-  function (pivot method). This yields asymmetric intervals.}
+one-sided confidence intervals derived using the pivot method (Steiger
+2004).\footnote{The confidence intervals are based on the \(\mathsf{F}\)
+  distribution, by changing the non-centrality parameter and inverting
+  the distribution function (pivot method). This yields asymmetric
+  intervals.}
 
 Software will typically return estimates of effect size alongside with
 the designs, but there are small things to keep in mind. One is that the
@@ -5946,16 +6143,84 @@ For example, if \(A\) is the experimental factor whose main effect is of
 interest, \(B\) is a blocking factor and \(C\) is another experimental
 factor, use
 \[\eta_{\langle A \rangle}^2 = \frac{\sigma^2_A}{\sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}}.\]
-as generalized partial effect. In \textbf{R}, most effect sizes for
-variance proportion have a \texttt{generalized} argument to which the
-vector of names of blocking factor can be passed. The reason for
-including blocking factors and random effects is that they would not
-necessarily be available in a replication. The correct effect size
-measure to calculate and to report depends on the design, and there are
-numerous estimators that can be utilized. Since they are related to one
-another, it is oftentimes possible to compute them directly from the
-output or convert. The formula highlight the importance of reporting
-(with enough precision) exactly the values of the test statistic.
+as generalized partial effect. The reason for including blocking factors
+and random effects is that they would not necessarily be available in a
+replication. The correct effect size measure to calculate and to report
+depends on the design, and there are numerous estimators that can be
+utilized. Since they are related to one another, it is oftentimes
+possible to compute them directly from the output or convert. The
+formula highlight the importance of reporting (with enough precision)
+exactly the values of the test statistic.
+
+\begin{example}[]\protect\hypertarget{exm-blocking}{}\label{exm-blocking}
+
+In \textbf{R}, the \texttt{effectsize} package functions, which are
+displayed prominently in this chapter, have a \texttt{generalized}
+argument to which the vector of names of blocking factor can be passed.
+We use the one-way analysis of variance from
+Example~\ref{exm-reachingout} for illustrating the calculation. Once
+again, the output matches the output of the package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod\_block }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(apprec }\SpecialCharTok{\textasciitilde{}}\NormalTok{ role }\SpecialCharTok{+}\NormalTok{ dyad, }\AttributeTok{data =}\NormalTok{ LRMM23\_S3l)}
+\NormalTok{anova\_tab }\OtherTok{\textless{}{-}}\NormalTok{ broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(}\FunctionTok{anova}\NormalTok{(mod\_block))}
+\CommentTok{\# Compute the generalized effect size {-} variance are estimated}
+\CommentTok{\# based on sum of squared termes in the ANOVA table}
+\FunctionTok{with}\NormalTok{(anova\_tab, sumsq[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(sumsq))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.08802785
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# We can use the \textquotesingle{}effectsize\textquotesingle{} package, specifying the blocking factor}
+\CommentTok{\# through argument \textquotesingle{}generalized\textquotesingle{}}
+\NormalTok{eff }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(}\AttributeTok{model =}\NormalTok{ mod\_block, }\AttributeTok{generalized =} \StringTok{"dyad"}\NormalTok{)}
+\CommentTok{\# Extract the generalized eta{-}squared effect size for \textquotesingle{}role\textquotesingle{} for comparison}
+\NormalTok{eff}\SpecialCharTok{$}\NormalTok{Eta2\_generalized[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.08802785
+\end{verbatim}
+
+\end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacitybacktitle=0.6, rightrule=.15mm]
+
+Measures of effect size are estimated based on data, but unlike summary
+statistics such as the mean and variance, tend to be very noisy in small
+samples and the uncertainty remains significant for larger samples. To
+show this, I simulated datasets for a two sample \(t\)-test: there is no
+effect for the control group, but the true effect for the treatment
+group is \(d=0.2\). With balanced data (\(n/2\) observations in each
+group) power is maximised. Figure~\ref{fig-effectsizedispersion} shows
+the estimated sample size for \(B=100\) replications of the experiment
+at samples of size \(n=10, 12, \ldots, 250\). The horizontal lines at
+\(0\) represent no effect: the proportion of values which show effects
+that are of opposite sign to the truth is still significant at \(n=250\)
+observations, and the variability seems to decrease very slowly. For
+smaller samples, the effect sizes are erratic and, although they are
+centered at the true value, most of them are severely inflated.
+
+\end{tcolorbox}
+
+\begin{figure}[ht!]
+
+{\centering \includegraphics{07-power_effect_files/figure-pdf/fig-effectsizedispersion-1.pdf}
+
+}
+
+\caption{\label{fig-effectsizedispersion}Dispersion of estimated effect
+size for data with a true mean dispersion of \(d=0.2\), for different
+sample size.}
+
+\end{figure}
 
 \hypertarget{power}{%
 \section{Power}\label{power}}
@@ -6225,6 +6490,9 @@ compute the tail probability as follows
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{power-calculations}{%
+\subsection{Power calculations}\label{power-calculations}}
+
 In practice, a software will return these quantities and inform us about
 the power. Note that these results are trustworthy provided the model
 assumptions are met, otherwise they may be misleading.
@@ -6235,7 +6503,8 @@ opt for a value reported elsewhere for a similar scale to estimate the
 variability and provide educated guesses for the mean differences.
 Another option is to run a pilot study and use the resulting estimates
 to inform about sensible values, perhaps using confidence intervals to
-see the range of plausible effect sizes.
+see the range of plausible effect sizes. Keep in mind the findings from
+Figure~\ref{fig-effectsizedispersion}.
 
 Reliance on estimated effect sizes reported in the literature is
 debatable: many such effects are inflated as a result of the file-drawer
@@ -6243,8 +6512,185 @@ problem and, as such, can lead to unreasonably high expectations about
 power.
 
 The \texttt{WebPower} package in \textbf{R} offers a comprehensive
-solution for conducting power studies, as is the free software
+solution for conducting power studies, as does the free software
 \href{https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower}{G*Power}.
+We present a range of examples from a replication study: the following
+quotes are taken from the \href{https://osf.io/ezcuj/}{Reproducibility
+Project: Psychology}.
+
+\begin{example}[Power calculation for between subject
+ANOVA]\protect\hypertarget{exm-poweranova1}{}\label{exm-poweranova1}
+
+The following extract of \href{https://osf.io/sd4uv/}{Jesse Chandler's
+replication} concerns Study 4b by Janiszewski and Uy (2008), which
+considers a \(2 \times 2\) between-subject ANOVA.
+
+\begin{quote}
+In Study 4a there are two effects of theoretical interest, a substantial
+main effect of anchor precision that replicates the first three studies
+and a small interaction (between precision and motivation within which
+people can adjust) that is not central to the paper. The main effect of
+anchor precision (effect size \(\eta^2_p=0.55\)) would require a sample
+size of \(10\) for \(80\)\% power, \(12\) for \(90\)\% power, and \(14\)
+for \(95\)\% power. The interaction (effect size \(\eta^2_p=0.11\))
+would require a sample size of \(65\) for \(80\)\% power, \(87\) for
+\(90\)\% power, and \(107\) for \(95\)\% power. There was also a
+theoretically uninteresting main effect of motivation (people adjust
+more when told to adjust more).
+\end{quote}
+
+In order to replicate, we must first convert estimates of \(\eta^2_p\)
+to Cohen's \(f\), which is the input accepted by both \texttt{WebPower}
+and G*Power. We compute the sample size for power 95\% for both the main
+effect and the interaction: in practice, we would pick the smaller of
+the two (or equivalently the larger resulting sample size estimate)
+should we wish to replicate both findings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta2\_to\_f}\NormalTok{(}\FloatTok{0.55}\NormalTok{) }\CommentTok{\# convert eta{-}squared to Cohen\textquotesingle{}s f}
+\NormalTok{ng }\OtherTok{\textless{}{-}} \DecValTok{4} \CommentTok{\# number of groups for the ANOVA}
+\FunctionTok{ceiling}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.kanova}\NormalTok{(}\AttributeTok{ndf =} \DecValTok{1}\NormalTok{, }\AttributeTok{ng =}\NormalTok{ ng, }\AttributeTok{f =}\NormalTok{ f, }\AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta2\_to\_f}\NormalTok{(}\FloatTok{0.11}\NormalTok{)}
+\FunctionTok{ceiling}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.kanova}\NormalTok{(}\AttributeTok{ndf =} \DecValTok{1}\NormalTok{, }\AttributeTok{ng =}\NormalTok{ ng, }\AttributeTok{f =}\NormalTok{ f, }\AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 108
+\end{verbatim}
+
+We can see that the numbers match the calculations from the replication
+(up to rounding).
+
+\end{example}
+
+\begin{example}[Power calculation for mixed
+design]\protect\hypertarget{exm-power-within}{}\label{exm-power-within}
+
+Repeated measures ANOVA have different characteristics from
+between-subject design in that measurements are correlated, and we can
+also provide correction for sphericity. These additional parameters need
+to specified by users. In \texttt{WebPower}, the \texttt{wp.rmanova}
+function. We need to specify the number of measurements per person, the
+number of groups, the value \(\epsilon\) for the sphericity correction,
+e.g., the output of Greenhouse--Geisser or Huynh--Feldt and the type of
+effect for between-subject factor, within-subject factor or an
+interaction between the two.
+
+\begin{quote}
+The result that is object of this replication is the interaction between
+item strength (massed vs.~spaced presentation) and condition (directed
+forgetting vs.~control). The dependent variable is the proportion of
+correctly remembered items from the stimulus set (List 1). ``(..) The
+interaction was significant, \(F(1,94)=4.97\), \(p <.05\),
+\(\mathrm{MSE} =0.029\), \(\eta^2=0.05\), (\ldots)''. (p.~412). Power
+analysis (G*Power (Version 3.1): ANOVA: Repeated measures,
+within-between interaction with a zero correlation between the repeated
+measures) indicated that sample sizes for \(80\)\%, \(90\)\% and
+\(95\)\% power were respectively \(78\), \(102\) and \(126\).
+\end{quote}
+
+We are thus considering a \(2 \times 2\) within-between design. The
+estimated effect size is \(\widehat{\eta}^2_p=0.05\), with Cohen's
+\(f\), where the value is multiplied by a constant \(C\);
+\href{https://webpower.psychstat.org/wiki/manual/power_of_rmanova}{see
+the WebPower page} which depends on the number of groups, the number of
+repeated measurements \(K\) and their correlation \(\rho\). For the
+interaction, the correction factor is \(C = \sqrt{K/(1-\rho)}\): taking
+\(K=2\) and \(\rho=0\), we get a Cohen's \(f\) of 0.23. We calculate the
+sample size for a power of 90\% changing \(\rho\): if we change the
+correlation in the calculation from zero to \(0.5\), we can see that
+there is a significant decrease in the sample size.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta2\_to\_f}\NormalTok{(}\FloatTok{0.05}\NormalTok{) }\CommentTok{\# convert eta{-}squared to Cohen\textquotesingle{}s f}
+\NormalTok{rho }\OtherTok{\textless{}{-}} \DecValTok{0} \CommentTok{\# correlation between measurements}
+\NormalTok{K }\OtherTok{\textless{}{-}}\NormalTok{ 2L }\CommentTok{\# number of repeated measurements}
+\FunctionTok{round}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.rmanova}\NormalTok{(}\AttributeTok{type =} \DecValTok{2}\NormalTok{, }\CommentTok{\# interaction }
+                           \AttributeTok{nm =}\NormalTok{ K, }\CommentTok{\# number of measurement per subject}
+                           \AttributeTok{ng =} \DecValTok{2}\NormalTok{, }\CommentTok{\# number of groups for between,}
+                           \AttributeTok{f =}\NormalTok{ f}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(K}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{rho)), }\CommentTok{\# scaled effect size}
+                           \AttributeTok{power =} \FloatTok{0.9}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n) }\CommentTok{\# requested power}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 102
+\end{verbatim}
+
+\begin{figure}[ht!]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/GPower.png}
+
+}
+
+\caption{\label{fig-Gpower}Screenshot of G*Power for the calculation of
+the sample size to replicate the interaction in a repeated measures
+(within-between) analysis of variance.}
+
+\end{figure}
+
+\begin{figure}[ht!]
+
+{\centering \includegraphics{07-power_effect_files/figure-pdf/fig-rmanova-1.pdf}
+
+}
+
+\caption{\label{fig-rmanova}Sample size requirement for a within-between
+interaction in a two by two (within-between) ANOVa with an effect size
+of \(\widehat{\eta}^2_p = 0.05\) as a function of correlation and power.
+The staircase pattern is an artefact of rounding up to the nearest
+integer.}
+
+\end{figure}
+
+We can see that the more correlated the response, the smaller sample
+size requirement according to Figure~\ref{fig-rmanova}. Higher power
+requirement leads to larger data collection efforts.
+
+\end{example}
+
+\begin{example}[Power calculation for a two sample
+\(t\)-test]\protect\hypertarget{exm-power-ttest}{}\label{exm-power-ttest}
+
+We consider a two-sample comparison, as these arise frequently from
+contrasts. The replication wishes to replicate a study whose estimated
+effect size was a Cohen's \(d\) of \(\widehat{d} = 0.451\). Using a
+two-tailed test with a balanced sample and \(\alpha = 0.05\) type I
+error rate, we obtain \(258\) participants. Note that some software, as
+below, report the sample size by group so the total sample size is twice
+the number reported.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2}\SpecialCharTok{*}\FunctionTok{ceiling}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.t}\NormalTok{(}
+  \AttributeTok{type =} \StringTok{"two.sample"}\NormalTok{,}
+  \AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{,}
+  \AttributeTok{d =} \FloatTok{0.451}\NormalTok{, }\CommentTok{\# Cohen\textquotesingle{}s f}
+  \AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n) }\CommentTok{\# power requirement}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 258
+\end{verbatim}
+
+The function also allows us to figure out the effect size one could
+obtain for given power and fixed sample size, by replacing \texttt{d}
+with the latter via arguments \texttt{n1} and \texttt{n2}.
+
+\end{example}
 
 \hypertarget{power-in-complex-designs}{%
 \subsection{Power in complex designs}\label{power-in-complex-designs}}
@@ -6270,7 +6716,7 @@ percentage of \emph{p}-values smaller than \(\alpha\). We can vary the
 sample size and see how many observations we need per group to achieve
 the desired level of power.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -6306,7 +6752,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, colframe=quarto-callout-important-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, opacitybacktitle=0.6, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -6322,8 +6768,7 @@ This chapter examines some of the causes of this lack of replicability.
 
 \end{tcolorbox}
 
-We adopt the terminology of Claerbout and Karrenbach
-(\protect\hyperlink{ref-Claerboutux2fKarrenbach:1992}{1992}): a study is
+We adopt the terminology of Claerbout and Karrenbach (1992): a study is
 said to be \textbf{reproducible} if an external person with the same
 data and enough indications about the procedure (for example, the code
 and software versions, etc.) can obtain consistent results that match
@@ -6349,9 +6794,8 @@ Scriberia).}
 \end{figure}
 
 Why is reproducibility and replicability important? In a thought
-provoking paper, Ioannidis
-(\protect\hyperlink{ref-Ioannidis:2005}{2005}) claimed that most
-research findings are wrong. The abstract of his paper stated
+provoking paper, Ioannidis (2005) claimed that most research findings
+are wrong. The abstract of his paper stated
 
 \begin{quote}
 There is increasing concern that most current published research
@@ -6368,8 +6812,7 @@ statistical significance.
 Since its publication, collaborative efforts have tried to assess the
 scale of the problem by reanalysing data and trying to replicate the
 findings of published research. For example, the ``Reproducibility
-{[}sic{]} Project: Psychology''
-(\protect\hyperlink{ref-Nosek:2015}{Nosek et al. 2015})
+{[}sic{]} Project: Psychology'' (Nosek et al. 2015)
 
 \begin{quote}
 conducted replications of 100 experimental and correlational studies
@@ -6405,20 +6848,19 @@ and reporting selected results.
 
 }
 
-\caption{\label{fig-repropvaluescorr}Figure 2 from Nosek et al.
-(\protect\hyperlink{ref-Nosek:2015}{2015}), showing scatterplot of
-effect sizes for the original and the replication study by power, with
-rugs and density plots by significance at the 5\% level.}
+\caption{\label{fig-repropvaluescorr}Figure 2 from Nosek et al. (2015),
+showing scatterplot of effect sizes for the original and the replication
+study by power, with rugs and density plots by significance at the 5\%
+level.}
 
 \end{figure}
 
 Another problem is selective reporting. Because a large emphasis is
 placed on statistical significance, many studies that find small effects
 are never published, resulting in a gap. Figure~\ref{fig-reprozscores}
-from Zwet and Cator (\protect\hyperlink{ref-vanZwet:2021}{2021}) shows
-\(z\)-scores obtained by transforming confidence intervals reported in
-Barnett and Wren (\protect\hyperlink{ref-Barnett:2019}{2019}). The
-authors used data mining techniques to extract confidence intervals from
+from Zwet and Cator (2021) shows \(z\)-scores obtained by transforming
+confidence intervals reported in Barnett and Wren (2019). The authors
+used data mining techniques to extract confidence intervals from
 abstracts of nearly one million publication in Medline published between
 1976 and 2019. If most experiments yielded no effect and were due to
 natural variability, the \(z\)-scores should be normally distributed,
@@ -6433,10 +6875,9 @@ not published is called the \textbf{file-drawer} problem.
 
 }
 
-\caption{\label{fig-reprozscores}Figure from Zwet and Cator
-(\protect\hyperlink{ref-vanZwet:2021}{2021}) based on results of Barnett
-and Wren (\protect\hyperlink{ref-Barnett:2019}{2019}); histogram of
-\(z\)-scores from one million studies from Medline.}
+\caption{\label{fig-reprozscores}Figure from Zwet and Cator (2021) based
+on results of Barnett and Wren (2019); histogram of \(z\)-scores from
+one million studies from Medline.}
 
 \end{figure}
 
@@ -6548,8 +6989,7 @@ of Borges}, is a term coined by
 Gelman} to refer to researchers' degrees of freedom. With vague
 hypothesis and data collection rules, it is easy for the researcher to
 adapt and interpret the conclusions in a way that fits his or her chosen
-narratives. In the words of Gelman and Loken
-(\protect\hyperlink{ref-Gelman.Loken:2014}{2014})
+narratives. In the words of Gelman and Loken (2014)
 
 \begin{quote}
 Given a particular data set, it can seem entirely appropriate to look at
@@ -6586,7 +7026,7 @@ MTurks.
 statisticians to advocate much more stringent cutoff criterion such as
 \(p < 0.001\) instead of the usual \(p<0.05\) criterion as level for the
 test. The level \(\alpha=5\)\% is essentially arbitrary and dates back
-to Fisher (\protect\hyperlink{ref-Fisher:1926}{1926}), who wrote
+to Fisher (1926), who wrote
 
 \begin{quote}
 If one in twenty does not seem high enough odds, we may, if we prefer
@@ -6595,7 +7035,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacitybacktitle=0.6, rightrule=.15mm]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -6654,7 +7094,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, toptitle=1mm, breakable, colback=white, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, left=2mm, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, leftrule=.75mm, coltitle=black, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, bottomtitle=1mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, arc=.35mm, colback=white, breakable, toptitle=1mm, opacityback=0, titlerule=0mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacitybacktitle=0.6, rightrule=.15mm]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -6767,6 +7207,9 @@ great care in specifying the model.
 We introduce the concept of repeated measure and within-subject ANOVA
 with an example.
 
+\begin{example}[Happy
+fakes]\protect\hypertarget{exm-happyfakes}{}\label{exm-happyfakes}
+
 We consider an experiment conducted in a graduate course at HEC,
 \emph{Information Technologies and Neuroscience}, in which PhD students
 gathered electroencephalography (EEG) data. The project focused on human
@@ -6856,7 +7299,7 @@ pairwise differences with the control.
 \subcaption{\label{fig-GANfaces-3}extremely modified}
 \end{minipage}%
 
-\caption{\label{fig-GANfaces}Example of faces presented in
+\caption{\label{fig-GANfaces}Examples of faces presented in
 Amirabdolahian and Ali-Adeeb (2021).}
 
 \end{figure}
@@ -6906,6 +7349,8 @@ Since the design is balanced after averaging, we can use \texttt{aov} in
 components can be negative if the variability due to subject is
 negligible. While \texttt{aov} is fast, it only works for simple
 balanced designs.
+
+\end{example}
 
 \hypertarget{contrasts-1}{%
 \subsection{Contrasts}\label{contrasts-1}}
@@ -7084,6 +7529,9 @@ stimulus 0.75651     0.5667
 stimulus 0.8514944  0.5872648
 \end{verbatim}
 
+\begin{example}[Visual
+acuity]\protect\hypertarget{exm-visualacuity}{}\label{exm-visualacuity}
+
 We consider a model with both within-subject and between-subject
 factors. Data for a study on visual acuity of participants. The data
 represent the number of words correctly detected at different font size;
@@ -7174,8 +7622,7 @@ degrees of freedom. Next, this term is compared to the mean square which
 contains only subject (here via acuity levels, since subjects are nested
 within acuity) and the corresponding variables; the correct mean square
 is for \texttt{acuity:adaptation:position}. In the balanced design
-setting, this can be formalized using Hasse diagram
-(\protect\hyperlink{ref-Oehlert:2010}{Oehlert 2000}).
+setting, this can be formalized using Hasse diagram (Oehlert 2000).
 
 We can produce an interaction plot to see what comes out: since we can't
 draw in four dimensions, we map visual acuity and adaptation level to
@@ -7192,6 +7639,8 @@ different from the paper, seemingly because their \(y\)-axis is flipped.
 acuity levels.}
 
 \end{figure}
+
+\end{example}
 
 \hypertarget{multivariate-analysis-of-variance}{%
 \section{Multivariate analysis of
@@ -7348,6 +7797,9 @@ the only difference with the univariate case is that the response on the
 left of the tilde sign (\texttt{\textasciitilde{}}) is now a matrix
 composed by binding together the vectors with the different responses.
 
+\begin{example}[A multivariate take on ``Happy
+fakes'']\protect\hypertarget{exm-happyfakemulti}{}\label{exm-happyfakemulti}
+
 We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time
 treating the averaged repeated measures for the different stimulus as a
 multivariate response. We first pivot the data to wide format, then fit
@@ -7423,13 +7875,17 @@ We can check that the output is the same in this case as the
 within-subject analysis of variance model fitted previously with the
 \texttt{afex} package.
 
+\end{example}
+
+\begin{example}[Teaching to
+read]\protect\hypertarget{exm-baumann-multi}{}\label{exm-baumann-multi}
+
 We consider a between-subject repeated measure multivariate analysis of
-variance model with the Baumann, Seifert-Kessell, and Jones
-(\protect\hyperlink{ref-Baumann:1992}{1992}). The data are balanced by
-experimental condition and they include the results of three tests
-performed after the intervention: an error detection task, an expanded
-comprehension monitoring questionnaire and a cloze test. Note that the
-scale of the tests are different (16, 18 and 56).
+variance model with the Baumann, Seifert-Kessell, and Jones (1992). The
+data are balanced by experimental condition and they include the results
+of three tests performed after the intervention: an error detection
+task, an expanded comprehension monitoring questionnaire and a cloze
+test. Note that the scale of the tests are different (16, 18 and 56).
 
 We could obtain the estimated covariance matrix of the fitted model by
 extracting the residuals \(Y_{ik} - \widehat{\mu}_k\) and computing the
@@ -7541,6 +7997,8 @@ onto the linear discriminants for the post-experiment tests, by group.}
 Linear discriminant analysis is a topic on it's own that is beyond the
 scope of the course.
 
+\end{example}
+
 \hypertarget{model-assumptions-1}{%
 \subsection{Model assumptions}\label{model-assumptions-1}}
 
@@ -7624,8 +8082,7 @@ Power calculations are beyond the reach of ordinary software as one
 needs to specify the variance of each observation, their correlation and
 their mean. Simulation is an obvious way for this kind of design to
 obtain answers, but the free \textbf{G}\({}^{*}\)\textbf{Power} software
-(\protect\hyperlink{ref-GPower3}{Faul et al. 2007}) also offers some
-tools. See also Läuter (\protect\hyperlink{ref-Lauter:1978}{1978}) for
+(Faul et al. 2007) also offers some tools. See also Läuter (1978) for
 pairwise comparisons: to achieve a power of 80\%, we need the following
 number of replicates per group \(j=1, \ldots, J\), which shows that the
 number increases rapidly with the dimension of the response vector
@@ -7739,7 +8196,7 @@ model the variability arising from the sampling of that population and
 focuses on variance and correlation parameters. Addition of random
 effects does not impact the population mean, but induces variability and
 correlation within subject. There is no consensual definition, but
-Gelman (\protect\hyperlink{ref-Gelman:2005}{2005}) lists a handful:
+Gelman (2005) lists a handful:
 
 \begin{quote}
 When a sample exhausts the population, the corresponding variable is
@@ -7771,8 +8228,7 @@ effect estimates when the number of observations per subject or group
 increases, but these prediction can deviate from mean estimates in the
 case where there are few measurements per subject.
 
-Oehlert (\protect\hyperlink{ref-Oehlert:2010}{2000}) identifies the
-following step to perform a mixed model
+Oehlert (2000) identifies the following step to perform a mixed model
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7800,16 +8256,17 @@ subject to each factor combination. Interactions can occur for the
 between-subject factors, although we need participants in each
 subcategory to estimate them.
 
-:::\{.example ``Temporal distancing in peace prospects''\}
+\begin{example}[Temporal distancing in peace
+prospects]\protect\hypertarget{exm-tempdist}{}\label{exm-tempdist}
 
-We consider a three-way mixed design from Study 5 of
-(\protect\hyperlink{ref-Halevy.Berson:2022}{\textbf{Halevy.Berson:2022?}}).
-The research studied how temporal distance impacted the prospects of
-peace by presenting participants with a fictional scenario in which two
-tribes in a fictional country, Velvetia, where either at war or peace
-and asking what they think the outcome would be in the near and distance
-future. Participants rated the likeliness using a Likert scale ranging
-from extremely unlikely (1) to extremely likely (7) for the question
+We consider a three-way mixed design from Study 5 of Halevy and Berson
+(2022). The research studied how temporal distance impacted the
+prospects of peace by presenting participants with a fictional scenario
+in which two tribes in a fictional country, Velvetia, where either at
+war or peace and asking what they think the outcome would be in the near
+and distance future. Participants rated the likeliness using a Likert
+scale ranging from extremely unlikely (1) to extremely likely (7) for
+the question
 
 \begin{quote}
 There is currently {[}war/peace{]} between the two tribes in Velvetia.
@@ -7911,7 +8368,10 @@ Number of Observations: 554
 Number of Groups: 277 
 \end{verbatim}
 
-:::
+\end{example}
+
+\begin{example}[Happy fakes,
+remixed]\protect\hypertarget{exm-happy-fakes-revisited}{}\label{exm-happy-fakes-revisited}
 
 We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021)
 on smiling fakes and the emotion, this time from a pure mixed model
@@ -7994,12 +8454,16 @@ are based on Satterthwaite's method. There is again no evidence of
 differences between experimental conditions. This is rather unsurprising
 if we look at the raw data in Figure~\ref{fig-aafulldat}.
 
-We consider a replication study of Elliott et al.
-(\protect\hyperlink{ref-Elliot:2021}{2021}), which studied verbalization
-and verbalization of kids aged 5, 6, 7 and 10. The replication was
-performed in 17 different school labs, adapting a protocol of Flavell,
-Beach, and Chinsky (\protect\hyperlink{ref-Flavell:1966}{1966}), with an
-overall sample of 977 child partaking in the experiment.
+\end{example}
+
+\begin{example}[Verbalization and
+memorization]\protect\hypertarget{exm-verbalization-memorization}{}\label{exm-verbalization-memorization}
+
+We consider a replication study of Elliott et al. (2021), which studied
+verbalization and verbalization of kids aged 5, 6, 7 and 10. The
+replication was performed in 17 different school labs, adapting a
+protocol of Flavell, Beach, and Chinsky (1966), with an overall sample
+of 977 child partaking in the experiment.
 
 Each participant was assigned to three tasks (\texttt{timing}):
 \texttt{delayed} recall with 15 seconds wait, or \texttt{immediate}, and
@@ -8190,6 +8654,8 @@ task for younger children.}
 
 \end{figure}
 
+\end{example}
+
 \bookmarksetup{startatroot}
 
 \hypertarget{causal-inference}{%
@@ -8200,11 +8666,11 @@ association) between two phenomena is not the same as causation. For
 example, weather forecasts of rain and the number of people carrying
 umbrellas in the streets are positively correlated, but the relationship
 is directed: if I intervene as an experimenter and force everyone around
-to carry umbrellas, it won't impact weather forecasts nor the weather
-itself. The website
+to carry umbrellas, it will impact neither weather forecasts nor the
+weather itself. The website
 \href{https://tylervigen.com/spurious-correlations}{Spurious
 correlations} by Tyler Vigen shows multiple graphs of absurd non-causal
-relations, many of which are simply artefact of population growth.
+relations, many of which are simply artifact of population growth.
 
 \begin{figure}[ht!]
 
@@ -8221,9 +8687,9 @@ license}.}
 
 \end{figure}
 
-Causal inference is concerned with inferring the effect of an action or
-manipulation (intervention, policy, or treatment) applied to an
-observational unit and identifying and quantifying the effect of one
+\textbf{Causal inference} is concerned with inferring the effect of an
+action or manipulation (intervention, policy, or treatment) applied to
+an observational unit and identifying and quantifying the effect of one
 variable on other variables. Such action may be conceptual: we can
 imagine for example looking at student's success (as measured by their
 grades) by comparing two policies: giving them timely feedback and
@@ -8236,50 +8702,54 @@ logical interrelation between variables using directed acyclic graphs
 and focus on relations between triples defining confounders, colliders
 and mediators. We then describe how we can retrieve causal effects (in
 an abstract setting). Finally, we present the linear mediation model
-popularized by Baron and Kenny
-(\protect\hyperlink{ref-Baron.Kenny:1986}{1986}). We focus on the hidden
-assumptions that can undermine causal claims of mediation.
+popularized by Baron and Kenny (1986). We focus on the hidden
+assumptions that can undermine causal claims in linear mediation models.
 
 \hypertarget{basics-of-causal-inference}{%
 \section{Basics of causal inference}\label{basics-of-causal-inference}}
 
-In an experiment, we can manipulate assignment to treatment \(a\) and
+In an experiment, we can manipulate assignment to treatment \(X\) and
 randomize units to each value of the treatment to avoid undue effects
 from other variables. The potential outcomes applies in between-subject
 design because experimental units are assigned to a single treatment,
 whereas in within-subject designs a single ordering is presented. If we
 denote the outcome by \(Y\), then we are effectively comparing
-\((Y \mid X)\) for different values of the action set \(X\) (for
-example, \(X\) could be an experimental factor. We talk about causation
-when for treatment (\(X=j\)) and control (\(X=0\)), the distributions of
-\((Y \mid X=j)\) differs from that of \((Y \mid X=0)\). The fundamental
-problem of causal inference is that, while we would like to study the
-impact of every action on our response, we can only observe the outcome
-for treatment \(j\), written \((Y_i \mid X=j)\).\footnote{In a
-  within-subject design, the analog is that a single ordering can be
-  presented.}
+\((Y \mid X)\) for different values of the experimental treatment set
+\(X\) (more generally, these are referred to as action sets). We talk
+about causation when for treatment (\(X=j\)) and control (\(X=0\)), the
+distributions of \((Y \mid X=j)\) differs from that of \((Y \mid X=0)\).
+The fundamental problem of causal inference is that, while we would like
+to study the impact of every action on our response, we can only observe
+the outcome for treatment \(j\), written \((Y_i \mid X=j)\), for a given
+individual.\footnote{In a within-subject design, the analog is that a
+  single ordering can be presented.}
 
-Rather than look at the individual treatment effect, we must focus on
-the population effects. The most common measure of causation is the
-\textbf{average treatment effect}, which is the difference between the
-population averages of treatment group \(j\) and the control group,
+Rather than look at the individual treatment effect difference, we must
+focus on the population effects. The most common measure of causation is
+the \textbf{average treatment effect}, which is the difference between
+the population averages of treatment group \(j\) and the control group,
 \begin{align*}
 \textsf{ATE}_j = \mathsf{E}(Y \mid X=j) - \mathsf{E}(Y \mid X=0)
 \end{align*} In experimental designs, we can target the average
-treatment effect if our subjects comply with their treatment assignment
-and if we randomize the effect and use a random sample which is
-representative of the population.
+treatment effect if we randomize the effect \(X=j\), if our subjects
+comply with their treatment assignment, and more importantly if we use a
+random sample which is representative of the population.
 
 In many fields, the unconditional effect is not interesting enough to
 warrant publication free of other explanatory variables. It may be that
-the effect of the treatment is not the same for everyone: for example, a
-study on gender discrimination may reveal different perceptions
-depending on gender, in which case the average treatment effect might
-not be a sensible measure and we could look at conditional effects. We
-may also be interested in seeing how different mechanisms and pathways
-are impacted by treatment and how this affects the response. VanderWeele
-(\protect\hyperlink{ref-Vanderweele:2015}{2015}) provides an excellent
-non-technical overview of mediation and interaction.
+the effect of the treatment is not the same for everyone and depends on
+some covariate \(Z\): for example, a study on gender discrimination may
+reveal different perceptions depending on gender \(Z\), in which case
+the average treatment effect might not be a sensible measure and we
+could look at conditional effects. We may also be interested in seeing
+how different mechanisms and pathways are impacted by treatment and how
+this affects the response. The conditional average treatment effect
+looks at the average difference \begin{align*}
+\textsf{CATE}_j = \mathsf{E}(Y \mid X=j, Z = z) - \mathsf{E}(Y \mid X=0, Z = z)
+\end{align*}
+
+VanderWeele (2015) provides an excellent non-technical overview of
+mediation and interaction.
 
 Causal inference requires a logical conceptual model of the
 interrelation between the variables. We will look at directed acyclic
@@ -8307,18 +8777,17 @@ world view, but is already rather complicated.
 }
 
 \caption{\label{fig-daggity}Directed acyclic graph of McQuire et al.
-(\protect\hyperlink{ref-McQuire:2020}{2020}) reproduction by
-\href{https://www.andrewheiss.com/}{Andrew Heiss}, licensed under
+(2020) reproduction by \href{https://www.andrewheiss.com/}{Andrew
+Heiss}, licensed under
 \href{https://creativecommons.org/licenses/by-nc/4.0/}{CC BY-NC 4.0}.}
 
 \end{figure}
 
 At a theoretical level, the DAG will help identify which paths and
 relations to control through conditioning arguments to strip the
-relation to that of interest. Judea Pearl (e.g.,
-\protect\hyperlink{ref-Pearl:2016}{Pearl, Glymour, and Jewell 2016})
-identifies three potential relations between triples of (sets of)
-variables:
+relation to that of interest. Judea Pearl (e.g., Pearl, Glymour, and
+Jewell 2016) identifies three potential relations between triples of
+(sets of) variables:
 
 \begin{itemize}
 \tightlist
@@ -8369,8 +8838,7 @@ could eliminate the effect of a confounding variable by controlling in a
 regression model or by stratifying for different values of the
 confounders in order to extract the causal estimate of \(X\) on \(Y\).
 However, the same strategy with a collider would backfire and we would
-get erroneous conclusions: Kowal
-(\protect\hyperlink{ref-Kowal:2021}{2021}) reportedly found out married
+get erroneous conclusions: Kowal (2021) reportedly found out married
 couples with more children were less happy. As Richard McElreath hinted,
 controlling for marriage (through sample selection) is incorrect since
 unhappy couples tend to divorce, but families with many children are
@@ -8396,14 +8864,14 @@ Our ability to establish mediation will depend on the model and a set of
 assumptions, some of which won't be verifiable.
 
 To define in full generality the treatment and mediation effect, we need
-to consider the potential outcome framework. Following Pearl
-(\protect\hyperlink{ref-Pearl:2014}{2014}), we use \(Y_i(x, m)\) to
-denote the potential outcome for individual \(i\) with explanatory or
-experimental covariate/factor \(x\) and mediator \(m\). Likewise,
-\(M_i(x)\) is the potential mediator when applying treatment level
-\(x\).\footnote{The notation is important to distinguish between
-  association \(Y \mid X\) when observing \(X\) from manipulations or
-  interventions, \(Y \mid \mathsf{do}(X)\) and counterfactuals \(Y(X)\).}
+to consider the potential outcome framework. Following Pearl (2014), we
+use \(Y_i(x, m)\) to denote the potential outcome for individual \(i\)
+with explanatory or experimental covariate/factor \(x\) and mediator
+\(m\). Likewise, \(M_i(x)\) is the potential mediator when applying
+treatment level \(x\).\footnote{The notation is important to distinguish
+  between association \(Y \mid X\) when observing \(X\) from
+  manipulations or interventions, \(Y \mid \mathsf{do}(X)\) and
+  counterfactuals \(Y(X)\).}
 
 The \textbf{total effect} measures the overall impact of changes in
 outcome \(Y\) (both through \(M\) and directly) when experimentally
@@ -8452,17 +8920,16 @@ The second component of the sequential ignorability assumption is as
 follows: given pre-treatment covariates and observed treatment,
 mediation is independent of potential outcomes, \begin{align*}
 Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, W_i = w
-\end{align*} The set of assumptions from Imai, Keele, and Tingley
-(\protect\hyperlink{ref-Imai:2010}{2010}) and Pearl
-(\protect\hyperlink{ref-Pearl:2014}{2014}) are equivalent under
-randomization of treatment assignment, as we consider thereafter.
+\end{align*} The set of assumptions from Imai, Keele, and Tingley (2010)
+and Pearl (2014) are equivalent under randomization of treatment
+assignment, as we consider thereafter.
 
 The total effect can be written
 \[\mathsf{TE}(x, x^*) = \mathsf{NDE}(x, x^*) - \mathsf{NIE}(x^*, x).\]
 In the linear mediation model, the reversal of argument amounts to
 changing the sign of the coefficient, giving an additive decomposition
 of the total effect as \(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)
-(\protect\hyperlink{ref-Pearl:2014}{Pearl 2014}).
+(Pearl 2014).
 
 When measuring effects in psychology and marketing, it will often be the
 case that the conceptual causal model includes variables that cannot be
@@ -8488,18 +8955,15 @@ license}.}
 \section{Linear mediation model}\label{linear-mediation-model}}
 
 One of the most popular model in social sciences is the linear mediation
-model, popularized by Baron and Kenny
-(\protect\hyperlink{ref-Baron.Kenny:1986}{1986}) although the method
+model, popularized by Baron and Kenny (1986) although the method
 predates this publication. Another inferential approach, suggested by
-Preacher and Hayes (\protect\hyperlink{ref-Preacher.Hayes:2004}{2004}),
-uses the same model with different test statistics and is extremely
-popular because it comes with software; Hayes'
-\href{https://www.processmacro.org/index.html}{PROCESS macros for SAS,
-SPSS and \textbf{R}} have lead to the widespread adoption by
-researchers. Bullock, Green, and Ha
-(\protect\hyperlink{ref-Bullock.Green.Ha:2010}{2010}) list limitations
-of the approach and provide examples of instances in which the model
-does not have a meaningful causal interpretation.
+Preacher and Hayes (2004), uses the same model with different test
+statistics and is extremely popular because it comes with software;
+Hayes' \href{https://www.processmacro.org/index.html}{PROCESS macros for
+SAS, SPSS and \textbf{R}} have lead to the widespread adoption by
+researchers. Bullock, Green, and Ha (2010) list limitations of the
+approach and provide examples of instances in which the model does not
+have a meaningful causal interpretation.
 
 The linear mediation model assumes that the effect of mediation and
 treatment is additive and that the response measurement is continuous.
@@ -8537,9 +9001,9 @@ independent and, as a result, error terms should also be uncorrelated.
 
 In the linear mediation model, we can estimate the conditional direct
 effect corresponding to the product of coefficients \(\alpha\gamma\).
-Absence of mediation implies the product is zero. Baron and Kenny
-(\protect\hyperlink{ref-Baron.Kenny:1986}{1986}) recommended using
-Sobel's test statistic, a Wald-test of the form \begin{align*}
+Absence of mediation implies the product is zero. Baron and Kenny (1986)
+recommended using Sobel's test statistic, a Wald-test of the form
+\begin{align*}
 S  = \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} =  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} \stackrel{\cdot}{\sim}\mathsf{No}(0,1)
 \end{align*} where \(\widehat{\alpha}\), \(\widehat{\gamma}\) and their
 variance \(\mathsf{Va}(\widehat{\alpha})\) and
@@ -8559,9 +9023,8 @@ unmeasured confounders and linearity, the product \(\alpha\gamma\) is
 also equal to the difference between the total effect and the
 \textbf{natural direct effect}, \(\tau - \beta\).
 
-Baron and Kenny (\protect\hyperlink{ref-Baron.Kenny:1986}{1986})
-suggested for \(X\) and \(M\) continuous breaking down the task in three
-separate steps:
+Baron and Kenny (1986) suggested for \(X\) and \(M\) continuous breaking
+down the task in three separate steps:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -8575,16 +9038,14 @@ separate steps:
   \(\beta\) and \(\gamma\).
 \end{enumerate}
 
-In the ``Baron and Kenny
-(\protect\hyperlink{ref-Baron.Kenny:1986}{1986}) approach'', we test
+In the ``Baron and Kenny (1986) approach'', we test
 \(\mathscr{H}_0: \alpha=0\), \(\mathscr{H}_0: \tau=0\) and
 \(\mathscr{H}_0: \gamma=0\) against the two-sided alternative. This
 approach has caveats since mediation refers to the relation
 \(X \to M \to Y\), so we only need to consider (joint tests of)
 \(\alpha\) and \(\gamma\) (the total effect could be zero because
 \(\beta = -\alpha\gamma\) even if there is mediation). Zhao, Lynch, and
-Chen (\protect\hyperlink{ref-Zhao.Lynch.Chen:2010}{2010}) review the
-typology of mediation.
+Chen (2010) review the typology of mediation.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -8600,11 +9061,10 @@ typology of mediation.
   but the effect \(X \to M \to Y\) isn't.
 \end{enumerate}
 
-Previous definitions popularized by Baron and Kenny
-(\protect\hyperlink{ref-Baron.Kenny:1986}{1986}) still found in old
-papers include ``full mediation'' for instances where \(\beta=0\) and
-partial mediation if the direct effect is less than the total effect,
-meaning \(\beta < \tau\).
+Previous definitions popularized by Baron and Kenny (1986) still found
+in old papers include ``full mediation'' for instances where \(\beta=0\)
+and partial mediation if the direct effect is less than the total
+effect, meaning \(\beta < \tau\).
 
 To see this, let's generate data with a binary treatment and normally
 distributed mediators and response with no confounding (so the data
@@ -8636,13 +9096,11 @@ resampling from the ones observed (as if it was the population). Since
 we want the sample size to be identical and our objective is to get
 heterogeneity, we sample with replacement: from one bootstrap dataset to
 the next, we will have multiple copies, or none, of each observation.
-See Efron and Tibshirani
-(\protect\hyperlink{ref-Efron.Tibshirani:1993}{1993}) and Davison and
-Hinkley (\protect\hyperlink{ref-Davison.Hinkley:1997}{1997}) for a more
-thorough treatment of the bootstrap and alternative sampling schemes for
-regression models. The nonparametric bootstrap procedure advocated by
-Preacher and Hayes (\protect\hyperlink{ref-Preacher.Hayes:2004}{2004})
-consists in repeating the following \(B\) times:
+See Efron and Tibshirani (1993) and Davison and Hinkley (1997) for a
+more thorough treatment of the bootstrap and alternative sampling
+schemes for regression models. The nonparametric bootstrap procedure
+advocated by Preacher and Hayes (2004) consists in repeating the
+following \(B\) times:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -8686,13 +9144,12 @@ null hypothesis \(\mathscr{H}_0: \alpha \gamma=0\).
 The inference scheme is popular, but we could also rely on different
 models and use the definitions of the causal effects to perform
 simulation-based inference; see Appendix D of Imai, Keele, and Tingley
-(\protect\hyperlink{ref-Imai:2010}{2010}). The latter fit two models for
-the mediator and the outcome, then estimate parameters. In large
-samples, the parameter estimators are approximately multivariate
-Gaussian and we can simulate parameters, use the parametric model to
-generate new data and potential outcomes. The average causal mediation
-effect can be estimated empirically based on the simulated potential
-outcomes.
+(2010). The latter fit two models for the mediator and the outcome, then
+estimate parameters. In large samples, the parameter estimators are
+approximately multivariate Gaussian and we can simulate parameters, use
+the parametric model to generate new data and potential outcomes. The
+average causal mediation effect can be estimated empirically based on
+the simulated potential outcomes.
 
 \hypertarget{model-assumptions-2}{%
 \subsection{Model assumptions}\label{model-assumptions-2}}
@@ -8767,9 +9224,8 @@ The linearity assumption also implies that the effect is the same for
 every individual, so there is no treatment heterogeneity or measurement
 error which could lead to attenuation bias.
 
-Following Bullock, Green, and Ha
-(\protect\hyperlink{ref-Bullock.Green.Ha:2010}{2010}), we index the
-regression equations by individual \(i\) \begin{align*}
+Following Bullock, Green, and Ha (2010), we index the regression
+equations by individual \(i\) \begin{align*}
 M_i\mid X_i=x &= c_M + \alpha_i x + \varepsilon_{Mi},\\
 Y_i \mid X_i=x, M_i=m &=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\boldsymbol{\omega} + \varepsilon_{Yi}
 \end{align*} If \(\alpha_i\) differ from one observation to the next,
@@ -8780,11 +9236,10 @@ they cancel out even if there is complementary mediation.
 
 We could easily expand the model to include nonlinear effects (not for
 the treatment or mediator) and potential interactions, but the linear
-model approach will be limited. Imai, Keele, and Tingley
-(\protect\hyperlink{ref-Imai:2010}{2010}) details a more general
-approach for parametric models based on simulations, as well as a
-nonparametric approach. Both are less restrictive than the Baron and
-Kenny (\protect\hyperlink{ref-Baron.Kenny:1986}{1986}) model.
+model approach will be limited. Imai, Keele, and Tingley (2010) details
+a more general approach for parametric models based on simulations, as
+well as a nonparametric approach. Both are less restrictive than the
+Baron and Kenny (1986) model.
 
 The main benefit of experimental designs is that it deconfounds the
 relation between treatment and other variables, but adding spurious
@@ -8796,19 +9251,18 @@ indirect effect term by manipulating jointly (if possible) (\(X, M\))
 but even then the linearity assumption must hold for the estimates to
 correspond to our linear causal mediation model.
 
-\hypertarget{example}{%
-\subsection{Example}\label{example}}
+\begin{example}[Fluency as mediator of product
+evaluation]\protect\hypertarget{exm-inconsistency}{}\label{exm-inconsistency}
 
-Study 2 of Lee and Choi (\protect\hyperlink{ref-Lee.Choi:2019}{2019})
-focus on inconsistency of photos and text descriptions for online
-descriptions and how this impact the product evaluation.
+Study 2 of Lee and Choi (2019) focus on inconsistency of photos and text
+descriptions for online descriptions and how this impact the product
+evaluation.
 
 The experimental variable is the consistency of the product description
 and depiction, with \texttt{fluency} leading to ``processing
 disfluency'' that is expected to impact negatively judgment ratings.
 Familiarity with the product brand and product is included as covariate
-in both mediator and outcome model (see Table 1 of Lee and Choi
-(\protect\hyperlink{ref-Lee.Choi:2019}{2019})).\footnote{Incidentally, reporting the coefficients in a table with standard errors, etc. allows one to retro-engineer the calculations.}
+in both mediator and outcome model (see Table 1 of Lee and Choi (2019)).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8852,11 +9306,10 @@ indirect effect estimate is
 effect is \(\widehat{\beta} = 0.29\).
 
 To get confidence intervals, we can use the \texttt{mediate} package
-(\protect\hyperlink{ref-mediationR}{Tingley et al. 2014}). The function
-requires the parametric model for the mediation and outcome, as well as
-a series of specification (the number of bootstrap samples, the type of
-confidence interval, the names of the levels for categorical treatment,
-etc.)
+(Tingley et al. 2014). The function requires the parametric model for
+the mediation and outcome, as well as a series of specification (the
+number of bootstrap samples, the type of confidence interval, the names
+of the levels for categorical treatment, etc.)
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8898,6 +9351,8 @@ Using the \texttt{summary} method, we can print the table of estimates
 and confidence intervals. We can see that the results are consistent
 with those reported in the article.
 
+\end{example}
+
 \hypertarget{moderation-and-interactions}{%
 \section{Moderation and
 interactions}\label{moderation-and-interactions}}
@@ -8926,17 +9381,17 @@ parametrization, the linear model
 includes different slopes for \(W\) in each experimental group, as well
 as different intercepts (\(\mu + \alpha_k\)) for group \(k\).
 
-As an example, we consider Garcia et al.
-(\protect\hyperlink{ref-Garcia:2010}{2010}). These data are from a study
-on gender discrimination. Participants were put with a file where a
-women was turned down promotion in favour of male colleague despite her
-being clearly more experimented and qualified. The authors manipulated
-the decision of the participant to this decision, either choosing not to
-challenge the decision (no protest), a request to reconsider based on
-individual qualities of the applicants (individual) and a request to
-reconsider based on abilities of women (collective). All items were
-measured using scales constructed using items measured using Likert
-scales ranging from strongly disagree (1) to strongly agree (7).
+As an example, we consider Garcia et al. (2010). These data are from a
+study on gender discrimination. Participants were put with a file where
+a women was turned down promotion in favour of male colleague despite
+her being clearly more experimented and qualified. The authors
+manipulated the decision of the participant to this decision, either
+choosing not to challenge the decision (no protest), a request to
+reconsider based on individual qualities of the applicants (individual)
+and a request to reconsider based on abilities of women (collective).
+All items were measured using scales constructed using items measured
+using Likert scales ranging from strongly disagree (1) to strongly agree
+(7).
 
 The postulated mediator variable is \texttt{sexism}, the average of 6
 Likert scales for the Modern Sexism Scale assessing pervasiveness of
@@ -8990,12 +9445,11 @@ or one standard deviation away.
 
 We may be interested in the range of values of the predictor \(W\) for
 which the difference between treatments is not statistically significant
-if we only have a binary treatment. The Johnson--Neyman method
-(\protect\hyperlink{ref-Johnson.Neyman:1936}{Johnson and Neyman 1936})
-considers this range, but this leads to multiple testing problems since
-we probe the model repeatedly. Esarey and Sumner
-(\protect\hyperlink{ref-Esarey.Sumner:2018}{2018}) offer a method that
-provides control for the false discovery rate.
+if we only have a binary treatment. The Johnson--Neyman method (Johnson
+and Neyman 1936) considers this range, but this leads to multiple
+testing problems since we probe the model repeatedly. Esarey and Sumner
+(2018) offer a method that provides control for the false discovery
+rate.
 
 To illustrate the method, we dichotomize the manipulation pooling
 individual and collective protests, since these are the most similar.
@@ -9163,10 +9617,9 @@ or negative. The \texttt{coin} package in \textbf{R} deals correctly
 with such instances, but it is important to specify the treatment of
 such values.\footnote{For example, are zero difference discarded prior
   to ranking, as suggested by Wilcoxon, or kept for the ranking and
-  discarded after, as proposed by Pratt
-  (\protect\hyperlink{ref-Pratt:1959}{1959})? We also need to deal with
-  ties, as the distribution of numbers changes with ties. If this seems
-  complicated to you, well it is\ldots{} so much that the default
+  discarded after, as proposed by Pratt (1959)? We also need to deal
+  with ties, as the distribution of numbers changes with ties. If this
+  seems complicated to you, well it is\ldots{} so much that the default
   implementation in \textbf{R} is unreliable.
   \href{https://www.stat.umn.edu/geyer/5601/examp/signrank.html}{Charles
   Geyer} illustrate the problems with the \emph{zero fudge}, but the
@@ -9174,13 +9627,15 @@ such values.\footnote{For example, are zero difference discarded prior
   trust default software, even if it's been sitting around for a long
   time.}
 
-We consider a within-subject design from Brodeur et al.
-(\protect\hyperlink{ref-Brodeur:2021}{2021}), who conducted an
-experiment at Tech3Lab to check distraction while driving from different
-devices including smartwatches using a virtual reality environment. The
-authors wanted to investigate whether smartwatches were more distracting
-than cellphones while driving. Using a simulator, they ran a
-within-subject design where each participant was assigned to a
+\begin{example}[Smartwatches and other
+distractions]\protect\hypertarget{exm-smartwatch}{}\label{exm-smartwatch}
+
+We consider a within-subject design from Brodeur et al. (2021), who
+conducted an experiment at Tech3Lab to check distraction while driving
+from different devices including smartwatches using a virtual reality
+environment. The authors wanted to investigate whether smartwatches were
+more distracting than cellphones while driving. Using a simulator, they
+ran a within-subject design where each participant was assigned to a
 distraction (phone, using a speaker, texting while driving or
 smartwatch) while using a driving simulator. The response is the number
 of road safety violations conducted on the segment. Each task was
@@ -9269,6 +9724,8 @@ testing whether the mean is zero. The \(p\)-value obtained by doing this
 after discarding zeros is \(0.73\), which is pretty much the same as the
 more complicated approximation.
 
+\end{example}
+
 \hypertarget{wilcoxon-rank-sum-test-and-kruskalwallis-test}{%
 \section{Wilcoxon rank sum test and Kruskal--Wallis
 test}\label{wilcoxon-rank-sum-test-and-kruskalwallis-test}}
@@ -9290,12 +9747,14 @@ pair of groups: those are called Walsh's averages. The Hodges--Lehmann
 estimate of location is simply the median of Walsh's averages and we can
 use the Walsh's averages themselves to obtain a confidence interval.
 
-Brucks and Levav (\protect\hyperlink{ref-Brucks.Levav:2022}{2022})
-measure the attention of participants based on condition using an
-eyetracker. We compare the time spend looking at the partner by
-experimental condition (face-to-face or videoconferencing). The authors
-used a Kruskal--Wallis test, but this is equivalent to Wilcoxon's
-rank-sum test.
+\begin{example}[Virtual
+communications]\protect\hypertarget{exm-virtual-communications}{}\label{exm-virtual-communications}
+
+Brucks and Levav (2022) measure the attention of participants based on
+condition using an eyetracker. We compare the time spend looking at the
+partner by experimental condition (face-to-face or videoconferencing).
+The authors used a Kruskal--Wallis test, but this is equivalent to
+Wilcoxon's rank-sum test.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9339,6 +9798,8 @@ for face-to-face vs group video, with a 95\% confidence interval of
 In either case, it's clear that the videoconferencing translates into
 longer time spent gazing at the partner than in-person meetings.
 
+\end{example}
+
 \bookmarksetup{startatroot}
 
 \hypertarget{references}{%
@@ -9349,7 +9810,7 @@ longer time spent gazing at the partner than in-person meetings.
 \leavevmode\vadjust pre{\hypertarget{ref-STAR2008}{}}%
 Achilles, C. M., Helen Pate Bain, Fred Bellott, Jayne Boyd-Zaharias,
 Jeremy Finn, John Folger, John Johnston, and Elizabeth Word. 2008.
-{``{Tennessee's Student Teacher Achievement Ratio (STAR) project}.''}
+{``Tennessee's Student Teacher Achievement Ratio (STAR) Project.''}
 Harvard Dataverse. \url{https://doi.org/10.7910/DVN/SIWH9F}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Aguinis:2021}{}}%
@@ -9402,9 +9863,9 @@ Analysis \& Prevention} 149: 105846.
 \leavevmode\vadjust pre{\hypertarget{ref-RANDHIE}{}}%
 Brook, Robert H., Emmett B. Keeler, Kathleen N. Lohr, Joseph P.
 Newhouse, John E. Ware, William H. Rogers, Allyson Ross Davies, et al.
-2006. \emph{\href{}{The {H}ealth {I}nsurance {E}xperiment: A Classic
-{RAND} Study Speaks to the Current Health Care Reform Debate}}. Santa
-Monica, CA: RAND Corporation.
+2006. \emph{The {H}ealth {I}nsurance {E}xperiment: A Classic {RAND}
+Study Speaks to the Current Health Care Reform Debate}. Santa Monica,
+CA: RAND Corporation.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Brucks.Levav:2022}{}}%
 Brucks, Melanie S., and Jonathan Levav. 2022. {``Virtual Communication
@@ -9412,8 +9873,8 @@ Curbs Creative Idea Generation.''} \emph{Nature} 605 (7908): 108--12.
 \url{https://doi.org/10.1038/s41586-022-04643-y}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Bullock.Green.Ha:2010}{}}%
-Bullock, J. G., Green D. P., and S. E. Ha. 2010. {``Journal of
-Personality and Social Psychology''} 98 (4): 550--58.
+Bullock, J. G., Green D. P., and S. E. Ha. 2010. {``Yes, but What's the
+Mechanism? (Don't Expect an Easy Answer).''} 98 (4): 550--58.
 \url{https://doi.org/10.1037/a0018933}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Card.Krueger:1994}{}}%
@@ -9423,9 +9884,9 @@ A Case Study of the Fast-Food Industry in {N}ew {J}ersey and
 \url{http://www.jstor.org/stable/2118030}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Claerboutux2fKarrenbach:1992}{}}%
-Claerbout, Jon F., and Martin Karrenbach. 1992. {``{Electronic documents
-give reproducible research a new meaning}.''} \emph{SEG Technical
-Program Expanded Abstracts}.
+Claerbout, Jon F., and Martin Karrenbach. 1992. {``Electronic Documents
+Give Reproducible Research a New Meaning.''} \emph{SEG Technical Program
+Expanded Abstracts}.
 https://doi.org/\url{https://doi.org/10.1190/1.1822162}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Cohen:1988}{}}%
@@ -9446,8 +9907,8 @@ Davison, A. C., and D. V. Hinkley. 1997. \emph{Bootstrap Methods and
 Their Application}. New York, NY: Cambridge University Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Efron.Tibshirani:1993}{}}%
-Efron, B., and R. J. Tibshirani. 1993. \emph{{An Introduction to the
-Bootstrap}}. Boca Raton, FL: CRC Press.
+Efron, B., and R. J. Tibshirani. 1993. \emph{An Introduction to the
+Bootstrap}. Boca Raton, FL: CRC Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Elliot:2021}{}}%
 Elliott, Emily M., Candice C. Morey, Angela M. AuBuchon, Nelson Cowan,
@@ -9495,6 +9956,12 @@ Important Than Ever.''} \emph{The Annals of Statistics} 33 (1): 1--53.
 Gelman, Andrew, and Eric Loken. 2014. {``The Statistical Crisis in
 Science.''} \emph{American Scientist} 102: 460--65.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Halevy.Berson:2022}{}}%
+Halevy, Nir, and Yair Berson. 2022. {``Thinking about the Distant Future
+Promotes the Prospects of Peace: A Construal-Level Perspective on
+Intergroup Conflict Resolution.''} \emph{Journal of Conflict Resolution}
+66 (6): 1119--43. \url{https://doi.org/10.1177/00220027221079402}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-Hariton.Locascio:2018}{}}%
 Hariton, Eduardo, and Joseph J Locascio. 2018. {``Randomised Controlled
 Trials -- the Gold Standard for Effectiveness Research.''} \emph{BJOG:
@@ -9516,6 +9983,11 @@ Approach to Causal Mediation Analysis.''} \emph{Psychological Methods}
 Ioannidis, John P. A. 2005. {``Why Most Published Research Findings Are
 False.''} \emph{PLOS Medicine} 2 (8).
 \url{https://doi.org/10.1371/journal.pmed.0020124}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Janiszewski.Uy:2008}{}}%
+Janiszewski, Chris, and Dan Uy. 2008. {``Precision of the Anchor
+Influences the Amount of Adjustment.''} \emph{Psychological Science} 19
+(2): 121--27. \url{https://doi.org/10.1111/j.1467-9280.2008.02057.x}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Johnson.Neyman:1936}{}}%
 Johnson, P. O., and J. Neyman. 1936. {``Tests of Certain Linear
@@ -9564,8 +10036,8 @@ and Consumer Services} 49: 279--88.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Lin.Kim.Uduehi.Keinan:2024}{}}%
 Lin, Jason D, Nicole You Jeung Kim, Esther Uduehi, and Anat Keinan.
-2024. {``{Culture for Sale: Unpacking Consumer Perceptions of Cultural
-Appropriation}.''} \emph{Journal of Consumer Research}.
+2024. {``Culture for Sale: Unpacking Consumer Perceptions of Cultural
+Appropriation.''} \emph{Journal of Consumer Research}.
 \url{https://doi.org/10.1093/jcr/ucad076}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Liu.Rim.Min.Min:2023}{}}%
@@ -9645,9 +10117,9 @@ Packaging.''} \emph{Journal of Consumer Research} 50 (3): 468--91.
 \url{https://doi.org/10.1093/jcr/ucad008}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Song.Baicker:2019}{}}%
-Song, Zirui, and Katherine Baicker. 2019. {``{Effect of a Workplace
+Song, Zirui, and Katherine Baicker. 2019. {``Effect of a Workplace
 Wellness Program on Employee Health and Economic Outcomes: A Randomized
-Clinical Trial}.''} \emph{JAMA} 321 (15): 1491--501.
+Clinical Trial.''} \emph{JAMA} 321 (15): 1491--501.
 \url{https://doi.org/10.1001/jama.2019.3307}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Steiger:2004}{}}%

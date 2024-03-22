@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods – 5&nbsp; Complete factorial designs</title>
+<title>Experimental design and statistical methods - 5&nbsp; Complete factorial designs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,42 +109,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -162,12 +127,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-interactions_multiway.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-interactions_multiway.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -177,13 +142,13 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -281,7 +246,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -292,7 +257,7 @@ window.Quarto = {
   <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions"><span class="header-section-number">5.2</span> Interactions</a></li>
   <li><a href="#model-parametrization" id="toc-model-parametrization" class="nav-link" data-scroll-target="#model-parametrization"><span class="header-section-number">5.3</span> Model parametrization</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/05-interactions_multiway.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/05-interactions_multiway.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -302,13 +267,12 @@ window.Quarto = {
 
 </header>
 
-
 <p>We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously. Before jumping into the statistical analysis, let us discuss briefly some examples that will be covered in the sequel.</p>
 <div id="exm-STC21" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.1 (Psychological ownership of borrowed money)</strong></span> Supplemental Study 5 from <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.</p>
+<p><span class="theorem-title"><strong>Example 5.1 (Psychological ownership of borrowed money) </strong></span>Supplemental Study 5 from <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.</p>
 </div>
 <div id="exm-MP14" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.2 (Spatial orientation shrinks and expands psychological distance)</strong></span> <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> measured the subjective distance on travel based on the direction of travel. They conducted an experiment in the Toronto subway green line, asking commuters from Bay station to answer the question “How far away does the [name] station feel to you?” using a 7 point Likert scale ranging from very close (1) to very far (7). The stations name were one of Spadina, St.&nbsp;George, Bloor–Yonge and Sherbourne (from West to East).</p>
+<p><span class="theorem-title"><strong>Example 5.2 (Spatial orientation shrinks and expands psychological distance) </strong></span><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> measured the subjective distance on travel based on the direction of travel. They conducted an experiment in the Toronto subway green line, asking commuters from Bay station to answer the question “How far away does the [name] station feel to you?” using a 7 point Likert scale ranging from very close (1) to very far (7). The stations name were one of Spadina, St.&nbsp;George, Bloor–Yonge and Sherbourne (from West to East).</p>
 <p>As there are four stations and two directions of travel (a 4 by 2 design), the scientific question of interest for subjective measures of distance would consist of perceiving differently the distance depending on the direction of travel. We could also wonder whether destinations that are two stations away from Bay (Spadina and Sherbourne) would be considered equidistant, and similarly for the other two.</p>
 </div>
 <section id="efficiency-of-multiway-analysis-of-variance." class="level2" data-number="5.1">
@@ -326,13 +290,9 @@ window.Quarto = {
 </ul>
 <p>This, it turns out, is a special case of linear regression model. We could build contrasts for comparing group averages, but it will more convenient to reparametrize the model so that hypotheses of interest are directly expressed in terms of the parameters.</p>
 <p>For example, in the <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> study, we could gather observations for each factor combination in a table, where <code>direction</code> is the row and <code>station</code> the column.</p>
-<div id="tbl-cellmeansMP14" class="quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cellmeansMP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.1: Conceptual depiction of cell average for the two by two design of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>
-</figcaption>
-<div aria-describedby="tbl-cellmeansMP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="tbl-cellmeansMP14" class="anchored">
 <table class="table">
+<caption>Table&nbsp;5.1: Conceptual depiction of cell average for the two by two design of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span></caption>
 <colgroup>
 <col style="width: 30%">
 <col style="width: 2%">
@@ -388,26 +348,20 @@ Table&nbsp;5.1: Conceptual depiction of cell average for the two by two design o
 </tbody>
 </table>
 </div>
-</figure>
-</div>
 <p>The <span class="math inline">\(i\)</span>th row mean represents the average response across all levels of <span class="math inline">\(B\)</span>, <span class="math inline">\(\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b\)</span> and similarly for the average of the <span class="math inline">\(j\)</span>th column, <span class="math inline">\(\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.\)</span> Finally, the overall average is <span class="math display">\[\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.\]</span></p>
 <p>Each subgroup average <span class="math inline">\(\mu_{ij}\)</span> will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means <span class="math inline">\(\widehat{\mu}_{i.}\)</span>, <span class="math inline">\(\widehat{\mu}_{.j}\)</span> and <span class="math inline">\(\widehat{\mu}\)</span>. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.</p>
-<div class="cell">
-<div id="tbl-balance-MP14" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-balance-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.2: Repartition of the sample for Study 1 of Maglio and Polman (2014).
-</figcaption>
-<div aria-describedby="tbl-balance-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/tbl-balance-MP14_3bbe46c32639693e57530e9ceec5e4d2">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small">
+<div id="tbl-balance-MP14" class="anchored">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Table&nbsp;5.2: Repartition of the sample for Study 1 of Maglio and Polman (2014).</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">Spadina</th>
-<th style="text-align: right;">St.&nbsp;George</th>
-<th style="text-align: right;">Bloor-Yonge</th>
-<th style="text-align: right;">Sherbourne</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Spadina</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">St. George</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Bloor-Yonge</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sherbourne</th>
 </tr>
 </thead>
 <tbody>
@@ -428,15 +382,15 @@ Table&nbsp;5.2: Repartition of the sample for Study 1 of Maglio and Polman (2014
 </tbody>
 </table>
 </div>
+
+
 </div>
-</figure>
 </div>
-</div>
-<p>Looking at <a href="#tbl-balance-MP14" class="quarto-xref">Table&nbsp;<span>5.2</span></a>, we can see that the number of observations is not exactly the same. In general, attrition and non-response can lead to unequal cell sample size, but you should strive to gather roughly equal number of observations. The main consequence is that different decompositions of the variance will lead to different tests, whereas no such ambiguity exists for balanced data.</p>
+<p>Looking at <a href="#tbl-balance-MP14">Table&nbsp;<span>5.2</span></a>, we can see that the number of observations is not exactly the same. In general, attrition and non-response can lead to unequal cell sample size, but you should strive to gather roughly equal number of observations. The main consequence is that different decompositions of the variance will lead to different tests, whereas no such ambiguity exists for balanced data.</p>
 </section>
 <section id="interactions" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="interactions"><span class="header-section-number">5.2</span> Interactions</h2>
-<p><a href="#tbl-cellmeansMP14" class="quarto-xref">Table&nbsp;<span>5.1</span></a> shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either <code>direction</code> or <code>station</code> as sole factor.</p>
+<p><a href="#tbl-cellmeansMP14">Table&nbsp;<span>5.1</span></a> shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either <code>direction</code> or <code>station</code> as sole factor.</p>
 <p>We will use particular terminology to refer to these:</p>
 <ul>
 <li><strong>simple effects</strong>: difference between levels of one in a fixed combination of others. Simple effects are comparing cell averages within a given row or column.</li>
@@ -446,34 +400,26 @@ Table&nbsp;5.2: Repartition of the sample for Study 1 of Maglio and Polman (2014
 <p>In other words, an interaction occurs when some experimental factors, when coupled together, have different impacts than the superposition of each. An interaction between two factors occurs when the average effect of one independent variable depends on the level of the other.</p>
 <p>If there is a significant interaction, the main effects are <strong>not</strong> of interest since they are misleading. Rather, we will compute the simple effects by making the comparison one at level at the time.</p>
 <p>In our example of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, a simple effect would be comparing the distance between Spadina and Sherbourne for east. The main effect for the direction would be the average perceived distance for east and for west. Finally, the interaction would measure how much these differ by station depending on direction.</p>
-<div class="cell">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/fig-2by2_ba833c96d680042b22cd0bf8b906ae45">
 <div class="cell-output-display">
-<div id="fig-2by2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="05-interactions_multiway_files/figure-html/fig-2by2-1.png" class="img-fluid figure-img" style="width:100.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.1: Interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of <span class="citation" data-cites="Crump.Navarro.Suzuki:2019">Crump, Navarro, and Suzuki (<a href="references.html#ref-Crump.Navarro.Suzuki:2019" role="doc-biblioref">2019</a>)</span> by Matthew Crump (CC BY-SA 4.0 license).
-</figcaption>
+<div id="fig-2by2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-interactions_multiway_files/figure-html/fig-2by2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.1: Interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of <span class="citation" data-cites="Crump.Navarro.Suzuki:2019">Crump, Navarro, and Suzuki (<a href="references.html#ref-Crump.Navarro.Suzuki:2019" role="doc-biblioref">2019</a>)</span> by Matthew Crump (CC BY-SA 4.0 license).</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>To better understand, we consider the average response and suppose we have access to the true population average for each sub-treatment. We can then represent the population using a line graph with the two factors, one being mapped to color and another to the <span class="math inline">\(x\)</span>-axis. <a href="#fig-2by2" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> shows what happens under all possible scenarios with a 2 by 2 design. When there is no overall effect, the mean is constant. If there isn’t a main effect of <span class="math inline">\(A\)</span>, the average of the two mean response for <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> are the same, etc. Interactions are depicted by <strong>non-parallel lines</strong>.</p>
-<p>It’s clear from <a href="#fig-2by2" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> that looking only at the average of <span class="math inline">\(A\)</span> alone (the main effect) isn’t instructive when we are in the presence of an interaction: rather, we should be comparing the values of <span class="math inline">\(A\)</span> for <span class="math inline">\(b_1\)</span> separately than those for <span class="math inline">\(b_2\)</span>, and vice-versa, using simple effects, otherwise our conclusions may be misleading.</p>
+<p>To better understand, we consider the average response and suppose we have access to the true population average for each sub-treatment. We can then represent the population using a line graph with the two factors, one being mapped to color and another to the <span class="math inline">\(x\)</span>-axis. <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> shows what happens under all possible scenarios with a 2 by 2 design. When there is no overall effect, the mean is constant. If there isn’t a main effect of <span class="math inline">\(A\)</span>, the average of the two mean response for <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> are the same, etc. Interactions are depicted by <strong>non-parallel lines</strong>.</p>
+<p>It’s clear from <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> that looking only at the average of <span class="math inline">\(A\)</span> alone (the main effect) isn’t instructive when we are in the presence of an interaction: rather, we should be comparing the values of <span class="math inline">\(A\)</span> for <span class="math inline">\(b_1\)</span> separately than those for <span class="math inline">\(b_2\)</span>, and vice-versa, using simple effects, otherwise our conclusions may be misleading.</p>
 <div id="exm-MP14-interaction" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.3 (Interaction plots for Maglio and Polman (2014))</strong></span> The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on <a href="#fig-interactionplotMP" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.</p>
-<div class="cell">
+<p><span class="theorem-title"><strong>Example 5.3 (Interaction plots for Maglio and Polman (2014)) </strong></span>The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on <a href="#fig-interactionplotMP">Figure&nbsp;<span>5.2</span></a>, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.</p>
+<div class="cell" data-hash="05-interactions_multiway_cache/html/fig-interactionplotMP_38bd5c332fb9984ad8fc5cb4587b5dcd">
 <div class="cell-output-display">
-<div id="fig-interactionplotMP" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-interactionplotMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="05-interactions_multiway_files/figure-html/fig-interactionplotMP-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactionplotMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.2: Interaction plot for Study 1 of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, showing group averages and 95% confidence intervals for the means. Observations are overlaid on the graph.
-</figcaption>
+<div id="fig-interactionplotMP" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-interactions_multiway_files/figure-html/fig-interactionplotMP-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.2: Interaction plot for Study 1 of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, showing group averages and 95% confidence intervals for the means. Observations are overlaid on the graph.</figcaption>
 </figure>
 </div>
 </div>
@@ -483,25 +429,25 @@ Figure&nbsp;5.2: Interaction plot for Study 1 of <span class="citation" data-cit
 <section id="model-parametrization" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="model-parametrization"><span class="header-section-number">5.3</span> Model parametrization</h2>
 <p>The following section is technical and may be omitted.</p>
-<p>The model parametrized in terms of subgroup or cell average is okay in <a href="#eq-twowayasoneway" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, but it doesn’t help us if we want to check for the presence of main effects and interaction, even if it would be possible to specify the contrasts required to test these hypotheses. We can however express the model in terms of main effects and interactions.</p>
+<p>The model parametrized in terms of subgroup or cell average is okay in <a href="#eq-twowayasoneway">Equation&nbsp;<span>5.1</span></a>, but it doesn’t help us if we want to check for the presence of main effects and interaction, even if it would be possible to specify the contrasts required to test these hypotheses. We can however express the model in terms of main effects and interactions.</p>
 <p>We consider the alternative formulation <span class="math display">\[\begin{align*}
 Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 \end{align*}\]</span> where</p>
 <ul>
 <li><span class="math inline">\(\mu\)</span> is the average of all subgroup averages, termed overall mean.</li>
 <li><span class="math inline">\(\alpha_i = \mu_{i.} - \mu\)</span> is the mean of level <span class="math inline">\(A_i\)</span> minus the overall mean.</li>
-<li><span class="math inline">\(\beta_j  = \mu_{.j} - \mu\)</span> is the mean of level <span class="math inline">\(B_j\)</span> minus overall mean.</li>
+<li><span class="math inline">\(\beta_j = \mu_{.j} - \mu\)</span> is the mean of level <span class="math inline">\(B_j\)</span> minus overall mean.</li>
 <li><span class="math inline">\((\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu\)</span> is the interaction term for <span class="math inline">\(A_i\)</span> and <span class="math inline">\(B_j\)</span> which encodes the effect of both variable not already captured by the main effects.</li>
 </ul>
-<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(n_a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\)</span>. The <span class="math inline">\(1 +  n_a + n_b\)</span> <strong>sum to zero</strong> constraints, <span class="math display">\[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]</span> restore identifiability.</p>
+<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(n_a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\)</span>. The <span class="math inline">\(1 + n_a + n_b\)</span> <strong>sum to zero</strong> constraints, <span class="math display">\[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]</span> restore identifiability.</p>
 <p>The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.</p>
 <p><strong>To be continued</strong>…</p>
 <div id="exm-borrowed-money-test" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.4 (Testing for Psychological ownership of borrowed money)</strong></span> <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors <code>debttype</code> and <code>purchase</code>), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.</p>
-<p>The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in <a href="#fig-2by2" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn’t significant, then we could pool observations instead and average across either of the two factors, resulting in the marginal comparisons with the main effects.</p>
+<p><span class="theorem-title"><strong>Example 5.4 (Testing for Psychological ownership of borrowed money) </strong></span><span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors <code>debttype</code> and <code>purchase</code>), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.</p>
+<p>The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a>, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn’t significant, then we could pool observations instead and average across either of the two factors, resulting in the marginal comparisons with the main effects.</p>
 <p>Fitting the model including the interaction between factors ensures that we keep the additivity assumption and that our conclusions aren’t misleading: the price to pay is additional mean parameters to be estimated, which isn’t an issue if you collect enough data, but can be critical when data collection is extremely costly and only a few runs are allowed.</p>
 <p>In <strong>R</strong>, we include both factors in a formula as <code>response ~ factorA * factorB</code>, the <code>*</code> symbol indicating that both are allowed to interact; in the main effect model, we would use instead <code>+</code> to reflect that the effects of both factors add up.</p>
-<div class="cell">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/unnamed-chunk-5_e07f0b8623131619809363a2ef794e5b">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing Supplementary Study 5</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of Sharma, Tully, and Cryder (2021)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(STC21_SS5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
@@ -606,44 +552,36 @@ purchase = need:
 <p>To get the simple effects, we give both variables in <code>specs</code> as factors for which to compute subgroup means, then set additionally the <code>by</code> command to specify which variable we want separate results for. We get the difference in average between <code>credit</code> and <code>loan</code> labels for each purchase type along with the <span class="math inline">\(t\)</span> statistics for the marginal contrast and the <span class="math inline">\(p\)</span>-value. The simple effects suggest that the label has an impact on perception only for discretionary expenses rather than needed ones, which runs counter-intuitively with the lack of interaction.</p>
 </div>
 <div class="example" name="Spatial perception of distance in the Toronto subway">
-<p><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> considered the relative perception of distance from Bay station in Toronto. We modify the data so that we consider station distance in direction of travel (rather than station names). The categorical variable <code>stdist</code> has labels <span class="math inline">\((-2, -1, +1, +2\)</span>) for stations Spadina, St.&nbsp;Georges, Bloor-Yonge, Sherbourne in direction East, and opposite signs in the other direction: see <a href="#fig-Torontosubway" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> for the map. We are interested in knowing whether two stations behind (<code>stdist</code><span class="math inline">\(=-2\)</span>) is perceived the same as two stations ahead (<code>stdist</code><span class="math inline">\(=+2\)</span>).</p>
-<div class="cell">
+<p><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> considered the relative perception of distance from Bay station in Toronto. We modify the data so that we consider station distance in direction of travel (rather than station names). The categorical variable <code>stdist</code> has labels <span class="math inline">\((-2, -1, +1, +2\)</span>) for stations Spadina, St.&nbsp;Georges, Bloor-Yonge, Sherbourne in direction East, and opposite signs in the other direction: see <a href="#fig-Torontosubway">Figure&nbsp;<span>5.3</span></a> for the map. We are interested in knowing whether two stations behind (<code>stdist</code><span class="math inline">\(=-2\)</span>) is perceived the same as two stations ahead (<code>stdist</code><span class="math inline">\(=+2\)</span>).</p>
+<div class="cell" data-hash="05-interactions_multiway_cache/html/fig-Torontosubway_fb8d6af10e41dfd21f2f534a1fcfa0a0">
 <div class="cell-output-display">
-<div id="fig-Torontosubway" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Torontosubway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/Toronto_subway.png" class="img-fluid figure-img" width="494">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Torontosubway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.3: Simplified depiction of the Toronto metro stations used in the experiment, based on work by Craftwerker on Wikipedia, distributed under CC-BY-SA 4.0.
-</figcaption>
+<div id="fig-Torontosubway" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/Toronto_subway.png" class="img-fluid figure-img" width="494"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.3: Simplified depiction of the Toronto metro stations used in the experiment, based on work by Craftwerker on Wikipedia, distributed under CC-BY-SA 4.0.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/unnamed-chunk-8_ac956b022d8e59cf26202c63d3a6dd4b">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up parametrization to sum-to-zero for categorical factors</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> stdist <span class="sc">*</span> direction, <span class="at">data =</span> MP14_S1) </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div id="tbl-ANOVA2-MP14" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA2-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.3: Analysis of variance (type II effects) for the Maglio and Polman (2014) reformated data.
-</figcaption>
-<div aria-describedby="tbl-ANOVA2-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/tbl-ANOVA2-MP14_0cba122b0d01b1429a29ab42221eb9e0">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small">
+<div id="tbl-ANOVA2-MP14" class="anchored">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Table&nbsp;5.3: Analysis of variance (type II effects) for the Maglio and Polman (2014) reformated data.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">sum of squares</th>
-<th style="text-align: right;">df</th>
-<th style="text-align: right;">stat</th>
-<th style="text-align: left;">p-value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sum of squares</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">df</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">stat</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p-value</th>
 </tr>
 </thead>
 <tbody>
@@ -678,43 +616,35 @@ Table&nbsp;5.3: Analysis of variance (type II effects) for the Maglio and Polman
 </tbody>
 </table>
 </div>
+
+
 </div>
-</figure>
 </div>
-</div>
-<p>We look at the analysis of variance in <a href="#tbl-ANOVA2-MP14" class="quarto-xref">Table&nbsp;<span>5.3</span></a> to see what the perception of distance is. The <span class="math inline">\(F\)</span>-tests suggest that there is no interaction, and no effect of direction of travel although there is an uninteresting main effect of station distance (of course, two station apart is considered further from Bay than one station apart).</p>
+<p>We look at the analysis of variance in <a href="#tbl-ANOVA2-MP14">Table&nbsp;<span>5.3</span></a> to see what the perception of distance is. The <span class="math inline">\(F\)</span>-tests suggest that there is no interaction, and no effect of direction of travel although there is an uninteresting main effect of station distance (of course, two station apart is considered further from Bay than one station apart).</p>
 <p>Since there is no interaction, we can collapse the data to a one-way ANOVA with a single factor (station distance) and consider contrasts. Say we are interested in testing the perception of distance, by looking at average distance of pairs at equal distance <span class="math inline">\(\mu_{-1} = \mu_{+1}\)</span> and <span class="math inline">\(\mu_{-2} = \mu_{+2}\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/fig-interactionMP_fcaa85a6874455a61c6f70a5062dc348">
 <div class="cell-output-display">
-<div id="fig-interactionMP" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-interactionMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="05-interactions_multiway_files/figure-html/fig-interactionMP-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactionMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.4: Interaction plot for the reformated data from Maglio and Polman (2014) with 95% confidence intervals.
-</figcaption>
+<div id="fig-interactionMP" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05-interactions_multiway_files/figure-html/fig-interactionMP-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.4: Interaction plot for the reformated data from Maglio and Polman (2014) with 95% confidence intervals.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>If we have categories are in the order <span class="math inline">\((-2, -1, +1, +2)\)</span>, the contrast weights are <span class="math inline">\((-1, 0, 0, 1)\)</span> and <span class="math inline">\((0, -1, 1, 0)\)</span> or a multiple thereof; the two contrasts are orthogonal. <a href="#tbl-contrast-MP14" class="quarto-xref">Table&nbsp;<span>5.4</span></a> shows the result of the hypothesis tests: both are significant, even applying a Bonferroni correction. This supports the hypothesis of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>.</p>
-<div class="cell">
-<div id="tbl-contrast-MP14" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contrast-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.4: Contrasts for comparing the perceived distance for stations at the same distance on the network, but in opposition directions to that of travel.
-</figcaption>
-<div aria-describedby="tbl-contrast-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p>If we have categories are in the order <span class="math inline">\((-2, -1, +1, +2)\)</span>, the contrast weights are <span class="math inline">\((-1, 0, 0, 1)\)</span> and <span class="math inline">\((0, -1, 1, 0)\)</span> or a multiple thereof; the two contrasts are orthogonal. <a href="#tbl-contrast-MP14">Table&nbsp;<span>5.4</span></a> shows the result of the hypothesis tests: both are significant, even applying a Bonferroni correction. This supports the hypothesis of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>.</p>
+<div class="cell" data-hash="05-interactions_multiway_cache/html/tbl-contrast-MP14_62fb477fb157e3a73c9eb5a2c086544b">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small">
+<div id="tbl-contrast-MP14" class="anchored">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Table&nbsp;5.4: Contrasts for comparing the perceived distance for stations at the same distance on the network, but in opposition directions to that of travel.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">contrast</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std. error</th>
-<th style="text-align: right;">stat</th>
-<th style="text-align: left;">p-value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std. error</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">stat</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p-value</th>
 </tr>
 </thead>
 <tbody>
@@ -735,31 +665,27 @@ Table&nbsp;5.4: Contrasts for comparing the perceived distance for stations at t
 </tbody>
 </table>
 </div>
-</div>
-</figure>
+
+
 </div>
 </div>
 </div>
 <p>It is important to understand that any multiway ANOVA with two or more factor can be collapsed into a single one-way ANOVA: this is notably useful when there is a control group which is not related to the factor levels, as no manipulation takes place. The use of contrasts becomes critical since we can write any test for main effects, interactions using the latter through weighting.</p>
 <div id="exm-LKUK24" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.5 (Perceptions of cultural appropriation by ideology)</strong></span> We consider a three-way ANOVA from <span class="citation" data-cites="Lin.Kim.Uduehi.Keinan:2024">Lin et al. (<a href="references.html#ref-Lin.Kim.Uduehi.Keinan:2024" role="doc-biblioref">2024</a>)</span>. Their Study 4 focused on cultural appropriation for soul food recipe cookbook from Chef Dax, who was either black (or not), manipulating the description of the way he obtained the recipes (by peeking without permission in kitchens, by asking permission or no mention for control). Authors postulated that the perception of appropriation would vary by political ideology (liberal or conservative). The study results in a 3 by 2 by 2 three-way between-subject ANOVA.</p>
+<p><span class="theorem-title"><strong>Example 5.5 (Perceptions of cultural appropriation by ideology) </strong></span>We consider a three-way ANOVA from <span class="citation" data-cites="Lin.Kim.Uduehi.Keinan:2024">Lin et al. (<a href="references.html#ref-Lin.Kim.Uduehi.Keinan:2024" role="doc-biblioref">2024</a>)</span>. Their Study 4 focused on cultural appropriation for soul food recipe cookbook from Chef Dax, who was either black (or not), manipulating the description of the way he obtained the recipes (by peeking without permission in kitchens, by asking permission or no mention for control). Authors postulated that the perception of appropriation would vary by political ideology (liberal or conservative). The study results in a 3 by 2 by 2 three-way between-subject ANOVA.</p>
 <p>For the <span class="math inline">\(K\)</span>-way ANOVA, we always start with estimating the full model with all <span class="math inline">\(K\)</span>-way interaction (provided there are enough data to estimate the latter, which implies there are repetitions). If the latter is significant, we can fix one or more factor levels and compare the others.</p>
-<div class="cell">
-<div id="tbl-anova-LKUK24" class="cell quarto-float anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anova-LKUK24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.5: Analysis of variance table (type II decomposition) for the data from Study 4 of Lin et al.&nbsp;(2024).
-</figcaption>
-<div aria-describedby="tbl-anova-LKUK24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/tbl-anova-LKUK24_6613bc2564d257d8b7b5a70993d76292">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell table table-sm table-striped small">
+<div id="tbl-anova-LKUK24" class="anchored">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<caption>Table&nbsp;5.5: Analysis of variance table (type II decomposition) for the data from Study 4 of Lin et al. (2024).</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">sum of squares</th>
-<th style="text-align: right;">df</th>
-<th style="text-align: right;">stat</th>
-<th style="text-align: left;">p-value</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sum of squares</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">df</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">stat</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">p-value</th>
 </tr>
 </thead>
 <tbody>
@@ -822,14 +748,14 @@ Table&nbsp;5.5: Analysis of variance table (type II decomposition) for the data 
 </tbody>
 </table>
 </div>
+
+
 </div>
-</figure>
 </div>
-</div>
-<p>If we consider <a href="#tbl-anova-LKUK24" class="quarto-xref">Table&nbsp;<span>5.5</span></a>, we find that there is no three-way interaction and, omitting the latter and focusing on lower-level, a single two-way interaction between political ideology and the race of Chef Dax. We cannot interpret the <span class="math inline">\(p\)</span>-value for the main effect of <code>brandaction</code>, but we could look at the marginal means.</p>
+<p>If we consider <a href="#tbl-anova-LKUK24">Table&nbsp;<span>5.5</span></a>, we find that there is no three-way interaction and, omitting the latter and focusing on lower-level, a single two-way interaction between political ideology and the race of Chef Dax. We cannot interpret the <span class="math inline">\(p\)</span>-value for the main effect of <code>brandaction</code>, but we could look at the marginal means.</p>
 <p>Based on the data, we will collapse data to a one-way ANOVA comparing the three levels of <code>brandaction</code> and a 2 by 2 two-way ANOVA for the other two factors. The results are obtained by averaging over the missing factor.</p>
 <p>We are interested in comparing the perception between the race of Chef Dax (black or not, as Southern Soul food cooking is more likely to be associated with cultural appropriation is Chef Dax is not black. We proceed with <code>emmeans</code> by computing the marginal means separately for each of the four subcategories, but compare the race of Chef Dax separately for liberals and conservatives due to the presence of the interaction.</p>
-<div class="cell">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/unnamed-chunk-14_8a897fe206772acdccfeb5050e6662f2">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LKUK24_S4, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(appropriation <span class="sc">~</span> politideo <span class="sc">*</span> chefdax <span class="sc">*</span> brandaction,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> LKUK24_S4)</span>
@@ -850,7 +776,7 @@ Results are averaged over the levels of: brandaction </code></pre>
 </div>
 <p>We see that the liberals are much more likely to view Chef Dax cookbook as an instance of cultural appropriation if he is not black; there is limited evidence of any difference between conservatives and liberal when Chef Dax is black. Both differences are statistically significative, but the differences (and thus evidence of an effect) is much stronger for left-leaning respondents.</p>
 <p>We can look next at the brand action: we expect participants will view peeking less favorably than if Chef Dax asked for permission to publish the recipes. It’s tricky to know the effect of the control, as we are not bringing the point to the attention of participants in this instance.</p>
-<div class="cell">
+<div class="cell" data-hash="05-interactions_multiway_cache/html/unnamed-chunk-15_22725ca1cb7b43dad43af4ba259cb65b">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal mean for brandaction</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>emm_brand <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mod, <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"brandaction"</span>)) </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>emm_brand</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -896,7 +822,7 @@ Confidence level used: 0.95 </code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Crump.Navarro.Suzuki:2019" class="csl-entry" role="listitem">
 Crump, M. J. C., D. J. Navarro, and J. Suzuki. 2019. <em>Answering Questions with Data: Introductory Statistics for Psychology Students</em>. <a href="https://doi.org/10.17605/OSF.IO/JZE52">https://doi.org/10.17605/OSF.IO/JZE52</a>.
 </div>
@@ -954,7 +880,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -986,50 +923,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1039,17 +937,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1061,130 +950,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1228,7 +994,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1254,32 +1019,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1341,12 +1080,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-contrasts_multipletesting.html" class="pagination-link" aria-label="Contrasts and multiple testing">
+      <a href="./04-contrasts_multipletesting.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./06-blocking_ancova.html" class="pagination-link" aria-label="Designs to reduce the error">
+      <a href="./06-blocking_ancova.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Designs to reduce the error</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1355,5 +1094,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/05-interactions_multiway.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+</body></html>

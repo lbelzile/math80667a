@@ -64,4 +64,20 @@ format:
     code-copy: true
     engine: knitr
     default-image-extension: png
+  pdf:
+    documentclass: scrbook
+    latex_documents:
+       targetname: MATH80667A-EDSM.tex
+    fontsize: 11pt
+    fig-pos: "ht!"
+    papersize: letter
+    template-partials: 
+      - before-body.tex
+      - title.tex
+    include-in-header: preamble.tex
+    include-before-body: coverpage.tex
+    pdf-engine: pdflatex
+    citation-package: natbib
+    keep-tex: true
+    biblio-style: apalike2
 

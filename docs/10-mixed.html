@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods – 10&nbsp; Introduction to mixed models</title>
+<title>Experimental design and statistical methods - 10&nbsp; Introduction to mixed models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,42 +109,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -162,12 +127,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-mixed.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-mixed.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -177,13 +142,13 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -281,7 +246,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -290,7 +255,7 @@ window.Quarto = {
   <ul>
   <li><a href="#fixed-vs-random-effects" id="toc-fixed-vs-random-effects" class="nav-link active" data-scroll-target="#fixed-vs-random-effects"><span class="header-section-number">10.1</span> Fixed vs random effects</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/10-mixed.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/10-mixed.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -299,7 +264,6 @@ window.Quarto = {
 <h1 class="title display-7"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></h1>
 
 </header>
-
 
 <p>This chapter considers tools for models with repeated measures from a modern perspective, using random effects for modelling. This class of model, called hierarchical models, multilevel models or mixed models in simple scenarios, give us more flexibility to account for complex scenarios in which there may be different sources of variability.</p>
 <p>For example, consider a large-scale replication study about teaching methods. We may have multiple labs partaking in a research program and each has unique characteristics. Because of these, we can expect that measurements collected within a lab will be correlated. At the same time, we can have repeated mesures for participants in the study. One can view this setup as a hierarchy, with within-subject factor within subject within lab. In such settings, the old-school approach to analysis of variance becomes difficult, if not impossible; it doesn’t easily account for the heterogeneity in the lab sample size and does not let us estimate the variability within labs.</p>
@@ -328,13 +292,13 @@ window.Quarto = {
 </ol>
 <p>Sources of variations are all factors (including identifiers) which could influence the response.</p>
 <p>We say to factors are nested (<span class="math inline">\(A\)</span> within <span class="math inline">\(B\)</span>) when one can only coexist within the levels of the other: this has implications, for we cannot have interaction between the two. In between-subject experiments, subjects are nested in between-subject factors and the experimental factors are crossed, meaning we can assign an experimental unit or a subject to each factor combination. Interactions can occur for the between-subject factors, although we need participants in each subcategory to estimate them.</p>
-<p>:::{.example “Temporal distancing in peace prospects”}</p>
-<p>We consider a three-way mixed design from Study 5 of <span class="citation" data-cites="Halevy.Berson:2022">Halevy and Berson (<a href="references.html#ref-Halevy.Berson:2022" role="doc-biblioref">2022</a>)</span>. The research studied how temporal distance impacted the prospects of peace by presenting participants with a fictional scenario in which two tribes in a fictional country, Velvetia, where either at war or peace and asking what they think the outcome would be in the near and distance future. Participants rated the likeliness using a Likert scale ranging from extremely unlikely (1) to extremely likely (7) for the question</p>
+<div id="exm-tempdist" class="theorem example">
+<p><span class="theorem-title"><strong>Example 10.1 (Temporal distancing in peace prospects) </strong></span>We consider a three-way mixed design from Study 5 of <span class="citation" data-cites="Halevy.Berson:2022">Halevy and Berson (<a href="references.html#ref-Halevy.Berson:2022" role="doc-biblioref">2022</a>)</span>. The research studied how temporal distance impacted the prospects of peace by presenting participants with a fictional scenario in which two tribes in a fictional country, Velvetia, where either at war or peace and asking what they think the outcome would be in the near and distance future. Participants rated the likeliness using a Likert scale ranging from extremely unlikely (1) to extremely likely (7) for the question</p>
 <blockquote class="blockquote">
 <p>There is currently [war/peace] between the two tribes in Velvetia. Thinking about [next year/in 20 years], how likely is it that there will be [war/peace] in Velvetia?</p>
 </blockquote>
 <p>Each participant was assigned to a single combination of the current state <code>curstate</code> and the predicted outcome <code>predout</code> and answered the question for both temporal horizon, <code>tempdist</code>. A rapid examination shows that we have a complete design: there are participants assigned to each subcategory of the between-subject factors.</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-2_a52151e94d8e1e1807defa8b55013e87">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(HB22_S5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> curstate <span class="sc">+</span> predout, <span class="at">data =</span> HB22_S5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -351,7 +315,7 @@ curstate peace war
 <li>We can have interactions between the three experimental factors <code>predout</code>, <code>curstate</code> and <code>tempdist</code> since the database contains instances of both of the former together, and since each person gets two <code>tempdist</code> levels. However, no interaction are possible between <code>id</code> and <code>tempdist</code> (due to lack of replication), or between between-subject factors and identifiers.</li>
 </ol>
 <p>With data in long format, meaning each line contains a single response and characteristics are repeated per row, with an <code>software will automatically capture the random effect. We can fit the equivalent of the repeated measure mixed ANOVA using a linear mixed model in **R**, by simply specifying a random intercept for the participant</code>id`. The full model with the three-way interaction includes eight components for the mean and two variant component (residual variance, and subject-specific variance).</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-3_ff79bfffd0aa69b09726e8a30dda5416">
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML ['lmerMod']
 Formula: likelihood ~ curstate * predout * tempdist + (1 | id)
@@ -395,25 +359,21 @@ Number of Observations: 554
 Number of Groups: 277 </code></pre>
 </div>
 </div>
-<p>:::</p>
-<div id="exm-happy-fakes-revisited" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.1 (Happy fakes, remixed)</strong></span> We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly. To fit the model, identifiers of subjects must be declared as factors (categorical variables). If we have repeated measurements of the within-subject factor, we may consider adding a random effect for the interaction between the subject and the within-subject factor.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-aafulldat" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-aafulldat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="10-mixed_files/figure-html/fig-aafulldat-1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aafulldat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.1: Jittered scatterplot of individual measurements per participant and stimulus type.
-</figcaption>
+<div id="exm-happy-fakes-revisited" class="theorem example">
+<p><span class="theorem-title"><strong>Example 10.2 (Happy fakes, remixed) </strong></span>We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly. To fit the model, identifiers of subjects must be declared as factors (categorical variables). If we have repeated measurements of the within-subject factor, we may consider adding a random effect for the interaction between the subject and the within-subject factor.</p>
+<div class="cell" data-hash="10-mixed_cache/html/fig-aafulldat_66cc47a788cff3c38e5028e14f1069c4">
+<div class="cell-output-display">
+<div id="fig-aafulldat" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-mixed_files/figure-html/fig-aafulldat-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.1: Jittered scatterplot of individual measurements per participant and stimulus type.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-aafulldat" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.</p>
-<div class="cell">
+<p><a href="#fig-aafulldat">Figure&nbsp;<span>10.1</span></a> shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.</p>
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-5_afe844d4d585d2666bbc1987e48a0312">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest) <span class="co"># Package to fit and tests for mixed models</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>mixedmod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
@@ -442,22 +402,22 @@ Fixed Effects:
 </div>
 </div>
 <p>The model includes a fixed effect for stimulus, and variance terms for <code>stimulus</code> (nested within <code>id</code>) and subject identifier <code>id</code>. We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large. We can also look globally at the statistical evidence for the difference between the various stimuli.</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-6_507303fd212ca828c9dd23c22f32998c">
 <div class="cell-output cell-output-stdout">
 <pre><code>Type III Analysis of Variance Table with Satterthwaite's method
          Sum Sq Mean Sq NumDF  DenDF F value Pr(&gt;F)
 stimulus  65.62   32.81     2 23.337  0.8471 0.4414</code></pre>
 </div>
 </div>
-<p>The global <span class="math inline">\(F\)</span> test of significance for stimulus is based on an approximation that accounts for the correlation between observations; the denominator degrees of freedom for the approximate <span class="math inline">\(F\)</span> statistic are based on Satterthwaite’s method. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in <a href="#fig-aafulldat" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>.</p>
+<p>The global <span class="math inline">\(F\)</span> test of significance for stimulus is based on an approximation that accounts for the correlation between observations; the denominator degrees of freedom for the approximate <span class="math inline">\(F\)</span> statistic are based on Satterthwaite’s method. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in <a href="#fig-aafulldat">Figure&nbsp;<span>10.1</span></a>.</p>
 </div>
 <div id="exm-verbalization-memorization" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.2 (Verbalization and memorization)</strong></span> We consider a replication study of <span class="citation" data-cites="Elliot:2021">Elliott et al. (<a href="references.html#ref-Elliot:2021" role="doc-biblioref">2021</a>)</span>, which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The replication was performed in 17 different school labs, adapting a protocol of <span class="citation" data-cites="Flavell:1966">Flavell, Beach, and Chinsky (<a href="references.html#ref-Flavell:1966" role="doc-biblioref">1966</a>)</span>, with an overall sample of 977 child partaking in the experiment.</p>
+<p><span class="theorem-title"><strong>Example 10.3 (Verbalization and memorization) </strong></span>We consider a replication study of <span class="citation" data-cites="Elliot:2021">Elliott et al. (<a href="references.html#ref-Elliot:2021" role="doc-biblioref">2021</a>)</span>, which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The replication was performed in 17 different school labs, adapting a protocol of <span class="citation" data-cites="Flavell:1966">Flavell, Beach, and Chinsky (<a href="references.html#ref-Flavell:1966" role="doc-biblioref">1966</a>)</span>, with an overall sample of 977 child partaking in the experiment.</p>
 <p>Each participant was assigned to three tasks (<code>timing</code>): <code>delayed</code> recall with 15 seconds wait, or <code>immediate</code>, and finally a naming task (<code>point-and-name</code>). The <code>taskorder</code> variable records the order in which these were presented: the order of <code>delayed</code> and <code>immediate</code> was counterbalanced across individuals, with the naming task always occurring last. The response variable is the number of words correctly recalled out of five. The experimenters also recorded the frequency at which students spontaneously verbalized during the task (except the naming task, where they were instructed to do so).</p>
 <p>The timing is a within-subject factor, whereas task order and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).</p>
 <p>To fit the linear mixed model with a random effect for both children <code>id</code> and <code>lab</code>: since children are nested in lab, we must specify the random effects via <code>(1 | id:lab) + (1 | lab)</code> if <code>id</code> are not unique.</p>
 <p>We modify the data to keep only 5 and 6 years old students, since most older kids verbalized during the task and we would have large disbalance (14 ten years old out of 235, and 19 out of 269 seven years old). We also exclude the point-and-name task, since verbalization was part of the instruction. This leaves us with 1419 observations and we can check that there are indeed enough children in each condition to get estimates.</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-7_f73d54034b0418eb529dd06e76bea077">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(MULTI21_D2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>MULTI21_D2_sub <span class="ot">&lt;-</span> MULTI21_D2 <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
@@ -476,7 +436,7 @@ age    no yes
 </div>
 </div>
 <p>Given that we have multiple students of every age group, we can include two-way and three-way interactions in the <span class="math inline">\(2^3\)</span> design. We also include random effects for the student and the lab.</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-8_48c099118208fb912a0df68a9f3b5a58">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>hmod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
@@ -486,7 +446,7 @@ age    no yes
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(hmod)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We focus here on selected part of the output from <code>summary()</code> giving the estimated variance terms.</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-9_0de8e468c88028fec0b844ea0bfde414">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups   Name        Variance Std.Dev.</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  id:lab   (Intercept) 0.3587   0.599   </span></span>
@@ -495,7 +455,7 @@ age    no yes
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of obs: 946, groups:  id:lab, 473; lab, 17</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can interpret the results as follows: the total variance is the sum of the <code>id</code>, <code>lab</code> and <code>residual</code> variances components give us an all but negligible effect of lab with 7 percent of the total variance, versus 40.5 percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn’t add much to the correlation.</p>
-<div class="cell">
+<div class="cell" data-hash="10-mixed_cache/html/unnamed-chunk-10_55e340932cef3089ac0013fc37c8be7a">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(hmod, <span class="at">ddf =</span> <span class="st">"Kenward-Roger"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Type III Analysis of Variance Table with Kenward-Roger's method
@@ -538,17 +498,13 @@ Degrees-of-freedom method: kenward-roger </code></pre>
 </div>
 <p>The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means (95% confidence interval) for age with an estimated correct number of words of 1.8543233 (1.6689094, 2.0397372) words out of 5 for the 5 years olds and 2.4446996 (2.2340654, 2.6553337) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward–Roger method are much fewer, respectively 35.8271155 and 60.943758 for five and six years old.</p>
 <p>The <span class="math inline">\(t\)</span>-test for the pairwise difference of the marginal effect is 0.5903763 words with standard error 0.1076964. Judging from the output, the degrees of freedom calculation for the pairwise <span class="math inline">\(t\)</span>-test are erroneous — they seem to be some average between the number of entries for the five years old (440) and six years old (506), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.</p>
-<p>We can easily see the limited interaction and strong main effects from the interaction plot in <a href="#fig-interactionrecall" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>. The confidence intervals are of different width because of the sample inbalance.</p>
-<div class="cell">
+<p>We can easily see the limited interaction and strong main effects from the interaction plot in <a href="#fig-interactionrecall">Figure&nbsp;<span>10.2</span></a>. The confidence intervals are of different width because of the sample inbalance.</p>
+<div class="cell" data-hash="10-mixed_cache/html/fig-interactionrecall_5f7d03ee3916eba16411d5f009c7e6ee">
 <div class="cell-output-display">
-<div id="fig-interactionrecall" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-interactionrecall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="10-mixed_files/figure-html/fig-interactionrecall-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactionrecall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.2: Interaction plot for the recall task for younger children.
-</figcaption>
+<div id="fig-interactionrecall" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="10-mixed_files/figure-html/fig-interactionrecall-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.2: Interaction plot for the recall task for younger children.</figcaption>
 </figure>
 </div>
 </div>
@@ -556,7 +512,7 @@ Figure&nbsp;10.2: Interaction plot for the recall task for younger children.
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Elliot:2021" class="csl-entry" role="listitem">
 Elliott, Emily M., Candice C. Morey, Angela M. AuBuchon, Nelson Cowan, Chris Jarrold, Eryn J. Adams, Meg Attwood, et al. 2021. <span>“Multilab Direct Replication of <span>F</span>lavell, <span>B</span>each, and <span>C</span>hinsky (1966): Spontaneous Verbal Rehearsal in a Memory Task as a Function of Age.”</span> <em>Advances in Methods and Practices in Psychological Science</em> 4 (2): 1–20. <a href="https://doi.org/10.1177/25152459211018187">https://doi.org/10.1177/25152459211018187</a>.
 </div>
@@ -611,7 +567,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -643,50 +610,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -696,17 +624,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -718,130 +637,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -885,7 +681,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -911,32 +706,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -998,12 +767,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./09-repeated.html" class="pagination-link" aria-label="Repeated measures and multivariate models">
+      <a href="./09-repeated.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Repeated measures and multivariate models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11-causal-inference.html" class="pagination-link" aria-label="Causal inference">
+      <a href="./11-causal-inference.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Causal inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1012,5 +781,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/10-mixed.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+</body></html>

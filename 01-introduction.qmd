@@ -143,6 +143,7 @@ The choice of statistical model and test depends on the underlying type of the d
 #| fig-cap: Illustration of continuous (left) and discrete variables (right). Artwork
 #|   by Allison Horst [shared under the CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
 #| echo: false
+#| eval: false
 #| out-width: '80%'
 knitr::include_graphics('figures/continuous_discrete.png')
 ```
@@ -157,6 +158,7 @@ Categorical variables take only a finite of values. They are regrouped in two gr
 ```{r}
 #| label: variablescateg
 #| echo: false
+#| eval: false
 #| fig-cap: "Examples of categorical nominal (left), ordinal (middle) and binary (right) variables. Artwork by [Allison Horst](https://www.allisonhorst.com/) shared under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)."
 #| out-width: '80%'
 knitr::include_graphics('figures/nominal_ordinal_binary.png')
