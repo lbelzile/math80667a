@@ -482,8 +482,9 @@ Since all of the multivariate statistics can be transformed for a comparison wit
 
 Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free **G**${}^{*}$**Power** software [@GPower3] also offers some tools. See also @Lauter:1978 for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group $j=1, \ldots, J$, which shows that the number increases rapidly with the dimension of the response vector $p$. As usual, smaller effect sizes are more difficult to detect.
 
-```{r tablepowersamplesize, echo = FALSE, eval = TRUE, output = "asis"}
-library(tidyverse)
+```{r tablepowersamplesize}
+#| echo: false
+#| eval: true
 tab <- data.frame(
 n = c(13,16,18,21,26,33,38,42,44,56,66,72,98,125,145,160,14,18,21,23,29,37,44,48,50,64,74,84,115,145,165,185,16,21,24,27,34,44,52,58,60,76,90,100,135,170,200,230),
 ngroups = factor(rep(3:5, each = 16)),
@@ -491,12 +492,11 @@ ndep = factor(rep(c(2L,4L,6L,8L), length.out = 3*16)),
 effects = factor(rep(rep(c("very large", "large", "medium", "small"), each = 4), length.out = 3*16))
 )
 
-tab_pivot <- tab %>% pivot_wider(values_from = "n", 
+tab_pivot <- tab |> tidyr::pivot_wider(values_from = "n", 
                     names_from = c("ndep","ngroups"))
-library(kableExtra)
-kbl(tab_pivot,
-    col.names = c("effect size \\ p",rep(c("2","4","6","8"), length.out = 12))) %>%
-  kable_classic() %>%
-  add_header_above(c(" " = 1, "3 groups" = 4, "4 groups" = 4, "5 groups" = 4))
+kableExtra::kbl(tab_pivot,
+    col.names = c("effect size \\ p",rep(c("2","4","6","8"), length.out = 12))) |>
+kableExtra::kable_classic() |>
+  kableExtra::add_header_above(c(" " = 1, "3 groups" = 4, "4 groups" = 4, "5 groups" = 4))
 ```
 
