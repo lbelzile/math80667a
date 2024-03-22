@@ -399,14 +399,6 @@ There are other instances of sampling, most of which are non-random and to be av
 
 In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon's Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review [@Aguinis:2021]. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census. 
 
-```{r}
-#| label: fig-samplingbias
-#| eval: true
-#| echo: false
-#| fig-cap: "Sampling bias. Artwork by Jonathan Hey [(Sketchplanations)](https://sketchplanations.com/sampling-bias), licensed under [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-nc/4.0/)"
-#| out-width: '70%'
-knitr::include_graphics('figures/continuous_discrete.png')
-```
 
 
 ## Examples of experimental designs
