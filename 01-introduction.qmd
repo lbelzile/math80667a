@@ -137,17 +137,6 @@ The choice of statistical model and test depends on the underlying type of the d
 - an **observation** is a set of measures (variables) collected under identical conditions for an individual or at a given time.
 
 
-
-```{r}
-#| label: variablesquanti
-#| fig-cap: Illustration of continuous (left) and discrete variables (right). Artwork
-#|   by Allison Horst [shared under the CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
-#| echo: false
-#| eval: false
-#| out-width: '80%'
-knitr::include_graphics('figures/continuous_discrete.png')
-```
-
 Most of the models we will deal with are so-called regression models, in which the mean of a quantitative variable is a function of other variables, termed explanatories. There are two types of numerical variables
 
 - a discrete variable takes a countable number of values, prime examples being binary variables or count variables.
@@ -155,14 +144,6 @@ Most of the models we will deal with are so-called regression models, in which t
 
 Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using  arbitrary encoding for the levels: for modelling, these variables taking $K$ possible values (or levels) must be transformed into a set of $K-1$ binary variables $T_1, \ldots, T_K$, each of which corresponds to the logical group $k$ (yes = 1, no = 0), the omitted level corresponding to a baseline when all of the $K-1$ indicators are zero. Failing to declare categorical variables in your software is a common mistake, especially when these are saved in the database using integers (1,2, $\ldots$) rather than as text (Monday, Tuesday, $\ldots$).
 
-```{r}
-#| label: variablescateg
-#| echo: false
-#| eval: false
-#| fig-cap: "Examples of categorical nominal (left), ordinal (middle) and binary (right) variables. Artwork by [Allison Horst](https://www.allisonhorst.com/) shared under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)."
-#| out-width: '80%'
-knitr::include_graphics('figures/nominal_ordinal_binary.png')
-```
 
 We can characterize the set of all potential values their measurements can take, together with their frequency, via a **distribution**. The latter can be represented graphically using an histogram or a density plot^[Since continuous data can take any value in the interval, we can't talk about the probability of a specific value. Rather, the density curve encodes the probability for any given area: the higher the curve, the more likely the outcome.] if the data are continuous, or a bar plot for discrete or categorical measurements.
 

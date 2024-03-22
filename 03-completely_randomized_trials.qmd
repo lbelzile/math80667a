@@ -856,8 +856,8 @@ What are the impacts of unequal variance if we use the $F$-test instead? For one
 #| fig-cap: Histogram of the null distribution of $p$-values obtained through simulation
 #|   using the classical analysis of variance $F$-test (left) and Welch's unequal variance
 #|   alternative (right), based on 10 000 simulations. Each simulated sample consist
-#|   of 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from
-#|   $\mathsf{No}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins
+#|   of 50 observations from a $\mathsf{Normal}(0, 1)$ distribution and 10 observations from
+#|   $\mathsf{Normal}(0, 9)$. The uniform distribution would have 5% in each of the 20 bins
 #|   used for the display.
 set.seed(1234)
 n1 <- 50
@@ -910,7 +910,7 @@ theme_set(theme_classic())
 g1 + g2
 ```
 
-We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{No}(0, 1)$ distribution and 10 observations from $\mathsf{No}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics. @fig-simuWelchnull shows the results. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be `r 100*mean(pvalsW < 0.05)`% for the Welch statistic, not far from the level. By contrast, we reject `r 100*mean(pvalsF < 0.05)`% of the time with the one-way ANOVA global $F$-test: this is a large share of innocents sentenced to jail based on false premises! While the size distortion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.
+We consider for simplicity a problem with $K=2$ groups, which is the two-sample $t$-test. We simulated 50 observations from a $\mathsf{Normal}(0, 1)$ distribution and 10 observations from $\mathsf{Normal}(0, 9)$, comparing the distribution of the $p$-values for the Welch and the $F$-test statistics. @fig-simuWelchnull shows the results. The percentage of $p$-values less than $\alpha=0.05$ based on 10 000  replicates is estimated to be `r 100*mean(pvalsW < 0.05)`% for the Welch statistic, not far from the level. By contrast, we reject `r 100*mean(pvalsF < 0.05)`% of the time with the one-way ANOVA global $F$-test: this is a large share of innocents sentenced to jail based on false premises! While the size distortion is not always as striking, heterogeneity should be accounted in the design by requiring sufficient sample sizes (whenever costs permits) in each group to be able to estimate the variance reliably and using an adequate statistic.
 
 :::
 

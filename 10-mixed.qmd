@@ -15,7 +15,7 @@ For example, consider a large-scale replication study about teaching methods. We
 We begin our journey with the same setup as for repeated measures ANOVA by considering one-way within-subject ANOVA model. We assign each participant (subject) in the study to all of the experimental treatments, in random order. If we have one experimental factor $A$ with $n_a$ levels, the model is
 \begin{align*}\underset{\text{response}\vphantom{l}}{Y_{ij}} = \underset{\text{global mean}}{\mu_{\vphantom{j}}} + \underset{\text{mean difference}}{\alpha_j} + \underset{\text{random effect for subject}}{S_{i\vphantom{j}}} + \underset{\text{error}\vphantom{l}}{\varepsilon_{ij}}.
 \end{align*}
-In a random effect model, we assume that the subject effect $S_i$ is a random variable; we take $S_i \sim \mathsf{No}(0, \sigma^2_s)$ and the latter is assumed to be independent of the noise $\varepsilon_{ij} \sim \mathsf{No}(0, \sigma^2_e)$. The model parameters that we need to estimate are the global mean $\mu$, the mean differences $\alpha_1, \ldots, \alpha_{n_a}$, the subject-specific variability $\sigma^2_s$ and the residual variability $\sigma^2_e$, with the sum-to-zero constraint $\alpha_1 + \cdots + \alpha_{n_a}=0$.
+In a random effect model, we assume that the subject effect $S_i$ is a random variable; we take $S_i \sim \mathsf{Normal}(0, \sigma^2_s)$ and the latter is assumed to be independent of the noise $\varepsilon_{ij} \sim \mathsf{Normal}(0, \sigma^2_e)$. The model parameters that we need to estimate are the global mean $\mu$, the mean differences $\alpha_1, \ldots, \alpha_{n_a}$, the subject-specific variability $\sigma^2_s$ and the residual variability $\sigma^2_e$, with the sum-to-zero constraint $\alpha_1 + \cdots + \alpha_{n_a}=0$.
 
 Inclusion of random effects introduces positive correlation between measurements: specifically, the correlation between two observations from the same subject will be $\rho=\sigma^2_s/(\sigma^2_s+\sigma^2_e)$ and zero otherwise. This correlation structure is termed compound symmetry, since the correlation between measurements, $\rho$, is the same regardless of the order of the observations. If there are multiple random effects, the dependence structure will be more complicated.
 
@@ -71,9 +71,11 @@ xtabs(~ curstate + predout, data = HB22_S5)
 3. `id` is random, whereas `predout`, `curstate` and `tempdist` are fixed effects
 4. We can have interactions between the three experimental factors  `predout`, `curstate` and `tempdist` since the database contains instances of both of the former together, and since each person gets two `tempdist` levels. However, no interaction are possible between `id` and `tempdist` (due to lack of replication), or between between-subject factors and identifiers.
 
-With data in long format, meaning each line contains a single response and characteristics are repeated per row, with an ` software will automatically capture the random effect. We can fit the equivalent of the repeated measure mixed ANOVA using a linear mixed model in **R**, by simply specifying a random intercept for the participant `id`. The full model with the three-way interaction includes eight components for the mean and two variant component (residual variance, and subject-specific variance).
+With data in long format, meaning each line contains a single response and characteristics are repeated per row, the software will automatically capture the random effect. We can fit the equivalent of the repeated measure mixed ANOVA using a linear mixed model in **R**, by simply specifying a random intercept for the participant `id`. The full model with the three-way interaction includes eight components for the mean and two variant component (residual variance, and subject-specific variance).
 
 ```{r}
+#| eval: true
+#| echo: true
 # In R, two packages offer linear mixed model fit via (RE)ML
 # lme4 is more modern (and reliable?), but does not allow for unequal variant
 lme4::lmer(likelihood ~ curstate*predout*tempdist + (1 | id),
@@ -133,6 +135,8 @@ The model includes a fixed effect for stimulus, and variance terms for `stimulus
 We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large. We can also look globally at the statistical evidence for the difference between the various stimuli.
 
 ```{r}
+#| eval: true
+#| echo: true
 # Global effect of different faces
 # ANOVA here is type III effects 
 # computed from the 'lmerTest' package
@@ -215,9 +219,9 @@ pairdiff
 ```
 
 
-The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means (95% confidence interval) for age with an estimated correct number of words of `r summary(emm)$emmean[1]`  (`r summary(emm)$lower.CL[1]`, `r summary(emm)$upper.CL[1]`) words out of 5 for the 5 years olds and `r summary(emm)$emmean[2]` (`r summary(emm)$lower.CL[2]`, `r summary(emm)$upper.CL[2]`) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward--Roger method are much fewer, respectively `r summary(emm)$df[1]` and `r summary(emm)$df[2]` for five and six years old.
+The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means (95% confidence interval) for age with an estimated correct number of words of `r round(summary(emm)$emmean[1],2)`  (`r round(summary(emm)$lower.CL[1],2)`, `r round(summary(emm)$upper.CL[1],2)`) words out of 5 for the 5 years olds and `r round(summary(emm)$emmean[2],2)` (`r round(summary(emm)$lower.CL[2],2)`, `r round(summary(emm)$upper.CL[2],2)`) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward--Roger method are much fewer, respectively `r round(summary(emm)$df[1],2)` and `r round(summary(emm)$df[2],2)` for five and six years old.
 
-The $t$-test for the pairwise difference of the marginal effect is `r -summary(pairdiff)$estimate` words with standard error `r summary(pairdiff)$SE`. Judging from the output, the degrees of freedom calculation for the pairwise $t$-test are erroneous --- they seem to be some average between the number of entries for the five years old (`r table(MULTI21_D2_sub$age)[1]`) and six years old (`r table(MULTI21_D2_sub$age)[2]`), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.
+The $t$-test for the pairwise difference of the marginal effect is `r round(-summary(pairdiff)$estimate,2)` words with standard error `r round(summary(pairdiff)$SE,2)`. Judging from the output, the degrees of freedom calculation for the pairwise $t$-test are erroneous --- they seem to be some average between the number of entries for the five years old (`r table(MULTI21_D2_sub$age)[1]`) and six years old (`r table(MULTI21_D2_sub$age)[2]`), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.
 
 We can easily see the limited interaction and strong main effects from the interaction plot in @fig-interactionrecall. The confidence intervals are of different width because of the sample inbalance.
 

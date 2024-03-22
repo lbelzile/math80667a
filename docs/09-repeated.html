@@ -863,17 +863,7 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 <h3 data-number="9.2.5" class="anchored" data-anchor-id="power-and-effect-size"><span class="header-section-number">9.2.5</span> Power and effect size</h3>
 <p>Since all of the multivariate statistics can be transformed for a comparison with a univariate <span class="math inline">\(\mathsf{F}\)</span> distribution, we can estimate partial effect size as before. The package <code>effectsize</code> offers a measure of partial <span class="math inline">\(\widehat{\eta}^2\)</span> for the multivariate tests.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation" data-cites="GPower3">(<a href="references.html#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation" data-cites="Lauter:1978">Läuter (<a href="references.html#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group <span class="math inline">\(j=1, \ldots, J\)</span>, which shows that the number increases rapidly with the dimension of the response vector <span class="math inline">\(p\)</span>. As usual, smaller effect sizes are more difficult to detect.</p>
-<div class="cell" data-hash="09-repeated_cache/html/tablepowersamplesize_ae1eb9f5ed66705ffe5dac1787110b29">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ lubridate 1.9.3     ✔ tibble    3.2.1
-✔ purrr     1.0.2     ✔ tidyr     1.3.0
-✔ readr     2.1.4     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter()     masks stats::filter()
-✖ dplyr::group_rows() masks kableExtra::group_rows()
-✖ dplyr::lag()        masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="cell" data-hash="09-repeated_cache/html/tablepowersamplesize_e61dcc4d32072eb7ab03034170f022d6">
 <div class="cell-output-display">
 <table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
