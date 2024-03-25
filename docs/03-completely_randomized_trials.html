@@ -641,9 +641,8 @@ F = 15.268, num df = 4, denom df = 40, p-value = 1.163e-07</code></pre>
 <div id="exm-measurementindep" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3.6 (Independence of measurements) </strong></span>There are many hidden ways in which measurements can impact the response. Physical devices that need to be calibrated before use (scales, microscope) require tuning: if measurements are done by different experimenters or on different days, it may impact and add systematic shift in means for the whole batch.</p>
 </div>
-<p>Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.</p>
-<p>What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the <span class="math inline">\(F\)</span>-test is the sample variance, which is based on the within sum of squares divided by <span class="math inline">\(n-K\)</span>. If each observation is counted 10 times, say, then the real number of measurements is <span class="math inline">\(n\)</span> but the <span class="math inline">\(F\)</span> statistic gets multiplied by a factor 10.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-plotLevelIndep_071beb81e89e2bcfee219fd79a85e4cb">
+<p>What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical, but adding them multiple times unduly inflates the statistic and leads to more frequent rejections.</p>
+<div class="cell" data-hash="03-completely_randomized_trials_cache/html/fig-plotLevelIndep_d2f4d39d97da7809a01f35d1cb96352f">
 <div class="cell-output-display">
 <div id="fig-plotLevelIndep" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -679,7 +678,6 @@ Weissgerber, Tracey L., Stacey J. Winham, Ethan P. Heinzen, Jelena S. Milin-Lazo
 <li id="fn5"><p>For the connoisseur, this is a likelihood ratio test under the assumption of normally distributed data, with a Bartlett correction to improve the <span class="math inline">\(\chi^2\)</span> approximation to the null distribution.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Coupled with a slight loss of power if the variance are truly equal, more on this later.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>All credits for this pun are due to C. Genest<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>The null distribution also changes with the sample size, but for <span class="math inline">\(n\)</span> large the impact is less than that of the scaling since the <span class="math inline">\(\mathsf{F}(\nu_1, \nu_2)\)</span> distribution is approximately <span class="math inline">\(\chi^2(\nu_1)\)</span> when <span class="math inline">\(\nu_2\)</span> is large.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

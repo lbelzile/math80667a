@@ -1005,44 +1005,43 @@ There are many hidden ways in which measurements can impact the response. Physic
 
 :::
 
-Special care must be taken whenever group testing is used, and blocking for potential impacts can salvage an analysis.
 
-What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical. The reason why this makes a difference is the following: the denominator of the $F$-test is the sample variance, which is based on the within sum of squares divided by $n-K$. If each observation is counted 10 times, say, then the real number of measurements is $n$ but the $F$ statistic gets multiplied by a factor 10.^[The null distribution also changes with the sample size, but for $n$ large the impact is less than that of the scaling since the $\mathsf{F}(\nu_1, \nu_2)$ distribution is approximately $\chi^2(\nu_1)$ when $\nu_2$ is large.]
+What is the impact of dependence between measurements? Heuristically, correlated measurements carry less information than independent ones. In the most extreme case, there is no additional information and measurements are identical, but adding them multiple times unduly inflates the statistic and leads to more frequent rejections.
 
 ```{r}
 #| label: sizetestCorrelation
 #| echo: false
 #| eval: true
 #| cache: true
-if(!"matRes.RData" %in% list.files(path = "./figures")){
-set.seed(1234)
-n <- 25
-ng <- c(2,3,5,10)
-correlation <- seq(0, 0.5, by = 0.05)
-matRes <- array(0, dim = c(1e4, 
-                           length(correlation),
-                           length(ng)))
-for(i in seq_along(correlation)){
-  Sigma <- diag(1-correlation[i], nrow = n, ncol = n) + 
-    matrix(correlation[i], nrow = n, ncol = n)
-for(j in seq_along(ng)){
-  for(k in seq_len(dim(matRes)[1])){
-    samp <- mev::mvrnorm(n = ng[j], 
-                         mu = rep(0, n),
-                         Sigma = Sigma) 
-    matRes[k,i,j] <- 
-      oneway.test(data = tibble(
-        resp = c(t(samp)), 
-        group = factor(x = rep(1:ng[j], each = n))),
-           formula = resp ~ group,
-           var.equal = TRUE)$p.value   
-  }
- }
-}
-save(list = c("matRes", "correlation", "ng"), file = "figures/matRes.RData")
-} else{
-  load(file = "figures/matRes.RData")
-}
+# if(!"matRes.RData" %in% list.files(path = "./figures")){
+# set.seed(1234)
+# n <- 25
+# ng <- c(2,3,5,10)
+# correlation <- seq(0, 0.5, by = 0.05)
+# matRes <- array(0, dim = c(1e4, 
+#                            length(correlation),
+#                            length(ng)))
+# for(i in seq_along(correlation)){
+#   Sigma <- diag(1-correlation[i], nrow = n, ncol = n) + 
+#     matrix(correlation[i], nrow = n, ncol = n)
+# for(j in seq_along(ng)){
+#   for(k in seq_len(dim(matRes)[1])){
+#     samp <- mev::mvrnorm(n = ng[j], 
+#                          mu = rep(0, n),
+#                          Sigma = Sigma) 
+#     matRes[k,i,j] <- 
+#       oneway.test(data = tibble(
+#         resp = c(t(samp)), 
+#         group = factor(x = rep(1:ng[j], each = n))),
+#            formula = resp ~ group,
+#            var.equal = TRUE)$p.value   
+#   }
+#  }
+# }
+# save(list = c("matRes", "correlation", "ng"), file = "figures/matRes.RData")
+# } else{
+#   load(file = "figures/matRes.RData")
+# }
 
 
 ```
@@ -1055,26 +1054,54 @@ save(list = c("matRes", "correlation", "ng"), file = "figures/matRes.RData")
 #|   of means for the one way ANOVA with data generated with equal mean and variance
 #|   from an equicorrelation model (within group observations are correlated, between
 #|   group observations are independent). The nominal level of the test is 5%.
-size_p5 <- t(apply(matRes, 2:3, function(x){mean(x < 0.05)}))
-nent <- length(size_p5)
-size_p5_tibble <- 
-  tibble(size = c(size_p5),
-         samp = factor(rep(ng, length.out = nent)),
-         correlation = rep(correlation, each = length(ng)))
-ggplot(data = size_p5_tibble,
-       mapping = aes(col = samp, 
-                     x = correlation, 
-                     y = size)) +
-  geom_line() +
+# size_p5 <- t(apply(matRes, 2:3, function(x){mean(x < 0.05)}))
+# nent <- length(size_p5)
+# size_p5_tibble <- 
+#   tibble(size = c(size_p5),
+#          samp = factor(rep(ng, length.out = nent)),
+#          correlation = rep(correlation, each = length(ng)))
+
+
+# From Don Fraser (1958). Statistics: an introduction, pp. 342-343
+nrep <- 25L
+rho <- seq(0, 0.8, by = 0.01)
+dims <- c(2,3,5,10)
+size <- matrix(0, nrow = length(rho), ncol = length(dims))
+for(i in seq_along(dims)){
+  d <- dims[i]
+  sigmasq <- (1-rho)
+  tausq <- rho
+  fact <- (nrep*tausq + sigmasq)/sigmasq
+  
+  cutoff <- qf(0.95, df1 = d-1, df2 = (nrep-1)*d)
+  size[,i] <- pf(cutoff/fact, df1 = d-1, df2 = (nrep-1)*d, lower.tail = FALSE)
+}
+
+size_exact <- data.frame(
+  size = c(size), 
+  dim = factor(rep(dims, each = length(rho))), 
+  rho = rep(rho, length.out = length(size)))
+
+# ggplot(data = size_p5_tibble,
+#        mapping = aes(col = samp, 
+#                      x = correlation, 
+#                      y = size)) +
+#   geom_line() +
+ggplot() +
+  geom_line(data = size_exact, 
+            mapping = aes(color = dim, x = rho, y = size)) + 
   geom_hline(yintercept = 0.05, alpha = 0.5) +
   labs(y = "size of test", 
        x = "within group correlation",
        color = "number of groups",
        caption = "25 observations per group") + 
-  theme(legend.position = "bottom") +
-  coord_cartesian(xlim = c(0, 0.5), 
+  coord_cartesian(xlim = c(0, max(rho)), 
                   ylim = c(0, 1), 
-                  expand = FALSE)
+                  expand = FALSE) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+
 ```
 
 The lack of independence can also have drastic consequences on inference and lead to false conclusions: @fig-plotLevelIndep shows an example with correlated samples within group (or equivalently repeated measurements from individuals) with 25 observations per group. The $y$-axis shows the proportion of times the null is rejected when it shouldn't be. Here, since the data are generated from the null model (equal mean) with equal variance, the inflation in the number of spurious discoveries, false alarm or type I error is alarming and the inflation is substantial even with very limited correlation between measurements. 
