@@ -240,20 +240,6 @@
 \usepackage{utopia}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 \usepackage{pdfpages}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 \makeatletter
 \@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
 \@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
@@ -346,7 +332,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-03-24}
+\date{2024-04-04}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -364,7 +350,7 @@
 \begin{document}
 \includepdf{figures/coverpage.pdf}
 
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, sharp corners, breakable, frame hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable, interior hidden, enhanced]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -387,7 +373,7 @@ the joint Ph.D.~program in Management.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on Sunday, March 24 2024.
+and were last compiled on Thursday, April 04 2024.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -426,7 +412,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -546,7 +532,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, breakable, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -587,7 +573,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, breakable, arc=.35mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -606,7 +592,7 @@ found no evidence of a negative impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -622,8 +608,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -775,7 +761,7 @@ limit theorem.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, breakable, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -843,7 +829,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, breakable, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -887,7 +873,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, breakable, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -919,7 +905,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, breakable, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -974,7 +960,7 @@ for the stratified sample.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, breakable, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1354,7 +1340,7 @@ license}.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, breakable, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -1391,7 +1377,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \textbf{Learning objectives}:
 
@@ -2062,7 +2048,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, breakable, arc=.35mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2300,7 +2286,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, breakable, arc=.35mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2550,7 +2536,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, breakable, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -3532,7 +3518,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \textbf{Learning objectives}:
 
@@ -5083,7 +5069,7 @@ averages of the three actions are much smaller than for race.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -5668,7 +5654,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, breakable, arc=.35mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
 
 Stekelenburg et al. (2021) split their data to do pairwise comparisons
 two at the time (thus taking roughly two-third of the data to perform a
@@ -5687,7 +5673,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, breakable, arc=.35mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -5713,7 +5699,7 @@ posterior belief score.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -5741,7 +5727,7 @@ posterior belief score.}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, breakable, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -6182,7 +6168,7 @@ again, the output matches the output of the package.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, breakable, arc=.35mm, colbacktitle=quarto-callout-caution-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
 
 Measures of effect size are estimated based on data, but unlike summary
 statistics such as the mean and variance, tend to be very noisy in small
@@ -6707,7 +6693,7 @@ percentage of \emph{p}-values smaller than \(\alpha\). We can vary the
 sample size and see how many observations we need per group to achieve
 the desired level of power.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -6743,7 +6729,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, breakable, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
 
 \begin{itemize}
 \tightlist
@@ -7026,7 +7012,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, breakable, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -7085,7 +7071,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, rightrule=.15mm, left=2mm, bottomrule=.15mm, toprule=.15mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, breakable, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, opacitybacktitle=0.6, opacityback=0, toptitle=1mm, bottomtitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -8667,9 +8653,9 @@ task for younger children.}
 \hypertarget{causal-inference}{%
 \chapter{Causal inference}\label{causal-inference}}
 
-Statisticians are famous for repeating ad nauseam that ``correlation is
-not causation''. This statement illustrated on the website
-\href{https://tylervigen.com/spurious-correlations}{Spurious
+Statisticians are famous for repeating \emph{ad nauseam} that
+``correlation is not causation''. This statement illustrated on the
+website \href{https://tylervigen.com/spurious-correlations}{Spurious
 correlations} by Tyler Vigen, which shows multiple graphs of absurd
 relations, many of which are simply artifact of population growth. As
 second example, consider weather forecasts (of rain) and the number of
@@ -8803,8 +8789,8 @@ experimental setting, we need
   conditional \emph{ignorability}, which states that potential outcomes
   are independent (denoted with the \({\perp\mkern-10mu\perp}\) symbol)
   of assignment to treatment given a set of explanatories
-  \(\boldsymbol{Z}\). In notation
-  \(\{Y(0), \ldots, Y(J)\} {\perp\mkern-10mu\perp} X \mid \boldsymbol{Z}\)
+  \(\boldsymbol{Z}.\) In notation
+  \(\{Y(0), \ldots, Y(J)\}\ {\perp\mkern-10mu\perp}\ X \mid \boldsymbol{Z}\)
   (if the latter is an empty set, we talk about ignorability).
 \item
   lack of interference: the outcome is unaffected by the treatment
@@ -8817,20 +8803,29 @@ experimental setting, we need
 
 The two last assumptions are sometimes pooled together under the
 umbrella term \textbf{stable unit-treatment value assumption} (SUTVA),
-implying that ``no other version or treatment assignment would lead to
-different potential outcome'\,' (\textbf{Imbens.Rubin:2015?}), which
-also suggests the effect of treatment is constant.
+implying that `'no other version or treatment assignment would lead to
+different potential outcome'' (Imbens and Rubin 2015), which also
+suggests the effect of treatment is constant.
 
-In the observational setting, conditional ignorability assumption
-requires identification of a set of confounders, which cause both \(X\)
-and the outcome \(Y\). We can then look effect averaging over the
-distribution of \(\boldsymbol{Z}\). This is valid as long as there is a
-positive probability of being assigned to each group of \(X\) regardless
-of the value of the covariates \(\boldsymbol{Z}\), an assumption
-sometimes known as positivity.
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+
+Causal inference is possible in observational settings, but some of the
+assumptions are unverifiable and typically much stronger than for
+randomized experiments. Notably, we need to identify a sufficient set of
+confounders \(\boldsymbol{Z}\), i.e., variables which cause both \(X\)
+and the outcome \(Y\) but are not of interest, to incorporate in the
+model to recover the effect due to \(X\). We can then look effect
+averaging over the distribution of \(\boldsymbol{Z}\). This method is
+valid as long as there is a positive probability of being assigned to
+each group of \(X\) regardless of the value of the covariates
+\(\boldsymbol{Z}\), an assumption sometimes known as positivity. The
+model must also be correctly specified, and there must be no omitted
+confounders.
+
+\end{tcolorbox}
 
 In summary, we can target the average treatment effect in experimental
-designs if we randomize the effect \(X=j\), if our subjects comply with
+designs if we randomize the effect \(X=j,\) if our subjects comply with
 their treatment assignment, and more importantly if we use a random
 sample which is representative of the population.
 
@@ -8844,23 +8839,25 @@ exams as regular students, but their class average are higher in the
 mandatory statistics course. However, since participation in the program
 is reserved for students who postulated to be part of the cohort, and
 who must be team players who are autonomous and with a keen liking for
-inverse pedagogical teaching methods, no conclusion can be drawn: it may
-be that the teaching method is better suited, or that the students are
-simply more motivated or stronger in statistics to being with.
+inverse pedagogical teaching methods, no conclusion can be drawn.
+Indeed, it may be that the teaching method is well suited to them but
+not to general students, or their better grades may be due to the fact
+that the Agir students are more motivated or stronger in statistics to
+being with.
 
 If we compared the outcome of regular bachelor cohort with Agir
-students, we may have violation of no interference: if students from
-different programs share material or study together, then this lack of
-compliance may induce differences in response relative to their group
-assignment.
+students, we may also have violation of ``no interference'': if students
+from different programs share course material or study together, then
+this lack of compliance may induce differences in response relative to
+their group assignment.
 
 \end{example}
 
 In many fields, the unconditional effect is not interesting enough to
 warrant publication free of other explanatory variables. It may be that
 the effect of the treatment is not the same for everyone and depends on
-some covariate \(Z\): for example, a study on gender discrimination may
-reveal different perceptions depending on gender \(Z\), in which case
+some covariate \(Z:\) for example, a study on gender discrimination may
+reveal different perceptions depending on gender \(Z,\) in which case
 the average treatment effect might not be a sensible measure and we
 could look at conditional effects. We may also be interested in seeing
 how different mechanisms and pathways are impacted by treatment and how
@@ -8965,23 +8962,18 @@ regression model, matching or by stratifying for different values of the
 confounders in order to extract the causal estimate of \(X\) on \(Y\).
 Matching consists in creating paired samples (with similar
 characteristics for explanatories), and comparing the pairs.
-Stratification consists of analysing subpopulations separately, e.g.,
-However, the same strategy with a collider would backfire and we would
-get erroneous conclusions: Kowal (2021) reportedly found out married
-couples with more children were less happy. As Richard McElreath hinted
-online, controlling for marriage (through sample selection) is incorrect
-since unhappy couples tend to divorce, but families with many children
-are less likely to divorce!
+Stratification consists of analysing subpopulations separately.
 
-In a randomized experiment, we can check the average outcome of a
-manipulation by comparing groups: assuming random sampling, these
-conclusions can be broadly generalized to the population of interest
-from which the sample is drawn. However, it may be that the effect of
-the treatment depends on other variables: cultural differences, gender
-or education may change. In the statistical model, inclusion of
-interaction terms (typically product of the moderator variable with the
-factor encoding the experimental sub-condition) will allow us to
-estimate those differences.
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+
+Controlling for a collider is counterproductive, as we would get
+erroneous conclusions: Kowal (2021) reportedly claimed married couples
+with more children were less happy. As Richard McElreath hinted online,
+controlling for marriage (through sample selection) is incorrect since
+unhappy couples tend to divorce, but families with many children are
+less likely to divorce.
+
+\end{tcolorbox}
 
 \hypertarget{mediation}{%
 \section{Mediation}\label{mediation}}
@@ -8993,17 +8985,22 @@ Our ability to establish mediation will depend on the model and a set of
 assumptions, some of which won't be verifiable.
 
 The following section is technical and may be omitted on a first
-reading. To define in full generality the treatment and mediation
-effect, we consider the potential outcome framework. Following Pearl
-(2014), we use \(Y_i(x, m)\) to denote the potential outcome for
-individual \(i\) with explanatory or experimental covariate/factor \(x\)
-and mediator \(m\). Likewise, \(M_i(x)\) is the potential outcome for
-the mediator when applying treatment level \(x\).\footnote{The notation
-  is important to distinguish between association \(Y \mid X\) when
-  observing \(X\) from experimental manipulations or interventions,
-  \(Y \mid \mathsf{do}(X)\) and counterfactuals \(Y(X)\).} The notation
-\(\text{do}(X=x)\) is used to distinguish between association
-(observational data) and experimental manipulation of \(X\).
+reading.
+
+To define in full generality the treatment and mediation effect, we
+consider the potential outcome framework. Following Pearl (2014), we use
+the notation \(\text{do}(X=x)\) is used to denote experimental
+manipulation of \(X\), to distinguish it from correlation in
+observational data. The potential outcome for individual \(i\) is
+\(Y_i(x, m)\), with explanatory or experimental covariate/factor \(x\)
+and mediator \(m\). Likewise, \(M_i(x)\) is the potential mediator when
+applying treatment level \(x\).\footnote{The notation is important to
+  distinguish between association \(Y \mid X\) when observing \(X\) from
+  experimental manipulations or interventions, \(Y \mid \mathsf{do}(X)\)
+  and counterfactuals \(Y(X)\).} Value \(x_0\) represents the baseline
+or control value for our experimental manipulation: typically, in binary
+treatments \(X \in \{0,1\}\), with \(X=x_0=0\) the control and \(X=1\)
+for treatment.
 
 The \textbf{total effect} measures the overall impact of changes in
 outcome \(Y\) (both through \(M\) and directly) when experimentally
@@ -9067,10 +9064,14 @@ changing the sign of the coefficient, giving an additive decomposition
 of the total effect as \(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)
 (Pearl 2014).
 
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+
 When measuring effects in psychology and marketing, it will often be the
 case that the conceptual causal model includes variables that cannot be
-directly measured. The proxy, as in Figure~\ref{fig-xkcd2652}, add an
+directly measured. Proxies, as in Figure~\ref{fig-xkcd2652}, add an
 additional layer of complexity and potential sources of confounding.
+
+\end{tcolorbox}
 
 \begin{figure}[ht!]
 
@@ -9091,31 +9092,28 @@ license}.}
 \section{Linear mediation model}\label{linear-mediation-model}}
 
 One of the most popular model in social sciences is the linear mediation
-model, popularized by Baron and Kenny (1986) although the method
-predates this publication. Another inferential approach, suggested by
-Preacher and Hayes (2004), uses the same model with different test
-statistics and is extremely popular because it comes with software;
-Hayes' \href{https://www.processmacro.org/index.html}{PROCESS macros for
-SAS, SPSS and \textbf{R}} have lead to the widespread adoption by
-researchers. Bullock, Green, and Ha (2010) list limitations of the
-approach and provide examples of instances in which the model does not
-have a meaningful causal interpretation.
+model, popularized by Baron and Kenny (1986). Hayes'
+\href{https://www.processmacro.org/index.html}{PROCESS macros for SAS,
+SPSS and \textbf{R}} have lead to the widespread adoption by researchers
+(Preacher and Hayes 2004). Bullock, Green, and Ha (2010) list
+limitations of the approach and provide examples in which the model does
+not have a meaningful causal interpretation.
 
 The linear mediation model assumes that the effect of mediation and
 treatment is additive and that the response measurement is continuous.
-Consider covariates \(\mathbf{Z}\), experimental factor \(\mathbf{X}\)
-corresponding to treatment and postulated mediator variable \(M\),
+Consider an experimental factor \(X\) corresponding to treatments with
+control or reference \(x_0\) and postulated mediator variable \(M\),
 assumed continuous. Given \textbf{uncorrelated} unobserved noise
-variables \(\varepsilon_M\) and \(\varepsilon_Y\), we specify linear
-regression models, \begin{align*}
+variables \(\varepsilon_M\) and \(\varepsilon_Y\) and assumine there
+are, we specify linear regression models, \begin{align*}
 M \mid X=x &= c_M + \alpha x + \varepsilon_M,\\
-Y \mid X=x, M=m &=  c_Y + \beta x + \gamma m + \mathbf{z}^\top\boldsymbol{\omega} + \varepsilon_Y
-\end{align*} where we use the contrast-to-reference parametrization so
-that the reference category for the intercept corresponds to control
-(group \(x_0\)) and \(x\) the other category of interest, with
-\(\alpha\) capturing the difference between \(x\) and \(x_0\). The model
-for \(Y \mid X, M\) should include additional covariates \(\mathbf{z}\)
-to control for confounding between \(M\) and \(Y\) if the latter is
+Y \mid X=x, M=m &=  c_Y + \beta x + \gamma m  + \varepsilon_Y
+\end{align*} where we use the contrasts parametrization, so that the
+reference category for the intercept corresponds to control (group
+\(x_0\)) and \(x\) the other category of interest, with \(\alpha\)
+capturing the difference between \(x\) and \(x_0\). The model for
+\(Y \mid X, M\) should include additional covariates \(\mathbf{z}\) to
+control for confounding between \(M\) and \(Y\) if the latter is
 suspected.
 
 The parameters can be interpreted as the direct (\(\beta\)), indirect
@@ -9123,38 +9121,39 @@ The parameters can be interpreted as the direct (\(\beta\)), indirect
 see this, we plug the first equation in the second and obtain the
 marginal model for \(Y\) given treatment \(X\), \begin{align}
 Y \mid X=x &= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
-&= c_Y' + \tau X + \varepsilon_Y'
+&= c_Y' + \tau x + \varepsilon_Y'
 \end{align} These parameters can be estimated using structural equation
-models (SEM), or more typically by running a series of linear regression
-(ordinary least squares).
+models (SEM), or more typically by running a series of linear
+regression.
 
-The sequential ignorability in the linear mediation models boils down to
-``no unmeasured confounders'' in the relations \(X \to Y\), \(X \to M\)
-and \(M \to Y\): the first two are satisfied in experimental studies due
-to randomization, as shown in Figure~\ref{fig-dag1}. This means
+The ``sequential ignorability'' assumption in the linear mediation
+models boils down to ``no unmeasured confounders'' in the relations
+\(X \to Y\), \(X \to M\) and \(M \to Y\): the first two are satisfied in
+experimental studies due to randomization if we can manipulate \(X\), as
+shown in Figure~\ref{fig-dag1}. This means
 \(\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y\) must be
 independent and, as a result, error terms should also be uncorrelated.
 
 In the linear mediation model, we can estimate the conditional direct
 effect corresponding to the product of coefficients \(\alpha\gamma\).
 Absence of mediation implies the product is zero. Baron and Kenny (1986)
-recommended using Sobel's test statistic, a Wald-test of the form
-\begin{align*}
-S  = \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} =  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}} \stackrel{\cdot}{\sim}\mathsf{No}(0,1)
+recommended using Sobel's test statistic, of the form \begin{align*}
+S  &= \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} \\&=  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}}
 \end{align*} where \(\widehat{\alpha}\), \(\widehat{\gamma}\) and their
 variance \(\mathsf{Va}(\widehat{\alpha})\) and
 \(\mathsf{Va}(\widehat{\gamma})\) can be obtained from the estimated
 coefficients and standard errors.\footnote{Sobel derived the asymptotic
   variance using a first-order Taylor series expansion assuming both
   \(\alpha\) and \(\gamma\) are non-zero (hence the tests!)} The Sobel's
-statistic \(S\) is approximately standard normal in large samples, but
-the approximation is sometimes crude.
+statistic \(S\) is approximately standard normal in large samples,
+\(S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)\), but the approximation
+is sometimes poor in small samples.
 
 In the linear mediation causal model, we can estimate the total causal
 effect of \(X\), labelled \(\tau\), by running the linear regression of
 \(Y\) on \(X\) as there is no confounding affecting treatment \(X\) in a
 completely randomized experimental design. This strategy isn't valid
-with observational data unless we adjust for confounders. Under no
+with observational data unless we adjust for confounders. Assuming no
 unmeasured confounders and linearity, the product \(\alpha\gamma\) is
 also equal to the difference between the total effect and the
 \textbf{natural direct effect}, \(\tau - \beta\).
@@ -9274,7 +9273,7 @@ percentile 95\% confidence intervals (vertical red lines).}
 \end{figure}
 
 The nonparametric percentile bootstrap confidence interval for
-\(\alpha\gamma\) is {[}-0.08, 1.71{]} and thus we fail to reject the
+\(\alpha\gamma\) is \([-0.08, 1.71]\) and thus we fail to reject the
 null hypothesis \(\mathscr{H}_0: \alpha \gamma=0\).
 
 The inference scheme is popular, but we could also rely on different
@@ -9362,8 +9361,8 @@ error which could lead to attenuation bias.
 
 Following Bullock, Green, and Ha (2010), we index the regression
 equations by individual \(i\) \begin{align*}
-M_i\mid X_i=x &= c_M + \alpha_i x + \varepsilon_{Mi},\\
-Y_i \mid X_i=x, M_i=m &=  c_Y + \beta_i x + \gamma_i m + \mathbf{z}_i^\top\boldsymbol{\omega} + \varepsilon_{Yi}
+M_i\mid X_i=x &= c_M + \alpha_i x + \varepsilon_{M,i},\\
+Y_i \mid X_i=x, M_i=m &=  c_Y + \beta_i x + \gamma_i m + \varepsilon_{Y,i}
 \end{align*} If \(\alpha_i\) differ from one observation to the next,
 the average estimated by the regression could be positive, negative or
 null. Even in the latter case, we could have \(\gamma_i\) and
@@ -9372,20 +9371,21 @@ they cancel out even if there is complementary mediation.
 
 We could easily expand the model to include nonlinear effects (not for
 the treatment or mediator) and potential interactions, but the linear
-model approach will be limited. Imai, Keele, and Tingley (2010) details
-a more general approach for parametric models based on simulations, as
-well as a nonparametric approach. Both are less restrictive than the
-Baron and Kenny (1986) model.
+model approach remains intrinsically of limited applicability. Imai,
+Keele, and Tingley (2010) details a more general approach for parametric
+models based on simulations, as well as a nonparametric approach. Both
+are less restrictive than the Baron and Kenny (1986) model.
 
-The main benefit of experimental designs is that it deconfounds the
-relation between treatment and other variables, but adding spurious
-variables could create feedback and lead to inconsistent conclusions.
-It's not clear that the mediator can be manipulated experimentally, and
-even if it could be to estimate the \(\gamma\), one must make sure the
-relation is the same absent of \(X\). For example, we could estimate the
-indirect effect term by manipulating jointly (if possible) (\(X, M\))
-but even then the linearity assumption must hold for the estimates to
-correspond to our linear causal mediation model.
+The main benefit of experimental designs is that it remove confounding
+in the relationship between treatment and other variables. Adding
+spurious variables could create feedback (if some of those variables are
+colliders) and lead to inconsistent conclusions. It's not clear that the
+mediator can be manipulated experimentally, and even if it could be to
+estimate the \(\gamma\), one must make sure the relation is the same
+absent of \(X\). For example, we could estimate the indirect effect term
+by manipulating jointly (if possible) (\(X, M\)) but even then the
+linearity assumption must hold for the estimates to correspond to our
+linear causal mediation model.
 
 \begin{example}[Fluency as mediator of product
 evaluation]\protect\hypertarget{exm-inconsistency}{}\label{exm-inconsistency}
@@ -9458,7 +9458,7 @@ of the levels for categorical treatment, etc.)
   \AttributeTok{mediator =} \StringTok{"fluency"}\NormalTok{,}
   \AttributeTok{sims =}\NormalTok{ 5000L,}
   \AttributeTok{boot =} \ConstantTok{TRUE}\NormalTok{,}
-  \AttributeTok{boot.ci.type =} \StringTok{"bca"}\NormalTok{, }\CommentTok{\# bias{-}corrected and accelerated (bca)}
+  \AttributeTok{boot.ci.type =} \StringTok{"bca"}\NormalTok{, }\CommentTok{\# bias{-}corrected and accelerated intervals}
   \AttributeTok{control.value =} \StringTok{"inconsistent"}\NormalTok{,}
   \AttributeTok{treat.value =} \StringTok{"consistent"}\NormalTok{)}
 \end{Highlighting}
@@ -9467,8 +9467,8 @@ of the levels for categorical treatment, etc.)
 \hypertarget{tbl-mediation}{}
 \begin{table}
 \caption{\label{tbl-mediation}Linear causal mediation analysis: parameter estimates, nonparametric
-bootstrap 95\% confidence intervals and p-values with the percentile
-method based on 5000 bootstrap samples. }\tabularnewline
+bootstrap 95\% confidence intervals and p-values with bias-corrected and
+accelerated confidence intervals based on 5000 bootstrap samples. }\tabularnewline
 
 \centering
 \begin{tabular}{lrrrr}
@@ -9493,41 +9493,50 @@ with those reported in the article.
 \section{Moderation and
 interactions}\label{moderation-and-interactions}}
 
-The causal effect \(Y \mid \mathsf{do}(X)\) may be a misleading summary
-if another variable modifies the relation: for example, the perception
-of gender discrimination or racism may depend on the person background
-and experience and this may impact the effect of the manipulation. Such
-variables, say \(W\), thus have an interactive effect with the
-experimental factor \(X\), termed moderator in psychology.
+In a randomized experiment, we can check the average outcome of a
+manipulation by comparing groups: assuming random sampling, these
+conclusions can be broadly generalized to the population of interest
+from which the sample is drawn. However, it may be that the effect of
+the treatment depends on other variables: cultural differences, gender
+or education may change.
+
+The causal effect \(Y \mid \mathsf{do}(X)\) may thus be a misleading
+summary if another variable modifies the relation of \(X \to Y\): for
+example, the perception of gender discrimination or racism may depend on
+the person background and experience and this may impact the effect of
+the manipulation. Such variables, say \(W\), thus have an interactive
+effect with the experimental factor \(X\), termed moderator in
+psychology. In the statistical model, inclusion of interaction terms
+between \(X\) and \(W\) (typically via product of the so-called
+moderator variable with the factor encoding the experimental
+sub-condition) will allow us to estimate those differences.
 
 In a blocking design, covariates are included that have an impact on the
 outcome to filter out variability, but with the assumption that they do
 not influence the effect of treatment. With moderators, we include the
-interaction.
-
-If we have an experimental factor \(X\) which is binary or categorical,
-the resulting model is a simple analysis of variance model and we can
-test the significance of the interaction term to assess the moderating
-effect of \(W\).
+interactions as fixed effects. If we have an experimental factor \(X\)
+which is binary or categorical, the resulting model is a simple analysis
+of variance model (or analysis of covariance) and we can test the
+significance of the interaction term to assess the moderating effect of
+\(W\).
 
 If \(W\) is a mean-centered continuous variable and \(X\) a categorical
 variable with \(k=1, \ldots, K\) levels using the sum-to-zero
-parametrization, the linear model
-\[\mathsf{E}\{Y \mid \mathsf{do}(X) = k, W\} = \mu + \alpha_k + (\beta + \gamma_k)W + \varepsilon,\]
-includes different slopes for \(W\) in each experimental group, as well
-as different intercepts (\(\mu + \alpha_k\)) for group \(k\).
+parametrization, the linear model with mean \[
+\underset{\text{average response at $W$ in group $k$}}{\mathsf{E}\{Y \mid \mathsf{do}(X) = k, W\}} = \underset{\text{intercept for group $k$}}{\mu + \alpha_k} + \underset{\text{slope for group $k$}}{(\beta + \gamma_k)}W
+\] includes different slopes for \(W\) in each experimental group, as
+well as different intercepts for each group.
 
-As an example, we consider Garcia et al. (2010). These data are from a
-study on gender discrimination. Participants were put with a file where
-a women was turned down promotion in favour of male colleague despite
-her being clearly more experimented and qualified. The authors
-manipulated the decision of the participant to this decision, either
-choosing not to challenge the decision (no protest), a request to
-reconsider based on individual qualities of the applicants (individual)
-and a request to reconsider based on abilities of women (collective).
-All items were measured using scales constructed using items measured
-using Likert scales ranging from strongly disagree (1) to strongly agree
-(7).
+As an example, we consider data from a study on gender discrimination
+(Garcia et al. 2010). Participants were put with a file where a women
+was turned down promotion in favour of male colleague despite her being
+clearly more experimented and qualified. The authors manipulated the
+decision of the participant to this decision, either choosing not to
+challenge the decision (no protest), a request to reconsider based on
+individual qualities of the applicants (individual) and a request to
+reconsider based on abilities of women (collective). All items were
+measured using scales constructed using items measured using Likert
+scales ranging from strongly disagree (1) to strongly agree (7).
 
 The postulated mediator variable is \texttt{sexism}, the average of 6
 Likert scales for the Modern Sexism Scale assessing pervasiveness of
@@ -9554,7 +9563,7 @@ slopes
 \centering
 \begin{tabular}{lrrrl}
 \toprule
-term & sumsq & df & statistic & p.value\\
+term & sum of squares & df & stat & p-value\\
 \midrule
 protest & 6.34 & 2 & 2.45 & .091\\
 sexism & 6.59 & 1 & 5.09 & .026\\
@@ -10114,6 +10123,12 @@ Statistics} 6 (2): 107--28.
 Imai, Kosuke, Luke Keele, and Dustin Tingley. 2010. {``A General
 Approach to Causal Mediation Analysis.''} \emph{Psychological Methods}
 15 (4): 309--34. \url{https://doi.org/10.1037/a0020761}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Imbens.Rubin:2015}{}}%
+Imbens, Guido W., and Donald B. Rubin. 2015. \emph{Causal Inference for
+Statistics, Social, and Biomedical Sciences: An Introduction}.
+Cambridge, UK: Cambridge University Press.
+\url{https://doi.org/10.1017/CBO9781139025751}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Ioannidis:2005}{}}%
 Ioannidis, John P. A. 2005. {``Why Most Published Research Findings Are
