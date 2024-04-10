@@ -6,8 +6,23 @@
 #| include: false
 ```
 
-Many experiments can have binary outcomes: aggregating these results by factor leads to contingency tables, which contain the total count per factor combination. These data can be understood in the same way as other ANOVA models, but with the aggregated responses. The following section is meant as both an introduction to the topic, showcasing examples of tests and their application. 
+Many experiments can have binary outcomes. If we manipulate one or more experimental factors, we can aggregate these results by subcategories. This leads to contingency tables, which contain the total count per factor combination. These data can be understood in the same way as other ANOVA models, but with the aggregated responses as counts rather than averages. The following section is meant as both an introduction to the topic, showcasing examples of tests and their application. 
 
+
+With count data, we typically model observations as arising from a Poisson distribution, which takes values in $0, 1, \ldots$. The Poisson distribution has mean and variance $\mu>0$ and, to ensure the fitted average are positive, regression models typically consider the natural logarithm.
+
+
+To make things concrete, consider a two-way between-subject design with crossed factors having $I$ and $J$ categories, respectively. The mean equation would be
+
+\begin{align*}
+\ln \mu_{ij} = \alpha + \beta_i + \gamma_j + (\beta\gamma)_{ij}, \qquad i=1,\ldots, I; j =1, \ldots, J
+\end{align*}
+where $\beta$, $\gamma$, $(\beta\gamma)$'s are subject to sum-to-zero categories.
+One major difference with regular ANOVA is that there will be at most $IJ$ counts (one for each cell). If we fit a model with an interaction, we will overfit the data and predict back the entries. This is possible for the Poisson distribution because the variance is fully determined by the mean.
+
+There are direct analog to the tests we normally consider: we can compare the full model with all interactions (termed **saturated** model) with simpler alternatives. The deviance statistic assesses whether the simpler model (null hypothesis) provides adequate fit, relative to the full model (alternative hypothesis).
+
+We can compare different models in the same way than for multi-way between-subject designs. We fit two competing models (one simpler null model, say without interaction) and the alternative which includes the same specification, plus additional terms. We then compare the log-likelihood, a measure of fit, and form a statistic. As for ANOVA, the alternative models fit better (no matter what), but we can assess whether this improvement, due to including $\nu$ additional parameters,  could be due to chance alone. The likelihood ratio statistic assess this change, and our large-sample benchmark. we compare it to a chi-square random variable with $\nu$ degrees of freedom, denoted $\chi^2_\nu$. This gives a $p$-value.
 
 
 
@@ -15,40 +30,79 @@ Many experiments can have binary outcomes: aggregating these results by factor l
 
 ## Racial discrimination in hiring
 
-We consider a  study from @Bertrand.Mullainathain:2004, who study racial discrimination in hiring based on the consonance of applicants names; a similar example was recently featured in selection at the [M.Sc. level from *Ondes*](https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf). The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.
+We consider a  study from @Bertrand.Mullainathan:2004, who study racial discrimination in hiring based on the consonance of applicants names; a similar example was recently featured in selection at the [M.Sc. level from *Ondes*](https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf). The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.
 
 If there was no racial discrimination (null hypothesis), we would expect the average number of times a white applicant was called back (but no black applicant) to be the same as a single black applicant (but no white). Only the entries for different numbers of call-back (either 0 vs 2, 0 vs 1 or 1 vs 2 for either race) are instructive about our question of interest. 
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-BM04T2tab
+#| tbl-cap: "Table 2 of Bertrand and Mullainathan (2004), with counts of callbacks out of four CV (two white, two black) per combination."
+BM04_T2tab <- rbind(c(1103, 74, 19), c(33, 46, 18), c(6, 7, 17))
+colnames(BM04_T2tab) <- c("no", "1W", "2W")
+rownames(BM04_T2tab) <- c("no", "1B", "2B")
+knitr::kable(BM04_T2tab, row.names = TRUE)
+```
+
+Under the null hypothesis, the model would have equal off-diagonal entries in @tbl-BM04T2tab. We can test this null hypothesis of symmetry using contrasts.
+
+
+```{r}
+#| eval: true
+#| echo: true
+# Table with the entries
+library(emmeans)
+data(BM04_T2, package = "hecedsm")
+# Fit the Poisson regression model
+model_null <- glm(count ~ white*black, #saturated model 
+             data = BM04_T2, 
+             family = poisson) # default log-link
+# Null model - same average for off diagonal entry
+# Get back intger codes and create a factor with the same entries for 01 and 10, etc.
+iwhite <- as.integer(BM04_T2$white) - 1L
+iblack <- as.integer(BM04_T2$black) - 1L
+BM04_T2$sym <- factor(paste0(pmin(iwhite, iblack), pmax(iwhite, iblack)))
+model_alt <- glm(count ~ sym, #saturated model 
+             data = BM04_T2, 
+             family = poisson)
+# Compare the two nested models
+anova(model_alt, model_null,  test = "LRT")
+pchisq(deviance(model_alt), df = model_alt$df.residual, lower.tail = FALSE)
+
+# Pearson test - observed minus expected under model sum (O-E)^2/E
+PearsonX2 <- sum(residuals(model_alt, type = "pearson")^2)
+pchisq(PearsonX2, df = 3, lower.tail = FALSE)
+
+```
 
 
 ```{r}
 #| eval: false
 #| echo: false
-BM04_T2 <- rbind(c(1103, 74, 19),
-      c(33, 46, 18),
-      c(6, 7, 17))
-colnames(BM04_T2) <- c("no", "1W", "2W")
-rownames(BM04_T2) <- c("no", "1B", "2B")
-
-qty <- data.frame(white = factor(rep(c("no", "1", "2"), each = 3)),
-                  black = factor(rep(c("no", "1", "2"), length.out = 9)),
-                  count = as.vector(BM04_T2))
-
-library(emmeans)
-model <- glm(count ~ white*black, #saturated model 
+THIS IS WRONG?
+# Different approach, using contrasts
+emmeans(model_null, specs = c("black", "white")) |>
+  # Compute custom contrasts - USE THIS ORDER FOR CONTRASTS
+  contrast(method = # Compute joint test of
+              list("0vs1" = c(0,1,0,-1,0,0,0,0,0), 
+                   #(1 white, 0 black) vs (0 white, 1 black)
+                   "0vs2" = c(0,0,1,0,0,0,-1,0,0),
+                   "1vs2" = c(0,0,0,0,0,1,0,-1,0))) |>
+  joint_tests()
+model0 <- glm(count ~ white + black, #main effect model
              data = qty, 
-             family = poisson)
-library(emmeans)
-emmeans(model, specs = c("white","black")) |> 
-  contrast(method = 
-              list("1vs2" = c(0,1,0,-1,0,0,0,0,0),
-                   "1vs0" = c(0,0,1,0,0,0,-1,0,0),
-                   "2vs0" = c(0,0,0,0,0,1,0,-1,0))) |>
-  emmeans::joint_tests()
+             family = poisson) 
+sum(residuals(model_alt, type = "pearson")^2)
 
 PearsonX2 <- (74-33)^2/(74+33) + (19-6)^2/(19+6) + (18-7)^2/(18+7)
 pchisq(PearsonX2, df = 3, lower.tail = FALSE)
+```
 
 
+```{r}
+#| eval: true
+#| echo: true
 data(MULTI21_D1, package = "hecedsm")
 contingency <- xtabs(
   count ~ age + frequency, 
@@ -60,19 +114,77 @@ counts_5vs7 <- xtabs(
   data = MULTI21_D1,
   subset = age %in% c("5yo", "7yo"),
   drop.unused.levels = TRUE)
+# Compute chi-square test with sub-table
 chisq.test(counts_5vs7)
-effectsize::cramers_v(chisq.test(counts_5vs7))
 
+# compute effect size
+effectsize::cramers_v(chisq.test(counts_5vs7))
+```
+
+```{r}
 data(DA23_E2, package = "hecedsm")
 # How many observations?
 nrow(DA23_E2)
 tabs <- with(DA23_E2, table(purchased, format))
-chisq.test(tabs, correct = FALSE)
-# In the paper, all participants were included for this test but other were excluded at a latter stage. 
-# DA23_E2 only includes the subset
-
-
-
+# Chi-square test for interaction
+chisq.test(tabs)
+# In the paper, all participants were included for this test 
+# but other were excluded at a latter stage. 
+# DA23_E2 only includes the latter (i.e., the subset)
 ```
+
+:::
+
+In more general regression models, we build a design matrix with explanatory variables $\mathrm{X}_1, \ldots, \mathrm{X}_p$. The mean model then reads
+\begin{align*}
+\mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
+\end{align*}
+so the mean is multiplied by $\exp(\beta_j)$ for an increase of one unit of $\mathrm{X}_{j}$, *ceteris  paribus*. If $\beta_j < 0$, $\exp(\beta_j) < 1$ and so we have a decrease of $100\cdot(1-\exp(\beta_j))$% of the mean response. Likewise, if $\beta_j>0$, the mean number increases by $100\cdot(\exp(\beta_j)-1)$%. 
+
+:::{#exm-roadsweden}
+
+## Road accidents and speed limits on the motorway in Sweden
+
+Sweden is a worldwide leader in road safety and has a long history of countermeasures to increase road traffic safety, including the Vision Zero program. Back in the 1960s, a study was conducted by the authorities to investigate the potential of speed limits on motorways to reduce the number of accidents. The `sweden` data contains the number of accidents on 92 matching days in both 1961 and 1962 [@Svensson:1981]; speed limits were in place on selected days in either year. 
+
+To study the impact of the restrictions we can fit a Poisson model. Let
+$Y_{i1}$ (respectively $Y_{i2}$) denote the number of accidents in 1961
+(1962) on day $i$ and let $\texttt{limit}_{ij}$ denote a binary
+indicator equal to one if speed limits were enforced on day $i$ of year
+$j$. We set 
+\begin{align*}
+Y_{i1} &\sim \mathsf{Po}\{\exp(\delta_i + \alpha \texttt{limit}_{i1})\},
+\\ Y_{i2} &\sim\mathsf{Po}\{\exp(\delta_i + \gamma +  \alpha \texttt{limit}_{i2})\}, \qquad i=1, \ldots, 92.
+\end{align*}
+The nuisance parameters $\delta_1, \ldots, \delta_{92}$ control for changes in background number of accidents and are of no practical interest, while $\gamma$ denotes the change from 1961 to 1962. We are interested here in assessing changes in the number of accidents due to the policy, $\alpha$; of secondary interest is $\gamma$, which determines whether there has been a change in the number of accident in 1962 relative to 1961.
+
+```{r}
+#| label: swedenmod
+#| eval: true
+#| echo: true
+data(sweden, package = "hecedsm")
+modswed <- glm(accidents ~ -1 + day + limit + year,
+               family = poisson("log"), 
+               data = sweden)
+tab <- car::Anova(modswed, type = 3)
+```
+
+```{r}
+#| label: tbl-swedenglm
+#| echo: false
+#| eval: true
+#| tbl-cap: "Analysis of deviance table (Type 3 decomposition) for the Poisson regression model fitted to the Sweden traffic restrictions data: the table gives the $p$-value for likelihood ratio tests comparing the full model including all covariates with models in which a single explanatory is removed."
+mtab <- broom::tidy(tab)
+mtab$p.value <- ifelse(format.pval(broom::tidy(tab)$p.value, digits = 3, eps = 1e-5) == "<1e-05","\\(<10^{-5}\\)", paste0("\\(", round(broom::tidy(tab)$p.value,3),"\\)"))
+kableExtra::kbl(
+   mtab,
+   col.names = c("variable","stat","df","p-value"),
+   booktabs = TRUE,
+   digits = 2,
+   escape = FALSE
+)
+```
+
+The residual deviance is `r round(modswed$deviance, 2)` for `r modswed$df.residual` degrees of freedom, suggests the overall fit is good, despite the large number of nuisance parameters $\delta_1, \ldots, \delta_{92}$. The coefficient associated to limit is strongly significant: the estimated coefficient is $\widehat{\alpha}=`r round(as.numeric(coef(modswed)['limit']),2)`$, indicates that speed limits reduce the mean number of accidents by $`r round(100*(1-exp(as.numeric(coef(modswed)["limit"]))),1)`$% on average. In contrast, the likelihood ratio test reported in @tbl-swedenglm shows that the change in the yearly number of accident from 1961 to 1962, $\gamma$, is not significantly different from zero.
 
 :::

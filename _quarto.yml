@@ -43,6 +43,7 @@ book:
   - 10-mixed.qmd
   - 11-causal-inference.qmd
   - 12-nonparametric.qmd
+  - 13-count.qmd
   - references.qmd
   site-url: https://lbelzile.github.io/math80667a/
   repo-url: https://github.com/lbelzile/math80667a/

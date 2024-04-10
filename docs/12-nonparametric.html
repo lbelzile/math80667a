@@ -83,7 +83,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./13-count.html" rel="next">
 <link href="./11-causal-inference.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -239,8 +239,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./13-count.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Count data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
@@ -273,14 +279,14 @@ div.csl-indent {
 <p>In short: the more assumptions you are willing to assume, the more information you can squeeze out of your problem. However, the inference can be fragile so you have to decide on a trade-off between efficiency (keeping all numerical records) and robustness (e.g., keeping only the signs or the ranking of the data).</p>
 <p>The following list nonparametric tests and their popular parametric equivalent.</p>
 <ul>
-<li>sign test: an alternative to a one-sample <span class="math inline">\(t\)</span>-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences). Only uses the sign of the difference, minimal assumptions but not powerful</li>
+<li>sign test: an alternative to a one-sample <span class="math inline">\(t\)</span>-test (also valid for paired measurements, where we subtract the two measurements and rank differences). Only uses the sign of the difference, minimal assumptions but not particularly powerful.</li>
 <li>Wilcoxon’s signed rank test: idem, but using the ranks of the observations</li>
-<li>Mann–Whitney <span class="math inline">\(U\)</span> or Wilcoxon’s rank-sum test: the nonparametric analog of two-sample <span class="math inline">\(t\)</span>-test, which ranks all observations in the sample and compares them between groups. For between-subject designs</li>
+<li>Mann–Whitney <span class="math inline">\(U\)</span> or Wilcoxon’s rank-sum test: the nonparametric analog of two-sample <span class="math inline">\(t\)</span>-test, which ranks all observations in the sample (abstracting from group levels) and compares them between groups. This test is meant for between-subject designs.</li>
 </ul>
 <p>These can be extended with repeated measurements to more than two groups:</p>
 <ul>
 <li><a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/friedman.htm">Friedman’s rank sum test</a> for completely randomized block design: ranks are computed within each block (one block, one experimental factor) and we consider the sum of the ranks for each treatment level. Equivalent of sign test with more samples; also <a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/quade.htm">Quade’s test</a></li>
-<li>Kruskal–Wallis test: one-way analysis of variance model with ranks, obtained by pooling all observations, computing the ranks, and splitting them by experimental condition.</li>
+<li>Kruskal–Wallis test: one-way analysis of variance model with ranks, obtained by pooling all observations, computing the ranks, and splitting them back by experimental condition.</li>
 </ul>
 <p>For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests from the linear model or ANOVA function yield more or less the same benchmarks for all useful purposes: <a href="https://lindeloev.github.io/tests-as-linear/">see J. K. Lindeløv</a> cheatsheet and examples for indications.</p>
 <section id="wilcoxon-signed-rank-test" class="level2" data-number="12.1">
@@ -629,8 +635,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./13-count.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Count data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

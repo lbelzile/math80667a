@@ -240,6 +240,20 @@
 \usepackage{utopia}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 \usepackage{pdfpages}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \makeatletter
 \@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
 \@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
@@ -332,7 +346,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-04-04}
+\date{2024-04-10}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -350,7 +364,7 @@
 \begin{document}
 \includepdf{figures/coverpage.pdf}
 
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable, interior hidden, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, borderline west={3pt}{0pt}{shadecolor}, enhanced, breakable, boxrule=0pt, interior hidden, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -412,7 +426,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -532,7 +546,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -573,7 +587,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -592,7 +606,7 @@ found no evidence of a negative impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -608,8 +622,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -761,7 +775,7 @@ limit theorem.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -829,7 +843,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -873,7 +887,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -905,7 +919,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -960,7 +974,7 @@ for the stratified sample.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1340,7 +1354,7 @@ license}.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -1377,7 +1391,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \textbf{Learning objectives}:
 
@@ -2048,7 +2062,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2286,7 +2300,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2536,7 +2550,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -3518,7 +3532,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \textbf{Learning objectives}:
 
@@ -5069,7 +5083,7 @@ averages of the three actions are much smaller than for race.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -5654,7 +5668,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Stekelenburg et al. (2021) split their data to do pairwise comparisons
 two at the time (thus taking roughly two-third of the data to perform a
@@ -5673,7 +5687,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -5699,7 +5713,7 @@ posterior belief score.}
 
 \end{figure}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -5727,7 +5741,7 @@ posterior belief score.}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -6168,7 +6182,7 @@ again, the output matches the output of the package.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Measures of effect size are estimated based on data, but unlike summary
 statistics such as the mean and variance, tend to be very noisy in small
@@ -6693,7 +6707,7 @@ percentage of \emph{p}-values smaller than \(\alpha\). We can vary the
 sample size and see how many observations we need per group to achieve
 the desired level of power.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -6729,7 +6743,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-important-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, colframe=quarto-callout-important-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -7012,7 +7026,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-note-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, colframe=quarto-callout-note-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -7071,7 +7085,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-tip-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, colframe=quarto-callout-tip-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -8807,7 +8821,7 @@ implying that `'no other version or treatment assignment would lead to
 different potential outcome'' (Imbens and Rubin 2015), which also
 suggests the effect of treatment is constant.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Causal inference is possible in observational settings, but some of the
 assumptions are unverifiable and typically much stronger than for
@@ -8964,7 +8978,7 @@ Matching consists in creating paired samples (with similar
 characteristics for explanatories), and comparing the pairs.
 Stratification consists of analysing subpopulations separately.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 Controlling for a collider is counterproductive, as we would get
 erroneous conclusions: Kowal (2021) reportedly claimed married couples
@@ -9064,7 +9078,7 @@ changing the sign of the coefficient, giving an additive decomposition
 of the total effect as \(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)
 (Pearl 2014).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomtitle=1mm, opacitybacktitle=0.6, opacityback=0, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, left=2mm, leftrule=.75mm, breakable, colback=white, toptitle=1mm, bottomrule=.15mm, toprule=.15mm, colframe=quarto-callout-caution-color-frame]
+\begin{tcolorbox}[enhanced jigsaw, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, colframe=quarto-callout-caution-color-frame, coltitle=black, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white, left=2mm, breakable, toptitle=1mm, titlerule=0mm, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0, leftrule=.75mm, toprule=.15mm, arc=.35mm, colback=white]
 
 When measuring effects in psychology and marketing, it will often be the
 case that the conceptual causal model includes variables that cannot be
@@ -9689,16 +9703,17 @@ equivalent.
 \tightlist
 \item
   sign test: an alternative to a one-sample \(t\)-test (also valid for
-  paired measurements, where we subtract the two to get a single numeric
-  number and we rank differences). Only uses the sign of the difference,
-  minimal assumptions but not powerful
+  paired measurements, where we subtract the two measurements and rank
+  differences). Only uses the sign of the difference, minimal
+  assumptions but not particularly powerful.
 \item
   Wilcoxon's signed rank test: idem, but using the ranks of the
   observations
 \item
   Mann--Whitney \(U\) or Wilcoxon's rank-sum test: the nonparametric
   analog of two-sample \(t\)-test, which ranks all observations in the
-  sample and compares them between groups. For between-subject designs
+  sample (abstracting from group levels) and compares them between
+  groups. This test is meant for between-subject designs.
 \end{itemize}
 
 These can be extended with repeated measurements to more than two
@@ -9717,7 +9732,7 @@ groups:
 \item
   Kruskal--Wallis test: one-way analysis of variance model with ranks,
   obtained by pooling all observations, computing the ranks, and
-  splitting them by experimental condition.
+  splitting them back by experimental condition.
 \end{itemize}
 
 For more than 15 observations, the normal, student or Fisher
@@ -9942,6 +9957,147 @@ for face-to-face vs group video, with a 95\% confidence interval of
 
 In either case, it's clear that the videoconferencing translates into
 longer time spent gazing at the partner than in-person meetings.
+
+\end{example}
+
+\bookmarksetup{startatroot}
+
+\hypertarget{count-data}{%
+\chapter{Count data}\label{count-data}}
+
+Many experiments can have binary outcomes. If we manipulate one or more
+experimental factors, we can aggregate these results by subcategories.
+This leads to contingency tables, which contain the total count per
+factor combination. These data can be understood in the same way as
+other ANOVA models, but with the aggregated responses as counts rather
+than averages. The following section is meant as both an introduction to
+the topic, showcasing examples of tests and their application.
+
+With count data, we typically model observations as arising from a
+Poisson distribution, which takes values in \(0, 1, \ldots\). The
+Poisson distribution has mean and variance \(\mu>0\) and, to ensure the
+fitted average are positive, regression models typically consider the
+natural logarithm.
+
+To make things concrete, consider a two-way between-subject design with
+crossed factors having \(I\) and \(J\) categories, respectively. The
+mean equation would be
+
+\begin{align*}
+\ln \mu_{ij} = \alpha + \beta_i + \gamma_j + (\beta\gamma)_{ij}, \qquad i=1,\ldots, I; j =1, \ldots, J
+\end{align*} where \(\beta\), \(\gamma\), \((\beta\gamma)\)'s are
+subject to sum-to-zero categories. One major difference with regular
+ANOVA is that there will be at most \(IJ\) counts (one for each cell).
+If we fit a model with an interaction, we will overfit the data and
+predict back the entries. This is possible for the Poisson distribution
+because the variance is fully determined by the mean.
+
+There are direct analog to the tests we normally consider: we can
+compare the full model with all interactions (termed \textbf{saturated}
+model) with simpler alternatives. The deviance statistic assesses
+whether the simpler model (null hypothesis) provides adequate fit,
+relative to the full model (alternative hypothesis).
+
+We can compare different models in the same way than for multi-way
+between-subject designs. We fit two competing models (one simpler null
+model, say without interaction) and the alternative which includes the
+same specification, plus additional terms. We then compare the
+log-likelihood, a measure of fit, and form a statistic. As for ANOVA,
+the alternative models fit better (no matter what), but we can assess
+whether this improvement, due to including \(\nu\) additional
+parameters, could be due to chance alone. The likelihood ratio statistic
+assess this change, and our large-sample benchmark. we compare it to a
+chi-square random variable with \(\nu\) degrees of freedom, denoted
+\(\chi^2_\nu\). This gives a \(p\)-value.
+
+\begin{example}[Racial discrimination in
+hiring]\protect\hypertarget{exm-racial-chisq}{}\label{exm-racial-chisq}
+
+We consider a study from (\textbf{Bertrand.Mullainathain:2004?}), who
+study racial discrimination in hiring based on the consonance of
+applicants names; a similar example was recently featured in selection
+at the
+\href{https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf}{M.Sc.
+level from \emph{Ondes}}. The authors created curriculum vitae for four
+applicants and randomly allocated them a name, either one typical of a
+white person or a black person. The response is a count indicating how
+many of the applicants were called back (out of two black and two white)
+depending on their origin.
+
+If there was no racial discrimination (null hypothesis), we would expect
+the average number of times a white applicant was called back (but no
+black applicant) to be the same as a single black applicant (but no
+white). Only the entries for different numbers of call-back (either 0 vs
+2, 0 vs 1 or 1 vs 2 for either race) are instructive about our question
+of interest.
+
+\end{example}
+
+In more general regression models, we build a design matrix with
+explanatory variables \(\mathrm{X}_1, \ldots, \mathrm{X}_p\). The mean
+model then reads \begin{align*}
+\mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
+\end{align*} so the mean is multiplied by \(\exp(\beta_j)\) for an
+increase of one unit of \(\mathrm{X}_{j}\), \emph{ceteris paribus}. If
+\(\beta_j < 0\), \(\exp(\beta_j) < 1\) and so we have a decrease of
+\(100\cdot(1-\exp(\beta_j))\)\% of the mean response. Likewise, if
+\(\beta_j>0\), the mean number increases by
+\(100\cdot(\exp(\beta_j)-1)\)\%.
+
+\begin{example}[Road accidents and speed limits on the motorway in
+Sweden]\protect\hypertarget{exm-roadsweden}{}\label{exm-roadsweden}
+
+Sweden is a worldwide leader in road safety and has a long history of
+countermeasures to increase road traffic safety, including the Vision
+Zero program. Back in the 1960s, a study was conducted by the
+authorities to investigate the potential of speed limits on motorways to
+reduce the number of accidents. The \texttt{sweden} data contains the
+number of accidents on 92 matching days in both 1961 and 1962 (Svensson
+1981); speed limits were in place on selected days in either year.
+
+To study the impact of the restrictions we can fit a Poisson model. Let
+\(Y_{i1}\) (respectively \(Y_{i2}\)) denote the number of accidents in
+1961 (1962) on day \(i\) and let \(\texttt{limit}_{ij}\) denote a binary
+indicator equal to one if speed limits were enforced on day \(i\) of
+year \(j\). We set \begin{align*}
+Y_{i1} \sim \mathsf{Po}\{\exp(\delta_i + \alpha \texttt{limit}_{i1})\}, \quad Y_{i2} \sim\mathsf{Po}\{\exp(\delta_i + \gamma +  \alpha \texttt{limit}_{i2})\}, \qquad i=1, \ldots, 92.
+\end{align*} The nuisance parameters \(\delta_1, \ldots, \delta_{92}\)
+control for changes in background number of accidents and are of no
+practical interest, while \(\gamma\) denotes the change from 1961 to
+1962. We are interested here in assessing changes in the number of
+accidents due to the policy, \(\alpha\); of secondary interest is
+\(\gamma\), which determines whether there has been a change in the
+number of accident in 1962 relative to 1961.
+
+\hypertarget{tbl-swedenglm}{}
+\begin{table}
+\caption{\label{tbl-swedenglm}Analysis of deviance table (Type 3 decomposition) for the Poisson
+regression model fitted to the Sweden traffic restrictions data: the
+table gives the \(p\)-value for likelihood ratio tests comparing the
+full model including all covariates with models in which a single
+explanatory is removed. }\tabularnewline
+
+\centering
+\begin{tabular}{lrrr}
+\toprule
+variable & stat & df & p-value\\
+\midrule
+day & 9395.220 & 92 & 0.000\\
+limit & 46.288 & 1 & 0.000\\
+year & 0.704 & 1 & 0.401\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The residual deviance is 107.95 for 90 degrees of freedom, suggests the
+overall fit is good, despite the large number of nuisance parameters
+\(\delta_1, \ldots, \delta_{92}\). The coefficient associated to limit
+is strongly significant: the estimated coefficient is
+\(\widehat{\alpha}=-0.291686\), indicates that speed limits reduce the
+mean number of accidents by \(25.3\)\% on average. In contrast, the
+likelihood ratio test reported in Table @ref(tab:swedenglm) shows that
+the change in the yearly number of accident from 1961 to 1962,
+\(\gamma\), is not significantly different from zero.
 
 \end{example}
 
@@ -10285,6 +10441,11 @@ Stekelenburg, Aart van, Gabi Schaap, Harm Veling, and Moniek Buijzen.
 Consensus Can Help to Correct False Beliefs.''} \emph{Psychological
 Science} 32 (10): 1549--65.
 \url{https://doi.org/10.1177/09567976211007788}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Svensson:1981}{}}%
+Svensson, Ake. 1981. {``On a Goodness-of-Fit Test for Multiplicative
+{P}oisson Models.''} \emph{Ann. Statist.} 9 (4): 697--704.
+\url{https://doi.org/10.1214/aos/1176345512}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-mediationR}{}}%
 Tingley, Dustin, Teppei Yamamoto, Kentaro Hirose, Luke Keele, and Kosuke

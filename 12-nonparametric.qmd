@@ -21,14 +21,14 @@ In short: the more assumptions you are willing to assume, the more information y
 
 The following list nonparametric tests and their popular parametric equivalent.
 
-- sign test: an alternative to a one-sample $t$-test (also valid for paired measurements, where we subtract the two to get a single numeric number and we rank differences). Only uses the sign of the difference, minimal assumptions but not powerful
+- sign test: an alternative to a one-sample $t$-test (also valid for paired measurements, where we subtract the two measurements and rank differences). Only uses the sign of the difference, minimal assumptions but not particularly powerful.
 - Wilcoxon's signed rank test: idem, but using the ranks of the observations
-- Mann--Whitney $U$ or Wilcoxon's rank-sum test: the nonparametric analog of two-sample $t$-test, which ranks all observations in the sample and compares them between groups. For between-subject designs
+- Mann--Whitney $U$ or Wilcoxon's rank-sum test: the nonparametric analog of two-sample $t$-test, which ranks all observations in the sample (abstracting from group levels) and compares them between groups. This test is meant for between-subject designs.
 
 These can be extended with repeated measurements to more than two groups: 
 
 - [Friedman's rank sum test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/friedman.htm) for completely randomized block design: ranks are computed within each block (one block, one experimental factor) and we consider the sum of the ranks for each treatment level. Equivalent of sign test with more samples; also [Quade's test](https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/quade.htm)
-- Kruskal--Wallis test: one-way analysis of variance model with ranks, obtained by pooling all observations, computing the ranks, and splitting them by experimental condition.
+- Kruskal--Wallis test: one-way analysis of variance model with ranks, obtained by pooling all observations, computing the ranks, and splitting them back by experimental condition.
 
 For more than 15 observations, the normal, student or Fisher approximation obtained by running the tests from the linear model or ANOVA function yield more or less the same benchmarks for all useful purposes: [see J. K. Lindeløv](https://lindeloev.github.io/tests-as-linear/) cheatsheet and examples for indications.
 
