@@ -104,10 +104,10 @@ eff_size <- effectsize::kendalls_w(
 ```
 
 
-The Friedman test is obtained by replacing observations by the rank within each block (so rather than the number of violations per task, we compute the rank among the four tasks). The Friedman's test statistic is $`r round( friedman@statistic@teststatistic, 3)`$ and is compared to a benchmark $\chi^2_3$ distribution, yielding a $p$-value of $`r round(friedman@distribution@pvalue(q = friedman@statistic@teststatistic), 4)`$. 
+The Friedman test is obtained by replacing observations by the rank within each block (so rather than the number of violations per task, we compute the rank among the four tasks). Friedman's test statistic is $`r round( friedman@statistic@teststatistic, 3)`$ and is compared to a benchmark $\chi^2_3$ distribution, yielding a $p$-value of $`r round(friedman@distribution@pvalue(q = friedman@statistic@teststatistic), 4)`.$ 
 
 
-We can also obtain effect sizes for the rank test, termed Kendall's $W$. A value of 1 indicates complete agreement in the ranking: here, this would occur if the ranking of the number of violations was the same for each participant. The estimated agreement (effect size) is $`r round(eff_size$Kendalls_W, 2)`$.
+We can also obtain effect sizes for the rank test, termed Kendall's $W.$ A value of 1 indicates complete agreement in the ranking: here, this would occur if the ranking of the number of violations was the same for each participant. The estimated agreement (effect size) is $`r round(eff_size$Kendalls_W, 2)`.$
 
 The test reveals significant differences in the number of road safety violations across tasks. We could therefore perform all pairwise differences using the signed-rank test and adjust $p$-values to correct for the fact we have performed six hypothesis tests.
 

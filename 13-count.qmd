@@ -22,9 +22,18 @@ One major difference with regular ANOVA is that there will be at most $IJ$ count
 
 There are direct analog to the tests we normally consider: we can compare the full model with all interactions (termed **saturated** model) with simpler alternatives. The deviance statistic assesses whether the simpler model (null hypothesis) provides adequate fit, relative to the full model (alternative hypothesis).
 
-We can compare different models in the same way than for multi-way between-subject designs. We fit two competing models (one simpler null model, say without interaction) and the alternative which includes the same specification, plus additional terms. We then compare the log-likelihood, a measure of fit, and form a statistic. As for ANOVA, the alternative models fit better (no matter what), but we can assess whether this improvement, due to including $\nu$ additional parameters,  could be due to chance alone. The likelihood ratio statistic assess this change, and our large-sample benchmark. we compare it to a chi-square random variable with $\nu$ degrees of freedom, denoted $\chi^2_\nu$. This gives a $p$-value.
+We can compare different models in the same way than for multi-way between-subject designs. We fit two competing models (one simpler null model, say without interaction) and the alternative which includes the same specification, plus additional terms. We then compare the log-likelihood, a measure of fit, and form a statistic. As for ANOVA, the alternative models fit better (no matter what), but we can assess whether this improvement, due to including $\nu$ additional parameters,  could be due to chance alone. The likelihood ratio statistic assess this change, and our large-sample benchmark. we compare it to a chi-square random variable with $\nu$ degrees of freedom, denoted $\chi^2_\nu$.
 
 
+In contingency tables, we can use Pearson's $\chi^2$ test to compare observed counts to postulated expected counts, comparing the statistic to a chi-square distribution. The large-sample approximation is adequate provided that the expected counts in each subgroup, $E_i$, are larger than 5.
+
+The statistic is of the form
+$$P =\sum_{i=1}^I \sum_{j=1}^J \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
+where $E_i$ is the expected count under the null hypothesis, and $O_i$ are the observed entries.
+The degrees of freedom are $N$ (here $IJ=N$, the number of cells) minus the number of parameters under the null hypothesis.
+
+
+For contingency tables, the usual effect size is Cramér's $V$, which is a transformation of the chi-square statistic to remove the dependence on sample size and varies from $0$ (no association) to $1$ (fully determined data). The estimator is typically biased upward, so slightly different estimators (recipe) are available, including many with small-sample corrections.
 
 :::{#exm-racial-chisq}
 
@@ -40,8 +49,8 @@ If there was no racial discrimination (null hypothesis), we would expect the ave
 #| label: tbl-BM04T2tab
 #| tbl-cap: "Table 2 of Bertrand and Mullainathan (2004), with counts of callbacks out of four CV (two white, two black) per combination."
 BM04_T2tab <- rbind(c(1103, 74, 19), c(33, 46, 18), c(6, 7, 17))
-colnames(BM04_T2tab) <- c("no", "1W", "2W")
-rownames(BM04_T2tab) <- c("no", "1B", "2B")
+colnames(BM04_T2tab) <- c("no white", "1 white", "2 white")
+rownames(BM04_T2tab) <- c("no black", "1 black", "2 black")
 knitr::kable(BM04_T2tab, row.names = TRUE)
 ```
 
@@ -51,54 +60,60 @@ Under the null hypothesis, the model would have equal off-diagonal entries in @t
 ```{r}
 #| eval: true
 #| echo: true
-# Table with the entries
 library(emmeans)
 data(BM04_T2, package = "hecedsm")
-# Fit the Poisson regression model
-model_null <- glm(count ~ white*black, #saturated model 
+# Fit the Poisson regression models
+# Saturated model - one average per cell, 9 parameters 
+mod_null <- glm(count ~ white*black, 
              data = BM04_T2, 
              family = poisson) # default log-link
-# Null model - same average for off diagonal entry
-# Get back intger codes and create a factor with the same entries for 01 and 10, etc.
-iwhite <- as.integer(BM04_T2$white) - 1L
-iblack <- as.integer(BM04_T2$black) - 1L
-BM04_T2$sym <- factor(paste0(pmin(iwhite, iblack), pmax(iwhite, iblack)))
-model_alt <- glm(count ~ sym, #saturated model 
-             data = BM04_T2, 
-             family = poisson)
-# Compare the two nested models
-anova(model_alt, model_null,  test = "LRT")
-pchisq(deviance(model_alt), df = model_alt$df.residual, lower.tail = FALSE)
-
-# Pearson test - observed minus expected under model sum (O-E)^2/E
-PearsonX2 <- sum(residuals(model_alt, type = "pearson")^2)
-pchisq(PearsonX2, df = 3, lower.tail = FALSE)
-
+# Symmetric model with 6 parameters (3 diag + 3 upper triangular)
+mod_alt <- glm(count ~ gnm::Symm(black, white), 
+                data = BM04_T2, 
+                family = poisson)
+# Compare the two nested models using a likelihood ratio test
+anova(mod_alt, mod_null,  test = "LRT")
+# The saturated model need not be fitted - use deviance and residuals directly
+pchisq(deviance(mod_alt), df = mod_alt$df.residual, lower.tail = FALSE)
 ```
+
+We could use Pearson's $\chi^2$ test too. In our example, the entries $E_{ij}$ for off-diagonal average counts entries $E_{01}$, $E_{12}$, $E_{02}$, etc., are obtained as the average of counts $E_{ij} = (O_{ij} + O_{ji})/2$ $(i\neq j)$, etc. The numeric value of the test statistic is `r round(sum(residuals(mod_alt, type = "pearson")^2),2)`, yielding a $p$-value less than $10^{-5}$. There is thus strong evidence of racial discrimination.
 
 
 ```{r}
 #| eval: false
-#| echo: false
-THIS IS WRONG?
-# Different approach, using contrasts
-emmeans(model_null, specs = c("black", "white")) |>
+#| echo: true
+## Alternative test (Pearson)
+# Compute observed counts minus expected counts under model sum_i (O_i-E_i)^2/E_i
+# E_i is the expected count, estimated via average of non-diagonal entries 0.5*mu(0,2) + 0.5*mu(2,0)
+PearsonX2 <- sum(residuals(mod_alt, type = "pearson")^2)
+pchisq(PearsonX2, df = 3, lower.tail = FALSE)
+```
+
+We can also compute contrasts. Because the model is multiplicative, it makes sense
+to report departures of symmetry by computing ratios $\widehat{\mu}_{ji}/\widehat{\mu}_{ij}$ for $i, j = 0, 1, 2$ and $i \neq j$. The grid specification is as usual. Wald tests (computed on the log scale) are also reported.
+
+```{r}
+#| eval: true
+#| echo: true
+# Compute contrasts as ratios counts01/counts10
+emmeans(mod_null, specs = c("black", "white")) |>
   # Compute custom contrasts - USE THIS ORDER FOR CONTRASTS
   contrast(method = # Compute joint test of
               list("0vs1" = c(0,1,0,-1,0,0,0,0,0), 
                    #(1 white, 0 black) vs (0 white, 1 black)
                    "0vs2" = c(0,0,1,0,0,0,-1,0,0),
-                   "1vs2" = c(0,0,0,0,0,1,0,-1,0))) |>
-  joint_tests()
-model0 <- glm(count ~ white + black, #main effect model
-             data = qty, 
-             family = poisson) 
-sum(residuals(model_alt, type = "pearson")^2)
-
-PearsonX2 <- (74-33)^2/(74+33) + (19-6)^2/(19+6) + (18-7)^2/(18+7)
-pchisq(PearsonX2, df = 3, lower.tail = FALSE)
+                   "1vs2" = c(0,0,0,0,0,1,0,-1,0)),
+           type = "response")
 ```
 
+:::
+
+:::{#exm-elliot-contingency}
+
+## Spontaneous verbal rehersal of memory tasks
+
+We consider @Elliot:2021 multi-lab replication of @Flavell:1966 study on spontaneous verbalization of children when asked to identify pictures of objects. We pool data from all labs and study the counts as a function of age and frequency. We are interested in assessing whether there is an interaction between the two. Using Pearson $\chi^2$ test, we can fit the model in which counts in each cell $E_{ij}$, which corresponds to the average predicted with a model with main effect only (overall average + row $i$ and column $j$ estimated deviation, from the main model).
 
 ```{r}
 #| eval: true
@@ -107,31 +122,71 @@ data(MULTI21_D1, package = "hecedsm")
 contingency <- xtabs(
   count ~ age + frequency, 
   data = MULTI21_D1)
-chisq.test(contingency)
+# Use chi-square directly - the correction is not applied
+# to get the same result as with the Poisson regression model
+chisqtest <- chisq.test(contingency, correct = FALSE)
+# Effect size (with adjustment for small sample)
+effectsize::cramers_v(chisq.test(contingency))$Cramers_V_adjusted
+# Aggregate data into long format
+MULTI21_D1_long <- MULTI21_D1 |> 
+  dplyr::group_by(age, frequency) |> 
+  dplyr::summarize(total = sum(count))
+mod_main <- glm(total ~ age + frequency, 
+    family = poisson,
+    data = MULTI21_D1_long)
+PearsonX2 <- sum(residuals(mod_main, type = "pearson")^2)
+# p-value for Pearson chi-square test
+pchisq(PearsonX2, df = mod_main$df.residual, lower.tail = FALSE)
+# p-value for likelihood ratio test
+pchisq(deviance(mod_main), df = mod_main$df.residual, lower.tail = FALSE)
+```
 
+The two statistics, likelihood ratio test and Pearson's chi-square tests, give similar answers (they are two ways of assessing the same hypothesis, and both have $\chi^2$ distributions under the null hypothesis of no interaction.
+
+
+Given our large sample size, it is unsurprising to find differences. Perhaps more interesting is looking only at 5 years old versus 7 years old, as this is the age range where most changes occur. We also report effect sizes. 
+
+
+```{r}
+# Take only a subset of the levels for age
 counts_5vs7 <- xtabs(
   count ~ age + frequency, 
   data = MULTI21_D1,
   subset = age %in% c("5yo", "7yo"),
   drop.unused.levels = TRUE)
-# Compute chi-square test with sub-table
+counts_5vs7
+# Compute chi-square test with 2x3 sub-table
 chisq.test(counts_5vs7)
+# Even stronger evidence of more verbalization
 
-# compute effect size
-effectsize::cramers_v(chisq.test(counts_5vs7))
+# compute effect size - Cramer's V without small sample adjustment
+effectsize::cramers_v(chisq.test(counts_5vs7), adjust = FALSE)$Cramers_v
+
+
 ```
+
+
+:::
+
+
+:::{#exm-sellingformat}
+
+## The importance of selling format
+
+We revisit data from @Duke.Amir:2023 on selling formats, which compare integrated purchases (e.g., proposing to choose first the item, then choosing the combination) or having a menu at checkout for the quantity (sequential). We look at whether the person purchased the item and aggregate counts in a $2 \times 2$ table. We are again testing for an interaction versus only main effects.
+
+
+In the paper, all participants were included for this test,  but other were excluded at a latter stage.
+The database `DA23_E2` only includes the `r nrow(hecedsm::DA23_E2)` participants who were present at all stages.
 
 ```{r}
 data(DA23_E2, package = "hecedsm")
-# How many observations?
-nrow(DA23_E2)
 tabs <- with(DA23_E2, table(purchased, format))
+tabs
 # Chi-square test for interaction
 chisq.test(tabs)
-# In the paper, all participants were included for this test 
-# but other were excluded at a latter stage. 
-# DA23_E2 only includes the latter (i.e., the subset)
 ```
+The integrated quantity lead to a higher proportion of sales, and this difference is statistically significant at level 1%. The effect size (estimated with a small-sample correction of $V=`r round(effectsize::cramers_v(chisq.test(tabs))[[1]],2)`$ indicates a moderate effect, even if the $p$-value is small since we have 39.8% who bought for quantity-integrated, versus 16.4% for sequential.
 
 :::
 
@@ -139,7 +194,7 @@ In more general regression models, we build a design matrix with explanatory var
 \begin{align*}
 \mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
 \end{align*}
-so the mean is multiplied by $\exp(\beta_j)$ for an increase of one unit of $\mathrm{X}_{j}$, *ceteris  paribus*. If $\beta_j < 0$, $\exp(\beta_j) < 1$ and so we have a decrease of $100\cdot(1-\exp(\beta_j))$% of the mean response. Likewise, if $\beta_j>0$, the mean number increases by $100\cdot(\exp(\beta_j)-1)$%. 
+so the mean is multiplied by $\exp(\beta_j)$ for an increase of one unit of $\mathrm{X}_{j}$, *ceteris  paribus.* If $\beta_j < 0$, $\exp(\beta_j) < 1$ and so we have a decrease of $100\cdot(1-\exp(\beta_j))$% of the mean response. Likewise, if $\beta_j>0$, the mean number increases by $100\cdot(\exp(\beta_j)-1)$%. 
 
 :::{#exm-roadsweden}
 
