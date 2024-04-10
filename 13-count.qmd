@@ -148,6 +148,8 @@ Given our large sample size, it is unsurprising to find differences. Perhaps mor
 
 
 ```{r}
+#| eval: true
+#| echo: true
 # Take only a subset of the levels for age
 counts_5vs7 <- xtabs(
   count ~ age + frequency, 
@@ -161,8 +163,6 @@ chisq.test(counts_5vs7)
 
 # compute effect size - Cramer's V without small sample adjustment
 effectsize::cramers_v(chisq.test(counts_5vs7), adjust = FALSE)$Cramers_v
-
-
 ```
 
 
@@ -180,6 +180,8 @@ In the paper, all participants were included for this test,  but other were excl
 The database `DA23_E2` only includes the `r nrow(hecedsm::DA23_E2)` participants who were present at all stages.
 
 ```{r}
+#| eval: true
+#| echo: true
 data(DA23_E2, package = "hecedsm")
 tabs <- with(DA23_E2, table(purchased, format))
 tabs

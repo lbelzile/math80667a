@@ -462,12 +462,21 @@ argument.</code></pre>
 <p>The two statistics, likelihood ratio test and Pearson’s chi-square tests, give similar answers (they are two ways of assessing the same hypothesis, and both have <span class="math inline">\(\chi^2\)</span> distributions under the null hypothesis of no interaction.</p>
 <p>Given our large sample size, it is unsurprising to find differences. Perhaps more interesting is looking only at 5 years old versus 7 years old, as this is the age range where most changes occur. We also report effect sizes.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take only a subset of the levels for age</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>counts_5vs7 <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  count <span class="sc">~</span> age <span class="sc">+</span> frequency, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> MULTI21_D1,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">subset =</span> age <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"5yo"</span>, <span class="st">"7yo"</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">drop.unused.levels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>counts_5vs7</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     frequency
 age   never sometimes usually
   5yo    53        80      87
   7yo    19        73     177</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute chi-square test with 2x3 sub-table</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(counts_5vs7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -475,6 +484,10 @@ age   never sometimes usually
 data:  counts_5vs7
 X-squared = 42.575, df = 2, p-value = 5.688e-10</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Even stronger evidence of more verbalization</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># compute effect size - Cramer's V without small sample adjustment</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">cramers_v</span>(<span class="fu">chisq.test</span>(counts_5vs7), <span class="at">adjust =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>Cramers_v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2950689</code></pre>
 </div>
@@ -484,12 +497,17 @@ X-squared = 42.575, df = 2, p-value = 5.688e-10</code></pre>
 <p><span class="theorem-title"><strong>Example 13.3 (The importance of selling format)</strong></span> We revisit data from <span class="citation" data-cites="Duke.Amir:2023">Duke and Amir (<a href="references.html#ref-Duke.Amir:2023" role="doc-biblioref">2023</a>)</span> on selling formats, which compare integrated purchases (e.g., proposing to choose first the item, then choosing the combination) or having a menu at checkout for the quantity (sequential). We look at whether the person purchased the item and aggregate counts in a <span class="math inline">\(2 \times 2\)</span> table. We are again testing for an interaction versus only main effects.</p>
 <p>In the paper, all participants were included for this test, but other were excluded at a latter stage. The database <code>DA23_E2</code> only includes the 325 participants who were present at all stages.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(DA23_E2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>tabs <span class="ot">&lt;-</span> <span class="fu">with</span>(DA23_E2, <span class="fu">table</span>(purchased, format))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>tabs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         format
 purchased quantity-integrated quantity-sequential
         0                 100                 133
         1                  66                  26</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi-square test for interaction</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(tabs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test with Yates' continuity correction
@@ -510,11 +528,11 @@ Y_{i1} &amp;\sim \mathsf{Po}\{\exp(\delta_i + \alpha \texttt{limit}_{i1})\},
 \\ Y_{i2} &amp;\sim\mathsf{Po}\{\exp(\delta_i + \gamma +  \alpha \texttt{limit}_{i2})\}, \qquad i=1, \ldots, 92.
 \end{align*}\]</span> The nuisance parameters <span class="math inline">\(\delta_1, \ldots, \delta_{92}\)</span> control for changes in background number of accidents and are of no practical interest, while <span class="math inline">\(\gamma\)</span> denotes the change from 1961 to 1962. We are interested here in assessing changes in the number of accidents due to the policy, <span class="math inline">\(\alpha\)</span>; of secondary interest is <span class="math inline">\(\gamma\)</span>, which determines whether there has been a change in the number of accident in 1962 relative to 1961.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(sweden, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>modswed <span class="ot">&lt;-</span> <span class="fu">glm</span>(accidents <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> day <span class="sc">+</span> limit <span class="sc">+</span> year,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">poisson</span>(<span class="st">"log"</span>), </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> sweden)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Anova</span>(modswed, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(sweden, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>modswed <span class="ot">&lt;-</span> <span class="fu">glm</span>(accidents <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> day <span class="sc">+</span> limit <span class="sc">+</span> year,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">poisson</span>(<span class="st">"log"</span>), </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> sweden)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Anova</span>(modswed, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div id="tbl-swedenglm" class="cell quarto-float anchored">
