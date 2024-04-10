@@ -25,12 +25,12 @@ There are direct analog to the tests we normally consider: we can compare the fu
 We can compare different models in the same way than for multi-way between-subject designs. We fit two competing models (one simpler null model, say without interaction) and the alternative which includes the same specification, plus additional terms. We then compare the log-likelihood, a measure of fit, and form a statistic. As for ANOVA, the alternative models fit better (no matter what), but we can assess whether this improvement, due to including $\nu$ additional parameters,  could be due to chance alone. The likelihood ratio statistic assess this change, and our large-sample benchmark. we compare it to a chi-square random variable with $\nu$ degrees of freedom, denoted $\chi^2_\nu$.
 
 
-In contingency tables, we can use Pearson's $\chi^2$ test to compare observed counts to postulated expected counts, comparing the statistic to a chi-square distribution. The large-sample approximation is adequate provided that the expected counts in each subgroup, $E_i$, are larger than 5.
+In contingency tables, we can use Pearson's $\chi^2$ test to compare observed counts to postulated expected counts, comparing the statistic to a chi-square distribution. 
 
 The statistic is of the form
 $$P =\sum_{i=1}^I \sum_{j=1}^J \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
-where $E_i$ is the expected count under the null hypothesis, and $O_i$ are the observed entries.
-The degrees of freedom are $N$ (here $IJ=N$, the number of cells) minus the number of parameters under the null hypothesis.
+where $E_{ij}$ is the expected count under the null hypothesis, and $O_{ij}$ are the observed entries.
+The degrees of freedom are $N$ (here $IJ=N$, the number of cells) minus the number of parameters under the null hypothesis. The large-sample approximation is adequate provided that the expected counts in each subgroup, $E_{ij}$'s, are larger than 5.
 
 
 For contingency tables, the usual effect size is Cramér's $V$, which is a transformation of the chi-square statistic to remove the dependence on sample size and varies from $0$ (no association) to $1$ (fully determined data). The estimator is typically biased upward, so slightly different estimators (recipe) are available, including many with small-sample corrections.
