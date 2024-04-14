@@ -10,7 +10,7 @@
 
 In small samples or in the presence of very skewed outcome responses, often combined with extreme observations, the conclusions drawn from the large-sample approximations for $t$-tests or analysis of variance models need not hold. This chapter presents **nonparametric tests**.
 
-If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size $n$, where rank 1 denotes the smallest observation and rank $n$ the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations (8,2,1,2) gives ranks (4, 2.5., 1, 2.5) if we assign the average rank to ties.
+If our responses are numeric (or at least ordinal, such as those measured by Likert scales), we could subtitute them by their ranks. Ranks give the relative ordering in a sample of size $n$, where rank 1 denotes the smallest observation and rank $n$ the largest. Ranks are not affected by outliers and are more robust (contrary to averages), but discard information. For example, ranking the set of four observations $(8, 2, 1, 2)$ gives ranks $(4, 2.5, 1, 2.5)$ if we assign the average rank to ties.
 
 When are nonparametric tests used? The answer is that they are robust (meaning their conclusions are less affected) by departure from distributional assumptions (e.g., data are normally distributed) and by outliers. In large samples, the central limit theorem kicks in and the behaviour of most group average is normal. However, in small samples, the quality of the $p$-value approximate depends more critically on whether the model assumptions hold or not. 
 

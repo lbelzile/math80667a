@@ -434,12 +434,12 @@ Pitfall
 <p>Measures of effect size are estimated based on data, but unlike summary statistics such as the mean and variance, tend to be very noisy in small samples and the uncertainty remains significant for larger samples. To show this, I simulated datasets for a two sample <span class="math inline">\(t\)</span>-test: there is no effect for the control group, but the true effect for the treatment group is <span class="math inline">\(d=0.2\)</span>. With balanced data (<span class="math inline">\(n/2\)</span> observations in each group) power is maximised. <a href="#fig-effectsizedispersion">Figure&nbsp;<span>7.2</span></a> shows the estimated sample size for <span class="math inline">\(B=100\)</span> replications of the experiment at samples of size <span class="math inline">\(n=10, 12, \ldots, 250\)</span>. The horizontal lines at <span class="math inline">\(0\)</span> represent no effect: the proportion of values which show effects that are of opposite sign to the truth is still significant at <span class="math inline">\(n=250\)</span> observations, and the variability seems to decrease very slowly. For smaller samples, the effect sizes are erratic and, although they are centered at the true value, most of them are severely inflated.</p>
 </div>
 </div>
-<div class="cell" data-hash="07-power_effect_cache/html/fig-effectsizedispersion_a9a6bc3cf35be9aca530115e3a8d8d90">
+<div class="cell" data-hash="07-power_effect_cache/html/fig-effectsizedispersion_01bcfa7ee1dc3ac8bdfbde170e5ced6b">
 <div class="cell-output-display">
 <div id="fig-effectsizedispersion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-effectsizedispersion-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7.2: Dispersion of estimated effect size for data with a true mean dispersion of <span class="math inline">\(d=0.2\)</span>, for different sample size.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;7.2: Dispersion of estimated effect size for Cohen’s <span class="math inline">\(d\)</span>, for data with a true mean dispersion of <span class="math inline">\(d=0.2\)</span>, varying the sample size. The full and dashed lines give 95% and 50% confidence intervals for the sampling distribution, respectively.</figcaption>
 </figure>
 </div>
 </div>
@@ -594,12 +594,12 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="07-power_effect_cache/html/fig-rmanova_163db6eb8e73bb8603f0cc090ad95e17">
+<div class="cell" data-layout-align="center" data-hash="07-power_effect_cache/html/fig-rmanova_ec112a7931f32b64387c4a9cafc22817">
 <div class="cell-output-display">
 <div id="fig-rmanova" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-power_effect_files/figure-html/fig-rmanova-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7.8: Sample size requirement for a within-between interaction in a two by two (within-between) ANOVa with an effect size of <span class="math inline">\(\widehat{\eta}^2_p = 0.05\)</span> as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;7.8: Sample size requirement for a within-between interaction in a two by two (within-between) ANOVA with an effect size of <span class="math inline">\(\widehat{\eta}^2_p = 0.05\)</span> as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer.</figcaption>
 </figure>
 </div>
 </div>

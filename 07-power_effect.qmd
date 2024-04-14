@@ -288,7 +288,7 @@ Measures of effect size are estimated based on data, but unlike summary statisti
 #| echo: false
 #| cache: true
 #| label: fig-effectsizedispersion
-#| fig-cap: "Dispersion of estimated effect size for data with a true mean dispersion of $d=0.2$, for different sample size."
+#| fig-cap: "Dispersion of estimated effect size for Cohen's $d$, for data with a true mean dispersion of $d=0.2$, varying the sample size. The full and dashed lines give 95% and 50% confidence intervals for the sampling distribution, respectively."
 n <- seq(10, 250, by = 2)
 B <- 100L
 results <- matrix(nrow = B, ncol = length(n))
@@ -298,6 +298,11 @@ for(i in seq_along(n)){
    results[b,i] <- effectsize::cohens_d(rnorm(n[i]/2), rnorm(n[i]/2, 0.2))$Cohens_d
   }
 }
+qCohen95u <- ufs::qCohensd(p = 0.975, df = n-2, populationD = 0.2)
+qCohen50u <- ufs::qCohensd(p = 0.75, df = n-2, populationD = 0.2)
+qCohen95l <- ufs::qCohensd(p = 0.025, df = n-2, populationD = 0.2)
+qCohen50l <- ufs::qCohensd(p = 0.25, df = n-2, populationD = 0.2)
+
 colnames(results) <- paste0("n_", n)
 df_effects <- data.frame(results) |> 
   tidyr::pivot_longer(
@@ -310,6 +315,20 @@ ggplot(data = df_effects,
        aes(y = -effectsize, x = n)) +
   geom_point() +
   geom_hline(yintercept = c(0,0.2), col = c(2,"white")) + 
+  geom_line(data = data.frame(x = n, 
+                              y = qCohen95u),
+            mapping = aes(x = x, y = y), col = "gray90") +
+  geom_line(data = data.frame(x = n, 
+                              y = qCohen95l),
+            mapping = aes(x = x, y = y), col = "gray90") +   
+  geom_line(data = data.frame(x = n, 
+                              y = qCohen50u),
+            mapping = aes(x = x, y = y),
+            linetype = "dashed", col = "gray90") +
+  geom_line(data = data.frame(x = n, 
+                              y = qCohen50l),
+            mapping = aes(x = x, y = y),
+            linetype = "dashed", col = "gray90") +
   labs(y = "Cohen's d", x = "sample size") +
   theme_minimal()
 ```
@@ -664,7 +683,7 @@ knitr::include_graphics("figures/GPower.png")
 #| echo: false
 #| label: fig-rmanova
 #| fig-align: 'center'
-#| fig-cap: "Sample size requirement for a within-between interaction in a two by two (within-between) ANOVa with an effect size of $\\widehat{\\eta}^2_p = 0.05$ as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer."
+#| fig-cap: "Sample size requirement for a within-between interaction in a two by two (within-between) ANOVA with an effect size of $\\widehat{\\eta}^2_p = 0.05$ as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer."
 rho_seq <- seq(-0.5, 0.9, by = 0.01)
 samp90 <- sapply(rho_seq, function(rho){
 round(WebPower::wp.rmanova(type = 2, # interaction 

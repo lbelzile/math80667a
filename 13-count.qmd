@@ -162,28 +162,10 @@ mod_null <- glm(count ~ gnm::Symm(black, white),
 # Compare the two nested models using a likelihood ratio test
 anova(mod_null, mod_alt,  test = "LRT")
 # The saturated model need not be fitted - use deviance and residuals directly
-pchisq(deviance(mod_null), df = mod_null$df.residual, lower.tail = FALSE)
+pval <- pchisq(deviance(mod_null), df = mod_null$df.residual, lower.tail = FALSE)
 ```
 
 
-```{r}
-#| eval: true
-#| echo: false
-BM04_T2 <- BM04_T2 |>
-  dplyr::mutate(sym = gnm::Symm(black, white),
-                pred = predict(mod_null, type = "response"))
-
-knitr::kable(xtabs(count ~ black + white, data = BM04_T2))
-
-xtabs(pred ~ black + white, data = BM04_T2) |>
-  knitr::kable(booktabs = TRUE) |>
-  kableExtra::kable_styling() |>
-  kableExtra::cell_spec(c(1,9), bold = TRUE, background = 2)
-  kable(booktabs = T) %>%
-  kable_styling() %>%
-  row_spec(color.me, bold = T, color = "white", background = "red")
-
-```
 We could use Pearson's $\chi^2$ test too. In our example, the entries $E_{ij}$ for off-diagonal average counts entries $E_{01}$, $E_{12}$, $E_{02}$, etc., are obtained as the average of counts $E_{ij} = (O_{ij} + O_{ji})/2$ $(i\neq j)$, etc. The numeric value of the test statistic is `r round(sum(residuals(mod_alt, type = "pearson")^2),2)`, yielding a $p$-value less than $10^{-5}$. There is thus strong evidence of racial discrimination.
 
 
