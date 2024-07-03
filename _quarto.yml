@@ -31,19 +31,21 @@ book:
   date: today
   chapters:
   - index.qmd
-  - 01-introduction.qmd
-  - 02-hypothesis_testing.qmd
-  - 03-completely_randomized_trials.qmd
-  - 04-contrasts_multipletesting.qmd
-  - 05-interactions_multiway.qmd
-  - 06-blocking_ancova.qmd
-  - 07-power_effect.qmd
-  - 08-reproducibility_crisis.qmd
-  - 09-repeated.qmd
-  - 10-mixed.qmd
-  - 11-causal-inference.qmd
-  - 12-nonparametric.qmd
-  - 13-count.qmd
+  - introduction.qmd
+  - hypothesis_testing.qmd
+  - completely_randomized_trials.qmd
+  - contrasts_multipletesting.qmd
+  - twoway.qmd
+  - repeated.qmd
+  - multiway.qmd
+  - manova.qmd
+  - ancova.qmd
+  - power_effect.qmd
+  - reproducibility_crisis.qmd
+  - mixed.qmd
+  - causal-inference.qmd
+  - nonparametric.qmd
+  - count.qmd
   - references.qmd
   site-url: https://lbelzile.github.io/math80667a/
   repo-url: https://github.com/lbelzile/math80667a/

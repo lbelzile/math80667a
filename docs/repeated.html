@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Experimental design and statistical methods - 6&nbsp; Repeated measures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./multiway.html" rel="next">
+<link href="./twoway.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./repeated.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Repeated measures</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Experimental design and statistical methods</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./completely_randomized_trials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_multipletesting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./twoway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Repeated measures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multivariate analysis of variance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./power_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducibility_crisis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Replication crisis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Count data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#repeated-measures" id="toc-repeated-measures" class="nav-link active" data-scroll-target="#repeated-measures"><span class="header-section-number">6.1</span> Repeated measures</a>
+  <ul class="collapse">
+  <li><a href="#contrasts" id="toc-contrasts" class="nav-link" data-scroll-target="#contrasts"><span class="header-section-number">6.1.1</span> Contrasts</a></li>
+  <li><a href="#sphericity-assumption" id="toc-sphericity-assumption" class="nav-link" data-scroll-target="#sphericity-assumption"><span class="header-section-number">6.1.2</span> Sphericity assumption</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/repeated.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Repeated measures</span></h1>
+
+</header>
+
+<p>So far, all experiments we have considered can be classified as between-subject designs, meaning that each experimental unit was assigned to a single experimental (sub)-condition. In many instances, it may be possible to randomly assign multiple conditions to each experimental unit. For example, an individual coming to a lab to perform tasks in a virtual reality environment may be assigned to all treatments. There is an obvious benefit to doing so, as the participants can act as their own control group, leading to greater comparability among treatment conditions.</p>
+<p>For example, consider a study performed at Tech3Lab that looks at the reaction time for people texting or talking on a cellphone while walking. We may wish to determine whether disengagement is slower for people texting, yet we may also postulate that some elderly people have slower reflexes.</p>
+<p>By including multiple conditions, we can filter out the effect due to subject: this leads to increased precision of effect sizes and increased power (as we will see, hypothesis tests are based on within-subject variability). Together, this translates into the need to gather fewer observations or participants to detect a given effect in the population and thus experiments are cheaper to run.</p>
+<p>There are of course drawbacks to gathering repeated measures from individuals. Because subjects are confronted with multiple tasks, there may be carryover effects (when one task influences the response of the subsequent ones, for example becoming better as manipulations go on), period effects (fatigue, a decrease in acuity), and permanent changes in the subject condition after a treatment or attrition (loss of subjects over time).</p>
+<p>To minimize potential biases, there are multiple strategies one can use. Tasks are normally presented in random order among subjects to avoid confounding, or using a balanced crossover design and include the period and carryover effect in the statistical model via control variables so as to better isolate the treatment effect. The experimenter should also allow enough time between treatment conditions to reduce or eliminate period or carryover effects and plan tasks accordingly.</p>
+<p>If each subject is assigned to an experimental condition only once, one good way to do this is via <strong>counterbalancing</strong>. We proceed as follows: first, enumerate all possible orders of the condition and then assign participants as equally as possible between conditions. For example, with a single within-factor design with three conditions <span class="math inline">\(A, B, C\)</span>, we have six possible orderings (either <span class="math inline">\(ABC\)</span>, <span class="math inline">\(ACB\)</span>, <span class="math inline">\(BAC\)</span>, <span class="math inline">\(BCA\)</span>, <span class="math inline">\(CAB\)</span> or <span class="math inline">\(CBA\)</span>). Much like other forms of randomization, this helps us remove confounding effects and let’s us estimate what is the average effect of task ordering on the response.</p>
+<p>There are multiple approaches to handling repeated measures. The first option is to take averages over experimental condition per subject and treat them as additional blocking factors, but it may be necessary to adjust the resulting statistics. The second approach consists in fitting a multivariate model for the response and explicitly account for the correlation, otherwise the null distribution commonly used are off and so are the conclusions, as illustrated with the absurd comic displayed in <a href="causal-inference.html#fig-xkcd2569">Figure&nbsp;<span>13.1</span></a>.</p>
+<div class="cell" data-hash="repeated_cache/html/fig-xkcd2569_0a486335b04fbb9568e1683a32c98dcc">
+<div class="cell-output-display">
+<div id="fig-xkcd2569" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/xkcd2533-slope_hypothesis_testing.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;6.1: xkcd comic <a href="https://xkcd.com/2533/">2533 (Slope Hypothesis Testing) by Randall Munroe</a>. Alt text: What? I can’t hear– I said, are you sure–; CAN YOU PLEASE SPEAK–. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="repeated-measures" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="repeated-measures"><span class="header-section-number">6.1</span> Repeated measures</h2>
+<p>We introduce the concept of repeated measure and within-subject ANOVA with an example.</p>
+<div id="exm-happyfakes" class="theorem example">
+<p><span class="theorem-title"><strong>Example 6.1 (Happy fakes) </strong></span>We consider an experiment conducted in a graduate course at HEC, <em>Information Technologies and Neuroscience</em>, in which PhD students gathered electroencephalography (EEG) data. The project focused on human perception of deepfake image created by a generative adversarial network: Amirabdolahian and Ali-Adeeb (2021) expected the attitude towards real and computer generated image of people smiling to change.</p>
+<p>The response variable is the amplitude of a brain signal measured at 170 ms after the participant has been exposed to different faces. Repeated measures were collected on 9 participants given in the database <code>AA21</code>, who were expected to look at 120 faces. Not all participants completed the full trial, as can be checked by looking at the cross-tabs of the counts</p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-3_d7f093941bc0591f8a4ad9f77d441472">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(AA21, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span>stimulus <span class="sc">+</span> id, <span class="at">data =</span> AA21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        id
+stimulus  1  2  3  4  5  6  7  8  9 10 11 12
+    real 30 32 34 32 38 29 36 36 40 30 39 33
+    GAN1 32 31 40 33 38 29 39 31 39 28 35 34
+    GAN2 31 33 37 34 38 29 34 36 40 33 35 32</code></pre>
+</div>
+</div>
+<p>The experimental manipulation is encoded in the <code>stimuli</code>, with levels control (<code>real</code>) for real facial images, whereas the others were generated using a generative adversarial network (GAN) with be slightly smiling (<code>GAN1</code>) or extremely smiling (<code>GAN2</code>); the latter looks more fake. While the presentation order was randomized, the order of presentation of the faces within each type is recorded using the <code>epoch</code> variable: this allows us to measure the fatigue effect.</p>
+<p>Since our research question is whether images generated from generative adversarial networks trigger different reactions, we will be looking at pairwise differences with the control.</p>
+<div id="fig-GANfaces" class="cell quarto-layout-panel" data-hash="repeated_cache/html/fig-GANfaces_8cd2ae2d4010d1d1c1fc3cad0e22f95b">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-GANfaces-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/face_real.png" class="img-fluid figure-img" data-ref-parent="fig-GANfaces"></p>
+<figcaption class="figure-caption">(a) real</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-GANfaces-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/face_GAN_S.png" class="img-fluid figure-img" data-ref-parent="fig-GANfaces"></p>
+<figcaption class="figure-caption">(b) slightly modified</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-GANfaces-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/face_GAN_E.png" class="img-fluid figure-img" data-ref-parent="fig-GANfaces"></p>
+<figcaption class="figure-caption">(c) extremely modified</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.2: Examples of faces presented in Amirabdolahian and Ali-Adeeb (2021).</figcaption><p></p>
+</figure>
+</div>
+<p>We could first grouping the data and compute the average for each experimental condition <code>stimulus</code> per participant and set <code>id</code> as blocking factor. The analysis of variance table obtained from <code>aov</code> would be correct, but would fail to account for correlation.</p>
+<p>The one-way analysis of variance with <span class="math inline">\(n_s\)</span> subjects, each of which was exposed to the <span class="math inline">\(n_a\)</span> experimental conditions, can be written <span class="math display">\[\begin{align*}\underset{\text{response}\vphantom{l}}{Y_{ij}} = \underset{\text{global mean}}{\mu_{\vphantom{j}}} + \underset{\text{mean difference}}{\alpha_j} + \underset{\text{subject difference}}{s_{i\vphantom{j}}} + \underset{\text{error}\vphantom{l}}{\varepsilon_{ij}}
+\end{align*}\]</span></p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-5_8182237516db47a666bd5d76cddc1461">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute mean for each subject + </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># experimental condition subgroup</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>AA21_m <span class="ot">&lt;-</span> AA21 <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id, stimulus) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">latency =</span> <span class="fu">mean</span>(latency))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Use aov for balanced sample</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fixedmod <span class="ot">&lt;-</span> <span class="fu">aov</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  latency <span class="sc">~</span> stimulus <span class="sc">+</span> <span class="fu">Error</span>(id<span class="sc">/</span>stimulus), </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> AA21_m)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print ANOVA table</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fixedmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: id
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+Residuals 11  187.8   17.07               
+
+Error: id:stimulus
+          Df Sum Sq Mean Sq F value Pr(&gt;F)
+stimulus   2   1.94  0.9704   0.496  0.615
+Residuals 22  43.03  1.9557               </code></pre>
+</div>
+</div>
+<p>Since the design is balanced after averaging, we can use <code>aov</code> in <strong>R</strong>: we need to specify the subject identifier within <code>Error</code> term. This approach has a drawback, as variance components can be negative if the variability due to subject is negligible. While <code>aov</code> is fast, it only works for simple balanced designs.</p>
+</div>
+<section id="contrasts" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="contrasts"><span class="header-section-number">6.1.1</span> Contrasts</h3>
+<p>With balanced data, the estimated marginal means coincide with the row averages. If we have a single replication or the average for each subject/condition, we could create a new column with the contrast and then fit a model with an intercept-only (global mean) to check whether the latter is zero. With 12 participants, we should thus expect our test statistic to have 11 degrees of freedom, since one unit is spent on estimating the mean parameter and we have 12 participants.</p>
+<p>Unfortunately, the <code>emmeans</code> package analysis for object fitted using <code>aov</code> will be incorrect: this can be seen by passing a contrast vector and inspecting the degrees of freedom. The <code>afex</code> package includes functionalities that are tailored for within-subject and between-subjects and has an interface with <code>emmeans</code>.</p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-6_0270ea610b194e978306b02e060c8343">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>afexmod <span class="ot">&lt;-</span> afex<span class="sc">::</span><span class="fu">aov_ez</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"id"</span>,           <span class="co"># subject id</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv =</span> <span class="st">"latency"</span>,      <span class="co"># response variable</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">within =</span> <span class="st">"stimulus"</span>, <span class="co"># within-subject factor</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> AA21,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun_aggregate =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>afex</code> package has different functions for computing the within-subjects design and the <code>aov_ez</code> specification, which allow people to list within and between-subjects factor separately with subject identifiers may be easier to understand. It also has an argument, <code>fun_aggregate</code>, to automatically average replications.</p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-8_e6248376ce46460e24946d0a5f015276">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up contrast vector</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cont_vec <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"real vs GAN"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Correct output</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>afexmod <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">spec =</span> <span class="st">"stimulus"</span>, </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">contr =</span> cont_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+ stimulus emmean    SE df lower.CL upper.CL
+ real      -10.8 0.942 11    -12.8    -8.70
+ GAN1      -10.8 0.651 11    -12.3    -9.40
+ GAN2      -10.3 0.662 11    -11.8    -8.85
+
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate    SE df t.ratio p.value
+ real vs GAN   -0.202 0.552 11  -0.366  0.7213</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incorrect output - </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note the wrong degrees of freedom</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>fixedmod <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">spec =</span> <span class="st">"stimulus"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">contr =</span> cont_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Note: re-fitting model with sum-to-zero contrasts</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+ stimulus emmean    SE   df lower.CL upper.CL
+ real      -10.8 0.763 16.2    -12.4    -9.15
+ GAN1      -10.8 0.763 16.2    -12.4    -9.21
+ GAN2      -10.3 0.763 16.2    -11.9    -8.69
+
+Warning: EMMs are biased unless design is perfectly balanced 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast    estimate    SE df t.ratio p.value
+ real vs GAN   -0.202 0.494 22  -0.409  0.6867</code></pre>
+</div>
+</div>
+</section>
+<section id="sphericity-assumption" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="sphericity-assumption"><span class="header-section-number">6.1.2</span> Sphericity assumption</h3>
+<p>The validity of the <span class="math inline">\(F\)</span> statistic null distribution relies on the model having the correct structure.</p>
+<p>In repeated-measure analysis of variance, we assume again that each measurement has the same variance. We equally require the correlation between measurements of the same subject to be the same, an assumption that corresponds to the so-called compound symmetry model.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>What if the within-subject measurements have unequal variance or the correlation between those responses differs?</p>
+<p>Since we care only about differences in treatment, can get away with a weaker assumption than compound symmetry (equicorrelation) by relying instead on <em>sphericity</em>, which holds if the variance of the difference between treatment is constant. Sphericity is not a relevant concept when there is only two measurements (as there is a single correlation); we could check this by comparing the fit of a model with an unstructured covariance (difference variances for each and correlations for each pair of variable)</p>
+<p>The most popular approach to handling correlation in tests is a two-stage approach: first, check for sphericity (using, e.g., Mauchly’s test of sphericity). If the null hypothesis of sphericity is rejected, one can use a correction for the <span class="math inline">\(F\)</span> statistic by modifying the parameters of the Fisher <span class="math inline">\(\mathsf{F}\)</span> null distribution used as benchmark.</p>
+<p>An idea due to Box is to correct the degrees of freedom of the <span class="math inline">\(\mathsf{F}(\nu_1, \nu_2)\)</span> distribution by multiplying them by a common factor <span class="math inline">\(\epsilon&lt;1\)</span> and use <span class="math inline">\(\mathsf{F}(\epsilon\nu_1, \epsilon\nu_2)\)</span> as null distribution instead to benchmark our statistics and determine how extreme our observed one is. Since the <span class="math inline">\(F\)</span> statistic is a ratio of variances, the <span class="math inline">\(\epsilon\)</span> terms would cancel. Using the scaled <span class="math inline">\(\mathsf{F}\)</span> distribution leads to larger <span class="math inline">\(p\)</span>-values, thus accounting for the correlation.</p>
+<p>There are three widely used corrections: Greenhouse–Geisser, Huynh–Feldt and Box correction, which divides by <span class="math inline">\(\nu_1\)</span> both degrees of freedom and gives a very conservative option. The Huynh–Feldt method is reported to be more powerful so should be preferred, but the estimated value of <span class="math inline">\(\epsilon\)</span> can be larger than 1.</p>
+<p>Using the <code>afex</code> functions, we get the result for Mauchly’s test of sphericity and the <span class="math inline">\(p\)</span> values from using either correction method</p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-9_403b65ea03dfcc32ef7a06a7dc9a0aa6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(afexmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
+
+            Sum Sq num Df Error SS den Df  F value    Pr(&gt;F)    
+(Intercept) 4073.1      1  187.814     11 238.5554 8.373e-09 ***
+stimulus       1.9      2   43.026     22   0.4962    0.6155    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Mauchly Tests for Sphericity
+
+         Test statistic p-value
+stimulus        0.67814 0.14341
+
+
+Greenhouse-Geisser and Huynh-Feldt Corrections
+ for Departure from Sphericity
+
+          GG eps Pr(&gt;F[GG])
+stimulus 0.75651     0.5667
+
+            HF eps Pr(&gt;F[HF])
+stimulus 0.8514944  0.5872648</code></pre>
+</div>
+</div>
+<div id="exm-waiting" class="theorem example">
+<p><span class="theorem-title"><strong>Example 6.2 (Enjoyment from waiting) </strong></span>We consider Experiment 3 from <span class="citation" data-cites="Hatano:2022">Hatano et al. (<a href="references.html#ref-Hatano:2022" role="doc-biblioref">2022</a>)</span>. The data consist in a two by two mixed analysis of variance. The authors studied engagement and enjoyment from waiting tasks, and “potential effects of time interval on the underestimation of task motivation by manipulating the time for the waiting task”. The waiting time was randomly assigned to either short (3 minutes) or long (20 minutes) with equal probability, but participants were either told that there was a 70% chance of being assigned to the short session, or 30% chance. We first load the data from the package and inspect the content.</p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-10_afa877061d57413d946fbd1c635e8554">
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [126 × 4] (S3: tbl_df/tbl/data.frame)
+ $ id        : Factor w/ 63 levels "1","2","3","4",..: 1 1 2 2 3 3 4 4 5 5 ...
+ $ waiting   : Factor w/ 2 levels "long","short": 2 2 1 1 1 1 2 2 1 1 ...
+ $ ratingtype: Factor w/ 2 levels "experience","prediction": 2 1 2 1 2 1 2 1 2 1 ...
+ $ imscore   : num [1:126] 2.33 3.33 1.25 1.92 1 ...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>waiting
+ long short 
+   32    31 </code></pre>
+</div>
+</div>
+<p>From this, we can see that there each student is assigned to a single waiting time, but that they have both rating types. Since there are 63 students, the study is unbalanced but by a single person; this may be due to exclusion criteria. We use the <code>afex</code> package (analysis of factorial design) with the <code>aov_ez</code> function to fit the model in <strong>R</strong>. We need to specify the identifier of the subjects (<code>id</code>), the response variable (<code>dv</code>) and both between- (<code>between</code>) and within-subject (<code>within</code>) factors. Each of those names must be quoted.</p>
+<div class="cell" data-hash="repeated_cache/html/unnamed-chunk-11_9607d90830334e966724b69821358a26">
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type 3 tests)
+
+Response: imscore
+                   num Df den Df     MSE       F      ges    Pr(&gt;F)    
+waiting                 1     61 2.48926 11.2551 0.126246   0.00137 ** 
+ratingtype              1     61 0.68953 38.4330 0.120236 5.388e-08 ***
+waiting:ratingtype      1     61 0.68953  0.0819 0.000291   0.77575    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The output includes the <span class="math inline">\(F\)</span>-tests for the two main effects and the interaction and global effect sizes <span class="math inline">\(\widehat{\eta}^2\)</span> (<code>ges</code>). There is no output for tests of sphericity, since there are only two measurements per person and thus a single mean different within-subject (so the test to check equality doesn’t make sense with a single number). We could however compare variance between groups using Levene’s test. Note that the degrees of freedom for the denominator of the test are based on the number of participants, here 63.</p>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Hatano:2022" class="csl-entry" role="listitem">
+Hatano, A., C. Ogulmus, H. Shigemasu, and K. Murayama. 2022. <span>“Thinking about Thinking: People Underestimate How Enjoyable and Engaging Just Waiting Is.”</span> <em>Journal of Experimental Psychology: General</em> 151 (12): 3213–29. <a href="https://doi.org/10.1037/xge0001255">https://doi.org/10.1037/xge0001255</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Note that, with two measurements, there is a single correlation parameter to estimate and this assumption is irrelevant.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./twoway.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./multiway.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -2,66 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lbelzile.github.io/math80667a/index.html</loc>
-    <lastmod>2024-04-14T15:33:52.949Z</lastmod>
+    <lastmod>2024-07-03T15:55:22.367Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/01-introduction.html</loc>
-    <lastmod>2024-04-14T15:33:52.973Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/introduction.html</loc>
+    <lastmod>2024-07-03T15:55:22.391Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/02-hypothesis_testing.html</loc>
-    <lastmod>2024-04-14T15:33:53.017Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/hypothesis_testing.html</loc>
+    <lastmod>2024-07-03T15:55:22.435Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/03-completely_randomized_trials.html</loc>
-    <lastmod>2024-04-14T15:33:53.041Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/completely_randomized_trials.html</loc>
+    <lastmod>2024-07-03T15:55:22.487Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/04-contrasts_multipletesting.html</loc>
-    <lastmod>2024-04-14T15:33:53.081Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/contrasts_multipletesting.html</loc>
+    <lastmod>2024-07-03T15:55:22.519Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/05-interactions_multiway.html</loc>
-    <lastmod>2024-04-14T15:33:53.101Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/twoway.html</loc>
+    <lastmod>2024-07-03T15:55:22.571Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/06-blocking_ancova.html</loc>
-    <lastmod>2024-04-14T15:33:53.129Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/repeated.html</loc>
+    <lastmod>2024-07-03T15:55:22.591Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/07-power_effect.html</loc>
-    <lastmod>2024-04-14T15:33:53.157Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/multiway.html</loc>
+    <lastmod>2024-07-03T15:55:22.607Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/08-reproducibility_crisis.html</loc>
-    <lastmod>2024-04-14T15:33:53.173Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/manova.html</loc>
+    <lastmod>2024-07-03T15:55:22.627Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/09-repeated.html</loc>
-    <lastmod>2024-04-14T15:33:53.201Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/ancova.html</loc>
+    <lastmod>2024-07-03T15:55:22.651Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/10-mixed.html</loc>
-    <lastmod>2024-04-14T15:33:53.225Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/power_effect.html</loc>
+    <lastmod>2024-07-03T15:55:22.687Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/11-causal-inference.html</loc>
-    <lastmod>2024-04-14T15:33:53.253Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/reproducibility_crisis.html</loc>
+    <lastmod>2024-07-03T15:55:22.703Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/12-nonparametric.html</loc>
-    <lastmod>2024-04-14T15:33:53.273Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/mixed.html</loc>
+    <lastmod>2024-07-03T15:55:22.727Z</lastmod>
   </url>
   <url>
-    <loc>https://lbelzile.github.io/math80667a/13-count.html</loc>
-    <lastmod>2024-04-14T15:33:53.289Z</lastmod>
+    <loc>https://lbelzile.github.io/math80667a/causal-inference.html</loc>
+    <lastmod>2024-07-03T15:55:22.767Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lbelzile.github.io/math80667a/nonparametric.html</loc>
+    <lastmod>2024-07-03T15:55:22.775Z</lastmod>
+  </url>
+  <url>
+    <loc>https://lbelzile.github.io/math80667a/count.html</loc>
+    <lastmod>2024-07-03T15:55:22.803Z</lastmod>
   </url>
   <url>
     <loc>https://lbelzile.github.io/math80667a/references.html</loc>
-    <lastmod>2024-04-14T15:33:53.301Z</lastmod>
+    <lastmod>2024-07-03T15:55:22.815Z</lastmod>
   </url>
   <url>
     <loc>https://lbelzile.github.io/math80667a/MATH80667A-EDSM.pdf</loc>
-    <lastmod>2024-04-14T15:33:52.025Z</lastmod>
+    <lastmod>2024-07-03T15:55:21.395Z</lastmod>
   </url>
 </urlset>

@@ -1,0 +1,159 @@
+# Multiway factorial designs
+
+
+```{r}
+#| label: setup
+#| file: "_common.R"
+#| include: true
+#| message: false
+```
+
+This chapter focuses on models with a mix of within-subject and between-subject factors. As the number of factor increases, so does the number of categories: this explains why $2^p$ designs, where each factor has two options, are typically employed. 
+
+Any multiway ANOVA with two or more factor can be collapsed into a single one-way ANOVA: this is notably useful when there is a control group which is not related to the factor levels, as no manipulation takes place. The use of contrasts becomes critical since we can write any test for main effects, interactions using the latter through weighting.
+
+:::{#exm-LKUK24 name="Perceptions of cultural appropriation by ideology"}
+
+We consider a three-way ANOVA from @Lin.Kim.Uduehi.Keinan:2024. Their Study 4 focused on cultural appropriation for soul food recipe cookbook from Chef Dax, who was either black (or not), manipulating the description of the way he obtained the recipes (by peeking without permission in kitchens, by asking permission or no mention for control). Authors postulated that the perception of appropriation would vary by political ideology (liberal or conservative). The study results in a 3 by 2 by 2 three-way between-subject ANOVA.
+
+For the $K$-way ANOVA, we always start with estimating the full model with all $K$-way interaction (provided there are enough data to estimate the latter, which implies there are repetitions). If the latter is significant, we can fix one or more factor levels and compare the others.
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-anova-LKUK24
+#| tbl-cap: "Analysis of variance table (type II decomposition) for the data from Study 4 of Lin et al. (2024)." 
+options(contrasts = c("contr.sum", "contr.poly"))
+data(LKUK24_S4, package = "hecedsm")
+mod <- lm(appropriation ~ politideo * chefdax * brandaction,
+   data = LKUK24_S4)
+options(knitr.kable.NA = '')
+broom::tidy(car::Anova(mod, type = 2)) |>
+  dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  knitr::kable(digits = 2, 
+               col.names = c("term", "sum of squares","df","stat","p-value"),
+               booktabs = TRUE, 
+               linesep = "")
+```
+
+If we consider @tbl-anova-LKUK24, we find that there is no three-way interaction and, omitting the latter and focusing on lower-level, a single two-way interaction between political ideology and the race of Chef Dax. We cannot interpret the $p$-value for the main effect of `brandaction`, but we could look at the marginal means.
+
+Based on the data, we will collapse data to a one-way ANOVA comparing the three levels of `brandaction` and a 2 by 2 two-way ANOVA for the other two factors. The results are obtained by averaging over the missing factor.
+
+We are interested in comparing the perception between the race of Chef Dax (black or not, as Southern Soul food cooking is more likely to be associated with cultural appropriation is Chef Dax is not black. We proceed with `emmeans` by computing the marginal means separately for each of the four subcategories, but compare the race of Chef Dax separately for liberals and conservatives due to the presence of the interaction.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+data(LKUK24_S4, package = "hecedsm")
+library(emmeans)
+mod <- lm(appropriation ~ politideo * chefdax * brandaction,
+   data = LKUK24_S4)
+# Marginal means for political ideology/Chef Dax
+emm_racebypolit <- emmeans(mod, specs = "chefdax", by = "politideo")
+emm_racebypolit |> pairs() #shortcut for contrast("pairwise")
+```
+We see that the liberals are much more likely to view Chef Dax cookbook as an instance of cultural appropriation if he is not black; there is limited evidence of any difference between conservatives and liberal when Chef Dax is black. Both differences are statistically significative, but the differences (and thus evidence of an effect) is much stronger for left-leaning respondents.
+
+We can look next at the brand action: we expect participants will view peeking less favorably than if Chef Dax asked for permission to publish the recipes. It's tricky to know the effect of the control, as we are not bringing the point to the attention of participants in this instance.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+# Marginal mean for brandaction
+emm_brand <- emmeans(mod, specs = c("brandaction")) 
+emm_brand
+# Joint test for the main effect of brandaction
+emm_brand |> pairs() |> joint_tests()
+```
+
+A joint $F$-test, obtained by collapsing everything to a one-way ANOVA, shows that there are indeed differences. However, note that the averages of the three actions are much smaller than for race.
+
+:::
+
+
+:::{ #exm-visualacuity}
+
+## Visual acuity
+
+We consider a model with both within-subject and between-subject factors. Data for a study on visual acuity of participants. The data represent the number of words correctly detected at different font size; interest is in effect of illusory contraction on detection.  The mixed analysis of variance includes the experimental factors `adaptation` (2 levels, within), `fontsize` (4 levels, within), `position` (5 levels, within) and visual  `acuity` (2 levels, between). There are a total of 1760 measurements for 44 participants in `LBJ17_S1A`, balanced.
+The within-subject factors give a total of 40 measurements ($2 \times 4 \times 5$) per participant; all of these factors are crossed and we can estimate interactions for them. The subjects are nested within visual acuity groups, The participants were dichotomized in two groups based on their visual acuity, obtained from preliminary checks, using a median split.
+
+To fit the model, we rely on the `aov_ez` function from `afex`. By default, the latter includes all interactions.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+LBJ_mod <- afex::aov_ez(
+  id = "id",     # subject id
+  dv = "nerror", # response
+  between = "acuity",
+  within = c("adaptation",
+             "fontsize", 
+             "position"),
+  data = hecedsm::LBJ17_S1A)
+anova_tbl <- anova(LBJ_mod,  # model
+      correction = "none", # no correction for sphericity
+      es = "pes") 
+#partial eta-square for effect sizes (es)
+```
+
+```{r}
+#| label: tbl-anova-fourway
+#| tbl-cap: "Analysis of variance for the four-way model with partial effect sizes (partial eta-square)"
+#| echo: false
+#| eval: true
+anovatab <- data.frame(anova_tbl[,c(1,2,4,5, 6)])
+anovatab[,5] <- format.pval(anova_tbl[,6], eps = 1e-3, digits = 1)
+knitr::kable(anovatab, 
+             digits = c(0,0,1,2,2,0), 
+             booktabs = TRUE, 
+             col.names = c("df1","df2","F","pes","p-value")) |>
+kableExtra::kable_styling()
+```
+
+This is the most complicated model we tested so far: there are four experimental factor being manipulated at once, and all interactions of order two, three and four are included!
+
+The fourth order interaction isn't statistically significant: this means that we can legitimately marginalize over and look at each of the four three-way ANOVA designs in turn. We can also see that the third order interaction `adaptation:fontsize:position` and `acuity:adaptation:position ` are not really meaningful. 
+
+The following paragraph is technical and can be skipped. One difficult bit with designs including both within-subject and between-subject factors is the degrees of freedom and the correct sum of square terms to use to calculate the $F$ statistics for each hypothesis of interest. The correct setup is to use the next sum of square (and the associated degrees of freedom) from this. For any main effect or interaction, we count the number of instances of this particular (e.g., 10 for the interaction between position and adaptation). We subtract the number of mean parameter used to estimate means and differences in mean (1 global mean, 4 means for position, 1 for adaptation), which gives $4=10-6$ degrees of freedom. Next, this term is compared to the mean square which contains only subject (here via acuity levels, since subjects are nested within acuity) and the corresponding variables; the correct mean square is for `acuity:adaptation:position`. In the balanced design setting, this can be formalized using Hasse diagram [@Oehlert:2010]. 
+
+We can produce an interaction plot to see what comes out: since we can't draw in four dimensions, we map visual acuity and adaptation level to panels with different colours for the position. The figure looks different from the paper, seemingly because their $y$-axis is flipped.
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-LBJ-interactionplot
+#| fig-cap: "Interaction plot for visual acuity levels."
+# Quick and dirty ggplot
+afex::afex_plot(object = LBJ_mod, 
+          x = "fontsize", 
+          trace = "position",
+          panel = c("acuity","adaptation"),
+          mapping = c("color", "linetype"), 
+          error = "none") +
+    theme_classic() +
+    theme(legend.position = "bottom") +
+    labs(x = "font size",
+         subtitle = "number of correct words",
+         y = "")
+# Seems flipped relative to the paper
+```
+
+:::
+
+
+:::{.callout-important}
+
+## **Summary**
+
+* A multiway analysis of variance can be treated as a one-way analysis of variance by collapsing categories; however, only specific contrasts will be of interest.
+* The number of observations increases quickly with the dimension as we increase the number of factors considered.
+
+
+:::

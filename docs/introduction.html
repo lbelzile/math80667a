@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Experimental design and statistical methods - 1&nbsp; Introduction</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./hypothesis_testing.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Experimental design and statistical methods</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./completely_randomized_trials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./contrasts_multipletesting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./twoway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Repeated measures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multivariate analysis of variance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./power_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproducibility_crisis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Replication crisis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mixed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Introduction to mixed models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causal-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Causal inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Count data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#study-type" id="toc-study-type" class="nav-link active" data-scroll-target="#study-type"><span class="header-section-number">1.1</span> Study type</a></li>
+  <li><a href="#terminology" id="toc-terminology" class="nav-link" data-scroll-target="#terminology"><span class="header-section-number">1.2</span> Terminology</a></li>
+  <li><a href="#review-of-basic-concepts" id="toc-review-of-basic-concepts" class="nav-link" data-scroll-target="#review-of-basic-concepts"><span class="header-section-number">1.3</span> Review of basic concepts</a>
+  <ul class="collapse">
+  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">1.3.1</span> Variables</a></li>
+  <li><a href="#population-sample" id="toc-population-sample" class="nav-link" data-scroll-target="#population-sample"><span class="header-section-number">1.3.2</span> Population and samples</a></li>
+  <li><a href="#sampling" id="toc-sampling" class="nav-link" data-scroll-target="#sampling"><span class="header-section-number">1.3.3</span> Sampling</a></li>
+  </ul></li>
+  <li><a href="#examples-of-experimental-designs" id="toc-examples-of-experimental-designs" class="nav-link" data-scroll-target="#examples-of-experimental-designs"><span class="header-section-number">1.4</span> Examples of experimental designs</a></li>
+  <li><a href="#requirements-for-good-experiments" id="toc-requirements-for-good-experiments" class="nav-link" data-scroll-target="#requirements-for-good-experiments"><span class="header-section-number">1.5</span> Requirements for good experiments</a>
+  <ul class="collapse">
+  <li><a href="#absence-of-systematic-error" id="toc-absence-of-systematic-error" class="nav-link" data-scroll-target="#absence-of-systematic-error"><span class="header-section-number">1.5.1</span> Absence of systematic error</a></li>
+  <li><a href="#variability" id="toc-variability" class="nav-link" data-scroll-target="#variability"><span class="header-section-number">1.5.2</span> Variability</a></li>
+  <li><a href="#generalizability" id="toc-generalizability" class="nav-link" data-scroll-target="#generalizability"><span class="header-section-number">1.5.3</span> Generalizability</a></li>
+  <li><a href="#simplicity" id="toc-simplicity" class="nav-link" data-scroll-target="#simplicity"><span class="header-section-number">1.5.4</span> Simplicity</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/introduction.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header">
+<h1 class="title display-7"><span id="introduction" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
+
+</header>
+
+<p>The advancement of science is built on our ability to study and assess research hypotheses. This chapter covers the basic concepts of experiments, starting with vocabulary associated with the field. Emphasis is placed on the difference between experiments and observations.</p>
+<p>This course covers experimental designs. In an experiment, the researcher manipulates one or more features (say the complexity of a text the person must read, or the type of advertisement campaign displayed, etc.) to study their impact. In general, however <span class="citation" data-cites="Cox:1958">(<a href="references.html#ref-Cox:1958" role="doc-biblioref">Cox 1958</a>)</span></p>
+<blockquote class="blockquote">
+<p>effects under investigation tend to be masked by fluctuations outside the experimenter’s control.</p>
+</blockquote>
+<p>The purpose of experiments is to arrange data collection so as to be capable of disentangling the differences due to treatment from those due to the (often large) intrinsic variation of the measurements. We typically expect differences between treatments (and thus the effect) to be <em>comparatively stable</em> relative to the measurement variation.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Learning objectives</strong>:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Learning the terminology associated to experiments.</li>
+<li>Assessing the generalizability of a study based on the consideration of the sample characteristics, sampling scheme and population.</li>
+<li>Distinguishing between observational and experimental studies.</li>
+<li>Understanding the rationale behind the requirements for good experimental studies.</li>
+</ul>
+</div>
+</div>
+<section id="study-type" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="study-type"><span class="header-section-number">1.1</span> Study type</h2>
+<p>There are two main categories of studies: observational and experimental. The main difference between the two is treatment assignment. In observational studies, a feature or potential cause is measured, but not assigned by the experimenter. By contrast, the treatment assignment mechanism is fully determined by the experimenter in the latter case.</p>
+<p>For example, an economist studying the impact of interest rates on the price of housing can only look at historical records of sales. Similarly, surveys studying the labour market are also observational: people cannot influence the type of job performed by employees or their social benefits to see what could have happened. Observational studies can lead to detection of association, but only an experiment in which the researcher controls the allocation mechanism through randomization can lead to <em>directly</em> establish existence of a causal relationship. Because everything else is the same in a well controlled experiment, any treatment effect should be in principle caused by the experimental manipulation.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="cell" data-hash="introduction_cache/html/fig-openintrograph_23131edfbebfc24995d854cbe2a13ab4">
+<div class="cell-output-display">
+<div id="fig-openintrograph" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/random_sample_assignment.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.1: Two by two classification matrix for experiments based on sampling and study type. Source: Mine Çetinkaya-Rundel and OpenIntro, distributed under the <a href="https://creativecommons.org/licenses/by-sa/3.0/us/">CC BY-SA license</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-openintrograph">Figure&nbsp;<span>1.1</span></a> summarizes the two preceding sections. Random allocation of observational units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations.</p>
+</section>
+<section id="terminology" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="terminology"><span class="header-section-number">1.2</span> Terminology</h2>
+<p>In its simplest form, an <strong>experimental design</strong> is a comparison of two or more treatments (experimental conditions):</p>
+<ul>
+<li>The subjects (or <strong>experimental units</strong>) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.</li>
+<li>The <strong>observational unit</strong> is the smallest level (time point, individual) at which measurement are recorded.</li>
+<li>Explanatories (independent variables) are variables that impact the response. They can be continuous (dose) or categorical variables; in the latter case, they are termed <strong>factors</strong>.</li>
+<li>The <strong>experimental treatments</strong> or conditions are <em>manipulated and controlled</em> by the researcher. Oftentimes, there is a <strong>control</strong> or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).</li>
+<li>After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject.</li>
+<li>Observed differences in the outcome variable between the experimental conditions (treatments) are called treatment effects.</li>
+</ul>
+<div id="exm-experimentdefinitions" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.1 (Pedagogical experience) </strong></span>Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observational units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom).</p>
+<!--
+Potential confounders for this experiment include the strength of individuals, which reflects their prior exposure to the topic, knowledge, maturity, etc. This could be measured using a preliminary exam before assignment of students to class groups is completed. Additional factors worth controlling for include timing of the classroom (morning, afternoon, evening classes) and instructors.
+-->
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The marketing department of a company wants to know the value of its brand by determining how much more customers are willing to pay for their product relative to the cheaper generic product offered by the store. Economic theory suggests a substitution effect: while customers may prefer the brand product, they will switch to the generic version if the price tag is too high. To check this theory, one could design an experiment.</p>
+<p>As a researcher, how would you conduct this study? Identify a specific product. For the latter, define</p>
+<ul>
+<li>an adequate response variable</li>
+<li>the experimental and observational units</li>
+<li>potential blocking factors</li>
+</ul>
+</div>
+</div>
+<p>The main reason experiments should be preferred to collection of observational data is that they allow us, if they are conducted properly, to draw <strong>causal conclusions</strong> about the phenomenon of interest. If we take a random sample from the population of interest, split it randomly and manipulate only certain aspects, then all differences between groups must be due to those changes.</p>
+<p>As <span class="citation" data-cites="Hariton.Locascio:2018">Hariton and Locascio (<a href="references.html#ref-Hariton.Locascio:2018" role="doc-biblioref">2018</a>)</span> put it:</p>
+<blockquote class="blockquote">
+<p>Randomised controlled trials (RCTs) are the reference standard for studying causal relationships between interventions and outcomes as randomisation eliminates much of the bias inherent with other study designs</p>
+</blockquote>
+<div id="quasiexperiment" class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Quasi experiments</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sometimes, it is impossible or unethical to conduct an experiment. This seemingly precludes study many social phenomena, such as the effect on women and infantile mortality of strict bans on abortions. When changes in legislation occur (such as the Supreme court overturning Roe and Wade), this offers a window to compare neighbouring states.</p>
+<p>Canadian economist David Card was co-awarded the 2021 Nobel Memorial Prize in Economic Sciences for his work in experimental economics. One of his most cited paper is <span class="citation" data-cites="Card.Krueger:1994">Card and Krueger (<a href="references.html#ref-Card.Krueger:1994" role="doc-biblioref">1994</a>)</span>, a study that looked at the impact of an increase in minimum wage on employment figures. <span class="citation" data-cites="Card.Krueger:1994">Card and Krueger (<a href="references.html#ref-Card.Krueger:1994" role="doc-biblioref">1994</a>)</span> used a planned increase of the minimum wage of $0.80 USD in New Jersey to make comparisons with neighbouring Eastern Pennsylvania counties by studying 410 fast food outlets. The authors found no evidence of a negative impact on employment of this hike.</p>
+</div>
+</div>
+<div id="internalexternalvalidity" class="callout callout-style-default callout-important callout-titled" name="Point of terminology">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Point of terminology: internal and external validity</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A study from which we can study causal relationships is said to have <strong>internal validity</strong>. By design, good experiments should have this desirable property because the random allocation of treatment guarantees, if randomization is well performed, that the effect of interest is causal. There are many other aspects, not covered in the class, that can threaten internal validity.</p>
+<p><strong>External validity</strong> refers directly to generalizability of the conclusions of a study: <a href="#fig-openintrograph">Figure&nbsp;<span>1.1</span></a> shows that external validity is directly related to random sampling from the population</p>
+</div>
+</div>
+<div id="internalexternalvalidity" class="callout callout-style-default callout-important callout-titled" name="Point of terminology">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Point of terminology: between-subjects and within-subjects designs</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In between-subjects designs, subjects are randomly assigned to only one of the different experimental conditions. On the contrary, participants receive many or all of the experimental treatments in a within-subjects design, the order of assignment of the conditions typically being random.</p>
+<p>While within-subject designs allow for a better use of available ressources (it is cheaper to have fewer participants perform multiple tasks), observations from within-design are correlated and more subject to missingness and learning effects, all of which require special statistical treatment.</p>
+</div>
+</div>
+</section>
+<section id="review-of-basic-concepts" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="review-of-basic-concepts"><span class="header-section-number">1.3</span> Review of basic concepts</h2>
+<section id="variables" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="variables"><span class="header-section-number">1.3.1</span> Variables</h3>
+<p>The choice of statistical model and test depends on the underlying type of the data collected. There are many choices: quantitative (discrete or continuous) if the variables are numeric, or qualitative (binary, nominal, ordinal) if they can be described using an adjective; I prefer the term categorical, which is more evocative. The choice of graphical representation for data is contingent on variable type. Specifically,</p>
+<ul>
+<li>a <strong>variable</strong> represents a characteristic of the population, for example the sex of an individual, the price of an item, etc.</li>
+<li>an <strong>observation</strong> is a set of measures (variables) collected under identical conditions for an individual or at a given time.</li>
+</ul>
+<p>Most of the models we will deal with are so-called regression models, in which the mean of a quantitative variable is a function of other variables, termed explanatories. There are two types of numerical variables</p>
+<ul>
+<li>a discrete variable takes a countable number of values, prime examples being binary variables or count variables.</li>
+<li>a continuous variable can take (in theory) an infinite possible number of values, even when measurements are rounded or measured with a limited precision (time, width, mass). In many case, we could also consider discrete variables as continuous if they take enough values (e.g., money).</li>
+</ul>
+<p>Categorical variables take only a finite of values. They are regrouped in two groups, nominal if there is no ordering between levels (sex, colour, country of origin) or ordinal if they are ordered (Likert scale, salary scale) and this ordering should be reflected in graphs or tables. We will bundle every categorical variable using arbitrary encoding for the levels: for modelling, these variables taking <span class="math inline">\(K\)</span> possible values (or levels) must be transformed into a set of <span class="math inline">\(K-1\)</span> binary variables <span class="math inline">\(T_1, \ldots, T_K\)</span>, each of which corresponds to the logical group <span class="math inline">\(k\)</span> (yes = 1, no = 0), the omitted level corresponding to a baseline when all of the <span class="math inline">\(K-1\)</span> indicators are zero. Failing to declare categorical variables in your software is a common mistake, especially when these are saved in the database using integers (1,2, <span class="math inline">\(\ldots\)</span>) rather than as text (Monday, Tuesday, <span class="math inline">\(\ldots\)</span>).</p>
+<p>We can characterize the set of all potential values their measurements can take, together with their frequency, via a <strong>distribution</strong>. The latter can be represented graphically using an histogram or a density plot<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> if the data are continuous, or a bar plot for discrete or categorical measurements.</p>
+<div id="exm-dietoss" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.2 (Die toss) </strong></span>The distribution of outcomes of a die toss is discrete and takes values <span class="math inline">\(1, \ldots, 6\)</span>. Each outcome is equally likely with probability <span class="math inline">\(1/6\)</span>.</p>
+</div>
+<div id="exm-normaldist" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.3 (Normal distribution) </strong></span>Mathematical theory suggests that, under general conditions, the distribution of a sample average is approximately distributed according to a normal (aka Gaussian) distribution: this result is central to most of statistics. Normally distributed data are continuous; the distribution is characterized by a bell curve, light tails and it is symmetric around it’s mean. The shape of the facade of Hallgrímskirkja church in Reykjavik, shown in <a href="#fig-Hallfrimskirkja">Figure&nbsp;<span>1.2</span></a>, closely resembles the density a normal distribution, which lead <a href="https://sites.google.com/view/khoavu-umn/home">Khoa Vu</a> to call it ‘a normal church’ (chuckles).</p>
+<div class="cell" data-hash="introduction_cache/html/fig-Hallfrimskirkja_13772b8522bea14da77d59bbd455a86f">
+<div class="cell-output-display">
+<div id="fig-Hallfrimskirkja" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/hallgrimskirkja_reykjavik.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.2: Photography of the <a href="https://www.flickr.com/photos/dvdhaven/6350588233">Hallgrímskirkja church in Reykjavik, Iceland</a> by Dolf van der Haven, reproduced under a <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">CC BY-ND-NC 2.0 license</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The normal distribution is fully characterized by two parameters: the average <span class="math inline">\(\mu\)</span> and the standard deviation <span class="math inline">\(\sigma\)</span>. The left panel of <a href="#fig-normaldist">Figure&nbsp;<span>1.3</span></a> shows an arbitrary continuous distribution and the values of a random sample of <span class="math inline">\(n=1000\)</span> draws. The right panel shows the histogram of the sample mean value based on a very large number of random samples of size <span class="math inline">\(n=25\)</span>, drawn from the same distribution. The superimposed black curve is a normal density curve whose parameters match those given by the central limit theorem: the approximation is seemingly quite accurate.</p>
+<p>This fact explains the omnipresence of the normal distribution in introductory data science courses, as well as the prevalence of sample mean and sample variance as key summary statistics.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="cell" data-hash="introduction_cache/html/fig-normaldist_1697623155e25d78e6bade65b324aafa">
+<div class="cell-output-display">
+<div id="fig-normaldist" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="introduction_files/figure-html/fig-normaldist-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.3: Graphical representation of the distribution of a continuous variable, with histogram of a sample of <span class="math inline">\(n=1000\)</span> observations drawn from the distribution (left) and distribution of the sample mean, obtained by repeatedly drawing random sample of <span class="math inline">\(n=25\)</span> observations and computing their average (right). The curve shows the normal distribution approximation based on the central limit theorem.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One key aspect, often neglected in studies, is the discussion of the metric used for measurement of the response. While previous research may have identified instruments (like questionnaires) and particular wording for studying a particular aspect of individuals, there is a lot of free room for researchers to choose from that may impact conclusions. For example, if one uses a Likert scale, what should be the range of the scale? Too coarse a choice may lead to limited capability to detect, but more truthfulness, while there may be larger intrinsic measurement with a finer scale.</p>
+<p>Likewise, many continuous measures (say fMRI signal) can be discretized to provide a single numerical value. Choosing the average signal, range, etc. as outcome variable may lead to different conclusions.</p>
+<p>Choosing a particular instrument or metric could be in principle done by studying (apriori) the distribution of the values for the chosen metric using a pilot study: this will give researchers some grasp of the variability of those measures.</p>
+</div>
+</div>
+<p>At the heart of most analysis are measurements. The data presented in the course have been cleaned and oftentimes the choice of explanatory variables and experimental factor<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is evident from the context. In applications, however, this choice is not always trivial.</p>
+</section>
+<section id="population-sample" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="population-sample"><span class="header-section-number">1.3.2</span> Population and samples</h3>
+<p>Only for well-designed sampling schemes does results generalize beyond the group observed. It is thus of paramount importance to define the objective and the population of interest should we want to make conclusions.</p>
+<p>Generally, we will seek to estimate characteristics of a population using only a sample (a sub-group of the population of smaller size). The <strong>population of interest</strong> is a collection of individuals which the study targets. For example, the Labour Force Survey (LFS) is a monthly study conducted by Statistics Canada, who define the target population as “all members of the selected household who are 15 years old and older, whether they work or not.” Asking every Canadian meeting this definition would be costly and the process would be long: the characteristic of interest (employment) is also a snapshot in time and can vary when the person leaves a job, enters the job market or become unemployed. In this example, collecting a census would be impossible and too costly.</p>
+<p>In general, we therefore consider only <strong>samples</strong> to gather the information we seek to obtain. The purpose of <strong>statistical inference</strong> is to draw conclusions about the population, but using only a share of the latter and accounting for sources of variability. The pollster George Gallup made this great analogy between sample and population:</p>
+<blockquote class="blockquote">
+<p>One spoonful can reflect the taste of the whole pot, if the soup is well-stirred</p>
+</blockquote>
+<p>A <strong>sample</strong> is a sub-group of individuals drawn at random from the population. We won’t focus on data collection, but keep in mind the following information: for a sample to be good, it must be representative of the population under study.</p>
+<div class="callout callout-style-default callout-tip callout-titled" name="Confounding">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html">Parcours AGIR</a> at HEC Montréal is a pilot project for Bachelor in Administration students that was initiated to study the impact of flipped classroom and active learning on performance.</p>
+<p>Do you think we can draw conclusions about the efficacy of this teaching method by comparing the results of the students with those of the rest of the bachelor program? List potential issues with this approach addressing the internal and external validity, generalizability, effect of lurking variables, etc.</p>
+</div>
+</div>
+<p>Because the individuals are selected at <strong>random</strong> to be part of the sample, the measurement of the characteristic of interest will also be random and change from one sample to the next. While larger samples typically carry more information, sample size is not a guarantee of quality, as the following example demonstrates.</p>
+<div id="exm-Galluppoll" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.4 (Polling for the 1936 USA Presidential Election) </strong></span><em>The Literary Digest</em> surveyed 10 millions people by mail to know voting preferences for the 1936 USA Presidential Election. A sizeable share, 2.4 millions answered, giving Alf Landon (57%) over incumbent President Franklin D. Roosevelt (43%). The latter nevertheless won in a landslide election with 62% of votes cast, a 19% forecast error. <a href="https://www.jstor.org/stable/2749114">Biased sampling and differential non-response are mostly responsible for the error:</a> the sampling frame was built using ``phone number directories, drivers’ registrations, club memberships, etc.’’, all of which skewed the sample towards rich upper class white people more susceptible to vote for the GOP.</p>
+<p>In contrast, Gallup correctly predicted the outcome by polling (only) 50K inhabitants. <a href="https://medium.com/@ozanozbey/how-not-to-sample-11579793dac">Read the full story here.</a></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What are the considerations that could guide you in determining the population of interest for your study?</p>
+</div>
+</div>
+</section>
+<section id="sampling" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="sampling"><span class="header-section-number">1.3.3</span> Sampling</h3>
+<p>Because sampling is costly, we can only collect limited information about the variable of interest, drawing from the population through a sampling frame (phone books, population register, etc.) Good sampling frames can be purchased from sampling firms.</p>
+<p>In general, <em>randomization</em> is necessary in order to obtain a <strong>representative</strong> sample<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, one that match the characteristics of the population. Failing to randomize leads to introduction of bias and generally the conclusions drawn from a study won’t be generalizable.</p>
+<p>Even when observational units are selected at random to participate, there may be <strong>bias</strong> introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Reflect on the choice of platform used to collect answers and think about how it could influence the composition of the sample returned or affect non-response in a systematic way.</p>
+</div>
+</div>
+<p>Before examining problems related to sampling, we review the main random sampling methods. The simplest is simple random sampling, whereby <span class="math inline">\(n\)</span> units are drawn completely at random (uniformly) from the <span class="math inline">\(N\)</span> elements of the sampling frame. The second most common scheme is stratified sampling, whereby a certain numbers of units are drawn uniformly from strata, namely subgroups (e.g., gender). Finally, cluster sampling consists in sampling only from some of these subgroups.</p>
+<div id="exm-samplingscheme" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.5 (Sampling schemes in a picture) </strong></span>Suppose we wish to look at student satisfaction regarding the material taught in an introductory statistics course offered to multiple sections. The population consists of all students enrolled in the course in a given semester and this list provides the sampling frame. We can define strata to consist of class group. A simple random sample would be obtaining by sampling randomly abstracting from class groups, a stratified sample by drawing randomly a number from each class group and a cluster sampling by drawing all students from selected class groups. Cluster sampling is mostly useful if all groups are similar and if the costs associated to sampling from multiple strata are expensive.</p>
+<p><a href="#fig-sampling">Figure&nbsp;<span>1.4</span></a> shows three sampling schemes: the middle corresponds to stratum (e.g., age bands) whereas the right contains clusters (e.g., villages or classrooms).</p>
+<div class="cell" data-hash="introduction_cache/html/fig-sampling_09365f447c00f52768d410df1cd71dbb">
+<div class="cell-output-display">
+<div id="fig-sampling" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="introduction_files/figure-html/fig-sampling-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.4: Illustration of three sampling schemes from nine groups: simple random sampling (left), stratified sampling (middle) and cluster sampling (right).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Stratified sampling is typically superior if we care about having similar proportions of sampled in each group and is useful for reweighting: in <a href="#fig-sampling">Figure&nbsp;<span>1.4</span></a>, the true proportion of sampled is <span class="math inline">\(1/3\)</span>, with the simple random sampling having a range of [<span class="math inline">\(0.22, 0.39\)</span>] among the strata, compared to [<span class="math inline">\(0.31, 0.33\)</span>] for the stratified sample.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Thinking outside the box
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?</p>
+</div>
+</div>
+<p>There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.</p>
+<p>In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon’s Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review <span class="citation" data-cites="Aguinis:2021">(<a href="references.html#ref-Aguinis:2021" role="doc-biblioref">Aguinis, Villamor, and Ramani 2021</a>)</span>. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census.</p>
+</section>
+</section>
+<section id="examples-of-experimental-designs" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="examples-of-experimental-designs"><span class="header-section-number">1.4</span> Examples of experimental designs</h2>
+<p>The field of experimental design has a long history, starting with agricultural field trials.</p>
+<div id="exm-agriculturalfieldtrials" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.6 (Agricultural field trials at the Rothamsted Research Station.) </strong></span>The <a href="https://www.rothamsted.ac.uk/">Rothamsted Research Station</a> in the UK has been conducting experiments since 1843. Ronald A. Fisher, who worked 14 years at Rothamsted from 1919, developed much of the statistical theory underlying experimental design, inspired from his work there. <span class="citation" data-cites="Yates:1964">Yates (<a href="references.html#ref-Yates:1964" role="doc-biblioref">1964</a>)</span> provides a recollection of his contribution to the field.</p>
+<div class="cell" data-hash="introduction_cache/html/fig-rothamsted_46b95cfb9c71142ac36ec5add8ed8021">
+<div class="cell-output-display">
+<div id="fig-rothamsted" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/HFL-A1958.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.5: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-Highfield-Ley-Arable-1-1">1958 plan for the Highfield Ley–Arable Experiment</a>. Source: Rothamsted Research Station, reproduced under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Experimental design revolves in large part in understanding how best to allocate our resources, determine the impact of policies or choosing the most effective “treatment” from a series of option.</p>
+<div id="exm-experimentalexample1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.7 (Modern experiments and A/B testing) </strong></span>Most modern experiments happen online, with tech companies running thousands of experiments on an ongoing basis in order to discover improvement to their interfaces that lead to increased profits. An <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">Harvard Business Review article</a> <span class="citation" data-cites="HBR2017">(<a href="references.html#ref-HBR2017" role="doc-biblioref">Kohavi and Thomke 2017</a>)</span> details how small tweaks to the display of advertisements in the Microsoft Bing search engine landing page lead to a whooping 12% increase in revenues. Such randomized control trials, termed A/B experiments, involve splitting incoming traffic into separate groups; each group will see different views of the webpage that differ only ever slightly. The experimenters then compare traffic and click revenues. At large scale, even small effects can have major financial consequences and can be learned despite the large variability in customer behaviour.</p>
+</div>
+<p>There are also multiple examples of randomized control experiments used for policy making.</p>
+<div id="exm-experimentvsobservations" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.8 (Experiments on wellness programs) </strong></span><span class="citation" data-cites="Song.Baicker:2019">Song and Baicker (<a href="references.html#ref-Song.Baicker:2019" role="doc-biblioref">2019</a>)</span> conducted a large randomized trial over a period of 18 months to study the impact of wellness programs in US companies. The industry, worth more than 8 billions USD, has significantly increased following the passage of the Affordable Care Act, aka Obamacare. The findings are vulgarized in <a href="https://hms.harvard.edu/news/do-wellness-programs-work">a press release by Jake Miller from Harvard News &amp; Research</a>: they show that, while there was seemingly an impact on physical activity and well-being, there were no evidence of changes in absenteeism, job tenure and job performance. <span class="citation" data-cites="Damon.Molitor.Reif:2019">Jones, Molitor, and Reif (<a href="references.html#ref-Damon.Molitor.Reif:2019" role="doc-biblioref">2019</a>)</span> reach similar conclusion.</p>
+</div>
+<p>These findings are strikingly different from previous observational studies, which found increase participation in sportive activities, increased job duration, reduced medical spendings.</p>
+<div id="exm-Tennesseestar" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.9 (STAR) </strong></span>The Tennessee’s Student Teacher Achievement Ratio <a href="(https://dss.princeton.edu/catalog/resource1589)">(STAR)</a> project <span class="citation" data-cites="STAR2008">(<a href="references.html#ref-STAR2008" role="doc-biblioref">Achilles et al. 2008</a>)</span> is another important example of large scale experiment with broad ramifications. The study suggested that smaller class sizes lead to better outcomes of pupils.</p>
+<blockquote class="blockquote">
+<p>Over 7,000 students in 79 schools were randomly assigned into one of 3 interventions: small class (13 to 17 students per teacher), regular class (22 to 25 students per teacher), and regular-with-aide class (22 to 25 students with a full-time teacher’s aide). Classroom teachers were also randomly assigned to the classes they would teach. The interventions were initiated as the students entered school in kindergarten and continued through third grade.</p>
+</blockquote>
+</div>
+<div id="exm-randcorp" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.10 (RAND health care programs) </strong></span>In a large-scale <a href="https://www.rand.org/health-care/projects/hie.html">multiyear experiment conducted by the RAND Corporation</a> <span class="citation" data-cites="RANDHIE">(<a href="references.html#ref-RANDHIE" role="doc-biblioref">Brook et al. 2006</a>)</span>, participants who paid for a share of their health care used fewer health services than a comparison group given free care. The study concluded that cost sharing reduced “inappropriate or unnecessary” medical care (overutilization), but also reduced “appropriate or needed” medical care.</p>
+<blockquote class="blockquote">
+<p>The HIE was a large-scale, randomized experiment conducted between 1971 and 1982. For the study, RAND recruited 2,750 families encompassing more than 7,700 individuals, all of whom were under the age of 65. They were chosen from six sites across the United States to provide a regional and urban/rural balance. Participants were randomly assigned to one of five types of health insurance plans created specifically for the experiment. There were four basic types of fee-for-service plans: One type offered free care; the other three types involved varying levels of cost sharing — 25 percent, 50 percent, or 95 percent coinsurance (the percentage of medical charges that the consumer must pay). The fifth type of health insurance plan was a nonprofit, HMO-style group cooperative. Those assigned to the HMO received their care free of charge. For poorer families in plans that involved cost sharing, the amount of cost sharing was income-adjusted to one of three levels: 5, 10, or 15 percent of income. Out-of-pocket spending was capped at these percentages of income or at $1,000 annually (roughly $3,000 annually if adjusted from 1977 to 2005 levels), whichever was lower.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Families participated in the experiment for 3–5 years. The upper age limit for adults at the time of enrollment was 61, so that no participants would become eligible for Medicare before the experiment ended. To assess participant service use, costs, and quality of care, RAND served as the families’ insurer and processed their claims. To assess participant health, RAND administered surveys at the beginning and end of the experiment and also conducted comprehensive physical exams. Sixty percent of participants were randomly chosen to receive exams at the beginning of the study, and all received physicals at the end. The random use of physicals at the beginning was intended to control for possible health effects that might be stimulated by the physical exam alone, independent of further participation in the experiment.</p>
+</blockquote>
+</div>
+<p>There are many other great examples in <a href="https://tellingstorieswithdata.com/08-hunt.html#rct-examples">the dedicated section of Chapter 10 of <em>Telling stories with data</em> by Rohan Alexander</a> <span class="citation" data-cites="Alexander2021">(<a href="references.html#ref-Alexander2021" role="doc-biblioref">Alexander 2022</a>)</span>. Section 1.4 of <span class="citation" data-cites="Berger:2018">Berger, Maurer, and Celli (<a href="references.html#ref-Berger:2018" role="doc-biblioref">2018</a>)</span> also lists various applications of experimental designs in a variety of fields.</p>
+</section>
+<section id="requirements-for-good-experiments" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="requirements-for-good-experiments"><span class="header-section-number">1.5</span> Requirements for good experiments</h2>
+<p>Section 1.2 of <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> describes the various requirements that are necessary for experiments to be useful. These are</p>
+<ol type="1">
+<li>absence of systematic error</li>
+<li>precision</li>
+<li>range of validity</li>
+<li>simplicity</li>
+</ol>
+<p>We review each in turn.</p>
+<section id="absence-of-systematic-error" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="absence-of-systematic-error"><span class="header-section-number">1.5.1</span> Absence of systematic error</h3>
+<p>This point requires careful planning and listing potential confounding variables that could affect the response.</p>
+<div id="exm-systematicerror" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.11 (Systematic example) </strong></span>Suppose we wish to consider the differences in student performance between two instructors. If the first teaches only morning classes, while the second only teaches in the evening, it will be impossible to disentangle the effect of timing with that of instructor performance. Such comparisons should only be undertaken if there is compelling prior evidence that timing does not impact the outcome of interest.</p>
+</div>
+<p>The first point raised by Cox is thus that we</p>
+<blockquote class="blockquote">
+<p>ensure that experimental units receiving one treatment differ in no systematic way from those receiving another treatment.</p>
+</blockquote>
+<p>This point also motivates use of <strong>double-blind</strong> procedures (where both experimenters and participants are unaware of the treatment allocation) and use of placebo in control groups (to avoid psychological effects, etc. associated with receiving treatment or lack thereof).</p>
+<p>Randomization<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> is at the core of achieving this goal, and ensuring measurements are independent of one another also comes out as corollary.</p>
+</section>
+<section id="variability" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="variability"><span class="header-section-number">1.5.2</span> Variability</h3>
+<p>The second point listed by <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the difference in mean treatment is divided by its standard error, a form of effect size. The intuition should be that it’s easier to detect something when the signal is large and the background noise is low. The latter is a function of</p>
+<ol type="a">
+<li>the accuracy of the experimental work and measurements apparatus and the intrinsic variability of the phenomenon under study,</li>
+<li>the number of experimental and observational units (the sample size).</li>
+<li>the choice of design and statistical procedures.</li>
+</ol>
+<p>Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is usually standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.</p>
+</section>
+<section id="generalizability" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="generalizability"><span class="header-section-number">1.5.3</span> Generalizability</h3>
+<p>Most studies are done with an objective of generalizing the findings beyond the particular units analyzed. The range of validity thus crucially depends with the choice of population from which a sample is drawn and the particular sampling scheme. Non-random sampling severely limits the extrapolation of the results to more general settings. This leads Cox to advocate having</p>
+<blockquote class="blockquote">
+<p>not just empirical knowledge about what the treatment differences are, but also some understanding of the reasons for the differences.</p>
+</blockquote>
+<p>Even if we believe a factor to have no effect, it may be wise to introduce it in the experiment to check this assumption: if it is not a source of variability, it shouldn’t impact the findings and at the same time would provide some more robustness.</p>
+<p>If we look at a continuous treatment, than it is probably only safe to draw conclusions within the range of doses administered. Comic in <a href="hypothesis_testing.html#fig-xkcd605">Figure&nbsp;<span>2.3</span></a> is absurd, but makes this point.</p>
+<div class="cell" data-hash="introduction_cache/html/fig-xkcd605_2d9c0abb490c5d520d8936dfc843c387">
+<div class="cell-output-display">
+<div id="fig-xkcd605" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/xkcd605_extrapolating.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.6: xkcd comic <a href="https://xkcd.com/605/">605 (Extrapolating) by Randall Munroe</a>. Alt text: By the third trimester, there will be thousands of babies inside you. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="exm-generalizability" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.12 (Generalizability) </strong></span>Replication studies done in university often draw participants from students enrolled in the institutions. The findings are thus not necessarily robust if extrapolated to the whole population if there are characteristics for which they have strong (familiarity to technology, acquaintance with administrative system, political views, etc). These samples are often <strong>convenience samples</strong>.</p>
+</div>
+<div id="exm-spratt" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.13 (Spratt-Archer barley in Ireland) </strong></span>Example 1.9 in <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> mentions recollections of “Student”<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> on Spratt-Archer barley, a new variety of barley that performed well in experiments and whose culture the Irish Department of Agriculture encouraged. Fuelled by a district skepticism with the new variety, the Department ran an experiment comparing the yield of the Spratt-Archer barley with that of the native race. Their findings surprised the experimenters: the native barley grew more quickly and was more resistant to weeds, leading to higher yields. It was concluded that the initial experiments were misleading because Spratt-Archer barley had been experimented in well-farmed areas, exempt of nuisance.</p>
+</div>
+</section>
+<section id="simplicity" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="simplicity"><span class="header-section-number">1.5.4</span> Simplicity</h3>
+<p>The fourth requirement is one of simplicity of design, which almost invariably leads to simplicity of the statistical analysis. Randomized control-trials are often viewed as the golden rule for determining efficacy of policies or treatments because the set of assumptions they make is pretty minimalist due to randomization. Most researchers in management are not necessarily comfortable with advanced statistical techniques and this also minimizes the burden. <a href="#fig-xkcd2400">Figure&nbsp;<span>1.7</span></a> shows an <a href="https://www.zq1.de/~bernhard/images/share/mRNA-1273-trial.png">hypothetical graph</a> on the efficacy of the Moderna MRNA vaccine for Covid: if the difference is clearly visible in a suitable experimental setting, then conclusions are easily drawn.</p>
+<p>Randomization justifies the use of the statistical tools we will use under very weak assumptions, if units measurements are independent from one another. Drawing conclusions from observational studies, in contrast to experimental designs, requires making often unrealistic or unverifiable assumptions and the choice of techniques required to handle the lack of randomness is often beyond the toolbox of applied researchers.</p>
+<div class="cell" data-hash="introduction_cache/html/fig-xkcd2400_e6ba5be805bfdfeeeb5d5af769d819c4">
+<div class="cell-output-display">
+<div id="fig-xkcd2400" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/xkcd2400_statistics.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;1.7: xkcd comic <a href="https://xkcd.com/2400/">2400 (Statistics) by Randall Munroe</a>. Alt text: We reject the null hypothesis based on the ‘hot damn, check out this chart’ test. Cartoon reprinted under the <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5 license</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Define the following terms in your own word: experimental unit, factor, treatment.</li>
+<li>What is the main benefit of experimental studies over observational studies?</li>
+</ul>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-STAR2008" class="csl-entry" role="listitem">
+Achilles, C. M., Helen Pate Bain, Fred Bellott, Jayne Boyd-Zaharias, Jeremy Finn, John Folger, John Johnston, and Elizabeth Word. 2008. <span>“Tennessee’s Student Teacher Achievement Ratio (STAR) Project.”</span> Harvard Dataverse. <a href="https://doi.org/10.7910/DVN/SIWH9F">https://doi.org/10.7910/DVN/SIWH9F</a>.
+</div>
+<div id="ref-Aguinis:2021" class="csl-entry" role="listitem">
+Aguinis, Herman, Isabel Villamor, and Ravi S. Ramani. 2021. <span>“<span>MT</span>urk Research: Review and Recommendations.”</span> <em>Journal of Management</em> 47 (4): 823–37. <a href="https://doi.org/10.1177/0149206320969787">https://doi.org/10.1177/0149206320969787</a>.
+</div>
+<div id="ref-Alexander2021" class="csl-entry" role="listitem">
+Alexander, Rohan. 2022. <em>Telling Stories with Data</em>. CRC Press. <a href="https://www.tellingstorieswithdata.com/">https://www.tellingstorieswithdata.com/</a>.
+</div>
+<div id="ref-Berger:2018" class="csl-entry" role="listitem">
+Berger, Paul, Robert Maurer, and Giovana B Celli. 2018. <em>Experimental Design with Application in Management, Engineering, and the Sciences</em>. 2nd ed. Springer. <a href="https://doi.org/10.1007/978-3-319-64583-4">https://doi.org/10.1007/978-3-319-64583-4</a>.
+</div>
+<div id="ref-RANDHIE" class="csl-entry" role="listitem">
+Brook, Robert H., Emmett B. Keeler, Kathleen N. Lohr, Joseph P. Newhouse, John E. Ware, William H. Rogers, Allyson Ross Davies, et al. 2006. <em>The <span>H</span>ealth <span>I</span>nsurance <span>E</span>xperiment: A Classic <span>RAND</span> Study Speaks to the Current Health Care Reform Debate</em>. Santa Monica, CA: RAND Corporation.
+</div>
+<div id="ref-Card.Krueger:1994" class="csl-entry" role="listitem">
+Card, David, and Alan B. Krueger. 1994. <span>“Minimum Wages and Employment: A Case Study of the Fast-Food Industry in <span>N</span>ew <span>J</span>ersey and <span>P</span>ennsylvania.”</span> <em>The American Economic Review</em> 84 (4): 772–93. <a href="http://www.jstor.org/stable/2118030">http://www.jstor.org/stable/2118030</a>.
+</div>
+<div id="ref-Cox:1958" class="csl-entry" role="listitem">
+Cox, David R. 1958. <em>Planning of Experiments</em>. New York, NY: Wiley.
+</div>
+<div id="ref-Hariton.Locascio:2018" class="csl-entry" role="listitem">
+Hariton, Eduardo, and Joseph J Locascio. 2018. <span>“Randomised Controlled Trials – the Gold Standard for Effectiveness Research.”</span> <em>BJOG: An International Journal of Obstetrics &amp; Gynaecology</em> 125 (13): 1716–16. https://doi.org/<a href="https://doi.org/10.1111/1471-0528.15199">https://doi.org/10.1111/1471-0528.15199</a>.
+</div>
+<div id="ref-Damon.Molitor.Reif:2019" class="csl-entry" role="listitem">
+Jones, Damon, David Molitor, and Julian Reif. 2019. <span>“What Do Workplace Wellness Programs Do? Evidence from the <span>I</span>llinois Workplace Wellness Study.”</span> <em>The Quarterly Journal of Economics</em> 134 (4): 1747–91. <a href="https://doi.org/10.1093/qje/qjz023">https://doi.org/10.1093/qje/qjz023</a>.
+</div>
+<div id="ref-HBR2017" class="csl-entry" role="listitem">
+Kohavi, Ron, and Stefan Thomke. 2017. <span>“The Surprising Power of Online Experiments.”</span> <em>Harvard Business Review</em> September–October: 74–82. <a href="https://hbr.org/2017/09/the-surprising-power-of-online-experiments">https://hbr.org/2017/09/the-surprising-power-of-online-experiments</a>.
+</div>
+<div id="ref-Song.Baicker:2019" class="csl-entry" role="listitem">
+Song, Zirui, and Katherine Baicker. 2019. <span>“Effect of a Workplace Wellness Program on Employee Health and Economic Outcomes: A Randomized Clinical Trial.”</span> <em>JAMA</em> 321 (15): 1491–501. <a href="https://doi.org/10.1001/jama.2019.3307">https://doi.org/10.1001/jama.2019.3307</a>.
+</div>
+<div id="ref-Yates:1964" class="csl-entry" role="listitem">
+Yates, F. 1964. <span>“Sir <span>R</span>onald <span>F</span>isher and the Design of Experiments.”</span> <em>Biometrics</em> 20 (2): 307–21. <a href="http://www.jstor.org/stable/2528399">http://www.jstor.org/stable/2528399</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The preceding paragraph shouldn’t be taken to mean that one cannot get meaningful conclusions from observational studies. Rather, I wish to highlight that controlling for the non-random allocation and potential confounding is a much more complicated task, requires practitioners to make stronger (and sometimes unverifiable) assumptions and requires using a different toolbox (including, but not limited to differences in differences, propensity score weighting, instrumental variables). The book <a href="https://theeffectbook.net/index.html"><em>The Effect: An Introduction to Research Design and Causality</em></a> by Nick Huntington-Klein gives a gentle nontechnical introduction to some of these methods.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Since continuous data can take any value in the interval, we can’t talk about the probability of a specific value. Rather, the density curve encodes the probability for any given area: the higher the curve, the more likely the outcome.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The parameters of most commonly used theoretical distributions do not directly relate to the mean and the variance, unlike the normal distribution.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>A factor is a categorical variable, thus the experimental factor encodes the different groups to compare<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Note this randomization is different from the one in assigning treatments to experimental units!<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The percentage of participants need not be equiprobable, nor do we need to assign the same probability to each participant. However, going away from equal number of people per group has consequences and makes the statistical analysis more complicated.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>William Sealy Gosset<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./hypothesis_testing.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

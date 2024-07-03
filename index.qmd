@@ -8,7 +8,7 @@
 invisible(Sys.setlocale("LC_TIME", "en_CA.UTF-8"))
 ```
 
-This book is a web complement to MATH 80667A *Experimental Designs and Statistical Methods*, a graduate course offered at HEC Montréal in the joint Ph.D. program in Management.
+This book is a web complement to MATH 80667A *Experimental Designs and Statistical Methods*, a graduate course offered at HEC Montréal in the joint Ph.D. program in Management. Consult the [course webpage](https://lbelzile.github.io/experimental) for more details.
 
 These notes are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/) and were last compiled on `r format(Sys.Date(), format = "%A, %B %d %Y")`.
 

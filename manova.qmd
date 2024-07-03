@@ -1,0 +1,338 @@
+# Multivariate analysis of variance
+
+```{r}
+#| label: setup
+#| file: "_common.R"
+#| include: true
+#| message: false
+```
+
+
+Multivariate analysis of variance (MANOVA) leads to procedures that are analogous to univariate analysis of variance, but we now need to estimate correlation and variance parameters for each measurement separately and there are multiple potential statistics that can be defined for testing effects. While we can benefit from the correlation and find differences that wouldn't be detected from univariate models, the additional parameters to estimate lead to a loss of power. Finally, the most popular method nowadays for handling repeated measures is to fit a mixed model, with random effects accounting to subject-specific characteristics. By doing so, we assume that the levels of a factor (here the subject identifiers) form a random sample from a large population. These models can be difficult to fit and one needs to take great care in specifying the model. 
+
+
+The second paradigm for modelling is to specify that the response from each subject is in fact a multivariate object: we can combine all measurements from a given individual in a vector $\boldsymbol{Y}$. In the example with the happy fakes, this would be the tuple of measurements for (`real`, `GAN1`, `GAN2`).
+
+The multivariate analysis of variance model is designed by assuming observations follow a (multivariate) normal distribution with mean vector $\boldsymbol{\mu}_j$ in group $j$ and common covariance matrix $\boldsymbol{\Sigma}$ and comparing means between groups. As in univariate analysis of variance, the multivariate normal assumption holds approximately by virtue of the central limit theorem in large samples, but the convergence is slower and larger numbers are needed to ensure this is valid.
+
+The difference with the univariate approach is now that we will compare a global mean vector $\boldsymbol{\mu}$ between comparisons. In the one-way analysis of variance model with an experimental factor having $K$ levels and a balanced sample $n_g$ observations per group and $n=n_gK$ total observations, we assume that each group has average $\boldsymbol{\mu}_k$ $(k=1, \ldots, K)$, which we can estimate using only the observations from that group. Under the null hypothesis, all groups have the same mean, so the estimator is the overall mean $\boldsymbol{\mu}$ combining all $n$ observations.
+
+The statistic is obtained by decomposing the total variance around the global mean into components due to the different factors and the leftover variability. Because these equivalent to the sum of square decomposition results in multiple matrices, there are multiple ways of constructing test statistics.  Wilk's $\Lambda$ is the most popular choice. Another common choice, which leads to a statistic giving lower power but which is also more robust to departure from model assumptions is Pillai's trace.
+
+The MANOVA model assumes that the covariance matrices are the same within each experimental condition. We can use Box's $M$ statistic to test the normality hypothesis.
+
+
+
+## Data format
+
+With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in **wide format**, since there are multiple measurements in each row. While this format is suitable for storate, many statistical routines will instead expect data to be in **long format**, for which there is a single measurement per line. @fig-longvswide illustrates the difference between the two formats.
+
+
+```{r}
+#| label: fig-longvswide
+#| fig-cap: "Long versus wide-format for data tables (illustration by Garrick Aden-Buie)."
+#| echo: false
+#| eval: true
+#| out-width: '50%'
+knitr::include_graphics(path = "figures/original-dfs-tidy.png")
+```
+
+Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant. 
+
+
+Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed @sec-modelassumptionsindependence: failing to account for correlation leads to $p$-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.
+
+
+## Mathematical complement
+
+
+This section is technical and can be omitted. Analogous to the univariate case, we can decompose the variance estimator in terms of within, between and total variance. Let $\boldsymbol{Y}_{ik}$ denote the response vector for the $i$th observation of group $k$; then, we can decompose the variance as
+\begin{align*} &
+\underset{\text{total variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}})^\top} \\\qquad &= \underset{\text{within variance}}{\sum_{k=1}^K \sum_{i=1}^{n_g} (\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)(\boldsymbol{Y}_{ik} - \widehat{\boldsymbol{\mu}}_k)^\top} + \underset{\text{between variance}}{\sum_{k=1}^K n_g(\boldsymbol{\mu}_{k} - \widehat{\boldsymbol{\mu}})(\widehat{\boldsymbol{\mu}}_k - \widehat{\boldsymbol{\mu}})^\top}
+\end{align*}
+defining covariance matrix estimators. If we write $\widehat{\boldsymbol{\Sigma}}_T,$ $\widehat{\boldsymbol{\Sigma}}_W$, and $\widehat{\boldsymbol{\Sigma}}_B$ for respectively the total, within and between variance estimators, we can build a statistic from these ingredients to see how much variability is induced by centering using a common vector. When $K>2$, there are multiple statistics that be constructed, including
+
+- Wilk's $\Lambda$: $|\widehat{\boldsymbol{\Sigma}}_W|/|\widehat{\boldsymbol{\Sigma}}_W + \widehat{\boldsymbol{\Sigma}}_B|$
+- Roy's maximum root: the largest eigenvalue of $\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B$
+- Lawley--Hotelling trace: $\mathrm{tr}(\widehat{\boldsymbol{\Sigma}}_W^{-1}\widehat{\boldsymbol{\Sigma}}_B)$
+- Pillai's trace: $\mathrm{tr}\left\{\widehat{\boldsymbol{\Sigma}}_B(\widehat{\boldsymbol{\Sigma}}_W +\widehat{\boldsymbol{\Sigma}}_B)^{-1}\right\}$.
+
+All four criteria lead to equivalent statistics and the same $p$-values if $K=2$.
+
+With a two-way balanced MANOVA, we can perform a similar decomposition for each factor or interaction, with 
+$$\widehat{\boldsymbol{\Sigma}}_T = \widehat{\boldsymbol{\Sigma}}_A + \widehat{\boldsymbol{\Sigma}}_B + \widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W.$$
+
+Wilk's $\Lambda$ is based on taking the ratio of the determinant of the within-variance and that of the sum of effect-variance plus within-variance, e.g., $|\widehat{\boldsymbol{\Sigma}}_{AB} + \widehat{\boldsymbol{\Sigma}}_W|$ for the interaction term. 
+
+## Model fitting
+
+We can treat the within-subject responses as a vector of observations and estimate the model using using multivariate linear regression. Contrary to the univariate counterpart, the model explicitly models the correlation between observations from the same subject.
+
+In order to fit a model with a multivariate response, we first need to pivot the data into wider format so as to have a matrix with rows for the number of subjects and $M$ columns for the number of response variables. 
+
+Once the data are in a suitable format, we fit the multivariate model with the `lm` function using the sum-to-zero constraints, here imposed globally by changing the `contrasts` option. Syntax-wise, the only difference with the univariate case is that the response on the left of the tilde sign (`~`) is now a matrix composed by binding together the vectors with the different responses.
+
+:::{#exm-happyfakemulti}
+
+## A multivariate take on "Happy fakes"
+
+We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.
+
+```{r}
+#| eval: true
+#| echo: true
+data(AA21, package = "hecedsm")
+# Compute mean per subject
+AA21_m <- AA21 |>
+  dplyr::group_by(id, stimulus) |>
+  dplyr::summarize(latency = mean(latency))
+# Pivot to wide format (one individual, multiple measurements per line)
+AA21_mw <- AA21_m |>
+  tidyr::pivot_wider(names_from = stimulus, # within-subject factor labels
+                     values_from = latency) # response measurements 
+# Model with each variable with a different mean
+# Specify all columns with column bind 
+# left of the ~, following 
+options(contrasts = c("contr.sum", "contr.poly"))
+mlm <- lm(cbind(real, GAN1, GAN2) ~ 1,
+          data = AA21_mw)
+```
+
+Since the within-subject factor `stimulus` disappeared when we consider the multivariate response, we only specify a global mean vector $\boldsymbol{\mu}$ via `~1`. In general, we would add the between-subject factors to the right-hand side of the equation. Our hypothesis of equal mean translates into the hypothesis $\boldsymbol{\mu} = \mu\boldsymbol{1}_3$, which can be imposed using a call to `anova`. The output returns the statistic and $p$-values including corrections for sphericity.
+
+We can also use `emmeans` to set up post-hoc contrasts. Since we have no variable, we need to set in `specs` the repeated measure variable appearing on the left hand side of the formula; the latter is labelled `rep.meas` by default.
+
+```{r}
+#| eval: true
+#| echo: true
+# Test the multivariate model against
+# equal mean (X = ~1)
+anova(mlm, X = ~1, test = "Spherical")
+# Follow-up contrast comparisons
+library(emmeans)
+emm_mlm <- emmeans(mlm, specs = "rep.meas") 
+emm_mlm |> contrast(method = list(c(1,-0.5,-0.5)))
+```
+
+We can check that the output is the same in this case as the within-subject analysis of variance model fitted previously with the `afex` package.
+:::
+
+:::{#exm-baumann-multi}
+
+## Teaching to read
+
+We consider a between-subject repeated measure multivariate analysis of variance model with the @Baumann:1992. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).
+
+
+We could obtain the estimated covariance matrix of the fitted model by extracting the residuals $Y_{ik} - \widehat{\mu}_k$ and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test 2.
+
+Let us compute the multivariate analysis of variance model
+
+```{r}
+#| eval: true
+#| echo: true
+data(BSJ92, package = "hecedsm")
+# Force sum-to-zero parametrization
+options(contrasts = c("contr.sum", "contr.poly"))
+# Fit MANOVA model
+mmod <- lm(
+  cbind(posttest1, posttest2, posttest3) ~ group,
+   data = BSJ92)
+# Calculate multivariate test
+mtest <- car::Anova(mmod, test = "Wilks")
+# mtest
+# Get all statistics and univariate tests
+summary(car::Anova(mmod), univariate = TRUE)
+``` 
+
+By default, we get Pillai's trace statistic. Here, there is clear evidence of differences between groups of observations regardless of the statistic being used. 
+
+We can compute effect size as before by passing the table, for example using `eta_squared(mtest)` to get the effect size of the multivariate test, or simple the model to get the individual variable effect sizes.
+
+Having found a difference, one could in principle investigate for which component of the response they are by performing univariate analysis of variance and accounting for multiple testing using, e.g., Bonferroni's correction. A more fruitful avenue if you are trying to discriminate is to use descriptive discriminant analysis as a follow-up, which computes the best fitting hyperplanes that separate groups.
+
+```{r}
+#| eval: false
+#| echo: true
+MASS::lda(group ~ posttest1 + posttest2 + posttest3,
+          data = BSJ92)
+```
+
+This amounts to compute the weights $\boldsymbol{w}$ such, that, computing $\boldsymbol{w}^\top\boldsymbol{Y}$ creating a composite score by adding up weighted components that leads to maximal separation between groups. @fig-lindiscrim shows the new coordinates.
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: '80%'
+#| label: fig-lindiscrim
+#| fig-cap: "Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group."
+discrim <- MASS::lda(group ~ posttest1 + posttest2 + posttest3,
+    data = BSJ92)
+pred <- as.matrix(BSJ92[,c("posttest1","posttest2","posttest3")]) %*% discrim$scaling
+newdata <- 
+  data.frame(LD1 = pred[,"LD1"],
+           LD2 = pred[,"LD2"],
+           group = BSJ92$group)
+ggplot(data = newdata,
+        aes(x = LD1,
+            y = LD2,
+            color = group)) +
+  geom_point() + 
+  geom_rug() +
+  labs(x = "linear discriminant 1",
+       y = "linear discriminant 2") + 
+  theme_classic() +
+  theme(legend.position = "bottom")
+```
+
+Linear discriminant analysis is a topic on it's own that is beyond the scope of the course.
+
+:::
+
+## Model assumptions
+
+
+In addition to the usual model assumptions (independence of measurements from different subjects, equal variance, additivity, etc.), the MANOVA model adds two hypothesis that altogether determine how reliable our $p$-values and conclusions are. 
+
+The first assumption is that of multivariate normality of the response. The central limit theorem can be applied to a multivariate response, but the sample size needed overall to reliably estimate the correlation and variance is larger than in the univariate setting. This hypothesis can be tested using the Shapiro-Wilk normality test (null hypothesis is that of normality) by passing the residuals of the multivariate model. Such a test can lead to rejection of the null hypothesis when specific variables are far from normal, or when the dependence structure isn't the one exhibited by a multivariate normal model. With decent sample sizes (say $n=50$ per group), this assumption isn't as important as others. 
+
+
+```{r}
+#| eval: true
+#| echo: true
+# Shapiro-Wilk normality test
+# Must transpose the residuals 
+# to get a 3 by n matrix
+mvnormtest::mshapiro.test(U = t(resid(mmod)))
+```
+
+The second assumption is that the covariance matrix is the same for all individuals, regardless of their experimental group assignment. We could try checking whether a covariance model in each group: under multivariate normal assumption, this leads to a test statistic called Box's $M$ test. Unfortunately, this test is quite sensitive to departures from the multivariate normal assumption and, if the $p$-value is small, it may have to do more with the normality than the heterogeneity.
+
+```{r}
+#| eval: true
+#| echo: true
+with(BSJ92, 
+     biotools::boxM(
+       data = cbind(posttest1, posttest2, posttest3),
+       grouping = group))
+```
+
+In our example, there is limited evidence against any of those model assumptions. We should of course also check the assumptions of the analysis of variance model for each of `postest1`, `posttest2` and `posttest3` in turn; such a check is left as an exercice to the reader.
+
+## Power and effect size
+
+Since all of the multivariate statistics can be transformed for a comparison with a univariate $\mathsf{F}$ distribution, we can estimate partial effect size as before. The package `effectsize` offers a measure of partial $\widehat{\eta}^2$ for the multivariate tests.^[I must confess I haven't checked whether the output is sensical.]
+
+Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free **G**${}^{*}$**Power** software [@GPower3] also offers some tools. See also @Lauter:1978 for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group $j=1, \ldots, J$, which shows that the number increases rapidly with the dimension of the response vector $p$. As usual, smaller effect sizes are more difficult to detect.
+
+```{r tablepowersamplesize}
+#| echo: false
+#| eval: true
+tab <- data.frame(
+n = c(13,16,18,21,26,33,38,42,44,56,66,72,98,125,145,160,14,18,21,23,29,37,44,48,50,64,74,84,115,145,165,185,16,21,24,27,34,44,52,58,60,76,90,100,135,170,200,230),
+ngroups = factor(rep(3:5, each = 16)),
+ndep = factor(rep(c(2L,4L,6L,8L), length.out = 3*16)),
+effects = factor(rep(rep(c("very large", "large", "medium", "small"), each = 4), length.out = 3*16))
+)
+
+tab_pivot <- tab |> tidyr::pivot_wider(values_from = "n", 
+                    names_from = c("ndep","ngroups"))
+kableExtra::kbl(tab_pivot,
+    col.names = c("effect size \\ p",rep(c("2","4","6","8"), length.out = 12))) |>
+kableExtra::kable_classic() |>
+  kableExtra::add_header_above(c(" " = 1, "3 groups" = 4, "4 groups" = 4, "5 groups" = 4))
+```
+
+:::{#exm-avc}
+
+## Disclosure formats for companies
+
+The data presented in this example vignette is inspired by a study from @Anandarajan:2002, who looked at the impact of communication means through different disclosure format on the perceived risk of organization on the brink of bankruptcy in accountancy. There is a single between-subject factor for the disclore format, and three measures of the performance, ratings for the interest rate premium assessed, for the ability to service debt and that to improve profitability. We first load the data from the package and inspect the content.
+
+```{r}
+data(AVC02, package = "hecedsm")
+str(AVC02)
+xtabs(~ format, data = AVC02)
+```
+
+The data are unbalanced by condition. In general, we need them to be roughly balanced to maximize power. The `manova` function will not be usable unless data are balanced, and we need to enforce sum-to-zero constraints to get sensible outputs. After this is done, we can fit the multivariate linear model with `lm` by binding columns on the left of the `~` sign to gather the response vectors.
+```{r}
+options(contrasts = c("contr.sum", "contr.poly"))
+model <- lm(cbind(prime, debt, profitability) ~ format, 
+            data = AVC02)
+```
+
+We can check the residual correlation matrix to see if there was a strong dependence between our measurements. The benefit of MANOVA is to be able to leverage this correlation, if any.
+
+```{r}
+#| eval: false
+#| echo: true
+cor(resid(model))
+```
+
+```{r}
+#| eval: true
+#| echo: false
+round(cor(resid(model)), 2)
+```
+
+We can look at the global mean for each variable and the estimated mean differences for all groups, including the reference which is omitted. It's easy to see that the mean differences sum to zero.
+
+```{r}
+dummy.coef(model)
+```
+
+
+Next, we compute the multivariate analysis of variance table and the follow-up with the univariate functions. By default, we can add a multiplicity correction for the tests, using Holm-Bonferonni with option `'holm'`. For the MANOVA test, there are multiple statistics to pick from, including `Pillai`, `Wilks`, `Hotelling-Lawley` and `Roy`. The default is `Pillai`, which is more robust to departures from the model hypothesis, but `Wilks` is also popular choice among practitioners.
+
+```{r}
+car::Manova(model, test = "Pillai")
+```
+
+We can compute effect sizes overall for the MANOVA statistic using the correspondance with the $F$ distribution, and also the individual effect size variable per variable. Here, the values returned are partial $\widehat{\eta}^2$ measures.
+```{r}
+effectsize::eta_squared(car::Manova(model))
+# Since it's a one-way between-subject MANOVA, no partial measure
+effectsize::eta_squared(model, partial = FALSE)
+```
+
+
+We can continue with descriptive discriminant analysis for the post-hoc comparisons. To fit the model using the `lda` function from the `MASS` package, we swap the role of the experimental factor and responses in the formula. The output shows the weights for the linear combinations.
+
+```{r}
+MASS::lda(format ~ prime + debt + profitability,
+          data = AVC02)
+```
+
+Interpretation of these is beyond the scope of the course, but you can find information about linear discriminant analysis in good textbooks [e.g., Chapter 12 of @Mardia.Kent.Taylor:2024]. The next step before writing about any of our conclusions is to check the model assumptions. As before, we could check for each variable in turn whether the variance are the same in each group. Here, we rather check equality of covariance matrix. The test has typically limited power, but unfortunately is very sensitive to departure from the multivariate normality assumption, so sometimes rejections are simply due to false positive.
+
+```{r}
+with(AVC02,
+biotools::boxM(cbind(prime, debt, profitability),
+               grouping = format))
+```
+
+We get a smallish $p$-value, and therefore weak evidence against equality of covariance matrices. The data were generated from normal distribution, so the small $p$-value is likely an artifact of the rounding of the Likert scale. We can test the normality assumption using univariate quantile-quantile plots or tests of normality, including Shapiro-Wilks.
+
+```{r}
+par(mfrow = c(1,3)) # one row, 3 columns for plot layout
+car::qqPlot(rstudent(model)[,1], 
+            id = FALSE, # don't flag outliers
+            ylab = "studentized residuals (prime)")
+car::qqPlot(rstudent(model)[,2], 
+            id = FALSE, 
+            ylab = "studentized residuals (debt)")
+car::qqPlot(rstudent(model)[,3], 
+            id = FALSE, 
+            ylab = "studentized residuals (profitability)")
+```
+
+We see severe rounding impacts for debt and profitability. There is little to be done about this, but the sample size are large enough that this shouldn't be too much a concern. We can also test the multivariate normality assumption. The latter supposes that observations in each group have the same mean. To get this, we detrend using multivariate linear model by subtracting the mean of each group. Thus, our input is the matrix of residuals, which must be transposed for the function to work.
+
+```{r}
+mvnormtest::mshapiro.test(U = t(resid(model)))
+```
+There is (unsurprisingly) strong evidence against multivariate normality, but it matters less due to sample size. This is a consequence of the discrete univariate measurements, which explain rejection of the null (for data to be multivariate normal, each of the response must be univariate normal and the dependence structure must also match. Since model assumptions are doubtful, we recommend using Pilai's trace as test statistic for the MANOVA.
+
+:::
