@@ -1,4 +1,4 @@
-# Analysis of covariance
+# Linear regression models
 
 ```{r}
 #| label: setup
@@ -13,8 +13,10 @@ The previous chapter dealt with factorial experiments in which all experimental 
 
 Including covariates should in principle increase power and our ability to detect real differences due to experimental manipulations, provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn't be used to assign treatment. Such designs are meant to reduce the error.
 
+## Analysis of covariance
 
-We can include continuous covariates to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn't necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called **analysis of covariance**, although as analysis of variance models, they are nothing but linear regression models.
+
+We can include continuous covariates to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn't necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called **analysis of covariance**, although as analysis of variance models, they are nothing but linear regression models. The ANCOVA model assumes that slopes are parallel: if rather there is an interaction term, then the experimental manipulation induces changes that depend on the value of the continuous explanatory. This case is termed mediation in the management literature.
 
 In an analysis of covariance, we include a linear component for a (continuous) covariate, with the purpose again to reduce residual error and increase power. A prime example is prior/post experiment measurements, whereby we monitor the change in outcome due to the manipulation. This post by Solomon Kurz [[link]](https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/) nicely illustrates the added benefits of using covariates when there is strong correlation between your response and the latter
 
@@ -177,13 +179,11 @@ tab_ancova$p.value <- papaja::apa_p(tab_ancova$p.value)
 knitr::kable(tab_anova,
   col.names = c("term","sum. sq.", "df","stat","p-value"),
   digits = c(0,2,1,2,3,3), booktabs = TRUE,
-  caption = "model without familiarity") |>
-  kableExtra::kable_styling()
+  caption = "model without familiarity")
 knitr::kable(tab_ancova,
   col.names = c("term","sum. sq.", "df","stat","p-value"),
   digits = c(0,2,1,2,3,3), booktabs = TRUE,
-  caption = "model with familiarity") |>
-  kableExtra::kable_styling()
+  caption = "model with familiarity")
 ```
 
 
@@ -353,14 +353,12 @@ knitr::kable(tab_anova,
              booktabs = TRUE,
              caption = "ANOVA model (without prior belief)",
              col.names = c("term","df","stat","p-value"),
-             digits = c(0,2,1,2))  |>
-  kableExtra::kable_styling()
+             digits = c(0,2,1,2))
 knitr::kable(tab_ancova,
              booktabs = TRUE,
              caption = "ANCOVA model (with prior belief)",
              col.names = c("term","df","stat","p-value"),
-             digits = c(0,2,1,2))  |>
-  kableExtra::kable_styling()
+             digits = c(0,2,1,2))
 ```
 
 Repeating the exercise of comparing the amount of evidence for comparison with and without inclusion of a covariate shows that the value of the test statistic is larger (@tbl-anovatabSSVB), indicative of stronger evidence with the analysis of covariance model: the conclusion would be unaffected with such large sample sizes. We of course care very little for the global $F$ test of equality of mean, as the previous study had shown large differences. What is more interesting here is quantifying the change between conditions.
@@ -381,14 +379,12 @@ knitr::kable(tab_anova,
              booktabs = TRUE,
   digits = c(0,2,1,2,3,3),
   
-  caption = "ANOVA model (without prior belief score).") |>
-  kableExtra::kable_styling()
+  caption = "ANOVA model (without prior belief score).")
 
 knitr::kable(tab_ancova,
              booktabs = TRUE,
   digits = c(0,2,1,2,3,3),
-  caption = "ANCOVA model (with prior belief score).") |>
-  kableExtra::kable_styling()
+  caption = "ANCOVA model (with prior belief score).")
 ```
 
 @tbl-contraststabSSVB shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with `prior`) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate `prior`, which is somewhat strongly correlated with `post` as seen in @fig-vanStekS3, helps decrease background noise.
@@ -419,8 +415,7 @@ SSVB21_S3_summary <- SSVB21_S3_long |>
 knitr::kable(SSVB21_S3_summary, 
             digits = 2,
             booktabs = TRUE, 
-            linesep = "") |>
-  kableExtra::kable_styling()
+            linesep = "")
 ```
 
 
@@ -504,21 +499,107 @@ ggplot(data = SSVB21_S3,
 ```
 
 
-<!-- Dean, Voss, Daguliic (2017), Section 10.2 -->
+## Moderation and interactions
 
-<!--
-## Block designs with more one or more blocking factors
+In a randomized experiment, we can check the average outcome of a manipulation by comparing groups: assuming random sampling, these conclusions can be broadly generalized to the population of interest from which the sample is drawn. However, it may be that the effect of the treatment depends on other variables: cultural differences, gender or education may change.
 
-How to allocation observations optimally?
-Do we need observations in each cells? Examples of designs
+The causal effect on $Y$ of the experimental manipulation, say $X$ may be a misleading summary if another variable modifies the relation of $X \to Y$: for example, the perception of gender discrimination or racism may depend on the person background and experience and this may impact the effect of the manipulation. Such variables, say $W$, thus have an interactive effect with the experimental factor $X$, termed moderator in psychology. In the statistical model, inclusion of interaction terms between $X$ and $W$ (typically via product of the so-called moderator variable with the factor encoding the experimental sub-condition) will allow us to estimate those differences.
 
-## Effect size for block designs
+In an analysis of covariance, covariates are included that have an impact on the outcome to filter out variability, but with the assumption that they do not influence the effect of treatment (no interaction). With moderators, we rather include and tests for the interactions. If we have an experimental factor $X$ which is binary or categorical, the resulting model is a simple analysis of variance model (or analysis of covariance) and we can test the significance of the interaction term to assess the moderating effect of $W$.
 
-Removing the variability of the block.
-Also for power calculations (partial)
+If $W$ is a mean-centered continuous variable and $X$ a categorical variable with $k=1, \ldots, K$ levels using the sum-to-zero parametrization, the linear model with mean
+$$
+\underset{\text{average response at $W$ in group $k$}}{\mathsf{E}\{Y \mid \mathsf{do}(X) = k, W\}} = \underset{\text{intercept for group $k$}}{\mu + \alpha_k} + \underset{\text{slope for group $k$}}{(\beta + \gamma_k)}W
+$$
+includes different slopes for $W$ in each experimental group, as well as different intercepts for each group.
+
+As an example, we consider data from a study on gender discrimination [@Garcia:2010]. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).
+
+The postulated mediator variable is `sexism`, the average of 6 Likert scales for the Modern Sexism Scale assessing pervasiveness of gender discrimination. We consider participants' evaluation of the appropriateness of the response of the fictional character.
+
+We fit the linear model with the interaction and display the observed slopes
+
+```{r}
+#| eval: false
+#| echo: true
+data(GSBE10, package = "hecedsm")
+lin_moder <- lm(respeval ~ protest*sexism,
+               data = GSBE10)
+summary(lin_moder) # coefficients
+car::Anova(lin_moder, type = 3) # tests
+```
+
+```{r}
+#| label: tbl-testsmoder
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+#| tbl-cap: "Analysis of variance table for the linear moderation model."
+data(GSBE10, package = "hecedsm")
+linmoder <- lm(respeval ~ protest*sexism,
+               data = GSBE10)
+# summary(linmoder) # coefficients
+
+options(knitr.kable.NA = '')
+tab_anova <- broom::tidy(
+    car::Anova(linmoder, type = 3)[-1,])
+tab_anova$p.value <- papaja::apa_p(tab_anova$p.value)
+knitr::kable(tab_anova,
+  booktabs = TRUE,
+  col.names = c("term", "sum of squares","df","stat","p-value"),
+  digits = c(0,2,1,2,3,3))
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| out-width: '80%'
+ggplot(data = GSBE10,
+       aes(x = sexism,
+           y = respeval,
+           color = protest,
+           group = protest)) +
+  geom_point() +
+  geom_smooth(se = FALSE, method = "lm", formula = y ~ x) +
+  labs(subtitle = "evaluation of response",
+       y = "",
+       color = "experimental condition") +
+  theme_classic() +
+  theme(legend.position = "bottom")
+```
+
+Because of the interaction, comparing the levels of the experimental factor only makes sense if we fix the value of sexism (since the slopes are not parallel) and won't necessarily be reliable outside of the range of observed values of sexism. We could look at quantiles and differences at the mean sexism,^[This is the default with `emmeans`] or one standard deviation away.
+
+We may be interested in the range of values of the predictor $W$ for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson--Neyman method [@Johnson.Neyman:1936] considers this range, but this leads to multiple testing problems since we probe the model repeatedly. @Esarey.Sumner:2018 offer a method that provides control for the false discovery rate.
+
+To illustrate the method, we dichotomize the manipulation pooling individual and collective protests, since these are the most similar.
+
+```{r}
+#| eval: true
+#| echo: true
+#| fig-cap: "Johnson--Neyman plot for difference between protest and no protest as a function of sexism."
+#| label: fig-jn
+library(interactions)
+db <- GSBE10 |>
+  dplyr::mutate(
+    protest = as.integer(protest != "no protest"))
+lin_moder2 <- lm(respeval ~ protest*sexism, data = db)
+jn <- johnson_neyman(
+  model = lin_moder2, # linear model
+  pred = protest, # binary experimental factor
+  modx = sexism, # moderator
+  control.fdr = TRUE,
+  mod.range = range(db$sexism))
+jn$plot
+```
 
 
--->
+The cutoff value is 4.20 with control for the false discovery rate and 4.15 without. The interval is not extended beyond the range of value for sexism, as these are not possible given the Likert scale (which starts at 1). In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation models could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation. Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.
+
+
 
 
 
@@ -526,23 +607,13 @@ Also for power calculations (partial)
 
 ## **Summary**
 
-* Inclusion of blocking factor and continuous covariates may help filtering out unwanted variability.
+* Inclusion of continuous covariates may help filtering out unwanted variability.
 * These are typically concomitant variables (measured alongside the response variable).
-* These designs reduce the residual error, leading to an increase in power (more ability to detect differences in average between experimental conditions).
+* This designs reduce the residual error, leading to an increase in power (more ability to detect differences in average between experimental conditions).
 * We are only interested in differences due to experimental condition (marginal effects).
 * In general, there should be no interaction between covariates/blocking factors and experimental conditions. 
 * This hypothesis can be assessed by comparing the models with and without interaction, if there are enough units (e.g., equality of slope for ANCOVA).
+* Moderators are variables that interact with the experimental factor. We assess their presence by testing for an interaction in a linear regresison model.
 
 :::
 
-
-
-:::{.callout-tip}
-
-- @Box:1978 write on page 103 the following motto:
-
-> Block what you can and randomize what you cannot.
-
-Explain the main benefit of blocking for confounding variables (when possible) over randomization.
-
-:::

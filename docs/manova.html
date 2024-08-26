@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 8&nbsp; Multivariate analysis of variance</title>
+<title>8&nbsp; Multivariate analysis of variance – Experimental design and statistical methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,17 +116,44 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -130,13 +164,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./manova.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multivariate analysis of variance</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./manova.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multivariate analysis of variance</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -145,13 +179,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -219,7 +253,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ancova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -267,7 +301,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -280,7 +314,7 @@ div.csl-indent {
   <li><a href="#model-assumptions" id="toc-model-assumptions" class="nav-link" data-scroll-target="#model-assumptions"><span class="header-section-number">8.4</span> Model assumptions</a></li>
   <li><a href="#power-and-effect-size" id="toc-power-and-effect-size" class="nav-link" data-scroll-target="#power-and-effect-size"><span class="header-section-number">8.5</span> Power and effect size</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/manova.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/manova.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -290,6 +324,7 @@ div.csl-indent {
 
 </header>
 
+
 <p>Multivariate analysis of variance (MANOVA) leads to procedures that are analogous to univariate analysis of variance, but we now need to estimate correlation and variance parameters for each measurement separately and there are multiple potential statistics that can be defined for testing effects. While we can benefit from the correlation and find differences that wouldn’t be detected from univariate models, the additional parameters to estimate lead to a loss of power. Finally, the most popular method nowadays for handling repeated measures is to fit a mixed model, with random effects accounting to subject-specific characteristics. By doing so, we assume that the levels of a factor (here the subject identifiers) form a random sample from a large population. These models can be difficult to fit and one needs to take great care in specifying the model.</p>
 <p>The second paradigm for modelling is to specify that the response from each subject is in fact a multivariate object: we can combine all measurements from a given individual in a vector <span class="math inline">\(\boldsymbol{Y}\)</span>. In the example with the happy fakes, this would be the tuple of measurements for (<code>real</code>, <code>GAN1</code>, <code>GAN2</code>).</p>
 <p>The multivariate analysis of variance model is designed by assuming observations follow a (multivariate) normal distribution with mean vector <span class="math inline">\(\boldsymbol{\mu}_j\)</span> in group <span class="math inline">\(j\)</span> and common covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span> and comparing means between groups. As in univariate analysis of variance, the multivariate normal assumption holds approximately by virtue of the central limit theorem in large samples, but the convergence is slower and larger numbers are needed to ensure this is valid.</p>
@@ -298,19 +333,23 @@ div.csl-indent {
 <p>The MANOVA model assumes that the covariance matrices are the same within each experimental condition. We can use Box’s <span class="math inline">\(M\)</span> statistic to test the normality hypothesis.</p>
 <section id="data-format" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="data-format"><span class="header-section-number">8.1</span> Data format</h2>
-<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for storate, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. <a href="#fig-longvswide">Figure&nbsp;<span>8.1</span></a> illustrates the difference between the two formats.</p>
-<div class="cell" data-hash="manova_cache/html/fig-longvswide_0b74a6836391e9373688a44a04661393">
+<p>With repeated measures, it is sometimes convenient to store measurements associated to each experimental condition in different columns of a data frame or spreadsheet, with lines containing participants identifiers. Such data are said to be in <strong>wide format</strong>, since there are multiple measurements in each row. While this format is suitable for storate, many statistical routines will instead expect data to be in <strong>long format</strong>, for which there is a single measurement per line. <a href="#fig-longvswide" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> illustrates the difference between the two formats.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-longvswide" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/original-dfs-tidy.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.1: Long versus wide-format for data tables (illustration by Garrick Aden-Buie).</figcaption>
+<div id="fig-longvswide" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-longvswide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/original-dfs-tidy.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-longvswide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Long versus wide-format for data tables (illustration by Garrick Aden-Buie).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Ideally, a data base in long format with repeated measures would also include a column giving the order in which the treatments were assigned to participants. This is necessary in order to test whether there are fatigue or crossover effects, for example by plotting the residuals after accounting for treatment subject by subject, ordered over time. We could also perform formal tests by including time trends in the model and checking whether the slope is significant.</p>
-<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed <a href="completely_randomized_trials.html#sec-modelassumptionsindependence"><span>Section&nbsp;3.4.4</span></a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
+<p>Overall, the biggest difference with within-subject designs is that observations are correlated whereas we assumed measurements were independent until now. This needs to be explicitly accounted for, as correlation has an important impact on testing as discussed <a href="completely_randomized_trials.html#sec-modelassumptionsindependence" class="quarto-xref"><span>Section 3.4.4</span></a>: failing to account for correlation leads to <span class="math inline">\(p\)</span>-values that are much too low. To see why, think about a stupid setting under which we duplicate every observation in the database: the estimated marginal means will be the same, but the variance will be halved despite the fact there is no additional information. Intuitively, correlation reduces the amount of information provided by each individual: if we have repeated measures from participants, we expect the effective sample size to be anywhere between the total number of subjects and the total number of observations.</p>
 </section>
 <section id="mathematical-complement" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="mathematical-complement"><span class="header-section-number">8.2</span> Mathematical complement</h2>
@@ -333,8 +372,8 @@ div.csl-indent {
 <p>In order to fit a model with a multivariate response, we first need to pivot the data into wider format so as to have a matrix with rows for the number of subjects and <span class="math inline">\(M\)</span> columns for the number of response variables.</p>
 <p>Once the data are in a suitable format, we fit the multivariate model with the <code>lm</code> function using the sum-to-zero constraints, here imposed globally by changing the <code>contrasts</code> option. Syntax-wise, the only difference with the univariate case is that the response on the left of the tilde sign (<code>~</code>) is now a matrix composed by binding together the vectors with the different responses.</p>
 <div id="exm-happyfakemulti" class="theorem example">
-<p><span class="theorem-title"><strong>Example 8.1 (A multivariate take on “Happy fakes”) </strong></span>We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-3_a6b72fb99675c2270002a695c6466887">
+<p><span class="theorem-title"><strong>Example 8.1 (A multivariate take on “Happy fakes”)</strong></span> We use the data from Amirabdolahian and Ali-Adeeb (2021), but this time treating the averaged repeated measures for the different stimulus as a multivariate response. We first pivot the data to wide format, then fit the multivariate linear model.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(AA21, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute mean per subject</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>AA21_m <span class="ot">&lt;-</span> AA21 <span class="sc">|&gt;</span></span>
@@ -357,7 +396,7 @@ argument.</code></pre>
 </div>
 <p>Since the within-subject factor <code>stimulus</code> disappeared when we consider the multivariate response, we only specify a global mean vector <span class="math inline">\(\boldsymbol{\mu}\)</span> via <code>~1</code>. In general, we would add the between-subject factors to the right-hand side of the equation. Our hypothesis of equal mean translates into the hypothesis <span class="math inline">\(\boldsymbol{\mu} = \mu\boldsymbol{1}_3\)</span>, which can be imposed using a call to <code>anova</code>. The output returns the statistic and <span class="math inline">\(p\)</span>-values including corrections for sphericity.</p>
 <p>We can also use <code>emmeans</code> to set up post-hoc contrasts. Since we have no variable, we need to set in <code>specs</code> the repeated measure variable appearing on the left hand side of the formula; the latter is labelled <code>rep.meas</code> by default.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-4_bff54bcd822eba1be54d5a46f7c249c6">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the multivariate model against</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># equal mean (X = ~1)</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mlm, <span class="at">X =</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">test =</span> <span class="st">"Spherical"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -376,14 +415,9 @@ Huynh-Feldt epsilon:        0.8515
 Residuals   11                                             </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Follow-up contrast comparisons</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Welcome to emmeans.
-Caution: You lose important information if you filter this package's results.
-See '? untidy'</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>emm_mlm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mlm, <span class="at">specs =</span> <span class="st">"rep.meas"</span>) </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>emm_mlm <span class="sc">|&gt;</span> <span class="fu">contrast</span>(<span class="at">method =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>emm_mlm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mlm, <span class="at">specs =</span> <span class="st">"rep.meas"</span>) </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>emm_mlm <span class="sc">|&gt;</span> <span class="fu">contrast</span>(<span class="at">method =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="fl">0.5</span>,<span class="sc">-</span><span class="fl">0.5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> contrast         estimate    SE df t.ratio p.value
  c(1, -0.5, -0.5)   -0.202 0.552 11  -0.366  0.7213</code></pre>
@@ -392,22 +426,22 @@ See '? untidy'</code></pre>
 <p>We can check that the output is the same in this case as the within-subject analysis of variance model fitted previously with the <code>afex</code> package.</p>
 </div>
 <div id="exm-baumann-multi" class="theorem example">
-<p><span class="theorem-title"><strong>Example 8.2 (Teaching to read) </strong></span>We consider a between-subject repeated measure multivariate analysis of variance model with the <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).</p>
+<p><span class="theorem-title"><strong>Example 8.2 (Teaching to read)</strong></span> We consider a between-subject repeated measure multivariate analysis of variance model with the <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The data are balanced by experimental condition and they include the results of three tests performed after the intervention: an error detection task, an expanded comprehension monitoring questionnaire and a cloze test. Note that the scale of the tests are different (16, 18 and 56).</p>
 <p>We could obtain the estimated covariance matrix of the fitted model by extracting the residuals <span class="math inline">\(Y_{ik} - \widehat{\mu}_k\)</span> and computing the empirical covariance. The results shows a strong dependence between tests 1 and 3 (correlation of 0.39), but much weaker dependence with test 2.</p>
 <p>Let us compute the multivariate analysis of variance model</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-5_0aa1f97a869e6c491fa6e8a3221622ae">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BSJ92, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sum-to-zero parametrization</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit MANOVA model</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>mmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(posttest1, posttest2, posttest3) <span class="sc">~</span> group,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> BSJ92)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate multivariate test</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>mtest <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Anova</span>(mmod, <span class="at">test =</span> <span class="st">"Wilks"</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># mtest</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all statistics and univariate tests</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(car<span class="sc">::</span><span class="fu">Anova</span>(mmod), <span class="at">univariate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BSJ92, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Force sum-to-zero parametrization</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit MANOVA model</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>mmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(posttest1, posttest2, posttest3) <span class="sc">~</span> group,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> BSJ92)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate multivariate test</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>mtest <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Anova</span>(mmod, <span class="at">test =</span> <span class="st">"Wilks"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># mtest</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all statistics and univariate tests</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(car<span class="sc">::</span><span class="fu">Anova</span>(mmod), <span class="at">univariate =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Type II MANOVA Tests:
@@ -454,17 +488,21 @@ group 0.00734676 0.00058043 0.01515115</code></pre>
 <p>By default, we get Pillai’s trace statistic. Here, there is clear evidence of differences between groups of observations regardless of the statistic being used.</p>
 <p>We can compute effect size as before by passing the table, for example using <code>eta_squared(mtest)</code> to get the effect size of the multivariate test, or simple the model to get the individual variable effect sizes.</p>
 <p>Having found a difference, one could in principle investigate for which component of the response they are by performing univariate analysis of variance and accounting for multiple testing using, e.g., Bonferroni’s correction. A more fruitful avenue if you are trying to discriminate is to use descriptive discriminant analysis as a follow-up, which computes the best fitting hyperplanes that separate groups.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-6_930fd656c77dd85b0ad94e6f169c1e03">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">lda</span>(group <span class="sc">~</span> posttest1 <span class="sc">+</span> posttest2 <span class="sc">+</span> posttest3,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> BSJ92)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">lda</span>(group <span class="sc">~</span> posttest1 <span class="sc">+</span> posttest2 <span class="sc">+</span> posttest3,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> BSJ92)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This amounts to compute the weights <span class="math inline">\(\boldsymbol{w}\)</span> such, that, computing <span class="math inline">\(\boldsymbol{w}^\top\boldsymbol{Y}\)</span> creating a composite score by adding up weighted components that leads to maximal separation between groups. <a href="#fig-lindiscrim">Figure&nbsp;<span>8.2</span></a> shows the new coordinates.</p>
-<div class="cell" data-hash="manova_cache/html/fig-lindiscrim_139d87b5cab5eeb23db3c1a7d41ba7e8">
+<p>This amounts to compute the weights <span class="math inline">\(\boldsymbol{w}\)</span> such, that, computing <span class="math inline">\(\boldsymbol{w}^\top\boldsymbol{Y}\)</span> creating a composite score by adding up weighted components that leads to maximal separation between groups. <a href="#fig-lindiscrim" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> shows the new coordinates.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-lindiscrim" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="manova_files/figure-html/fig-lindiscrim-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;8.2: Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group.</figcaption>
+<div id="fig-lindiscrim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lindiscrim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="manova_files/figure-html/fig-lindiscrim-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lindiscrim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: Scatterplot of observations projected onto the linear discriminants for the post-experiment tests, by group.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -476,11 +514,11 @@ group 0.00734676 0.00058043 0.01515115</code></pre>
 <h2 data-number="8.4" class="anchored" data-anchor-id="model-assumptions"><span class="header-section-number">8.4</span> Model assumptions</h2>
 <p>In addition to the usual model assumptions (independence of measurements from different subjects, equal variance, additivity, etc.), the MANOVA model adds two hypothesis that altogether determine how reliable our <span class="math inline">\(p\)</span>-values and conclusions are.</p>
 <p>The first assumption is that of multivariate normality of the response. The central limit theorem can be applied to a multivariate response, but the sample size needed overall to reliably estimate the correlation and variance is larger than in the univariate setting. This hypothesis can be tested using the Shapiro-Wilk normality test (null hypothesis is that of normality) by passing the residuals of the multivariate model. Such a test can lead to rejection of the null hypothesis when specific variables are far from normal, or when the dependence structure isn’t the one exhibited by a multivariate normal model. With decent sample sizes (say <span class="math inline">\(n=50\)</span> per group), this assumption isn’t as important as others.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-8_fe0fe7a761752cbc52aa24eefd9863a2">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Must transpose the residuals </span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to get a 3 by n matrix</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>mvnormtest<span class="sc">::</span><span class="fu">mshapiro.test</span>(<span class="at">U =</span> <span class="fu">t</span>(<span class="fu">resid</span>(mmod)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk normality test</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Must transpose the residuals </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to get a 3 by n matrix</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mvnormtest<span class="sc">::</span><span class="fu">mshapiro.test</span>(<span class="at">U =</span> <span class="fu">t</span>(<span class="fu">resid</span>(mmod)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -490,11 +528,11 @@ W = 0.96464, p-value = 0.05678</code></pre>
 </div>
 </div>
 <p>The second assumption is that the covariance matrix is the same for all individuals, regardless of their experimental group assignment. We could try checking whether a covariance model in each group: under multivariate normal assumption, this leads to a test statistic called Box’s <span class="math inline">\(M\)</span> test. Unfortunately, this test is quite sensitive to departures from the multivariate normal assumption and, if the <span class="math inline">\(p\)</span>-value is small, it may have to do more with the normality than the heterogeneity.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-9_d63b54011b5b21c9b915d6a9adca5a0f">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(BSJ92, </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     biotools<span class="sc">::</span><span class="fu">boxM</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> <span class="fu">cbind</span>(posttest1, posttest2, posttest3),</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">grouping =</span> group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(BSJ92, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>     biotools<span class="sc">::</span><span class="fu">boxM</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> <span class="fu">cbind</span>(posttest1, posttest2, posttest3),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">grouping =</span> group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box's M-test for Homogeneity of Covariance Matrices
@@ -509,9 +547,9 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 <h2 data-number="8.5" class="anchored" data-anchor-id="power-and-effect-size"><span class="header-section-number">8.5</span> Power and effect size</h2>
 <p>Since all of the multivariate statistics can be transformed for a comparison with a univariate <span class="math inline">\(\mathsf{F}\)</span> distribution, we can estimate partial effect size as before. The package <code>effectsize</code> offers a measure of partial <span class="math inline">\(\widehat{\eta}^2\)</span> for the multivariate tests.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>Power calculations are beyond the reach of ordinary software as one needs to specify the variance of each observation, their correlation and their mean. Simulation is an obvious way for this kind of design to obtain answers, but the free <strong>G</strong><span class="math inline">\({}^{*}\)</span><strong>Power</strong> software <span class="citation" data-cites="GPower3">(<a href="references.html#ref-GPower3" role="doc-biblioref">Faul et al. 2007</a>)</span> also offers some tools. See also <span class="citation" data-cites="Lauter:1978">Läuter (<a href="references.html#ref-Lauter:1978" role="doc-biblioref">1978</a>)</span> for pairwise comparisons: to achieve a power of 80%, we need the following number of replicates per group <span class="math inline">\(j=1, \ldots, J\)</span>, which shows that the number increases rapidly with the dimension of the response vector <span class="math inline">\(p\)</span>. As usual, smaller effect sizes are more difficult to detect.</p>
-<div class="cell" data-hash="manova_cache/html/tablepowersamplesize_7d08e49d25ab5e82847cec8d0d49d2ff">
+<div class="cell">
 <div class="cell-output-display">
-<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="lightable-classic caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <colgroup>
 <col style="width: 7%">
 <col style="width: 7%">
@@ -624,8 +662,8 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 </div>
 </div>
 <div id="exm-avc" class="theorem example">
-<p><span class="theorem-title"><strong>Example 8.3 (Disclosure formats for companies) </strong></span>The data presented in this example vignette is inspired by a study from <span class="citation" data-cites="Anandarajan:2002">Anandarajan, Viger, and Curatola (<a href="references.html#ref-Anandarajan:2002" role="doc-biblioref">2002</a>)</span>, who looked at the impact of communication means through different disclosure format on the perceived risk of organization on the brink of bankruptcy in accountancy. There is a single between-subject factor for the disclore format, and three measures of the performance, ratings for the interest rate premium assessed, for the ability to service debt and that to improve profitability. We first load the data from the package and inspect the content.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-10_607f1677e3f586d5afde8b2caf4601aa">
+<p><span class="theorem-title"><strong>Example 8.3 (Disclosure formats for companies)</strong></span> The data presented in this example vignette is inspired by a study from <span class="citation" data-cites="Anandarajan:2002">Anandarajan, Viger, and Curatola (<a href="references.html#ref-Anandarajan:2002" role="doc-biblioref">2002</a>)</span>, who looked at the impact of communication means through different disclosure format on the perceived risk of organization on the brink of bankruptcy in accountancy. There is a single between-subject factor for the disclore format, and three measures of the performance, ratings for the interest rate premium assessed, for the ability to service debt and that to improve profitability. We first load the data from the package and inspect the content.</p>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [132 × 4] (S3: tbl_df/tbl/data.frame)
  $ format       : Factor w/ 3 levels "integrated note",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -641,10 +679,10 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 </div>
 <p>The data are unbalanced by condition. In general, we need them to be roughly balanced to maximize power. The <code>manova</code> function will not be usable unless data are balanced, and we need to enforce sum-to-zero constraints to get sensible outputs. After this is done, we can fit the multivariate linear model with <code>lm</code> by binding columns on the left of the <code>~</code> sign to gather the response vectors.</p>
 <p>We can check the residual correlation matrix to see if there was a strong dependence between our measurements. The benefit of MANOVA is to be able to leverage this correlation, if any.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-12_ab215e4a32e46b5592029652e11f9d5a">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">resid</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">resid</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-13_425ea55b8fdb7c936804323b915a6e93">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>              prime  debt profitability
 prime          1.00 -0.40         -0.54
@@ -653,7 +691,7 @@ profitability -0.54  0.65          1.00</code></pre>
 </div>
 </div>
 <p>We can look at the global mean for each variable and the estimated mean differences for all groups, including the reference which is omitted. It’s easy to see that the mean differences sum to zero.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-14_282e1f82444232937ec0a2a83087e39a">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Full coefficients are 
                                                                
@@ -675,7 +713,7 @@ format:         modified auditor report
 </div>
 </div>
 <p>Next, we compute the multivariate analysis of variance table and the follow-up with the univariate functions. By default, we can add a multiplicity correction for the tests, using Holm-Bonferonni with option <code>'holm'</code>. For the MANOVA test, there are multiple statistics to pick from, including <code>Pillai</code>, <code>Wilks</code>, <code>Hotelling-Lawley</code> and <code>Roy</code>. The default is <code>Pillai</code>, which is more robust to departures from the model hypothesis, but <code>Wilks</code> is also popular choice among practitioners.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-15_0168aaf207314d90c48795e029fd1d61">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Type II MANOVA Tests: Pillai test statistic
@@ -684,7 +722,7 @@ format  2   0.02581  0.55782      6    256 0.7637</code></pre>
 </div>
 </div>
 <p>We can compute effect sizes overall for the MANOVA statistic using the correspondance with the <span class="math inline">\(F\)</span> distribution, and also the individual effect size variable per variable. Here, the values returned are partial <span class="math inline">\(\widehat{\eta}^2\)</span> measures.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-16_e24ccf311484e82a4492e61ae9527bf3">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># Effect Size for ANOVA (Type II)
 
@@ -693,9 +731,6 @@ Parameter | Eta2 (partial) |       95% CI
 format    |           0.01 | [0.00, 1.00]
 
 - One-sided CIs: upper bound fixed at [1.00].</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Argument `effectsize_type` is deprecated. Use `es_type` instead.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Effect Size for ANOVA (Type I)
@@ -708,7 +743,7 @@ profitability |    format |     0.02 | [0.00, 1.00]</code></pre>
 </div>
 </div>
 <p>We can continue with descriptive discriminant analysis for the post-hoc comparisons. To fit the model using the <code>lda</code> function from the <code>MASS</code> package, we swap the role of the experimental factor and responses in the formula. The output shows the weights for the linear combinations.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-17_5bc4b46df32d1d5a439c404e953e778c">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 lda(format ~ prime + debt + profitability, data = AVC02)
@@ -735,7 +770,7 @@ Proportion of trace:
 </div>
 </div>
 <p>Interpretation of these is beyond the scope of the course, but you can find information about linear discriminant analysis in good textbooks <span class="citation" data-cites="Mardia.Kent.Taylor:2024">(e.g., Chapter 12 of <a href="references.html#ref-Mardia.Kent.Taylor:2024" role="doc-biblioref">Mardia, Kent, and Taylor 2024</a>)</span>. The next step before writing about any of our conclusions is to check the model assumptions. As before, we could check for each variable in turn whether the variance are the same in each group. Here, we rather check equality of covariance matrix. The test has typically limited power, but unfortunately is very sensitive to departure from the multivariate normality assumption, so sometimes rejections are simply due to false positive.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-18_9b13f1ac358986b8d33cf70f3aa769b3">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box's M-test for Homogeneity of Covariance Matrices
@@ -745,13 +780,17 @@ Chi-Sq (approx.) = 21.274, df = 12, p-value = 0.0465</code></pre>
 </div>
 </div>
 <p>We get a smallish <span class="math inline">\(p\)</span>-value, and therefore weak evidence against equality of covariance matrices. The data were generated from normal distribution, so the small <span class="math inline">\(p\)</span>-value is likely an artifact of the rounding of the Likert scale. We can test the normality assumption using univariate quantile-quantile plots or tests of normality, including Shapiro-Wilks.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-19_2d36eb2e7c80e93cbc5dac4ce65059e4">
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="manova_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="manova_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We see severe rounding impacts for debt and profitability. There is little to be done about this, but the sample size are large enough that this shouldn’t be too much a concern. We can also test the multivariate normality assumption. The latter supposes that observations in each group have the same mean. To get this, we detrend using multivariate linear model by subtracting the mean of each group. Thus, our input is the matrix of residuals, which must be transposed for the function to work.</p>
-<div class="cell" data-hash="manova_cache/html/unnamed-chunk-20_2add44f4aab5906198558e0603e88994">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -764,7 +803,7 @@ W = 0.96982, p-value = 0.004899</code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Anandarajan:2002" class="csl-entry" role="listitem">
 Anandarajan, Asokan, Chantal Viger, and Anthony P. Curatola. 2002. <span>“An Experimental Investigation of Alternative Going-Concern Reporting Formats: A <span>C</span>anadian Experience.”</span> <em>Canadian Accounting Perspectives</em> 1 (2): 141–62. <a href="https://doi.org/10.1506/5947-NQTC-C3Y5-H46N">https://doi.org/10.1506/5947-NQTC-C3Y5-H46N</a>.
 </div>
@@ -825,18 +864,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -868,11 +896,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -882,8 +949,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -895,7 +971,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -939,6 +1138,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -964,6 +1164,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1025,13 +1251,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./multiway.html" class="pagination-link">
+      <a href="./multiway.html" class="pagination-link" aria-label="Multiway factorial designs">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiway factorial designs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ancova.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ancova.html" class="pagination-link" aria-label="Linear regression models">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1039,4 +1265,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/manova.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

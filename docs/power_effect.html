@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 10&nbsp; Effect sizes and power</title>
+<title>10&nbsp; Effect sizes and power – Experimental design and statistical methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,14 +116,42 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -127,13 +162,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./power_effect.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./power_effect.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Effect sizes and power</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -142,13 +177,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -216,7 +251,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ancova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -264,7 +299,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -285,7 +320,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#additional-r-examples" id="toc-additional-r-examples" class="nav-link" data-scroll-target="#additional-r-examples"><span class="header-section-number">10.3</span> Additional <strong>R</strong> examples</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/power_effect.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/power_effect.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -295,20 +330,25 @@ div.csl-indent {
 
 </header>
 
+
 <p>In social studies, it is common to write a paper containing multiple studies on a similar topic. These may use different designs, with varying sample size. If the studies uses different questionnaires, or change the Likert scale, the results and the mean difference between groups are not directly comparable between experiments.</p>
 <p>We may also wish replicate a study by using the same material and re-run an experiment. For the replication to be somewhat successful (or at least reliable), one needs to determine beforehand how many participants should be recruited in the study.</p>
 <p>We could think for an example of comparing statistics or <span class="math inline">\(p\)</span>-values, which are by construction standardized unit less measures, making them comparable across study. Test statistics show how outlying observed differences between experimental conditions relative to a null hypothesis, typically that of no effect (equal mean in each subgroup). However, statistics are usually a function of both the sample size (the number of observations in each experimental condition) and the effect size (how large the standardized differences between groups are), making them unsuitable for describing differences.</p>
-<div class="cell" data-hash="power_effect_cache/html/fig-effectsize_f56215d5065b71ddce0cfb47017c153c">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-effectsize" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-effectsize-1.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.1: True sampling distribution for a two-sample <span class="math inline">\(t\)</span>-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small (left panel) and large (right panel) sample sizes.</figcaption>
+<div id="fig-effectsize" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effectsize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-effectsize-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effectsize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: True sampling distribution for a two-sample <span class="math inline">\(t\)</span>-test under the alternative (rightmost curve) and null distribution (leftmost curve) with small (left panel) and large (right panel) sample sizes.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-effectsize">Figure&nbsp;<span>10.1</span></a> shows an example with the sampling distributions of the difference in mean under the null (curve centered at zero) and the true alternative (mean difference of two). The area in white under the curve represents the power, which is larger with larger sample size and coincides with smaller average <span class="math inline">\(p\)</span>-values for the testing procedure.</p>
+<p><a href="#fig-effectsize" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> shows an example with the sampling distributions of the difference in mean under the null (curve centered at zero) and the true alternative (mean difference of two). The area in white under the curve represents the power, which is larger with larger sample size and coincides with smaller average <span class="math inline">\(p\)</span>-values for the testing procedure.</p>
 <p>One could argue that, on the surface, every null hypothesis is wrong and that, with a sufficiently large number of observation, all observed differences eventually become “statistically significant”. This has to do with the fact that we become more and more certain of the estimated means of each experimental sub-condition. Statistical significance of a testing procedure does not translate into practical relevance, which itself depends on the scientific question at hand. For example, consider the development of a new drug for commercialization by Health Canada: what is the minimum difference between two treatments that would be large enough to justify commercialization of the new drug? If the effect is small but it leads to many lives saved, would it still be relevant? Such decision involve a trade-off between efficacy of new treatment relative to the status quo, the cost of the drug, the magnitude of the improvement, etc.</p>
 <p>Effect size are summaries to inform about the standardized magnitude of these differences; they are used to combine results of multiple experiments using meta-analysis, or to calculate sample size requirements to replicate an effect in power studies.</p>
 <section id="effect-sizes" class="level2" data-number="10.1">
@@ -323,11 +363,10 @@ T =  \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} \left(\frac{1}{n
 <p>The difference <span class="math inline">\(d=(\mu_1-\mu_2)/\sigma\)</span> has an obvious interpretation: a distance of <span class="math inline">\(a\)</span> indicates that the means of the two groups are <span class="math inline">\(a\)</span> standard deviation apart. Cohen’s <span class="math inline">\(d\)</span> is sometimes loosely categorized in terms of weak (<span class="math inline">\(d = 0.2\)</span>), medium (<span class="math inline">\(d=0.5\)</span>) and large (<span class="math inline">\(d=0.8\)</span>) effect size; these, much like arbitrary <span class="math inline">\(p\)</span>-value cutoffs, are rules of thumbs. Alongside <span class="math inline">\(d\)</span>, there are many commonly reported metrics that are simple transformations of <span class="math inline">\(d\)</span> describing the observed difference. This interactive <a href="https://rpsychologist.com/cohend/">applet</a> by Kristoffer Magnusson <span class="citation" data-cites="magnussonCohend">(<a href="references.html#ref-magnussonCohend" role="doc-biblioref">Magnusson 2021</a>)</span> shows the visual impact of changing the value of <span class="math inline">\(d\)</span> along. There are different estimators of <span class="math inline">\(d\)</span> depending on whether or not the pooled variance estimator is used. Cohen’s <span class="math inline">\(d\)</span>, is upward biased, meaning it gives values that are on average larger than the truth. Hedge’s <span class="math inline">\(g\)</span> <span class="citation" data-cites="Hedges:1981">(<a href="references.html#ref-Hedges:1981" role="doc-biblioref">Hedges 1981</a>)</span> offers a bias-correction and should always be preferred as an estimator.</p>
 <p>For these different estimators, it is possible to obtain (asymmetric) confidence intervals or tolerance intervals.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="exm-LiuRimMinMin2023E1effect" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.1 (Effect sizes for “The Surprise of Reaching Out”) </strong></span>&nbsp;</p>
-<p>We consider a two-sample <span class="math inline">\(t\)</span>-test for the study of <span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span> discussed in <a href="hypothesis_testing.html#exm-LiuRimMinMin2023E1">Example&nbsp;<span>2.5</span></a>. The difference in average response index is 0.371, indicating that the responder have a higher score. The <span class="math inline">\(p\)</span>-value is 0.041, showing a small effect.</p>
+<p><span class="theorem-title"><strong>Example 10.1 (Effect sizes for “The Surprise of Reaching Out”)</strong></span> We consider a two-sample <span class="math inline">\(t\)</span>-test for the study of <span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span> discussed in <a href="hypothesis_testing.html#exm-LiuRimMinMin2023E1" class="quarto-xref">Example&nbsp;<span>2.5</span></a>. The difference in average response index is 0.371, indicating that the responder have a higher score. The <span class="math inline">\(p\)</span>-value is 0.041, showing a small effect.</p>
 <p>If we consider the standardized difference <span class="math inline">\(d\)</span>, the group means are -0.289 standard deviations apart based on Hedge’s <span class="math inline">\(g\)</span>, with an associated 95% confidence interval of [-0.567, -0.011]: thus, the difference found is small (using <span class="citation" data-cites="Cohen:1988">Cohen (<a href="references.html#ref-Cohen:1988" role="doc-biblioref">1988</a>)</span>’s convention) and there is a large uncertainty surrounding it.</p>
 <p>There is a <span class="math inline">\(42\)</span>% probability that an observation drawn at random from the responder condition will exceed an observation drawn at random of the initiator group (probability of superiority) and <span class="math inline">\(38.6\)</span>% of the responder observations will exceed the median of the initiator (Cohen’s <span class="math inline">\(U_3\)</span>).</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-4_4275c0ed74599b37e8849ee3ce14ce35">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LRMM23_S1, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  appreciation <span class="sc">~</span> role, </span>
@@ -346,7 +385,7 @@ T =  \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} \left(\frac{1}{n
 <p>One common measure employed in software is Cohen’s <em>f</em> <span class="citation" data-cites="Cohen:1988">(<a href="references.html#ref-Cohen:1988" role="doc-biblioref">Cohen 1988</a>)</span>, which for a one-way ANOVA (equal variance <span class="math inline">\(\sigma^2\)</span>) with more than two groups, <span class="math display">\[
 f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigma^2_{\text{effect}}}{\sigma^2},
 \]</span> a weighted sum of squared difference relative to the overall mean <span class="math inline">\(\mu\)</span>. <span class="math inline">\(\sigma^2_{\text{effect}}\)</span> is a measure of the variability that is due to the difference in mean, so standardizing it by the measurement variance gives us a ratio of variance with values higher than one indicating that more variability is explainable, leading to higher effect sizes. If the means of every subgroup is the same, then <span class="math inline">\(f=0\)</span>. For <span class="math inline">\(k=2\)</span> groups, Cohen’s <span class="math inline">\(f\)</span> and Cohen’s <span class="math inline">\(d\)</span> are related via <span class="math inline">\(f=d/2\)</span>.</p>
-<p>Cohen’s <span class="math inline">\(f\)</span> can be directly related to the behaviour of the <span class="math inline">\(F\)</span> statistic under an alternative, as explained in <a href="#sec-power-oneway"><span>Section&nbsp;10.2.1</span></a>. However, since the interpretation isn’t straightforward, we typically consider proportions of variance (rather than ratios of variance).</p>
+<p>Cohen’s <span class="math inline">\(f\)</span> can be directly related to the behaviour of the <span class="math inline">\(F\)</span> statistic under an alternative, as explained in <a href="#sec-power-oneway" class="quarto-xref"><span>Section 10.2.1</span></a>. However, since the interpretation isn’t straightforward, we typically consider proportions of variance (rather than ratios of variance).</p>
 <p>To build such an effect size, we break down the variability that is explained by our experimental manipulation (<span class="math inline">\(\sigma^2_\text{effect}\)</span>), here denoted by effect, from the leftover unexplained part, or residual (<span class="math inline">\(\sigma^2_\text{resid}\)</span>). In a one-way analysis of variance, <span class="math display">\[\sigma^2_{\text{total}} = \sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}\]</span> and the percentage of variability explained by the <span class="math inline">\(\text{effect}\)</span>. <span class="math display">\[\eta^2 = \frac{\text{explained variability}}{\text{total variability}}= \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}} = \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{total}}}.\]</span> Simple arithmetic manipulations reveal that <span class="math inline">\(f^2 = \eta^2/(1-\eta^2)\)</span>, so we can relate any proportion of variance in terms of ratio and vice-versa.</p>
 <p>Such an effect size depends on unknown population quantities (the true means of each subgroup, the overall mean and the variance). There are multiple alternative estimators to estimate <span class="math inline">\(\eta^2\)</span>, and researchers are often carefree when reporting as to which is used. To disambiguate, I will put <span class="math inline">\(\hat{\eta}^2\)</span> to denote an estimator. To make an analogy, there are many different recipes (estimators) that can lead to a particular cake, but some may lead to a mixing that is on average too wet if they are not well calibrated.</p>
 <p>The default estimator for <span class="math inline">\(\eta^2\)</span> is the coefficient of determination of the linear regression, denoted <span class="math inline">\(\widehat{R}^2\)</span> or <span class="math inline">\(\widehat{\eta}^2\)</span>. The latter can be reconstructed from the analysis of variance table using the formula <span class="math display">\[
@@ -354,8 +393,8 @@ f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigm
 \]</span> where for the one-way ANOVA <span class="math inline">\(\nu_1 = K-1\)</span> and <span class="math inline">\(\nu_2 = n-K\)</span> are the degrees of freedom of a design with <span class="math inline">\(n\)</span> observations and <span class="math inline">\(K\)</span> experimental conditions.</p>
 <p>Unfortunately, <span class="math inline">\(\widehat{R}{}^2\)</span> is an upward biased estimator (too large on average), leading to optimistic measures. Another estimator of <span class="math inline">\(\eta^2\)</span> that is recommended in <span class="citation" data-cites="Keppel/Wickens:2004">Keppel and Wickens (<a href="references.html#ref-Keppel/Wickens:2004" role="doc-biblioref">2004</a>)</span> for power calculations is <span class="math inline">\(\widehat{\omega}^2\)</span>, which is <span class="math display">\[\widehat{\omega}^2 = \frac{\nu_1 (F-1)}{\nu_1(F-1)+n}.\]</span> Since the <span class="math inline">\(F\)</span> statistic is approximately 1 on average, this measure removes the mode. Both <span class="math inline">\(\widehat{\omega}^2\)</span> and <span class="math inline">\(\widehat{\epsilon}^2\)</span> have been reported to be less biased and thus preferable as estimators of the true proportion of variance <span class="citation" data-cites="Lakens:2013">(<a href="references.html#ref-Lakens:2013" role="doc-biblioref">Lakens 2013</a>)</span>.</p>
 <div id="exm-calculation-effect-anova" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.2 (Computing effect size for a between-subject one-way ANOVA) </strong></span>Consider the one-way analysis of variance model for the “Degrees of Reading Power” cloze test, from <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The response records the number of correctly answered items, ranging from 0 to 56.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-5_4fb7d3bcacf5bc002805fd0a572ab2bb">
+<p><span class="theorem-title"><strong>Example 10.2 (Computing effect size for a between-subject one-way ANOVA)</strong></span> Consider the one-way analysis of variance model for the “Degrees of Reading Power” cloze test, from <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The response records the number of correctly answered items, ranging from 0 to 56.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BSJ92, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit ANOVA model</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mod_post <span class="ot">&lt;-</span> <span class="fu">lm</span>(posttest3 <span class="sc">~</span> group, <span class="at">data =</span> BSJ92)</span>
@@ -389,7 +428,7 @@ f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigm
 </div>
 </div>
 <p>We can also compute effect size for contrasts. Since these take individual the form of <span class="math inline">\(t\)</span>-tests, we can use <code>emmeans</code> to obtain corresponding effect sizes, which are Cohen’s <span class="math inline">\(d\)</span>.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-6_1a4eeed852b5eebccbda621812b5aa62">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod_post, <span class="at">specs =</span> <span class="st">"group"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  emmeans<span class="sc">::</span><span class="fu">contrast</span>(<span class="fu">list</span>(<span class="at">C1 =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">C2 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>))) <span class="sc">|&gt;</span></span>
@@ -414,8 +453,8 @@ Confidence level used: 0.95 </code></pre>
 <p>Lastly, it is customary to report effect sizes that include the variability of blocking factors and random effects, leading to so-called <strong>generalized</strong> effect sizes. Include the variance of all blocking factors and interactions (only with the effect!) in the denominator.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p>For example, if <span class="math inline">\(A\)</span> is the experimental factor whose main effect is of interest, <span class="math inline">\(B\)</span> is a blocking factor and <span class="math inline">\(C\)</span> is another experimental factor, use <span class="math display">\[\eta_{\langle A \rangle}^2 = \frac{\sigma^2_A}{\sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}}.\]</span> as generalized partial effect. The reason for including blocking factors and random effects is that they would not necessarily be available in a replication. The correct effect size measure to calculate and to report depends on the design, and there are numerous estimators that can be utilized. Since they are related to one another, it is oftentimes possible to compute them directly from the output or convert. The formula highlight the importance of reporting (with enough precision) exactly the values of the test statistic.</p>
 <div id="exm-blocking" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.3 </strong></span>In <strong>R</strong>, the <code>effectsize</code> package functions, which are displayed prominently in this chapter, have a <code>generalized</code> argument to which the vector of names of blocking factor can be passed. We use the one-way analysis of variance from <a href="mixed.html#exm-reachingout">Example&nbsp;<span>12.1</span></a> for illustrating the calculation. Once again, the output matches the output of the package.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-8_dfa8cf553778e4ea7c7556dad03e494f">
+<p><span class="theorem-title"><strong>Example 10.3</strong></span> In <strong>R</strong>, the <code>effectsize</code> package functions, which are displayed prominently in this chapter, have a <code>generalized</code> argument to which the vector of names of blocking factor can be passed. We use the one-way analysis of variance from <a href="mixed.html#exm-reachingout" class="quarto-xref">Example&nbsp;<span>12.1</span></a> for illustrating the calculation. Once again, the output matches the output of the package.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod_block <span class="ot">&lt;-</span> <span class="fu">lm</span>(apprec <span class="sc">~</span> role <span class="sc">+</span> dyad, <span class="at">data =</span> LRMM23_S3l)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>anova_tab <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">anova</span>(mod_block))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the generalized effect size - variance are estimated</span></span>
@@ -426,12 +465,9 @@ Confidence level used: 0.95 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can use the 'effectsize' package, specifying the blocking factor</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># through argument 'generalized'</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(<span class="at">model =</span> mod_block, <span class="at">generalized =</span> <span class="st">"dyad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Argument `effectsize_type` is deprecated. Use `es_type` instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the generalized eta-squared effect size for 'role' for comparison</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span>Eta2_generalized[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(<span class="at">model =</span> mod_block, <span class="at">generalized =</span> <span class="st">"dyad"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the generalized eta-squared effect size for 'role' for comparison</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span>Eta2_generalized[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.08802785</code></pre>
 </div>
@@ -447,15 +483,19 @@ Pitfall
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Measures of effect size are estimated based on data, but unlike summary statistics such as the mean and variance, tend to be very noisy in small samples and the uncertainty remains significant for larger samples. To show this, I simulated datasets for a two sample <span class="math inline">\(t\)</span>-test: there is no effect for the control group, but the true effect for the treatment group is <span class="math inline">\(d=0.2\)</span>. With balanced data (<span class="math inline">\(n/2\)</span> observations in each group) power is maximised. <a href="#fig-effectsizedispersion">Figure&nbsp;<span>10.2</span></a> shows the estimated sample size for <span class="math inline">\(B=100\)</span> replications of the experiment at samples of size <span class="math inline">\(n=10, 12, \ldots, 250\)</span>. The horizontal lines at <span class="math inline">\(0\)</span> represent no effect: the proportion of values which show effects that are of opposite sign to the truth is still significant at <span class="math inline">\(n=250\)</span> observations, and the variability seems to decrease very slowly. For smaller samples, the effect sizes are erratic and, although they are centered at the true value, most of them are severely inflated.</p>
+<p>Measures of effect size are estimated based on data, but unlike summary statistics such as the mean and variance, tend to be very noisy in small samples and the uncertainty remains significant for larger samples. To show this, I simulated datasets for a two sample <span class="math inline">\(t\)</span>-test: there is no effect for the control group, but the true effect for the treatment group is <span class="math inline">\(d=0.2\)</span>. With balanced data (<span class="math inline">\(n/2\)</span> observations in each group) power is maximised. <a href="#fig-effectsizedispersion" class="quarto-xref">Figure&nbsp;<span>10.2</span></a> shows the estimated sample size for <span class="math inline">\(B=100\)</span> replications of the experiment at samples of size <span class="math inline">\(n=10, 12, \ldots, 250\)</span>. The horizontal lines at <span class="math inline">\(0\)</span> represent no effect: the proportion of values which show effects that are of opposite sign to the truth is still significant at <span class="math inline">\(n=250\)</span> observations, and the variability seems to decrease very slowly. For smaller samples, the effect sizes are erratic and, although they are centered at the true value, most of them are severely inflated.</p>
 </div>
 </div>
-<div class="cell" data-hash="power_effect_cache/html/fig-effectsizedispersion_51e38811df72af4ffe48064a39b221f9">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-effectsizedispersion" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-effectsizedispersion-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.2: Dispersion of estimated effect size for Cohen’s <span class="math inline">\(d\)</span>, for data with a true mean dispersion of <span class="math inline">\(d=0.2\)</span>, varying the sample size. The full and dashed lines give 95% and 50% confidence intervals for the sampling distribution, respectively.</figcaption>
+<div id="fig-effectsizedispersion" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effectsizedispersion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-effectsizedispersion-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effectsizedispersion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.2: Dispersion of estimated effect size for Cohen’s <span class="math inline">\(d\)</span>, for data with a true mean dispersion of <span class="math inline">\(d=0.2\)</span>, varying the sample size. The full and dashed lines give 95% and 50% confidence intervals for the sampling distribution, respectively.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -469,32 +509,44 @@ Pitfall
 <p>The <strong>power of a test</strong> is the probability of <strong>correctly</strong> rejecting the null hypothesis <span class="math inline">\(\mathscr{H}_0\)</span> when <span class="math inline">\(\mathscr{H}_0\)</span> is false, i.e., <span class="math display">\[\begin{align*}
 \mathsf{Pr}_a(\text{reject} \mathscr{H}_0)
 \end{align*}\]</span> Whereas the null alternative corresponds to a single value (equality in mean), there are infinitely many alternatives… Depending on the alternative models, it is more or less easy to detect that the null hypothesis is false and reject in favour of an alternative. Power is thus a measure of our ability to detect real effects. Different test statistics can give broadly similar conclusions despite being based on different benchmark. Generally, however, there will be a tradeoff between the number of assumptions we make about our data or model (the fewer, the better) and the ability to draw conclusions when there is truly something going on when the null hypothesis is false.</p>
-<div class="cell" data-hash="power_effect_cache/html/fig-power1_e61a5ff37cf9a0056cc59cd9ac4091af">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-power1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-power1-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.3: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).</figcaption>
+<div id="fig-power1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-power1-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.3: Comparison between null distribution (full curve) and a specific alternative for a <em>t</em>-test (dashed line). The power corresponds to the area under the curve of the density of the alternative distribution which is in the rejection area (in white).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-hash="power_effect_cache/html/fig-power2_7ded06fd8db142bfa606685a96f809ef">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-power2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-power2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.4: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).</figcaption>
+<div id="fig-power2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-power2-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.4: Increase in power due to an increase in the mean difference between the null and alternative hypothesis. Power is the area in the rejection region (in white) under the alternative distribution (dashed): the latter is more shifted to the right relative to the null distribution (full line).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-hash="power_effect_cache/html/fig-power3_ae5b9c05c0765c81ec7ee34c54166069">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-power3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-power3-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.5: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.</figcaption>
+<div id="fig-power3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-power3-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.5: Increase of power due to an increase in the sample size or a decrease of standard deviation of the population: the null distribution (full line) is more concentrated. Power is given by the area (white) under the curve of the alternative distribution (dashed). In general, the null distribution changes with the sample size.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -502,8 +554,8 @@ Pitfall
 <p>We want to choose an experimental design and a test statistic that leads to high power, so that this power is as close as possible to one. Under various assumptions about the distribution of the original data, we can derive optimal tests that are most powerful, but some of the power comes from imposing more structure and these assumptions need not be satisfied in practice.</p>
 <p>Minimally, the power of the test should be <span class="math inline">\(\alpha\)</span> because we reject the null hypothesis <span class="math inline">\(\alpha\)</span> fraction of the time even when <span class="math inline">\(\mathscr{H}_0\)</span> is true. Power depends on many criteria, notably</p>
 <ul>
-<li>the effect size: the bigger the difference between the postulated value for <span class="math inline">\(\theta_0\)</span> under <span class="math inline">\(\mathscr{H}_0\)</span> and the observed behaviour, the easier it is to detect departures from <span class="math inline">\(\theta_0\)</span>. (<a href="#fig-power3">Figure&nbsp;<span>10.5</span></a>); it’s easier to spot an elephant in a room than a mouse.</li>
-<li>variability: the less noisy your data, the easier it is to assess that the observed differences are genuine, as <a href="#fig-power2">Figure&nbsp;<span>10.4</span></a> shows;</li>
+<li>the effect size: the bigger the difference between the postulated value for <span class="math inline">\(\theta_0\)</span> under <span class="math inline">\(\mathscr{H}_0\)</span> and the observed behaviour, the easier it is to detect departures from <span class="math inline">\(\theta_0\)</span>. (<a href="#fig-power3" class="quarto-xref">Figure&nbsp;<span>10.5</span></a>); it’s easier to spot an elephant in a room than a mouse.</li>
+<li>variability: the less noisy your data, the easier it is to assess that the observed differences are genuine, as <a href="#fig-power2" class="quarto-xref">Figure&nbsp;<span>10.4</span></a> shows;</li>
 <li>the sample size: the more observation, the higher our ability to detect significative differences because the amount of evidence increases as we gather more observations.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> In experimental designs, the power also depends on how many observations are allocated to each group.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></li>
 <li>the choice of test statistic: there is a plethora of possible statistics to choose from as a summary of the evidence against the null hypothesis. Choosing and designing statistics is usually best left out to statisticians, as there may be tradeoffs. For example, rank-based statistics discard information about the observed values of the response, focusing instead on their relative ranking. The resulting tests are typically less powerful, but they are also less sensible to model assumptions, model misspecification and outliers.</li>
 </ul>
@@ -532,49 +584,53 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 \]</span> and where <span class="math inline">\(f^2\)</span> is the square of Cohen’s <span class="math inline">\(f\)</span>. Under the null hypothesis, all group means are equal and <span class="math inline">\(\mu_j=\mu\)</span> for <span class="math inline">\(j=1, \ldots, K\)</span> and <span class="math inline">\(\Delta=0\)</span>, but if some groups have different average the displacement will be non-zero. The greater <span class="math inline">\(\Delta\)</span>, the further the mode (peak of the distribution) is from unity and the greater the power.</p>
 <p>Closer examination reveals that <span class="math inline">\(\Delta\)</span> increases with <span class="math inline">\(n_j\)</span> (sample size) and with the true squared mean difference <span class="math inline">\((\mu_j-\mu)^2\)</span> increases effect size represented by the difference in mean, but decreases as the observation variance increases.</p>
 <p>Under the alternative, the distribution of the <span class="math inline">\(F\)</span> statistic is a noncentral Fisher distribution, denoted <span class="math inline">\(\mathsf{F}(\nu_1, \nu_2, \Delta)\)</span> with degrees of freedom <span class="math inline">\(\nu_1\)</span> and <span class="math inline">\(\nu_2\)</span> and noncentrality parameter <span class="math inline">\(\Delta\)</span>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> To calculate the power of a test, we need to single out a specific alternative hypothesis.</p>
-<div class="cell" data-hash="power_effect_cache/html/fig-powercurve_5f876b209007013a37bf85eb7eb1310a">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-powercurve" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-powercurve-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.6: Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter <span class="math inline">\(\Delta=3\)</span>. The area in white under the curve denotes the power under this alternative.</figcaption>
+<div id="fig-powercurve" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-powercurve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-powercurve-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-powercurve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.6: Density curves for the null distribution (full line) and true distribution (dashed line) under noncentrality parameter <span class="math inline">\(\Delta=3\)</span>. The area in white under the curve denotes the power under this alternative.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The plot in <a href="#fig-powercurve">Figure&nbsp;<span>10.6</span></a> shows the null (full line) distribution and the true distribution (dashed line) for a particular alternative. The noncentral <span class="math inline">\(\mathsf{F}\)</span> is shifted to the right and right skewed, so the mode (peak) is further away from 1.</p>
+<p>The plot in <a href="#fig-powercurve" class="quarto-xref">Figure&nbsp;<span>10.6</span></a> shows the null (full line) distribution and the true distribution (dashed line) for a particular alternative. The noncentral <span class="math inline">\(\mathsf{F}\)</span> is shifted to the right and right skewed, so the mode (peak) is further away from 1.</p>
 <p>Given a value of <span class="math inline">\(\Delta=nf^2\)</span> and information about the effect of interest (degrees of freedom of the effect and the residuals), we can compute the tail probability as follows</p>
 <ol type="1">
 <li>Compute the cutoff point: the value under <span class="math inline">\(\mathscr{H}_0\)</span> that leads to rejection at level <span class="math inline">\(\alpha\)</span></li>
 <li>Compute probability below the alternative curve, from the cutoff onwards.</li>
 </ol>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-15_2a85febc88e28dab717f9c450840c250">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="at">p =</span> <span class="dv">1</span><span class="sc">-</span>alpha, <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pf</span>(<span class="at">q =</span> cutoff,  <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2, </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncp =</span> Delta, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cutoff <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="at">p =</span> <span class="dv">1</span><span class="sc">-</span>alpha, <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pf</span>(<span class="at">q =</span> cutoff,  <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ncp =</span> Delta, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="power-calculations" class="level3" data-number="10.2.2">
 <h3 data-number="10.2.2" class="anchored" data-anchor-id="power-calculations"><span class="header-section-number">10.2.2</span> Power calculations</h3>
 <p>In practice, a software will return these quantities and inform us about the power. Note that these results are trustworthy provided the model assumptions are met, otherwise they may be misleading.</p>
-<p>The most difficult question when trying to estimate sample size for a study is determining which value to use for the effect size. One could opt for a value reported elsewhere for a similar scale to estimate the variability and provide educated guesses for the mean differences. Another option is to run a pilot study and use the resulting estimates to inform about sensible values, perhaps using confidence intervals to see the range of plausible effect sizes. Keep in mind the findings from <a href="#fig-effectsizedispersion">Figure&nbsp;<span>10.2</span></a>.</p>
+<p>The most difficult question when trying to estimate sample size for a study is determining which value to use for the effect size. One could opt for a value reported elsewhere for a similar scale to estimate the variability and provide educated guesses for the mean differences. Another option is to run a pilot study and use the resulting estimates to inform about sensible values, perhaps using confidence intervals to see the range of plausible effect sizes. Keep in mind the findings from <a href="#fig-effectsizedispersion" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>.</p>
 <p>Reliance on estimated effect sizes reported in the literature is debatable: many such effects are inflated as a result of the file-drawer problem and, as such, can lead to unreasonably high expectations about power.</p>
 <p>The <code>WebPower</code> package in <strong>R</strong> offers a comprehensive solution for conducting power studies, as does the free software <a href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>. We present a range of examples from a replication study: the following quotes are taken from the <a href="https://osf.io/ezcuj/">Reproducibility Project: Psychology</a>.</p>
 <div id="exm-poweranova1" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.4 (Power calculation for between subject ANOVA) </strong></span>The following extract of <a href="https://osf.io/sd4uv/">Jesse Chandler’s replication</a> concerns Study 4b by <span class="citation" data-cites="Janiszewski.Uy:2008">Janiszewski and Uy (<a href="references.html#ref-Janiszewski.Uy:2008" role="doc-biblioref">2008</a>)</span>, which considers a <span class="math inline">\(2 \times 2\)</span> between-subject ANOVA.</p>
+<p><span class="theorem-title"><strong>Example 10.4 (Power calculation for between subject ANOVA)</strong></span> The following extract of <a href="https://osf.io/sd4uv/">Jesse Chandler’s replication</a> concerns Study 4b by <span class="citation" data-cites="Janiszewski.Uy:2008">Janiszewski and Uy (<a href="references.html#ref-Janiszewski.Uy:2008" role="doc-biblioref">2008</a>)</span>, which considers a <span class="math inline">\(2 \times 2\)</span> between-subject ANOVA.</p>
 <blockquote class="blockquote">
 <p>In Study 4a there are two effects of theoretical interest, a substantial main effect of anchor precision that replicates the first three studies and a small interaction (between precision and motivation within which people can adjust) that is not central to the paper. The main effect of anchor precision (effect size <span class="math inline">\(\eta^2_p=0.55\)</span>) would require a sample size of <span class="math inline">\(10\)</span> for <span class="math inline">\(80\)</span>% power, <span class="math inline">\(12\)</span> for <span class="math inline">\(90\)</span>% power, and <span class="math inline">\(14\)</span> for <span class="math inline">\(95\)</span>% power. The interaction (effect size <span class="math inline">\(\eta^2_p=0.11\)</span>) would require a sample size of <span class="math inline">\(65\)</span> for <span class="math inline">\(80\)</span>% power, <span class="math inline">\(87\)</span> for <span class="math inline">\(90\)</span>% power, and <span class="math inline">\(107\)</span> for <span class="math inline">\(95\)</span>% power. There was also a theoretically uninteresting main effect of motivation (people adjust more when told to adjust more).</p>
 </blockquote>
 <p>In order to replicate, we must first convert estimates of <span class="math inline">\(\eta^2_p\)</span> to Cohen’s <span class="math inline">\(f\)</span>, which is the input accepted by both <code>WebPower</code> and G*Power. We compute the sample size for power 95% for both the main effect and the interaction: in practice, we would pick the smaller of the two (or equivalently the larger resulting sample size estimate) should we wish to replicate both findings.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-16_c1e42e88ac3be6bf5627ce23c90a6c4d">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.55</span>) <span class="co"># convert eta-squared to Cohen's f</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ng <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># number of groups for the ANOVA</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling</span>(WebPower<span class="sc">::</span><span class="fu">wp.kanova</span>(<span class="at">ndf =</span> <span class="dv">1</span>, <span class="at">ng =</span> ng, <span class="at">f =</span> f, <span class="at">power =</span> <span class="fl">0.95</span>)<span class="sc">$</span>n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.55</span>) <span class="co"># convert eta-squared to Cohen's f</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ng <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># number of groups for the ANOVA</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling</span>(WebPower<span class="sc">::</span><span class="fu">wp.kanova</span>(<span class="at">ndf =</span> <span class="dv">1</span>, <span class="at">ng =</span> ng, <span class="at">f =</span> f, <span class="at">power =</span> <span class="fl">0.95</span>)<span class="sc">$</span>n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 14</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.11</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling</span>(WebPower<span class="sc">::</span><span class="fu">wp.kanova</span>(<span class="at">ndf =</span> <span class="dv">1</span>, <span class="at">ng =</span> ng, <span class="at">f =</span> f, <span class="at">power =</span> <span class="fl">0.95</span>)<span class="sc">$</span>n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.11</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ceiling</span>(WebPower<span class="sc">::</span><span class="fu">wp.kanova</span>(<span class="at">ndf =</span> <span class="dv">1</span>, <span class="at">ng =</span> ng, <span class="at">f =</span> f, <span class="at">power =</span> <span class="fl">0.95</span>)<span class="sc">$</span>n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 108</code></pre>
 </div>
@@ -582,54 +638,62 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 <p>We can see that the numbers match the calculations from the replication (up to rounding).</p>
 </div>
 <div id="exm-power-within" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.5 (Power calculation for mixed design) </strong></span>Repeated measures ANOVA have different characteristics from between-subject design in that measurements are correlated, and we can also provide correction for sphericity. These additional parameters need to specified by users. In <code>WebPower</code>, the <code>wp.rmanova</code> function. We need to specify the number of measurements per person, the number of groups, the value <span class="math inline">\(\epsilon\)</span> for the sphericity correction, e.g., the output of Greenhouse–Geisser or Huynh–Feldt and the type of effect for between-subject factor, within-subject factor or an interaction between the two.</p>
+<p><span class="theorem-title"><strong>Example 10.5 (Power calculation for mixed design)</strong></span> Repeated measures ANOVA have different characteristics from between-subject design in that measurements are correlated, and we can also provide correction for sphericity. These additional parameters need to specified by users. In <code>WebPower</code>, the <code>wp.rmanova</code> function. We need to specify the number of measurements per person, the number of groups, the value <span class="math inline">\(\epsilon\)</span> for the sphericity correction, e.g., the output of Greenhouse–Geisser or Huynh–Feldt and the type of effect for between-subject factor, within-subject factor or an interaction between the two.</p>
 <blockquote class="blockquote">
 <p>The result that is object of this replication is the interaction between item strength (massed vs.&nbsp;spaced presentation) and condition (directed forgetting vs.&nbsp;control). The dependent variable is the proportion of correctly remembered items from the stimulus set (List 1). “(..) The interaction was significant, <span class="math inline">\(F(1,94)=4.97\)</span>, <span class="math inline">\(p &lt;.05\)</span>, <span class="math inline">\(\mathrm{MSE} =0.029\)</span>, <span class="math inline">\(\eta^2=0.05\)</span>, (…)”. (p.&nbsp;412). Power analysis (G*Power (Version 3.1): ANOVA: Repeated measures, within-between interaction with a zero correlation between the repeated measures) indicated that sample sizes for <span class="math inline">\(80\)</span>%, <span class="math inline">\(90\)</span>% and <span class="math inline">\(95\)</span>% power were respectively <span class="math inline">\(78\)</span>, <span class="math inline">\(102\)</span> and <span class="math inline">\(126\)</span>.</p>
 </blockquote>
 <p>We are thus considering a <span class="math inline">\(2 \times 2\)</span> within-between design. The estimated effect size is <span class="math inline">\(\widehat{\eta}^2_p=0.05\)</span>, with Cohen’s <span class="math inline">\(f\)</span>, where the value is multiplied by a constant <span class="math inline">\(C\)</span>; <a href="https://webpower.psychstat.org/wiki/manual/power_of_rmanova">see the WebPower page</a> which depends on the number of groups, the number of repeated measurements <span class="math inline">\(K\)</span> and their correlation <span class="math inline">\(\rho\)</span>. For the interaction, the correction factor is <span class="math inline">\(C = \sqrt{K/(1-\rho)}\)</span>: taking <span class="math inline">\(K=2\)</span> and <span class="math inline">\(\rho=0\)</span>, we get a Cohen’s <span class="math inline">\(f\)</span> of 0.23. We calculate the sample size for a power of 90% changing <span class="math inline">\(\rho\)</span>: if we change the correlation in the calculation from zero to <span class="math inline">\(0.5\)</span>, we can see that there is a significant decrease in the sample size.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-17_f556377d81045bfd616cd8de034cd981">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.05</span>) <span class="co"># convert eta-squared to Cohen's f</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># correlation between measurements</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> 2L <span class="co"># number of repeated measurements</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(WebPower<span class="sc">::</span><span class="fu">wp.rmanova</span>(<span class="at">type =</span> <span class="dv">2</span>, <span class="co"># interaction </span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">nm =</span> K, <span class="co"># number of measurement per subject</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">ng =</span> <span class="dv">2</span>, <span class="co"># number of groups for between,</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">f =</span> f<span class="sc">*</span><span class="fu">sqrt</span>(K<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho)), <span class="co"># scaled effect size</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">power =</span> <span class="fl">0.9</span>)<span class="sc">$</span>n) <span class="co"># requested power</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.05</span>) <span class="co"># convert eta-squared to Cohen's f</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># correlation between measurements</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">2</span>L <span class="co"># number of repeated measurements</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(WebPower<span class="sc">::</span><span class="fu">wp.rmanova</span>(<span class="at">type =</span> <span class="dv">2</span>, <span class="co"># interaction </span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">nm =</span> K, <span class="co"># number of measurement per subject</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">ng =</span> <span class="dv">2</span>, <span class="co"># number of groups for between,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">f =</span> f<span class="sc">*</span><span class="fu">sqrt</span>(K<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho)), <span class="co"># scaled effect size</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">power =</span> <span class="fl">0.9</span>)<span class="sc">$</span>n) <span class="co"># requested power</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 102</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="power_effect_cache/html/fig-GPower_83a8e735988d557d2bd13254c6c2badb">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-GPower" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/GPower.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.7: Screenshot of G*Power for the calculation of the sample size to replicate the interaction in a repeated measures (within-between) analysis of variance.</figcaption>
+<div id="fig-GPower" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-GPower-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/GPower.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-GPower-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.7: Screenshot of G*Power for the calculation of the sample size to replicate the interaction in a repeated measures (within-between) analysis of variance.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="power_effect_cache/html/fig-rmanova_af3f96223ebd9d5b950626b5f56974d4">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-rmanova" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="power_effect_files/figure-html/fig-rmanova-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;10.8: Sample size requirement for a within-between interaction in a two by two (within-between) ANOVA with an effect size of <span class="math inline">\(\widehat{\eta}^2_p = 0.05\)</span> as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer.</figcaption>
+<div id="fig-rmanova" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rmanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="power_effect_files/figure-html/fig-rmanova-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rmanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.8: Sample size requirement for a within-between interaction in a two by two (within-between) ANOVA with an effect size of <span class="math inline">\(\widehat{\eta}^2_p = 0.05\)</span> as a function of correlation and power. The staircase pattern is an artefact of rounding up to the nearest integer.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>We can see that the more correlated the response, the smaller sample size requirement according to <a href="#fig-rmanova">Figure&nbsp;<span>10.8</span></a>. Higher power requirement leads to larger data collection efforts.</p>
+<p>We can see that the more correlated the response, the smaller sample size requirement according to <a href="#fig-rmanova" class="quarto-xref">Figure&nbsp;<span>10.8</span></a>. Higher power requirement leads to larger data collection efforts.</p>
 </div>
 <div id="exm-power-ttest" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.6 (Power calculation for a two sample <span class="math inline">\(t\)</span>-test) </strong></span>We consider a two-sample comparison, as these arise frequently from contrasts. The replication wishes to replicate a study whose estimated effect size was a Cohen’s <span class="math inline">\(d\)</span> of <span class="math inline">\(\widehat{d} = 0.451\)</span>. Using a two-tailed test with a balanced sample and <span class="math inline">\(\alpha = 0.05\)</span> type I error rate, we obtain <span class="math inline">\(258\)</span> participants. Note that some software, as below, report the sample size by group so the total sample size is twice the number reported.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-20_67804c7f402100c9abd1d913d065d6b7">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span><span class="fu">ceiling</span>(WebPower<span class="sc">::</span><span class="fu">wp.t</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">d =</span> <span class="fl">0.451</span>, <span class="co"># Cohen's f</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.95</span>)<span class="sc">$</span>n) <span class="co"># power requirement</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="theorem-title"><strong>Example 10.6 (Power calculation for a two sample <span class="math inline">\(t\)</span>-test)</strong></span> We consider a two-sample comparison, as these arise frequently from contrasts. The replication wishes to replicate a study whose estimated effect size was a Cohen’s <span class="math inline">\(d\)</span> of <span class="math inline">\(\widehat{d} = 0.451\)</span>. Using a two-tailed test with a balanced sample and <span class="math inline">\(\alpha = 0.05\)</span> type I error rate, we obtain <span class="math inline">\(258\)</span> participants. Note that some software, as below, report the sample size by group so the total sample size is twice the number reported.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span><span class="fu">ceiling</span>(WebPower<span class="sc">::</span><span class="fu">wp.t</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">d =</span> <span class="fl">0.451</span>, <span class="co"># Cohen's f</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.95</span>)<span class="sc">$</span>n) <span class="co"># power requirement</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 258</code></pre>
 </div>
@@ -661,18 +725,15 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 <p>The <code>effectsize</code> package reports confidence intervals<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> calculated using the pivot method described in <span class="citation" data-cites="Steiger:2004">Steiger (<a href="references.html#ref-Steiger:2004" role="doc-biblioref">2004</a>)</span>. Check the documentation at <code>?effectsize::effectsize_CIs</code> for more technical details.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 <p>In general, confidence intervals for effect sizes are very wide, including a large range of potential values and sometimes zero. This reflects the large uncertainty surrounding their estimation and should not be taken to mean that the estimated effect is null.</p>
 <div id="exm-power1" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.7 (Effect size and power for a one-way ANOVA) </strong></span>We begin with the result of another one-way ANOVA using data from <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. If we consider the global <span class="math inline">\(F\)</span>-test of equality in means, we can report as corresponding effect size the percentage of variance that is explained by the experimental condition, <code>group</code>.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-21_42dd62264a38699ae5e9407784ba01f9">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BSJ92, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(posttest2 <span class="sc">-</span> pretest2 <span class="sc">~</span> group,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> BSJ92)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print_md</span>(<span class="fu">omega_squared</span>(<span class="fu">anova</span>(mod), <span class="at">partial =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Argument `effectsize_type` is deprecated. Use `es_type` instead.</code></pre>
-</div>
+<p><span class="theorem-title"><strong>Example 10.7 (Effect size and power for a one-way ANOVA)</strong></span> We begin with the result of another one-way ANOVA using data from <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. If we consider the global <span class="math inline">\(F\)</span>-test of equality in means, we can report as corresponding effect size the percentage of variance that is explained by the experimental condition, <code>group</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BSJ92, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(posttest2 <span class="sc">-</span> pretest2 <span class="sc">~</span> group,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> BSJ92)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print_md</span>(<span class="fu">omega_squared</span>(<span class="fu">anova</span>(mod), <span class="at">partial =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <caption>Effect Size for ANOVA (Type I)</caption>
 <thead>
 <tr class="header">
@@ -694,26 +755,19 @@ F =  \frac{\text{between sum of squares}/(K-1)}{\text{within sum of squares}/(n-
 </div>
 <p>The estimator employed is <span class="math inline">\(\widehat{\omega}^2\)</span> and could be obtained directly using the formula provided in the slides. For a proportion of variance, the number is medium according to <span class="citation" data-cites="Cohen:1988">Cohen (<a href="references.html#ref-Cohen:1988" role="doc-biblioref">1988</a>)</span> definition. Using <span class="math inline">\(\widehat{R}^2 \equiv \widehat{\eta}^2\)</span> as estimator instead would give an estimated proportion of variance of 0.188, a slightly higher number.</p>
 <p>Having found a significant difference in mean between groups, one could be interested in computing estimated marginal means and contrasts based on the latter. The <code>emmeans</code> function has a method for computing effect size (Cohen’s <span class="math inline">\(d\)</span>) for pairwise differences if provided with the denominator standard deviation <span class="math inline">\(\sigma\)</span> and the degrees of freedom associated with the latter (i.e., how many observations were left from the total sample size after subtracting the number of subgroup means).</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-22_3e1965e2a4adb491fdc1f057b2c0ce0b">
-<div class="cell-output cell-output-stderr">
-<pre><code>Welcome to emmeans.
-Caution: You lose important information if you filter this package's results.
-See '? untidy'</code></pre>
-</div>
-</div>
 <p>The confidence intervals reported by <code>emmeans</code> for <span class="math inline">\(t\)</span>-tests are symmetric and different in nature from the one obtained previously.</p>
 <p>Technical aside: while it is possible to create a <span class="math inline">\(t\)</span>-statistic for a constrast by dividing the contrast estimator by it’s standard error, the construction of Cohen’s <span class="math inline">\(d\)</span> here for the contrast consisting of, e.g., the pairwise difference between <code>DRTA</code> and <code>TA</code> would take the form <span class="math display">\[
 d_{\text{DRTA}- \text{TA}} = \frac{\mu_{\text{DRTA}}- \mu_{\text{TA}}}{\sigma},
 \]</span> where the denominator stands for the standard deviation of the observations.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
 </div>
 <div id="exm-power2" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.8 (Sample size for replication studies) </strong></span>Armed with effect sizes and a desired level of power, it is possible to determine the minimum number of observations that would yield such effect. <span class="citation" data-cites="Johnson:2014">Johnson, Cheung, and Donnellan (<a href="references.html#ref-Johnson:2014" role="doc-biblioref">2014</a>)</span> performs a replication study of Schnall, Benton, and Harvey (2008) who conjectured that physical cleanliness reduces the severity of moral judgments. The following excerpt from the paper explain how sample size for the replication were calculated.</p>
+<p><span class="theorem-title"><strong>Example 10.8 (Sample size for replication studies)</strong></span> Armed with effect sizes and a desired level of power, it is possible to determine the minimum number of observations that would yield such effect. <span class="citation" data-cites="Johnson:2014">Johnson, Cheung, and Donnellan (<a href="references.html#ref-Johnson:2014" role="doc-biblioref">2014</a>)</span> performs a replication study of Schnall, Benton, and Harvey (2008) who conjectured that physical cleanliness reduces the severity of moral judgments. The following excerpt from the paper explain how sample size for the replication were calculated.</p>
 <blockquote class="blockquote">
 <p>In Experiment 2, the critical test of the cleanliness manipulation on ratings of morality was significant, <span class="math inline">\(F(1, 41) = 7.81\)</span>, <span class="math inline">\(p=0.01\)</span>, <span class="math inline">\(d=0.87\)</span>, <span class="math inline">\(N=44\)</span>. Assuming <span class="math inline">\(\alpha=0.05\)</span>, the achieved power in this experiment was <span class="math inline">\(0.80\)</span>. Our proposed research will attempt to replicate this experiment with a level of power = <span class="math inline">\(0.99\)</span>. This will require a minimum of 100 participants (assuming equal sized groups with <span class="math inline">\(d=0.87\)</span>) so we will collect data from 115 participants to ensure a properly powered sample in case of errors.</p>
 </blockquote>
 <p>The first step is to try and compute the effect size, here Cohen’s <span class="math inline">\(d\)</span>, from the reported <span class="math inline">\(F\)</span> statistic to make sure it matches the quoted value.</p>
 <p>This indeed coincides with the value reported for Cohen’s <span class="math inline">\(d\)</span> estimator. We can then plug-in this value in the power function with the desired power level <span class="math inline">\(0.99\)</span> to find out a minimal number of 50 participants in each group, for a total of 100 if we do a pairwise comparison using a two-sample <span class="math inline">\(t\)</span>-test.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-24_ccc6619f859c34fcf2140f53aec3e2eb">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Two-sample t-test
 
@@ -727,17 +781,14 @@ URL: http://psychstat.org/ttest</code></pre>
 <p>The <code>effectsize</code> package includes many functions to convert <span class="math inline">\(F\)</span> and <span class="math inline">\(t\)</span> statistics to effect sizes.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
 </div>
 <div id="exm-power3" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.9 (Power calculation for a two-way ANOVA with unbalanced data) </strong></span>While software can easily compute effect sizes, the user should not blindly rely on the output, but rather think about various elements using the following guiding principles:</p>
+<p><span class="theorem-title"><strong>Example 10.9 (Power calculation for a two-way ANOVA with unbalanced data)</strong></span> While software can easily compute effect sizes, the user should not blindly rely on the output, but rather think about various elements using the following guiding principles:</p>
 <ul>
 <li>we are interested in partial effects when there are multiple factors</li>
 <li>the denominator should consist of the variance of the effect of interest (say factor <span class="math inline">\(A\)</span>), the variance of blocking factors and random effects and that of all interactions associated with them.</li>
 </ul>
 <p>Consider next the unbalanced two-way ANOVA example in Study 1 of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>. We pass here directly the output of the model. We use the <code>lm</code> function with the mean-to-zero parametrization, since we have unbalanced data.</p>
 <p>By default, the variance terms for each factor and interaction are estimated using the <code>anova</code> call. When the data aren’t balanced and you have multiple factors in the mean equation, these are the sequential sum of square estimates (type I). This means that the resulting effect size would depend on the order in which you specify the terms, an unappealing feature. The model can alternatively take as argument the analysis of variance table produced by the <code>Anova</code> function in package <code>car</code>, e.g., <code>car::Anova(..., type = 3)</code>. Note that it is of paramount importance to pass the correct arguments and to use the mean-to-zero parametrization in order to get sensible results. The package warns users about this.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-26_da9186ef4755fcdb1a52db7a67a2fdf8">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Argument `effectsize_type` is deprecated. Use `es_type` instead.</code></pre>
-</div>
+<div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Type 3 ANOVAs only give sensible and informative results when covariates
   are mean-centered and factors are coded with orthogonal contrasts (such
@@ -755,7 +806,7 @@ URL: http://psychstat.org/ttest</code></pre>
 <li>the sample size,</li>
 </ol>
 <p>it is possible to deduce the last one assuming a balanced sample. Below, we use the information to compute the so-called <em>post-hoc</em> power. Such terminology is misleading because there is no guarantee that we are under the alternative, and effect sizes are really noisy proxy so the range of potential values for the missing ingredient is oftentimes quite large. Because studies in the literature have inflated effect size, the power measures are more often than not misleading.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-27_a776752c7b245113501e04a38e74be61">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Multiple way ANOVA analysis
 
@@ -768,10 +819,7 @@ URL: http://psychstat.org/kanova</code></pre>
 </div>
 <p>Here, the interaction is unusually strong (a fifth of the variance is explained by it!) and we have an extremely large <em>post-hoc</em> power estimate. This is rather unsurprising given the way the experiment was set up.</p>
 <p>We can use the same function to determine how many observations the study would need to minimally achieve a certain power, below of 99% — the number reported must be rounded up to the nearest integer. Depending on the design or function, this number may be the overall sample size or the sample size per group.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-28_c789b38186eba250c624c98bb167fc32">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Argument `effectsize_type` is deprecated. Use `es_type` instead.</code></pre>
-</div>
+<div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Type 3 ANOVAs only give sensible and informative results when covariates
   are mean-centered and factors are coded with orthogonal contrasts (such
@@ -800,12 +848,12 @@ URL: http://psychstat.org/kanova</code></pre>
 <p>The total sample size using <span class="math inline">\(\widehat{\omega}^2\)</span> is 108, whereas using the biased estimator <span class="math inline">\(\widehat{f}\)</span> directly (itself obtained from <span class="math inline">\(\widehat{\eta}^2\)</span>) gives 98: this difference of 10 individuals can have practical implications.</p>
 </div>
 <div id="exm-power4" class="theorem example">
-<p><span class="theorem-title"><strong>Example 10.10 (Sample size calculation for a replication with a mixed design) </strong></span>You can download <a href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a> to perform these calculations. The following quote is taken from the <a href="https://osf.io/ezcuj/">Reproducibility Project: Psychology</a></p>
+<p><span class="theorem-title"><strong>Example 10.10 (Sample size calculation for a replication with a mixed design)</strong></span> You can download <a href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a> to perform these calculations. The following quote is taken from the <a href="https://osf.io/ezcuj/">Reproducibility Project: Psychology</a></p>
 <blockquote class="blockquote">
 <p>The result that is object of this replication is the interaction between item strength (massed vs.&nbsp;spaced presentation) and condition (directed forgetting vs.&nbsp;control). The dependent variable is the proportion of correctly remembered items from the stimulus set (List 1). “(..) The interaction was significant, <span class="math inline">\(F(1,94)=4.97\)</span>, <span class="math inline">\(p &lt;.05\)</span>, <span class="math inline">\(\mathrm{MSE} =0.029\)</span>, <span class="math inline">\(\eta^2=0.05\)</span>, (…)”. (p.&nbsp;412). Power analysis (G*Power (Version 3.1): ANOVA: Repeated measures, within-between interaction with a zero correlation between the repeated measures) indicated that sample sizes for <span class="math inline">\(80\)</span>%, <span class="math inline">\(90\)</span>% and <span class="math inline">\(95\)</span>% power were respectively <span class="math inline">\(78\)</span>, <span class="math inline">\(102\)</span> and <span class="math inline">\(126\)</span>.</p>
 </blockquote>
-<p>Not all software accept the same input, so we need to tweak the effect size to get the same answers. The user must specify whether we are looking at a within-subjet, between-subject contrast, or an interaction between the two, as is the case here. The latter in <code>WebPower</code> (for an interaction effect) should be <span class="math inline">\(\sigma_{\text{effect}}/\sigma_{\text{resid}} \times C\)</span>, where <span class="math inline">\(C = \sqrt{K/(1-\rho)}\)</span>, and where <span class="math inline">\(K\)</span> is the number of groups and <span class="math inline">\(\rho\)</span> the correlation of within-subject measurements. We use the <code>wp.rmanova</code> function, specify the type (<code>2</code> for interaction), the number of groups <span class="math inline">\(K=2\)</span>, the number of repeated measurements <span class="math inline">\(2\)</span>. The description uses a correlation <span class="math inline">\(\rho=0\)</span>, which is a worst-case scenario: in practice, more correlation leads to reduced sample size requirements.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-29_6e8a4de4e0218080850952636ccb2cf0">
+<p>Not all software accept the same input, so we need to tweak the effect size to get the same answers. The user must specify whether we are looking at a within-subjet, between-subject contrast, or an interaction between the two, as is the case here. The latter in <code>WebPower</code> (for an interaction effect) should be <span class="math inline">\(\sigma_{\text{effect}}/\sigma_{\text{resid}}  \times C\)</span>, where <span class="math inline">\(C = \sqrt{K/(1-\rho)}\)</span>, and where <span class="math inline">\(K\)</span> is the number of groups and <span class="math inline">\(\rho\)</span> the correlation of within-subject measurements. We use the <code>wp.rmanova</code> function, specify the type (<code>2</code> for interaction), the number of groups <span class="math inline">\(K=2\)</span>, the number of repeated measurements <span class="math inline">\(2\)</span>. The description uses a correlation <span class="math inline">\(\rho=0\)</span>, which is a worst-case scenario: in practice, more correlation leads to reduced sample size requirements.</p>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Repeated-measures ANOVA analysis
 
@@ -838,11 +886,11 @@ URL: http://psychstat.org/rmanova</code></pre>
 <blockquote class="blockquote">
 <p>We aim at testing the two main effects of prediction 1 and prediction 3. Given the <span class="math inline">\(2 \times 3\)</span> within factors design for both main effects, we calculated <span class="math inline">\(\eta^2_p\)</span> based on <span class="math inline">\(F\)</span>-Values and degrees of freedom. This procedure resulted in <span class="math inline">\(\eta^2_p=0.427\)</span> and <span class="math inline">\(\eta^2_p=0.389\)</span> for the effect of prediction 1 (<span class="math inline">\(F(1, 36)=22.88\)</span>) and prediction 3 (<span class="math inline">\(F(1, 36)=26.88\)</span>), respectively. Accordingly, G*Power (Version 3.1) indicates that a power of <span class="math inline">\(80\)</span>%, <span class="math inline">\(90\)</span>%, and <span class="math inline">\(95\)</span>% is achieved with sample sizes of <span class="math inline">\(3\)</span>, <span class="math inline">\(4\)</span>, and <span class="math inline">\(4\)</span> participants, respectively, for both effects (assuming a correlation of <span class="math inline">\(r=0.5\)</span> between repeated measures in all power calculations).</p>
 </blockquote>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-30_e3b920408fc088101377eb3d6079eaf1">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.389</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">6</span><span class="sc">/</span>(<span class="dv">1</span><span class="fl">-0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">eta2_to_f</span>(<span class="fl">0.389</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">6</span><span class="sc">/</span>(<span class="dv">1</span><span class="fl">-0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We get an error message because the sample size is smaller than the number of measurements, but we can still compute the power for a given sample size.</p>
-<div class="cell" data-hash="power_effect_cache/html/unnamed-chunk-31_bea90c410ba083fc57b3db3777a33e70">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Repeated-measures ANOVA analysis
 
@@ -887,7 +935,7 @@ URL: http://psychstat.org/rmanova</code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Baumann:1992" class="csl-entry" role="listitem">
 Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992. <span>“Effect of Think-Aloud Instruction on Elementary Students’ Comprehension Monitoring Abilities.”</span> <em>Journal of Reading Behavior</em> 24 (2): 143–72. <a href="https://doi.org/10.1080/10862969209547770">https://doi.org/10.1080/10862969209547770</a>.
 </div>
@@ -976,18 +1024,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1019,11 +1056,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1033,8 +1109,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1046,7 +1131,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1090,6 +1298,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1115,6 +1324,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1176,12 +1411,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ancova.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span>
+      <a href="./ancova.html" class="pagination-link" aria-label="Linear regression models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./reproducibility_crisis.html" class="pagination-link">
+      <a href="./reproducibility_crisis.html" class="pagination-link" aria-label="Replication crisis">
         <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Replication crisis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1190,4 +1425,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/power_effect.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

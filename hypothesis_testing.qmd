@@ -103,7 +103,7 @@ knitr::include_graphics("figures/xkcd2581_health_stats.png")
 
 
 
-To illustrate this point, @fig-samplevar shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Thus, sampling variability implies that the sample means of the subgroups will always differ even if they share the same characteristics. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
+To illustrate this point, @fig-samplevar shows five simple random samples of size $n=10$ drawn from an hypothetical population with mean $\mu$ and standard deviation $\sigma$, along with their sample mean $\overline{y}$. Because of the sampling variability, the sample means of the subgroups will differ even if they originate from the same distribution. You can view sampling variability as noise: our goal is to extract the signal (typically differences in means) but accounting for spurious results due to the background noise.
 
 ```{r}
 #| label: fig-samplevar
@@ -128,7 +128,7 @@ ggplot(data = samp,
   theme(legend.position = "none")
 ```
 
-We can clearly see from @fig-samplevar that, even if each sample is drawn from the same population, the sample mean varies from one sample to the next as a result of the sampling variability. The astute eye might even notice that the sample means are less dispersed around the full black horizontal line representing the population average $\mu$ than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.
+The astute eye might even notice that the sample means (thick horizontal segments) are less dispersed around the full black horizontal line representing the population average $\mu$ than are the individual measurements. This is a fundamental principle of statistics: information accumulates as you get more data.
 
 Values of the sample mean don't tell the whole picture and studying differences in mean (between groups, or relative to a postulated reference value) is not enough to draw conclusions. In most settings, there is no guarantee that the sample mean will be equal to it's true value because it changes from one sample to the next: the only guarantee we have is that it will be on average equal to the population average in repeated samples. Depending on the choice of measurement and variability in the population, there may be considerable differences from one observation to the next and this means the observed difference could be a fluke.
 
@@ -395,6 +395,66 @@ There are generally three ways of obtaining null distributions for assessing the
 
 While desirable, the first method is only applicable in simple cases (such as counting the probability of getting two six if you throw two fair die). The second method is most commonly used due to its generality and ease of use (particularly in older times where computing power was scarce), but fares poorly with small sample sizes (where 'too small' is context and test-dependent). The last approach can be used to approximate the null distribution in many scenarios, but adds a layer of randomness and the extra computations costs sometimes are not worth it. 
 
+
+
+## Confidence intervals
+
+
+
+A **confidence interval** is an alternative way to present the conclusions of an hypothesis test performed at significance level $\alpha$ by giving a range of all values for which the null isn't rejected at the chosen level. It is often combined with a point estimator $\hat{\theta}$ to give an indication of the variability of the estimation procedure. Wald-based  $(1-\alpha)$ confidence intervals for a scalar parameter $\theta$ are of the form
+\begin{align*}
+\widehat{\theta} + \text{critical value} \; \mathrm{se}(\widehat{\theta})
+\end{align*}
+based on the Wald statistic $W$,
+\begin{align*}
+W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
+\end{align*}
+and where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The critical values  are quantile of the null distribution  and are chosen so that the probability of being more extreme is $\alpha$. 
+
+The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random: their values will vary from one sample to the next.
+
+
+
+For generic random samples, there is a $1-\alpha$ probability that $\theta$ is contained in the **random** confidence interval computed. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter $\theta$ is either inside the confidence interval or not. We can interpret confidence interval's as follows: if we were to repeat the experiment multiple times, and calculate a $1-\alpha$ confidence interval each time, then roughly $1-\alpha$ of the calculated confidence intervals would contain the true value of $\theta$ in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the *procedure* we use to calculate confidence intervals and not in the actual values we obtain from a sample.
+
+
+
+```{r}
+#| label: intconf
+#| eval: true
+#| echo: false
+#| cache: true
+#| fig.width: 8.0
+#| fig.height: 5.0
+#| fig-cap: 95\% confidence intervals for the mean of a standard normal population for
+#|   100 random samples. On average, 5\% of these intervals fail to include the true
+#|   mean value of zero (in red).
+set.seed(1234)
+interv <- t(sapply(1:100, function(i){t.test(rnorm(1000), mu=0)$conf.int}))
+confint_dat <- data.frame(lower = interv[,1],
+                          upper = interv[,2],
+                          replicate = 1:100,
+                          covers = factor((interv[,1] > 0) | (interv[,2] < 0), labels = c("covers","fails to cover")))
+confint_dat$covers <- relevel(confint_dat$covers, ref = "fails to cover")
+ggplot(data = confint_dat,
+       aes(x = factor(replicate))) +
+  geom_hline(yintercept = 0) +
+  geom_segment(mapping = aes(y = lower, yend = upper, x = replicate, xend = replicate, col = covers)) +
+  # scale_color_discrete(c("black","red")) +
+  labs(x = "replicate study",
+       y = "",
+       col = "") +
+  theme_classic() +
+  theme(legend.position = "bottom",
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank())
+```
+
+If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.
+
+
+
 ### Conclusion
 
 
@@ -439,6 +499,9 @@ list of principles](https://doi.org/10.1080/00031305.2016.1154108) guiding (mis)
 > (5) _p_-value, or statistical significance, does not measure the size of an effect or the importance of a result.
 
 :::
+
+
+### Examples
 
 ::: {#exm-rosenjerdee74}
 
@@ -506,7 +569,7 @@ knitr::kable(x = broom::tidy(fisher.test(dat_exper1, conf.int = FALSE)) %>% sele
 
 -->
 
-Another alternative to obtain a benchmark to assess the outlyingness of the observed odds ratio is to use simulations. Consider a database containing the raw data with 93 rows, one for each manager, with for each an indicator of `action` and the `sex` of the hypothetical employee presented in the task.
+Another alternative to obtain a benchmark to assess the outlyingness of the observed odds ratio is to use simulations: permutation tests are well [illustrated by Jared Wilber](https://www.jwilber.me/permutationtest/).  Consider a database containing the raw data with 93 rows, one for each manager, with for each an indicator of `action` and the `sex` of the hypothetical employee presented in the task.
 
 ```{r}
 #| label: dat-long-test-rosen
@@ -612,64 +675,6 @@ The degrees of freedom (80) are much too few compared to the number of observati
 Partial or selective reporting of statistical procedures hinders reproducibility. In general, the  presentation should explicitly state the name of the test statistic employed, the sample size, mean and variance estimates, the null distribution used to assess significance and its parameters, if any. Without these, we are left to speculate.
 
 :::
-
-
-
-## Confidence intervals
-
-
-
-A **confidence interval** is an alternative way to present the conclusions of an hypothesis test performed at significance level $\alpha$ by giving a range of all values for which the null isn't rejected at the chosen level. It is often combined with a point estimator $\hat{\theta}$ to give an indication of the variability of the estimation procedure. Wald-based  $(1-\alpha)$ confidence intervals for a parameter  $\theta$ are of the form
-\begin{align*}
-\widehat{\theta} + \text{critical value} \; \mathrm{se}(\widehat{\theta})
-\end{align*}
-based on the Wald statistic $W$,
-\begin{align*}
-W =\frac{\widehat{\theta}-\theta}{\mathrm{se}(\widehat{\theta})},
-\end{align*}
-and where $\theta$ represents the postulated value for the fixed, but unknown value of the parameter. The critical values  are quantile of the null distribution  and are chosen so that the probability of being more extreme is $\alpha$. 
-
-The bounds of the confidence intervals are random variables, since both estimators of the parameter and its standard error, $\widehat{\theta}$ and $\mathrm{se}(\widehat{\theta})$, are random: their values will vary from one sample to the next.
-
-
-
-For generic random samples, there is a $1-\alpha$ probability that $\theta$ is contained in the **random** confidence interval computed. Once we obtain a sample and calculate the confidence interval, there is no more notion of probability: the true value of the parameter $\theta$ is either inside the confidence interval or not. We can interpret confidence interval's as follows: if we were to repeat the experiment multiple times, and calculate a $1-\alpha$ confidence interval each time, then roughly $1-\alpha$ of the calculated confidence intervals would contain the true value of $\theta$ in repeated samples (in the same way, if you flip a coin, there is roughly a 50-50 chance of getting heads or tails, but any outcome will be either). Our confidence is in the *procedure* we use to calculate confidence intervals and not in the actual values we obtain from a sample.
-
-
-
-```{r}
-#| label: intconf
-#| eval: true
-#| echo: false
-#| cache: true
-#| fig.width: 8.0
-#| fig.height: 5.0
-#| fig-cap: 95\% confidence intervals for the mean of a standard normal population for
-#|   100 random samples. On average, 5\% of these intervals fail to include the true
-#|   mean value of zero (in red).
-set.seed(1234)
-interv <- t(sapply(1:100, function(i){t.test(rnorm(1000), mu=0)$conf.int}))
-confint_dat <- data.frame(lower = interv[,1],
-                          upper = interv[,2],
-                          replicate = 1:100,
-                          covers = factor((interv[,1] > 0) | (interv[,2] < 0), labels = c("covers","fails to cover")))
-confint_dat$covers <- relevel(confint_dat$covers, ref = "fails to cover")
-ggplot(data = confint_dat,
-       aes(x = factor(replicate))) +
-  geom_hline(yintercept = 0) +
-  geom_segment(mapping = aes(y = lower, yend = upper, x = replicate, xend = replicate, col = covers)) +
-  # scale_color_discrete(c("black","red")) +
-  labs(x = "replicate study",
-       y = "",
-       col = "") +
-  theme_classic() +
-  theme(legend.position = "bottom",
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        panel.grid.major.y = element_blank())
-```
-
-If we are only interested in the binary decision rule reject/fail to reject $\mathscr{H}_0$, the confidence interval is equivalent to a *p*-value since it leads to the same conclusion. Whereas the $1-\alpha$ confidence interval gives the set of all values for which the test statistic doesn't provide enough evidence to reject  $\mathscr{H}_0$ at level $\alpha$, the *p*-value gives the probability under the null of obtaining a result more extreme than the postulated value and so is more precise for this particular value. If the *p*-value is smaller than $\alpha$, our null value $\theta$ will be outside of the confidence interval and vice-versa.
 
 
 

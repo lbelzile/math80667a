@@ -103,8 +103,7 @@ options(knitr.kable.NA = '')
 
 knitr::kable(summary_stats,
   digits = c(0,2,2,2),
-  booktabs = TRUE) |>
-  kableExtra::kable_styling()
+  booktabs = TRUE)
 ```
 
 :::

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 5&nbsp; Complete factorial designs</title>
+<title>5&nbsp; Complete factorial designs – Experimental design and statistical methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,14 +116,42 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -127,13 +162,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./twoway.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./twoway.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -142,13 +177,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -216,7 +251,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ancova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -264,7 +299,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -275,7 +310,7 @@ div.csl-indent {
   <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions"><span class="header-section-number">5.2</span> Interactions</a></li>
   <li><a href="#model-parametrization" id="toc-model-parametrization" class="nav-link" data-scroll-target="#model-parametrization"><span class="header-section-number">5.3</span> Model parametrization</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/twoway.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/twoway.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -285,12 +320,13 @@ div.csl-indent {
 
 </header>
 
+
 <p>We next consider experiments and designs in which there are multiple factors being manipulated by the experimenter simultaneously. Before jumping into the statistical analysis, let us discuss briefly some examples that will be covered in the sequel.</p>
 <div id="exm-STC21" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.1 (Psychological ownership of borrowed money) </strong></span>Supplemental Study 5 from <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.</p>
+<p><span class="theorem-title"><strong>Example 5.1 (Psychological ownership of borrowed money)</strong></span> Supplemental Study 5 from <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> checks the psychological perception of borrowing money depending on the label. The authors conducted a 2 by 2 between-subject comparison (two-way ANOVA) varying the type of debt (whether the money was advertised as credit or loan) and the type of purchase the latter would be used for (discretionary spending or need). The response is the average of the likelihood and interest in the product, both measured using a 9 point Likert scale from 1 to 9.</p>
 </div>
 <div id="exm-MP14" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.2 (Spatial orientation shrinks and expands psychological distance) </strong></span><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> measured the subjective distance on travel based on the direction of travel. They conducted an experiment in the Toronto subway green line, asking commuters from Bay station to answer the question “How far away does the [name] station feel to you?” using a 7 point Likert scale ranging from very close (1) to very far (7). The stations name were one of Spadina, St.&nbsp;George, Bloor–Yonge and Sherbourne (from West to East).</p>
+<p><span class="theorem-title"><strong>Example 5.2 (Spatial orientation shrinks and expands psychological distance)</strong></span> <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> measured the subjective distance on travel based on the direction of travel. They conducted an experiment in the Toronto subway green line, asking commuters from Bay station to answer the question “How far away does the [name] station feel to you?” using a 7 point Likert scale ranging from very close (1) to very far (7). The stations name were one of Spadina, St.&nbsp;George, Bloor–Yonge and Sherbourne (from West to East).</p>
 <p>As there are four stations and two directions of travel (a 4 by 2 design), the scientific question of interest for subjective measures of distance would consist of perceiving differently the distance depending on the direction of travel. We could also wonder whether destinations that are two stations away from Bay (Spadina and Sherbourne) would be considered equidistant, and similarly for the other two.</p>
 </div>
 <section id="efficiency-of-multiway-analysis-of-variance." class="level2" data-number="5.1">
@@ -308,9 +344,13 @@ div.csl-indent {
 </ul>
 <p>This, it turns out, is a special case of linear regression model. We could build contrasts for comparing group averages, but it will more convenient to reparametrize the model so that hypotheses of interest are directly expressed in terms of the parameters.</p>
 <p>For example, in the <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> study, we could gather observations for each factor combination in a table, where <code>direction</code> is the row and <code>station</code> the column.</p>
-<div id="tbl-cellmeansMP14" class="anchored">
-<table class="table">
-<caption>Table&nbsp;5.1: Conceptual depiction of cell average for the two by two design of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span></caption>
+<div id="tbl-cellmeansMP14" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cellmeansMP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.1: Conceptual depiction of cell average for the two by two design of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>
+</figcaption>
+<div aria-describedby="tbl-cellmeansMP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
 <col style="width: 2%">
@@ -366,13 +406,19 @@ div.csl-indent {
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>The <span class="math inline">\(i\)</span>th row mean represents the average response across all levels of <span class="math inline">\(B\)</span>, <span class="math inline">\(\mu_{i.} = (\mu_{i1} + \cdots + \mu_{in_b})/n_b\)</span> and similarly for the average of the <span class="math inline">\(j\)</span>th column, <span class="math inline">\(\mu_{.j} = (\mu_{1j} + \cdots + \mu_{n_aj})/n_a.\)</span> Finally, the overall average is <span class="math display">\[\mu = \frac{\sum_{i=1}^{n_a} \sum_{j=1}^{n_b} \mu_{ij}}{n_an_b}.\]</span></p>
 <p>Each subgroup average <span class="math inline">\(\mu_{ij}\)</span> will be estimated as the sample mean of observations in their group and we would use the above formulae to obtain estimates of the row, column and overall means <span class="math inline">\(\widehat{\mu}_{i.}\)</span>, <span class="math inline">\(\widehat{\mu}_{.j}\)</span> and <span class="math inline">\(\widehat{\mu}\)</span>. If the sample is balanced, meaning the number of observations is the same, these will be the same as summing over all observations in a row, column or table and then averaging. In general setup, however, we will give equal weight to each subgroup average.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/tbl-balance-MP14_043e29cc0a4e9fa6d783d518f26fa4d2">
+<div class="cell">
+<div id="tbl-balance-MP14" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-balance-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.2: Repartition of the sample for Study 1 of Maglio and Polman (2014).
+</figcaption>
+<div aria-describedby="tbl-balance-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-balance-MP14" class="anchored">
-<table class="table table-sm table-striped small">
-<caption>Table&nbsp;5.2: Repartition of the sample for Study 1 of Maglio and Polman (2014).</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -401,12 +447,14 @@ div.csl-indent {
 </table>
 </div>
 </div>
+</figure>
 </div>
-<p>Looking at <a href="#tbl-balance-MP14">Table&nbsp;<span>5.2</span></a>, we can see that the number of observations is not exactly the same. In general, attrition and non-response can lead to unequal cell sample size, but you should strive to gather roughly equal number of observations. The main consequence is that different decompositions of the variance will lead to different tests, whereas no such ambiguity exists for balanced data.</p>
+</div>
+<p>Looking at <a href="#tbl-balance-MP14" class="quarto-xref">Table&nbsp;<span>5.2</span></a>, we can see that the number of observations is not exactly the same. In general, attrition and non-response can lead to unequal cell sample size, but you should strive to gather roughly equal number of observations. The main consequence is that different decompositions of the variance will lead to different tests, whereas no such ambiguity exists for balanced data.</p>
 </section>
 <section id="interactions" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="interactions"><span class="header-section-number">5.2</span> Interactions</h2>
-<p><a href="#tbl-cellmeansMP14">Table&nbsp;<span>5.1</span></a> shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either <code>direction</code> or <code>station</code> as sole factor.</p>
+<p><a href="#tbl-cellmeansMP14" class="quarto-xref">Table&nbsp;<span>5.1</span></a> shows the individual mean of each subgroup. From these, we may be interested in looking at the experiment as a single one-way analysis of variance model with eight subgroups, or as a series of one-way analysis of variance with either <code>direction</code> or <code>station</code> as sole factor.</p>
 <p>We will use particular terminology to refer to these:</p>
 <ul>
 <li><strong>simple effects</strong>: difference between levels of one in a fixed combination of others. Simple effects are comparing cell averages within a given row or column.</li>
@@ -416,26 +464,34 @@ div.csl-indent {
 <p>In other words, an interaction occurs when some experimental factors, when coupled together, have different impacts than the superposition of each. An interaction between two factors occurs when the average effect of one independent variable depends on the level of the other.</p>
 <p>If there is a significant interaction, the main effects are <strong>not</strong> of interest since they are misleading. Rather, we will compute the simple effects by making the comparison one at level at the time.</p>
 <p>In our example of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, a simple effect would be comparing the distance between Spadina and Sherbourne for east. The main effect for the direction would be the average perceived distance for east and for west. Finally, the interaction would measure how much these differ by station depending on direction.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/fig-2by2_0fda2ef8a73c895c87594d4f64f94da1">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-2by2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="twoway_files/figure-html/fig-2by2-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: Interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of <span class="citation" data-cites="Crump.Navarro.Suzuki:2019">Crump, Navarro, and Suzuki (<a href="references.html#ref-Crump.Navarro.Suzuki:2019" role="doc-biblioref">2019</a>)</span> by Matthew Crump (CC BY-SA 4.0 license).</figcaption>
+<div id="fig-2by2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="twoway_files/figure-html/fig-2by2-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2by2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Interaction plots (line graphs) for example patterns for means for each of the possible kinds of general outcomes in a 2 by 2 design. Illustration adapted from Figure 10.2 of <span class="citation" data-cites="Crump.Navarro.Suzuki:2019">Crump, Navarro, and Suzuki (<a href="references.html#ref-Crump.Navarro.Suzuki:2019" role="doc-biblioref">2019</a>)</span> by Matthew Crump (CC BY-SA 4.0 license).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>To better understand, we consider the average response and suppose we have access to the true population average for each sub-treatment. We can then represent the population using a line graph with the two factors, one being mapped to color and another to the <span class="math inline">\(x\)</span>-axis. <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> shows what happens under all possible scenarios with a 2 by 2 design. When there is no overall effect, the mean is constant. If there isn’t a main effect of <span class="math inline">\(A\)</span>, the average of the two mean response for <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> are the same, etc. Interactions are depicted by <strong>non-parallel lines</strong>.</p>
-<p>It’s clear from <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a> that looking only at the average of <span class="math inline">\(A\)</span> alone (the main effect) isn’t instructive when we are in the presence of an interaction: rather, we should be comparing the values of <span class="math inline">\(A\)</span> for <span class="math inline">\(b_1\)</span> separately than those for <span class="math inline">\(b_2\)</span>, and vice-versa, using simple effects, otherwise our conclusions may be misleading.</p>
+<p>To better understand, we consider the average response and suppose we have access to the true population average for each sub-treatment. We can then represent the population using a line graph with the two factors, one being mapped to color and another to the <span class="math inline">\(x\)</span>-axis. <a href="#fig-2by2" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> shows what happens under all possible scenarios with a 2 by 2 design. When there is no overall effect, the mean is constant. If there isn’t a main effect of <span class="math inline">\(A\)</span>, the average of the two mean response for <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> are the same, etc. Interactions are depicted by <strong>non-parallel lines</strong>.</p>
+<p>It’s clear from <a href="#fig-2by2" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> that looking only at the average of <span class="math inline">\(A\)</span> alone (the main effect) isn’t instructive when we are in the presence of an interaction: rather, we should be comparing the values of <span class="math inline">\(A\)</span> for <span class="math inline">\(b_1\)</span> separately than those for <span class="math inline">\(b_2\)</span>, and vice-versa, using simple effects, otherwise our conclusions may be misleading.</p>
 <div id="exm-MP14-interaction" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.3 (Interaction plots for Maglio and Polman (2014)) </strong></span>The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on <a href="#fig-interactionplotMP">Figure&nbsp;<span>5.2</span></a>, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/fig-interactionplotMP_474d05afd483efea51ee26e7b5f1c0ed">
+<p><span class="theorem-title"><strong>Example 5.3 (Interaction plots for Maglio and Polman (2014))</strong></span> The hypothesis of interest is the interaction; for the time being, we can simply plot the average per group. Since the summary statistics can hide important information such as the uncertainty, we add 95% confidence intervals for the subgroup averages and superimpose jittered observations to show the spread of the data. Based on <a href="#fig-interactionplotMP" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, there appears to be at least an interaction between station and direction of travel, in addition to a main effect for station. Formal hypothesis testing can help check this intuition.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-interactionplotMP" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="twoway_files/figure-html/fig-interactionplotMP-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.2: Interaction plot for Study 1 of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, showing group averages and 95% confidence intervals for the means. Observations are overlaid on the graph.</figcaption>
+<div id="fig-interactionplotMP" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-interactionplotMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="twoway_files/figure-html/fig-interactionplotMP-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactionplotMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Interaction plot for Study 1 of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>, showing group averages and 95% confidence intervals for the means. Observations are overlaid on the graph.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -445,142 +501,160 @@ div.csl-indent {
 <section id="model-parametrization" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="model-parametrization"><span class="header-section-number">5.3</span> Model parametrization</h2>
 <p>The following section is technical and may be omitted.</p>
-<p>The model parametrized in terms of subgroup or cell average is okay in <a href="#eq-twowayasoneway">Equation&nbsp;<span>5.1</span></a>, but it doesn’t help us if we want to check for the presence of main effects and interaction, even if it would be possible to specify the contrasts required to test these hypotheses. We can however express the model in terms of main effects and interactions.</p>
+<p>The model parametrized in terms of subgroup or cell average is okay in <a href="#eq-twowayasoneway" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>, but it doesn’t help us if we want to check for the presence of main effects and interaction, even if it would be possible to specify the contrasts required to test these hypotheses. We can however express the model in terms of main effects and interactions.</p>
 <p>We consider the alternative formulation <span class="math display">\[\begin{align*}
 Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 \end{align*}\]</span> where</p>
 <ul>
 <li><span class="math inline">\(\mu\)</span> is the average of all subgroup averages, termed overall mean.</li>
 <li><span class="math inline">\(\alpha_i = \mu_{i.} - \mu\)</span> is the mean of level <span class="math inline">\(A_i\)</span> minus the overall mean.</li>
-<li><span class="math inline">\(\beta_j = \mu_{.j} - \mu\)</span> is the mean of level <span class="math inline">\(B_j\)</span> minus overall mean.</li>
+<li><span class="math inline">\(\beta_j  = \mu_{.j} - \mu\)</span> is the mean of level <span class="math inline">\(B_j\)</span> minus overall mean.</li>
 <li><span class="math inline">\((\alpha\beta)_{ij} = \mu_{ij} - \mu_{i.} - \mu_{.j} + \mu\)</span> is the interaction term for <span class="math inline">\(A_i\)</span> and <span class="math inline">\(B_j\)</span> which encodes the effect of both variable not already captured by the main effects.</li>
 </ul>
-<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(n_a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\)</span>. The <span class="math inline">\(1 + n_a + n_b\)</span> <strong>sum to zero</strong> constraints, <span class="math display">\[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]</span> restore identifiability.</p>
+<p>A rapid calculation shows that there are more coefficients than the number of cells and subgroups (<span class="math inline">\(n_an_b\)</span> cells overall) in our table. The model is <strong>overparametrized</strong>: to get away with this, we impose constraints to remove redundancies. The idea is that if we know <span class="math inline">\(n_a-1\)</span> of the mean for factor <span class="math inline">\(A\)</span> and the global average is a combination of these, we can deduce the value for the last row mean. The model formulation in terms of difference from the global average or main effect ensures that we can test for main effects for factor <span class="math inline">\(A\)</span> by setting <span class="math inline">\(\mathscr{H}_0: \alpha_1 = \cdots = \alpha_{n_a-1}=0\)</span>. The <span class="math inline">\(1 +  n_a + n_b\)</span> <strong>sum to zero</strong> constraints, <span class="math display">\[\sum_{i=1}^{n_a} \alpha_i=0, \quad \sum_{j=1}^{n_b} \beta_j=0, \quad  \sum_{j=1}^{n_b} (\alpha\beta)_{ij}=0, \quad \sum_{i=1}^{n_a} (\alpha\beta)_{ij}=0,\]</span> restore identifiability.</p>
 <p>The redundancy in information, due to the fact main effects are expressible as row and column averages, and the overall mean as the average of all observations, will arise again when we consider degrees of freedom for tests.</p>
 <p><strong>To be continued</strong>…</p>
 <div id="exm-borrowed-money-test" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.4 (Testing for Psychological ownership of borrowed money) </strong></span><span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors <code>debttype</code> and <code>purchase</code>), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.</p>
-<p>The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in <a href="#fig-2by2">Figure&nbsp;<span>5.1</span></a>, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn’t significant, then we could pool observations instead and average across either of the two factors, resulting in the marginal comparisons with the main effects.</p>
+<p><span class="theorem-title"><strong>Example 5.4 (Testing for Psychological ownership of borrowed money)</strong></span> <span class="citation" data-cites="Sharma.Tully.Cryder:2021">Sharma, Tully, and Cryder (<a href="references.html#ref-Sharma.Tully.Cryder:2021" role="doc-biblioref">2021</a>)</span> first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors <code>debttype</code> and <code>purchase</code>), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.</p>
+<p>The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in <a href="#fig-2by2" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn’t significant, then we could pool observations instead and average across either of the two factors, resulting in the marginal comparisons with the main effects.</p>
 <p>Fitting the model including the interaction between factors ensures that we keep the additivity assumption and that our conclusions aren’t misleading: the price to pay is additional mean parameters to be estimated, which isn’t an issue if you collect enough data, but can be critical when data collection is extremely costly and only a few runs are allowed.</p>
 <p>In <strong>R</strong>, we include both factors in a formula as <code>response ~ factorA * factorB</code>, the <code>*</code> symbol indicating that both are allowed to interact; in the main effect model, we would use instead <code>+</code> to reflect that the effects of both factors add up.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-5_3e02b3d968edc2c4327365021786cc1c">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing Supplementary Study 5</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># of Sharma, Tully, and Cryder (2021)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(STC21_SS5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(likelihood <span class="sc">~</span> purchase<span class="sc">*</span>debttype, </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> STC21_SS5)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of means</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Grand mean</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4.88 </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purchase </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     discretionary    need</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             4.182   5.579</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rep       751.000 750.000</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      credit    loan</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       5.127   4.631</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; rep 753.000 748.000</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  purchase:debttype </span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                debttype</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase        credit loan </span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   discretionary   4.5    3.8</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rep           392.0  359.0</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   need            5.7    5.4</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   rep           361.0  389.0</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance reveals </span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># non-significant interaction</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># of purchase and type</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">3</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Anova Table (Type III tests)</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Response: likelihood</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   Sum Sq   Df F value  Pr(&gt;F)    </span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)         7974    1 1040.96 &lt; 2e-16 ***</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase             283    1   36.91 1.6e-09 ***</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; debttype              88    1   11.55  0.0007 ***</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase:debttype     14    1    1.79  0.1817    </span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals          11467 1497                    </span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="st">"debttype"</span>,</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $emmeans</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype emmean    SE   df lower.CL upper.CL</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit     5.12 0.101 1497     4.93     5.32</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  loan       4.63 0.101 1497     4.43     4.83</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: purchase </span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $contrasts</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast      estimate    SE   df t.ratio p.value</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit - loan    0.496 0.143 1497   3.470  0.0005</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: purchase</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise comparisons within levels of purchase</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effect</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"purchase"</span>, <span class="st">"debttype"</span>),</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="st">"purchase"</span>,</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $emmeans</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = discretionary:</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype emmean    SE   df lower.CL upper.CL</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit     4.51 0.140 1497     4.24     4.78</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  loan       3.82 0.146 1497     3.54     4.11</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = need:</span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  debttype emmean    SE   df lower.CL upper.CL</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit     5.74 0.146 1497     5.45     6.02</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  loan       5.43 0.140 1497     5.16     5.71</span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $contrasts</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = discretionary:</span></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast      estimate    SE   df t.ratio p.value</span></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit - loan    0.687 0.202 1497   3.400  0.0007</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; purchase = need:</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast      estimate    SE   df t.ratio p.value</span></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  credit - loan    0.305 0.202 1497   1.510  0.1318</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tables of means
+Grand mean
+         
+4.879747 
+
+ purchase 
+    discretionary    need
+            4.182   5.579
+rep       751.000 750.000
+
+ debttype 
+     credit    loan
+      5.127   4.631
+rep 753.000 748.000
+
+ purchase:debttype 
+               debttype
+purchase        credit loan 
+  discretionary   4.5    3.8
+  rep           392.0  359.0
+  need            5.7    5.4
+  rep           361.0  389.0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance reveals </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># non-significant interaction</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># of purchase and type</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type III tests)
+
+Response: likelihood
+                   Sum Sq   Df   F value    Pr(&gt;F)    
+(Intercept)        7974.0    1 1040.9610 &lt; 2.2e-16 ***
+purchase            282.8    1   36.9137 1.563e-09 ***
+debttype             88.5    1   11.5483 0.0006959 ***
+purchase:debttype    13.7    1    1.7852 0.1817132    
+Residuals         11467.4 1497                        
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Main effects</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="st">"debttype"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     5.12 0.101 1497     4.93     5.32
+ loan       4.63 0.101 1497     4.43     4.83
+
+Results are averaged over the levels of: purchase 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast      estimate    SE   df t.ratio p.value
+ credit - loan    0.496 0.143 1497   3.469  0.0005
+
+Results are averaged over the levels of: purchase </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise comparisons within levels of purchase</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effect</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"purchase"</span>, <span class="st">"debttype"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="st">"purchase"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+purchase = discretionary:
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     4.51 0.140 1497     4.24     4.78
+ loan       3.82 0.146 1497     3.54     4.11
+
+purchase = need:
+ debttype emmean    SE   df lower.CL upper.CL
+ credit     5.74 0.146 1497     5.45     6.02
+ loan       5.43 0.140 1497     5.16     5.71
+
+Confidence level used: 0.95 
+
+$contrasts
+purchase = discretionary:
+ contrast      estimate    SE   df t.ratio p.value
+ credit - loan    0.687 0.202 1497   3.398  0.0007
+
+purchase = need:
+ contrast      estimate    SE   df t.ratio p.value
+ credit - loan    0.305 0.202 1497   1.508  0.1318</code></pre>
+</div>
 </div>
 <p>In the analysis of variance table, we focus exclusively on the last line with the sum of squares for <code>purchase:debttype</code>. The <span class="math inline">\(F\)</span> statistic is 1.79; using the <span class="math inline">\(\mathsf{F}\)</span> (1, 1497) distribution as benchmark, we obtain a <span class="math inline">\(p\)</span>-value of 0.18 so there is no evidence the effect of purchase depends on debt type.</p>
 <p>We can thus pool data and look at the effect of debt type (<code>loan</code> or <code>credit</code>) overall by combining the results for all purchase types, one of the planned comparison reported in the Supplementary material. To do this in <strong>R</strong> with the <code>emmeans</code> package, we use the <code>emmeans</code> function and we quote the factor of interest (i.e., the one we want to keep) in <code>specs</code>. By default, this will compute the estimate marginal means: the <code>contr = "pairwise"</code> indicates that we want the difference between the two, which gives us the contrasts.</p>
 <p>To get the simple effects, we give both variables in <code>specs</code> as factors for which to compute subgroup means, then set additionally the <code>by</code> command to specify which variable we want separate results for. We get the difference in average between <code>credit</code> and <code>loan</code> labels for each purchase type along with the <span class="math inline">\(t\)</span> statistics for the marginal contrast and the <span class="math inline">\(p\)</span>-value. The simple effects suggest that the label has an impact on perception only for discretionary expenses rather than needed ones, which runs counter-intuitively with the lack of interaction.</p>
 </div>
 <div class="example" name="Spatial perception of distance in the Toronto subway">
-<p><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> considered the relative perception of distance from Bay station in Toronto. We modify the data so that we consider station distance in direction of travel (rather than station names). The categorical variable <code>stdist</code> has labels <span class="math inline">\((-2, -1, +1, +2\)</span>) for stations Spadina, St.&nbsp;Georges, Bloor-Yonge, Sherbourne in direction East, and opposite signs in the other direction: see <a href="#fig-Torontosubway">Figure&nbsp;<span>5.3</span></a> for the map. We are interested in knowing whether two stations behind (<code>stdist</code><span class="math inline">\(=-2\)</span>) is perceived the same as two stations ahead (<code>stdist</code><span class="math inline">\(=+2\)</span>).</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/fig-Torontosubway_9ba4c84cf5807a2ca603fe6b86d6de32">
+<p><span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span> considered the relative perception of distance from Bay station in Toronto. We modify the data so that we consider station distance in direction of travel (rather than station names). The categorical variable <code>stdist</code> has labels <span class="math inline">\((-2, -1, +1, +2\)</span>) for stations Spadina, St.&nbsp;Georges, Bloor-Yonge, Sherbourne in direction East, and opposite signs in the other direction: see <a href="#fig-Torontosubway" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> for the map. We are interested in knowing whether two stations behind (<code>stdist</code><span class="math inline">\(=-2\)</span>) is perceived the same as two stations ahead (<code>stdist</code><span class="math inline">\(=+2\)</span>).</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-Torontosubway" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/Toronto_subway.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.3: Simplified depiction of the Toronto metro stations used in the experiment, based on work by Craftwerker on Wikipedia, distributed under CC-BY-SA 4.0.</figcaption>
+<div id="fig-Torontosubway" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Torontosubway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/Toronto_subway.png" class="img-fluid figure-img" width="494">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Torontosubway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Simplified depiction of the Toronto metro stations used in the experiment, based on work by Craftwerker on Wikipedia, distributed under CC-BY-SA 4.0.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-8_78cfac9b31a2afd8a7212d32308001be">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up parametrization to sum-to-zero for categorical factors</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> stdist <span class="sc">*</span> direction, <span class="at">data =</span> MP14_S1) </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up parametrization to sum-to-zero for categorical factors</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> stdist <span class="sc">*</span> direction, <span class="at">data =</span> MP14_S1) </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/tbl-ANOVA2-MP14_6a9ffabc1409c559ca6de92c2fd92cd4">
+<div class="cell">
+<div id="tbl-ANOVA2-MP14" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ANOVA2-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.3: Analysis of variance (type II effects) for the Maglio and Polman (2014) reformated data.
+</figcaption>
+<div aria-describedby="tbl-ANOVA2-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-ANOVA2-MP14" class="anchored">
-<table class="table table-sm table-striped small">
-<caption>Table&nbsp;5.3: Analysis of variance (type II effects) for the Maglio and Polman (2014) reformated data.</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">term</th>
@@ -623,25 +697,35 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 </table>
 </div>
 </div>
+</figure>
 </div>
-<p>We look at the analysis of variance in <a href="#tbl-ANOVA2-MP14">Table&nbsp;<span>5.3</span></a> to see what the perception of distance is. The <span class="math inline">\(F\)</span>-tests suggest that there is no interaction, and no effect of direction of travel although there is an uninteresting main effect of station distance (of course, two station apart is considered further from Bay than one station apart).</p>
+</div>
+<p>We look at the analysis of variance in <a href="#tbl-ANOVA2-MP14" class="quarto-xref">Table&nbsp;<span>5.3</span></a> to see what the perception of distance is. The <span class="math inline">\(F\)</span>-tests suggest that there is no interaction, and no effect of direction of travel although there is an uninteresting main effect of station distance (of course, two station apart is considered further from Bay than one station apart).</p>
 <p>Since there is no interaction, we can collapse the data to a one-way ANOVA with a single factor (station distance) and consider contrasts. Say we are interested in testing the perception of distance, by looking at average distance of pairs at equal distance <span class="math inline">\(\mu_{-1} = \mu_{+1}\)</span> and <span class="math inline">\(\mu_{-2} = \mu_{+2}\)</span>.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/fig-interactionMP_352bf37a5f56381c1c3f47f5f6cd92bf">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-interactionMP" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="twoway_files/figure-html/fig-interactionMP-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.4: Interaction plot for the reformated data from Maglio and Polman (2014) with 95% confidence intervals.</figcaption>
+<div id="fig-interactionMP" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-interactionMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="twoway_files/figure-html/fig-interactionMP-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactionMP-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Interaction plot for the reformated data from Maglio and Polman (2014) with 95% confidence intervals.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>If we have categories are in the order <span class="math inline">\((-2, -1, +1, +2)\)</span>, the contrast weights are <span class="math inline">\((-1, 0, 0, 1)\)</span> and <span class="math inline">\((0, -1, 1, 0)\)</span> or a multiple thereof; the two contrasts are orthogonal. <a href="#tbl-contrast-MP14">Table&nbsp;<span>5.4</span></a> shows the result of the hypothesis tests: both are significant, even applying a Bonferroni correction. This supports the hypothesis of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/tbl-contrast-MP14_51ab2c29d379bb5e171e840cb49d3389">
+<p>If we have categories are in the order <span class="math inline">\((-2, -1, +1, +2)\)</span>, the contrast weights are <span class="math inline">\((-1, 0, 0, 1)\)</span> and <span class="math inline">\((0, -1, 1, 0)\)</span> or a multiple thereof; the two contrasts are orthogonal. <a href="#tbl-contrast-MP14" class="quarto-xref">Table&nbsp;<span>5.4</span></a> shows the result of the hypothesis tests: both are significant, even applying a Bonferroni correction. This supports the hypothesis of <span class="citation" data-cites="Maglio.Polman:2014">Maglio and Polman (<a href="references.html#ref-Maglio.Polman:2014" role="doc-biblioref">2014</a>)</span>.</p>
+<div class="cell">
+<div id="tbl-contrast-MP14" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contrast-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.4: Contrasts for comparing the perceived distance for stations at the same distance on the network, but in opposition directions to that of travel.
+</figcaption>
+<div aria-describedby="tbl-contrast-MP14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-contrast-MP14" class="anchored">
-<table class="table table-sm table-striped small">
-<caption>Table&nbsp;5.4: Contrasts for comparing the perceived distance for stations at the same distance on the network, but in opposition directions to that of travel.</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">contrast</th>
@@ -670,302 +754,344 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 </table>
 </div>
 </div>
+</figure>
+</div>
 </div>
 </div>
 <div id="exm-anchor" class="theorem example">
-<p><span class="theorem-title"><strong>Example 5.5 (Precision of anchors and subjective adjustments) </strong></span>We consider data from a replication by Chandler (2016) of Study 4a of Janiszewski and Uy (2008). Both studies measured the amount of adjustment when presented with vague or precise range of value for objects, with potential encouragement for adjusting more the value. <span class="citation" data-cites="Chandler:2016">Chandler (<a href="references.html#ref-Chandler:2016" role="doc-biblioref">2016</a>)</span> described the effect in the replication report:</p>
+<p><span class="theorem-title"><strong>Example 5.5 (Precision of anchors and subjective adjustments)</strong></span> We consider data from a replication by Chandler (2016) of Study 4a of Janiszewski and Uy (2008). Both studies measured the amount of adjustment when presented with vague or precise range of value for objects, with potential encouragement for adjusting more the value. <span class="citation" data-cites="Chandler:2016">Chandler (<a href="references.html#ref-Chandler:2016" role="doc-biblioref">2016</a>)</span> described the effect in the replication report:</p>
 <blockquote class="blockquote">
 <p>Janiszewski and Uy (2008) conceptualized people’s attempt to adjust following presentation of an anchor as movement along a subjective representation scale by a certain number of units. Precise numbers (e.g.&nbsp;$9.99) imply a finer-resolution scale than round numbers (e.g.&nbsp;$10). Consequently, adjustment along a subjectively finer resolution scale will result in less objective adjustment than adjustment by the same number of units along a subjectively coarse resolution scale.</p>
 </blockquote>
 <p>The experiment is a 2 by 2 factorial design (two-way ANOVA) with <code>anchor</code> (either round or precise) and <code>magnitude</code> (<code>0</code> for small, <code>1</code> for big adjustment) as experimental factors. A total of 120 students were recruited and randomly assigned to one of the four experimental sub-condition, for a total of 30 observations per subgroup (<code>anchor</code>, <code>magnitude</code>). The response variable is <code>majust</code>, the mean adjustment for the price estimate of the item.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-14_6ba9475f06624635047f706aff4e9b5a">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of two-way ANOVA with balanced design</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(C16, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for balance</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> anchor <span class="sc">+</span> magnitude,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> C16)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          magnitude</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor     0  1</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   round   30 30</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   precise 30 30</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit two-way ANOVA model</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(madjust <span class="sc">~</span> anchor <span class="sc">*</span> magnitude,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> C16)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance table</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor             1   0.78    0.78    6.28   0.014 *  </span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; magnitude          1   8.80    8.80   71.06 1.1e-13 ***</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor:magnitude   1   0.00    0.00    0.01   0.909    </span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals        116  14.36    0.12                    </span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of two-way ANOVA with balanced design</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(C16, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for balance</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="at">formula =</span> <span class="sc">~</span> anchor <span class="sc">+</span> magnitude,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> C16)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         magnitude
+anchor     0  1
+  round   30 30
+  precise 30 30</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit two-way ANOVA model</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">aov</span>(madjust <span class="sc">~</span> anchor <span class="sc">*</span> magnitude,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> C16)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance table</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+anchor             1  0.777   0.777   6.277   0.0136 *  
+magnitude          1  8.796   8.796  71.058 1.09e-13 ***
+anchor:magnitude   1  0.002   0.002   0.013   0.9088    
+Residuals        116 14.359   0.124                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
 </div>
 <p>The dataset is available from the <strong>R</strong> package <code>hecedsm</code> as <code>C16</code>. We can see that there are 30 observations in each group in the replication, as advertised. In <strong>R</strong>, the function <code>aov</code> fits an analysis of variance model for <em>balanced data</em>. Analysis of variance are simple instances of linear regression models, and the main difference between fitting the model using <code>aov</code> and <code>lm</code> is the default parametrization used (<code>aov</code> uses sum-to-zero constraints by default, <code>lm</code> does not). In more general settings (including continuous covariates), we will use <code>lm</code> as a workshorse to fit the model, with an option to set up the contrasts so the output matches our expectations (and needs). The model is fitted as before by specifying the <code>response ~ explanatories</code>: the <code>*</code> notation is a shortcut to specify <code>anchor + magnitude + anchor:magnitude</code>, with the last term separated by a semi-colon <code>:</code> denoting an interaction between two variables. Here, the experimental factors <code>anchor</code> and <code>magnitude</code> are crossed, as it is possible to be in both experimental groups simultaneously.</p>
 <p>The <code>interaction.plot</code> function in base <strong>R</strong> allows one to create an interaction (or profile) plot for a two-way design. More generally, we can simply compute the group means for each combination of the experimental conditions, map the mean response to the <span class="math inline">\(y\)</span>-axis of a graph and add the experimental factors to other dimensions (<span class="math inline">\(x\)</span>-axis, panel, color, etc.)</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-15_d901d4333e14288c4525591de48cd1d0">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>C16 <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> anchor,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> madjust,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> magnitude)) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="fu">aes</span>(<span class="at">group =</span> magnitude), </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> mean, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change position of labels</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">""</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Mean adjustment"</span>) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co"># change theme</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>C16 <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> anchor,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> madjust,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> magnitude)) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="fu">aes</span>(<span class="at">group =</span> magnitude), </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> mean, </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Change position of labels</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Mean adjustment"</span>) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co"># change theme</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="twoway_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="twoway_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>In our example, the interaction plot shows a large main effect for <code>magnitude</code>, a smaller one for <code>anchor</code> and no evidence of interaction — despite the uncertainty associated with the estimation, the lines are very close to being parallel. Overlaying the jitter observations shows there is quite a bit of spread, but with limited overlap. Despite the graphical evidence hinting that the interaction isn’t significant, we will fit the two-way analysis of variance model with the interaction unless we invalidate our statistical inference. The <code>emmip</code> function allows one to return a plot automagically.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-16_f41a4826e44a200a32e7ec2eb2193ea1">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction plot</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmip</span>(mod, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               magnitude <span class="sc">~</span> anchor, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">CIs =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction plot</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmip</span>(mod, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>               magnitude <span class="sc">~</span> anchor, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">CIs =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="twoway_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="twoway_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Because our dataset is balanced, the marginal means (the summary statistics obtained by grouping the data for a single factor) and the marginal effects (obtained by calculating the average cell means by either row or column) will coincide. There are multiple functions that allow one to obtain estimates means for cells, rows or columns, including functionalities, notably <code>emmeans</code> from the eponymous package and <code>model.tables</code></p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-17_a1a2b8526017b7a50aaf403e67b91993">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get grand mean, cell means, etc.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of means</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Grand mean</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.00116 </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  anchor </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   round precise </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.0816 -0.0793 </span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude </span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; magnitude</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      0      1 </span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -0.270  0.272 </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  anchor:magnitude </span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          magnitude</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor    0      1     </span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   round   -0.185  0.349</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   precise -0.354  0.195</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell means</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod, </span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"anchor"</span>, <span class="st">"magnitude"</span>),</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  anchor  magnitude emmean     SE  df lower.CL upper.CL</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round   0         -0.185 0.0642 116   -0.313   -0.058</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  precise 0         -0.354 0.0642 116   -0.481   -0.227</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round   1          0.349 0.0642 116    0.221    0.476</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  precise 1          0.195 0.0642 116    0.068    0.322</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal means</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod, </span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="st">"anchor"</span>, </span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  anchor   emmean     SE  df lower.CL upper.CL</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round    0.0816 0.0454 116  -0.0083   0.1716</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  precise -0.0793 0.0454 116  -0.1693   0.0107</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: magnitude </span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod, </span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="st">"anchor"</span>, </span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  anchor   emmean     SE  df lower.CL upper.CL</span></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round    0.0816 0.0454 116  -0.0083   0.1716</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  precise -0.0793 0.0454 116  -0.1693   0.0107</span></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: magnitude </span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="co"># These match summary statistics</span></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>C16 <span class="sc">|&gt;</span></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(magnitude) <span class="sc">|&gt;</span></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">margmean =</span> <span class="fu">mean</span>(madjust))</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   magnitude margmean</span></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;        &lt;dbl&gt;</span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0           -0.270</span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 1            0.272</span></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>C16 <span class="sc">|&gt;</span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(anchor) <span class="sc">|&gt;</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">margmean =</span> <span class="fu">mean</span>(madjust))</span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   anchor  margmean</span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;      &lt;dbl&gt;</span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 round     0.0816</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 precise  -0.0793</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get grand mean, cell means, etc.</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(mod, <span class="at">type =</span> <span class="st">"means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tables of means
+Grand mean
+            
+0.001155778 
+
+ anchor 
+anchor
+   round  precise 
+ 0.08162 -0.07931 
+
+ magnitude 
+magnitude
+       0        1 
+-0.26959  0.27190 
+
+ anchor:magnitude 
+         magnitude
+anchor    0       1      
+  round   -0.1854  0.3487
+  precise -0.3537  0.1951</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell means</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"anchor"</span>, <span class="st">"magnitude"</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> anchor  magnitude emmean     SE  df lower.CL upper.CL
+ round   0         -0.185 0.0642 116  -0.3127  -0.0582
+ precise 0         -0.354 0.0642 116  -0.4810  -0.2265
+ round   1          0.349 0.0642 116   0.2215   0.4759
+ precise 1          0.195 0.0642 116   0.0679   0.3223
+
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal means</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod, </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="st">"anchor"</span>, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> anchor   emmean     SE  df lower.CL upper.CL
+ round    0.0816 0.0454 116 -0.00834   0.1716
+ precise -0.0793 0.0454 116 -0.16928   0.0107
+
+Results are averaged over the levels of: magnitude 
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="st">"anchor"</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> anchor   emmean     SE  df lower.CL upper.CL
+ round    0.0816 0.0454 116 -0.00834   0.1716
+ precise -0.0793 0.0454 116 -0.16928   0.0107
+
+Results are averaged over the levels of: magnitude 
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># These match summary statistics</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>C16 <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(magnitude) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">margmean =</span> <span class="fu">mean</span>(madjust))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  magnitude margmean
+  &lt;fct&gt;        &lt;dbl&gt;
+1 0           -0.270
+2 1            0.272</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>C16 <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(anchor) <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">margmean =</span> <span class="fu">mean</span>(madjust))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  anchor  margmean
+  &lt;fct&gt;      &lt;dbl&gt;
+1 round     0.0816
+2 precise  -0.0793</code></pre>
+</div>
 </div>
 <p>Since the data are balanced, we can look at the (default) analysis of variance table produced using <code>anova</code> function<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-18_b6d2db75d2f60bb52759b7dd6e724786">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Response: madjust</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor             1   0.78    0.78    6.28   0.014 *  </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; magnitude          1   8.80    8.80   71.06 1.1e-13 ***</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor:magnitude   1   0.00    0.00    0.01   0.909    </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals        116  14.36    0.12                    </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: madjust
+                  Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+anchor             1  0.7770  0.7770  6.2768   0.01362 *  
+magnitude          1  8.7962  8.7962 71.0584 1.089e-13 ***
+anchor:magnitude   1  0.0016  0.0016  0.0132   0.90879    
+Residuals        116 14.3595  0.1238                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
 </div>
 <p>The output confirms our intuition that there is not much different from zero, with a strong effect for magnitude of adjustment and a significant, albeit smaller one, for anchor type.</p>
 <p>While the conclusions are probably unambiguous due to the large evidence, it would be useful to check the model assumptions. The sample size is just enough to forego normality checks, but the quantile-quantile plot can be useful to detect outliers and extremes. Outside of one potential value much lower than it’s group mean, there is no cause for concern.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-19_227750336a2edf3cd32a35eed9b59334">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">qqPlot</span>(mod, <span class="at">id =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">qqPlot</span>(mod, <span class="at">id =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="twoway_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="twoway_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>With 30 observations per group and no appearance of outlier, we need rather to worry about additivity and possibly heterogeneity arising from the treatment. Independence is plausible based on the context.</p>
 <p>The Tukey-Anscombe plot of residuals against fitted values (the group means) indicate no deviation, but the variance appears to be larger for the two groups with a large adjustment. Because the response takes negative values, we can simply proceed with fitting a two-way analysis in which each of the subgroups has mean <span class="math inline">\(\mu_{ij}\)</span> and standard deviation <span class="math inline">\(\sigma_{ij}\)</span>: in other words, only the data for each subgroup (<code>anchor</code>, <code>magnitude</code>) are used to estimate the summary statistics of that group.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-20_dc7f79c5162530ae90c57465d0a997ab">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evidence of unequal variance</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">residuals =</span> <span class="fu">resid</span>(mod),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fitted =</span> <span class="fu">fitted</span>(mod)),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.03</span>, <span class="at">height =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Equality of variance - Brown-Forsythe</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">leveneTest</span>(mod) </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levene's Test for Homogeneity of Variance (center = median)</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        Df F value Pr(&gt;F)  </span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group   3    2.81  0.042 *</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       116                 </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evidence of unequal variance</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">residuals =</span> <span class="fu">resid</span>(mod),</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fitted =</span> <span class="fu">fitted</span>(mod)),</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.03</span>, <span class="at">height =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="twoway_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<p><img src="twoway_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equality of variance - Brown-Forsythe</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">leveneTest</span>(mod) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+       Df F value Pr(&gt;F)  
+group   3  2.8133 0.0424 *
+      116                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
 </div>
 <p>Given the Brown-Forsythe test output, we can try fitting a different variance in each group, as there are enough observations for this. The function <code>gls</code> in the <code>nlme</code> package fits such models; the weight argument being setup with a constant variance (<code>~1</code>) per each combination of the crossed factors <code>anchor * magnitude</code>.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-21_663f0ff26f6f8bafda7496f70db1abd1">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a variance per group</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> nlme<span class="sc">::</span><span class="fu">gls</span>(</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> madjust <span class="sc">~</span> anchor <span class="sc">*</span> magnitude,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> C16,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> nlme<span class="sc">::</span><span class="fu">varIdent</span>(</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> anchor <span class="sc">*</span> magnitude))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Different ANOVA - we use type II here</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod2, <span class="at">type =</span> <span class="dv">2</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Analysis of Deviance Table (Type II tests)</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Response: madjust</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  Df Chisq Pr(&gt;Chisq)    </span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor            1  6.77     0.0093 ** </span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; magnitude         1 79.92     &lt;2e-16 ***</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; anchor:magnitude  1  0.01     0.9086    </span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a variance per group</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> nlme<span class="sc">::</span><span class="fu">gls</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> madjust <span class="sc">~</span> anchor <span class="sc">*</span> magnitude,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> C16,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> nlme<span class="sc">::</span><span class="fu">varIdent</span>(</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> anchor <span class="sc">*</span> magnitude))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Different ANOVA - we use type II here</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod2, <span class="at">type =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: madjust
+                 Df   Chisq Pr(&gt;Chisq)    
+anchor            1  6.7708   0.009266 ** 
+magnitude         1 79.9238  &lt; 2.2e-16 ***
+anchor:magnitude  1  0.0132   0.908595    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
 </div>
 <p>We can see the unequal std. deviation per group when passing the model with unequal variance and unequal means and computing the estimated marginal means. The package <code>emmeans</code> automatically adjusts for these changes.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-22_1d65ed3d69c1b4e177800599b3072392">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod2, </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"anchor"</span>, <span class="st">"magnitude"</span>))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  anchor  magnitude emmean     SE   df lower.CL upper.CL</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round   0         -0.185 0.0676 29.0   -0.324   -0.047</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  precise 0         -0.354 0.0422 29.0   -0.440   -0.267</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round   1          0.349 0.0796 29.0    0.186    0.512</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  precise 1          0.195 0.0618 28.9    0.069    0.322</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: satterthwaite </span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise difference for anchor</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>marg_effect <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="at">object =</span> mod2, </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="st">"anchor"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>marg_effect</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast        estimate     SE  df t.ratio p.value</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round - precise    0.161 0.0642 100   2.505  0.0138</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: magnitude </span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: satterthwaite</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># To get a data frame with data</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># broom::tidy(marg_effect)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod2, </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"anchor"</span>, <span class="st">"magnitude"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> anchor  magnitude emmean     SE   df lower.CL upper.CL
+ round   0         -0.185 0.0676 29.0  -0.3236  -0.0472
+ precise 0         -0.354 0.0422 29.0  -0.4401  -0.2674
+ round   1          0.349 0.0796 29.0   0.1859   0.5115
+ precise 1          0.195 0.0618 28.9   0.0687   0.3215
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 </code></pre>
 </div>
-<p>We can then pass the output to <code>car::Anova</code> to print the analysis of variance table. The <span class="math inline">\(p\)</span>-value for the main effect of <code>anchor</code> is 0.014 in the equal variance model. With unequal variance, different tests give different values: the <span class="math inline">\(p\)</span>-value is 0.009 if we use type II effects (the correct choice here), 0.012 with type III effects<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and the <code>emmeans</code> package returns Welch’s test for the pairwise difference with Satterwaite’s degree of freedom approximation if we average over <code>magnitude</code> to account for the difference in variance, this time with a <span class="math inline">\(p\)</span>-value of 0.014. These differences in output are somewhat notable: with <em>borderline statistical significance</em>, they may lead to different conclusions if one blindly dichotomize the results. Clearly stating which test and how the results are obtained is crucial for transparent reporting, as is providing the code and data. Let your readers make their own mind by reporting <span class="math inline">\(p\)</span>-values.</p>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise difference for anchor</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>marg_effect <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="at">object =</span> mod2, </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="st">"anchor"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>marg_effect</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast        estimate     SE  df t.ratio p.value
+ round - precise    0.161 0.0642 100   2.505  0.0138
+
+Results are averaged over the levels of: magnitude 
+Degrees-of-freedom method: satterthwaite </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To get a data frame with data</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co"># broom::tidy(marg_effect)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can then pass the output to <code>car::Anova</code> to print the analysis of variance table. The <span class="math inline">\(p\)</span>-value for the main effect of <code>anchor</code> is 0.014 in the equal variance model. With unequal variance, different tests give different values: the <span class="math inline">\(p\)</span>-value is 0.009 if we use type II effects (the correct choice here), 0.035 with type III effects<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and the <code>emmeans</code> package returns Welch’s test for the pairwise difference with Satterwaite’s degree of freedom approximation if we average over <code>magnitude</code> to account for the difference in variance, this time with a <span class="math inline">\(p\)</span>-value of 0.014. These differences in output are somewhat notable: with <em>borderline statistical significance</em>, they may lead to different conclusions if one blindly dichotomize the results. Clearly stating which test and how the results are obtained is crucial for transparent reporting, as is providing the code and data. Let your readers make their own mind by reporting <span class="math inline">\(p\)</span>-values.</p>
 <p>Regardless of the model, it should be clearly stated that there is some evidence of heterogeneity. We should also report sample size per group, mention the repartition (<span class="math inline">\(n=30\)</span> per group). In the present case, we can give information about the main effects and stop here, but giving an indication about the size of the adjustment (by reporting estimated marginal means) is useful. Note that <code>emmeans</code> gives a (here spurious) warning about the main effects (row or column average) since there is a potential interaction — as we all but ruled out the latter, we proceed nevertheless.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-23_e68b91f5bd6ea60aec8081d3befb7552">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>emm_marg <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> mod2,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="st">"anchor"</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>emm_marg <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> mod2,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="st">"anchor"</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
+</div>
 </div>
 <p>There are many different options to get the same results with <code>emmeans</code>. The <code>specs</code> indicates the list of factors which we want to keep, whereas <code>by</code> gives the one we want to have separate analysis for. In formula, we could get the simple effects for <code>anchor</code> by level of <code>magnitude</code> using <code>~ anchor | magnitude</code>, or set <code>specs = anchor</code> and <code>by = magnitude</code>. We can pass the result to <code>pairs</code> to obtain pairwise differences.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-24_beecf15bb1755d063c1988291aa62a10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effects for anchor</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>emm_simple <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> mod,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="st">"anchor"</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">"magnitude"</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise differences within each magnitude</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(emm_simple)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; magnitude = 0:</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast        estimate     SE  df t.ratio p.value</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round - precise    0.168 0.0908 116   1.853  0.0665</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; magnitude = 1:</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast        estimate     SE  df t.ratio p.value</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  round - precise    0.154 0.0908 116   1.690  0.0936</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple effects for anchor</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>emm_simple <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> mod,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="st">"anchor"</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="st">"magnitude"</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise differences within each magnitude</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(emm_simple)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>magnitude = 0:
+ contrast        estimate     SE  df t.ratio p.value
+ round - precise    0.168 0.0908 116   1.853  0.0665
+
+magnitude = 1:
+ contrast        estimate     SE  df t.ratio p.value
+ round - precise    0.154 0.0908 116   1.690  0.0936</code></pre>
+</div>
 </div>
 <p>By default, <code>emmeans</code> will compute adjustments for pairwise difference using Tukey’s honest significant difference method if there are more than one pairwise comparison. The software cannot easily guess the degrees of freedom, the number of tests, etc. There are also tests which are not of interest: for example, one probably wouldn’t want to compute the difference between the adjustment for (small magnitude and round) versus (large magnitude and precise). If we were interested in looking at all pairwise differences, we could keep all of the cells means.</p>
-<div class="cell" data-layout-align="center" data-hash="twoway_cache/html/unnamed-chunk-25_471117ba8a619de2abb8623a28d7e80f">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod2, </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"magnitude"</span>, <span class="st">"anchor"</span>), </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $emmeans</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude anchor  emmean     SE   df lower.CL upper.CL</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0         round   -0.185 0.0676 29.0   -0.324   -0.047</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1         round    0.349 0.0796 29.0    0.186    0.512</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0         precise -0.354 0.0422 29.0   -0.440   -0.267</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1         precise  0.195 0.0618 28.9    0.069    0.322</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: satterthwaite </span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95 </span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $contrasts</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast                                estimate     SE   df t.ratio p.value</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude0 round - magnitude1 round       -0.534 0.1044 56.4  -5.120  &lt;.0001</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude0 round - magnitude0 precise      0.168 0.0797 48.7   2.110  0.1640</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude0 round - magnitude1 precise     -0.381 0.0916 57.5  -4.160  0.0010</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude1 round - magnitude0 precise      0.702 0.0901 44.1   7.790  &lt;.0001</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude1 round - magnitude1 precise      0.154 0.1008 54.7   1.520  0.4310</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.1  -7.330  &lt;.0001</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: satterthwaite </span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; P value adjustment: tukey method for comparing a family of 4 estimates</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(<span class="at">object =</span> mod2, </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"magnitude"</span>, <span class="st">"anchor"</span>), </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">contr =</span> <span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+ magnitude anchor  emmean     SE   df lower.CL upper.CL
+ 0         round   -0.185 0.0676 29.0  -0.3236  -0.0472
+ 1         round    0.349 0.0796 29.0   0.1859   0.5115
+ 0         precise -0.354 0.0422 29.0  -0.4401  -0.2674
+ 1         precise  0.195 0.0618 28.9   0.0687   0.3215
+
+Degrees-of-freedom method: satterthwaite 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast                                estimate     SE   df t.ratio p.value
+ magnitude0 round - magnitude1 round       -0.534 0.1044 56.4  -5.115  &lt;.0001
+ magnitude0 round - magnitude0 precise      0.168 0.0797 48.7   2.112  0.1636
+ magnitude0 round - magnitude1 precise     -0.381 0.0916 57.5  -4.156  0.0006
+ magnitude1 round - magnitude0 precise      0.702 0.0901 44.1   7.795  &lt;.0001
+ magnitude1 round - magnitude1 precise      0.154 0.1008 54.7   1.524  0.4306
+ magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.0  -7.333  &lt;.0001
+
+Degrees-of-freedom method: satterthwaite 
+P value adjustment: tukey method for comparing a family of 4 estimates </code></pre>
+</div>
 </div>
 <p>Notice now the mention about Tukey’s effect. When there is heterogeneity of variance or unbalanced effects, the actual method employed is called <strong>Games-Howell</strong> correction.</p>
 </div>
@@ -990,7 +1116,7 @@ Y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \varepsilon_{ijk},
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Chandler:2016" class="csl-entry" role="listitem">
 Chandler, J. J. 2016. <span>“Replication of <span>J</span>aniszewski &amp; <span>U</span>y (2008, <span>P</span>sychological <span>S</span>cience, Study 4b).”</span> <a href="https://osf.io/aaudl">https://osf.io/aaudl</a>.
 </div>
@@ -1050,18 +1176,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1093,11 +1208,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1107,8 +1261,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1120,7 +1283,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1164,6 +1450,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1189,6 +1476,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1250,12 +1563,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./contrasts_multipletesting.html" class="pagination-link">
+      <a href="./contrasts_multipletesting.html" class="pagination-link" aria-label="Contrasts and multiple testing">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./repeated.html" class="pagination-link">
+      <a href="./repeated.html" class="pagination-link" aria-label="Repeated measures">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Repeated measures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1264,4 +1577,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/twoway.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

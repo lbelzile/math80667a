@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 4&nbsp; Contrasts and multiple testing</title>
+<title>4&nbsp; Contrasts and multiple testing – Experimental design and statistical methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,17 +116,44 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -130,13 +164,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./contrasts_multipletesting.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./contrasts_multipletesting.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -145,13 +179,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -219,7 +253,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ancova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -267,7 +301,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -285,7 +319,7 @@ div.csl-indent {
   <li><a href="#multiple-testing-methods-for-analysis-of-variance" id="toc-multiple-testing-methods-for-analysis-of-variance" class="nav-link" data-scroll-target="#multiple-testing-methods-for-analysis-of-variance"><span class="header-section-number">4.2.3</span> Multiple testing methods for analysis of variance</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/contrasts_multipletesting.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/contrasts_multipletesting.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -294,6 +328,7 @@ div.csl-indent {
 <h1 class="title display-7"><span id="contrasts-multiple-testing" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contrasts and multiple testing</span></span></h1>
 
 </header>
+
 
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -323,7 +358,7 @@ Key concept
 <p>Sometimes, linear contrasts encode disjoint bits of information about the sample: for example, one contrast that compares groups the first two groups versus one that compares the third and fourth is in effect using data from two disjoint samples, as contrasts are based on sample averages. Whenever the contrasts vectors are orthogonal, the tests will be uncorrelated. Mathematically, if we let <span class="math inline">\(c_{i}\)</span> and <span class="math inline">\(c^{*}_{i}\)</span> denote weights attached to the mean of group <span class="math inline">\(i\)</span> comprising <span class="math inline">\(n_i\)</span> observations, contrasts are orthogonal if <span class="math inline">\(c_{1}c^{*}_{1}/n_1 + \cdots + c_{K}c^{*}_K/n_K = 0\)</span>; if the sample is balanced with the same number of observations in each group, <span class="math inline">\(n/K = n_1 =\cdots = n_K\)</span>, we can consider the dot product of the two contrast vectors and neglect the subsample sizes.</p>
 <p>If we have <span class="math inline">\(K\)</span> groups, there are <span class="math inline">\(K-1\)</span> contrasts for pairwise differences, the last one being captured by the sample mean for the overall effect<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. If we care only about difference between groups (as opposed to the overall effect of all treatments), we impose a sum-to-zero constraint on the weights so <span class="math inline">\(c_1 + \cdots + c_K=0\)</span>. Keep in mind that, although independent tests are nice mathematically, contrasts should encode the hypothesis of interest to the researchers: we choose contrasts because they are meaningful, not because they are orthogonal.</p>
 <div id="exm-contrast-teaching" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4.1 (Contrasts for encouragement on teaching) </strong></span>The <code>arithmetic</code> data example considered five different treatment groups with 9 individuals in each. Two of them were control groups, one received praise, another was reproved and the last was ignored.</p>
+<p><span class="theorem-title"><strong>Example 4.1 (Contrasts for encouragement on teaching)</strong></span> The <code>arithmetic</code> data example considered five different treatment groups with 9 individuals in each. Two of them were control groups, one received praise, another was reproved and the last was ignored.</p>
 <p>Suppose that researchers were interested in assessing whether the experimental manipulation had an effect, and whether the impact of positive and negative feedback is the same on students.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>Suppose we have five groups in the order (control 1, control 2, praised, reproved, ignored). We can express these hypothesis as</p>
 <ul>
@@ -333,7 +368,7 @@ Key concept
 \end{align*}\]</span></li>
 </ul>
 <p>Note that, for the hypothesis of control vs experimental manipulation, we look at average of the different groups associated with each item. Using the ordering, the weights of the contrast vector are <span class="math inline">\((1/2, 1/2, -1/3, -1/3, -1/3)\)</span> and <span class="math inline">\((0, 0, 1, -1, 0)\)</span>. There are many equivalent formulation: we could multiply the weights by any number (different from zero) and we would get the same test statistic, as the latter is standardized.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/unnamed-chunk-2_fa1bd19b44fae97d7131e8e0ff926626">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(arithmetic, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>linmod <span class="ot">&lt;-</span> <span class="fu">aov</span>(score <span class="sc">~</span> group, <span class="at">data =</span> arithmetic)</span>
@@ -348,11 +383,15 @@ Key concept
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain confidence intervals instead of p-values</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(contrasts_res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/tbl-contrast-arithmetic-confint_794c2183a37de74c6101430c86d5f466">
+<div class="cell">
+<div id="tbl-contrast-arithmetic-confint" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contrast-arithmetic-confint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Contrasts estimates for the arithmetic data
+</figcaption>
+<div aria-describedby="tbl-contrast-arithmetic-confint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-contrast-arithmetic-confint" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4.1: Contrasts estimates for the arithmetic data</caption>
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
@@ -382,30 +421,36 @@ Key concept
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</figure>
 </div>
 </div>
 </div>
 <div id="exm-teachingtoread" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4.2 (Teaching to read) </strong></span>We consider data from <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The abstract of the paper provides a brief description of the study</p>
+<p><span class="theorem-title"><strong>Example 4.2 (Teaching to read)</strong></span> We consider data from <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>. The abstract of the paper provides a brief description of the study</p>
 <blockquote class="blockquote">
 <p>This study investigated the effectiveness of explicit instruction in think aloud as a means to promote elementary students’ comprehension monitoring abilities. Sixty-six fourth-grade students were randomly assigned to one of three experimental groups: (a) a Think-Aloud (TA) group, in which students were taught various comprehension monitoring strategies for reading stories (e.g., self-questioning, prediction, retelling, rereading) through the medium of thinking aloud; (b) a Directed reading-Thinking Activity (DRTA) group, in which students were taught a predict-verify strategy for reading and responding to stories; or (c) a Directed reading Activity (DRA) group, an instructed control, in which students engaged in a noninteractive, guided reading of stories.</p>
 </blockquote>
-<p>Looking at <a href="#tbl-print-pairwise-baumann">Table&nbsp;<span>4.2</span></a>, we can see that <code>DRTA</code> has the highest average, followed by <code>TA</code> and directed reading (<code>DR</code>).</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/pairwise-baumann_1d0a7a15f11e8986244e057921dadb9f">
+<p>Looking at <a href="#tbl-print-pairwise-baumann" class="quarto-xref">Table&nbsp;<span>4.2</span></a>, we can see that <code>DRTA</code> has the highest average, followed by <code>TA</code> and directed reading (<code>DR</code>).</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) <span class="co">#load package</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BSJ92, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mod_post <span class="ot">&lt;-</span> <span class="fu">aov</span>(posttest1 <span class="sc">~</span> group, <span class="at">data =</span> BSJ92)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>emmeans_post <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(<span class="at">object =</span> mod_post, </span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">specs =</span> <span class="st">"group"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/tbl-print-pairwise-baumann_ad634463216203ec23c46b283f130c5b">
+<div class="cell">
+<div id="tbl-print-pairwise-baumann" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-print-pairwise-baumann-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Estimated group averages with standard errors and 95% confidence intervals for post-test 1.
+</figcaption>
+<div aria-describedby="tbl-print-pairwise-baumann-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-print-pairwise-baumann" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4.2: Estimated group averages with standard errors and 95% confidence intervals for post-test 1.</caption>
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">terms</th>
@@ -443,9 +488,11 @@ Key concept
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</figure>
 </div>
 </div>
 <p>The purpose of <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span> was to make a particular comparison between treatment groups. From the abstract:</p>
@@ -454,8 +501,8 @@ Key concept
 </blockquote>
 <p>The hypothesis of <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span> is <span class="math inline">\(\mathscr{H}_0: \mu_{\mathrm{TA}} + \mu_{\mathrm{DRTA}} = 2 \mu_{\mathrm{DRA}}\)</span> or, rewritten slightly, <span class="math display">\[\begin{align*}
 \mathscr{H}_0: - 2 \mu_{\mathrm{DR}} + \mu_{\mathrm{DRTA}} + \mu_{\mathrm{TA}} = 0.
-\end{align*}\]</span> with weights <span class="math inline">\((-2, 1, 1)\)</span>; the order of the levels for the treatment are (<span class="math inline">\(\mathrm{DRA}\)</span>, <span class="math inline">\(\mathrm{DRTA}\)</span>, <span class="math inline">\(\mathrm{TA}\)</span>) and it must match that of the coefficients. An equivalent formulation is <span class="math inline">\((2, -1, -1)\)</span> or <span class="math inline">\((1, -1/2, -1/2)\)</span>: in either case, the estimated differences will be different (up to a constant multiple or a sign change). The vector of weights for <span class="math inline">\(\mathscr{H}_0: \mu_{\mathrm{TA}} = \mu_{\mathrm{DRTA}}\)</span> is (<span class="math inline">\(0\)</span>, <span class="math inline">\(-1\)</span>, <span class="math inline">\(1\)</span>): the zero appears because the first component, <span class="math inline">\(\mathrm{DRA}\)</span> doesn’t appear. The two contrasts are orthogonal since <span class="math inline">\((-2 \times 0) + (1 \times -1) + (1 \times 1) = 0\)</span>.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/contrasts_0af14cb2c515ab9b0bced74aba872392">
+\end{align*}\]</span> with weights <span class="math inline">\((-2, 1, 1)\)</span>; the order of the levels for the treatment are (<span class="math inline">\(\mathrm{DRA}\)</span>, <span class="math inline">\(\mathrm{DRTA}\)</span>, <span class="math inline">\(\mathrm{TA}\)</span>) and it must match that of the coefficients. An equivalent formulation is <span class="math inline">\((2, -1, -1)\)</span> or <span class="math inline">\((1, -1/2, -1/2)\)</span>: in either case, the estimated differences will be different (up to a constant multiple or a sign change). The vector of weights for <span class="math inline">\(\mathscr{H}_0:  \mu_{\mathrm{TA}} = \mu_{\mathrm{DRTA}}\)</span> is (<span class="math inline">\(0\)</span>, <span class="math inline">\(-1\)</span>, <span class="math inline">\(1\)</span>): the zero appears because the first component, <span class="math inline">\(\mathrm{DRA}\)</span> doesn’t appear. The two contrasts are orthogonal since <span class="math inline">\((-2 \times 0) + (1 \times -1) + (1 \times 1) = 0\)</span>.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the order of the level of the variables</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(BSJ92, <span class="fu">levels</span>(group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -477,11 +524,15 @@ Key concept
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> contrasts_list)</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>contrasts_summary_post <span class="ot">&lt;-</span> <span class="fu">summary</span>(contrasts_post)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/tbl-print-contrasts_7e3e9e1e0fdb94571e66559b516ebab1">
+<div class="cell">
+<div id="tbl-print-contrasts" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-print-contrasts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.3: Estimated contrasts for post-test 1.
+</figcaption>
+<div aria-describedby="tbl-print-contrasts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-print-contrasts" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4.3: Estimated contrasts for post-test 1.</caption>
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
@@ -527,22 +578,24 @@ Key concept
 </tr>
 </tbody>
 </table>
+
+
 </div>
-
-
+</div>
+</figure>
 </div>
 </div>
 <p>We can look at these differences; since <code>DRTA</code> versus <code>TA</code> is a pairwise difference, we could have obtained the <span class="math inline">\(t\)</span>-statistic directly from the pairwise contrasts using <code>pairs(emmeans_post)</code>. Note that the two different ways of writing the comparison between <code>DR</code> and the average of the other two methods yield different point estimates, but same inference (i.e., the same <span class="math inline">\(p\)</span>-values). For contrast <span class="math inline">\(C_{1b}\)</span>, we get half the estimate (but the standard error is also halved) and likewise for the second contrasts we get an estimate of <span class="math inline">\(\mu_{\mathrm{DRTA}} - \mu_{\mathrm{TA}}\)</span> in the first case (<span class="math inline">\(C_2\)</span>) and <span class="math inline">\(\mu_{\mathrm{TA}} - \mu_{\mathrm{DRTA}}\)</span>: the difference in group averages is the same up to sign.</p>
 <p>What is the conclusion of our analysis of contrasts? It looks like the methods involving teaching aloud have a strong impact on reading comprehension relative to only directed reading. The evidence is not as strong when we compare the method that combines directed reading-thinking activity and thinking aloud.</p>
 </div>
 <div id="exm-paperorplastic" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4.3 (Paper or plastic) </strong></span><span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> consider consumer bias when assessing how eco-friendly packages are. Items such as cereal are packaged in plastic bags, which themselves are covered in a box. They conjecture (and find) that consumers tend to view the packaging as being more eco-friendly when the amount of cardboard or paper surrounding the box is large, relative to the sole plastic package. We consider the data Study 2A, which measures the perceived environmental friendliness (PEF) as a function of the proportion of paper wrapping (either none, half of the area of the plastic, equal or twice). The authors are interested in comparing none with other choices.</p>
+<p><span class="theorem-title"><strong>Example 4.3 (Paper or plastic)</strong></span> <span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> consider consumer bias when assessing how eco-friendly packages are. Items such as cereal are packaged in plastic bags, which themselves are covered in a box. They conjecture (and find) that consumers tend to view the packaging as being more eco-friendly when the amount of cardboard or paper surrounding the box is large, relative to the sole plastic package. We consider the data Study 2A, which measures the perceived environmental friendliness (PEF) as a function of the proportion of paper wrapping (either none, half of the area of the plastic, equal or twice). The authors are interested in comparing none with other choices.</p>
 <p>If <span class="math inline">\(\mu_{0}, \mu_{0.5}, \mu_{1}, \mu_2\)</span> denote the true mean of the PEF score as a function of the proportion of paper, we are interested in pairwise differences, but only relative to the reference <span class="math inline">\(\mu_{0}\)</span>: <span class="math display">\[\begin{align*}
 \mu_0 = \mu_{0.5}  &amp; \iff 1\mu_0 - 1\mu_{0.5} + 0\mu_{1} + 0 \mu_{2} = 0\\
 \mu_0 = \mu_{1} &amp; \iff 1\mu_0 + 0\mu_{0.5} -1\mu_{1} + 0 \mu_{2} = 0\\
 \mu_0 = \mu_{2} &amp; \iff 1\mu_0 + 0\mu_{0.5} + 0\mu_{1} -1 \mu_{2} = 0
 \end{align*}\]</span> so contrast vectors <span class="math inline">\((1, -1, 0, 0)\)</span>, <span class="math inline">\((1, 0, -1, 0)\)</span> and <span class="math inline">\((1, 0, 0, -1)\)</span> would allow one to test the hypothesis.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/unnamed-chunk-8_d4bc9efaf0bf4dccd083b5a5d263ab90">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(SKD23_S2A, <span class="at">package =</span> <span class="st">"hecedsm"</span>) <span class="co"># load data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>linmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(pef <span class="sc">~</span> proportion, <span class="at">data =</span> SKD23_S2A) <span class="co"># fit simple linear regression</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(linmod) <span class="co"># check for significance of slope</span></span>
@@ -556,12 +609,16 @@ Key concept
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute contrasts relative to reference </span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>margmean <span class="sc">|&gt;</span> emmeans<span class="sc">::</span><span class="fu">contrast</span>(<span class="at">method =</span> contrastlist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The group averages are reported in <a href="#tbl-print-groupmeans-PEF">Table&nbsp;<span>4.4</span></a>, match those reported by the authors in the paper. They suggest an increased perceived environmental friendliness as the amount of paper used in the wrapping increases. We could fit a simple regression model to assess the average change, treating the proportion as a continuous explanatory variable. The estimated slope for the change in PEF score, which ranges from 1 to 7 in increments of 0.25, is 0.53 per area of paper. There is however strong evidence, given the data, that the change isn’t quite linear, as the fit of the linear regression model is significantly worse than the corresponding linear model.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/tbl-print-groupmeans-PEF_62ba0f3e4f986d4ba427342023eac41c">
+<p>The group averages are reported in <a href="#tbl-print-groupmeans-PEF" class="quarto-xref">Table&nbsp;<span>4.4</span></a>, match those reported by the authors in the paper. They suggest an increased perceived environmental friendliness as the amount of paper used in the wrapping increases. We could fit a simple regression model to assess the average change, treating the proportion as a continuous explanatory variable. The estimated slope for the change in PEF score, which ranges from 1 to 7 in increments of 0.25, is 0.53 per area of paper. There is however strong evidence, given the data, that the change isn’t quite linear, as the fit of the linear regression model is significantly worse than the corresponding linear model.</p>
+<div class="cell">
+<div id="tbl-print-groupmeans-PEF" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-print-groupmeans-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.4: Estimated group averages of PEF per proportion with standard errors
+</figcaption>
+<div aria-describedby="tbl-print-groupmeans-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-print-groupmeans-PEF" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4.4: Estimated group averages of PEF per proportion with standard errors</caption>
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">proportion</th>
@@ -607,16 +664,22 @@ Key concept
 </tr>
 </tbody>
 </table>
-</div>
 
 
 </div>
 </div>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/tbl-print-contrast-PEF_19805db320b4da634f0fa0b28b4e33a2">
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-print-contrast-PEF" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-print-contrast-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.5: Estimated contrasts for differences of PEF to no paper.
+</figcaption>
+<div aria-describedby="tbl-print-contrast-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-print-contrast-PEF" class="anchored">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Table&nbsp;4.5: Estimated contrasts for differences of PEF to no paper.</caption>
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
@@ -654,12 +717,14 @@ Key concept
 </tr>
 </tbody>
 </table>
-</div>
 
 
 </div>
 </div>
-<p>All differences reported in <a href="#tbl-print-contrast-PEF">Table&nbsp;<span>4.5</span></a> are significant and positive, in line with the researcher’s hypothesis.</p>
+</figure>
+</div>
+</div>
+<p>All differences reported in <a href="#tbl-print-contrast-PEF" class="quarto-xref">Table&nbsp;<span>4.5</span></a> are significant and positive, in line with the researcher’s hypothesis.</p>
 </div>
 </section>
 </section>
@@ -667,8 +732,8 @@ Key concept
 <h2 data-number="4.2" class="anchored" data-anchor-id="multiple-testing"><span class="header-section-number">4.2</span> Multiple testing</h2>
 <p>Beyond looking at the global null, we will be interested in a set of contrast statistics and typically this number can be large-ish. There is however a catch in starting to test multiple hypothesis at once.</p>
 <p>If you do a <strong>single</strong> hypothesis test and the testing procedure is well calibrated (meaning that the model model assumptions hold), <span class="math inline">\(p\)</span>-values are generated uniformly on the interval <span class="math inline">\([0,1]\)</span> and there is a probability of <span class="math inline">\(\alpha\)</span> of making a type I error (i.e., concluding in favour of the alternative and rejecting the null incorrectly) if the null is true. The problem of the above approach is that the more tests you perform, the higher the chance of finding (incorrectly) something: with 20 independent tests, we expect that, on average, one of them will yield a <span class="math inline">\(p\)</span>-value less than 5% even if this is a fluke. The problem with multiple testing is not so much that it occurs, but more than researchers tend to report selectively findings and only give the results of tests for which <span class="math inline">\(p \leq \alpha\)</span>, even if these are typically the product of chance. This makes most findings will not replicate: if we rerun the experiment, we will typically not find the same result.</p>
-<p>There is an infinite potential number of contrasts with more than two factos. Not all tests are of interest: standard software will report all possible pairwise comparisons, but this may not be of interest as showcased in <a href="#exm-paperorplastic">Example&nbsp;<span>4.4</span></a>. If there are <span class="math inline">\(K\)</span> groups to compare and any comparison is of interest, than we could performs <span class="math inline">\(\binom{K}{2}\)</span> pairwise comparisons with <span class="math inline">\(\mathscr{H}_{0}: \mu_i = \mu_j\)</span> for <span class="math inline">\(i \neq j\)</span>. For <span class="math inline">\(K=3\)</span>, there are three such comparisons, 10 pairwise comparisons if <span class="math inline">\(K=5\)</span> and 45 pairwise comparisons if <span class="math inline">\(K=10\)</span>. The number of pairwise comparisons grows quickly.</p>
-<p>The number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project <span class="citation" data-cites="Nosek:2015">(<a href="references.html#ref-Nosek:2015" role="doc-biblioref">Nosek et al. 2015</a>)</span>: this number ranged from 4 to 700, with an average of 72 — most studies did not account for the fact they were performing multiple tests or selected the model and thus some ‘discoveries’ are bound to be spurious. It is natural to ask then how many results are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in <a href="#fig-xkcdsignificant">Figure&nbsp;<span>4.1</span></a>: note how there is little scientific backing for the theory (thus such test shouldn’t be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.</p>
+<p>There is an infinite potential number of contrasts with more than two factos. Not all tests are of interest: standard software will report all possible pairwise comparisons, but this may not be of interest as showcased in <a href="#exm-paperorplastic" class="quarto-xref">Example&nbsp;<span>4.4</span></a>. If there are <span class="math inline">\(K\)</span> groups to compare and any comparison is of interest, than we could performs <span class="math inline">\(\binom{K}{2}\)</span> pairwise comparisons with <span class="math inline">\(\mathscr{H}_{0}: \mu_i = \mu_j\)</span> for <span class="math inline">\(i \neq j\)</span>. For <span class="math inline">\(K=3\)</span>, there are three such comparisons, 10 pairwise comparisons if <span class="math inline">\(K=5\)</span> and 45 pairwise comparisons if <span class="math inline">\(K=10\)</span>. The number of pairwise comparisons grows quickly.</p>
+<p>The number of tests performed in the course of an analysis can be very large. Y. Benjamini investigated the number of tests performed in each study of the Psychology replication project <span class="citation" data-cites="Nosek:2015">(<a href="references.html#ref-Nosek:2015" role="doc-biblioref">Nosek et al. 2015</a>)</span>: this number ranged from 4 to 700, with an average of 72 — most studies did not account for the fact they were performing multiple tests or selected the model and thus some ‘discoveries’ are bound to be spurious. It is natural to ask then how many results are spurious findings that correspond to type I errors. The paramount (absurd) illustration is the cartoon presented in <a href="#fig-xkcdsignificant" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>: note how there is little scientific backing for the theory (thus such test shouldn’t be of interest to begin with) and likewise the selective reporting made of the conclusions, despite nuanced conclusions.</p>
 <p>We can also assess mathematically the problem. Assume for simplicity that all tests are independent<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, then the probability of any rejecting the null incorrectly is <span class="math inline">\(\alpha\)</span>, but larger over the collection (with tests <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, we could reject by mistake if <span class="math inline">\(A\)</span> is a type I error and <span class="math inline">\(B\)</span> isn’t, or vice-versa, or if both are incorrect rejections.</p>
 <p>The probability of making at least one type I error if each test is conducted at level <span class="math inline">\(\alpha\)</span>, say <span class="math inline">\(\alpha^{\star}\)</span>, is<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="math display">\[\begin{align}
 \alpha^{\star} &amp;= 1 - \text{probability of making no type I error}
@@ -676,12 +741,16 @@ Key concept
 \\ &amp; \leq m\alpha
 \end{align}\]</span></p>
 <p>With <span class="math inline">\(\alpha = 5\)</span>% and <span class="math inline">\(m=4\)</span> tests, <span class="math inline">\(\alpha^{\star} \approx 0.185\)</span> whereas for <span class="math inline">\(m=72\)</span> tests, <span class="math inline">\(\alpha^{\star} \approx 0.975\)</span>: this means we are almost guaranteed even when nothing is going on to find “statistically significant” yet meaningless results.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/fig-xkcdsignificant_2e7f1369601da71a85dbdf12abf8e03b">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-xkcdsignificant" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/xkcd882_significant.png" class="img-fluid figure-img" width="270"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.1: xkcd 882: Significant. The alt text is ‘So, uh, we did the green study again and got no link. It was probably a–’ ‘RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!’</figcaption>
+<div id="fig-xkcdsignificant" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xkcdsignificant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/xkcd882_significant.png" class="img-fluid figure-img" width="270">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xkcdsignificant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: xkcd 882: Significant. The alt text is ‘So, uh, we did the green study again and got no link. It was probably a–’ ‘RESEARCH CONFLICTED ON GREEN JELLY BEAN/ACNE LINK; MORE STUDY RECOMMENDED!’
+</figcaption>
 </figure>
 </div>
 </div>
@@ -721,20 +790,24 @@ V_i &amp;=\begin{cases} 1 &amp; \text{type I error for } \mathscr{H}_{0i}\quad  
 <li>Scheffe’s method for contrasts. This is useful when the number of contrasts of interest is not specified apriori.</li>
 </ol>
 <p>If the global <span class="math inline">\(F\)</span>-test does not find differences at level <span class="math inline">\(\alpha\)</span>, then Scheffe’s method will also find no significant contrast <span class="math inline">\(\alpha\)</span> but nothing can be said about other methods. Generally, the more tests we control the type error for, the more conservative the procedures are.</p>
-<p>In <strong>R</strong>, we can use the <code>multcomp</code> or <code>emmeans</code> packages for the tests to adjust, or compute results manually. The test statistics do not change, only the benchmark null distribution is different. <a href="#fig-references-multtest">Figure&nbsp;<span>4.2</span></a> shows what the <span class="math inline">\(p\)</span>-value would be depending on how we control for contrasts. For reasonable values, we get larger <span class="math inline">\(p\)</span>-values for the methods that provide control.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/fig-references-multtest_82cca187a2ed6c1b16f462ffc5bae7b9">
+<p>In <strong>R</strong>, we can use the <code>multcomp</code> or <code>emmeans</code> packages for the tests to adjust, or compute results manually. The test statistics do not change, only the benchmark null distribution is different. <a href="#fig-references-multtest" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> shows what the <span class="math inline">\(p\)</span>-value would be depending on how we control for contrasts. For reasonable values, we get larger <span class="math inline">\(p\)</span>-values for the methods that provide control.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-references-multtest" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="contrasts_multipletesting_files/figure-html/fig-references-multtest-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4.2: P-value as a function of the squared t-statistic for a contrast for no adjustment (full line), Tukey’s HSD (dashed line) and Scheffe’s adjustment (dotted).</figcaption>
+<div id="fig-references-multtest" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-references-multtest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="contrasts_multipletesting_files/figure-html/fig-references-multtest-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-references-multtest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: P-value as a function of the squared t-statistic for a contrast for no adjustment (full line), Tukey’s HSD (dashed line) and Scheffe’s adjustment (dotted).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div id="exm-paperorplastic" class="theorem example">
-<p><span class="theorem-title"><strong>Example 4.4 (Multiple testing for paper or plastic) </strong></span><span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> considered pairwise difference relative to the control where only plastic wrapping is used. We could use either Bonferroni, Holm–Bonferoni or Dunnett’s method. Since the <span class="math inline">\(p\)</span>-values are tiny (less than <span class="math inline">\(10^{-4}\)</span>), this has no impact on the conclusions whatsoever. To better appreciate the impact in small samples, we subsample 20 observation per group to inflate <span class="math inline">\(p\)</span>-values. We can also see differences by inspecting the width of the confidence intervals for the pairwise differences to the reference group: more conservative references lead to wider intervals.</p>
-<div class="cell" data-hash="contrasts_multipletesting_cache/html/unnamed-chunk-14_9f4550c3b72740c10898b22fa259dc98">
+<p><span class="theorem-title"><strong>Example 4.4 (Multiple testing for paper or plastic)</strong></span> <span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> considered pairwise difference relative to the control where only plastic wrapping is used. We could use either Bonferroni, Holm–Bonferoni or Dunnett’s method. Since the <span class="math inline">\(p\)</span>-values are tiny (less than <span class="math inline">\(10^{-4}\)</span>), this has no impact on the conclusions whatsoever. To better appreciate the impact in small samples, we subsample 20 observation per group to inflate <span class="math inline">\(p\)</span>-values. We can also see differences by inspecting the width of the confidence intervals for the pairwise differences to the reference group: more conservative references lead to wider intervals.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(SKD23_S2A, <span class="at">package =</span> <span class="st">"hecedsm"</span>) <span class="co"># load data</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>) <span class="co"># Set seed for reproducibility</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>SKD23_S2A_sub <span class="ot">&lt;-</span> SKD23_S2A <span class="sc">|&gt;</span></span>
@@ -830,7 +903,7 @@ Conf-level adjustment: bonferroni method for 3 estimates </code></pre>
 <p>If we wanted to perform tests for multiple variables, or for subgroups, we can obtain overall control by using a procedure in each subset with a lower <span class="math inline">\(\alpha\)</span>, and combining the overall errors afterwards. If the data arise from different independent samples, the tests are indeed independent.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Baumann:1992" class="csl-entry" role="listitem">
 Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992. <span>“Effect of Think-Aloud Instruction on Elementary Students’ Comprehension Monitoring Abilities.”</span> <em>Journal of Reading Behavior</em> 24 (2): 143–72. <a href="https://doi.org/10.1080/10862969209547770">https://doi.org/10.1080/10862969209547770</a>.
 </div>
@@ -891,18 +964,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -934,11 +996,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -948,8 +1049,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -961,7 +1071,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1005,6 +1238,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1030,6 +1264,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1091,12 +1351,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./completely_randomized_trials.html" class="pagination-link">
+      <a href="./completely_randomized_trials.html" class="pagination-link" aria-label="Completely randomized designs">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Completely randomized designs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./twoway.html" class="pagination-link">
+      <a href="./twoway.html" class="pagination-link" aria-label="Complete factorial designs">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Complete factorial designs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1105,4 +1365,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/contrasts_multipletesting.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

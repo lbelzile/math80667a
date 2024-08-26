@@ -549,9 +549,8 @@ Given the Brown-Forsythe test output, we can try fitting a different variance in
 ```{r}
 #| eval: true
 #| echo: true
-#| cache: true
+#| cache: false
 library(nlme)
-library(car)
 # Fit a variance per group
 mod2 <- nlme::gls(
   model = madjust ~ anchor * magnitude,

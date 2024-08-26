@@ -230,6 +230,7 @@ Given that we have multiple students of every age group, we can include two-way 
 ```{r}
 #| eval: true
 #| echo: true
+#| cache: false
 library(lmerTest)
 library(emmeans)
 hmod <- lmer(

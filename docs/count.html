@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimental design and statistical methods - 15&nbsp; Count data</title>
+<title>15&nbsp; Count data – Experimental design and statistical methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -109,17 +116,44 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -130,13 +164,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./count.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Count data</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./count.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Count data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -145,13 +179,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Experimental design and statistical methods</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/lbelzile/math80667a/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./MATH80667A-EDSM.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/lbelzile/math80667a/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./MATH80667A-EDSM.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -219,7 +253,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ancova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Analysis of covariance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Linear regression models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -267,9 +301,9 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
     </div>
 <!-- main -->
@@ -279,6 +313,7 @@ div.csl-indent {
 <h1 class="title display-7"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Count data</span></h1>
 
 </header>
+
 
 <p>Many experiments can have binary outcomes. If we manipulate one or more experimental factors, we can aggregate these results by subcategories. This leads to contingency tables, which contain the total count per factor combination. These data can be understood in the same way as other ANOVA models, but with the aggregated responses as counts rather than averages. The following section is meant as both an introduction to the topic, showcasing examples of tests and their application.</p>
 <p>With count data, we typically model observations as arising from a Poisson distribution, which takes values in <span class="math inline">\(0, 1, \ldots\)</span>. The Poisson distribution has mean and variance <span class="math inline">\(\mu&gt;0\)</span> and, to ensure the fitted average are positive, regression models typically consider the natural logarithm.</p>
@@ -292,9 +327,9 @@ div.csl-indent {
 <p>The statistic is of the form <span class="math display">\[P =\sum_{i=1}^I \sum_{j=1}^J \frac{(O_{ij}-E_{ij})^2}{E_{ij}}\]</span> where <span class="math inline">\(E_{ij}\)</span> is the expected count under the null hypothesis, and <span class="math inline">\(O_{ij}\)</span> are the observed entries. The degrees of freedom are <span class="math inline">\(N\)</span> (here <span class="math inline">\(IJ=N\)</span>, the number of cells) minus the number of parameters under the null hypothesis. The large-sample approximation is adequate provided that the expected counts in each subgroup, <span class="math inline">\(E_{ij}\)</span>’s, are larger than 5.</p>
 <p>For contingency tables, the usual effect size is Cramér’s <span class="math inline">\(V\)</span>, which is a transformation of the chi-square statistic to remove the dependence on sample size and varies from <span class="math inline">\(0\)</span> (no association) to <span class="math inline">\(1\)</span> (fully determined data). The estimator is typically biased upward, so slightly different estimators (recipe) are available, including many with small-sample corrections.</p>
 <div id="exm-sellingformat" class="theorem example">
-<p><span class="theorem-title"><strong>Example 15.1 (The importance of selling format) </strong></span>We revisit data from <span class="citation" data-cites="Duke.Amir:2023">Duke and Amir (<a href="references.html#ref-Duke.Amir:2023" role="doc-biblioref">2023</a>)</span> on selling formats, which compare integrated purchases (e.g., proposing to choose first the item, then choosing the combination) or having a menu at checkout for the quantity (sequential). We look at whether the person purchased the item and aggregate counts in a <span class="math inline">\(2 \times 2\)</span> table. We are again testing for an interaction versus only main effects.</p>
+<p><span class="theorem-title"><strong>Example 15.1 (The importance of selling format)</strong></span> We revisit data from <span class="citation" data-cites="Duke.Amir:2023">Duke and Amir (<a href="references.html#ref-Duke.Amir:2023" role="doc-biblioref">2023</a>)</span> on selling formats, which compare integrated purchases (e.g., proposing to choose first the item, then choosing the combination) or having a menu at checkout for the quantity (sequential). We look at whether the person purchased the item and aggregate counts in a <span class="math inline">\(2 \times 2\)</span> table. We are again testing for an interaction versus only main effects.</p>
 <p>In the paper, all participants were included for this test, but other were excluded at a latter stage. The database <code>DA23_E2</code> only includes the 325 participants who were present at all stages.</p>
-<div class="cell" data-hash="count_cache/html/unnamed-chunk-2_682b58622ef1815f2deef5a422d79f4d">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(DA23_E2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tabs <span class="ot">&lt;-</span> <span class="fu">with</span>(DA23_E2, <span class="fu">table</span>(purchased, format))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tabs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -317,8 +352,8 @@ X-squared = 20.786, df = 1, p-value = 5.135e-06</code></pre>
 <p>The integrated quantity lead to a higher proportion of sales, and this difference is statistically significant at level 1%. The effect size (estimated with a small-sample correction of <span class="math inline">\(V=0.25\)</span> indicates a moderate effect, even if the <span class="math inline">\(p\)</span>-value is small since we have 39.8% who bought for quantity-integrated, versus 16.4% for sequential.</p>
 </div>
 <div id="exm-elliot-contingency" class="theorem example">
-<p><span class="theorem-title"><strong>Example 15.2 (Spontaneous verbal rehersal of memory tasks) </strong></span>We consider <span class="citation" data-cites="Elliot:2021">Elliott et al. (<a href="references.html#ref-Elliot:2021" role="doc-biblioref">2021</a>)</span> multi-lab replication of <span class="citation" data-cites="Flavell:1966">Flavell, Beach, and Chinsky (<a href="references.html#ref-Flavell:1966" role="doc-biblioref">1966</a>)</span> study on spontaneous verbalization of children when asked to identify pictures of objects. We pool data from all labs and study the counts as a function of age and frequency. We are interested in assessing whether there is an interaction between the two. Using Pearson <span class="math inline">\(\chi^2\)</span> test, we can fit the model in which counts in each cell <span class="math inline">\(E_{ij}\)</span>, which corresponds to the average predicted with a model with main effect only (overall average + row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> estimated deviation, from the main model).</p>
-<div class="cell" data-hash="count_cache/html/unnamed-chunk-3_3711480fd8ef4dee08e3e15797fa8326">
+<p><span class="theorem-title"><strong>Example 15.2 (Spontaneous verbal rehersal of memory tasks)</strong></span> We consider <span class="citation" data-cites="Elliot:2021">Elliott et al. (<a href="references.html#ref-Elliot:2021" role="doc-biblioref">2021</a>)</span> multi-lab replication of <span class="citation" data-cites="Flavell:1966">Flavell, Beach, and Chinsky (<a href="references.html#ref-Flavell:1966" role="doc-biblioref">1966</a>)</span> study on spontaneous verbalization of children when asked to identify pictures of objects. We pool data from all labs and study the counts as a function of age and frequency. We are interested in assessing whether there is an interaction between the two. Using Pearson <span class="math inline">\(\chi^2\)</span> test, we can fit the model in which counts in each cell <span class="math inline">\(E_{ij}\)</span>, which corresponds to the average predicted with a model with main effect only (overall average + row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> estimated deviation, from the main model).</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(MULTI21_D1, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>contingency <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  count <span class="sc">~</span> age <span class="sc">+</span> frequency, </span>
@@ -354,7 +389,7 @@ X-squared = 87.467, df = 6, p-value &lt; 2.2e-16</code></pre>
 </div>
 <p>The two statistics, likelihood ratio test and Pearson’s chi-square tests, give similar answers (they are two ways of assessing the same hypothesis, and both have <span class="math inline">\(\chi^2\)</span> distributions under the null hypothesis of no interaction.</p>
 <p>Given our large sample size, it is unsurprising to find differences. Perhaps more interesting is looking only at 5 years old versus 7 years old, as this is the age range where most changes occur. We also report effect sizes.</p>
-<div class="cell" data-hash="count_cache/html/unnamed-chunk-4_2741093fd576461890a0fa3a2779c975">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take only a subset of the levels for age</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>counts_5vs7 <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  count <span class="sc">~</span> age <span class="sc">+</span> frequency, </span>
@@ -387,13 +422,17 @@ X-squared = 42.575, df = 2, p-value = 5.688e-10</code></pre>
 </div>
 </div>
 <div id="exm-racial-chisq" class="theorem example">
-<p><span class="theorem-title"><strong>Example 15.3 (Racial discrimination in hiring) </strong></span>We consider a study from <span class="citation" data-cites="Bertrand.Mullainathan:2004">Bertrand and Mullainathan (<a href="references.html#ref-Bertrand.Mullainathan:2004" role="doc-biblioref">2004</a>)</span>, who study racial discrimination in hiring based on the consonance of applicants names; a similar example was recently featured in selection at the <a href="https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf">M.Sc. level from <em>Ondes</em></a>. The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.</p>
+<p><span class="theorem-title"><strong>Example 15.3 (Racial discrimination in hiring)</strong></span> We consider a study from <span class="citation" data-cites="Bertrand.Mullainathan:2004">Bertrand and Mullainathan (<a href="references.html#ref-Bertrand.Mullainathan:2004" role="doc-biblioref">2004</a>)</span>, who study racial discrimination in hiring based on the consonance of applicants names; a similar example was recently featured in selection at the <a href="https://ondes.univ-gustave-eiffel.fr/fileadmin/contributeurs/ONDES/Publications/ONDES_WP_23_01.pdf">M.Sc. level from <em>Ondes</em></a>. The authors created curriculum vitae for four applicants and randomly allocated them a name, either one typical of a white person or a black person. The response is a count indicating how many of the applicants were called back (out of two black and two white) depending on their origin.</p>
 <p>If there was no racial discrimination (null hypothesis), we would expect the average number of times a white applicant was called back (but no black applicant) to be the same as a single black applicant (but no white). Only the entries for different numbers of call-back (either 0 vs 2, 0 vs 1 or 1 vs 2 for either race) are instructive about our question of interest.</p>
-<div class="cell" data-hash="count_cache/html/tbl-BM04T2tab_530e62fea6c14f692f869909bd5918f4">
+<div class="cell">
+<div id="tbl-BM04T2tab" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-BM04T2tab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.1: Table 2 of Bertrand and Mullainathan (2004), with counts of callbacks out of four CV (two white, two black) per combination.
+</figcaption>
+<div aria-describedby="tbl-BM04T2tab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-BM04T2tab" class="anchored">
-<table class="table table-sm table-striped small">
-<caption>Table&nbsp;15.1: Table 2 of Bertrand and Mullainathan (2004), with counts of callbacks out of four CV (two white, two black) per combination.</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -425,9 +464,11 @@ X-squared = 42.575, df = 2, p-value = 5.688e-10</code></pre>
 </table>
 </div>
 </div>
+</figure>
 </div>
-<p>Under the null hypothesis, the model would have equal off-diagonal entries in <a href="#tbl-BM04T2tab">Table&nbsp;<span>15.1</span></a>. We can test this null hypothesis of symmetry by creating a factor that has similar levels for off-diagonal entries.</p>
-<div class="cell" data-hash="count_cache/html/unnamed-chunk-6_4357a1222cbe0291da3cdaf39dd0b3dd">
+</div>
+<p>Under the null hypothesis, the model would have equal off-diagonal entries in <a href="#tbl-BM04T2tab" class="quarto-xref">Table&nbsp;<span>15.1</span></a>. We can test this null hypothesis of symmetry by creating a factor that has similar levels for off-diagonal entries.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BM04_T2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the Poisson regression models</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Saturated model - one average per cell, 9 parameters </span></span>
@@ -455,7 +496,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(<span class="fu">deviance</span>(mod_null), <span class="at">df =</span> mod_null<span class="sc">$</span>df.residual, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We could use Pearson’s <span class="math inline">\(\chi^2\)</span> test too. In our example, the entries <span class="math inline">\(E_{ij}\)</span> for off-diagonal average counts entries <span class="math inline">\(E_{01}\)</span>, <span class="math inline">\(E_{12}\)</span>, <span class="math inline">\(E_{02}\)</span>, etc., are obtained as the average of counts <span class="math inline">\(E_{ij} = (O_{ij} + O_{ji})/2\)</span> <span class="math inline">\((i\neq j)\)</span>, etc. The numeric value of the test statistic is 0, yielding a <span class="math inline">\(p\)</span>-value less than <span class="math inline">\(10^{-5}\)</span>. There is thus strong evidence of racial discrimination.</p>
-<div class="cell" data-hash="count_cache/html/unnamed-chunk-7_71cb69ddd8104f82f89a8ff61c52fe26">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alternative test (Pearson)</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute observed counts minus expected counts under model sum_i (O_i-E_i)^2/E_i</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># E_i is the expected count, estimated via average of non-diagonal entries 0.5*mu(0,2) + 0.5*mu(2,0)</span></span>
@@ -463,7 +504,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(PearsonX2, <span class="at">df =</span> <span class="dv">3</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can also compute contrasts. Because the model is multiplicative, it makes sense to report departures of symmetry by computing ratios <span class="math inline">\(\widehat{\mu}_{ji}/\widehat{\mu}_{ij}\)</span> for <span class="math inline">\(i, j = 0, 1, 2\)</span> and <span class="math inline">\(i \neq j\)</span>. The grid specification is as usual. Wald tests (computed on the log scale) are also reported.</p>
-<div class="cell" data-hash="count_cache/html/unnamed-chunk-8_12e4d6e1be44c0838a4965b1d52f820e">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute contrasts as ratios counts01/counts10</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_alt, <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"white"</span>)) <span class="sc">|&gt;</span></span>
@@ -488,23 +529,27 @@ Tests are performed on the log scale </code></pre>
 \mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
 \end{align*}\]</span> so the mean is multiplied by <span class="math inline">\(\exp(\beta_j)\)</span> for an increase of one unit of <span class="math inline">\(\mathrm{X}_{j}\)</span>, <em>ceteris paribus.</em> If <span class="math inline">\(\beta_j &lt; 0\)</span>, <span class="math inline">\(\exp(\beta_j) &lt; 1\)</span> and so we have a decrease of <span class="math inline">\(100\cdot(1-\exp(\beta_j))\)</span>% of the mean response. Likewise, if <span class="math inline">\(\beta_j&gt;0\)</span>, the mean number increases by <span class="math inline">\(100\cdot(\exp(\beta_j)-1)\)</span>%.</p>
 <div id="exm-roadsweden" class="theorem example">
-<p><span class="theorem-title"><strong>Example 15.4 (Road accidents and speed limits on the motorway in Sweden) </strong></span>Sweden is a worldwide leader in road safety and has a long history of countermeasures to increase road traffic safety, including the Vision Zero program. Back in the 1960s, a study was conducted by the authorities to investigate the potential of speed limits on motorways to reduce the number of accidents. The <code>sweden</code> data contains the number of accidents on 92 matching days in both 1961 and 1962 <span class="citation" data-cites="Svensson:1981">(<a href="references.html#ref-Svensson:1981" role="doc-biblioref">Svensson 1981</a>)</span>; speed limits were in place on selected days in either year.</p>
+<p><span class="theorem-title"><strong>Example 15.4 (Road accidents and speed limits on the motorway in Sweden)</strong></span> Sweden is a worldwide leader in road safety and has a long history of countermeasures to increase road traffic safety, including the Vision Zero program. Back in the 1960s, a study was conducted by the authorities to investigate the potential of speed limits on motorways to reduce the number of accidents. The <code>sweden</code> data contains the number of accidents on 92 matching days in both 1961 and 1962 <span class="citation" data-cites="Svensson:1981">(<a href="references.html#ref-Svensson:1981" role="doc-biblioref">Svensson 1981</a>)</span>; speed limits were in place on selected days in either year.</p>
 <p>To study the impact of the restrictions we can fit a Poisson model. Let <span class="math inline">\(Y_{i1}\)</span> (respectively <span class="math inline">\(Y_{i2}\)</span>) denote the number of accidents in 1961 (1962) on day <span class="math inline">\(i\)</span> and let <span class="math inline">\(\texttt{limit}_{ij}\)</span> denote a binary indicator equal to one if speed limits were enforced on day <span class="math inline">\(i\)</span> of year <span class="math inline">\(j\)</span>. We set <span class="math display">\[\begin{align*}
 Y_{i1} &amp;\sim \mathsf{Po}\{\exp(\delta_i + \alpha \texttt{limit}_{i1})\},
 \\ Y_{i2} &amp;\sim\mathsf{Po}\{\exp(\delta_i + \gamma +  \alpha \texttt{limit}_{i2})\}, \qquad i=1, \ldots, 92.
 \end{align*}\]</span> The nuisance parameters <span class="math inline">\(\delta_1, \ldots, \delta_{92}\)</span> control for changes in background number of accidents and are of no practical interest, while <span class="math inline">\(\gamma\)</span> denotes the change from 1961 to 1962. We are interested here in assessing changes in the number of accidents due to the policy, <span class="math inline">\(\alpha\)</span>; of secondary interest is <span class="math inline">\(\gamma\)</span>, which determines whether there has been a change in the number of accident in 1962 relative to 1961.</p>
-<div class="cell" data-hash="count_cache/html/swedenmod_165e67a916b742259bbc3034be10e4f9">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(sweden, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>modswed <span class="ot">&lt;-</span> <span class="fu">glm</span>(accidents <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> day <span class="sc">+</span> limit <span class="sc">+</span> year,</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> <span class="fu">poisson</span>(<span class="st">"log"</span>), </span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> sweden)</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Anova</span>(modswed, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="count_cache/html/tbl-swedenglm_9e56aeddcd23dbb6589319be5d7ace65">
+<div class="cell">
+<div id="tbl-swedenglm" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-swedenglm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.2: Analysis of deviance table (Type 3 decomposition) for the Poisson regression model fitted to the Sweden traffic restrictions data: the table gives the <span class="math inline">\(p\)</span>-value for likelihood ratio tests comparing the full model including all covariates with models in which a single explanatory is removed.
+</figcaption>
+<div aria-describedby="tbl-swedenglm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-swedenglm" class="anchored">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<caption>Table&nbsp;15.2: Analysis of deviance table (Type 3 decomposition) for the Poisson regression model fitted to the Sweden traffic restrictions data: the table gives the <span class="math inline">\(p\)</span>-value for likelihood ratio tests comparing the full model including all covariates with models in which a single explanatory is removed.</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">variable</th>
@@ -534,16 +579,18 @@ Y_{i1} &amp;\sim \mathsf{Po}\{\exp(\delta_i + \alpha \texttt{limit}_{i1})\},
 </tr>
 </tbody>
 </table>
-</div>
 
 
 </div>
 </div>
-<p>The residual deviance is 107.95 for 90 degrees of freedom, suggests the overall fit is good, despite the large number of nuisance parameters <span class="math inline">\(\delta_1, \ldots, \delta_{92}\)</span>. The coefficient associated to limit is strongly significant: the estimated coefficient is <span class="math inline">\(\widehat{\alpha}=-0.29\)</span>, indicates that speed limits reduce the mean number of accidents by <span class="math inline">\(25.3\)</span>% on average. In contrast, the likelihood ratio test reported in <a href="#tbl-swedenglm">Table&nbsp;<span>15.2</span></a> shows that the change in the yearly number of accident from 1961 to 1962, <span class="math inline">\(\gamma\)</span>, is not significantly different from zero.</p>
+</figure>
+</div>
+</div>
+<p>The residual deviance is 107.95 for 90 degrees of freedom, suggests the overall fit is good, despite the large number of nuisance parameters <span class="math inline">\(\delta_1, \ldots, \delta_{92}\)</span>. The coefficient associated to limit is strongly significant: the estimated coefficient is <span class="math inline">\(\widehat{\alpha}=-0.29\)</span>, indicates that speed limits reduce the mean number of accidents by <span class="math inline">\(25.3\)</span>% on average. In contrast, the likelihood ratio test reported in <a href="#tbl-swedenglm" class="quarto-xref">Table&nbsp;<span>15.2</span></a> shows that the change in the yearly number of accident from 1961 to 1962, <span class="math inline">\(\gamma\)</span>, is not significantly different from zero.</p>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Bertrand.Mullainathan:2004" class="csl-entry" role="listitem">
 Bertrand, Marianne, and Sendhil Mullainathan. 2004. <span>“Are <span>E</span>mily and <span>G</span>reg More Employable Than <span>L</span>akisha and <span>J</span>amal? A Field Experiment on Labor Market Discrimination.”</span> <em>American Economic Review</em> 94 (4): 991–1013. <a href="https://doi.org/10.1257/0002828042002561">https://doi.org/10.1257/0002828042002561</a>.
 </div>
@@ -597,18 +644,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -640,11 +676,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/lbelzile\.github\.io\/math80667a\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -654,8 +729,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -667,7 +751,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -711,6 +918,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -736,6 +944,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -797,12 +1031,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./nonparametric.html" class="pagination-link">
+      <a href="./nonparametric.html" class="pagination-link" aria-label="Nonparametric tests">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Nonparametric tests</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
+      <a href="./references.html" class="pagination-link" aria-label="References">
         <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -811,4 +1045,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/lbelzile/math80667a/edit/main/count.qmd" class="toc-action">Edit this page</a></p></div></div></div></div></footer></body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/count.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
