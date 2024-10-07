@@ -253,12 +253,12 @@ The redundancy in information, due to the fact main effects are expressible as r
 
 @Sharma.Tully.Cryder:2021 first proceeded with the test for the interaction. Since there are one global average and two main effect (additional difference in average for both factors `debttype` and `purchase`), the interaction involves one degree of freedom since we go from a model with three parameters describing the mean to one that has a different average for each of the four subgroups.
 
-The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in @fig-2by2, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn't significant, then we could pool observations instead and average across either of the two factors, resulting in the marginal comparisons with the main effects.
+The reason why this is first test to carry out is that if the effect of one factor depends on the level of the other, as shown in @fig-2by2, then we need to compare the label of debt type separately for each type of purchase and vice-versa using simple effects. If the interaction on the contrary isn't significant, then we could look at main effects by pooling observations and averaging across either of the two factors, resulting in marginal comparisons.
 
 Fitting the model including the interaction between factors ensures that we keep the additivity assumption and that our conclusions aren't misleading: the price to pay is additional mean parameters to be estimated, which isn't an issue if you collect enough data, but can be critical when data collection is extremely costly and only a few runs are allowed.
 
 In **R**, we include both factors in a formula as 
-`response ~ factorA * factorB`, the `*` symbol indicating that both are allowed to interact; in the main effect model, we would use instead `+` to reflect that the effects of both factors add up.
+`response ~ factorA * factorB`, the `*` symbol indicating that both are allowed to interact, as a shorthand for `factorA + factorB + factorA:factorB`; in the main effect model, we would use instead `+` to reflect that the effects of both factors add up.
 
 ```{r}
 #| eval: true
@@ -491,9 +491,6 @@ emmeans(object = mod,
 emmeans(object = mod, 
         specs = "anchor", 
         type = "response")
-emmeans(object = mod, 
-        specs = "anchor", 
-        type = "response")
 # These match summary statistics
 C16 |>
   group_by(magnitude) |>
@@ -504,7 +501,7 @@ C16 |>
 ```
 
 Since the data are balanced, we can look at the (default) analysis of variance table produced using
-`anova` function^[In general, for unbalanced data, one would use `car::Anova` with `type = 2` or `type = 3` effects.]
+`anova` function^[In general, for unbalanced data, one would use `car::Anova` with `type = 2` or `type = 3` effects. The former (i.e., Type 2) is preferable because it respects the marginality principle.]
 
 ```{r}
 #| eval: true

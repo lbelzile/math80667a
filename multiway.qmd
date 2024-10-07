@@ -40,7 +40,7 @@ If we consider @tbl-anova-LKUK24, we find that there is no three-way interaction
 
 Based on the data, we will collapse data to a one-way ANOVA comparing the three levels of `brandaction` and a 2 by 2 two-way ANOVA for the other two factors. The results are obtained by averaging over the missing factor.
 
-We are interested in comparing the perception between the race of Chef Dax (black or not, as Southern Soul food cooking is more likely to be associated with cultural appropriation is Chef Dax is not black. We proceed with `emmeans` by computing the marginal means separately for each of the four subcategories, but compare the race of Chef Dax separately for liberals and conservatives due to the presence of the interaction.
+We are interested in comparing the perception between the race of Chef Dax (black or not, as Southern Soul food cooking is more likely to be associated with cultural appropriation if Chef Dax is not black. We proceed with `emmeans` by computing the marginal means separately for each of the four subcategories, but compare the race of Chef Dax separately for liberals and conservatives due to the presence of the interaction.
 
 ```{r}
 #| eval: true
