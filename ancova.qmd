@@ -7,14 +7,155 @@
 #| message: false
 ```
 
+## Linear models for factorial designs
+
+If factors measure a continuous quantity, we may alternatively consider a statistical model that describes a curve or a straight line, rather than only determining the mean at the levels measured in an experiment. These types of experiments are rather common in engineering.
 
 
-The previous chapter dealt with factorial experiments in which all experimental factors are of interest. It is possible to use measurements concomitant to the data collection (for example, value to a test before we complete the group assignment for the manipulation) to get a measure of the relative strength of students. The more correlated these measures are with the response, the more we can explain the data. We then proceed with the random assignment of our experimental units to different conditions. 
+:::{#exm-sokolova}
 
-Including covariates should in principle increase power and our ability to detect real differences due to experimental manipulations, provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn't be used to assign treatment. Such designs are meant to reduce the error.
+## Is additional paper wrapping viewed as more eco-friendly?
+
+@Sokolova.Krishna.Doring:2023 consider consumer bias when assessing how eco-friendly packages are. Items such as cereal are packaged in plastic bags, which themselves are covered in a box. They conjecture (and find) that, paradoxically, consumers tend to view the packaging as being more eco-friendly when the amount of cardboard
+or paper surrounding the box is larger, relative to the sole plastic package. We consider in the sequel the data from Study 2A, which measures the perceived environmental friendliness (PEF, variable `pef`) as a function of the `proportion` of paper wrapping (either none, half of the area of the plastic, equal or twice).
+
+The linear model we can envision measures the effect of `pef` as a linear function of `proportion`, with
+\begin{align*}
+\mathsf{E}(\texttt{pef} \mid \texttt{proportion}) = \beta_0 + \beta_1 \texttt{proportion}
+\end{align*}
+and with homoscedastic observations. More general models would include polynomials (up to degree $K-1$ for a factor with $K$ levels).
+
+If we fit against the simple linear regression model, we can extract the estimated coefficients and the $p$-values for the $t$-test for $\beta_0$ and $\beta_1$. The test for the intercept is of no interest since data are measured on a scale from 1 to 7, so the mean response when `proportion=0` cannot be zero. The coefficient for `proportion` suggests a trend of 0.5 point per unit ratio, and this is significantly different from zero, indicating that the `pef` score changes with the paper to plastic ratio.
+
+```{r}
+#| eval: true
+#| echo: true
+data(SKD23_S2A, package = "hecedsm") # load data
+linmod <- lm(pef ~ proportion, data = SKD23_S2A)
+# fit simple linear regression
+coef(linmod) # extract intercept and slope
+```
+
+Let $\mu_{0}, \mu_{0.5}, \mu_{1}, \mu_2$ denote the true mean of the PEF score as a function of the proportion of paper. There are several tests that could be of interest here, but we focus on contrasts performed by authors and an hypothesis test of linearity as a function of the proportion of plastic. For the latter, we could compare the linear regression model (in which the PEF score increases linearly with the proportion of paper to plastic) against the ANOVA which allows each of the four groups to have different means.
+
+
+If we use $\boldsymbol{\alpha} \in \mathbb{R}^4$ to denote the parameter vector of the analysis of variance model using the treatment parametrization and $\boldsymbol{\beta} \in \mathbb{R}^2$ for the simple linear regression model, then we have
+\begin{align*}
+\mu_0 &= \beta_0=\alpha_0 \\
+\mu_{0.5} &= \beta_0 + 0.5 \beta_1 = \alpha_0 + \alpha_1\\
+\mu_1 &= \beta_0 + \beta_1 = \alpha_0 + \alpha_2 \\
+\mu_2 &= \beta_0 + 2 \beta_1= \alpha_0 + \alpha_3.
+\end{align*}
+The test comparing the simple linear regression with the analysis of variance imposes two simultaneous restrictions, with $\mathscr{H}_0: \alpha_3 = 2\alpha_2= 4\alpha_1$, so the null distribution is $\mathsf{Fisher}(2, 798)$ or roughly $\chi^2_2$.
+
+
+```{r}
+#| eval: true
+#| echo: true
+anovamod <- lm(pef ~ factor(proportion), # one-way ANOVA
+               data = SKD23_S2A) 
+# Compare simple linear regression with ANOVA
+anova(linmod, anovamod) # is the change in PEF linear?
+# Specifying the weights 
+# these contrasts encode the mean (so don't sum to zero)
+car::linearHypothesis(model = anovamod, 
+   hypothesis = rbind(c(0, -2, 1, 0), 
+                      c(0, 0, -2, 1)))
+```
+We see from the output that the $F$ tests and the $p$-values are identical, whether we impose the constraints manually or simply feed the two nested models to the `anova` method.
+
+The authors were interested in comparing none with other choices: we are interested in pairwise differences, but only relative to the reference $\mu_{0}$:
+\begin{align*}
+\mu_0 = \mu_{0.5}  & \iff 1\mu_0 - 1\mu_{0.5} + 0\mu_{1} + 0 \mu_{2} = 0\\
+\mu_0 = \mu_{1} & \iff 1\mu_0 + 0\mu_{0.5} -1\mu_{1} + 0 \mu_{2} = 0\\
+\mu_0 = \mu_{2} & \iff 1\mu_0 + 0\mu_{0.5} + 0\mu_{1} -1 \mu_{2} = 0
+\end{align*}
+so contrast vectors $(1, -1, 0, 0)$, $(1, 0, -1, 0)$ and $(1, 0, 0, -1)$ for the marginal means would allow one to test the hypothesis.
+
+```{r}
+#| eval: true
+#| echo: true
+margmean <- anovamod |>  
+  emmeans::emmeans(specs = "proportion") # group means
+contrastlist <- list( # specify contrast vectors
+   refvshalf = c(1, -1, 0, 0),
+   refvsone =  c(1, 0, -1, 0),
+   refvstwo =  c(1, 0, 0, -1))
+# compute contrasts relative to reference
+margmean |> emmeans::contrast(method = contrastlist)
+```
+
+
+
+```{r}
+#| label: SKD23S2A-save
+#| eval: true
+#| echo: false
+data(SKD23_S2A, package = "hecedsm") # load data
+linmod <- lm(pef ~ proportion, data = SKD23_S2A) # fit simple linear regression
+anovamod <- lm(pef ~ factor(proportion), data = SKD23_S2A) # one-way ANOVA
+# anova(linmod, anovamod) # compare models (two restrictions)
+# group means
+margmean <- anovamod |>  emmeans::emmeans(specs = "proportion") 
+contrastlist <- list( # specify contrast vectors
+   refvshalf = c(1, -1, 0, 0),
+   refvsone =  c(1, 0, -1, 0),
+   refvstwo =  c(1, 0, 0, -1))
+contrast <- margmean |> emmeans::contrast( 
+ method = contrastlist)
+```
+
+The group averages are reported in @tbl-print-groupmeans-PEF, match those reported by the authors in the paper. They suggest an increased perceived environmental friendliness as the amount of paper used in the wrapping increases. We could fit a simple regression model to assess the average change, treating the proportion as a continuous explanatory variable. The estimated slope for the change in PEF score, which ranges from 1 to 7 in increments of 0.25, is `r round(coef(linmod)[2],2)` point per ratio of paper/plastic. There is however strong evidence, given the data, that the change isn't quite linear, as the fit of the linear regression model is significantly worse than the corresponding linear model.
+
+
+```{r}
+#| label: tbl-print-groupmeans-PEF
+#| echo: false
+#| eval: true
+#| tbl-cap: "Estimated group averages of PEF per proportion with standard errors"
+knitr::kable(margmean,
+      digits = c(2,2,3,0,2,4),
+      booktabs = TRUE,
+      col.names = c("proportion",
+                    "marg. mean",
+                    "std. err.",
+                    "dof",
+                    "lower (CI)",
+                    "upper (CI)")) |>
+    kableExtra::kable_styling()
+```
+
+```{r}
+#| label: tbl-print-contrast-PEF
+#| echo: false
+#| eval: true
+#| tbl-cap: "Estimated contrasts for differences of PEF to no paper."
+kable(contrast,
+      booktabs = TRUE,
+      digits = c(2,2,2,0,2,2),
+      col.names = c("contrast",
+                    "estimate",
+                    "std. err.",
+                    "dof",
+                    "stat",
+                    "p-value")) |>
+  kableExtra::kable_styling()
+```
+
+All differences reported in @tbl-print-contrast-PEF are significant and positive, in line with the researcher's hypothesis.
+
+
+:::
+
+
 
 ## Analysis of covariance
 
+The previous chapter dealt with factorial experiments in which all experimental factors are of interest. It is possible to use measurements concomitant to the data collection (for example, value to a test before we complete the group assignment for the manipulation) to get a measure of the relative strength of students. The more correlated these measures are with the response, the more we can explain the data. We then proceed with the random assignment of our experimental units to different conditions. 
+
+
+
+Including covariates should in principle increase power and our ability to detect real differences due to experimental manipulations, provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn't be used to assign treatment. Such designs are meant to reduce the error.
 
 We can include continuous covariates to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn't necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called **analysis of covariance**, although as analysis of variance models, they are nothing but linear regression models. The ANCOVA model assumes that slopes are parallel: if rather there is an interaction term, then the experimental manipulation induces changes that depend on the value of the continuous explanatory. This case is termed **moderation** in the management literature.
 
@@ -607,6 +748,7 @@ The cutoff value is 4.20 with control for the false discovery rate and 4.15 with
 
 ## **Summary**
 
+* We can treat factor levels measuring quantities as continuous covariates, and reduce the number of parameters.
 * Inclusion of continuous covariates may help filtering out unwanted variability.
 * These are typically concomitant variables (measured alongside the response variable).
 * This designs reduce the residual error, leading to an increase in power (more ability to detect differences in average between experimental conditions).

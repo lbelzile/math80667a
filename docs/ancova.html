@@ -122,6 +122,8 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -306,8 +308,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#analysis-of-covariance" id="toc-analysis-of-covariance" class="nav-link active" data-scroll-target="#analysis-of-covariance"><span class="header-section-number">9.1</span> Analysis of covariance</a></li>
-  <li><a href="#moderation-and-interactions" id="toc-moderation-and-interactions" class="nav-link" data-scroll-target="#moderation-and-interactions"><span class="header-section-number">9.2</span> Moderation and interactions</a></li>
+  <li><a href="#linear-models-for-factorial-designs" id="toc-linear-models-for-factorial-designs" class="nav-link active" data-scroll-target="#linear-models-for-factorial-designs"><span class="header-section-number">9.1</span> Linear models for factorial designs</a></li>
+  <li><a href="#analysis-of-covariance" id="toc-analysis-of-covariance" class="nav-link" data-scroll-target="#analysis-of-covariance"><span class="header-section-number">9.2</span> Analysis of covariance</a></li>
+  <li><a href="#moderation-and-interactions" id="toc-moderation-and-interactions" class="nav-link" data-scroll-target="#moderation-and-interactions"><span class="header-section-number">9.3</span> Moderation and interactions</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/ancova.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -320,13 +323,216 @@ window.Quarto = {
 </header>
 
 
+<section id="linear-models-for-factorial-designs" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="linear-models-for-factorial-designs"><span class="header-section-number">9.1</span> Linear models for factorial designs</h2>
+<p>If factors measure a continuous quantity, we may alternatively consider a statistical model that describes a curve or a straight line, rather than only determining the mean at the levels measured in an experiment. These types of experiments are rather common in engineering.</p>
+<div id="exm-sokolova" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.1 (Is additional paper wrapping viewed as more eco-friendly?)</strong></span> <span class="citation" data-cites="Sokolova.Krishna.Doring:2023">Sokolova, Krishna, and Döring (<a href="references.html#ref-Sokolova.Krishna.Doring:2023" role="doc-biblioref">2023</a>)</span> consider consumer bias when assessing how eco-friendly packages are. Items such as cereal are packaged in plastic bags, which themselves are covered in a box. They conjecture (and find) that, paradoxically, consumers tend to view the packaging as being more eco-friendly when the amount of cardboard or paper surrounding the box is larger, relative to the sole plastic package. We consider in the sequel the data from Study 2A, which measures the perceived environmental friendliness (PEF, variable <code>pef</code>) as a function of the <code>proportion</code> of paper wrapping (either none, half of the area of the plastic, equal or twice).</p>
+<p>The linear model we can envision measures the effect of <code>pef</code> as a linear function of <code>proportion</code>, with <span class="math display">\[\begin{align*}
+\mathsf{E}(\texttt{pef} \mid \texttt{proportion}) = \beta_0 + \beta_1 \texttt{proportion}
+\end{align*}\]</span> and with homoscedastic observations. More general models would include polynomials (up to degree <span class="math inline">\(K-1\)</span> for a factor with <span class="math inline">\(K\)</span> levels).</p>
+<p>If we fit against the simple linear regression model, we can extract the estimated coefficients and the <span class="math inline">\(p\)</span>-values for the <span class="math inline">\(t\)</span>-test for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. The test for the intercept is of no interest since data are measured on a scale from 1 to 7, so the mean response when <code>proportion=0</code> cannot be zero. The coefficient for <code>proportion</code> suggests a trend of 0.5 point per unit ratio, and this is significantly different from zero, indicating that the <code>pef</code> score changes with the paper to plastic ratio.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(SKD23_S2A, <span class="at">package =</span> <span class="st">"hecedsm"</span>) <span class="co"># load data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>linmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(pef <span class="sc">~</span> proportion, <span class="at">data =</span> SKD23_S2A)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit simple linear regression</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(linmod) <span class="co"># extract intercept and slope</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  proportion 
+  2.4073939   0.5264168 </code></pre>
+</div>
+</div>
+<p>Let <span class="math inline">\(\mu_{0}, \mu_{0.5}, \mu_{1}, \mu_2\)</span> denote the true mean of the PEF score as a function of the proportion of paper. There are several tests that could be of interest here, but we focus on contrasts performed by authors and an hypothesis test of linearity as a function of the proportion of plastic. For the latter, we could compare the linear regression model (in which the PEF score increases linearly with the proportion of paper to plastic) against the ANOVA which allows each of the four groups to have different means.</p>
+<p>If we use <span class="math inline">\(\boldsymbol{\alpha} \in \mathbb{R}^4\)</span> to denote the parameter vector of the analysis of variance model using the treatment parametrization and <span class="math inline">\(\boldsymbol{\beta} \in \mathbb{R}^2\)</span> for the simple linear regression model, then we have <span class="math display">\[\begin{align*}
+\mu_0 &amp;= \beta_0=\alpha_0 \\
+\mu_{0.5} &amp;= \beta_0 + 0.5 \beta_1 = \alpha_0 + \alpha_1\\
+\mu_1 &amp;= \beta_0 + \beta_1 = \alpha_0 + \alpha_2 \\
+\mu_2 &amp;= \beta_0 + 2 \beta_1= \alpha_0 + \alpha_3.
+\end{align*}\]</span> The test comparing the simple linear regression with the analysis of variance imposes two simultaneous restrictions, with <span class="math inline">\(\mathscr{H}_0: \alpha_3 = 2\alpha_2= 4\alpha_1\)</span>, so the null distribution is <span class="math inline">\(\mathsf{Fisher}(2, 798)\)</span> or roughly <span class="math inline">\(\chi^2_2\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>anovamod <span class="ot">&lt;-</span> <span class="fu">lm</span>(pef <span class="sc">~</span> <span class="fu">factor</span>(proportion), <span class="co"># one-way ANOVA</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> SKD23_S2A) </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare simple linear regression with ANOVA</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(linmod, anovamod) <span class="co"># is the change in PEF linear?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: pef ~ proportion
+Model 2: pef ~ factor(proportion)
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    800 1372.7                                  
+2    798 1343.4  2    29.262 8.6909 0.0001845 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specifying the weights </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># these contrasts encode the mean (so don't sum to zero)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">linearHypothesis</span>(<span class="at">model =</span> anovamod, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">hypothesis =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Linear hypothesis test:
+- 2 factor(proportion)0.5  + factor(proportion)1 = 0
+- 2 factor(proportion)1  + factor(proportion)2 = 0
+
+Model 1: restricted model
+Model 2: pef ~ factor(proportion)
+
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    800 1372.7                                  
+2    798 1343.4  2    29.262 8.6909 0.0001845 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We see from the output that the <span class="math inline">\(F\)</span> tests and the <span class="math inline">\(p\)</span>-values are identical, whether we impose the constraints manually or simply feed the two nested models to the <code>anova</code> method.</p>
+<p>The authors were interested in comparing none with other choices: we are interested in pairwise differences, but only relative to the reference <span class="math inline">\(\mu_{0}\)</span>: <span class="math display">\[\begin{align*}
+\mu_0 = \mu_{0.5}  &amp; \iff 1\mu_0 - 1\mu_{0.5} + 0\mu_{1} + 0 \mu_{2} = 0\\
+\mu_0 = \mu_{1} &amp; \iff 1\mu_0 + 0\mu_{0.5} -1\mu_{1} + 0 \mu_{2} = 0\\
+\mu_0 = \mu_{2} &amp; \iff 1\mu_0 + 0\mu_{0.5} + 0\mu_{1} -1 \mu_{2} = 0
+\end{align*}\]</span> so contrast vectors <span class="math inline">\((1, -1, 0, 0)\)</span>, <span class="math inline">\((1, 0, -1, 0)\)</span> and <span class="math inline">\((1, 0, 0, -1)\)</span> for the marginal means would allow one to test the hypothesis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>margmean <span class="ot">&lt;-</span> anovamod <span class="sc">|&gt;</span>  </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  emmeans<span class="sc">::</span><span class="fu">emmeans</span>(<span class="at">specs =</span> <span class="st">"proportion"</span>) <span class="co"># group means</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>contrastlist <span class="ot">&lt;-</span> <span class="fu">list</span>( <span class="co"># specify contrast vectors</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">refvshalf =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">refvsone =</span>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">refvstwo =</span>  <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute contrasts relative to reference</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>margmean <span class="sc">|&gt;</span> emmeans<span class="sc">::</span><span class="fu">contrast</span>(<span class="at">method =</span> contrastlist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast  estimate    SE  df t.ratio p.value
+ refvshalf   -0.749 0.131 798  -5.713  &lt;.0001
+ refvsone    -0.901 0.131 798  -6.893  &lt;.0001
+ refvstwo    -1.182 0.129 798  -9.196  &lt;.0001</code></pre>
+</div>
+</div>
+<p>The group averages are reported in <a href="#tbl-print-groupmeans-PEF" class="quarto-xref">Table&nbsp;<span>9.1</span></a>, match those reported by the authors in the paper. They suggest an increased perceived environmental friendliness as the amount of paper used in the wrapping increases. We could fit a simple regression model to assess the average change, treating the proportion as a continuous explanatory variable. The estimated slope for the change in PEF score, which ranges from 1 to 7 in increments of 0.25, is 0.53 point per ratio of paper/plastic. There is however strong evidence, given the data, that the change isn’t quite linear, as the fit of the linear regression model is significantly worse than the corresponding linear model.</p>
+<div class="cell">
+<div id="tbl-print-groupmeans-PEF" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-print-groupmeans-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.1: Estimated group averages of PEF per proportion with standard errors
+</figcaption>
+<div aria-describedby="tbl-print-groupmeans-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">proportion</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">marg. mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std. err.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower (CI)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper (CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">2.16</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">1.98</td>
+<td style="text-align: right;">2.3439</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2.91</td>
+<td style="text-align: right;">0.093</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">2.73</td>
+<td style="text-align: right;">3.0926</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">3.06</td>
+<td style="text-align: right;">0.092</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">2.88</td>
+<td style="text-align: right;">3.2441</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">3.34</td>
+<td style="text-align: right;">0.089</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">3.17</td>
+<td style="text-align: right;">3.5193</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-print-contrast-PEF" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-print-contrast-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.2: Estimated contrasts for differences of PEF to no paper.
+</figcaption>
+<div aria-describedby="tbl-print-contrast-PEF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">contrast</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std. err.</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">dof</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">stat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">refvshalf</td>
+<td style="text-align: right;">-0.75</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">-5.71</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">refvsone</td>
+<td style="text-align: right;">-0.90</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">-6.89</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">refvstwo</td>
+<td style="text-align: right;">-1.18</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">798</td>
+<td style="text-align: right;">-9.20</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>All differences reported in <a href="#tbl-print-contrast-PEF" class="quarto-xref">Table&nbsp;<span>9.2</span></a> are significant and positive, in line with the researcher’s hypothesis.</p>
+</div>
+</section>
+<section id="analysis-of-covariance" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="analysis-of-covariance"><span class="header-section-number">9.2</span> Analysis of covariance</h2>
 <p>The previous chapter dealt with factorial experiments in which all experimental factors are of interest. It is possible to use measurements concomitant to the data collection (for example, value to a test before we complete the group assignment for the manipulation) to get a measure of the relative strength of students. The more correlated these measures are with the response, the more we can explain the data. We then proceed with the random assignment of our experimental units to different conditions.</p>
 <p>Including covariates should in principle increase power and our ability to detect real differences due to experimental manipulations, provided the variables used as control are correlated with the response. Generally, they are not needed for valid inference, which is guaranteed by randomization, and shouldn’t be used to assign treatment. Such designs are meant to reduce the error.</p>
-<section id="analysis-of-covariance" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="analysis-of-covariance"><span class="header-section-number">9.1</span> Analysis of covariance</h2>
-<p>We can include continuous covariates to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn’t necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called <strong>analysis of covariance</strong>, although as analysis of variance models, they are nothing but linear regression models. The ANCOVA model assumes that slopes are parallel: if rather there is an interaction term, then the experimental manipulation induces changes that depend on the value of the continuous explanatory. This case is termed mediation in the management literature.</p>
+<p>We can include continuous covariates to the analysis of variance, whose slope governs the relationship with the response. The strict inclusion isn’t necessary to draw valid causal conclusion, but adding the term helps again reduce the residual variability. Such a design was historically called <strong>analysis of covariance</strong>, although as analysis of variance models, they are nothing but linear regression models. The ANCOVA model assumes that slopes are parallel: if rather there is an interaction term, then the experimental manipulation induces changes that depend on the value of the continuous explanatory. This case is termed <strong>moderation</strong> in the management literature.</p>
 <p>In an analysis of covariance, we include a linear component for a (continuous) covariate, with the purpose again to reduce residual error and increase power. A prime example is prior/post experiment measurements, whereby we monitor the change in outcome due to the manipulation. This post by Solomon Kurz <a href="https://solomonkurz.netlify.app/blog/2023-04-12-boost-your-power-with-baseline-covariates/">[link]</a> nicely illustrates the added benefits of using covariates when there is strong correlation between your response and the latter</p>
-<p>In such setting, it may seem logical to take the difference in post and prior score as response: this is showcased in <a href="#exm-vanStek" class="quarto-xref">Example&nbsp;<span>9.2</span></a> and <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>, an analysis of which is presented on <a href="https://edsm.rbind.io/example/06-ancova/">the course website</a>.</p>
+<p>In such setting, it may seem logical to take the difference in post and prior score as response: this is showcased in <a href="#exm-vanStek" class="quarto-xref">Example&nbsp;<span>9.3</span></a> and <span class="citation" data-cites="Baumann:1992">Baumann, Seifert-Kessell, and Jones (<a href="references.html#ref-Baumann:1992" role="doc-biblioref">1992</a>)</span>, an analysis of which is presented on <a href="https://edsm.rbind.io/example/06-ancova/">the course website</a>.</p>
 <p>When we add a covariate, we need the latter to have a strong linear correlation for the inclusion to make sense. We can assess graphically whether the relationship is linear, and whether the slopes for each experimental condition are the same.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -360,17 +566,17 @@ Figure&nbsp;9.2: Response after subtracting mean (left) and after detrending (ri
 </div>
 <p>We present two examples of analysis of covariance, showing how the inclusion of covariates helps disentangle differences between experimental conditions.</p>
 <div id="exm-leechoi" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.1 (Inconsistency of product description and image in online retailing)</strong></span> <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
+<p><span class="theorem-title"><strong>Example 9.2 (Inconsistency of product description and image in online retailing)</strong></span> <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> measured the impact of discrepancies between descriptions and visual depiction of items in online retail. They performed an experiment in which participants were presented with descriptions of a product (a set of six toothbrushes) that was either consistent or inconsistent with the description. The authors postulated that a discrepancy could lead to lower appreciation score, measured using three Likert scales. They also suspected that the familiarity with the product brand should impact ratings, and controlled for the latter using another question.</p>
 <p>One way to account for familiarity when comparing the mean is to use a linear regression with familiarity as another explanatory variable. The expected value of the product evaluation is <span id="eq-vS"><span class="math display">\[
 \mathsf{E}(\texttt{prodeval}) = \beta_0 + \beta_1 \texttt{familiarity} + \beta_2 \texttt{consistency},
 \tag{9.1}\]</span></span> where <span class="math inline">\(\texttt{familiarity}\)</span> is the score from 1 to 7 and <span class="math inline">\(\texttt{consistency}\)</span> is a binary indicator equal to one if the output is inconsistent and zero otherwise. The coefficient <span class="math inline">\(\beta_2\)</span> thus measures the difference between product evaluation rating for consistent vs inconsistent displays, for the same familiarity score.</p>
 <p>We can look at coefficient (standard error) estimates <span class="math inline">\(\widehat{\beta}_2 = -0.64 (0.302)\)</span>. No difference between groups would mean <span class="math inline">\(\beta_2=0\)</span> and we can build a test statistic by looking at the standardized regression coefficient <span class="math inline">\(t = \widehat{\beta}_2/\mathsf{se}(\widehat{\beta}_2)\)</span>. The result output is <span class="math inline">\(b = -0.64\)</span>, 95% CI <span class="math inline">\([-1.24, -0.04]\)</span>, <span class="math inline">\(t(93) = -2.12\)</span>, <span class="math inline">\(p = .037\)</span>. We reject the null hypothesis of equal product evaluation for both display at level 5%: there is evidence that there is a small difference, with people giving on average a score that is 0.64 points smaller (on a scale of 1 to 9) when presented with conflicting descriptions and images.</p>
-<p>We can compare the analysis of variance table obtained by fitting the model with and without <span class="math inline">\(\texttt{familiarity}\)</span>. <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span>9.1</span></a> shows that the effect of consistency is small and not significant and a two-sample <em>t</em>-test shows no evidence of difference between the average familiarity score in both experimental conditions (<span class="math inline">\(p\)</span>-value of <span class="math inline">\(.532\)</span>). However, we can explain roughly one fifth of the residual variability by the familiarity with the brand (see the sum of squares in <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span>9.1</span></a>): removing the latter leads to a higher signal-to-noise ratio for the impact of consistency, at the expense of a loss of one degree of freedom. Thus, it appears that the manipulation was successful.</p>
+<p>We can compare the analysis of variance table obtained by fitting the model with and without <span class="math inline">\(\texttt{familiarity}\)</span>. <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span>9.3</span></a> shows that the effect of consistency is small and not significant and a two-sample <em>t</em>-test shows no evidence of difference between the average familiarity score in both experimental conditions (<span class="math inline">\(p\)</span>-value of <span class="math inline">\(.532\)</span>). However, we can explain roughly one fifth of the residual variability by the familiarity with the brand (see the sum of squares in <a href="#tbl-anovatabLC19S1" class="quarto-xref">Table&nbsp;<span>9.3</span></a>): removing the latter leads to a higher signal-to-noise ratio for the impact of consistency, at the expense of a loss of one degree of freedom. Thus, it appears that the manipulation was successful.</p>
 <div class="cell">
 <div id="tbl-anovatabLC19S1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anovatabLC19S1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.1: Analysis of variance tables
+Table&nbsp;9.3: Analysis of variance tables
 </figcaption>
 <div aria-describedby="tbl-anovatabLC19S1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -462,7 +668,7 @@ Figure&nbsp;9.3: Scatterplot of product evaluation as a function of the familiar
 <p>To this effect, we fit a linear model with different slopes in each group, and compare the fit of the latter with the analysis of covariance model that includes a single slope for both groups: we can then test if the slopes are the same, or alternatively if the difference between the slopes is zero. The <em>t</em>-statistic indicates no difference in slope (<span class="math inline">\(p\)</span>-value of <span class="math inline">\(.379\)</span>), thus the assumption is reasonable. Levene’s test for homogeneity of variance indicates no discernible difference between groups. Thus, it appears there is a difference in perception of product quality due to the manipulation.</p>
 </div>
 <div id="exm-vanStek" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.2 (Effect of scientific consensus on false beliefs)</strong></span> We consider Study 3 of <span class="citation" data-cites="vanStekelenburg:2021">Stekelenburg et al. (<a href="references.html#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span>, who studied changes in perception of people holding false beliefs or denying (to some extent) the scientific consensus by presenting them with news article showcasing information about various phenomena. The experimental manipulation consisted in presenting boosting, a form of training to help readers identify and establish whether scientifists were truly expert in the domain of interest, how strong was the consensus, etc.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p><span class="theorem-title"><strong>Example 9.3 (Effect of scientific consensus on false beliefs)</strong></span> We consider Study 3 of <span class="citation" data-cites="vanStekelenburg:2021">Stekelenburg et al. (<a href="references.html#ref-vanStekelenburg:2021" role="doc-biblioref">2021</a>)</span>, who studied changes in perception of people holding false beliefs or denying (to some extent) the scientific consensus by presenting them with news article showcasing information about various phenomena. The experimental manipulation consisted in presenting boosting, a form of training to help readers identify and establish whether scientifists were truly expert in the domain of interest, how strong was the consensus, etc.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>The third and final experiment of the paper focused on genetically modified organisms: it is a replication of Study 2, but with a control group (since there were no detectable difference between experimental conditions <code>Boost</code> and <code>BoostPlus</code>) and a larger sample size (because Study 2 was underpowered).</p>
 <p>The data include 854 observations with <code>prior</code>, the negative of the prior belief score of the participant, the <code>post</code> experiment score for the veracity of the claim. Both were measured using a visual scale ranging from -100 (I am 100% certain this is false) to 100 (I am 100% certain this is true), with 0 (I don’t know) in the middle. Only people with negative prior beliefs were recruited to the study. The three experimental conditions were <code>BoostPlus</code>, <code>consensus</code> and a <code>control</code> group. Note that the scores in the data have been negated, meaning that negative posterior scores indicate agreement with the consensus on GMO.</p>
 <p>Preliminary checks suggest that, although the slopes for prior beliefs could plausibly be the same in each group and the data are properly randomized, there is evidence of unequal variance for the changes in score. As such, we fit a model with mean <span class="math display">\[\begin{align*}
@@ -482,7 +688,7 @@ Figure&nbsp;9.3: Scatterplot of product evaluation as a function of the familiar
 <div id="tbl-anovatabSSVB" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anovatabSSVB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.2: Analysis of variance tables
+Table&nbsp;9.4: Analysis of variance tables
 </figcaption>
 <div aria-describedby="tbl-anovatabSSVB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -537,12 +743,12 @@ Table&nbsp;9.2: Analysis of variance tables
 </figure>
 </div>
 </div>
-<p>Repeating the exercise of comparing the amount of evidence for comparison with and without inclusion of a covariate shows that the value of the test statistic is larger (<a href="#tbl-anovatabSSVB" class="quarto-xref">Table&nbsp;<span>9.2</span></a>), indicative of stronger evidence with the analysis of covariance model: the conclusion would be unaffected with such large sample sizes. We of course care very little for the global <span class="math inline">\(F\)</span> test of equality of mean, as the previous study had shown large differences. What is more interesting here is quantifying the change between conditions.</p>
+<p>Repeating the exercise of comparing the amount of evidence for comparison with and without inclusion of a covariate shows that the value of the test statistic is larger (<a href="#tbl-anovatabSSVB" class="quarto-xref">Table&nbsp;<span>9.4</span></a>), indicative of stronger evidence with the analysis of covariance model: the conclusion would be unaffected with such large sample sizes. We of course care very little for the global <span class="math inline">\(F\)</span> test of equality of mean, as the previous study had shown large differences. What is more interesting here is quantifying the change between conditions.</p>
 <div class="cell">
 <div id="tbl-contraststabSSVB" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contraststabSSVB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.3: Pairwise contrasts with <em>p</em>-values adjusted using Holm–Bonferroni
+Table&nbsp;9.5: Pairwise contrasts with <em>p</em>-values adjusted using Holm–Bonferroni
 </figcaption>
 <div aria-describedby="tbl-contraststabSSVB-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -647,12 +853,12 @@ Table&nbsp;9.3: Pairwise contrasts with <em>p</em>-values adjusted using Holm–
 </figure>
 </div>
 </div>
-<p><a href="#tbl-contraststabSSVB" class="quarto-xref">Table&nbsp;<span>9.3</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>, helps decrease background noise.</p>
+<p><a href="#tbl-contraststabSSVB" class="quarto-xref">Table&nbsp;<span>9.5</span></a> shows the pairwise contrasts, which measure two different things: the analysis of variance model compares the average in group, whereas the analysis of covariance (the linear model with <code>prior</code>) uses detrended values and focuses on the change in perception. Because the data are unbalanced and we estimate group mean and variance separately, the degrees of freedom change from one pairwise comparison to the next. Again, using the covariate <code>prior</code>, which is somewhat strongly correlated with <code>post</code> as seen in <a href="#fig-vanStekS3" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>, helps decrease background noise.</p>
 <div class="cell">
 <div id="tbl-vanStekS3" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vanStekS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.4: Summary statistics of belief as a function of time of measurement and experimental condition.
+Table&nbsp;9.6: Summary statistics of belief as a function of time of measurement and experimental condition.
 </figcaption>
 <div aria-describedby="tbl-vanStekS3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -766,8 +972,8 @@ Figure&nbsp;9.5: Scatterplot of negated prior and posterior belief score.
 </div>
 </div>
 </section>
-<section id="moderation-and-interactions" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="moderation-and-interactions"><span class="header-section-number">9.2</span> Moderation and interactions</h2>
+<section id="moderation-and-interactions" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="moderation-and-interactions"><span class="header-section-number">9.3</span> Moderation and interactions</h2>
 <p>In a randomized experiment, we can check the average outcome of a manipulation by comparing groups: assuming random sampling, these conclusions can be broadly generalized to the population of interest from which the sample is drawn. However, it may be that the effect of the treatment depends on other variables: cultural differences, gender or education may change.</p>
 <p>The causal effect on <span class="math inline">\(Y\)</span> of the experimental manipulation, say <span class="math inline">\(X\)</span> may be a misleading summary if another variable modifies the relation of <span class="math inline">\(X \to Y\)</span>: for example, the perception of gender discrimination or racism may depend on the person background and experience and this may impact the effect of the manipulation. Such variables, say <span class="math inline">\(W\)</span>, thus have an interactive effect with the experimental factor <span class="math inline">\(X\)</span>, termed moderator in psychology. In the statistical model, inclusion of interaction terms between <span class="math inline">\(X\)</span> and <span class="math inline">\(W\)</span> (typically via product of the so-called moderator variable with the factor encoding the experimental sub-condition) will allow us to estimate those differences.</p>
 <p>In an analysis of covariance, covariates are included that have an impact on the outcome to filter out variability, but with the assumption that they do not influence the effect of treatment (no interaction). With moderators, we rather include and tests for the interactions. If we have an experimental factor <span class="math inline">\(X\)</span> which is binary or categorical, the resulting model is a simple analysis of variance model (or analysis of covariance) and we can test the significance of the interaction term to assess the moderating effect of <span class="math inline">\(W\)</span>.</p>
@@ -778,17 +984,17 @@ Figure&nbsp;9.5: Scatterplot of negated prior and posterior belief score.
 <p>The postulated mediator variable is <code>sexism</code>, the average of 6 Likert scales for the Modern Sexism Scale assessing pervasiveness of gender discrimination. We consider participants’ evaluation of the appropriateness of the response of the fictional character.</p>
 <p>We fit the linear model with the interaction and display the observed slopes</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(GSBE10, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>lin_moder <span class="ot">&lt;-</span> <span class="fu">lm</span>(respeval <span class="sc">~</span> protest<span class="sc">*</span>sexism,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> GSBE10)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin_moder) <span class="co"># coefficients</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(lin_moder, <span class="at">type =</span> <span class="dv">3</span>) <span class="co"># tests</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(GSBE10, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lin_moder <span class="ot">&lt;-</span> <span class="fu">lm</span>(respeval <span class="sc">~</span> protest<span class="sc">*</span>sexism,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> GSBE10)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin_moder) <span class="co"># coefficients</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(lin_moder, <span class="at">type =</span> <span class="dv">3</span>) <span class="co"># tests</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div id="tbl-testsmoder" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-testsmoder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.5: Analysis of variance table for the linear moderation model.
+Table&nbsp;9.7: Analysis of variance table for the linear moderation model.
 </figcaption>
 <div aria-describedby="tbl-testsmoder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -842,7 +1048,7 @@ Table&nbsp;9.5: Analysis of variance table for the linear moderation model.
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ancova_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p><img src="ancova_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
@@ -851,18 +1057,18 @@ Table&nbsp;9.5: Analysis of variance table for the linear moderation model.
 <p>We may be interested in the range of values of the predictor <span class="math inline">\(W\)</span> for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson–Neyman method <span class="citation" data-cites="Johnson.Neyman:1936">(<a href="references.html#ref-Johnson.Neyman:1936" role="doc-biblioref">Johnson and Neyman 1936</a>)</span> considers this range, but this leads to multiple testing problems since we probe the model repeatedly. <span class="citation" data-cites="Esarey.Sumner:2018">Esarey and Sumner (<a href="references.html#ref-Esarey.Sumner:2018" role="doc-biblioref">2018</a>)</span> offer a method that provides control for the false discovery rate.</p>
 <p>To illustrate the method, we dichotomize the manipulation pooling individual and collective protests, since these are the most similar.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> GSBE10 <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">protest =</span> <span class="fu">as.integer</span>(protest <span class="sc">!=</span> <span class="st">"no protest"</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>lin_moder2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(respeval <span class="sc">~</span> protest<span class="sc">*</span>sexism, <span class="at">data =</span> db)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>jn <span class="ot">&lt;-</span> <span class="fu">johnson_neyman</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> lin_moder2, <span class="co"># linear model</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pred =</span> protest, <span class="co"># binary experimental factor</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">modx =</span> sexism, <span class="co"># moderator</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">control.fdr =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod.range =</span> <span class="fu">range</span>(db<span class="sc">$</span>sexism))</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>jn<span class="sc">$</span>plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>db <span class="ot">&lt;-</span> GSBE10 <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">protest =</span> <span class="fu">as.integer</span>(protest <span class="sc">!=</span> <span class="st">"no protest"</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>lin_moder2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(respeval <span class="sc">~</span> protest<span class="sc">*</span>sexism, <span class="at">data =</span> db)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>jn <span class="ot">&lt;-</span> <span class="fu">johnson_neyman</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> lin_moder2, <span class="co"># linear model</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pred =</span> protest, <span class="co"># binary experimental factor</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">modx =</span> sexism, <span class="co"># moderator</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">control.fdr =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">mod.range =</span> <span class="fu">range</span>(db<span class="sc">$</span>sexism))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>jn<span class="sc">$</span>plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-jn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -888,6 +1094,7 @@ Figure&nbsp;9.6: Johnson–Neyman plot for difference between protest and no pro
 </div>
 <div class="callout-body-container callout-body">
 <ul>
+<li>We can treat factor levels measuring quantities as continuous covariates, and reduce the number of parameters.</li>
 <li>Inclusion of continuous covariates may help filtering out unwanted variability.</li>
 <li>These are typically concomitant variables (measured alongside the response variable).</li>
 <li>This designs reduce the residual error, leading to an increase in power (more ability to detect differences in average between experimental conditions).</li>
@@ -915,6 +1122,9 @@ Johnson, P. O., and J. Neyman. 1936. <span>“Tests of Certain Linear Hypotheses
 </div>
 <div id="ref-Lee.Choi:2019" class="csl-entry" role="listitem">
 Lee, Kiljae, and Jungsil Choi. 2019. <span>“Image-Text Inconsistency Effect on Product Evaluation in Online Retailing.”</span> <em>Journal of Retailing and Consumer Services</em> 49: 279–88. <a href="https://doi.org/10.1016/j.jretconser.2019.03.015">https://doi.org/10.1016/j.jretconser.2019.03.015</a>.
+</div>
+<div id="ref-Sokolova.Krishna.Doring:2023" class="csl-entry" role="listitem">
+Sokolova, Tatiana, Aradhna Krishna, and Tim Döring. 2023. <span>“Paper Meets Plastic: The Perceived Environmental Friendliness of Product Packaging.”</span> <em>Journal of Consumer Research</em> 50 (3): 468–91. <a href="https://doi.org/10.1093/jcr/ucad008">https://doi.org/10.1093/jcr/ucad008</a>.
 </div>
 <div id="ref-vanStekelenburg:2021" class="csl-entry" role="listitem">
 Stekelenburg, Aart van, Gabi Schaap, Harm Veling, and Moniek Buijzen. 2021. <span>“Boosting Understanding and Identification of Scientific Consensus Can Help to Correct False Beliefs.”</span> <em>Psychological Science</em> 32 (10): 1549–65. <a href="https://doi.org/10.1177/09567976211007788">https://doi.org/10.1177/09567976211007788</a>.
