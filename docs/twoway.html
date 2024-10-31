@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -553,17 +553,16 @@ purchase        credit loan
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis of variance reveals </span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># non-significant interaction</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># of purchase and type</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(mod, <span class="at">type =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Anova Table (Type III tests)
+<pre><code>Anova Table (Type II tests)
 
 Response: likelihood
-                   Sum Sq   Df   F value    Pr(&gt;F)    
-(Intercept)        7974.0    1 1040.9610 &lt; 2.2e-16 ***
-purchase            282.8    1   36.9137 1.563e-09 ***
-debttype             88.5    1   11.5483 0.0006959 ***
-purchase:debttype    13.7    1    1.7852 0.1817132    
-Residuals         11467.4 1497                        
+                   Sum Sq   Df F value    Pr(&gt;F)    
+purchase            752.3    1 98.2066 &lt; 2.2e-16 ***
+debttype             92.2    1 12.0363 0.0005365 ***
+purchase:debttype    13.7    1  1.7852 0.1817132    
+Residuals         11467.4 1497                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -993,7 +992,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"anchor"</span>, <span class="st">"magnitude"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> anchor  magnitude emmean     SE   df lower.CL upper.CL
- round   0         -0.185 0.0676 29.0  -0.3236  -0.0472
+ round   0         -0.185 0.0676 28.9  -0.3236  -0.0472
  precise 0         -0.354 0.0422 29.0  -0.4401  -0.2674
  round   1          0.349 0.0796 29.0   0.1859   0.5115
  precise 1          0.195 0.0618 28.9   0.0687   0.3215
@@ -1019,7 +1018,7 @@ Degrees-of-freedom method: satterthwaite </code></pre>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To get a data frame with data</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># broom::tidy(marg_effect)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can then pass the output to <code>car::Anova</code> to print the analysis of variance table. The <span class="math inline">\(p\)</span>-value for the main effect of <code>anchor</code> is 0.014 in the equal variance model. With unequal variance, different tests give different values: the <span class="math inline">\(p\)</span>-value is 0.009 if we use type II effects (the correct choice here), 0.035 with type III effects<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and the <code>emmeans</code> package returns Welch’s test for the pairwise difference with Satterwaite’s degree of freedom approximation if we average over <code>magnitude</code> to account for the difference in variance, this time with a <span class="math inline">\(p\)</span>-value of 0.014. These differences in output are somewhat notable: with <em>borderline statistical significance</em>, they may lead to different conclusions if one blindly dichotomize the results. Clearly stating which test and how the results are obtained is crucial for transparent reporting, as is providing the code and data. Let your readers make their own mind by reporting <span class="math inline">\(p\)</span>-values.</p>
+<p>We can then pass the output to <code>car::Anova</code> to print the analysis of variance table. The <span class="math inline">\(p\)</span>-value for the main effect of <code>anchor</code> is 0.014 in the equal variance model. With unequal variance, different tests give different values: the <span class="math inline">\(p\)</span>-value is 0.009 if we use type II effects (the correct choice here), 0.012 with type III effects<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and the <code>emmeans</code> package returns Welch’s test for the pairwise difference with Satterwaite’s degree of freedom approximation if we average over <code>magnitude</code> to account for the difference in variance, this time with a <span class="math inline">\(p\)</span>-value of 0.014. These differences in output are somewhat notable: with <em>borderline statistical significance</em>, they may lead to different conclusions if one blindly dichotomize the results. Clearly stating which test and how the results are obtained is crucial for transparent reporting, as is providing the code and data. Let your readers make their own mind by reporting <span class="math inline">\(p\)</span>-values.</p>
 <p>Regardless of the model, it should be clearly stated that there is some evidence of heterogeneity. We should also report sample size per group, mention the repartition (<span class="math inline">\(n=30\)</span> per group). In the present case, we can give information about the main effects and stop here, but giving an indication about the size of the adjustment (by reporting estimated marginal means) is useful. Note that <code>emmeans</code> gives a (here spurious) warning about the main effects (row or column average) since there is a potential interaction — as we all but ruled out the latter, we proceed nevertheless.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>emm_marg <span class="ot">&lt;-</span> emmeans<span class="sc">::</span><span class="fu">emmeans</span>(</span>
@@ -1058,7 +1057,7 @@ magnitude = 1:
 <div class="cell-output cell-output-stdout">
 <pre><code>$emmeans
  magnitude anchor  emmean     SE   df lower.CL upper.CL
- 0         round   -0.185 0.0676 29.0  -0.3236  -0.0472
+ 0         round   -0.185 0.0676 28.9  -0.3236  -0.0472
  1         round    0.349 0.0796 29.0   0.1859   0.5115
  0         precise -0.354 0.0422 29.0  -0.4401  -0.2674
  1         precise  0.195 0.0618 28.9   0.0687   0.3215
@@ -1068,12 +1067,12 @@ Confidence level used: 0.95
 
 $contrasts
  contrast                                estimate     SE   df t.ratio p.value
- magnitude0 round - magnitude1 round       -0.534 0.1044 56.4  -5.115  &lt;.0001
- magnitude0 round - magnitude0 precise      0.168 0.0797 48.7   2.112  0.1636
+ magnitude0 round - magnitude1 round       -0.534 0.1040 56.5  -5.115  &lt;.0001
+ magnitude0 round - magnitude0 precise      0.168 0.0797 48.6   2.112  0.1636
  magnitude0 round - magnitude1 precise     -0.381 0.0916 57.5  -4.156  0.0006
  magnitude1 round - magnitude0 precise      0.702 0.0901 44.1   7.795  &lt;.0001
- magnitude1 round - magnitude1 precise      0.154 0.1008 54.7   1.524  0.4306
- magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.0  -7.333  &lt;.0001
+ magnitude1 round - magnitude1 precise      0.154 0.1010 54.6   1.524  0.4306
+ magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.1  -7.333  &lt;.0001
 
 Degrees-of-freedom method: satterthwaite 
 P value adjustment: tukey method for comparing a family of 4 estimates </code></pre>

@@ -6,6 +6,8 @@
 #| include: true
 #| message: false
 options(digits=2)
+suppressPackageStartupMessages(library(lmerTest))
+suppressPackageStartupMessages(library(emmeans))
 ```
 
 This chapter considers tools for models with repeated measures from a modern perspective, using random effects for modelling. This class of model, called hierarchical models, multilevel models or mixed models in simple scenarios, give us more flexibility to account for complex scenarios in which there may be different sources of variability.
@@ -125,13 +127,15 @@ With data in long format, meaning each line contains a single response and chara
 #| eval: true
 #| echo: true
 # In R, two packages offer linear mixed model fit via (RE)ML
-# lme4 is more modern (and reliable?), but does not allow for unequal variant
+# lme4 is more modern (and reliable?), but does not allow for unequal variance
 lme4::lmer(likelihood ~ curstate*predout*tempdist + (1 | id),
-     data = HB22_S5)
+           data = HB22_S5)
 #  Note that in `lme4` package, the random effects are specified inside parenthesis
 # nlme offers the possibility to acount for unequal variance per group
 # Random effects are specified in `random` with formula notation, and a | to indicate
-nlme::lme(likelihood ~ curstate*predout*tempdist, random = ~ 1 | id, data = HB22_S5)
+nlme::lme(likelihood ~ curstate*predout*tempdist, 
+          random = ~ 1 | id, # random intercept per individual
+          data = HB22_S5)
 ```
 
 

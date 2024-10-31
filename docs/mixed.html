@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -356,67 +356,59 @@ window.Quarto = {
 <div id="exm-reachingout" class="theorem example">
 <p><span class="theorem-title"><strong>Example 12.1 (The surprise of reaching out: paired data as blocking factors)</strong></span> We consider paired data from Study 3 of <span class="citation" data-cites="Liu.Rim.Min.Min:2023">Liu et al. (<a href="references.html#ref-Liu.Rim.Min.Min:2023" role="doc-biblioref">2023</a>)</span>, who looked at the appreciation of people reaching out to them in a unsolicited manner. The data includes the appreciation score of both responder and initiator, along with sociodemographic variables (age and gender).</p>
 <p>While a paired <span class="math inline">\(t\)</span>-test is the natural (and arguably simplest way) to compare the difference in appreciation scores, we reformat the data to long format (one response per line), with a categorical variable <code>role</code> indicating the role of the participant and <code>dyad</code>, a dummy number indicating which participants belong to which pair. We then fit an analysis of variance model to the scores with both <code>dyad</code> and <code>role</code>. The <span class="math inline">\(F\)</span>-tests for the main effects indicate that the dyads (66 additional parameters, since there are 67 pairs) filter out significant part of the variability. If we consider estimated marginal means and look at the <span class="math inline">\(p\)</span>-value and the pairwise difference between initiator and respondent, we find exactly the same statistic, degrees of freedom and <span class="math inline">\(p\)</span>-value for the pairwise difference as the paired <span class="math inline">\(t\)</span>-test.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LRMM23_S3, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Paired t-tests</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(LRMM23_S3, <span class="fu">t.test</span>(apprec_init, apprec_resp, <span class="at">paired =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Paired t-test
-
-data:  apprec_init and apprec_resp
-t = -4.6042, df = 66, p-value = 1.94e-05
-alternative hypothesis: true mean difference is not equal to 0
-95 percent confidence interval:
- -0.6633265 -0.2620466
-sample estimates:
-mean difference 
-     -0.4626866 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cast data to long format - one response/participant per line</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>LRMM23_S3l <span class="ot">&lt;-</span> LRMM23_S3 <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">dyad =</span> <span class="fu">factor</span>(dplyr<span class="sc">::</span><span class="fu">row_number</span>())) <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>dyad, </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"role"</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">_"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Format of the data</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LRMM23_S3l)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-  dyad  role  apprec   age gender
-  &lt;fct&gt; &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;fct&gt; 
-1 1     resp       4    20 male  
-2 1     init       4    20 male  
-3 2     resp       5    20 female
-4 2     init       5    24 female
-5 3     resp       5    21 female
-6 3     init       4    21 female</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Treat dyad as a factor and fit two-way ANOVA model</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(apprec <span class="sc">~</span> role <span class="sc">+</span> dyad, <span class="at">data =</span> LRMM23_S3l)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Global tests of main effects (balanced data)</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod) <span class="co"># There seems to be significant variability filtered out by 'id'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: apprec
-          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-role       1  7.172  7.1716 21.1985  1.94e-05 ***
-dyad      66 51.970  0.7874  2.3275 0.0003759 ***
-Residuals 66 22.328  0.3383                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise difference for main effect of 'role'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, <span class="at">spec =</span> <span class="st">"role"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  emmeans<span class="sc">::</span><span class="fu">contrast</span>(<span class="st">"pairwise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> contrast    estimate  SE df t.ratio p.value
- init - resp   -0.463 0.1 66  -4.604  &lt;.0001
-
-Results are averaged over the levels of: dyad </code></pre>
-</div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(LRMM23_S3, <span class="fu">t.test</span>(apprec_init, apprec_resp, <span class="at">paired =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Paired t-test</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  apprec_init and apprec_resp</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; t = -5, df = 66, p-value = 2e-05</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; alternative hypothesis: true mean difference is not equal to 0</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -0.663 -0.262</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sample estimates:</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; mean difference </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          -0.463</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Cast data to long format - one response/participant per line</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>LRMM23_S3l <span class="ot">&lt;-</span> LRMM23_S3 <span class="sc">|&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">dyad =</span> <span class="fu">factor</span>(dplyr<span class="sc">::</span><span class="fu">row_number</span>())) <span class="sc">|&gt;</span> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">!</span>dyad, </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"role"</span>),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">_"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Format of the data</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LRMM23_S3l)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 5</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   dyad  role  apprec   age gender</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;fct&gt; </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1     resp       4    20 male  </span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 1     init       4    20 male  </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 2     resp       5    20 female</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 2     init       5    24 female</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 3     resp       5    21 female</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 3     init       4    21 female</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Treat dyad as a factor and fit two-way ANOVA model</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(apprec <span class="sc">~</span> role <span class="sc">+</span> dyad, <span class="at">data =</span> LRMM23_S3l)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Global tests of main effects (balanced data)</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod) <span class="co"># There seems to be significant variability filtered out by 'id'</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Response: apprec</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           Df Sum Sq Mean Sq F value   Pr(&gt;F)    </span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; role       1    7.2    7.17   21.20 0.000019 ***</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dyad      66   52.0    0.79    2.33  0.00038 ***</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals 66   22.3    0.34                     </span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise difference for main effect of 'role'</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, <span class="at">spec =</span> <span class="st">"role"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  emmeans<span class="sc">::</span><span class="fu">contrast</span>(<span class="st">"pairwise"</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast    estimate  SE df t.ratio p.value</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  init - resp   -0.463 0.1 66  -4.600  &lt;.0001</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: dyad</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -428,15 +420,13 @@ Results are averaged over the levels of: dyad </code></pre>
 <p>There is currently [war/peace] between the two tribes in Velvetia. Thinking about [next year/in 20 years], how likely is it that there will be [war/peace] in Velvetia?</p>
 </blockquote>
 <p>Each participant was assigned to a single combination of the current state <code>curstate</code> and the predicted outcome <code>predout</code> and answered the question for both temporal horizon, <code>tempdist</code>. A rapid examination shows that we have a complete design: there are participants assigned to each subcategory of the between-subject factors.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(HB22_S5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> curstate <span class="sc">+</span> predout, <span class="at">data =</span> HB22_S5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        predout
-curstate peace war
-   peace   148 164
-   war     118 124</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(HB22_S5, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> curstate <span class="sc">+</span> predout, <span class="at">data =</span> HB22_S5)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         predout</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; curstate peace war</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    peace   148 164</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    war     118 124</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>The sources of variation are participants <code>id</code>, between-subject factors <code>predout</code> and <code>curstate</code> and within-subjects factor <code>tempdist</code>.</li>
@@ -445,67 +435,65 @@ curstate peace war
 <li>We can have interactions between the three experimental factors <code>predout</code>, <code>curstate</code> and <code>tempdist</code> since the database contains instances of both of the former together, and since each person gets two <code>tempdist</code> levels. However, no interaction are possible between <code>id</code> and <code>tempdist</code> (due to lack of replication), or between between-subject factors and identifiers.</li>
 </ol>
 <p>With data in long format, meaning each line contains a single response and characteristics are repeated per row, the software will automatically capture the random effect. We can fit the equivalent of the repeated measure mixed ANOVA using a linear mixed model in <strong>R</strong>, by simply specifying a random intercept for the participant <code>id</code>. The full model with the three-way interaction includes eight components for the mean and two variant component (residual variance, and subject-specific variance).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In R, two packages offer linear mixed model fit via (RE)ML</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lme4 is more modern (and reliable?), but does not allow for unequal variant</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>lme4<span class="sc">::</span><span class="fu">lmer</span>(likelihood <span class="sc">~</span> curstate<span class="sc">*</span>predout<span class="sc">*</span>tempdist <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">data =</span> HB22_S5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by REML ['lmerMod']
-Formula: likelihood ~ curstate * predout * tempdist + (1 | id)
-   Data: HB22_S5
-REML criterion at convergence: 1933.813
-Random effects:
- Groups   Name        Std.Dev.
- id       (Intercept) 0.8524  
- Residual             1.1436  
-Number of obs: 554, groups:  id, 277
-Fixed Effects:
-                        (Intercept)                          curstatewar  
-                              5.581                               -2.886  
-                         predoutwar                         tempdist20yr  
-                             -2.337                               -1.068  
-             curstatewar:predoutwar             curstatewar:tempdist20yr  
-                              5.142                                3.508  
-            predoutwar:tempdist20yr  curstatewar:predoutwar:tempdist20yr  
-                              2.775                               -6.554  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Note that in `lme4` package, the random effects are specified inside parenthesis</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># nlme offers the possibility to acount for unequal variance per group</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Random effects are specified in `random` with formula notation, and a | to indicate</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>nlme<span class="sc">::</span><span class="fu">lme</span>(likelihood <span class="sc">~</span> curstate<span class="sc">*</span>predout<span class="sc">*</span>tempdist, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> id, <span class="at">data =</span> HB22_S5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed-effects model fit by REML
-  Data: HB22_S5 
-  Log-restricted-likelihood: -966.9064
-  Fixed: likelihood ~ curstate * predout * tempdist 
-                        (Intercept)                         curstatewar 
-                           5.581081                           -2.886166 
-                         predoutwar                        tempdist20yr 
-                          -2.337179                           -1.067568 
-             curstatewar:predoutwar            curstatewar:tempdist20yr 
-                           5.142263                            3.508246 
-            predoutwar:tempdist20yr curstatewar:predoutwar:tempdist20yr 
-                           2.774885                           -6.554272 
-
-Random effects:
- Formula: ~1 | id
-        (Intercept) Residual
-StdDev:   0.8523522 1.143597
-
-Number of Observations: 554
-Number of Groups: 277 </code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In R, two packages offer linear mixed model fit via (RE)ML</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lme4 is more modern (and reliable?), but does not allow for unequal variance</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lme4<span class="sc">::</span><span class="fu">lmer</span>(likelihood <span class="sc">~</span> curstate<span class="sc">*</span>predout<span class="sc">*</span>tempdist <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> HB22_S5)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formula: likelihood ~ curstate * predout * tempdist + (1 | id)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Data: HB22_S5</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; REML criterion at convergence: 1934</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups   Name        Std.Dev.</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  id       (Intercept) 0.852   </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Residual             1.144   </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of obs: 554, groups:  id, 277</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fixed Effects:</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                         (Intercept)                          curstatewar  </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                5.58                                -2.89  </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          predoutwar                         tempdist20yr  </span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                               -2.34                                -1.07  </span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              curstatewar:predoutwar             curstatewar:tempdist20yr  </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                5.14                                 3.51  </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             predoutwar:tempdist20yr  curstatewar:predoutwar:tempdist20yr  </span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                2.77                                -6.55</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  Note that in `lme4` package, the random effects are specified inside parenthesis</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># nlme offers the possibility to acount for unequal variance per group</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Random effects are specified in `random` with formula notation, and a | to indicate</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>nlme<span class="sc">::</span><span class="fu">lme</span>(likelihood <span class="sc">~</span> curstate<span class="sc">*</span>predout<span class="sc">*</span>tempdist, </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>          <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> id, <span class="co"># random intercept per individual</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> HB22_S5)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear mixed-effects model fit by REML</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Data: HB22_S5 </span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Log-restricted-likelihood: -967</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Fixed: likelihood ~ curstate * predout * tempdist </span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                         (Intercept)                         curstatewar </span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                5.58                               -2.89 </span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          predoutwar                        tempdist20yr </span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                               -2.34                               -1.07 </span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              curstatewar:predoutwar            curstatewar:tempdist20yr </span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                5.14                                3.51 </span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             predoutwar:tempdist20yr curstatewar:predoutwar:tempdist20yr </span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                2.77                               -6.55 </span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Formula: ~1 | id</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         (Intercept) Residual</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; StdDev:       0.852     1.14</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Observations: 554</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Groups: 277</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="exm-happy-fakes-revisited" class="theorem example">
 <p><span class="theorem-title"><strong>Example 12.3 (Happy fakes, remixed)</strong></span> We consider again the experiment of Amirabdolahian and Ali-Adeeb (2021) on smiling fakes and the emotion, this time from a pure mixed model perspective. This means we can simply keep all observations and model them accordingly. To fit the model, identifiers of subjects must be declared as factors (categorical variables). If we have repeated measurements of the within-subject factor, we may consider adding a random effect for the interaction between the subject and the within-subject factor.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-aafulldat" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-aafulldat" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-aafulldat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="mixed_files/figure-html/fig-aafulldat-1.png" class="img-fluid figure-img" style="width:80.0%">
+<img src="mixed_files/figure-html/fig-aafulldat-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aafulldat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.1: Jittered scatterplot of individual measurements per participant and stimulus type.
@@ -515,45 +503,41 @@ Figure&nbsp;12.1: Jittered scatterplot of individual measurements per participan
 </div>
 </div>
 <p><a href="#fig-aafulldat" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> shows the raw measurements, including what are notable outliers that may be due to data acquisition problems or instrumental manipulations. Since the experiment was performed in a non-controlled setting (pandemic) with different apparatus and everyone acting as their own technician, it is unsurprising that the signal-to-noise ratio is quite small. We will exclude here (rather arbitrarily) measurements below a latency of minus 40.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest) <span class="co"># Package to fit and tests for mixed models</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mixedmod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  latency <span class="sc">~</span> stimulus <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> <span class="co"># random effect for subject</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> id<span class="sc">:</span>stimulus), <span class="co"># interaction id and stimuluss</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># random effect for interaction </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> hecedsm<span class="sc">::</span>AA21 <span class="sc">|&gt;</span> <span class="co">#remove outliers</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(latency <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">40</span>))</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Output parameter estimates</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mixedmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed model fit by REML ['lmerModLmerTest']
-Formula: latency ~ stimulus + (1 | id) + (1 | id:stimulus)
-   Data: dplyr::filter(hecedsm::AA21, latency &gt; -40)
-REML criterion at convergence: 8007.913
-Random effects:
- Groups      Name        Std.Dev.
- id:stimulus (Intercept) 0.7371  
- id          (Intercept) 2.2679  
- Residual                6.2235  
-Number of obs: 1227, groups:  id:stimulus, 36; id, 12
-Fixed Effects:
-(Intercept)    stimulus1    stimulus2  
-   -10.5374      -0.2529      -0.1394  </code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest) <span class="co"># Package to fit and tests for mixed models</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>mixedmod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  latency <span class="sc">~</span> stimulus <span class="sc">+</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> id) <span class="sc">+</span> <span class="co"># random effect for subject</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> id<span class="sc">:</span>stimulus), <span class="co"># interaction id and stimuluss</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># random effect for interaction </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> hecedsm<span class="sc">::</span>AA21 <span class="sc">|&gt;</span> <span class="co">#remove outliers</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(latency <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">40</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Output parameter estimates</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mixedmod)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear mixed model fit by REML ['lmerModLmerTest']</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formula: latency ~ stimulus + (1 | id) + (1 | id:stimulus)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Data: dplyr::filter(hecedsm::AA21, latency &gt; -40)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; REML criterion at convergence: 8008</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups      Name        Std.Dev.</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  id:stimulus (Intercept) 0.737   </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  id          (Intercept) 2.268   </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Residual                6.223   </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of obs: 1227, groups:  id:stimulus, 36; id, 12</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fixed Effects:</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)    stimulus1    stimulus2  </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     -10.537       -0.253       -0.139</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The model includes a fixed effect for stimulus, and variance terms for <code>stimulus</code> (nested within <code>id</code>) and subject identifier <code>id</code>. We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large. We can also look globally at the statistical evidence for the difference between the various stimuli.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Global effect of different faces</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA here is type III effects </span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># computed from the 'lmerTest' package</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mixedmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Type III Analysis of Variance Table with Satterthwaite's method
-         Sum Sq Mean Sq NumDF  DenDF F value Pr(&gt;F)
-stimulus  65.62   32.81     2 23.337  0.8471 0.4414</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Global effect of different faces</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA here is type III effects </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># computed from the 'lmerTest' package</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mixedmod)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Type III Analysis of Variance Table with Satterthwaite's method</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; stimulus   65.6    32.8     2  23.3    0.85   0.44</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The global <span class="math inline">\(F\)</span> test of significance for stimulus is based on an approximation that accounts for the correlation between observations; the denominator degrees of freedom for the approximate <span class="math inline">\(F\)</span> statistic are based on Satterthwaite’s method. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in <a href="#fig-aafulldat" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>.</p>
 </div>
@@ -563,119 +547,83 @@ stimulus  65.62   32.81     2 23.337  0.8471 0.4414</code></pre>
 <p>The timing is a within-subject factor, whereas task order and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).</p>
 <p>To fit the linear mixed model with a random effect for both children <code>id</code> and <code>lab</code>: since children are nested in lab, we must specify the random effects via <code>(1 | id:lab) + (1 | lab)</code> if <code>id</code> are not unique.</p>
 <p>We modify the data to keep only 5 and 6 years old students, since most older kids verbalized during the task and we would have large disbalance (14 ten years old out of 235, and 19 out of 269 seven years old). We also exclude the point-and-name task, since verbalization was part of the instruction. This leaves us with 1419 observations and we can check that there are indeed enough children in each condition to get estimates.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(MULTI21_D2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>MULTI21_D2_sub <span class="ot">&lt;-</span> MULTI21_D2 <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"5yo"</span>, <span class="st">"6yo"</span>),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    timing <span class="sc">!=</span> <span class="st">"point-and-name"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbalization =</span> <span class="fu">factor</span>(frequency <span class="sc">!=</span> <span class="st">"never"</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"no"</span>, <span class="st">"yes"</span>)),</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> <span class="fu">factor</span>(age)) <span class="co"># drop unused age levels</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> age <span class="sc">+</span> verbalization, <span class="at">data =</span> MULTI21_D2_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     verbalization
-age    no yes
-  5yo 106 334
-  6yo  56 450</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(MULTI21_D2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>MULTI21_D2_sub <span class="ot">&lt;-</span> MULTI21_D2 <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    age <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"5yo"</span>, <span class="st">"6yo"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    timing <span class="sc">!=</span> <span class="st">"point-and-name"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbalization =</span> <span class="fu">factor</span>(frequency <span class="sc">!=</span> <span class="st">"never"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"no"</span>, <span class="st">"yes"</span>)),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> <span class="fu">factor</span>(age)) <span class="co"># drop unused age levels</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> age <span class="sc">+</span> verbalization, <span class="at">data =</span> MULTI21_D2_sub)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      verbalization</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age    no yes</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   5yo 106 334</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   6yo  56 450</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Given that we have multiple students of every age group, we can include two-way and three-way interactions in the <span class="math inline">\(2^3\)</span> design. We also include random effects for the student and the lab.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: lme4</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Matrix</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'lmerTest'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:lme4':
-
-    lmer</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:stats':
-
-    step</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Welcome to emmeans.
-Caution: You lose important information if you filter this package's results.
-See '? untidy'</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>hmod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  mcorrect <span class="sc">~</span> age<span class="sc">*</span>timing<span class="sc">*</span>verbalization <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id<span class="sc">:</span>lab) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> lab), </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> MULTI21_D2_sub)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameter estimates</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(hmod)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>hmod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  mcorrect <span class="sc">~</span> age<span class="sc">*</span>timing<span class="sc">*</span>verbalization <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id<span class="sc">:</span>lab) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> lab), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> MULTI21_D2_sub)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameter estimates</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(hmod)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We focus here on selected part of the output from <code>summary()</code> giving the estimated variance terms.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups   Name        Variance Std.Dev.</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  id:lab   (Intercept) 0.3587   0.599   </span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lab      (Intercept) 0.0625   0.250   </span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Residual             0.6823   0.826   </span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of obs: 946, groups:  id:lab, 473; lab, 17</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups   Name        Variance Std.Dev.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  id:lab   (Intercept) 0.3587   0.599   </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  lab      (Intercept) 0.0625   0.250   </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Residual             0.6823   0.826   </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of obs: 946, groups:  id:lab, 473; lab, 17</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can interpret the results as follows: the total variance is the sum of the <code>id</code>, <code>lab</code> and <code>residual</code> variances components give us an all but negligible effect of lab with 7 percent of the total variance, versus 40.5 percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn’t add much to the correlation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(hmod, <span class="at">ddf =</span> <span class="st">"Kenward-Roger"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Type III Analysis of Variance Table with Kenward-Roger's method
-                          Sum Sq Mean Sq NumDF  DenDF F value    Pr(&gt;F)    
-age                      20.5045 20.5045     1 459.37 30.0507 6.955e-08 ***
-timing                    3.2464  3.2464     1 469.00  4.7579   0.02966 *  
-verbalization            13.6053 13.6053     1 459.45 19.9395 1.007e-05 ***
-age:timing                0.2434  0.2434     1 469.00  0.3567   0.55062    
-age:verbalization         0.0849  0.0849     1 462.08  0.1245   0.72439    
-timing:verbalization      2.6443  2.6443     1 469.00  3.8754   0.04959 *  
-age:timing:verbalization  0.2699  0.2699     1 469.00  0.3955   0.52972    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check estimated marginal means for age</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(hmod, <span class="at">specs =</span> <span class="st">"age"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>emm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> age emmean     SE   df lower.CL upper.CL
- 5yo   1.85 0.0914 35.8     1.67     2.04
- 6yo   2.44 0.1053 60.9     2.23     2.66
-
-Results are averaged over the levels of: timing, verbalization 
-Degrees-of-freedom method: kenward-roger 
-Confidence level used: 0.95 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise differences</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pairdiff <span class="ot">&lt;-</span> emm <span class="sc">|&gt;</span> <span class="fu">pairs</span>()</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>pairdiff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> contrast  estimate    SE  df t.ratio p.value
- 5yo - 6yo    -0.59 0.108 459  -5.482  &lt;.0001
-
-Results are averaged over the levels of: timing, verbalization 
-Degrees-of-freedom method: kenward-roger </code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(hmod, <span class="at">ddf =</span> <span class="st">"Kenward-Roger"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Type III Analysis of Variance Table with Kenward-Roger's method</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                          Sum Sq Mean Sq NumDF DenDF F value Pr(&gt;F)    </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age                       20.50   20.50     1   459   30.05  7e-08 ***</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; timing                     3.25    3.25     1   469    4.76   0.03 *  </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; verbalization             13.61   13.61     1   459   19.94  1e-05 ***</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age:timing                 0.24    0.24     1   469    0.36   0.55    </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age:verbalization          0.08    0.08     1   462    0.12   0.72    </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; timing:verbalization       2.64    2.64     1   469    3.88   0.05 *  </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; age:timing:verbalization   0.27    0.27     1   469    0.40   0.53    </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check estimated marginal means for age</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(hmod, <span class="at">specs =</span> <span class="st">"age"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>emm</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  age emmean     SE   df lower.CL upper.CL</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5yo   1.85 0.0914 35.8     1.67     2.04</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6yo   2.44 0.1050 60.9     2.23     2.65</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: timing, verbalization </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: kenward-roger </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise differences</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>pairdiff <span class="ot">&lt;-</span> emm <span class="sc">|&gt;</span> <span class="fu">pairs</span>()</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>pairdiff</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df t.ratio p.value</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5yo - 6yo    -0.59 0.108 459  -5.480  &lt;.0001</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: timing, verbalization </span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: kenward-roger</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The type III ANOVA table shows that there is no evidence of interaction between task order, age and verbalization (no three-interaction) and a very small difference for timing and verbalization. Thus, we could compute the estimated marginal means (95% confidence interval) for age with an estimated correct number of words of 1.85 (1.67, 2.04) words out of 5 for the 5 years olds and 2.44 (2.23, 2.66) words for six years old. Note that, despite the very large number children in the experiment, the degrees of freedom from the Kenward–Roger method are much fewer, respectively 35.83 and 60.94 for five and six years old.</p>
 <p>The <span class="math inline">\(t\)</span>-test for the pairwise difference of the marginal effect is 0.59 words with standard error 0.11. Judging from the output, the degrees of freedom calculation for the pairwise <span class="math inline">\(t\)</span>-test are erroneous — they seem to be some average between the number of entries for the five years old (440) and six years old (506), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.</p>
 <p>We can easily see the limited interaction and strong main effects from the interaction plot in <a href="#fig-interactionrecall" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>. The confidence intervals are of different width because of the sample inbalance.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-interactionrecall" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-interactionrecall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-interactionrecall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="mixed_files/figure-html/fig-interactionrecall-1.png" class="img-fluid figure-img" width="672">
+<img src="mixed_files/figure-html/fig-interactionrecall-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactionrecall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.2: Interaction plot for the recall task for younger children.
@@ -690,87 +638,78 @@ Figure&nbsp;12.2: Interaction plot for the recall task for younger children.
 <blockquote class="blockquote">
 <p>Thirty-seven young and healthy adults performed eight cognitive tasks in a 2 × 2 × 2 within-subject design of the following independent variables: posture (sitting/standing), task difficulty (easy/hard), and input device (computer mouse/tactile screen) in a counterbalanced order. The database <code>LJLSFBM20</code> in package <code>hecedsm</code> contains the measurements. There is a total of 296 measurements, or <span class="math inline">\(37 \times 8\)</span>, meaning each participant is assigned to a single task.</p>
 </blockquote>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>tibble [296 × 14] (S3: tbl_df/tbl/data.frame)
- $ id            : Factor w/ 37 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 2 2 ...
- $ order         : int [1:296] 1 2 3 4 5 6 7 8 1 2 ...
- $ position      : Factor w/ 2 levels "standing","sitting": 2 2 2 2 1 1 1 1 1 1 ...
- $ phys_demand   : Factor w/ 2 levels "mouse","touchpad": 1 2 2 1 2 2 1 1 2 2 ...
- $ task_diff     : Factor w/ 2 levels "easy","difficult": 1 2 1 2 2 1 2 1 2 1 ...
- $ ies           : num [1:296] 2486 24034 4691 11727 10874 ...
- $ central_alpha : num [1:296] 0.3 0.227 0.25 0.224 0.235 ...
- $ parietal_alpha: num [1:296] 0.388 0.348 0.345 0.333 0.298 ...
- $ central_beta  : num [1:296] 0.1103 0.0866 0.0902 0.0863 0.0972 ...
- $ parietal_beta : num [1:296] 0.169 0.159 0.141 0.147 0.141 ...
- $ bmi           : num [1:296] 22.8 22.8 22.8 22.8 22.8 ...
- $ sex           : Factor w/ 2 levels "man","woman": 1 1 1 1 1 1 1 1 1 1 ...
- $ attention     : num [1:296] 6.83 6.67 6.83 6.83 6.83 ...
- $ satisfaction  : num [1:296] 70 85 80 76 86 100 60 80 70 85 ...</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<pre><code>#&gt; tibble [296 × 14] (S3: tbl_df/tbl/data.frame)
+#&gt;  $ id            : Factor w/ 37 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 2 2 ...
+#&gt;  $ order         : int [1:296] 1 2 3 4 5 6 7 8 1 2 ...
+#&gt;  $ position      : Factor w/ 2 levels "standing","sitting": 2 2 2 2 1 1 1 1 1 1 ...
+#&gt;  $ phys_demand   : Factor w/ 2 levels "mouse","touchpad": 1 2 2 1 2 2 1 1 2 2 ...
+#&gt;  $ task_diff     : Factor w/ 2 levels "easy","difficult": 1 2 1 2 2 1 2 1 2 1 ...
+#&gt;  $ ies           : num [1:296] 2486 24034 4691 11727 10874 ...
+#&gt;  $ central_alpha : num [1:296] 0.3 0.227 0.25 0.224 0.235 ...
+#&gt;  $ parietal_alpha: num [1:296] 0.388 0.348 0.345 0.333 0.298 ...
+#&gt;  $ central_beta  : num [1:296] 0.1103 0.0866 0.0902 0.0863 0.0972 ...
+#&gt;  $ parietal_beta : num [1:296] 0.169 0.159 0.141 0.147 0.141 ...
+#&gt;  $ bmi           : num [1:296] 22.8 22.8 22.8 22.8 22.8 ...
+#&gt;  $ sex           : Factor w/ 2 levels "man","woman": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;  $ attention     : num [1:296] 6.83 6.67 6.83 6.83 6.83 ...
+#&gt;  $ satisfaction  : num [1:296] 70 85 80 76 86 100 60 80 70 85 ...</code></pre>
 </div>
 <p>The <code>id</code> variable is a dummy for the participant, with associated covariate <code>sex</code> and <code>bmi</code>. We also have the three within-subject factors, <code>position</code>, <code>phys_demand</code> and <code>task_diff</code> and the <code>order</code> in which the tasks were given (counterbalanced). There are in total seven response variables: the inverse efficiency score global stimulus (<code>ies</code>), measures of brain activity (<code>central_alpha</code>, <code>parietal_alpha</code>, <code>central_beta</code>, <code>parietal_beta</code>) and two scales obtained from answers to a questionaire, <code>attention</code> and <code>satisfaction</code>.</p>
 <p>The three manipulated factors are nested within subject and crossed, so we can estimate the three-way and two-way interactions with the experimental factors. The only logical random effect here is for subject, and we cannot have further sources of variability given the lack of replication.</p>
 <p>The authors are not transparent as to what their model is and earn a failure grade for reproducibility: we have no idea of the specification, as coefficients are not reported. There is clearly eight coefficients corresponding to the average of the subgroups, plus a random effect for subject and sex and body mass index as covariates. It appears from the output of Table 1 that there was an interaction term added for BMI and position (as standing may be more strenuous on overweight participants). Finally, we include the order of the tasks as a covariate to account for potential fatigue effects.</p>
 <p>Our linear mixed model would take the form, here with <code>ies</code> as response</p>
 <p>Given the number of response variables and coefficients, it is clear one must account for testing multiplicity. Figuring out the size of the family, <span class="math inline">\(m\)</span>, is not trivial: testing interactions and main effects leads to seven tests. We could also be interested in the interaction between body mass index and position if it affects performance, bringing the number of tests to eight and throw the covariate effect for order (up to 11 if we include all controls). Further contrasts may inflate this number (for example, there are 28 pairwise comparisons if the three-way interaction is significant). With seven responses and linear mixed models parametrized in the same way, we have at least 56 tests and potentially up to 350! Controlling the type-I error requires using Bonferroni–Holm type correction, since the different responses are not part of the same models.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Type III Analysis of Variance Table with Satterthwaite's method
-                                   Sum Sq    Mean Sq NumDF DenDF  F value
-position                           574983     574983     1   250   0.0361
-phys_demand                    1280635446 1280635446     1   250  80.3464
-task_diff                      4927991208 4927991208     1   250 309.1796
-sex                              79185574   79185574     1    34   4.9681
-bmi                              10365621   10365621     1    34   0.6503
-order                           105580125  105580125     1   250   6.6240
-position:phys_demand              9127601    9127601     1   250   0.5727
-position:task_diff                1825943    1825943     1   250   0.1146
-phys_demand:task_diff           327914741  327914741     1   250  20.5732
-position:bmi                      1224778    1224778     1   250   0.0768
-position:phys_demand:task_diff    2299196    2299196     1   250   0.1443
-                                  Pr(&gt;F)    
-position                         0.84952    
-phys_demand                    &lt; 2.2e-16 ***
-task_diff                      &lt; 2.2e-16 ***
-sex                              0.03254 *  
-bmi                              0.42560    
-order                            0.01064 *  
-position:phys_demand             0.44992    
-position:task_diff               0.73530    
-phys_demand:task_diff          8.913e-06 ***
-position:bmi                     0.78185    
-position:phys_demand:task_diff   0.70441    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Type III Analysis of Variance Table with Satterthwaite's method</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  Sum Sq  Mean Sq NumDF DenDF F value  Pr(&gt;F)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position                       5.75e+05 5.75e+05     1   250    0.04   0.850</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; phys_demand                    1.28e+09 1.28e+09     1   250   80.35 &lt; 2e-16</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; task_diff                      4.93e+09 4.93e+09     1   250  309.18 &lt; 2e-16</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex                            7.92e+07 7.92e+07     1    34    4.97   0.033</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bmi                            1.04e+07 1.04e+07     1    34    0.65   0.426</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; order                          1.06e+08 1.06e+08     1   250    6.62   0.011</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:phys_demand           9.13e+06 9.13e+06     1   250    0.57   0.450</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:task_diff             1.83e+06 1.83e+06     1   250    0.11   0.735</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; phys_demand:task_diff          3.28e+08 3.28e+08     1   250   20.57 8.9e-06</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:bmi                   1.22e+06 1.22e+06     1   250    0.08   0.782</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:phys_demand:task_diff 2.30e+06 2.30e+06     1   250    0.14   0.704</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                   </span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position                          </span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; phys_demand                    ***</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; task_diff                      ***</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; sex                            *  </span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; bmi                               </span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; order                          *  </span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:phys_demand              </span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:task_diff                </span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; phys_demand:task_diff          ***</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:bmi                      </span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; position:phys_demand:task_diff    </span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we focus on the sole results for <code>ies</code>, there is a significant two-way interaction (and main effects) for <code>phys_demand</code> and <code>task_diff</code>, but not for <code>position</code>. Further investigation would reveal better performance on the easy task and overall with a mouse.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, <span class="at">spec =</span> <span class="fu">c</span>(<span class="st">"phys_demand"</span>,<span class="st">"task_diff"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>NOTE: Results may be misleading due to involvement in interactions</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> phys_demand task_diff emmean  SE   df lower.CL upper.CL
- mouse       easy        2668 672 79.3     1332     4005
- touchpad    easy        4723 672 79.2     3387     6060
- mouse       difficult   8733 672 79.3     7396    10070
- touchpad    difficult  14998 672 79.2    13662    16335
-
-Results are averaged over the levels of: position, sex 
-Degrees-of-freedom method: kenward-roger 
-Confidence level used: 0.95 </code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, <span class="at">spec =</span> <span class="fu">c</span>(<span class="st">"phys_demand"</span>,<span class="st">"task_diff"</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  phys_demand task_diff emmean  SE   df lower.CL upper.CL</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  mouse       easy        2668 672 79.3     1332     4005</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  touchpad    easy        4723 672 79.2     3387     6060</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  mouse       difficult   8733 672 79.3     7396    10070</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  touchpad    difficult  14998 672 79.2    13662    16335</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: position, sex </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: kenward-roger </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>One may wonder whether there are any effect of spillover, learning or fatigue due to the repeated measures: tasks were much longer than is typical. The coefficient for <code>order</code> is -268.14, so the decrease for the inverse efficiency score global stimulus for each additional task, <em>ceteris paribus</em>, with a <span class="math inline">\(p\)</span>-value of 0.011 suggesting participants improve over time.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-residualsvscovariate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-residualsvscovariate" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-residualsvscovariate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="mixed_files/figure-html/fig-residualsvscovariate-1.png" class="img-fluid figure-img" width="672">
+<img src="mixed_files/figure-html/fig-residualsvscovariate-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-residualsvscovariate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.3: Scatterplots of residuals from the linear mixed model against participant identifier (left) and against order of task (right).
@@ -781,16 +720,16 @@ Figure&nbsp;12.3: Scatterplots of residuals from the linear mixed model against 
 </div>
 <p>Looking at the residuals of the model per participants is also quite insightful. It is clear that measurements from participants 30 and 31 are abnormal, and these correspond to the values we see.</p>
 <p>We can check the other model assumptions: the quantile-quantile plot of random effects suggests some large outliers, unsurprisingly due to the participants identified. The plot of fitted values vs residuals suggests our model is wholly inadequate: there is a clear trend in the residuals and strong evidence of heterogeneity.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ranef</span>(mod))</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ranef</span>(mod))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-residualsStanding" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-residualsStanding" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-residualsStanding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="mixed_files/figure-html/fig-residualsStanding-1.png" class="img-fluid figure-img" width="672">
+<img src="mixed_files/figure-html/fig-residualsStanding-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-residualsStanding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;12.4: Normal quantile-quantile plot of predicted random effects (left) and Tukey’s plot of residual vs fitted values (right).
