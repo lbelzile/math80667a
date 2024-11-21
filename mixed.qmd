@@ -56,7 +56,7 @@ We say to factors are nested ($A$ within $B$) when one can only coexist within t
 
 In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. In the old days, it was customary to include these as fixed effect factors in the analysis, but disregard tests. We term explanatory factors (fixed effects) that are used only to control unwanted variability **blocking factors**: variables that impact the measurement variability, but that are not of direct interest. By filtering their effect out and looking at the residual variability that is unexplained by the blocking factors, block designs reduce the error term, at the cost of including and estimating additional parameters (group averages). Experimental units are typically assigned to blocking factor using stratified sampling to ensure comparisons can be made.
 
-We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors.^[We can always check for this assumption.] Thus, we will be interested mostly in main effects of the experimental factors.
+We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors, but we can always check for this assumption. Thus, we will be interested mostly in main effects of the experimental factors.
 
 :::{#exm-reachingout}
 
@@ -73,6 +73,11 @@ While a paired $t$-test is the natural (and arguably simplest way) to compare th
 data(LRMM23_S3, package = "hecedsm")
 # Paired t-tests
 with(LRMM23_S3, t.test(apprec_init, apprec_resp, paired = TRUE))
+```
+
+```{r}
+#| eval: false
+#| echo: true
 # Cast data to long format - one response/participant per line
 LRMM23_S3l <- LRMM23_S3 |>
   dplyr::mutate(dyad = factor(dplyr::row_number())) |> 
@@ -89,9 +94,49 @@ anova(mod) # There seems to be significant variability filtered out by 'id'
 # Compute pairwise difference for main effect of 'role'
 emmeans::emmeans(mod, spec = "role") |>
   emmeans::contrast("pairwise")
-
 ```
 
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-longdat
+#| tbl-cap: "First six rows of the Study 3 of @Liu.Rim.Min.Min:2023 data in long format."
+# Cast data to long format - one response/participant per line
+LRMM23_S3l <- LRMM23_S3 |>
+  dplyr::mutate(dyad = factor(dplyr::row_number())) |> 
+  tidyr::pivot_longer(
+    cols = !dyad, 
+    names_to = c(".value", "role"),
+    names_sep = "\\_")
+# Format of the data
+knitr::kable(head(LRMM23_S3l), digits = 2, align = "c")
+```
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-LRMMS3-anovatab
+#| tbl-cap: "Analysis of variance table for appreciation as a function of role and dyad for Study 3 of @Liu.Rim.Min.Min:2023."
+mod <- lm(apprec ~ role + dyad, data = LRMM23_S3l)
+# Global tests of main effects (balanced data)
+options(knitr.kable.NA = '')
+broom::tidy(anova(mod)) |>
+  dplyr::mutate(p.value = ifelse(is.na(p.value), NA_character_, format.pval(p.value, digits = 2, eps = 1e-3))) |>
+  select(!meansq) |>
+  knitr::kable(digits = 2, col.names = c("term", "sum of squares","df","stat","p-value"), booktabs = TRUE, linesep = "")
+# Compute pairwise difference for main effect of 'role'
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-LRMMS3-emmeans
+#| tbl-cap: "Pairwise difference contrast for `role` for Study 3 of @Liu.Rim.Min.Min:2023."
+broom::tidy(emmeans::emmeans(mod, spec = "role") |>
+                   emmeans::contrast("pairwise")) |>
+   dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  dplyr::select(contrast, estimate, std.error, df, statistic, p.value) |>
+  knitr::kable(digits = 2, col.names = c("term", "contrast","std. error","df","stat","p-value"), booktabs = TRUE, linesep = "")
+```
 
 :::
 
@@ -170,9 +215,10 @@ ggplot(data = hecedsm::AA21,
 ```{r}
 #| eval: true
 #| echo: true
-library(lmerTest) # Package to fit and tests for mixed models
+#| message: false
+#| warning: false
 options(contrasts = c("contr.sum", "contr.poly"))
-mixedmod <- lmer(
+mixedmod <- lmerTest::lmer(
   latency ~ stimulus + 
     (1 | id) + # random effect for subject
     (1 | id:stimulus), # interaction id and stimuluss
@@ -187,12 +233,27 @@ The model includes a fixed effect for stimulus, and variance terms for `stimulus
 We see that there is quite a bit of heterogeneity between participants and per stimulus participant pair, albeit less so for the interaction. All estimated variance terms are rather large. We can also look globally at the statistical evidence for the difference between the various stimuli.
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 # Global effect of different faces
 # ANOVA here is type III effects 
 # computed from the 'lmerTest' package
 anova(mixedmod)
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-happyfake-rep-anova
+#| tbl-cap: "Type III analysis of variance table with Satterthwaite's method for the linear mixed model with random effects for individuals and the interaction with stimulus."
+options(knitr.kable.NA = '')
+broom::tidy(anova(mixedmod)) |>
+  dplyr::mutate(p.value = ifelse(is.na(p.value), NA_character_, format.pval(p.value, digits = 2, eps = 1e-3))) |>
+  select(!meansq) |>
+  knitr::kable(digits = 2, col.names = c("term", "sum of squares","df 1", "df 2", "stat","p-value"), booktabs = TRUE, linesep = "")
+
 ```
 
 The global $F$ test of significance for stimulus is based on an approximation that accounts for the correlation between observations; the denominator degrees of freedom for the approximate $F$ statistic are based on Satterthwaite's method. There is again no evidence of differences between experimental conditions. This is rather unsurprising if we look at the raw data in @fig-aafulldat.
@@ -235,9 +296,7 @@ Given that we have multiple students of every age group, we can include two-way 
 #| eval: true
 #| echo: true
 #| cache: false
-library(lmerTest)
-library(emmeans)
-hmod <- lmer(
+hmod <- lmerTest::lmer(
   mcorrect ~ age*timing*verbalization + (1 | id:lab) + (1 | lab), 
   data = MULTI21_D2_sub)
 # Parameter estimates
@@ -257,18 +316,64 @@ We focus here on selected part of the output from `summary()` giving the estimat
 ```
 
 
+In this setting, the correlation between observations from the same individuals $i$ in lab $j$ for measurement $k$ and from different individuals in the same labs are, respectively
+\begin{align*}
+\mathsf{cor}(Y_{ijk}, Y_{ijk'}) = \frac{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}, \qquad \mathsf{cor}(Y_{ijk}, Y_{i'jk'}) = \frac{\sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}.
+\end{align*}
 We can interpret the results as follows: the total variance is the sum of the  `id`, `lab` and `residual` variances components give us an all but negligible effect of lab with `r round(100*(hmod@theta[2]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent of the total variance, versus `r round(100*(hmod@theta[1]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn't add much to the correlation.
 
+
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 anova(hmod, ddf = "Kenward-Roger")
 # Check estimated marginal means for age
-emm <- emmeans(hmod, specs = "age")
-emm
+emm <- emmeans::emmeans(hmod, specs = "age")
+# Pairwise differences
+pairdiff <- emm |> emmeans::pairs()
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-elliot-anova
+#| tbl-cap: "Type III analysis of variance table with Kenward-Roger's method for @Elliot:2021."
+options(knitr.kable.NA = '')
+broom::tidy(anova(hmod, ddf = "Kenward-Roger")) |>
+  dplyr::mutate(p.value = ifelse(is.na(p.value), NA_character_, format.pval(p.value, digits = 2, eps = 1e-3))) |>
+  select(!meansq) |>
+  knitr::kable(digits = 2, col.names = c("term", "sum of squares","df 1", "df 2", "stat","p-value"), booktabs = TRUE, linesep = "")
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-Elliot-emmeans
+#| tbl-cap: "Estimated marginal means for age for @Elliot:2021."
+broom::tidy(emmeans::emmeans(hmod, specs = "age",)) |>
+   dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  knitr::kable(digits = 2, col.names = c("age", "emmeans","std. error","df","stat","p-value"), booktabs = TRUE, linesep = "")
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-Elliot-pairdiff
+#| tbl-cap: "Pairwise difference for age 5 and 6 for the study of @Elliot:2021"
+broom::tidy(emmeans::emmeans(hmod, specs = "age")|>
+            emmeans::contrast("pairwise")) |>
+   dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  dplyr::select(contrast, estimate, std.error, df, statistic, p.value) |>
+  knitr::kable(digits = 2, col.names = c("term", "contrast","std. error","df","stat","p-value"), booktabs = TRUE, linesep = "")
+emm <- emmeans::emmeans(hmod, specs = "age")
 # Pairwise differences
 pairdiff <- emm |> pairs()
-pairdiff
 ```
 
 
@@ -339,7 +444,8 @@ The authors are not transparent as to what their model is and earn a failure gra
 Our linear mixed model would take the form, here with `ies` as response
 
 ```{r}
-library(lmerTest)
+#| eval: true
+#| echo: true
 mod <- lmer(ies ~ position*phys_demand*task_diff +
   (1 | id) + sex + bmi*position + order, 
            data = LJLSFBM20) 
@@ -349,22 +455,45 @@ Given the number of response variables and coefficients, it is clear one must ac
 
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 anova(mod)
 ```
 
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-labontelemoyne-anova
+#| tbl-cap: "Type III analysis of variance table with Satterthwaite's method for @LabonteLemoyne:2020."
+options(knitr.kable.NA = '')
+broom::tidy(anova(mod)) |>
+  dplyr::mutate(p.value = ifelse(is.na(p.value), NA_character_, format.pval(p.value, digits = 2, eps = 1e-3))) |>
+  select(!meansq) |>
+  knitr::kable(digits = 2, col.names = c("term", "sum of squares","df 1", "df 2", "stat","p-value"), booktabs = TRUE, linesep = "")
+```
 
 If we focus on the sole results for `ies`, there is a significant two-way interaction (and main effects) for `phys_demand` and `task_diff`, but not for `position`. Further investigation would reveal better performance on the easy task and overall with a mouse.
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 emmeans::emmeans(mod, spec = c("phys_demand","task_diff"))
 ```
 
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| label: tbl-labonte-emmeans
+#| tbl-cap: "Estimated marginal means for physical demand and task difficulty for the data of @LabonteLemoyne:2020."
+broom::tidy(emmeans::emmeans(mod, spec = c("phys_demand","task_diff"))) |>
+   dplyr::mutate(p.value = format.pval(p.value, digits = 2, eps = 1e-3)) |>
+  knitr::kable(digits = 2, col.names = c("phys. demand", "task diff.","emmeans","std. error","df","stat","p-value"), booktabs = TRUE, linesep = "")
+```
 
-One may wonder whether there are any effect of spillover, learning or fatigue due to the repeated measures: tasks were much longer than is typical. The coefficient for `order` is `r round(as.numeric(fixef(mod)['order']), 2)`, so the decrease for the inverse efficiency score global stimulus for each additional task, *ceteris paribus*, with a $p$-value of `r round(anova(mod)[6,6], 3)` suggesting participants improve over time.
+One may wonder whether there are any effect of spillover, learning or fatigue due to the repeated measures: tasks were much longer than is typical. The coefficient for `order` is `r round(as.numeric(lme4::fixef(mod)['order']), 2)`, so the decrease for the inverse efficiency score global stimulus for each additional task, *ceteris paribus*, with a $p$-value of `r round(anova(mod)[6,6], 3)` suggesting participants improve over time.
 
 
 ```{r}
@@ -377,6 +506,7 @@ g1 <- ggplot(
   mapping = aes(x = id, 
                 y = residuals)) + 
   geom_point() +
+  scale_x_discrete(breaks = c(seq(5,40, by = 5))) + 
   theme_classic()
 g2 <- ggplot(
   data = data.frame(residuals = resid(mod), 

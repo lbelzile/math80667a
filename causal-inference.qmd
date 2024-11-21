@@ -22,7 +22,7 @@ knitr::include_graphics("figures/xkcd552_correlation.png")
 The field of **causal inference** is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables.  Such action may be conceptual: we can imagine for example looking at student's success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as **potential outcomes**.
 
 
-The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by @Baron.Kenny:1986. We focus on the hidden assumptions that can undermine causal claims in linear mediation models.
+The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by @Judd.Kenny:1981 and @Baron.Kenny:1986. We focus on the hidden assumptions that can undermine causal claims in linear mediation models.
 
 ## Basics of causal inference
 
@@ -40,9 +40,12 @@ set.seed(1237)
 x <- rep(c(0L,1L), each = 3)[sample.int(6)]
 Y <- sample.int(7, size = 6)
 knitr::kable(tibble::tibble(i = 1:6, X = x, "Y(0)" = ifelse(x == 0L, Y, "?"),
-                "Y(1)" = ifelse(x == 1L, Y, "?")),
+                "Y(1)" = ifelse(x == 1L, Y, "?"),
+                "Y(1)-Y(0)" = rep("?", 6)),
              booktabs = TRUE,
-             linesep = "")
+             col.names = c("\\(i\\)", "\\(X_i\\)", "\\(Y_i(0)\\)", "\\(Y_i(1)\\)", "\\(Y_i(1)-Y_i(0)\\)"),
+             linesep = "",align = "c") |>
+  kableExtra::kable_styling()
 ```
 
 
@@ -73,30 +76,42 @@ data_plot <- data.frame(
   group = factor(rep(c("treatment","control"), each = nobs)))
 
 ggplot() +
-  geom_bar(data = dplyr::filter(data_plot, group == "treatment"),
-    aes(x = response, y = after_stat(100*count/nobs), fill = "treatment")) +
-  geom_bar(data = dplyr::filter(data_plot, group == "control"),
-    aes(x = response, y = -after_stat(100*count/nobs), fill = "control")) +
-  geom_hline(yintercept = 0, color = "white", linewidth = 0.25) +
+  geom_bar(data = data_plot ,
+    aes(x = response, y = after_stat(100*count/nobs), fill = group,group = group), position = "dodge") +
   scale_x_continuous(labels = 1:7, breaks = 1:7) +
   scale_y_continuous(labels = abs) +
   labs(x = "response", y = "percentage", fill = NULL) +
+  MetBrewer::scale_fill_met_d("Hiroshige") +
   theme_classic() +
   theme(
     legend.position = "top",
     legend.key.size = unit(0.65, "lines")
   )
+# ggplot() +
+#   geom_bar(data = dplyr::filter(data_plot, group == "treatment"),
+#     aes(x = response, y = after_stat(100*count/nobs), fill = "treatment")) +
+#   geom_bar(data = dplyr::filter(data_plot, group == "control"),
+#     aes(x = response, y = -after_stat(100*count/nobs), fill = "control")) +
+#   geom_hline(yintercept = 0, color = "white", linewidth = 0.25) +
+#   scale_x_continuous(labels = 1:7, breaks = 1:7) +
+#   scale_y_continuous(labels = abs) +
+#   labs(x = "response", y = "percentage", fill = NULL) +
+#   theme_classic() +
+#   theme(
+#     legend.position = "top",
+#     legend.key.size = unit(0.65, "lines")
+#   )
 ```
 
 
 
-Rather than look at the individual treatment effect difference, we can focus on averages over the population. The most common measure of causation is the **average treatment effect**, which is the difference between the population averages of treatment group $j$ and the control group $X=0$,
+Rather than look at the individual treatment effect difference, we can focus on averages over the population. The most common measure of causation is the **average treatment effect**, which is the difference between the population averages of treatment group $X=j$ and the control group $X=0$,
 \begin{align*}
 \textsf{ATE}_j = \underset{\substack{\text{expected response among}\\\text{treatment group $j$}}}{\mathsf{E}(Y \mid X=j)} - \underset{\substack{\text{expected response among}\\\text{control group}}}{\mathsf{E}(Y \mid X=0)}
 \end{align*}
-which is a valid estimator of $\mathsf{E}\{Y(1) - Y(0)\}$ provided that $X$ is randomly allocated. 
+which is a valid estimator of $\mathsf{E}\{Y(j) - Y(0)\}$ provided that $X$ is randomly allocated. 
 
-What assumptions are necessary to draw causal conclusion? In an experimental setting, we need 
+What assumptions are necessary to draw causal conclusion? In an experimental setting, we need the following:
 
 1. conditional *ignorability*, which states that potential outcomes are independent (denoted with the ${\perp\mkern-10mu\perp}$ symbol) of assignment to treatment given a set of explanatories $\boldsymbol{Z}.$ In notation $\{Y(0), \ldots, Y(J)\}\ {\perp\mkern-10mu\perp}\ X \mid \boldsymbol{Z}$ (if the latter is an empty set, we talk about ignorability). 
 2. lack of interference: the outcome is unaffected by the treatment assignment of other participants. 
@@ -114,7 +129,7 @@ Causal inference is possible in observational settings, but some of the assumpti
 
 
 
-In summary, we can target the average treatment effect in experimental designs if we randomize the effect $X=j,$ if our subjects comply with their treatment assignment, and more importantly if we use a random sample which is representative of the population.
+In summary, we can estimate the average treatment effect in experimental designs if we randomize the effect $X=j,$ if our subjects comply with their treatment assignment, and more importantly if we use a random sample which is representative of the population.
 
 :::{#exm-nonrandomtreatment}
 The [Agir cohort](https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html) offers a comprehensive experience for the first three trimesters of the bachelor in administration program. These students take the same exams as regular students, but their class average are higher in the mandatory statistics course. However, since participation in the program is reserved for students who postulated to be part of the cohort, and who must be team players who are autonomous and with a keen liking for inverse pedagogical teaching methods, no conclusion can be drawn. Indeed, it may be that the teaching method is well suited to them but not to general students, or their better grades may be due to the fact that the Agir students are more motivated or stronger in statistics to being with.
@@ -205,46 +220,49 @@ Controlling for a collider is counterproductive, as we would get erroneous concl
 
 ## Mediation
 
-In order to do inference and tests relations, we need to add to our logical causal model represented by a directed acyclic graph a data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won't be verifiable. 
-
-The following section is technical and may be omitted on a first reading.
+We need to add to our logical causal model represented by a directed acyclic graph data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won't be verifiable. 
 
 
-To define in full generality the treatment and mediation effect, we consider the potential outcome framework. Following @Pearl:2014, we use the notation $\text{do}(X=x)$ is used to denote experimental manipulation of $X$, to distinguish it from correlation in observational data. The potential outcome  for individual $i$ is $Y_i(x, m)$, with explanatory or experimental covariate/factor $x$ and mediator $m$. Likewise, $M_i(x)$ is the potential mediator when applying treatment level $x$.^[The notation is important to distinguish between association $Y \mid X$ when observing $X$ from experimental manipulations or interventions, $Y \mid \mathsf{do}(X)$ and counterfactuals $Y(X)$.] Value $x_0$ represents the baseline or control value for our experimental manipulation: typically, in binary treatments $X \in \{0,1\}$, with $X=x_0=0$ the control and $X=1$ for treatment.
+To define in full generality the treatment and mediation effect, we consider the potential outcome framework. Following @Pearl:2014, we use the notation $\text{do}(X=x)$ is used to denote experimental manipulation of $X$, to distinguish it from correlation in observational data. The resulting potential outcome for individual $i$ is $Y_i(x, m)$, with explanatory or experimental covariate/factor $x$ and mediator $m$. Likewise, $M_i(x)$ is the potential mediator when applying treatment level $x$.^[The notation is important to distinguish between association $Y \mid X$ when observing $X$ from experimental manipulations or interventions, $Y \mid \mathsf{do}(X)$ and counterfactuals $Y(X)$.] Value $x_0$ represents the baseline or control value for our experimental manipulation.
 
+:::{#def-ate}
 
-The **total effect** measures the  overall impact of changes in outcome $Y$ (both through $M$ and directly) when experimentally manipulating $X$,
-\begin{align*}\mathsf{TE}(x, x_0) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x_0)],
-\end{align*}
-where $x_0$ is the factor level of the reference or control and $x$ is another treatment value. This is what we retrieve if we randomize treatment $X$ assignment and consider the average change in average response.
+## Average total, conditional mediation and direct effects
 
-The **average controlled directed effect** measures the flow along $X \rightarrow Y$, disabling the pathway $X \to M \to Y$ by fixing the mediator value: it is
+For simplicity, we focus on binary treatment with $X_i \in \{0,1\}$, with $X_i=x_0=0$ the control and $X=1$ for treatment. Until now, we have considered experiments in which we randomly allocate participants to groups, so we recovered the overall effect of treatment abstracting from other variables. The following definitions are standard, e.g. @Robins.Greenland:1992, @Pearl:2014, @Imai:2010.
+
+The **average directed effect** measures the flow along $X \rightarrow Y$, disabling the pathway $X \to M \to Y$ by fixing the mediator value: it is
 \begin{align*}
-\textsf{CDE}(m, x, x_0) &= 
-\mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x_0, m=m)] \\&= \mathsf{E}\{Y(x,m) -Y(x_0, m)\}
+\mathsf{ADE}(x) &= 
+\mathsf{E}[Y_i \mid \text{do}\{X=1, M=M_i(x)\}] - \mathsf{E}[Y_i \mid \text{do}\{X=0, M=M_i(x)\}] \\&= \mathsf{E}[Y_i(1,M_i(x)) -Y_i(0, M_i(x))\}
 \end{align*}
-This measures the expected change in response when the experimental factor changes from $x$ to $x_0$ and the mediator is set to a fixed value $m$ uniformly over the population. The problem with this is that it requires manipulation of the mediator to a fixed value, but also gives us answers for a single value of the mediator.
+This measures the expected change in response when the experimental factor changes from treatment to control, while the mediator is set to a fixed value $M_i(x)$ uniformly over the population. Fixing the mediator, which may or not be feasible experimentally.
 
-The **natural direct effect**, 
+The **average causal mediation effect** (also called indirect effect), is the main quantity of interest in mediation analysis. It is obtained by looking at changes in the outcome for a fixed intervention due to changing the values of the mediator to those it would take under the treatment and control group, respectively $M_i(1)$ and $M_i(0)$.
 \begin{align*}
-\textsf{NDE}(x, x_0) = \mathsf{E}[Y\{x, M(x_0)\} - Y\{x_0,  M(x_0)\}],
+\mathsf{ACME}(x) &= 
+\mathsf{E}[Y_i \mid \text{do}\{X=x, M=M_i(1)\}] - \mathsf{E}[Y_i \mid \text{do}\{X=x, M=M_i(0)\}] \\&= \mathsf{E}[Y_i\{x, M_i(1)\} -Y_i\{x, M_i(0)\}]
 \end{align*}
-is the expected change in $Y$ under treatment $x$ if $M$ is set to whatever value it would take under control $x_0$.
 
-The **natural indirect effect** ($\mathsf{NIE}$) is the expected change in the response $Y$ if we set our experimental value $X$ to its control value $x_0$ and change the mediator value which it would attain under $x$,
+
+The **total effect** measures the average overall impact of changes in outcome $Y$ (both through $M$ and directly) when experimentally manipulating $X$,
 \begin{align*}
-\textsf{NIE}(x, x_0) = \mathsf{E}[Y\{x_0, M(x)\} - Y\{x_0,  M(x_0)\}]
+\mathsf{TE}_i &= \mathsf{E}[ Y_i \mid \text{do}(X=1)] - \mathsf{E}[ Y_i \mid \text{do}(X=0)]
+\\ &= \mathsf{E}[Y_i\{1, M(1)\}] - \mathsf{E}[Y_i\{0, M(0)\}],
 \end{align*}
+This is what we retrieve if we randomize treatment assignment and consider the average change in average response. The total effect is obtained as $\mathsf{TE} = \mathsf{ACME}(X) + \mathsf{ADE}(1-X)$ for $X=0,1.$ If there is no interaction between the treatment and the mediator, then the values of the average causal mediation effect and the average direct effect are the same regardless of the treatment assignment $x$.
 
+:::
 
+:::{#def-sutva}
 
-Armed with these definitions, we can consider the **sequential ignorability assumption** for mediation, which is decomposed into two components.
+## Sequential ignorability assumption for mediation
 
-The first component is: given pre-treatment covariates $Z$, treatment assignment is independent of potential outcomes for mediation and outcome,
+To draw valid conclusions and build suitable estimation procedures, we need an assumption which can be decomposed into two components. The first component is: given pre-treatment covariates $Z$, treatment assignment is independent of potential outcomes for mediation and outcome,
 \begin{align*}
 Y_i(x', m), M_i(x) {\perp\mkern-10mu\perp} X_i \mid \boldsymbol{Z}_i = \boldsymbol{z}.
 \end{align*}
-In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don't change.^[The dependence on $\boldsymbol{Z}$ is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known from each individual).]
+In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don't change.^[The dependence on $\boldsymbol{Z}$ is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known for each individual).]
 
 The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, mediation is independent of potential outcomes,
 \begin{align*}
@@ -252,10 +270,13 @@ Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, \boldsymbol{Z}_i = \boldsy
 \end{align*}
 The set of assumptions from @Imai:2010 and @Pearl:2014 are equivalent under randomization of treatment assignment, as we consider thereafter.
 
-The total effect can be written 
-$$\mathsf{TE}(x, x_0) = \mathsf{NDE}(x, x_0) - \mathsf{NIE}(x_0, x).$$
-In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as $\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}$ [@Pearl:2014]. 
+We assume also that any value of $X$ given covariates $\boldsymbol{Z}$ is possible (which is trivially satisfied when randomizing with equal probability), and that likewise any value of the mediator $M$ is possible for any combination of covariates $\boldsymbol{Z}$ and treatment assignement $X$.
 
+<!-- The total effect can be written  -->
+<!-- $$\mathsf{TE}(x, x_0) = \mathsf{NDE}(x, x_0) - \mathsf{NIE}(x_0, x).$$ -->
+<!-- In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as $\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}$ [@Pearl:2014].  -->
+
+:::
 
 
 :::{.callout-caution}
@@ -281,46 +302,37 @@ knitr::include_graphics("figures/xkcd2652_proxy_variable.png")
 
 One of the most popular model in social sciences is the linear mediation model, popularized by @Baron.Kenny:1986. Hayes' [PROCESS macros for SAS, SPSS and **R**](https://www.processmacro.org/index.html) have lead to the widespread adoption by researchers [@Preacher.Hayes:2004]. @Bullock.Green.Ha:2010 list limitations of the approach and provide examples in which the model does not have a meaningful causal interpretation.
 
-The linear mediation model assumes that the effect of mediation and treatment is additive and that the response measurement is continuous. Consider an experimental factor $X$ corresponding to treatments with control or reference $x_0$ and postulated mediator variable $M$, assumed continuous. Given **uncorrelated** unobserved noise variables $\varepsilon_M$ and $\varepsilon_Y$ and assumine there are, we specify linear regression models,
+The linear mediation model assumes that the effect of mediation and treatment is additive and that the response measurement is continuous. Consider an experimental factor $X$ corresponding to treatments with control or reference $x_0$ and postulated mediator variable $M$, assumed continuous. Given **uncorrelated** unobserved noise variables $\varepsilon_M$ and $\varepsilon_Y$, we specify linear regression models,
 \begin{align*}
 M \mid X=x &= c_M + \alpha x + \varepsilon_M,\\
 Y \mid X=x, M=m &=  c_Y + \beta x + \gamma m  + \varepsilon_Y
 \end{align*}
 where we use the contrasts parametrization, so that the reference category for the intercept corresponds to control (group $x_0$) and $x$ the other category of interest, with $\alpha$ capturing the difference between $x$ and $x_0$. The model for $Y \mid X, M$ should include additional covariates $\mathbf{z}$ to control for confounding between $M$ and $Y$ if the latter is suspected.
 
-The parameters can be interpreted as the direct ($\beta$), indirect ($\alpha \gamma$) and total ($\beta + \alpha \gamma$) effects. To see this, we plug the first equation in the second and obtain the marginal model for $Y$ given treatment $X$,
-\begin{align}
-Y \mid X=x &= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
-&= c_Y' + \tau x + \varepsilon_Y'
-\end{align}
-These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression.
+The average value for $M(1) = c_M + \alpha$ and that of $M(0)=c_M$. If we substitute the first equation in the second equation, we get that
+\begin{align*}
+\mathsf{ACME}(x) &= \mathsf{E}[Y\{x, M(1)\} -Y\{x, M(0)\}] = \alpha \gamma\\
+\mathsf{ADE}(x) &= \mathsf{E}[Y\{1, M(x)\} -Y\{0, M(x)\}] = \beta \\
+\mathsf{TE} &= \mathsf{E}[Y\{1, M(1)\} -Y\{0, M(0)\}] = \beta + \alpha \gamma
+\end{align*}
 
-The "sequential ignorability" assumption in the linear mediation models boils down to "no unmeasured confounders" in the relations $X \to Y$, $X \to M$ and $M \to Y$: the first two are satisfied in experimental studies due to randomization if we can manipulate $X$, as shown in @fig-dag1. This means $\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y$ must be independent and, as a result, error terms should also be uncorrelated.
+
+The parameters can be interpreted as the direct ($\beta$), conditional mediation effect ($\alpha \gamma$) and total ($\beta + \alpha \gamma$) effects. These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression.
+
+The "sequential ignorability" assumption in the linear mediation models boils down to "no unmeasured confounders" in the relations $X \to Y$, $X \to M$ and $M \to Y$: the first two are satisfied in experimental studies due to randomization if we can manipulate $X$, as shown in @fig-dag1. This means $\varepsilon_M$ and $\varepsilon_Y$ must be independent of one another and, as a result, error terms should also be uncorrelated.
 
 In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients $\alpha\gamma$. Absence of mediation implies the product is zero. @Baron.Kenny:1986 recommended using Sobel's test statistic, of the form
 \begin{align*}
 S  &= \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} \\&=  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}}
 \end{align*} 
-where $\widehat{\alpha}$, $\widehat{\gamma}$ and their variance $\mathsf{Va}(\widehat{\alpha})$ and $\mathsf{Va}(\widehat{\gamma})$ can be obtained from the estimated coefficients and standard errors.^[Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both $\alpha$ and $\gamma$ are non-zero (hence the tests!)] The Sobel's statistic $S$ is approximately standard normal in large samples, $S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)$, but the approximation is sometimes poor in small samples.
-
-In the linear mediation causal model, we can estimate the total causal effect of $X$, labelled $\tau$, by running the linear regression of $Y$ on $X$ as there is no confounding affecting treatment $X$ in a completely randomized experimental design. This strategy isn't valid with observational data unless we adjust for confounders. Assuming no unmeasured confounders and linearity, the product $\alpha\gamma$ is also equal to the difference between the total effect and the **natural direct effect**, $\tau - \beta$.
-
-@Baron.Kenny:1986 suggested for $X$ and $M$ continuous breaking down the task in three separate steps:
-
-1) fit a linear regression of $M$ on $X$ to estimate $\alpha$
-2) fit a linear regression of $Y$ on $X$ to estimate $\tau$
-3) fit a linear regression of $Y$ on $X$ and $M$ to estimate $\beta$ and $\gamma$.
-
-In the "@Baron.Kenny:1986 approach", we test $\mathscr{H}_0: \alpha=0$, $\mathscr{H}_0: \tau=0$ and $\mathscr{H}_0: \gamma=0$ against the two-sided alternative. This approach has caveats since mediation refers to the relation $X \to M \to Y$, so we only need to consider (joint tests of) $\alpha$ and $\gamma$ (the total effect could be zero because $\beta = -\alpha\gamma$ even if there is mediation). @Zhao.Lynch.Chen:2010 review the typology of mediation.
-
-1. complementary mediation when both direct and indirect effects are of the same sign and non-zero.
-2. competitive mediation when direct and indirect effects are of opposite signs.
-3. indirect-only mediation when the direct effect of $X \to Y$ is null, but the effect $X \to M \to Y$ isn't.
-
-Previous definitions popularized by @Baron.Kenny:1986 still found in old papers include "full mediation" for instances where $\beta=0$ and partial mediation if the direct effect is less than the total effect, meaning $\beta < \tau$.
+where $\widehat{\alpha}$, $\widehat{\gamma}$ and their variance $\mathsf{Va}(\widehat{\alpha})$ and $\mathsf{Va}(\widehat{\gamma})$ can be obtained from the estimated coefficients and standard errors.^[Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both $\alpha$ and $\gamma$ are non-zero (hence the tests!)] The Sobel's statistic $S$ is approximately standard normal in large samples, $S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)$, but the approximation is sometimes poor in small samples. Other test statistics are listed in @McKinnon:2002.
 
 
-To see this, let's generate data with a binary treatment and normally distributed mediators and response with no confounding (so the data generating process matches exactly the formulation fo Baron--Kenny. We set $\alpha=2$, $\beta = 1/2$ and $\gamma=0$. This is an instance where the null is true ($X$ affects both $M$ and $Y$).
+:::{#exm-sobel}
+
+## Null distribution of Sobel statistic
+
+To see this, let's generate data with a binary treatment and normally distributed mediators and response with no confounding, so that the data generating process matches exactly the formulation of Baron--Kenny. We set $\alpha=2$, $\beta = 1/2$ and $\gamma=0$. This is an instance where the null hypothesis is true ($X$ affects both $M$ and $Y$, but there is no mediation effect).
 
 
 ```{r}
@@ -372,14 +384,54 @@ ggplot(data = data.frame(stat = sobel_null[,2]),
   theme_classic()
 ```
 
-If we knew exactly the model that generated $X$, $M$, $Y$ and the relations between them, we could simulate multiple datasets like in @fig-sobelsimu with $n=20$ observations and compare the test statistic we obtained with the simulation-based null distribution with $\alpha\gamma=0$. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. An alternative is the bootstrap, a form of simulation-based inference. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See @Efron.Tibshirani:1993 and @Davison.Hinkley:1997 for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by @Preacher.Hayes:2004 consists in repeating the following $B$ times:
+If we knew exactly the model that generated $X$, $M$, $Y$ and the relations between them, we could simulate multiple datasets like in @fig-sobelsimu with $n=20$ observations and compare the test statistic we obtained with the simulation-based null distribution with $\alpha\gamma=0$. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. 
+
+:::
+
+
+In the linear mediation causal model, we can estimate the total causal effect of $X$, labelled $\tau$, by running the linear regression of $Y$ on $X$ as there is no confounding affecting treatment $X$ in a completely randomized experimental design. This strategy isn't valid with observational data unless we adjust for confounders. 
+
+
+:::{#rem-histnote}
+
+## Historical note on Baron and Kenny
+
+@Baron.Kenny:1986 suggested for $M$ and $Y$ continuous breaking down the task in three separate steps:
+
+1) fit a linear regression of $M$ on $X$ to estimate $\alpha$
+2) fit a linear regression of $Y$ on $X$ and $M$ to estimate $\beta$ and $\gamma$.
+3) fit a linear regression of $Y$ on $X$ to estimate $\tau$
+
+
+In the "@Baron.Kenny:1986 approach", we test $\mathscr{H}_0: \alpha=0$, $\mathscr{H}_0: \tau=0$ and $\mathscr{H}_0: \gamma=0$ against the two-sided alternative. This approach is somewhat flawed since mediation refers to the relation $X \to M \to Y$, so we only need to consider (joint tests of) $\alpha\gamma$ (the total effect could be zero because $\beta = -\alpha\gamma$ even if there is mediation). In practice, thus, we only need steps 1) and 2) and the models should include potential confounders of the pair $(M, Y)$. 
+
+:::
+
+:::{#def-typology}
+
+## Typology of mediation
+
+The following characterization was proposed by @Zhao.Lynch.Chen:2010:
+
+1. complementary mediation when both direct and indirect effects are of the same sign and non-zero.
+2. competitive mediation when direct and indirect effects are of opposite signs.
+3. indirect-only mediation when the direct effect of $X \to Y$ is null, but the effect $X \to M \to Y$ isn't.
+
+Previous definitions popularized by @Baron.Kenny:1986 still found in old papers include "full mediation" for instances where $\beta=0$ and partial mediation if the direct effect is less than the total effect, meaning $\beta < \tau$.
+
+:::
+
+### Nonparametric bootstrap
+
+An alternative for inference to large-sample approximations to the null distribution used as benchmark to establish whether a test statistic is 'large' is the bootstrap, a form of simulation-based inference [@Efron:1979]. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See @Efron.Tibshirani:1993 and @Davison.Hinkley:1997 for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by @Preacher.Hayes:2004 consists in repeating the following $B$ times:
 
 1) sample $n$ observations **with replacement**, i.e., a tuple ($X_i, M_i, Y_i)$, from the original data .
 2) compute the natural indirect effect $\widehat{\alpha}\cdot\widehat{\gamma}$ on each simulated sample
 
+There are different approaches to computing confidence intervals, but the simplest is the **percentile method**. 
 For a two-sided test at level $\alpha$, compute the $\alpha/2$ and $1-\alpha/2$ quantiles of the bootstrap statistics $\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B$. For example, if the level is $\alpha=5$% and we generate $B=1000$ bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.
 
-Nowadays, the asymptotic approximation (sometimes misnamed delta method^[The latter is the name of the method used to derive the denominator of Sobel's statistic.]) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method. 
+Nowadays, the asymptotic approximation (sometimes misnamed delta method^[The latter is the name of the method used to derive the denominator of Sobel's statistic.]) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.  
 
 
 ```{r}
@@ -452,9 +504,8 @@ ggplot() +
 
 The nonparametric percentile bootstrap confidence interval for $\alpha\gamma$ is $[`r round(conf_interv[1], 2)`, `r round(conf_interv[2], 2)`]$ and thus `r ifelse(conf_interv[1] > 0 | conf_interv[2] < 0, "we reject", "we fail to reject")` the null hypothesis  $\mathscr{H}_0: \alpha \gamma=0$.
 
-The inference scheme is popular, but we could also rely on different models and use the definitions of the causal effects to perform simulation-based inference; see Appendix D of @Imai:2010. The latter fit two models for the mediator and the outcome, then estimate parameters. In large samples, the parameter estimators are approximately multivariate Gaussian and we can simulate parameters, use the parametric model to generate new data and potential outcomes. The average causal mediation effect can be estimated empirically based on the simulated potential outcomes.
 
-### Model assumptions
+## Model assumptions
 
 We can unpack the model assumptions for the linear mediation model.
 
@@ -481,7 +532,7 @@ Another problem would be to claim that variable $M$ is a mediator when in truth 
 knitr::include_graphics("figures/dag2.png")
 ```
 
-2. The **linearity assumption** implies that the linear models are correctly specified and that the effect of the covariates are linear. This means that, *ceteris paribus*, the effect of an increase of one unit of $M$ on $Y$ is the same regardless of the value of $M$. It also doesn't depend on the level of other variables (no interaction). If the model isn't properly specified, the linear model coefficients will capture the best linear predictor given the design and the coefficients may not be meaningful.
+2. The **linearity assumption** implies that the linear models are correctly specified and that the effect of the covariates are linear. This means that, *ceteris paribus*, the effect of an increase of one unit of $M$ on $Y$ is the same regardless of the value of $M$. It also doesn't depend on the level of other variables (no interaction). If the model isn't properly specified, the linear model coefficients will capture the best linear predictor given the design and the coefficients may not be meaningful. There must thus be no interaction between treatment and the mediator; see @def-moderated-mediation for the relaxation.
 
 The linearity assumption also implies that the effect is the same for every individual, so there is no treatment heterogeneity or measurement error which could lead to attenuation bias.
 
@@ -492,9 +543,40 @@ Y_i \mid X_i=x, M_i=m &=  c_Y + \beta_i x + \gamma_i m + \varepsilon_{Y,i}
 \end{align*}
 If $\alpha_i$ differ from one observation to the next, the average estimated by the regression could be positive, negative or null. Even in the latter case, we could have $\gamma_i$ and $\alpha_i$ positive for some observation, or both negatives so that they cancel out even if there is complementary mediation.
 
-We could easily expand the model to include nonlinear effects (not for the treatment or mediator) and potential interactions, but the linear model approach remains intrinsically of limited applicability. @Imai:2010 details a more general approach for parametric models based on simulations, as well as a nonparametric approach. Both are less restrictive than the @Baron.Kenny:1986 model.
 
 The main benefit of experimental designs is that it remove confounding in the relationship between treatment and other variables. Adding spurious variables could create feedback (if some of those variables are colliders) and lead to inconsistent conclusions. It's not clear that the mediator can be manipulated experimentally, and even if it could be to estimate the $\gamma$, one must make sure the relation is the same absent of $X$. For example, we could estimate the indirect effect term by manipulating jointly (if possible) ($X, M$) but even then the linearity assumption must hold for the estimates to correspond to our linear causal mediation model. 
+
+
+### Sensitivity analysis
+
+The no-unmeasured confounders assumption should be challenged. One way to assess the robustness of the conclusions to this is to consider correlation between errors, as in @Bullock.Green.Ha:2010. Indeed, one can show that the average parameter in the equation for the response of the linear mediation model satisfies 
+\begin{align*}
+\mathsf{E}(\widehat{\gamma})= \gamma + \frac{\mathsf{Cov}(\varepsilon_m, \varepsilon_y)}{\mathsf{Va}(\varepsilon_m)},
+\end{align*}
+which introduces bias in the $\mathsf{ACME}(x)$. Even if the true covariance is unknown, we can vary $\rho=\mathsf{Cor}(\varepsilon_m, \varepsilon_y)$ to assess the sensitivity of our conclusions to confounding. 
+The `medsens` function in the **R** package `mediation` implements the diagnostic of @Imai:2010 for the linear mediation model.
+
+
+:::{#def-moderated-mediation}
+
+## Moderated mediation
+
+We consider a more complex setting where the effect of the experimental factor $X$ depends on the mediator, a case termed **moderated mediator** [@Judd.Kenny:1981].
+
+In this case, the equation for the response variable becomes
+\begin{align*}
+\mathsf{E}(Y \mid M=m, X=x, \boldsymbol{Z} = \boldsymbol{z}) = c_Y + \beta x + \gamma m + \kappa x m + \boldsymbol{z}\boldsymbol{\omega}
+\end{align*}
+Upon substituting the equations for both inside the definition of average causal mediation effect, we find that the latter equals
+\begin{align*}
+\mathsf{ACME}(x) = (\gamma + \kappa x)\{M(1)-M(0)\} = \alpha (\gamma + \kappa x).
+\end{align*}
+and thus the value differs depending on experimental regime (treatment or control), due to the presence of the interaction.
+Both the average direct and total effects now depend on the theoretical average values of the covariates $\boldsymbol{Z}$ added to the model to control for confounding.
+
+:::
+
+
 
 :::{#exm-inconsistency}
 
@@ -511,6 +593,8 @@ Familiarity with the product brand and product is included as covariate in both 
 #| message: false
 #| warning: false
 data(LC19_S2, package = "hecedsm")
+LC19_S2 <- LC19_S2 |> # transform consistency into 
+ dplyr::mutate(consistency = ifelse(consistency == "inconsistent", 0, 1))
 YsMX <- lm(prodeval ~ fluency + consistency + familiarity,
            data = LC19_S2)
 MsX <- lm(fluency ~ consistency + familiarity,
@@ -519,19 +603,22 @@ MsX <- lm(fluency ~ consistency + familiarity,
 
 ```{r}
 #| label: tbl-coefsmediation
-#| tbl-cap: "Coefficients of the mediation (left) and outcome (right) models."
+#| tbl-cap: "Model coefficients"
+#| tbl-subcap: ["mediation","outcome"]
 #| eval: true
 #| echo: false
 #| cache: true
 #| message: false
 #| warning: false
+#| layout-ncol: 2
 coefs1 <- summary(YsMX) |> broom::tidy() 
 coefs1$term[3] <- c("consistency")
 coefs2 <- summary(MsX) |> broom::tidy()
 coefs2$term[2] <- c("consistency")
 kab1 <- knitr::kable(coefs1[,1:3], digits = 2, booktabs = TRUE)
 kab2 <- knitr::kable(coefs2[,1:3], digits = 2, booktabs = TRUE)
-knitr::kables(x = list(kab2, kab1))
+kab2
+kab1
 ```
 
 We can extract the effects directly from the outcome: the natural indirect effect estimate is $\widehat{\alpha}\widehat{\gamma} = 0.48 \times 0.60$ and the direct effect is $\widehat{\beta} = 0.29$.
@@ -552,16 +639,26 @@ linmed <- mediate(
   mediator = "fluency",
   sims = 5000L,
   boot = TRUE,
-  boot.ci.type = "bca", # bias-corrected and accelerated intervals
-  control.value = "inconsistent",
-  treat.value = "consistent")
+  boot.ci.type = "perc", # percentile method
+## with original factor, we could specify the levels for control and treatment
+#  control.value = "inconsistent", 
+#  treat.value = "consistent"
+)
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-effect-LC19
+#| fig-cap: "Causal effects and confidence intervals for the difference between inconsistency (control) and consistency (treatement)."
+plot(linmed)
 ```
 
 ```{r}
 #| label: tbl-mediation
 #| eval: true
 #| echo: false
-#| tbl-cap: "Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% confidence intervals and p-values with bias-corrected and accelerated confidence intervals based on 5000 bootstrap samples."
+#| tbl-cap: "Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% percentile confidence intervals and p-values based on 5000 bootstrap samples."
 x <- summary(linmed)
 smat <- c(x$d1, x$d1.ci, x$d1.p)
 smat <- rbind(smat, c(x$z0, x$z0.ci, x$z0.p))
@@ -575,10 +672,44 @@ knitr::kable(smat,
              digits = 3,
              booktabs = TRUE) |>
   kableExtra::kable_styling()
-
 ```
 
-Using the `summary` method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article.
+Using the `summary` method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article. We can also use the `medsens` function to perform the sensitivity analysis, but this only works for binary (numerical) treatments.
+
+```{r}
+#| eval: true
+#| echo: true
+#| label: fig-sensitivity
+#| fig-align: 'center'
+#| fig-cap: "Sensitivity analysis showing the variation of the average causal mediation effect as a function of the correlation between outcome and mediation errors, with pointwise 95% confidence intervals."
+plot(mediation::medsens(x = linmed))
+```
+
 
 :::
+
+
+## General average causal mediation effect estimation
+
+The linear mediation model is popular, but is limited to the case with no interaction, continuous mediators, constant (i.e., linear) treatment effect, and continuous response. It also hides model assumptions.
+
+We could also rely on different models and use the definitions of the causal effects to perform simulation-based inference; see Appendix D of @Imai:2010. The average causal mediation effect can be estimated empirically based on the simulated potential outcomes. Using @def-ate, the method of @Imai:2010 relies on Monte Carlo simulations.
+
+1. **Modelling**. Specify models to each relationship
+   a. a mediator model $f_M(x, \boldsymbol{z}; \boldsymbol{\theta}_M)$ that includes $X$ and potential confounders $\boldsymbol{Z}$
+   b. an outcome model $f_Y(x, m, \boldsymbol{z}; \boldsymbol{\theta}_Y)$ with both treatment indicator $X$, mediator $M$^[Optionally, add their interaction $X:M$ in case of moderated mediation.] and potential confounders $\boldsymbol{Z}$.
+2. **Estimation uncertainty**: Either use nonparametric bootstrap or a large-sample approximation to the distribution of model parameters $\boldsymbol{\theta}_M$ and $\boldsymbol{Y}$ to get $J$ copies.
+3. For each copy of the parameters $j=1, \ldots, J$, draw $M$ realizations of the mediation model for each observation $i=1, \ldots, n$, giving $M^{(jm)}_i(1)$ and $M^{(jm)}_i(0)$. Use these resulting to obtain one draw from the outcome model for each of  
+    a. $Y_{i}^{(jm)}\{0, M^{(jm)}_i(0)\}$,
+    b. $Y_{i}^{(jm)}\{0, M^{(jm)}_i(1)\}$, 
+    c. $Y_{i}^{(jm)}\{1, M^{(jm)}_i(0)\}$ and 
+    d. $Y_{i}^{(jm)}\{1, M^{(jm)}_i(1)\}$.
+4. Plug these quantities in the definitions of $\mathsf{ACME}(x)$, $\mathsf{ADE}(x)$ and $\mathsf{TE}$, averaging over the $nM$ replications, over both observations $i=1, \ldots, n$ and replications $m=1, \ldots, M$. This yields a collection of $J$ values $\mathsf{ACME}_j(x)$, $\mathsf{ADE}_j(x)$ and $\mathsf{TE}_j$ for each parameter value.
+5. Use the $J$ replications to compute a 95% percentile interval and return the sample means over $J$ for the average causal effects.
+
+The benefit of this method is that it naturally account for nonlinear effects, different natures of the mediator (binary, categorical, etc.) and the response, through suitable models, e.g., a logistic regression for a binary outcome. With repeated measures, one could also consider interactions between individuals and mediator using random effects, and still retrieve an effect. The framework easily handles interactions between $X:M$ added to the outcome model, in which case we get different values of average causal mediation effect and average direct effect for each value of $X$.
+
+
+
+
 

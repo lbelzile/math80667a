@@ -73,7 +73,7 @@ We call numerical summaries of the data **statistics**. Its important to disting
 
 ```{r}
 #| label: fig-cake
-#| out-width: '33%'
+#| out-width: '100%'
 #| fig-cap: "[Estimand](https://www.flickr.com/photos/darkdwarf/16563489881) (left), estimator (middle) and [estimate](https://www.flickr.com/photos/bensutherland/14685548773) (right) illustrated with cakes and based on an original idea of Simon Grund. Cake photos shared under [CC BY-NC 2.0 license](https://creativecommons.org/licenses/by-nc/2.0/)."
 #| fig-subcap: 
 #|  - "Estimand"

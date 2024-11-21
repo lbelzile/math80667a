@@ -333,6 +333,8 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
@@ -365,7 +367,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-10-31}
+\date{2024-11-21}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -407,7 +409,7 @@ details.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on jeudi, octobre 31 2024.
+and were last compiled on jeudi, novembre 21 2024.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -445,7 +447,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -565,7 +567,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -606,7 +608,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -625,7 +627,7 @@ found no evidence of a negative impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -641,8 +643,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -796,7 +798,7 @@ limit theorem.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -863,7 +865,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -907,7 +909,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -938,7 +940,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -995,7 +997,7 @@ for the stratified sample.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1375,7 +1377,7 @@ license}.}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -1411,7 +1413,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \textbf{Learning objectives}:
 
@@ -1548,7 +1550,7 @@ In other words,
 
 \centering{
 
-\includegraphics[width=0.33\textwidth,height=\textheight]{figures/estimand.jpg}
+\includegraphics[width=1\textwidth,height=\textheight]{figures/estimand.jpg}
 
 }
 
@@ -1560,7 +1562,7 @@ In other words,
 
 \centering{
 
-\includegraphics[width=0.33\textwidth,height=\textheight]{figures/estimator.jpg}
+\includegraphics[width=1\textwidth,height=\textheight]{figures/estimator.jpg}
 
 }
 
@@ -1572,7 +1574,7 @@ In other words,
 
 \centering{
 
-\includegraphics[width=0.33\textwidth,height=\textheight]{figures/estimate.jpg}
+\includegraphics[width=1\textwidth,height=\textheight]{figures/estimate.jpg}
 
 }
 
@@ -2135,7 +2137,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2378,7 +2380,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2567,7 +2569,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -3560,7 +3562,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \textbf{Learning objectives}:
 
@@ -5416,7 +5418,7 @@ We can then pass the output to \texttt{car::Anova} to print the analysis
 of variance table. The \(p\)-value for the main effect of
 \texttt{anchor} is 0.014 in the equal variance model. With unequal
 variance, different tests give different values: the \(p\)-value is
-0.009 if we use type II effects (the correct choice here), 0.012 with
+0.009 if we use type II effects (the correct choice here), 0.035 with
 type III effects\footnote{The type 3 effects compare the model with
   interactions and main effects to one that includes the interaction,
   but removes the main effects. Not of interest in the present context.}
@@ -5534,7 +5536,7 @@ of variance or unbalanced effects, the actual method employed is called
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -6277,7 +6279,7 @@ acuity levels.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -6799,6 +6801,13 @@ assessed, for the ability to service debt and that to improve
 profitability. We first load the data from the package and inspect the
 content.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(AVC02, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\FunctionTok{str}\NormalTok{(AVC02)}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 tibble [132 x 4] (S3: tbl_df/tbl/data.frame)
  $ format       : Factor w/ 3 levels "integrated note",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -6806,6 +6815,12 @@ tibble [132 x 4] (S3: tbl_df/tbl/data.frame)
  $ debt         : int [1:132] 3 4 1 4 3 3 3 5 2 2 ...
  $ profitability: int [1:132] 3 2 2 5 2 2 2 3 2 3 ...
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{xtabs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ format, }\AttributeTok{data =}\NormalTok{ AVC02)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 format
@@ -6820,6 +6835,14 @@ sum-to-zero constraints to get sensible outputs. After this is done, we
 can fit the multivariate linear model with \texttt{lm} by binding
 columns on the left of the \texttt{\textasciitilde{}} sign to gather the
 response vectors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{contrasts =} \FunctionTok{c}\NormalTok{(}\StringTok{"contr.sum"}\NormalTok{, }\StringTok{"contr.poly"}\NormalTok{))}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(prime, debt, profitability) }\SpecialCharTok{\textasciitilde{}}\NormalTok{ format, }
+            \AttributeTok{data =}\NormalTok{ AVC02)}
+\end{Highlighting}
+\end{Shaded}
 
 We can check the residual correlation matrix to see if there was a
 strong dependence between our measurements. The benefit of MANOVA is to
@@ -6841,6 +6864,12 @@ profitability -0.54  0.65          1.00
 We can look at the global mean for each variable and the estimated mean
 differences for all groups, including the reference which is omitted.
 It's easy to see that the mean differences sum to zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dummy.coef}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 Full coefficients are 
@@ -6872,6 +6901,12 @@ is \texttt{Pillai}, which is more robust to departures from the model
 hypothesis, but \texttt{Wilks} is also popular choice among
 practitioners.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{car}\SpecialCharTok{::}\FunctionTok{Manova}\NormalTok{(model, }\AttributeTok{test =} \StringTok{"Pillai"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 
 Type II MANOVA Tests: Pillai test statistic
@@ -6884,6 +6919,12 @@ correspondance with the \(F\) distribution, and also the individual
 effect size variable per variable. Here, the values returned are partial
 \(\widehat{\eta}^2\) measures.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(car}\SpecialCharTok{::}\FunctionTok{Manova}\NormalTok{(model))}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 # Effect Size for ANOVA (Type II)
 
@@ -6893,6 +6934,13 @@ format    |           0.01 | [0.00, 1.00]
 
 - One-sided CIs: upper bound fixed at [1.00].
 \end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Since it\textquotesingle{}s a one{-}way between{-}subject MANOVA, no partial measure}
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(model, }\AttributeTok{partial =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 # Effect Size for ANOVA (Type I)
@@ -6909,6 +6957,13 @@ comparisons. To fit the model using the \texttt{lda} function from the
 \texttt{MASS} package, we swap the role of the experimental factor and
 responses in the formula. The output shows the weights for the linear
 combinations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MASS}\SpecialCharTok{::}\FunctionTok{lda}\NormalTok{(format }\SpecialCharTok{\textasciitilde{}}\NormalTok{ prime }\SpecialCharTok{+}\NormalTok{ debt }\SpecialCharTok{+}\NormalTok{ profitability,}
+          \AttributeTok{data =}\NormalTok{ AVC02)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 Call:
@@ -6946,6 +7001,14 @@ unfortunately is very sensitive to departure from the multivariate
 normality assumption, so sometimes rejections are simply due to false
 positive.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{with}\NormalTok{(AVC02,}
+\NormalTok{biotools}\SpecialCharTok{::}\FunctionTok{boxM}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(prime, debt, profitability),}
+               \AttributeTok{grouping =}\NormalTok{ format))}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
 
     Box's M-test for Homogeneity of Covariance Matrices
@@ -6971,6 +7034,12 @@ group have the same mean. To get this, we detrend using multivariate
 linear model by subtracting the mean of each group. Thus, our input is
 the matrix of residuals, which must be transposed for the function to
 work.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mvnormtest}\SpecialCharTok{::}\FunctionTok{mshapiro.test}\NormalTok{(}\AttributeTok{U =} \FunctionTok{t}\NormalTok{(}\FunctionTok{resid}\NormalTok{(model)))}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
 
@@ -7696,7 +7765,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Stekelenburg et al. (2021) split their data to do pairwise comparisons
 two at the time (thus taking roughly two-third of the data to perform a
@@ -7715,7 +7784,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -7888,7 +7957,7 @@ with external variables, leading to moderated mediation. Interactions
 can be considered for pretty much any statistical model, but the usual
 assumptions need to hold for inference to be approximately valid.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -8170,20 +8239,55 @@ ranging from 0 to 56.
 \NormalTok{dfs }\OtherTok{\textless{}{-}}\NormalTok{ anova\_table}\SpecialCharTok{$}\NormalTok{df}
 \CommentTok{\# Output estimated value of eta{-}squared}
 \NormalTok{(eta\_sq }\OtherTok{\textless{}{-}}\NormalTok{ Fstat }\SpecialCharTok{*}\NormalTok{ dfs[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (Fstat }\SpecialCharTok{*}\NormalTok{ dfs[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ dfs[}\DecValTok{2}\NormalTok{]))}
-\CommentTok{\#\textgreater{} [1] 0.125}
-\CommentTok{\# Compare with coefficient of determination from regression}
-\FunctionTok{summary}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{r.squared}
-\CommentTok{\#\textgreater{} [1] 0.125}
-\CommentTok{\# Compare with output from R package \textquotesingle{}effectsize\textquotesingle{}}
-\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(mod\_post, }\AttributeTok{partial =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Eta2}
-\CommentTok{\#\textgreater{} [1] 0.125}
-\CommentTok{\# Compare with omega{-}squared value {-} the latter is smaller}
-\NormalTok{(omega\_sq }\OtherTok{\textless{}{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, dfs[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{(Fstat}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{ (dfs[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{(Fstat}\DecValTok{{-}1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{nobs}\NormalTok{(mod\_post))))}
-\CommentTok{\#\textgreater{} [1] 0.0954}
-\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{omega\_squared}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{Omega2}
-\CommentTok{\#\textgreater{} [1] 0.0954}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 0.1245399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare with coefficient of determination from regression}
+\FunctionTok{summary}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{r.squared}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1245399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare with output from R package \textquotesingle{}effectsize\textquotesingle{}}
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(mod\_post, }\AttributeTok{partial =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Eta2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1245399
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Compare with omega{-}squared value {-} the latter is smaller}
+\NormalTok{(omega\_sq }\OtherTok{\textless{}{-}} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, dfs[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{(Fstat}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{ (dfs[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{*}\NormalTok{(Fstat}\DecValTok{{-}1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{nobs}\NormalTok{(mod\_post))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.0954215
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{omega\_squared}\NormalTok{(mod\_post)}\SpecialCharTok{$}\NormalTok{Omega2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.0954215
+\end{verbatim}
 
 We can also compute effect size for contrasts. Since these take
 individual the form of \(t\)-tests, we can use \texttt{emmeans} to
@@ -8196,13 +8300,16 @@ obtain corresponding effect sizes, which are Cohen's \(d\).
                          \AttributeTok{C2 =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{))) }\SpecialCharTok{|\textgreater{}}
 \CommentTok{\# Specify estimated std. deviation of data and degrees of freedom }
 \NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{eff\_size}\NormalTok{(}\AttributeTok{sigma =} \FunctionTok{sigma}\NormalTok{(mod\_post), }\AttributeTok{edf =}\NormalTok{ dfs[}\DecValTok{2}\NormalTok{])}
-\CommentTok{\#\textgreater{}  contrast effect.size  SE df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  C1 {-} C2        0.317 0.4 63   {-}0.482     1.12}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} sigma used for effect sizes: 6.314 }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+ contrast effect.size  SE df lower.CL upper.CL
+ C1 - C2        0.317 0.4 63   -0.482     1.12
+
+sigma used for effect sizes: 6.314 
+Confidence level used: 0.95 
+\end{verbatim}
 
 \end{example}
 
@@ -8281,19 +8388,30 @@ again, the output matches the output of the package.
 \CommentTok{\# Compute the generalized effect size {-} variance are estimated}
 \CommentTok{\# based on sum of squared termes in the ANOVA table}
 \FunctionTok{with}\NormalTok{(anova\_tab, sumsq[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(sumsq))}
-\CommentTok{\#\textgreater{} [1] 0.088}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.08802785
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# We can use the \textquotesingle{}effectsize\textquotesingle{} package, specifying the blocking factor}
 \CommentTok{\# through argument \textquotesingle{}generalized\textquotesingle{}}
 \NormalTok{eff }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta\_squared}\NormalTok{(}\AttributeTok{model =}\NormalTok{ mod\_block, }\AttributeTok{generalized =} \StringTok{"dyad"}\NormalTok{)}
 \CommentTok{\# Extract the generalized eta{-}squared effect size for \textquotesingle{}role\textquotesingle{} for comparison}
 \NormalTok{eff}\SpecialCharTok{$}\NormalTok{Eta2\_generalized[}\DecValTok{1}\NormalTok{]}
-\CommentTok{\#\textgreater{} [1] 0.088}
 \end{Highlighting}
 \end{Shaded}
 
+\begin{verbatim}
+[1] 0.08802785
+\end{verbatim}
+
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Measures of effect size are estimated based on data, but unlike summary
 statistics such as the mean and variance, tend to be very noisy in small
@@ -8316,7 +8434,7 @@ centered at the true value, most of them are severely inflated.
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-effectsizedispersion-1.pdf}
+\includegraphics{power_effect_files/figure-pdf/fig-effectsizedispersion-1.pdf}
 
 }
 
@@ -8662,12 +8780,23 @@ should we wish to replicate both findings.
 \NormalTok{f }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta2\_to\_f}\NormalTok{(}\FloatTok{0.55}\NormalTok{) }\CommentTok{\# convert eta{-}squared to Cohen\textquotesingle{}s f}
 \NormalTok{ng }\OtherTok{\textless{}{-}} \DecValTok{4} \CommentTok{\# number of groups for the ANOVA}
 \FunctionTok{ceiling}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.kanova}\NormalTok{(}\AttributeTok{ndf =} \DecValTok{1}\NormalTok{, }\AttributeTok{ng =}\NormalTok{ ng, }\AttributeTok{f =}\NormalTok{ f, }\AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n)}
-\CommentTok{\#\textgreater{} [1] 14}
-\NormalTok{f }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta2\_to\_f}\NormalTok{(}\FloatTok{0.11}\NormalTok{)}
-\FunctionTok{ceiling}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.kanova}\NormalTok{(}\AttributeTok{ndf =} \DecValTok{1}\NormalTok{, }\AttributeTok{ng =}\NormalTok{ ng, }\AttributeTok{f =}\NormalTok{ f, }\AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n)}
-\CommentTok{\#\textgreater{} [1] 108}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OtherTok{\textless{}{-}}\NormalTok{ effectsize}\SpecialCharTok{::}\FunctionTok{eta2\_to\_f}\NormalTok{(}\FloatTok{0.11}\NormalTok{)}
+\FunctionTok{ceiling}\NormalTok{(WebPower}\SpecialCharTok{::}\FunctionTok{wp.kanova}\NormalTok{(}\AttributeTok{ndf =} \DecValTok{1}\NormalTok{, }\AttributeTok{ng =}\NormalTok{ ng, }\AttributeTok{f =}\NormalTok{ f, }\AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 108
+\end{verbatim}
 
 We can see that the numbers match the calculations from the replication
 (up to rounding).
@@ -8722,9 +8851,12 @@ there is a significant decrease in the sample size.
                            \AttributeTok{ng =} \DecValTok{2}\NormalTok{, }\CommentTok{\# number of groups for between,}
                            \AttributeTok{f =}\NormalTok{ f}\SpecialCharTok{*}\FunctionTok{sqrt}\NormalTok{(K}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{rho)), }\CommentTok{\# scaled effect size}
                            \AttributeTok{power =} \FloatTok{0.9}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n) }\CommentTok{\# requested power}
-\CommentTok{\#\textgreater{} [1] 102}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 102
+\end{verbatim}
 
 \begin{figure}[ht!]
 
@@ -8744,7 +8876,7 @@ the sample size to replicate the interaction in a repeated measures
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-rmanova-1.pdf}
+\includegraphics{power_effect_files/figure-pdf/fig-rmanova-1.pdf}
 
 }
 
@@ -8780,9 +8912,12 @@ the number reported.
   \AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{,}
   \AttributeTok{d =} \FloatTok{0.451}\NormalTok{, }\CommentTok{\# Cohen\textquotesingle{}s f}
   \AttributeTok{power =} \FloatTok{0.95}\NormalTok{)}\SpecialCharTok{$}\NormalTok{n) }\CommentTok{\# power requirement}
-\CommentTok{\#\textgreater{} [1] 258}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 258
+\end{verbatim}
 
 The function also allows us to figure out the effect size one could
 obtain for given power and fixed sample size, by replacing \texttt{d}
@@ -8966,13 +9101,13 @@ participants in each group, for a total of 100 if we do a pairwise
 comparison using a two-sample \(t\)-test.
 
 \begin{verbatim}
-#> Two-sample t-test
-#> 
-#>        n    d alpha power
-#>     49.5 0.87  0.05  0.99
-#> 
-#> NOTE: n is number in *each* group
-#> URL: http://psychstat.org/ttest
+Two-sample t-test
+
+           n    d alpha power
+    49.53039 0.87  0.05  0.99
+
+NOTE: n is number in *each* group
+URL: http://psychstat.org/ttest
 \end{verbatim}
 
 The \texttt{effectsize} package includes many functions to convert \(F\)
@@ -9017,6 +9152,13 @@ importance to pass the correct arguments and to use the mean-to-zero
 parametrization in order to get sensible results. The package warns
 users about this.
 
+\begin{verbatim}
+Type 3 ANOVAs only give sensible and informative results when covariates
+  are mean-centered and factors are coded with orthogonal contrasts (such
+  as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but
+  *not* by the default `contr.treatment`).
+\end{verbatim}
+
 The estimated effect size for the main effect of \texttt{direction} is
 negative with \(\widehat{\omega}^2_{\langle \text{direction}\rangle}\):
 either reporting a negative value or zero. This reflects that the
@@ -9057,13 +9199,13 @@ large. Because studies in the literature have inflated effect size, the
 power measures are more often than not misleading.
 
 \begin{verbatim}
-#> Multiple way ANOVA analysis
-#> 
-#>       n ndf ddf     f ng alpha power
-#>     202   3 194 0.476  8  0.05     1
-#> 
-#> NOTE: Sample size is the total sample size
-#> URL: http://psychstat.org/kanova
+Multiple way ANOVA analysis
+
+      n ndf ddf         f ng alpha     power
+    202   3 194 0.4764222  8  0.05 0.9999821
+
+NOTE: Sample size is the total sample size
+URL: http://psychstat.org/kanova
 \end{verbatim}
 
 Here, the interaction is unusually strong (a fifth of the variance is
@@ -9078,20 +9220,30 @@ on the design or function, this number may be the overall sample size or
 the sample size per group.
 
 \begin{verbatim}
-#> Multiple way ANOVA analysis
-#> 
-#>       n ndf  ddf     f ng alpha power
-#>     108   3 99.8 0.476  8  0.05  0.99
-#> 
-#> NOTE: Sample size is the total sample size
-#> URL: http://psychstat.org/kanova
-#> Multiple way ANOVA analysis
-#> 
-#>        n ndf  ddf     f ng alpha power
-#>     97.6   3 89.6 0.502  8  0.05  0.99
-#> 
-#> NOTE: Sample size is the total sample size
-#> URL: http://psychstat.org/kanova
+Type 3 ANOVAs only give sensible and informative results when covariates
+  are mean-centered and factors are coded with orthogonal contrasts (such
+  as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but
+  *not* by the default `contr.treatment`).
+\end{verbatim}
+
+\begin{verbatim}
+Multiple way ANOVA analysis
+
+        n ndf      ddf         f ng alpha power
+    107.8   3 99.80004 0.4764222  8  0.05  0.99
+
+NOTE: Sample size is the total sample size
+URL: http://psychstat.org/kanova
+\end{verbatim}
+
+\begin{verbatim}
+Multiple way ANOVA analysis
+
+           n ndf      ddf         f ng alpha power
+    97.61394   3 89.61394 0.5017988  8  0.05  0.99
+
+NOTE: Sample size is the total sample size
+URL: http://psychstat.org/kanova
 \end{verbatim}
 
 The total sample size using \(\widehat{\omega}^2\) is 108, whereas using
@@ -9137,27 +9289,33 @@ is a worst-case scenario: in practice, more correlation leads to reduced
 sample size requirements.
 
 \begin{verbatim}
-#> Repeated-measures ANOVA analysis
-#> 
-#>        n     f ng nm nscor alpha power
-#>     76.5 0.324  2  2     1  0.05   0.8
-#> 
-#> NOTE: Power analysis for interaction-effect test
-#> URL: http://psychstat.org/rmanova
-#> Repeated-measures ANOVA analysis
-#> 
-#>       n     f ng nm nscor alpha power
-#>     102 0.324  2  2     1  0.05   0.9
-#> 
-#> NOTE: Power analysis for interaction-effect test
-#> URL: http://psychstat.org/rmanova
-#> Repeated-measures ANOVA analysis
-#> 
-#>       n     f ng nm nscor alpha power
-#>     125 0.324  2  2     1  0.05  0.95
-#> 
-#> NOTE: Power analysis for interaction-effect test
-#> URL: http://psychstat.org/rmanova
+Repeated-measures ANOVA analysis
+
+           n         f ng nm nscor alpha power
+    76.53314 0.3244428  2  2     1  0.05   0.8
+
+NOTE: Power analysis for interaction-effect test
+URL: http://psychstat.org/rmanova
+\end{verbatim}
+
+\begin{verbatim}
+Repeated-measures ANOVA analysis
+
+           n         f ng nm nscor alpha power
+    101.7801 0.3244428  2  2     1  0.05   0.9
+
+NOTE: Power analysis for interaction-effect test
+URL: http://psychstat.org/rmanova
+\end{verbatim}
+
+\begin{verbatim}
+Repeated-measures ANOVA analysis
+
+           n         f ng nm nscor alpha power
+    125.4038 0.3244428  2  2     1  0.05  0.95
+
+NOTE: Power analysis for interaction-effect test
+URL: http://psychstat.org/rmanova
 \end{verbatim}
 
 Consider next a similar calculation for a repeated measure design:
@@ -9186,22 +9344,25 @@ number of measurements, but we can still compute the power for a given
 sample size.
 
 \begin{verbatim}
-#> Repeated-measures ANOVA analysis
-#> 
-#>     n    f ng nm nscor alpha power
-#>     3 2.76  1  6     1  0.05 0.823
-#>     4 2.76  1  6     1  0.05 0.963
-#> 
-#> NOTE: Power analysis for within-effect test
-#> URL: http://psychstat.org/rmanova
-#> Repeated-measures ANOVA analysis
-#> 
-#>     n    f ng nm nscor alpha power
-#>     3 2.99  1  6     1  0.05 0.884
-#>     4 2.99  1  6     1  0.05 0.984
-#> 
-#> NOTE: Power analysis for within-effect test
-#> URL: http://psychstat.org/rmanova
+Repeated-measures ANOVA analysis
+
+    n        f ng nm nscor alpha     power
+    3 2.764043  1  6     1  0.05 0.8231387
+    4 2.764043  1  6     1  0.05 0.9631782
+
+NOTE: Power analysis for within-effect test
+URL: http://psychstat.org/rmanova
+\end{verbatim}
+
+\begin{verbatim}
+Repeated-measures ANOVA analysis
+
+    n        f ng nm nscor alpha     power
+    3 2.990386  1  6     1  0.05 0.8835981
+    4 2.990386  1  6     1  0.05 0.9836138
+
+NOTE: Power analysis for within-effect test
+URL: http://psychstat.org/rmanova
 \end{verbatim}
 
 The \texttt{WebPower} package also has a
@@ -9210,7 +9371,7 @@ interface online for effect size calculations}.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -9245,7 +9406,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 \begin{itemize}
 \tightlist
@@ -9533,7 +9694,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -9592,7 +9753,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -9757,8 +9918,8 @@ stratified sampling to ensure comparisons can be made.
 We will analyse block designs in the same as we did for multi-way
 analysis of variance model, with one notable exception. Typically, we
 will assume that there is \textbf{no interaction} between experimental
-factor and blocking factors.\footnote{We can always check for this
-  assumption.} Thus, we will be interested mostly in main effects of the
+factor and blocking factors, but we can always check for this
+assumption. Thus, we will be interested mostly in main effects of the
 experimental factors.
 
 \begin{example}[The surprise of reaching out: paired data as blocking
@@ -9788,17 +9949,25 @@ difference as the paired \(t\)-test.
 \FunctionTok{data}\NormalTok{(LRMM23\_S3, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
 \CommentTok{\# Paired t{-}tests}
 \FunctionTok{with}\NormalTok{(LRMM23\_S3, }\FunctionTok{t.test}\NormalTok{(apprec\_init, apprec\_resp, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{))}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Paired t{-}test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  apprec\_init and apprec\_resp}
-\CommentTok{\#\textgreater{} t = {-}5, df = 66, p{-}value = 2e{-}05}
-\CommentTok{\#\textgreater{} alternative hypothesis: true mean difference is not equal to 0}
-\CommentTok{\#\textgreater{} 95 percent confidence interval:}
-\CommentTok{\#\textgreater{}  {-}0.663 {-}0.262}
-\CommentTok{\#\textgreater{} sample estimates:}
-\CommentTok{\#\textgreater{} mean difference }
-\CommentTok{\#\textgreater{}          {-}0.463}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Paired t-test
+
+data:  apprec_init and apprec_resp
+t = -4.6042, df = 66, p-value = 1.94e-05
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.6633265 -0.2620466
+sample estimates:
+mean difference 
+     -0.4626866 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Cast data to long format {-} one response/participant per line}
 \NormalTok{LRMM23\_S3l }\OtherTok{\textless{}{-}}\NormalTok{ LRMM23\_S3 }\SpecialCharTok{|\textgreater{}}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{dyad =} \FunctionTok{factor}\NormalTok{(dplyr}\SpecialCharTok{::}\FunctionTok{row\_number}\NormalTok{())) }\SpecialCharTok{|\textgreater{}} 
@@ -9808,37 +9977,74 @@ difference as the paired \(t\)-test.
     \AttributeTok{names\_sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{\_"}\NormalTok{)}
 \CommentTok{\# Format of the data}
 \FunctionTok{head}\NormalTok{(LRMM23\_S3l)}
-\CommentTok{\#\textgreater{} \# A tibble: 6 x 5}
-\CommentTok{\#\textgreater{}   dyad  role  apprec   age gender}
-\CommentTok{\#\textgreater{}   \textless{}fct\textgreater{} \textless{}chr\textgreater{}  \textless{}int\textgreater{} \textless{}dbl\textgreater{} \textless{}fct\textgreater{} }
-\CommentTok{\#\textgreater{} 1 1     resp       4    20 male  }
-\CommentTok{\#\textgreater{} 2 1     init       4    20 male  }
-\CommentTok{\#\textgreater{} 3 2     resp       5    20 female}
-\CommentTok{\#\textgreater{} 4 2     init       5    24 female}
-\CommentTok{\#\textgreater{} 5 3     resp       5    21 female}
-\CommentTok{\#\textgreater{} 6 3     init       4    21 female}
 \CommentTok{\# Treat dyad as a factor and fit two{-}way ANOVA model}
 \NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(apprec }\SpecialCharTok{\textasciitilde{}}\NormalTok{ role }\SpecialCharTok{+}\NormalTok{ dyad, }\AttributeTok{data =}\NormalTok{ LRMM23\_S3l)}
 \CommentTok{\# Global tests of main effects (balanced data)}
 \FunctionTok{anova}\NormalTok{(mod) }\CommentTok{\# There seems to be significant variability filtered out by \textquotesingle{}id\textquotesingle{}}
-\CommentTok{\#\textgreater{} Analysis of Variance Table}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Response: apprec}
-\CommentTok{\#\textgreater{}           Df Sum Sq Mean Sq F value   Pr(\textgreater{}F)    }
-\CommentTok{\#\textgreater{} role       1    7.2    7.17   21.20 0.000019 ***}
-\CommentTok{\#\textgreater{} dyad      66   52.0    0.79    2.33  0.00038 ***}
-\CommentTok{\#\textgreater{} Residuals 66   22.3    0.34                     }
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
 \CommentTok{\# Compute pairwise difference for main effect of \textquotesingle{}role\textquotesingle{}}
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }\AttributeTok{spec =} \StringTok{"role"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
 \NormalTok{  emmeans}\SpecialCharTok{::}\FunctionTok{contrast}\NormalTok{(}\StringTok{"pairwise"}\NormalTok{)}
-\CommentTok{\#\textgreater{}  contrast    estimate  SE df t.ratio p.value}
-\CommentTok{\#\textgreater{}  init {-} resp   {-}0.463 0.1 66  {-}4.600  \textless{}.0001}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: dyad}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{longtable}[]{@{}ccccc@{}}
+
+\caption{\label{tbl-longdat}First six rows of the Study 3 of Liu et al.
+(2023) data in long format.}
+
+\tabularnewline
+
+\toprule\noalign{}
+dyad & role & apprec & age & gender \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & resp & 4 & 20 & male \\
+1 & init & 4 & 20 & male \\
+2 & resp & 5 & 20 & female \\
+2 & init & 5 & 24 & female \\
+3 & resp & 5 & 21 & female \\
+3 & init & 4 & 21 & female \\
+
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrrl@{}}
+
+\caption{\label{tbl-LRMMS3-anovatab}Analysis of variance table for
+appreciation as a function of role and dyad for Study 3 of Liu et al.
+(2023).}
+
+\tabularnewline
+
+\toprule\noalign{}
+term & sum of squares & df & stat & p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+role & 1 & 7.17 & 21.20 & \textless0.001 \\
+dyad & 66 & 51.97 & 2.33 & \textless0.001 \\
+Residuals & 66 & 22.33 & & \\
+
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrrrl@{}}
+
+\caption{\label{tbl-LRMMS3-emmeans}Pairwise difference contrast for
+\texttt{role} for Study 3 of Liu et al. (2023).}
+
+\tabularnewline
+
+\toprule\noalign{}
+term & contrast & std. error & df & stat & p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+init - resp & -0.46 & 0.1 & 66 & -4.6 & \textless0.001 \\
+
+\end{longtable}
 
 \end{example}
 
@@ -9873,12 +10079,15 @@ factors.
 \begin{Highlighting}[]
 \FunctionTok{data}\NormalTok{(HB22\_S5, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
 \FunctionTok{xtabs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ curstate }\SpecialCharTok{+}\NormalTok{ predout, }\AttributeTok{data =}\NormalTok{ HB22\_S5)}
-\CommentTok{\#\textgreater{}         predout}
-\CommentTok{\#\textgreater{} curstate peace war}
-\CommentTok{\#\textgreater{}    peace   148 164}
-\CommentTok{\#\textgreater{}    war     118 124}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+        predout
+curstate peace war
+   peace   148 164
+   war     118 124
+\end{verbatim}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -9917,52 +10126,63 @@ variance, and subject-specific variance).
 \CommentTok{\# lme4 is more modern (and reliable?), but does not allow for unequal variance}
 \NormalTok{lme4}\SpecialCharTok{::}\FunctionTok{lmer}\NormalTok{(likelihood }\SpecialCharTok{\textasciitilde{}}\NormalTok{ curstate}\SpecialCharTok{*}\NormalTok{predout}\SpecialCharTok{*}\NormalTok{tempdist }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ id),}
            \AttributeTok{data =}\NormalTok{ HB22\_S5)}
-\CommentTok{\#\textgreater{} Linear mixed model fit by REML [\textquotesingle{}lmerMod\textquotesingle{}]}
-\CommentTok{\#\textgreater{} Formula: likelihood \textasciitilde{} curstate * predout * tempdist + (1 | id)}
-\CommentTok{\#\textgreater{}    Data: HB22\_S5}
-\CommentTok{\#\textgreater{} REML criterion at convergence: 1934}
-\CommentTok{\#\textgreater{} Random effects:}
-\CommentTok{\#\textgreater{}  Groups   Name        Std.Dev.}
-\CommentTok{\#\textgreater{}  id       (Intercept) 0.852   }
-\CommentTok{\#\textgreater{}  Residual             1.144   }
-\CommentTok{\#\textgreater{} Number of obs: 554, groups:  id, 277}
-\CommentTok{\#\textgreater{} Fixed Effects:}
-\CommentTok{\#\textgreater{}                         (Intercept)                          curstatewar  }
-\CommentTok{\#\textgreater{}                                5.58                                {-}2.89  }
-\CommentTok{\#\textgreater{}                          predoutwar                         tempdist20yr  }
-\CommentTok{\#\textgreater{}                               {-}2.34                                {-}1.07  }
-\CommentTok{\#\textgreater{}              curstatewar:predoutwar             curstatewar:tempdist20yr  }
-\CommentTok{\#\textgreater{}                                5.14                                 3.51  }
-\CommentTok{\#\textgreater{}             predoutwar:tempdist20yr  curstatewar:predoutwar:tempdist20yr  }
-\CommentTok{\#\textgreater{}                                2.77                                {-}6.55}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Linear mixed model fit by REML ['lmerMod']
+Formula: likelihood ~ curstate * predout * tempdist + (1 | id)
+   Data: HB22_S5
+REML criterion at convergence: 1933.813
+Random effects:
+ Groups   Name        Std.Dev.
+ id       (Intercept) 0.8524  
+ Residual             1.1436  
+Number of obs: 554, groups:  id, 277
+Fixed Effects:
+                        (Intercept)                          curstatewar  
+                              5.581                               -2.886  
+                         predoutwar                         tempdist20yr  
+                             -2.337                               -1.068  
+             curstatewar:predoutwar             curstatewar:tempdist20yr  
+                              5.142                                3.508  
+            predoutwar:tempdist20yr  curstatewar:predoutwar:tempdist20yr  
+                              2.775                               -6.554  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\#  Note that in \textasciigrave{}lme4\textasciigrave{} package, the random effects are specified inside parenthesis}
 \CommentTok{\# nlme offers the possibility to acount for unequal variance per group}
 \CommentTok{\# Random effects are specified in \textasciigrave{}random\textasciigrave{} with formula notation, and a | to indicate}
 \NormalTok{nlme}\SpecialCharTok{::}\FunctionTok{lme}\NormalTok{(likelihood }\SpecialCharTok{\textasciitilde{}}\NormalTok{ curstate}\SpecialCharTok{*}\NormalTok{predout}\SpecialCharTok{*}\NormalTok{tempdist, }
           \AttributeTok{random =} \SpecialCharTok{\textasciitilde{}} \DecValTok{1} \SpecialCharTok{|}\NormalTok{ id, }\CommentTok{\# random intercept per individual}
           \AttributeTok{data =}\NormalTok{ HB22\_S5)}
-\CommentTok{\#\textgreater{} Linear mixed{-}effects model fit by REML}
-\CommentTok{\#\textgreater{}   Data: HB22\_S5 }
-\CommentTok{\#\textgreater{}   Log{-}restricted{-}likelihood: {-}967}
-\CommentTok{\#\textgreater{}   Fixed: likelihood \textasciitilde{} curstate * predout * tempdist }
-\CommentTok{\#\textgreater{}                         (Intercept)                         curstatewar }
-\CommentTok{\#\textgreater{}                                5.58                               {-}2.89 }
-\CommentTok{\#\textgreater{}                          predoutwar                        tempdist20yr }
-\CommentTok{\#\textgreater{}                               {-}2.34                               {-}1.07 }
-\CommentTok{\#\textgreater{}              curstatewar:predoutwar            curstatewar:tempdist20yr }
-\CommentTok{\#\textgreater{}                                5.14                                3.51 }
-\CommentTok{\#\textgreater{}             predoutwar:tempdist20yr curstatewar:predoutwar:tempdist20yr }
-\CommentTok{\#\textgreater{}                                2.77                               {-}6.55 }
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Random effects:}
-\CommentTok{\#\textgreater{}  Formula: \textasciitilde{}1 | id}
-\CommentTok{\#\textgreater{}         (Intercept) Residual}
-\CommentTok{\#\textgreater{} StdDev:       0.852     1.14}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Number of Observations: 554}
-\CommentTok{\#\textgreater{} Number of Groups: 277}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Linear mixed-effects model fit by REML
+  Data: HB22_S5 
+  Log-restricted-likelihood: -966.9064
+  Fixed: likelihood ~ curstate * predout * tempdist 
+                        (Intercept)                         curstatewar 
+                           5.581081                           -2.886166 
+                         predoutwar                        tempdist20yr 
+                          -2.337179                           -1.067568 
+             curstatewar:predoutwar            curstatewar:tempdist20yr 
+                           5.142263                            3.508246 
+            predoutwar:tempdist20yr curstatewar:predoutwar:tempdist20yr 
+                           2.774885                           -6.554272 
+
+Random effects:
+ Formula: ~1 | id
+        (Intercept) Residual
+StdDev:   0.8523522 1.143597
+
+Number of Observations: 554
+Number of Groups: 277 
+\end{verbatim}
 
 \end{example}
 
@@ -10001,9 +10221,8 @@ arbitrarily) measurements below a latency of minus 40.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(lmerTest) }\CommentTok{\# Package to fit and tests for mixed models}
 \FunctionTok{options}\NormalTok{(}\AttributeTok{contrasts =} \FunctionTok{c}\NormalTok{(}\StringTok{"contr.sum"}\NormalTok{, }\StringTok{"contr.poly"}\NormalTok{))}
-\NormalTok{mixedmod }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(}
+\NormalTok{mixedmod }\OtherTok{\textless{}{-}}\NormalTok{ lmerTest}\SpecialCharTok{::}\FunctionTok{lmer}\NormalTok{(}
 \NormalTok{  latency }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stimulus }\SpecialCharTok{+} 
 \NormalTok{    (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ id) }\SpecialCharTok{+} \CommentTok{\# random effect for subject}
 \NormalTok{    (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ id}\SpecialCharTok{:}\NormalTok{stimulus), }\CommentTok{\# interaction id and stimuluss}
@@ -10012,21 +10231,24 @@ arbitrarily) measurements below a latency of minus 40.
 \NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(latency }\SpecialCharTok{\textgreater{}} \SpecialCharTok{{-}}\DecValTok{40}\NormalTok{))}
 \CommentTok{\# Output parameter estimates}
 \FunctionTok{print}\NormalTok{(mixedmod)}
-\CommentTok{\#\textgreater{} Linear mixed model fit by REML [\textquotesingle{}lmerModLmerTest\textquotesingle{}]}
-\CommentTok{\#\textgreater{} Formula: latency \textasciitilde{} stimulus + (1 | id) + (1 | id:stimulus)}
-\CommentTok{\#\textgreater{}    Data: dplyr::filter(hecedsm::AA21, latency \textgreater{} {-}40)}
-\CommentTok{\#\textgreater{} REML criterion at convergence: 8008}
-\CommentTok{\#\textgreater{} Random effects:}
-\CommentTok{\#\textgreater{}  Groups      Name        Std.Dev.}
-\CommentTok{\#\textgreater{}  id:stimulus (Intercept) 0.737   }
-\CommentTok{\#\textgreater{}  id          (Intercept) 2.268   }
-\CommentTok{\#\textgreater{}  Residual                6.223   }
-\CommentTok{\#\textgreater{} Number of obs: 1227, groups:  id:stimulus, 36; id, 12}
-\CommentTok{\#\textgreater{} Fixed Effects:}
-\CommentTok{\#\textgreater{} (Intercept)    stimulus1    stimulus2  }
-\CommentTok{\#\textgreater{}     {-}10.537       {-}0.253       {-}0.139}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+Linear mixed model fit by REML ['lmerModLmerTest']
+Formula: latency ~ stimulus + (1 | id) + (1 | id:stimulus)
+   Data: dplyr::filter(hecedsm::AA21, latency > -40)
+REML criterion at convergence: 8007.913
+Random effects:
+ Groups      Name        Std.Dev.
+ id:stimulus (Intercept) 0.7371  
+ id          (Intercept) 2.2679  
+ Residual                6.2235  
+Number of obs: 1227, groups:  id:stimulus, 36; id, 12
+Fixed Effects:
+(Intercept)    stimulus1    stimulus2  
+   -10.5374      -0.2529      -0.1394  
+\end{verbatim}
 
 The model includes a fixed effect for stimulus, and variance terms for
 \texttt{stimulus} (nested within \texttt{id}) and subject identifier
@@ -10042,11 +10264,26 @@ various stimuli.
 \CommentTok{\# ANOVA here is type III effects }
 \CommentTok{\# computed from the \textquotesingle{}lmerTest\textquotesingle{} package}
 \FunctionTok{anova}\NormalTok{(mixedmod)}
-\CommentTok{\#\textgreater{} Type III Analysis of Variance Table with Satterthwaite\textquotesingle{}s method}
-\CommentTok{\#\textgreater{}          Sum Sq Mean Sq NumDF DenDF F value Pr(\textgreater{}F)}
-\CommentTok{\#\textgreater{} stimulus   65.6    32.8     2  23.3    0.85   0.44}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{longtable}[]{@{}lrrrrl@{}}
+
+\caption{\label{tbl-happyfake-rep-anova}Type III analysis of variance
+table with Satterthwaite's method for the linear mixed model with random
+effects for individuals and the interaction with stimulus.}
+
+\tabularnewline
+
+\toprule\noalign{}
+term & sum of squares & df 1 & df 2 & stat & p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+stimulus & 65.62 & 2 & 23.34 & 0.85 & 0.44 \\
+
+\end{longtable}
 
 The global \(F\) test of significance for stimulus is based on an
 approximation that accounts for the correlation between observations;
@@ -10108,12 +10345,15 @@ estimates.
                            \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"no"}\NormalTok{, }\StringTok{"yes"}\NormalTok{)),}
     \AttributeTok{age =} \FunctionTok{factor}\NormalTok{(age)) }\CommentTok{\# drop unused age levels}
 \FunctionTok{xtabs}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ verbalization, }\AttributeTok{data =}\NormalTok{ MULTI21\_D2\_sub)}
-\CommentTok{\#\textgreater{}      verbalization}
-\CommentTok{\#\textgreater{} age    no yes}
-\CommentTok{\#\textgreater{}   5yo 106 334}
-\CommentTok{\#\textgreater{}   6yo  56 450}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+     verbalization
+age    no yes
+  5yo 106 334
+  6yo  56 450
+\end{verbatim}
 
 Given that we have multiple students of every age group, we can include
 two-way and three-way interactions in the \(2^3\) design. We also
@@ -10121,9 +10361,7 @@ include random effects for the student and the lab.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(lmerTest)}
-\FunctionTok{library}\NormalTok{(emmeans)}
-\NormalTok{hmod }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(}
+\NormalTok{hmod }\OtherTok{\textless{}{-}}\NormalTok{ lmerTest}\SpecialCharTok{::}\FunctionTok{lmer}\NormalTok{(}
 \NormalTok{  mcorrect }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age}\SpecialCharTok{*}\NormalTok{timing}\SpecialCharTok{*}\NormalTok{verbalization }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ id}\SpecialCharTok{:}\NormalTok{lab) }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ lab), }
   \AttributeTok{data =}\NormalTok{ MULTI21\_D2\_sub)}
 \CommentTok{\# Parameter estimates}
@@ -10145,48 +10383,103 @@ giving the estimated variance terms.
 \end{Highlighting}
 \end{Shaded}
 
-We can interpret the results as follows: the total variance is the sum
-of the \texttt{id}, \texttt{lab} and \texttt{residual} variances
-components give us an all but negligible effect of lab with 7 percent of
-the total variance, versus 40.5 percent for the children-specific
-variability. Since there are only 17 labs, and most of the individual
-specific variability is at the children level, the random effect for lab
-doesn't add much to the correlation.
+In this setting, the correlation between observations from the same
+individuals \(i\) in lab \(j\) for measurement \(k\) and from different
+individuals in the same labs are, respectively \begin{align*}
+\mathsf{cor}(Y_{ijk}, Y_{ijk'}) = \frac{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}, \qquad \mathsf{cor}(Y_{ijk}, Y_{i'jk'}) = \frac{\sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}.
+\end{align*} We can interpret the results as follows: the total variance
+is the sum of the \texttt{id}, \texttt{lab} and \texttt{residual}
+variances components give us an all but negligible effect of lab with 7
+percent of the total variance, versus 40.5 percent for the
+children-specific variability. Since there are only 17 labs, and most of
+the individual specific variability is at the children level, the random
+effect for lab doesn't add much to the correlation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{anova}\NormalTok{(hmod, }\AttributeTok{ddf =} \StringTok{"Kenward{-}Roger"}\NormalTok{)}
-\CommentTok{\#\textgreater{} Type III Analysis of Variance Table with Kenward{-}Roger\textquotesingle{}s method}
-\CommentTok{\#\textgreater{}                          Sum Sq Mean Sq NumDF DenDF F value Pr(\textgreater{}F)    }
-\CommentTok{\#\textgreater{} age                       20.50   20.50     1   459   30.05  7e{-}08 ***}
-\CommentTok{\#\textgreater{} timing                     3.25    3.25     1   469    4.76   0.03 *  }
-\CommentTok{\#\textgreater{} verbalization             13.61   13.61     1   459   19.94  1e{-}05 ***}
-\CommentTok{\#\textgreater{} age:timing                 0.24    0.24     1   469    0.36   0.55    }
-\CommentTok{\#\textgreater{} age:verbalization          0.08    0.08     1   462    0.12   0.72    }
-\CommentTok{\#\textgreater{} timing:verbalization       2.64    2.64     1   469    3.88   0.05 *  }
-\CommentTok{\#\textgreater{} age:timing:verbalization   0.27    0.27     1   469    0.40   0.53    }
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
 \CommentTok{\# Check estimated marginal means for age}
-\NormalTok{emm }\OtherTok{\textless{}{-}} \FunctionTok{emmeans}\NormalTok{(hmod, }\AttributeTok{specs =} \StringTok{"age"}\NormalTok{)}
-\NormalTok{emm}
-\CommentTok{\#\textgreater{}  age emmean     SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  5yo   1.85 0.0914 35.8     1.67     2.04}
-\CommentTok{\#\textgreater{}  6yo   2.44 0.1050 60.9     2.23     2.65}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: timing, verbalization }
-\CommentTok{\#\textgreater{} Degrees{-}of{-}freedom method: kenward{-}roger }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95}
+\NormalTok{emm }\OtherTok{\textless{}{-}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(hmod, }\AttributeTok{specs =} \StringTok{"age"}\NormalTok{)}
 \CommentTok{\# Pairwise differences}
-\NormalTok{pairdiff }\OtherTok{\textless{}{-}}\NormalTok{ emm }\SpecialCharTok{|\textgreater{}} \FunctionTok{pairs}\NormalTok{()}
-\NormalTok{pairdiff}
-\CommentTok{\#\textgreater{}  contrast  estimate    SE  df t.ratio p.value}
-\CommentTok{\#\textgreater{}  5yo {-} 6yo    {-}0.59 0.108 459  {-}5.480  \textless{}.0001}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: timing, verbalization }
-\CommentTok{\#\textgreater{} Degrees{-}of{-}freedom method: kenward{-}roger}
+\NormalTok{pairdiff }\OtherTok{\textless{}{-}}\NormalTok{ emm }\SpecialCharTok{|\textgreater{}}\NormalTok{ emmeans}\SpecialCharTok{::}\FunctionTok{pairs}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3788}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2273}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0758}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1061}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1212}}@{}}
+
+\caption{\label{tbl-elliot-anova}Type III analysis of variance table
+with Kenward-Roger's method for Elliott et al. (2021).}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sum of squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df 1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df 2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+stat
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p-value
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+age & 20.50 & 1 & 459.37 & 30.05 & \textless0.001 \\
+timing & 3.25 & 1 & 469.00 & 4.76 & 0.03 \\
+verbalization & 13.61 & 1 & 459.45 & 19.94 & \textless0.001 \\
+age:timing & 0.24 & 1 & 469.00 & 0.36 & 0.55 \\
+age:verbalization & 0.08 & 1 & 462.08 & 0.12 & 0.72 \\
+timing:verbalization & 2.64 & 1 & 469.00 & 3.88 & 0.05 \\
+age:timing:verbalization & 0.27 & 1 & 469.00 & 0.40 & 0.53 \\
+
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrrrl@{}}
+
+\caption{\label{tbl-Elliot-emmeans}Estimated marginal means for age for
+Elliott et al. (2021).}
+
+\tabularnewline
+
+\toprule\noalign{}
+age & emmeans & std. error & df & stat & p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+5yo & 1.85 & 0.09 & 35.83 & 20.29 & \textless0.001 \\
+6yo & 2.44 & 0.11 & 60.94 & 23.21 & \textless0.001 \\
+
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrrrl@{}}
+
+\caption{\label{tbl-Elliot-pairdiff}Pairwise difference for age 5 and 6
+for the study of Elliott et al. (2021)}
+
+\tabularnewline
+
+\toprule\noalign{}
+term & contrast & std. error & df & stat & p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+5yo - 6yo & -0.59 & 0.11 & 459.37 & -5.48 & \textless0.001 \\
+
+\end{longtable}
 
 The type III ANOVA table shows that there is no evidence of interaction
 between task order, age and verbalization (no three-interaction) and a
@@ -10216,7 +10509,7 @@ inbalance.
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
+\includegraphics{mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
 
 }
 
@@ -10243,21 +10536,21 @@ meaning each participant is assigned to a single task.
 \end{quote}
 
 \begin{verbatim}
-#> tibble [296 x 14] (S3: tbl_df/tbl/data.frame)
-#>  $ id            : Factor w/ 37 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 2 2 ...
-#>  $ order         : int [1:296] 1 2 3 4 5 6 7 8 1 2 ...
-#>  $ position      : Factor w/ 2 levels "standing","sitting": 2 2 2 2 1 1 1 1 1 1 ...
-#>  $ phys_demand   : Factor w/ 2 levels "mouse","touchpad": 1 2 2 1 2 2 1 1 2 2 ...
-#>  $ task_diff     : Factor w/ 2 levels "easy","difficult": 1 2 1 2 2 1 2 1 2 1 ...
-#>  $ ies           : num [1:296] 2486 24034 4691 11727 10874 ...
-#>  $ central_alpha : num [1:296] 0.3 0.227 0.25 0.224 0.235 ...
-#>  $ parietal_alpha: num [1:296] 0.388 0.348 0.345 0.333 0.298 ...
-#>  $ central_beta  : num [1:296] 0.1103 0.0866 0.0902 0.0863 0.0972 ...
-#>  $ parietal_beta : num [1:296] 0.169 0.159 0.141 0.147 0.141 ...
-#>  $ bmi           : num [1:296] 22.8 22.8 22.8 22.8 22.8 ...
-#>  $ sex           : Factor w/ 2 levels "man","woman": 1 1 1 1 1 1 1 1 1 1 ...
-#>  $ attention     : num [1:296] 6.83 6.67 6.83 6.83 6.83 ...
-#>  $ satisfaction  : num [1:296] 70 85 80 76 86 100 60 80 70 85 ...
+tibble [296 x 14] (S3: tbl_df/tbl/data.frame)
+ $ id            : Factor w/ 37 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 2 2 ...
+ $ order         : int [1:296] 1 2 3 4 5 6 7 8 1 2 ...
+ $ position      : Factor w/ 2 levels "standing","sitting": 2 2 2 2 1 1 1 1 1 1 ...
+ $ phys_demand   : Factor w/ 2 levels "mouse","touchpad": 1 2 2 1 2 2 1 1 2 2 ...
+ $ task_diff     : Factor w/ 2 levels "easy","difficult": 1 2 1 2 2 1 2 1 2 1 ...
+ $ ies           : num [1:296] 2486 24034 4691 11727 10874 ...
+ $ central_alpha : num [1:296] 0.3 0.227 0.25 0.224 0.235 ...
+ $ parietal_alpha: num [1:296] 0.388 0.348 0.345 0.333 0.298 ...
+ $ central_beta  : num [1:296] 0.1103 0.0866 0.0902 0.0863 0.0972 ...
+ $ parietal_beta : num [1:296] 0.169 0.159 0.141 0.147 0.141 ...
+ $ bmi           : num [1:296] 22.8 22.8 22.8 22.8 22.8 ...
+ $ sex           : Factor w/ 2 levels "man","woman": 1 1 1 1 1 1 1 1 1 1 ...
+ $ attention     : num [1:296] 6.83 6.67 6.83 6.83 6.83 ...
+ $ satisfaction  : num [1:296] 70 85 80 76 86 100 60 80 70 85 ...
 \end{verbatim}
 
 The \texttt{id} variable is a dummy for the participant, with associated
@@ -10290,6 +10583,14 @@ potential fatigue effects.
 Our linear mixed model would take the form, here with \texttt{ies} as
 response
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lmer}\NormalTok{(ies }\SpecialCharTok{\textasciitilde{}}\NormalTok{ position}\SpecialCharTok{*}\NormalTok{phys\_demand}\SpecialCharTok{*}\NormalTok{task\_diff }\SpecialCharTok{+}
+\NormalTok{  (}\DecValTok{1} \SpecialCharTok{|}\NormalTok{ id) }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ bmi}\SpecialCharTok{*}\NormalTok{position }\SpecialCharTok{+}\NormalTok{ order, }
+           \AttributeTok{data =}\NormalTok{ LJLSFBM20) }
+\end{Highlighting}
+\end{Shaded}
+
 Given the number of response variables and coefficients, it is clear one
 must account for testing multiplicity. Figuring out the size of the
 family, \(m\), is not trivial: testing interactions and main effects
@@ -10307,35 +10608,54 @@ part of the same models.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{anova}\NormalTok{(mod)}
-\CommentTok{\#\textgreater{} Type III Analysis of Variance Table with Satterthwaite\textquotesingle{}s method}
-\CommentTok{\#\textgreater{}                                  Sum Sq  Mean Sq NumDF DenDF F value  Pr(\textgreater{}F)}
-\CommentTok{\#\textgreater{} position                       5.75e+05 5.75e+05     1   250    0.04   0.850}
-\CommentTok{\#\textgreater{} phys\_demand                    1.28e+09 1.28e+09     1   250   80.35 \textless{} 2e{-}16}
-\CommentTok{\#\textgreater{} task\_diff                      4.93e+09 4.93e+09     1   250  309.18 \textless{} 2e{-}16}
-\CommentTok{\#\textgreater{} sex                            7.92e+07 7.92e+07     1    34    4.97   0.033}
-\CommentTok{\#\textgreater{} bmi                            1.04e+07 1.04e+07     1    34    0.65   0.426}
-\CommentTok{\#\textgreater{} order                          1.06e+08 1.06e+08     1   250    6.62   0.011}
-\CommentTok{\#\textgreater{} position:phys\_demand           9.13e+06 9.13e+06     1   250    0.57   0.450}
-\CommentTok{\#\textgreater{} position:task\_diff             1.83e+06 1.83e+06     1   250    0.11   0.735}
-\CommentTok{\#\textgreater{} phys\_demand:task\_diff          3.28e+08 3.28e+08     1   250   20.57 8.9e{-}06}
-\CommentTok{\#\textgreater{} position:bmi                   1.22e+06 1.22e+06     1   250    0.08   0.782}
-\CommentTok{\#\textgreater{} position:phys\_demand:task\_diff 2.30e+06 2.30e+06     1   250    0.14   0.704}
-\CommentTok{\#\textgreater{}                                   }
-\CommentTok{\#\textgreater{} position                          }
-\CommentTok{\#\textgreater{} phys\_demand                    ***}
-\CommentTok{\#\textgreater{} task\_diff                      ***}
-\CommentTok{\#\textgreater{} sex                            *  }
-\CommentTok{\#\textgreater{} bmi                               }
-\CommentTok{\#\textgreater{} order                          *  }
-\CommentTok{\#\textgreater{} position:phys\_demand              }
-\CommentTok{\#\textgreater{} position:task\_diff                }
-\CommentTok{\#\textgreater{} phys\_demand:task\_diff          ***}
-\CommentTok{\#\textgreater{} position:bmi                      }
-\CommentTok{\#\textgreater{} position:phys\_demand:task\_diff    }
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.4366}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2113}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0704}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0704}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0986}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1127}}@{}}
+
+\caption{\label{tbl-labontelemoyne-anova}Type III analysis of variance
+table with Satterthwaite's method for Labonté-LeMoyne et al. (2020).}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sum of squares
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df 1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+df 2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+stat
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+p-value
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+position & 574982.8 & 1 & 250 & 0.04 & 0.850 \\
+phys\_demand & 1280635445.5 & 1 & 250 & 80.35 & \textless0.001 \\
+task\_diff & 4927991208.4 & 1 & 250 & 309.18 & \textless0.001 \\
+sex & 79185574.3 & 1 & 34 & 4.97 & 0.033 \\
+bmi & 10365621.5 & 1 & 34 & 0.65 & 0.426 \\
+order & 105580124.8 & 1 & 250 & 6.62 & 0.011 \\
+position:phys\_demand & 9127600.8 & 1 & 250 & 0.57 & 0.450 \\
+position:task\_diff & 1825943.4 & 1 & 250 & 0.11 & 0.735 \\
+phys\_demand:task\_diff & 327914741.2 & 1 & 250 & 20.57 &
+\textless0.001 \\
+position:bmi & 1224777.6 & 1 & 250 & 0.08 & 0.782 \\
+position:phys\_demand:task\_diff & 2299195.8 & 1 & 250 & 0.14 & 0.704 \\
+
+\end{longtable}
 
 If we focus on the sole results for \texttt{ies}, there is a significant
 two-way interaction (and main effects) for \texttt{phys\_demand} and
@@ -10346,17 +10666,31 @@ overall with a mouse.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }\AttributeTok{spec =} \FunctionTok{c}\NormalTok{(}\StringTok{"phys\_demand"}\NormalTok{,}\StringTok{"task\_diff"}\NormalTok{))}
-\CommentTok{\#\textgreater{}  phys\_demand task\_diff emmean  SE   df lower.CL upper.CL}
-\CommentTok{\#\textgreater{}  mouse       easy        2668 672 79.3     1332     4005}
-\CommentTok{\#\textgreater{}  touchpad    easy        4723 672 79.2     3387     6060}
-\CommentTok{\#\textgreater{}  mouse       difficult   8733 672 79.3     7396    10070}
-\CommentTok{\#\textgreater{}  touchpad    difficult  14998 672 79.2    13662    16335}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Results are averaged over the levels of: position, sex }
-\CommentTok{\#\textgreater{} Degrees{-}of{-}freedom method: kenward{-}roger }
-\CommentTok{\#\textgreater{} Confidence level used: 0.95}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{longtable}[]{@{}llrrrrl@{}}
+
+\caption{\label{tbl-labonte-emmeans}Estimated marginal means for
+physical demand and task difficulty for the data of Labonté-LeMoyne et
+al. (2020).}
+
+\tabularnewline
+
+\toprule\noalign{}
+phys. demand & task diff. & emmeans & std. error & df & stat &
+p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+mouse & easy & 2668.22 & 671.60 & 79.26 & 3.97 & \textless0.001 \\
+touchpad & easy & 4723.12 & 671.55 & 79.24 & 7.03 & \textless0.001 \\
+mouse & difficult & 8733.22 & 671.62 & 79.27 & 13.00 & \textless0.001 \\
+touchpad & difficult & 14998.42 & 671.53 & 79.23 & 22.33 &
+\textless0.001 \\
+
+\end{longtable}
 
 One may wonder whether there are any effect of spillover, learning or
 fatigue due to the repeated measures: tasks were much longer than is
@@ -10369,7 +10703,7 @@ participants improve over time.
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{mixed_files/figure-pdf/fig-residualsvscovariate-1.pdf}
+\includegraphics{mixed_files/figure-pdf/fig-residualsvscovariate-1.pdf}
 
 }
 
@@ -10400,7 +10734,7 @@ and strong evidence of heterogeneity.
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{mixed_files/figure-pdf/fig-residualsStanding-1.pdf}
+\includegraphics{mixed_files/figure-pdf/fig-residualsStanding-1.pdf}
 
 }
 
@@ -10467,8 +10801,9 @@ logical interrelation between variables using directed acyclic graphs
 and focus on relations between triples defining confounders, colliders
 and mediators. We then describe how we can retrieve causal effects (in
 an abstract setting). Finally, we present the linear mediation model
-popularized by Baron and Kenny (1986). We focus on the hidden
-assumptions that can undermine causal claims in linear mediation models.
+popularized by Judd and Kenny (1981) and Baron and Kenny (1986). We
+focus on the hidden assumptions that can undermine causal claims in
+linear mediation models.
 
 \section{Basics of causal inference}\label{basics-of-causal-inference}
 
@@ -10497,7 +10832,7 @@ impact of every action on our response for each individual, only one of
 these potential outcomes is observed: at least half of the potential
 outcomes are unobserved.
 
-\begin{longtable}[]{@{}rrll@{}}
+\begin{longtable}[t]{ccccc}
 
 \caption{\label{tbl-missing}Potential outcomes \(Y(0)\), \(Y(1)\) with a
 binary treatment \(X\) for six individuals. Question marks indicate
@@ -10505,18 +10840,17 @@ missing data.}
 
 \tabularnewline
 
-\toprule\noalign{}
-i & X & Y(0) & Y(1) \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-1 & 1 & ? & 4 \\
-2 & 0 & 3 & ? \\
-3 & 1 & ? & 6 \\
-4 & 0 & 1 & ? \\
-5 & 0 & 5 & ? \\
-6 & 1 & ? & 7 \\
+\toprule
+\textbackslash{}(i\textbackslash{}) & \textbackslash{}(X\_i\textbackslash{}) & \textbackslash{}(Y\_i(0)\textbackslash{}) & \textbackslash{}(Y\_i(1)\textbackslash{}) & \textbackslash{}(Y\_i(1)-Y\_i(0)\textbackslash{})\\
+\midrule
+1 & 1 & ? & 4 & ?\\
+2 & 0 & 3 & ? & ?\\
+3 & 1 & ? & 6 & ?\\
+4 & 0 & 1 & ? & ?\\
+5 & 0 & 5 & ? & ?\\
+\addlinespace
+6 & 1 & ? & 7 & ?\\
+\bottomrule
 
 \end{longtable}
 
@@ -10533,7 +10867,7 @@ to draw inferences.
 
 \centering{
 
-\includegraphics[width=0.85\textwidth,height=\textheight]{causal-inference_files/figure-pdf/fig-dist-1.pdf}
+\includegraphics{causal-inference_files/figure-pdf/fig-dist-1.pdf}
 
 }
 
@@ -10546,14 +10880,14 @@ population.}
 Rather than look at the individual treatment effect difference, we can
 focus on averages over the population. The most common measure of
 causation is the \textbf{average treatment effect}, which is the
-difference between the population averages of treatment group \(j\) and
-the control group \(X=0\), \begin{align*}
+difference between the population averages of treatment group \(X=j\)
+and the control group \(X=0\), \begin{align*}
 \textsf{ATE}_j = \underset{\substack{\text{expected response among}\\\text{treatment group $j$}}}{\mathsf{E}(Y \mid X=j)} - \underset{\substack{\text{expected response among}\\\text{control group}}}{\mathsf{E}(Y \mid X=0)}
-\end{align*} which is a valid estimator of \(\mathsf{E}\{Y(1) - Y(0)\}\)
+\end{align*} which is a valid estimator of \(\mathsf{E}\{Y(j) - Y(0)\}\)
 provided that \(X\) is randomly allocated.
 
 What assumptions are necessary to draw causal conclusion? In an
-experimental setting, we need
+experimental setting, we need the following:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -10580,7 +10914,7 @@ implying that `'no other version or treatment assignment would lead to
 different potential outcome'\,' (Imbens and Rubin 2015), which also
 suggests the effect of treatment is constant.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Causal inference is possible in observational settings, but some of the
 assumptions are unverifiable and typically much stronger than for
@@ -10597,7 +10931,7 @@ confounders.
 
 \end{tcolorbox}
 
-In summary, we can target the average treatment effect in experimental
+In summary, we can estimate the average treatment effect in experimental
 designs if we randomize the effect \(X=j,\) if our subjects comply with
 their treatment assignment, and more importantly if we use a random
 sample which is representative of the population.
@@ -10740,7 +11074,7 @@ Matching consists in creating paired samples (with similar
 characteristics for explanatories), and comparing the pairs.
 Stratification consists of analysing subpopulations separately.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 Controlling for a collider is counterproductive, as we would get
 erroneous conclusions: Kowal (2021) reportedly claimed married couples
@@ -10753,67 +11087,78 @@ less likely to divorce.
 
 \section{Mediation}\label{mediation}
 
-In order to do inference and tests relations, we need to add to our
-logical causal model represented by a directed acyclic graph a data
-generating mechanisms that prescribes how variables how interrelated.
-Our ability to establish mediation will depend on the model and a set of
-assumptions, some of which won't be verifiable.
-
-The following section is technical and may be omitted on a first
-reading.
+We need to add to our logical causal model represented by a directed
+acyclic graph data generating mechanisms that prescribes how variables
+how interrelated. Our ability to establish mediation will depend on the
+model and a set of assumptions, some of which won't be verifiable.
 
 To define in full generality the treatment and mediation effect, we
 consider the potential outcome framework. Following Pearl (2014), we use
 the notation \(\text{do}(X=x)\) is used to denote experimental
 manipulation of \(X\), to distinguish it from correlation in
-observational data. The potential outcome for individual \(i\) is
-\(Y_i(x, m)\), with explanatory or experimental covariate/factor \(x\)
-and mediator \(m\). Likewise, \(M_i(x)\) is the potential mediator when
-applying treatment level \(x\).\footnote{The notation is important to
-  distinguish between association \(Y \mid X\) when observing \(X\) from
-  experimental manipulations or interventions, \(Y \mid \mathsf{do}(X)\)
-  and counterfactuals \(Y(X)\).} Value \(x_0\) represents the baseline
-or control value for our experimental manipulation: typically, in binary
-treatments \(X \in \{0,1\}\), with \(X=x_0=0\) the control and \(X=1\)
-for treatment.
+observational data. The resulting potential outcome for individual \(i\)
+is \(Y_i(x, m)\), with explanatory or experimental covariate/factor
+\(x\) and mediator \(m\). Likewise, \(M_i(x)\) is the potential mediator
+when applying treatment level \(x\).\footnote{The notation is important
+  to distinguish between association \(Y \mid X\) when observing \(X\)
+  from experimental manipulations or interventions,
+  \(Y \mid \mathsf{do}(X)\) and counterfactuals \(Y(X)\).} Value \(x_0\)
+represents the baseline or control value for our experimental
+manipulation.
 
-The \textbf{total effect} measures the overall impact of changes in
-outcome \(Y\) (both through \(M\) and directly) when experimentally
-manipulating \(X\),
-\begin{align*}\mathsf{TE}(x, x_0) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x_0)],
-\end{align*} where \(x_0\) is the factor level of the reference or
-control and \(x\) is another treatment value. This is what we retrieve
-if we randomize treatment \(X\) assignment and consider the average
-change in average response.
+\begin{definition}[Average total, conditional mediation and direct
+effects]\protect\hypertarget{def-ate}{}\label{def-ate}
 
-The \textbf{average controlled directed effect} measures the flow along
+For simplicity, we focus on binary treatment with \(X_i \in \{0,1\}\),
+with \(X_i=x_0=0\) the control and \(X=1\) for treatment. Until now, we
+have considered experiments in which we randomly allocate participants
+to groups, so we recovered the overall effect of treatment abstracting
+from other variables. The following definitions are standard, e.g.
+Robins and Greenland (1992), Pearl (2014), Imai, Keele, and Tingley
+(2010).
+
+The \textbf{average directed effect} measures the flow along
 \(X \rightarrow Y\), disabling the pathway \(X \to M \to Y\) by fixing
 the mediator value: it is \begin{align*}
-\textsf{CDE}(m, x, x_0) &= 
-\mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x_0, m=m)] \\&= \mathsf{E}\{Y(x,m) -Y(x_0, m)\}
+\mathsf{ADE}(x) &= 
+\mathsf{E}[Y_i \mid \text{do}\{X=1, M=M_i(x)\}] - \mathsf{E}[Y_i \mid \text{do}\{X=0, M=M_i(x)\}] \\&= \mathsf{E}[Y_i(1,M_i(x)) -Y_i(0, M_i(x))\}
 \end{align*} This measures the expected change in response when the
-experimental factor changes from \(x\) to \(x_0\) and the mediator is
-set to a fixed value \(m\) uniformly over the population. The problem
-with this is that it requires manipulation of the mediator to a fixed
-value, but also gives us answers for a single value of the mediator.
+experimental factor changes from treatment to control, while the
+mediator is set to a fixed value \(M_i(x)\) uniformly over the
+population. Fixing the mediator, which may or not be feasible
+experimentally.
 
-The \textbf{natural direct effect}, \begin{align*}
-\textsf{NDE}(x, x_0) = \mathsf{E}[Y\{x, M(x_0)\} - Y\{x_0,  M(x_0)\}],
-\end{align*} is the expected change in \(Y\) under treatment \(x\) if
-\(M\) is set to whatever value it would take under control \(x_0\).
-
-The \textbf{natural indirect effect} (\(\mathsf{NIE}\)) is the expected
-change in the response \(Y\) if we set our experimental value \(X\) to
-its control value \(x_0\) and change the mediator value which it would
-attain under \(x\), \begin{align*}
-\textsf{NIE}(x, x_0) = \mathsf{E}[Y\{x_0, M(x)\} - Y\{x_0,  M(x_0)\}]
+The \textbf{average causal mediation effect} (also called indirect
+effect), is the main quantity of interest in mediation analysis. It is
+obtained by looking at changes in the outcome for a fixed intervention
+due to changing the values of the mediator to those it would take under
+the treatment and control group, respectively \(M_i(1)\) and \(M_i(0)\).
+\begin{align*}
+\mathsf{ACME}(x) &= 
+\mathsf{E}[Y_i \mid \text{do}\{X=x, M=M_i(1)\}] - \mathsf{E}[Y_i \mid \text{do}\{X=x, M=M_i(0)\}] \\&= \mathsf{E}[Y_i\{x, M_i(1)\} -Y_i\{x, M_i(0)\}]
 \end{align*}
 
-Armed with these definitions, we can consider the \textbf{sequential
-ignorability assumption} for mediation, which is decomposed into two
-components.
+The \textbf{total effect} measures the average overall impact of changes
+in outcome \(Y\) (both through \(M\) and directly) when experimentally
+manipulating \(X\), \begin{align*}
+\mathsf{TE}_i &= \mathsf{E}[ Y_i \mid \text{do}(X=1)] - \mathsf{E}[ Y_i \mid \text{do}(X=0)]
+\\ &= \mathsf{E}[Y_i\{1, M(1)\}] - \mathsf{E}[Y_i\{0, M(0)\}],
+\end{align*} This is what we retrieve if we randomize treatment
+assignment and consider the average change in average response. The
+total effect is obtained as
+\(\mathsf{TE} = \mathsf{ACME}(X) + \mathsf{ADE}(1-X)\) for \(X=0,1.\) If
+there is no interaction between the treatment and the mediator, then the
+values of the average causal mediation effect and the average direct
+effect are the same regardless of the treatment assignment \(x\).
 
-The first component is: given pre-treatment covariates \(Z\), treatment
+\end{definition}
+
+\begin{definition}[Sequential ignorability assumption for
+mediation]\protect\hypertarget{def-sutva}{}\label{def-sutva}
+
+To draw valid conclusions and build suitable estimation procedures, we
+need an assumption which can be decomposed into two components. The
+first component is: given pre-treatment covariates \(Z\), treatment
 assignment is independent of potential outcomes for mediation and
 outcome, \begin{align*}
 Y_i(x', m), M_i(x) {\perp\mkern-10mu\perp} X_i \mid \boldsymbol{Z}_i = \boldsymbol{z}.
@@ -10822,7 +11167,7 @@ response exist independently of the treatment assignment and don't
 change.\footnote{The dependence on \(\boldsymbol{Z}\) is used for
   situations where we can perform randomization based on pre-treatment
   assignment (i.e., we specify a mechanisms that is not equal based, but
-  the probability of assignment is known from each individual).}
+  the probability of assignment is known for each individual).}
 
 The second component of the sequential ignorability assumption is as
 follows: given pre-treatment covariates and observed treatment,
@@ -10832,14 +11177,15 @@ Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, \boldsymbol{Z}_i = \boldsy
 and Pearl (2014) are equivalent under randomization of treatment
 assignment, as we consider thereafter.
 
-The total effect can be written
-\[\mathsf{TE}(x, x_0) = \mathsf{NDE}(x, x_0) - \mathsf{NIE}(x_0, x).\]
-In the linear mediation model, the reversal of argument amounts to
-changing the sign of the coefficient, giving an additive decomposition
-of the total effect as \(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)
-(Pearl 2014).
+We assume also that any value of \(X\) given covariates
+\(\boldsymbol{Z}\) is possible (which is trivially satisfied when
+randomizing with equal probability), and that likewise any value of the
+mediator \(M\) is possible for any combination of covariates
+\(\boldsymbol{Z}\) and treatment assignement \(X\).
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, opacitybacktitle=0.6, left=2mm, breakable, leftrule=.75mm, arc=.35mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, titlerule=0mm, toprule=.15mm, bottomrule=.15mm, opacityback=0, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, toptitle=1mm]
+\end{definition}
+
+\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
 
 When measuring effects in psychology and marketing, it will often be the
 case that the conceptual causal model includes variables that cannot be
@@ -10880,8 +11226,8 @@ treatment is additive and that the response measurement is continuous.
 Consider an experimental factor \(X\) corresponding to treatments with
 control or reference \(x_0\) and postulated mediator variable \(M\),
 assumed continuous. Given \textbf{uncorrelated} unobserved noise
-variables \(\varepsilon_M\) and \(\varepsilon_Y\) and assumine there
-are, we specify linear regression models, \begin{align*}
+variables \(\varepsilon_M\) and \(\varepsilon_Y\), we specify linear
+regression models, \begin{align*}
 M \mid X=x &= c_M + \alpha x + \varepsilon_M,\\
 Y \mid X=x, M=m &=  c_Y + \beta x + \gamma m  + \varepsilon_Y
 \end{align*} where we use the contrasts parametrization, so that the
@@ -10892,23 +11238,27 @@ capturing the difference between \(x\) and \(x_0\). The model for
 control for confounding between \(M\) and \(Y\) if the latter is
 suspected.
 
-The parameters can be interpreted as the direct (\(\beta\)), indirect
-(\(\alpha \gamma\)) and total (\(\beta + \alpha \gamma\)) effects. To
-see this, we plug the first equation in the second and obtain the
-marginal model for \(Y\) given treatment \(X\), \begin{align}
-Y \mid X=x &= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
-&= c_Y' + \tau x + \varepsilon_Y'
-\end{align} These parameters can be estimated using structural equation
-models (SEM), or more typically by running a series of linear
-regression.
+The average value for \(M(1) = c_M + \alpha\) and that of \(M(0)=c_M\).
+If we substitute the first equation in the second equation, we get that
+\begin{align*}
+\mathsf{ACME}(x) &= \mathsf{E}[Y\{x, M(1)\} -Y\{x, M(0)\}] = \alpha \gamma\\
+\mathsf{ADE}(x) &= \mathsf{E}[Y\{1, M(x)\} -Y\{0, M(x)\}] = \beta \\
+\mathsf{TE} &= \mathsf{E}[Y\{1, M(1)\} -Y\{0, M(0)\}] = \beta + \alpha \gamma
+\end{align*}
+
+The parameters can be interpreted as the direct (\(\beta\)), conditional
+mediation effect (\(\alpha \gamma\)) and total
+(\(\beta + \alpha \gamma\)) effects. These parameters can be estimated
+using structural equation models (SEM), or more typically by running a
+series of linear regression.
 
 The ``sequential ignorability'' assumption in the linear mediation
 models boils down to ``no unmeasured confounders'' in the relations
 \(X \to Y\), \(X \to M\) and \(M \to Y\): the first two are satisfied in
 experimental studies due to randomization if we can manipulate \(X\), as
-shown in Figure~\ref{fig-dag1}. This means
-\(\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y\) must be
-independent and, as a result, error terms should also be uncorrelated.
+shown in Figure~\ref{fig-dag1}. This means \(\varepsilon_M\) and
+\(\varepsilon_Y\) must be independent of one another and, as a result,
+error terms should also be uncorrelated.
 
 In the linear mediation model, we can estimate the conditional direct
 effect corresponding to the product of coefficients \(\alpha\gamma\).
@@ -10923,65 +11273,18 @@ coefficients and standard errors.\footnote{Sobel derived the asymptotic
   \(\alpha\) and \(\gamma\) are non-zero (hence the tests!)} The Sobel's
 statistic \(S\) is approximately standard normal in large samples,
 \(S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)\), but the approximation
-is sometimes poor in small samples.
+is sometimes poor in small samples. Other test statistics are listed in
+MacKinnon et al. (2002).
 
-In the linear mediation causal model, we can estimate the total causal
-effect of \(X\), labelled \(\tau\), by running the linear regression of
-\(Y\) on \(X\) as there is no confounding affecting treatment \(X\) in a
-completely randomized experimental design. This strategy isn't valid
-with observational data unless we adjust for confounders. Assuming no
-unmeasured confounders and linearity, the product \(\alpha\gamma\) is
-also equal to the difference between the total effect and the
-\textbf{natural direct effect}, \(\tau - \beta\).
-
-Baron and Kenny (1986) suggested for \(X\) and \(M\) continuous breaking
-down the task in three separate steps:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\tightlist
-\item
-  fit a linear regression of \(M\) on \(X\) to estimate \(\alpha\)
-\item
-  fit a linear regression of \(Y\) on \(X\) to estimate \(\tau\)
-\item
-  fit a linear regression of \(Y\) on \(X\) and \(M\) to estimate
-  \(\beta\) and \(\gamma\).
-\end{enumerate}
-
-In the ``Baron and Kenny (1986) approach'', we test
-\(\mathscr{H}_0: \alpha=0\), \(\mathscr{H}_0: \tau=0\) and
-\(\mathscr{H}_0: \gamma=0\) against the two-sided alternative. This
-approach has caveats since mediation refers to the relation
-\(X \to M \to Y\), so we only need to consider (joint tests of)
-\(\alpha\) and \(\gamma\) (the total effect could be zero because
-\(\beta = -\alpha\gamma\) even if there is mediation). Zhao, Lynch, and
-Chen (2010) review the typology of mediation.
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  complementary mediation when both direct and indirect effects are of
-  the same sign and non-zero.
-\item
-  competitive mediation when direct and indirect effects are of opposite
-  signs.
-\item
-  indirect-only mediation when the direct effect of \(X \to Y\) is null,
-  but the effect \(X \to M \to Y\) isn't.
-\end{enumerate}
-
-Previous definitions popularized by Baron and Kenny (1986) still found
-in old papers include ``full mediation'' for instances where \(\beta=0\)
-and partial mediation if the direct effect is less than the total
-effect, meaning \(\beta < \tau\).
+\begin{example}[Null distribution of Sobel
+statistic]\protect\hypertarget{exm-sobel}{}\label{exm-sobel}
 
 To see this, let's generate data with a binary treatment and normally
-distributed mediators and response with no confounding (so the data
-generating process matches exactly the formulation fo Baron--Kenny. We
+distributed mediators and response with no confounding, so that the data
+generating process matches exactly the formulation of Baron--Kenny. We
 set \(\alpha=2\), \(\beta = 1/2\) and \(\gamma=0\). This is an instance
-where the null is true (\(X\) affects both \(M\) and \(Y\)).
+where the null hypothesis is true (\(X\) affects both \(M\) and \(Y\),
+but there is no mediation effect).
 
 \begin{figure}[ht!]
 
@@ -11002,18 +11305,88 @@ relations between them, we could simulate multiple datasets like in
 Figure~\ref{fig-sobelsimu} with \(n=20\) observations and compare the
 test statistic we obtained with the simulation-based null distribution
 with \(\alpha\gamma=0\). In practice we do not know the model that
-generated the data and furthermore we have a single dataset at hand. An
-alternative is the bootstrap, a form of simulation-based inference. The
-latter is conceptually easy to understand: we generate new datasets by
-resampling from the ones observed (as if it was the population). Since
-we want the sample size to be identical and our objective is to get
-heterogeneity, we sample with replacement: from one bootstrap dataset to
-the next, we will have multiple copies, or none, of each observation.
-See Efron and Tibshirani (1993) and Davison and Hinkley (1997) for a
-more thorough treatment of the bootstrap and alternative sampling
-schemes for regression models. The nonparametric bootstrap procedure
-advocated by Preacher and Hayes (2004) consists in repeating the
-following \(B\) times:
+generated the data and furthermore we have a single dataset at hand.
+
+\end{example}
+
+In the linear mediation causal model, we can estimate the total causal
+effect of \(X\), labelled \(\tau\), by running the linear regression of
+\(Y\) on \(X\) as there is no confounding affecting treatment \(X\) in a
+completely randomized experimental design. This strategy isn't valid
+with observational data unless we adjust for confounders.
+
+\begin{refremark}[Historical note on Baron and Kenny]
+Baron and Kenny (1986) suggested for \(M\) and \(Y\) continuous breaking
+down the task in three separate steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  fit a linear regression of \(M\) on \(X\) to estimate \(\alpha\)
+\item
+  fit a linear regression of \(Y\) on \(X\) and \(M\) to estimate
+  \(\beta\) and \(\gamma\).
+\item
+  fit a linear regression of \(Y\) on \(X\) to estimate \(\tau\)
+\end{enumerate}
+
+In the ``Baron and Kenny (1986) approach'', we test
+\(\mathscr{H}_0: \alpha=0\), \(\mathscr{H}_0: \tau=0\) and
+\(\mathscr{H}_0: \gamma=0\) against the two-sided alternative. This
+approach is somewhat flawed since mediation refers to the relation
+\(X \to M \to Y\), so we only need to consider (joint tests of)
+\(\alpha\gamma\) (the total effect could be zero because
+\(\beta = -\alpha\gamma\) even if there is mediation). In practice,
+thus, we only need steps 1) and 2) and the models should include
+potential confounders of the pair \((M, Y)\).
+
+\label{rem-histnote}
+
+\end{refremark}
+
+\begin{definition}[Typology of
+mediation]\protect\hypertarget{def-typology}{}\label{def-typology}
+
+The following characterization was proposed by Zhao, Lynch, and Chen
+(2010):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  complementary mediation when both direct and indirect effects are of
+  the same sign and non-zero.
+\item
+  competitive mediation when direct and indirect effects are of opposite
+  signs.
+\item
+  indirect-only mediation when the direct effect of \(X \to Y\) is null,
+  but the effect \(X \to M \to Y\) isn't.
+\end{enumerate}
+
+Previous definitions popularized by Baron and Kenny (1986) still found
+in old papers include ``full mediation'' for instances where \(\beta=0\)
+and partial mediation if the direct effect is less than the total
+effect, meaning \(\beta < \tau\).
+
+\end{definition}
+
+\subsection{Nonparametric bootstrap}\label{nonparametric-bootstrap}
+
+An alternative for inference to large-sample approximations to the null
+distribution used as benchmark to establish whether a test statistic is
+`large' is the bootstrap, a form of simulation-based inference (Efron
+1979). The latter is conceptually easy to understand: we generate new
+datasets by resampling from the ones observed (as if it was the
+population). Since we want the sample size to be identical and our
+objective is to get heterogeneity, we sample with replacement: from one
+bootstrap dataset to the next, we will have multiple copies, or none, of
+each observation. See Efron and Tibshirani (1993) and Davison and
+Hinkley (1997) for a more thorough treatment of the bootstrap and
+alternative sampling schemes for regression models. The nonparametric
+bootstrap procedure advocated by Preacher and Hayes (2004) consists in
+repeating the following \(B\) times:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -11026,8 +11399,10 @@ following \(B\) times:
   \(\widehat{\alpha}\cdot\widehat{\gamma}\) on each simulated sample
 \end{enumerate}
 
-For a two-sided test at level \(\alpha\), compute the \(\alpha/2\) and
-\(1-\alpha/2\) quantiles of the bootstrap statistics
+There are different approaches to computing confidence intervals, but
+the simplest is the \textbf{percentile method}. For a two-sided test at
+level \(\alpha\), compute the \(\alpha/2\) and \(1-\alpha/2\) quantiles
+of the bootstrap statistics
 \(\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B\). For example, if
 the level is \(\alpha=5\)\% and we generate \(B=1000\) bootstrap
 samples, the percentile confidence intervals bounds are the 25th and
@@ -11054,17 +11429,7 @@ The nonparametric percentile bootstrap confidence interval for
 \(\alpha\gamma\) is \([-0.08, 1.71]\) and thus we fail to reject the
 null hypothesis \(\mathscr{H}_0: \alpha \gamma=0\).
 
-The inference scheme is popular, but we could also rely on different
-models and use the definitions of the causal effects to perform
-simulation-based inference; see Appendix D of Imai, Keele, and Tingley
-(2010). The latter fit two models for the mediator and the outcome, then
-estimate parameters. In large samples, the parameter estimators are
-approximately multivariate Gaussian and we can simulate parameters, use
-the parametric model to generate new data and potential outcomes. The
-average causal mediation effect can be estimated empirically based on
-the simulated potential outcomes.
-
-\subsection{Model assumptions}\label{model-assumptions-2}
+\section{Model assumptions}\label{model-assumptions-2}
 
 We can unpack the model assumptions for the linear mediation model.
 
@@ -11087,7 +11452,7 @@ We can unpack the model assumptions for the linear mediation model.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/dag1.pdf}
+\includegraphics[width=0.8\textwidth,height=\textheight]{figures/dag1.png}
 
 }
 
@@ -11112,7 +11477,7 @@ mediation effect on \(X\) is due to \(M_1\).
 
 \centering{
 
-\includegraphics[width=0.4\textwidth,height=\textheight]{figures/dag2.pdf}
+\includegraphics[width=0.4\textwidth,height=\textheight]{figures/dag2.png}
 
 }
 
@@ -11133,7 +11498,9 @@ mediators.}
   \(M\). It also doesn't depend on the level of other variables (no
   interaction). If the model isn't properly specified, the linear model
   coefficients will capture the best linear predictor given the design
-  and the coefficients may not be meaningful.
+  and the coefficients may not be meaningful. There must thus be no
+  interaction between treatment and the mediator; see
+  Definition~\ref{def-moderated-mediation} for the relaxation.
 \end{enumerate}
 
 The linearity assumption also implies that the effect is the same for
@@ -11150,13 +11517,6 @@ null. Even in the latter case, we could have \(\gamma_i\) and
 \(\alpha_i\) positive for some observation, or both negatives so that
 they cancel out even if there is complementary mediation.
 
-We could easily expand the model to include nonlinear effects (not for
-the treatment or mediator) and potential interactions, but the linear
-model approach remains intrinsically of limited applicability. Imai,
-Keele, and Tingley (2010) details a more general approach for parametric
-models based on simulations, as well as a nonparametric approach. Both
-are less restrictive than the Baron and Kenny (1986) model.
-
 The main benefit of experimental designs is that it remove confounding
 in the relationship between treatment and other variables. Adding
 spurious variables could create feedback (if some of those variables are
@@ -11167,6 +11527,44 @@ absent of \(X\). For example, we could estimate the indirect effect term
 by manipulating jointly (if possible) (\(X, M\)) but even then the
 linearity assumption must hold for the estimates to correspond to our
 linear causal mediation model.
+
+\subsection{Sensitivity analysis}\label{sensitivity-analysis}
+
+The no-unmeasured confounders assumption should be challenged. One way
+to assess the robustness of the conclusions to this is to consider
+correlation between errors, as in Bullock, Green, and Ha (2010). Indeed,
+one can show that the average parameter in the equation for the response
+of the linear mediation model satisfies \begin{align*}
+\mathsf{E}(\widehat{\gamma})= \gamma + \frac{\mathsf{Cov}(\varepsilon_m, \varepsilon_y)}{\mathsf{Va}(\varepsilon_m)},
+\end{align*} which introduces bias in the \(\mathsf{ACME}(x)\). Even if
+the true covariance is unknown, we can vary
+\(\rho=\mathsf{Cor}(\varepsilon_m, \varepsilon_y)\) to assess the
+sensitivity of our conclusions to confounding. The \texttt{medsens}
+function in the \textbf{R} package \texttt{mediation} implements the
+diagnostic of Imai, Keele, and Tingley (2010) for the linear mediation
+model.
+
+\begin{definition}[Moderated
+mediation]\protect\hypertarget{def-moderated-mediation}{}\label{def-moderated-mediation}
+
+We consider a more complex setting where the effect of the experimental
+factor \(X\) depends on the mediator, a case termed \textbf{moderated
+mediator} (Judd and Kenny 1981).
+
+In this case, the equation for the response variable becomes
+\begin{align*}
+\mathsf{E}(Y \mid M=m, X=x, \boldsymbol{Z} = \boldsymbol{z}) = c_Y + \beta x + \gamma m + \kappa x m + \boldsymbol{z}\boldsymbol{\omega}
+\end{align*} Upon substituting the equations for both inside the
+definition of average causal mediation effect, we find that the latter
+equals \begin{align*}
+\mathsf{ACME}(x) = (\gamma + \kappa x)\{M(1)-M(0)\} = \alpha (\gamma + \kappa x).
+\end{align*} and thus the value differs depending on experimental regime
+(treatment or control), due to the presence of the interaction. Both the
+average direct and total effects now depend on the theoretical average
+values of the covariates \(\boldsymbol{Z}\) added to the model to
+control for confounding.
+
+\end{definition}
 
 \begin{example}[Fluency as mediator of product
 evaluation]\protect\hypertarget{exm-inconsistency}{}\label{exm-inconsistency}
@@ -11184,6 +11582,8 @@ in both mediator and outcome model (see Table 1 of Lee and Choi (2019)).
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{data}\NormalTok{(LC19\_S2, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\NormalTok{LC19\_S2 }\OtherTok{\textless{}{-}}\NormalTok{ LC19\_S2 }\SpecialCharTok{|\textgreater{}} \CommentTok{\# transform consistency into }
+\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{consistency =} \FunctionTok{ifelse}\NormalTok{(consistency }\SpecialCharTok{==} \StringTok{"inconsistent"}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 \NormalTok{YsMX }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(prodeval }\SpecialCharTok{\textasciitilde{}}\NormalTok{ fluency }\SpecialCharTok{+}\NormalTok{ consistency }\SpecialCharTok{+}\NormalTok{ familiarity,}
            \AttributeTok{data =}\NormalTok{ LC19\_S2)}
 \NormalTok{MsX }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(fluency }\SpecialCharTok{\textasciitilde{}}\NormalTok{ consistency }\SpecialCharTok{+}\NormalTok{ familiarity,}
@@ -11193,23 +11593,48 @@ in both mediator and outcome model (see Table 1 of Lee and Choi (2019)).
 
 \begin{table}
 
-\caption{\label{tbl-coefsmediation}Coefficients of the mediation (left)
-and outcome (right) models.}
+\caption{\label{tbl-coefsmediation}Model coefficients}
+
+\begin{minipage}{0.50\linewidth}
+
+\subcaption{\label{tbl-coefsmediation-1}mediation}
 
 \centering{
 
-|term        | estimate| std.error|
-|:-----------|--------:|---------:|
-|(Intercept) |     5.23|      0.27|
-|consistency |     0.48|      0.24|
-|familiarity |     0.08|      0.06||term        | estimate| std.error|
-|:-----------|--------:|---------:|
-|(Intercept) |     3.04|      0.53|
-|fluency     |     0.60|      0.09|
-|consistency |     0.29|      0.22|
-|familiarity |     0.09|      0.05|
+\begin{tabular}{lrr}
+\toprule
+term & estimate & std.error\\
+\midrule
+(Intercept) & 5.23 & 0.27\\
+consistency & 0.48 & 0.24\\
+familiarity & 0.08 & 0.06\\
+\bottomrule
+\end{tabular}
 
 }
+
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
+
+\subcaption{\label{tbl-coefsmediation-2}outcome}
+
+\centering{
+
+\begin{tabular}{lrr}
+\toprule
+term & estimate & std.error\\
+\midrule
+(Intercept) & 3.04 & 0.53\\
+fluency & 0.60 & 0.09\\
+consistency & 0.29 & 0.22\\
+familiarity & 0.09 & 0.05\\
+\bottomrule
+\end{tabular}
+
+}
+
+\end{minipage}%
 
 \end{table}%
 
@@ -11235,37 +11660,153 @@ of the levels for categorical treatment, etc.)
   \AttributeTok{mediator =} \StringTok{"fluency"}\NormalTok{,}
   \AttributeTok{sims =} \DecValTok{5000}\NormalTok{L,}
   \AttributeTok{boot =} \ConstantTok{TRUE}\NormalTok{,}
-  \AttributeTok{boot.ci.type =} \StringTok{"bca"}\NormalTok{, }\CommentTok{\# bias{-}corrected and accelerated intervals}
-  \AttributeTok{control.value =} \StringTok{"inconsistent"}\NormalTok{,}
-  \AttributeTok{treat.value =} \StringTok{"consistent"}\NormalTok{)}
+  \AttributeTok{boot.ci.type =} \StringTok{"perc"}\NormalTok{, }\CommentTok{\# percentile method}
+\DocumentationTok{\#\# with original factor, we could specify the levels for control and treatment}
+\CommentTok{\#  control.value = "inconsistent", }
+\CommentTok{\#  treat.value = "consistent"}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{figure}[ht!]
+
+\centering{
+
+\includegraphics{causal-inference_files/figure-pdf/fig-effect-LC19-1.pdf}
+
+}
+
+\caption{\label{fig-effect-LC19}Causal effects and confidence intervals
+for the difference between inconsistency (control) and consistency
+(treatement).}
+
+\end{figure}%
 
 \begin{longtable}[t]{lrrrr}
 
 \caption{\label{tbl-mediation}Linear causal mediation analysis:
-parameter estimates, nonparametric bootstrap 95\% confidence intervals
-and p-values with bias-corrected and accelerated confidence intervals
-based on 5000 bootstrap samples.}
+parameter estimates, nonparametric bootstrap 95\% percentile confidence
+intervals and p-values based on 5000 bootstrap samples.}
 
 \tabularnewline
 
 \toprule
  & estimate & lower 95\% CI & upper 95\% CI & p-value\\
 \midrule
-ACME & 0.286 & 0.025 & 0.615 & 0.037\\
-ADE & 0.287 & -0.166 & 0.732 & 0.218\\
-total effect & 0.573 & 0.037 & 1.080 & 0.030\\
-prop. mediated & 0.499 & 0.211 & 5.956 & 0.057\\
+ACME & 0.286 & 0.015 & 0.595 & 0.037\\
+ADE & 0.287 & -0.165 & 0.737 & 0.218\\
+total effect & 0.573 & 0.047 & 1.091 & 0.030\\
+prop. mediated & 0.499 & -0.051 & 1.938 & 0.057\\
 \bottomrule
 
 \end{longtable}
 
 Using the \texttt{summary} method, we can print the table of estimates
 and confidence intervals. We can see that the results are consistent
-with those reported in the article.
+with those reported in the article. We can also use the \texttt{medsens}
+function to perform the sensitivity analysis, but this only works for
+binary (numerical) treatments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(mediation}\SpecialCharTok{::}\FunctionTok{medsens}\NormalTok{(}\AttributeTok{x =}\NormalTok{ linmed))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[ht!]
+
+\centering{
+
+\includegraphics{causal-inference_files/figure-pdf/fig-sensitivity-1.pdf}
+
+}
+
+\caption{\label{fig-sensitivity}Sensitivity analysis showing the
+variation of the average causal mediation effect as a function of the
+correlation between outcome and mediation errors, with pointwise 95\%
+confidence intervals.}
+
+\end{figure}%
 
 \end{example}
+
+\section{General average causal mediation effect
+estimation}\label{general-average-causal-mediation-effect-estimation}
+
+The linear mediation model is popular, but is limited to the case with
+no interaction, continuous mediators, constant (i.e., linear) treatment
+effect, and continuous response. It also hides model assumptions.
+
+We could also rely on different models and use the definitions of the
+causal effects to perform simulation-based inference; see Appendix D of
+Imai, Keele, and Tingley (2010). The average causal mediation effect can
+be estimated empirically based on the simulated potential outcomes.
+Using Definition~\ref{def-ate}, the method of Imai, Keele, and Tingley
+(2010) relies on Monte Carlo simulations.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Modelling}. Specify models to each relationship
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    a mediator model \(f_M(x, \boldsymbol{z}; \boldsymbol{\theta}_M)\)
+    that includes \(X\) and potential confounders \(\boldsymbol{Z}\)
+  \item
+    an outcome model
+    \(f_Y(x, m, \boldsymbol{z}; \boldsymbol{\theta}_Y)\) with both
+    treatment indicator \(X\), mediator \(M\)\footnote{Optionally, add
+      their interaction \(X:M\) in case of moderated mediation.} and
+    potential confounders \(\boldsymbol{Z}\).
+  \end{enumerate}
+\item
+  \textbf{Estimation uncertainty}: Either use nonparametric bootstrap or
+  a large-sample approximation to the distribution of model parameters
+  \(\boldsymbol{\theta}_M\) and \(\boldsymbol{Y}\) to get \(J\) copies.
+\item
+  For each copy of the parameters \(j=1, \ldots, J\), draw \(M\)
+  realizations of the mediation model for each observation
+  \(i=1, \ldots, n\), giving \(M^{(jm)}_i(1)\) and \(M^{(jm)}_i(0)\).
+  Use these resulting to obtain one draw from the outcome model for each
+  of
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    \(Y_{i}^{(jm)}\{0, M^{(jm)}_i(0)\}\),
+  \item
+    \(Y_{i}^{(jm)}\{0, M^{(jm)}_i(1)\}\),
+  \item
+    \(Y_{i}^{(jm)}\{1, M^{(jm)}_i(0)\}\) and
+  \item
+    \(Y_{i}^{(jm)}\{1, M^{(jm)}_i(1)\}\).
+  \end{enumerate}
+\item
+  Plug these quantities in the definitions of \(\mathsf{ACME}(x)\),
+  \(\mathsf{ADE}(x)\) and \(\mathsf{TE}\), averaging over the \(nM\)
+  replications, over both observations \(i=1, \ldots, n\) and
+  replications \(m=1, \ldots, M\). This yields a collection of \(J\)
+  values \(\mathsf{ACME}_j(x)\), \(\mathsf{ADE}_j(x)\) and
+  \(\mathsf{TE}_j\) for each parameter value.
+\item
+  Use the \(J\) replications to compute a 95\% percentile interval and
+  return the sample means over \(J\) for the average causal effects.
+\end{enumerate}
+
+The benefit of this method is that it naturally account for nonlinear
+effects, different natures of the mediator (binary, categorical, etc.)
+and the response, through suitable models, e.g., a logistic regression
+for a binary outcome. With repeated measures, one could also consider
+interactions between individuals and mediator using random effects, and
+still retrieve an effect. The framework easily handles interactions
+between \(X:M\) added to the outcome model, in which case we get
+different values of average causal mediation effect and average direct
+effect for each value of \(X\).
 
 \bookmarksetup{startatroot}
 
@@ -11453,7 +11994,7 @@ The Friedman test is obtained by replacing observations by the rank
 within each block (so rather than the number of violations per task, we
 compute the rank among the four tasks). Friedman's test statistic is
 \(18.97\) and is compared to a benchmark \(\chi^2_3\) distribution,
-yielding a \(p\)-value of \(0.\)
+yielding a \(p\)-value of \(\ensuremath{3\times 10^{-4}}.\)
 
 We can also obtain effect sizes for the rank test, termed Kendall's
 \(W.\) A value of 1 indicates complete agreement in the ranking: here,
@@ -11479,15 +12020,18 @@ likewise for the five other pairwise comparisons and then adjust
   \AttributeTok{values\_from =}\NormalTok{ nviolation)}
 \NormalTok{coin}\SpecialCharTok{::}\FunctionTok{wilcoxsign\_test}\NormalTok{(phone }\SpecialCharTok{\textasciitilde{}}\NormalTok{ watch,}
                       \AttributeTok{data =}\NormalTok{ smartwatch)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Asymptotic Wilcoxon{-}Pratt Signed{-}Rank Test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  y by x (pos, neg) }
-\CommentTok{\#\textgreater{}   stratified by block}
-\CommentTok{\#\textgreater{} Z = 0.4, p{-}value = 0.7}
-\CommentTok{\#\textgreater{} alternative hypothesis: true mu is not equal to 0}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    Asymptotic Wilcoxon-Pratt Signed-Rank Test
+
+data:  y by x (pos, neg) 
+     stratified by block
+Z = 0.35399, p-value = 0.7233
+alternative hypothesis: true mu is not equal to 0
+\end{verbatim}
 
 You can think of the test as performing a paired \(t\)-test for the 31
 signed ranks \(R_i =\mathsf{sign}(D_i) \mathsf{rank}(|D_i|)\) and
@@ -11537,19 +12081,22 @@ Wilcoxon's rank-sum test.
   \AttributeTok{data =}\NormalTok{ BL22\_E, }
   \AttributeTok{conf.int =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{mww}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Asymptotic Wilcoxon{-}Mann{-}Whitney Test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  partner\_time by cond (f2f, video)}
-\CommentTok{\#\textgreater{} Z = {-}6, p{-}value = 1e{-}10}
-\CommentTok{\#\textgreater{} alternative hypothesis: true mu is not equal to 0}
-\CommentTok{\#\textgreater{} 95 percent confidence interval:}
-\CommentTok{\#\textgreater{}  {-}50.7 {-}25.9}
-\CommentTok{\#\textgreater{} sample estimates:}
-\CommentTok{\#\textgreater{} difference in location }
-\CommentTok{\#\textgreater{}                  {-}37.8}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+
+    Asymptotic Wilcoxon-Mann-Whitney Test
+
+data:  partner_time by cond (f2f, video)
+Z = -6.4637, p-value = 1.022e-10
+alternative hypothesis: true mu is not equal to 0
+95 percent confidence interval:
+ -50.694 -25.908
+sample estimates:
+difference in location 
+               -37.808 
+\end{verbatim}
 
 The output of the test includes, in addition to the \(p\)-value for the
 null hypothesis that both median time are the same, a confidence
@@ -11655,19 +12202,30 @@ includes the 325 participants who were present at all stages.
 \FunctionTok{data}\NormalTok{(DA23\_E2, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
 \NormalTok{tabs }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(DA23\_E2, }\FunctionTok{table}\NormalTok{(purchased, format))}
 \NormalTok{tabs}
-\CommentTok{\#\textgreater{}          format}
-\CommentTok{\#\textgreater{} purchased quantity{-}integrated quantity{-}sequential}
-\CommentTok{\#\textgreater{}         0                 100                 133}
-\CommentTok{\#\textgreater{}         1                  66                  26}
-\CommentTok{\# Chi{-}square test for interaction}
-\FunctionTok{chisq.test}\NormalTok{(tabs)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Pearson\textquotesingle{}s Chi{-}squared test with Yates\textquotesingle{} continuity correction}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  tabs}
-\CommentTok{\#\textgreater{} X{-}squared = 21, df = 1, p{-}value = 5e{-}06}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+         format
+purchased quantity-integrated quantity-sequential
+        0                 100                 133
+        1                  66                  26
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Chi{-}square test for interaction}
+\FunctionTok{chisq.test}\NormalTok{(tabs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  tabs
+X-squared = 20.786, df = 1, p-value = 5.135e-06
+\end{verbatim}
 
 The integrated quantity lead to a higher proportion of sales, and this
 difference is statistically significant at level 1\%. The effect size
@@ -11700,14 +12258,30 @@ model with main effect only (overall average + row \(i\) and column
 \CommentTok{\# to get the same result as with the Poisson regression model}
 \NormalTok{chisqtest }\OtherTok{\textless{}{-}} \FunctionTok{chisq.test}\NormalTok{(contingency, }\AttributeTok{correct =} \ConstantTok{FALSE}\NormalTok{)}
 \NormalTok{chisqtest}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Pearson\textquotesingle{}s Chi{-}squared test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  contingency}
-\CommentTok{\#\textgreater{} X{-}squared = 87, df = 6, p{-}value \textless{}2e{-}16}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Pearson's Chi-squared test
+
+data:  contingency
+X-squared = 87.467, df = 6, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Effect size (with adjustment for small sample)}
 \NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{cramers\_v}\NormalTok{(chisqtest)}\SpecialCharTok{$}\NormalTok{Cramers\_v\_adjusted}
-\CommentTok{\#\textgreater{} [1] 0.204}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.2043891
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Aggregate data into long format}
 \NormalTok{MULTI21\_D1\_long }\OtherTok{\textless{}{-}}\NormalTok{ MULTI21\_D1 }\SpecialCharTok{|\textgreater{}} 
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(age, frequency) }\SpecialCharTok{|\textgreater{}} 
@@ -11742,24 +12316,43 @@ effect sizes.
   \AttributeTok{subset =}\NormalTok{ age }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"5yo"}\NormalTok{, }\StringTok{"7yo"}\NormalTok{),}
   \AttributeTok{drop.unused.levels =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{counts\_5vs7}
-\CommentTok{\#\textgreater{}      frequency}
-\CommentTok{\#\textgreater{} age   never sometimes usually}
-\CommentTok{\#\textgreater{}   5yo    53        80      87}
-\CommentTok{\#\textgreater{}   7yo    19        73     177}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     frequency
+age   never sometimes usually
+  5yo    53        80      87
+  7yo    19        73     177
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Compute chi{-}square test with 2x3 sub{-}table}
 \FunctionTok{chisq.test}\NormalTok{(counts\_5vs7)}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{}  Pearson\textquotesingle{}s Chi{-}squared test}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} data:  counts\_5vs7}
-\CommentTok{\#\textgreater{} X{-}squared = 43, df = 2, p{-}value = 6e{-}10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Pearson's Chi-squared test
+
+data:  counts_5vs7
+X-squared = 42.575, df = 2, p-value = 5.688e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Even stronger evidence of more verbalization}
 
 \CommentTok{\# compute effect size {-} Cramer\textquotesingle{}s V without small sample adjustment}
 \NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{cramers\_v}\NormalTok{(}\FunctionTok{chisq.test}\NormalTok{(counts\_5vs7), }\AttributeTok{adjust =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Cramers\_v}
-\CommentTok{\#\textgreater{} [1] 0.295}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+[1] 0.2950689
+\end{verbatim}
 
 \end{example}
 
@@ -11822,15 +12415,23 @@ off-diagonal entries.
                 \AttributeTok{family =}\NormalTok{ poisson)}
 \CommentTok{\# Compare the two nested models using a likelihood ratio test}
 \FunctionTok{anova}\NormalTok{(mod\_null, mod\_alt,  }\AttributeTok{test =} \StringTok{"LRT"}\NormalTok{)}
-\CommentTok{\#\textgreater{} Analysis of Deviance Table}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Model 1: count \textasciitilde{} gnm::Symm(black, white)}
-\CommentTok{\#\textgreater{} Model 2: count \textasciitilde{} white * black}
-\CommentTok{\#\textgreater{}   Resid. Df Resid. Dev Df Deviance Pr(\textgreater{}Chi)    }
-\CommentTok{\#\textgreater{} 1         3       28.2                         }
-\CommentTok{\#\textgreater{} 2         0        0.0  3     28.2  3.2e{-}06 ***}
-\CommentTok{\#\textgreater{} {-}{-}{-}}
-\CommentTok{\#\textgreater{} Signif. codes:  0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Deviance Table
+
+Model 1: count ~ gnm::Symm(black, white)
+Model 2: count ~ white * black
+  Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
+1         3     28.232                          
+2         0      0.000  3   28.232 3.246e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# The saturated model need not be fitted {-} use deviance and residuals directly}
 \NormalTok{pval }\OtherTok{\textless{}{-}} \FunctionTok{pchisq}\NormalTok{(}\FunctionTok{deviance}\NormalTok{(mod\_null), }\AttributeTok{df =}\NormalTok{ mod\_null}\SpecialCharTok{$}\NormalTok{df.residual, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
@@ -11871,14 +12472,17 @@ on the log scale) are also reported.
                    \StringTok{"0vs2"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{),}
                    \StringTok{"1vs2"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)),}
            \AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
-\CommentTok{\#\textgreater{}  contrast ratio     SE  df null z.ratio p.value}
-\CommentTok{\#\textgreater{}  0vs1     0.446 0.0933 Inf    1  {-}3.860  0.0001}
-\CommentTok{\#\textgreater{}  0vs2     0.316 0.1480 Inf    1  {-}2.460  0.0138}
-\CommentTok{\#\textgreater{}  1vs2     0.389 0.1730 Inf    1  {-}2.120  0.0340}
-\CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Tests are performed on the log scale}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+ contrast ratio     SE  df null z.ratio p.value
+ 0vs1     0.446 0.0933 Inf    1  -3.858  0.0001
+ 0vs2     0.316 0.1480 Inf    1  -2.461  0.0138
+ 1vs2     0.389 0.1730 Inf    1  -2.120  0.0340
+
+Tests are performed on the log scale 
+\end{verbatim}
 
 \end{example}
 
@@ -11887,7 +12491,7 @@ explanatory variables \(\mathrm{X}_1, \ldots, \mathrm{X}_p\). The mean
 model then reads \begin{align*}
 \mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
 \end{align*} so the mean is multiplied by \(\exp(\beta_j)\) for an
-increase of one unit of \(\mathrm{X}_{j}\), \emph{ceteris paribus.} If
+increase of one unit of \(\mathrm{X}_{j},\) \emph{ceteris paribus.} If
 \(\beta_j < 0\), \(\exp(\beta_j) < 1\) and so we have a decrease of
 \(100\cdot(1-\exp(\beta_j))\)\% of the mean response. Likewise, if
 \(\beta_j>0\), the mean number increases by
@@ -11943,9 +12547,9 @@ with models in which a single explanatory is removed.}
 \toprule
 variable & stat & df & p-value\\
 \midrule
-day & 9395.2 & 92 & \(<10^{-5}\)\\
-limit & 46.3 & 1 & \(<10^{-5}\)\\
-year & 0.7 & 1 & \(0.401\)\\
+day & 9395.22 & 92 & \(<10^{-5}\)\\
+limit & 46.29 & 1 & \(<10^{-5}\)\\
+year & 0.70 & 1 & \(0.401\)\\
 \bottomrule
 \end{tabular}
 
@@ -12088,6 +12692,11 @@ Formats: When Integrating Purchase and Quantity Decisions Increases
 Sales.''} \emph{Marketing Science} 42 (1): 87--109.
 \url{https://doi.org/10.1287/mksc.2022.1364}.
 
+\bibitem[\citeproctext]{ref-Efron:1979}
+Efron, B. 1979. {``Bootstrap Methods: Another Look at the Jackknife.''}
+\emph{The Annals of Statistics} 7 (1): 1--26.
+\url{https://doi.org/10.1214/aos/1176344552}.
+
 \bibitem[\citeproctext]{ref-Efron.Tibshirani:1993}
 Efron, B., and R. J. Tibshirani. 1993. \emph{An Introduction to the
 Bootstrap}. Boca Raton, FL: CRC Press.
@@ -12199,6 +12808,12 @@ Wellness Programs Do? Evidence from the {I}llinois Workplace Wellness
 Study.''} \emph{The Quarterly Journal of Economics} 134 (4): 1747--91.
 \url{https://doi.org/10.1093/qje/qjz023}.
 
+\bibitem[\citeproctext]{ref-Judd.Kenny:1981}
+Judd, Charles M., and David A. Kenny. 1981. {``Process Analysis:
+Estimating Mediation in Treatment Evaluations.''} \emph{Evaluation
+Review} 5 (5): 602--19.
+\url{https://doi.org/10.1177/0193841X8100500502}.
+
 \bibitem[\citeproctext]{ref-Keppelux2fWickens:2004}
 Keppel, G., and T. D. Wickens. 2004. \emph{Design and Analysis: A
 Researcher's Handbook}. Pearson Prentice Hall.
@@ -12251,6 +12866,12 @@ Liu, Peggy J., SoYon Rim, Lauren Min, and Kate E. Min. 2023. {``The
 Surprise of Reaching Out: Appreciated More Than We Think.''}
 \emph{Journal of Personality and Social Psychology} 124 (4): 754--71.
 \url{https://doi.org/10.1037/pspi0000402}.
+
+\bibitem[\citeproctext]{ref-McKinnon:2002}
+MacKinnon, David P., Chondra M. Lockwood, Jeanne M. Hoffman, Stephen G.
+West, and Virgil Sheets. 2002. {``A Comparison of Methods to Test
+Mediation and Other Intervening Variable Effects.''} \emph{Psychological
+Methods} 7 (1): 83--104. \url{https://doi.org/10.1037/1082-989X.7.1.83}.
 
 \bibitem[\citeproctext]{ref-Maglio.Polman:2014}
 Maglio, Sam J., and Evan Polman. 2014. {``Spatial Orientation Shrinks
@@ -12308,6 +12929,12 @@ Preacher, Kristopher J., and Andrew F. Hayes. 2004. {``{SPSS} and {SAS}
 Procedures for Estimating Indirect Effects in Simple Mediation
 Models.''} \emph{Behavior Research Methods, Instruments {\&} Computers}
 36: 717--31. \url{https://doi.org/10.3758/BF03206553}.
+
+\bibitem[\citeproctext]{ref-Robins.Greenland:1992}
+Robins, James M., and Sander Greenland. 1992. {``Identifiability and
+Exchangeability for Direct and Indirect Effects.''} \emph{Epidemiology}
+3 (2).
+\url{https://journals.lww.com/epidem/fulltext/1992/03000/identifiability_and_exchangeability_for_direct_and.13.aspx}.
 
 \bibitem[\citeproctext]{ref-Rosen:1974}
 Rosen, B., and T. H. Jerdee. 1974. {``Influence of Sex Role Stereotypes
