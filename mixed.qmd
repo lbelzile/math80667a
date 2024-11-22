@@ -54,7 +54,7 @@ We say to factors are nested ($A$ within $B$) when one can only coexist within t
 
 In many instances, some of the characteristics of observational units are not of interest: for example, EEG measurements of participants in a lab may differ due to time of the day, to the lab technician, etc. In the old days, it was customary to include these as fixed effect factors in the analysis, but disregard tests. We term explanatory factors (fixed effects) that are used only to control unwanted variability **blocking factors**: variables that impact the measurement variability, but that are not of direct interest. By filtering their effect out and looking at the residual variability that is unexplained by the blocking factors, block designs reduce the error term, at the cost of including and estimating additional parameters (group averages). Experimental units are typically assigned to blocking factor using stratified sampling to ensure comparisons can be made.
 
-We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors.^[We can always check for this assumption.] Thus, we will be interested mostly in main effects of the experimental factors.
+We will analyse block designs in the same as we did for multi-way analysis of variance model, with one notable exception. Typically, we will assume that there is **no interaction** between experimental factor and blocking factors, even if we can always check for this assumption. Thus, we will be interested mostly in main effects of the experimental factors.
 
 :::{#exm-reachingout}
 
@@ -62,7 +62,7 @@ We will analyse block designs in the same as we did for multi-way analysis of va
 
 We consider paired data from Study 3 of @Liu.Rim.Min.Min:2023, who looked at the appreciation of people reaching out to them in a unsolicited manner. The data includes the appreciation score of both responder and initiator, along with sociodemographic variables (age and gender).
 
-While a paired $t$-test is the natural (and arguably simplest way) to compare the difference in appreciation scores, we reformat the data to long format (one response per line), with a categorical variable `role` indicating the role of the participant and `dyad`, a dummy number indicating which participants belong to which pair. We then fit an analysis of variance model to the scores with both `dyad` and `role`. The $F$-tests for the main effects indicate that the dyads (66 additional parameters, since there are 67 pairs) filter out significant part of the variability. If we consider estimated marginal means and look at the $p$-value and the pairwise difference between initiator and respondent, we find exactly the same statistic, degrees of freedom and $p$-value for the pairwise difference as the paired $t$-test.
+While a paired $t$-test is the natural (and arguably simplest way) to compare the difference in appreciation scores, we reformat the data to long format (one response per line), with a categorical variable `role` indicating the role of the participant and `dyad`, a dummy number indicating which participants belong to which pair. We then fit an analysis of variance model to the scores with both `dyad` and `role`. The $F$-tests for the main effects indicate that the dyads (66 additional parameters, since there are 67 pairs) filter out significant part of the variability. If we consider estimated marginal means and look at the $p$-value and the pairwise difference between initiator and respondent, we find exactly the same statistic value `r round(as.numeric(ttest$statistic),2)`, with $`r as.integer(ttest$parameter)`$ degrees of freedom and $p$-value for the pairwise difference as the paired $t$-test.
 
 
 ```{r}
@@ -70,7 +70,8 @@ While a paired $t$-test is the natural (and arguably simplest way) to compare th
 #| eval: true
 data(LRMM23_S3, package = "hecedsm")
 # Paired t-tests
-with(LRMM23_S3, t.test(apprec_init, apprec_resp, paired = TRUE))
+ttest <- with(LRMM23_S3, 
+              t.test(apprec_init, apprec_resp, paired = TRUE))
 # Cast data to long format - one response/participant per line
 LRMM23_S3l <- LRMM23_S3 |>
   dplyr::mutate(dyad = factor(dplyr::row_number())) |> 
@@ -83,7 +84,7 @@ head(LRMM23_S3l)
 # Treat dyad as a factor and fit two-way ANOVA model
 mod <- lm(apprec ~ role + dyad, data = LRMM23_S3l)
 # Global tests of main effects (balanced data)
-anova(mod) # There seems to be significant variability filtered out by 'id'
+aov <- anova(mod) # There seems to be significant variability filtered out by 'id'
 # Compute pairwise difference for main effect of 'role'
 emmeans::emmeans(mod, spec = "role") |>
   emmeans::contrast("pairwise")
