@@ -654,7 +654,13 @@ $$
 $$
 includes different slopes for $W$ in each experimental group, as well as different intercepts for each group.
 
-As an example, we consider data from a study on gender discrimination [@Garcia:2010]. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).
+
+
+:::{#exm-moderation1}
+
+## Gender discrimation
+
+We consider data from a study on gender discrimination [@Garcia:2010]. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).
 
 The postulated mediator variable is `sexism`, the average of 6 Likert scales for the Modern Sexism Scale assessing pervasiveness of gender discrimination. We consider participants' evaluation of the appropriateness of the response of the fictional character.
 
@@ -676,7 +682,7 @@ car::Anova(lin_moder, type = 3) # tests
 #| eval: true
 #| message: false
 #| warning: false
-#| tbl-cap: "Analysis of variance table for the linear moderation model."
+#| tbl-cap: "Analysis of variance table for the linear moderation model of ."
 data(GSBE10, package = "hecedsm")
 linmoder <- lm(respeval ~ protest*sexism,
                data = GSBE10)
@@ -714,6 +720,8 @@ ggplot(data = GSBE10,
 
 Because of the interaction, comparing the levels of the experimental factor only makes sense if we fix the value of sexism (since the slopes are not parallel) and won't necessarily be reliable outside of the range of observed values of sexism. We could look at quantiles and differences at the mean sexism,^[This is the default with `emmeans`] or one standard deviation away.
 
+:::
+
 We may be interested in the range of values of the predictor $W$ for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson--Neyman method [@Johnson.Neyman:1936] considers this range, but this leads to multiple testing problems since we probe the model repeatedly. @Esarey.Sumner:2018 offer a method that provides control for the false discovery rate.
 
 To illustrate the method, we dichotomize the manipulation pooling individual and collective protests, since these are the most similar.
@@ -741,7 +749,133 @@ jn$plot
 The cutoff value is 4.20 with control for the false discovery rate and 4.15 without. The interval is not extended beyond the range of value for sexism, as these are not possible given the Likert scale (which starts at 1). In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation models could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation. Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.
 
 
+:::{#exm-moderation2}
 
+
+# Ghosting 
+
+@Leckfor:2023 consider the impact of ghosting someone (i.e., not responding to communications and cutting bridges with a person) on personal satisfaction, uncertainty and the need for closure (explanations). In their Study 3, they postulated that the type of rejection someone experienced. The study comprises 545 participants who were asked to reflect about a situation in their own life, in scenarios where 
+
+> Participants in the included (control) condition were asked to write about a time when someone “expressed that they wanted to continue and/or maintain a friendship, romantic relationship, or casual dating situation.” Participants in the ghosted condition wrote about a time when someone ended a relationship by “suddenly cutting off all communication without explanation.” Participants in the directly rejected condition wrote about a time when someone “directly communicate[d] that they wanted to end the relationship.” Nearly half (49%) of participants wrote about a friendship, followed by a romantic relationship (29%), and then a casual dating situation (22%).
+
+The moderator variable is `cond`, one of control, being ghosted or rejected. This should moderate the effect of the need for closure on need for satisfaction. The authors postulated that individuals would have lower needs of satisfaction after being ghosted.
+
+```{r}
+#| label: moderation2 
+#| eval: false
+#| echo: true
+# Moderation analysis
+# This time, the factor of interest is continuous
+# and the moderator is categorical (K=3 levels)
+data(LWSH23_S3, package = "hecedsm")
+mod <- lm(data = LWSH23_S3, needsatis ~ needclosure * cond)
+anova(mod) # interaction is significant
+# Compute estimated marginal means, but with global weights equal to relative weight of each variable
+emmeans::emmeans(mod, specs = "needclosure", 
+                 by = "cond", 
+                 at = list(needclosure = 2:7), 
+                 weights = "prop")
+# All values are reported for the average of needclosure by default without the at
+```
+```{r}
+#| label: tbl-lmmoder2
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+#| tbl-cap: "Linear moderation model coefficients of Study 3 of @Leckfor:2023. Least square coefficients, standard errors, Wald tests and $p$-values for $\\beta=0$ and 95\\% confidence intervals."
+data(LWSH23_S3, package = "hecedsm")
+mod <- lm(data = LWSH23_S3, needsatis ~ needclosure * cond)
+options(knitr.kable.NA = '')
+tab_coefs <- broom::tidy(summary(mod))
+tab_coefs$term = c("(Intercept)", "need for closure", "directly rejected [cond]", "ghosted [cond]",
+ "need for closure * directly rejected [cond]", "need for closure * ghosted [cond]")
+# tab_coefs$p.value <- papaja::apa_p(tab_coefs$p.value)
+tab_coefs$p.value<- NULL
+tab_coefs$statistic <- NULL
+tab_coefs$coef <- paste0("$\\beta_",0:5,"$")
+tab_coefs$lower <- confint(mod)[,1]
+tab_coefs$upper <- confint(mod)[,2]
+tab_coefs <- tab_coefs |> dplyr::select(term, coef, estimate, std.error, lower, upper)
+knitr::kable(tab_coefs,
+  booktabs = TRUE,
+  col.names = c("term", "coef.","estimate",  "std. error", "lower CL", "upper CL"),
+  digits = c(0,2,1,2,2,2), align = "lccccc")
+```
+
+```{r}
+#| label: tbl-testsmoder2
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+#| tbl-cap: "Analysis of variance table for the linear moderation model of Study 3 of @Leckfor:2023."
+data(LWSH23_S3, package = "hecedsm")
+mod <- lm(data = LWSH23_S3, needsatis ~ needclosure * cond)
+options(knitr.kable.NA = '')
+tab_anova <- broom::tidy(anova(mod)) |> dplyr::select(!meansq,)
+tab_anova$p.value <- papaja::apa_p(tab_anova$p.value)
+knitr::kable(tab_anova,
+  booktabs = TRUE,
+  col.names = c("term", "df","sum of squares", "stat","p-value"),
+  digits = c(0,2,1,2,3,3))
+```
+Since the interaction is significant, we focus on the different slopes. We can of course simply report the equations of the linear regression for each group. Alternative, `emmeans` can also return the predictions for different values of `needclosure` per condition along with standard errors. The estimates will have lower values of `needclosure` when close to the subgroup averages.
+
+
+The postulated theoretical mean equation is 
+\begin{align*}
+\mathsf{E}(\texttt{needsatisf}) &= \beta_0 + \beta_1\texttt{needclosure} + \beta_2 \mathsf{1}_{\texttt{cond=directly rejected}} +\beta_3 \mathsf{1}_{\texttt{cond=directly rejected}} \\&+ \beta_4 \texttt{needclosure} \times \mathsf{1}_{\texttt{cond=directly rejected}} +\beta_5 \texttt{needclosure} \times\mathsf{1}_{\texttt{cond=directly rejected}}.
+\end{align*}
+The estimated model mean $\widehat{\mathsf{E}}(\texttt{needsatisf} \mid \texttt{needclosure}=x)$ when `needclosure` is worth $x \in [1,7]$ for each `cond` is thus
+\begin{align*}
+\widehat{Y} & = \begin{cases}
+\widehat{\beta}_0 + \widehat{\beta}_1x, & \texttt{control};\\
+(\widehat{\beta}_0 + \widehat{\beta}_3) + (\widehat{\beta}_1 + \beta_4)x , & \texttt{directly rejected};\\
+(\widehat{\beta}_0 + \widehat{\beta}_2) + (\widehat{\beta}_1 + \beta_5)x, & \texttt{ghosted}.
+\end{cases} \\&= \begin{cases}
+5.015 + 0.181 x, & \texttt{control};\\
+ 3.86 -0.222x, & \texttt{directly rejected};\\
+3.52 -0.234x, & \texttt{ghosted}.
+\end{cases}
+\end{align*}
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-moderation2-slopes
+#| fig-cap: "Scatterplot and linear regression slopes for the need for satisfaction as a function of the moderating situation and the need for closure."
+ggplot(data = LWSH23_S3, 
+       mapping = aes(x = needclosure, y = needsatis, color = cond)) +
+   geom_smooth(method = "lm", se = FALSE) +
+   geom_point() + MetBrewer::scale_color_met_d("Hiroshige") + 
+   labs(x = "need for closure",
+        y = "need for satisfaction",
+        color = NULL) +
+   theme_classic() +
+   theme(legend.position = "bottom")
+```
+
+We can see clearly in @fig-moderation2-slopes that the impact of the need for closure depends on the situation, with downward trends for the ghosted and rejected groups. 
+
+
+We can fit this toy model also with the PROCESS macro, which only understand numeric values for factors... The output (omitted) includes model coefficients with confidence intervals, the $F$ test statistic for the ANOVA, and output for the average need for closure.
+
+```{r}
+#| echo: true
+#| eval: false
+process(data = LWSH23_S3 |>
+          dplyr::mutate(condind = as.integer(cond)), # cast factor to numeric integer levels
+        y = "needsatis",  # response variable
+        x = "needclosure", # explanatory variable (not manipulated)
+        w = "condind", # postulated moderator
+        mcw = 1, # dummy coding for moderator w (so compare to base level, here 'included')
+        model = 1) # number of model in Hayes (simple moderation)
+```
+
+:::
 
 
 :::{.callout-important}
@@ -755,7 +889,7 @@ The cutoff value is 4.20 with control for the false discovery rate and 4.15 with
 * We are only interested in differences due to experimental condition (marginal effects).
 * In general, there should be no interaction between covariates/blocking factors and experimental conditions. 
 * This hypothesis can be assessed by comparing the models with and without interaction, if there are enough units (e.g., equality of slope for ANCOVA).
-* Moderators are variables that interact with the experimental factor. We assess their presence by testing for an interaction in a linear regresison model.
-
+* Moderators are variables that interact with the experimental factor. We assess their presence by testing for an interaction in a linear regression model.
+* In the presence of a moderator, we need to consider slopes or groups separately for subgroups.
 :::
 

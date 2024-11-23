@@ -431,16 +431,16 @@ An alternative for inference to large-sample approximations to the null distribu
 There are different approaches to computing confidence intervals, but the simplest is the **percentile method**. 
 For a two-sided test at level $\alpha$, compute the $\alpha/2$ and $1-\alpha/2$ quantiles of the bootstrap statistics $\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B$. For example, if the level is $\alpha=5$% and we generate $B=1000$ bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.
 
-Nowadays, the asymptotic approximation (sometimes misnamed delta method^[The latter is the name of the method used to derive the denominator of Sobel's statistic.]) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.  
+Nowadays, the asymptotic approximation (sometimes misnamed delta method^[The latter is the name of the method used to derive the denominator of Sobel's statistic.]) has fallen out of fashion among practitioners for getting confidence intervals for the ACME (not Sobel's statistic), who prefer the nonparametric bootstrap coupled with the percentile method. @fig-bootstrap shows that the sampling distribution of $\widehat{\alpha}\widehat{\gamma}$ (unstandardized) is indeed not symmetric, unlike the distribution of Sobel's statistic.  
 
 
 ```{r}
-#| label: bootstrap
+#| label: fig-bootstrap
 #| echo: false
 #| eval: true
 #| out-width: '80%'
 #| cache: true
-#| fig-cap: "Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines)."
+#| fig-cap: "Bootstrap distribution of average conditional mediation effect (aka indirect effect) with estimate and percentile 95% confidence intervals (vertical red lines) for the simulated example."
 set.seed(80667)
 alpha <- 2
 beta <- 0.5
@@ -576,7 +576,257 @@ Both the average direct and total effects now depend on the theoretical average 
 
 :::
 
+:::{#exm-mediation1}
 
+## Pain as a social glue
+
+We consider an example from Experiment 1 of @Bastian:2014, who experienced the effect of the effect of shared pain (through a manipulation) on bonding.
+
+> This effect of pain remained when controlling for age ($p = .048$), gender ($p = .052$), and group size ($p = .050$). None of these variables were significantly correlated with experimental condition ($ps > .136$) or perceived bonding ($ps > .925$). To determine whether the marginal tendency for the pain tasks to be viewed as more threatening than the control tasks mediated the effect of pain on perceived bonding, we conducted a bootstrap analysis (Preacher & Hayes, 2008) using 5,000 resamples. The results of this analysis revealed that threat was not a significant mediator, indirect effect = $-0.11$, SE = $0.09$, 95% CI = [$-0.34, 0.03$].
+
+
+The response variable $Y$ is `bonding`, the experimental factor `condition` and `threat`, the average ALES subscale about the perception of the physical task, is the postulated mediator.
+
+We use the `mediation` package [@mediationR] for the model; the package certainly isn't needed (nor the PROCESS macros) to run the bootstrap, which we could obtain with a single for-loop. However, it has utilities, notably for checking model assumptions, that are convenient. 
+
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+library(mediation, quietly = TRUE)
+data(BJF14_S1, package = "hecedsm")
+# Mediation and response models
+MsX <- lm(threat ~ condition + gender + groupsize + age, 
+          data = BJF14_S1)
+YsXM <- lm(bonding ~ condition + threat + gender + groupsize + age,
+           data = BJF14_S1)
+```
+
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-responsecoefs
+#| tbl-cap: "Coefficients and standard errors of the linear regression model for @Bastian:2014"
+#| layout-ncol: 2
+#| tbl-subcap: ["mediation model","outcome model"]
+coefs1 <- summary(MsX) |> broom::tidy() 
+coefs1$term[2:4] <- c("condition [pain]", "gender [female]", "group size")
+coefs2 <- summary(YsXM) |> broom::tidy()
+coefs2$term[c(2,4,5)] <- c("condition [pain]", "gender [female]", "group size")
+kab1 <- knitr::kable(coefs1[,1:3], digits = 2, bookdown = TRUE, col.names = c("term","coef.","std. error"))
+kab2 <- knitr::kable(coefs2[,1:3], digits = 2, bookdown = TRUE, col.names = c("term","coef.","std. error"))
+kab1
+kab2
+```
+
+Both of the `threat` and `bonding` measures are average of Likert scales. We include the controls in the regression for the response to account for potential confounding between threat level and shared bonding: it is unclear whether the authors used the control covariates or whether these make sense.
+
+
+
+
+
+It is instructive to perform calculations by hand. We write a little function that takes
+as input the coefficients and variance of the parameters $\alpha$ and $\gamma$ from the linear mediation
+model and returns the Sobel statistic, and the $p$-value and 95\% confidence intervals based on the (large-sample) normal approximation.
+
+```{r}
+#| eval: true
+#| echo: true
+# Function to calculate Sobel's statistic for binary treatment
+sobel <- function(alpha, gamma, alpha_var, gamma_var){
+  # Compute point estimate (product of alpha and gamma)
+  pe_sob <- as.numeric(alpha*gamma)
+  # Obtain standard error of alpha_hat*gamma_hat
+  se_sob <- as.numeric(sqrt(gamma^2 * alpha_var + alpha^2 * gamma_var  + gamma_var*alpha_var))
+  # Wald statistic
+  stat <- pe_sob/se_sob
+  data.frame(estimate = pe_sob,
+             se = se_sob,
+             stat = stat, # Sobel test statistic
+             pvalue = 2*pnorm(abs(stat), lower.tail = FALSE), # two-sided p-value
+             lowerCI = pe_sob + qnorm(p = 0.025)*se_sob,
+             upperCI = pe_sob + qnorm(p = 0.975)*se_sob
+  )
+}
+
+# Create a function that returns the statistic for any given data
+# This way, we can pass a bootstrap sample and get the same quantity
+stat <- function(data, peOnly = TRUE){
+  # Fit models
+mod_med <- lm(threat ~ condition + gender + groupsize + age,
+          data = data) # mediator model
+mod_resp <- lm(bonding ~ condition + threat + gender + groupsize + age,
+           data = data) # response model
+# Use 'coef' to extract estimated coefficients
+# and 'vcov' to get the estimated covariance matrix of coefficients
+coef_alpha <- coef(mod_med)['conditionPain']
+coef_gamma <- coef(mod_resp)['threat']
+var_alpha <- vcov(mod_med)['conditionPain','conditionPain']
+var_gamma <- vcov(mod_resp)['threat','threat']
+  # Compute Sobel's statistic
+  S <- sobel(alpha = coef_alpha,
+             alpha_var = var_alpha,
+             gamma = coef_gamma,
+             gamma_var = var_gamma)
+  if(!isTRUE(peOnly)){
+    return(S)
+  } else{
+    return(as.vector(S[,'estimate']))
+  }
+}
+# Values for the paper - using large-sample approximation
+vals <- stat(data = BJF14_S1, peOnly = FALSE)
+```
+
+Next, we turn to the nonparametric bootstrap to get a comparison of how the results would differ. We
+fix the seed and provide data sampled with replacement, using a simple for-loop. The number of bootstrap
+samples should be large enough to avoid additional variability due to resampling.
+
+```{r}
+#| eval: true
+#| echo: true
+# Nonparametric bootstrap analysis
+set.seed(80667) # set random seed for reproducibility
+B <- 1000L #number of bootstrap replications
+n <- nrow(BJF14_S1) # number of observations
+results <- numeric(B) # create container
+for(b in seq_len(B)){
+  # Sample row indices with replacement at random uniformly
+  bootdata <- BJF14_S1[sample.int(n, n, replace = TRUE),]
+  # Compute the test statistic on the bootstrap sample
+  results[b] <- stat(data = bootdata, peOnly = TRUE)
+}
+# Percentile confidence intervals
+boot_perc_confint <- quantile(results, prob = c(0.025, 0.975))
+# If we have B a multiple of 40, then we can use the sorted observations
+# sort(results)[B*c(0.025,0.975)]
+# Bootstrap p-value for test alpha*gamma=0
+M_over_B <- mean(results < 0)
+boot_pval <- 2*min(c(M_over_B, 1-M_over_B))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-sobol-pain
+#| tbl-cap: "Average causal mediation effect for @Bastian:2014, with $p$-values and 95% confidence intervals based on the normal approximation (top) and nonparametric bootstrap with percentile confidence intervals (bottom)."
+knitr::kable(rbind(vals[,-3], 
+                   c(estimate = vals$estimate, 
+                     se = sd(results), 
+                                 pvalue = boot_pval,
+                     lowerCI = boot_perc_confint[1],
+                     upperCI = boot_perc_confint[2])),
+             booktabs = TRUE, 
+             col.names = c("estimate","std. error","p-value","lower CL","upper CL"),
+             digits = 3)
+```
+
+The differences between the large-sample approximation and the bootstrap, reported in @tbl-sobol-pain, are negligible.
+
+We can also use software to perform the calculations without coding manually effects.
+
+```{r}
+#| eval: false
+#| echo: true
+#| cache: true
+#| message: false
+set.seed(80667)
+linmed <- mediate(
+  model.m = MsX,
+  model.y = YsXM,
+  sims = 1000L, # number of bootstrap simulations
+  boot = TRUE, # use bootstrap
+  boot.ci.type = "perc", # type of bootstrap: percentile
+  mediator = "threat", # name of mediator
+  treat = "condition", # name of treatment
+  control.value = "Control", # name of control (level of 'condition')
+  treat.value = "Pain") # name of treatment (level of 'condition')
+summary(linmed)
+```
+
+```{r}
+#| label: tbl-mediation1
+#| eval: true
+#| echo: false
+#| cache: true
+#| message: false
+#| tbl-cap: "Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% confidence intervals and p-values with the percentile method based on 5000 bootstrap samples."
+set.seed(80667)
+linmed <- mediate(
+  model.m = MsX,
+  model.y = YsXM,
+  sims = 1000L, # number of bootstrap simulations
+  boot = TRUE, # use bootstrap
+  boot.ci.type = "perc", # type of bootstrap: percentile
+  mediator = "threat", # name of mediator
+  treat = "condition", # name of treatment
+  control.value = "Control", # name of control (level of 'condition')
+  treat.value = "Pain") # name of treatment (level of 'condition')
+x <- summary(linmed)
+smat <- c(x$d1, x$d1.ci, x$d1.p)
+smat <- rbind(smat, c(x$z0, x$z0.ci, x$z0.p))
+smat <- rbind(smat, c(x$tau.coef, x$tau.ci, x$tau.p))
+smat <- rbind(smat, c(x$n0, x$n0.ci, x$n0.p))
+rownames(smat) <- c("ACME", "ADE", "total effect", "prop. mediated")
+clp <- 100 * x$conf.level
+colnames(smat) <- c("estimate", paste0("lower ", clp, "% CI", 
+        sep = ""), paste0("upper ", clp, "% CI", sep = ""), "p-value")
+knitr::kable(smat, 
+             digits = 3,
+             booktabs = TRUE) |>
+  kableExtra::kable_styling()
+
+```
+
+The first line of @tbl-mediation gives the average conditional mediated effect (labelled ACME), the second the average direct effect (ADE) and the third the total effect (ADE + ACME). The point estimate for ACME, $\alpha\gamma$ is $\widehat{\alpha}\widehat{\gamma} = `r round(coef(YsXM)['threat'] * coef(MsX)['conditionPain'], 2)`$.
+The bootstrap sampling distribution is skewed to the left, a fact reflected by the asymmetric percentile confidence interval.
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-densityACME
+#| fig-cap: "Density of the 1000 nonparametric bootstrap estimates of the average conditional mediation effect $\\alpha\\gamma$, with point estimate and 95% percentile bootstrap confidence intervals (vertical dashed lines)."
+library(ggplot2)
+ggplot(data = data.frame(x = linmed$d1.sims),
+       aes(x = x)) + 
+  geom_vline(xintercept = linmed$d1, linetype = "dashed") +
+  geom_vline(xintercept = quantile(linmed$d1.sims, 
+                                   c(0.025, 0.975)), 
+             linetype = "dashed", alpha = 0.1) +
+  geom_density() +
+  scale_y_continuous(limits = c(0,6), expand = c(0,0)) +
+  theme_classic() + 
+  labs(y = "", x = "ACME",
+       subtitle = "")
+```
+
+
+
+The sequential ignorability assumption cannot be verified, but we can see what impacts violations would have on the coefficients: the expected value of the coefficient $\widehat{\gamma}$ is $\gamma + \mathsf{Cov}(\varepsilon_M, \varepsilon_Y)/\mathsf{Va}(\varepsilon_M)$; the second component is a bias term that does not vanish, even when the sample size grows [@Bullock.Green.Ha:2010]. The variance of the error of the mediation and response models can be estimated, and we can vary the correlation coefficient, $\rho=\mathsf{Cor}(\varepsilon_M, \varepsilon_Y)$, to assess the sensitivity of our conclusions if there was confounding.
+
+```{r}
+#| eval: true
+#| echo: true
+linmed_sensitivity <- medsens(linmed)
+summary(linmed_sensitivity)
+plot(linmed_sensitivity)
+```
+
+The `medsens` function implements the sensitivity diagnostic presented in Section 5.1 of @Imai.Keele.Yamamoto:2010 for the linear mediation model. By default, the correlation $\rho$ varies in 0.1 increments. We can see the wide range of the ACME if there was correlation between residuals from the mediation and the response model, highlighting the wide range of values that could be returned: the ACME could go from $0.2$ to $-0.288$ for correlations in the range $\rho \in [-0.4, 0.4]$.  In this example, nearly any correlation in this range would lead to "insignificant results", mostly because of the small sample size. In a situation where we had found a significant (sic) result, we could observe how much correlation btween would be needed for this effect to be an artifact of correlation and vanish.
+
+According to the documentation of the `medsens` function (`?medsens`), there are two variants of the estimated effect size, either computing the proportion of the total (tilde, `R^2_M~R^2_Y`) or residual (starred, `R^2_M*R^2_Y*`) variance from the mediation and outcome models that are due to hypothetical unobserved confounders. 
+
+:::
+
+
+:::{.callout-caution}
+There are several problems with the description of @Bastian:2014: while it seems
+that some covariates (age, gender, group size) were added to regression models, it is unclear whether they could be confounders, whether their effect is linear and in which (if any) model they are included. Stating "bootstrap analysis" is the equivalent of "running a statistical test", so vague it could mean anything, and the fact the output is random does not help with reproducibility.
+
+:::
 
 :::{#exm-inconsistency}
 
@@ -658,7 +908,7 @@ plot(linmed)
 #| label: tbl-mediation
 #| eval: true
 #| echo: false
-#| tbl-cap: "Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% percentile confidence intervals and p-values based on 5000 bootstrap samples."
+#| tbl-cap: "Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% percentile confidence intervals and p-values based on 5000 nonparametric bootstrap samples."
 x <- summary(linmed)
 smat <- c(x$d1, x$d1.ci, x$d1.p)
 smat <- rbind(smat, c(x$z0, x$z0.ci, x$z0.p))
@@ -689,6 +939,8 @@ plot(mediation::medsens(x = linmed))
 :::
 
 
+
+
 ## General average causal mediation effect estimation
 
 The linear mediation model is popular, but is limited to the case with no interaction, continuous mediators, constant (i.e., linear) treatment effect, and continuous response. It also hides model assumptions.
@@ -698,14 +950,16 @@ We could also rely on different models and use the definitions of the causal eff
 1. **Modelling**. Specify models to each relationship
    a. a mediator model $f_M(x, \boldsymbol{z}; \boldsymbol{\theta}_M)$ that includes $X$ and potential confounders $\boldsymbol{Z}$
    b. an outcome model $f_Y(x, m, \boldsymbol{z}; \boldsymbol{\theta}_Y)$ with both treatment indicator $X$, mediator $M$^[Optionally, add their interaction $X:M$ in case of moderated mediation.] and potential confounders $\boldsymbol{Z}$.
-2. **Estimation uncertainty**: Either use nonparametric bootstrap or a large-sample approximation to the distribution of model parameters $\boldsymbol{\theta}_M$ and $\boldsymbol{Y}$ to get $J$ copies.
-3. For each copy of the parameters $j=1, \ldots, J$, draw $M$ realizations of the mediation model for each observation $i=1, \ldots, n$, giving $M^{(jm)}_i(1)$ and $M^{(jm)}_i(0)$. Use these resulting to obtain one draw from the outcome model for each of  
-    a. $Y_{i}^{(jm)}\{0, M^{(jm)}_i(0)\}$,
-    b. $Y_{i}^{(jm)}\{0, M^{(jm)}_i(1)\}$, 
-    c. $Y_{i}^{(jm)}\{1, M^{(jm)}_i(0)\}$ and 
-    d. $Y_{i}^{(jm)}\{1, M^{(jm)}_i(1)\}$.
-4. Plug these quantities in the definitions of $\mathsf{ACME}(x)$, $\mathsf{ADE}(x)$ and $\mathsf{TE}$, averaging over the $nM$ replications, over both observations $i=1, \ldots, n$ and replications $m=1, \ldots, M$. This yields a collection of $J$ values $\mathsf{ACME}_j(x)$, $\mathsf{ADE}_j(x)$ and $\mathsf{TE}_j$ for each parameter value.
-5. Use the $J$ replications to compute a 95% percentile interval and return the sample means over $J$ for the average causal effects.
+2. Draw $B$ realizations of the mediation model for each observation $i=1, \ldots, n$, giving $M^{(b)}_i(1)$ and $M^{(b)}_i(0)$ for $b=1, \ldots, B$. Use these resulting to obtain one draw from the outcome model for each of  
+    a. $Y_{i}^{(b)}\{0, M^{(b)}_i(0)\}$,
+    b. $Y_{i}^{(b)}\{0, M^{(b)}_i(1)\}$, 
+    c. $Y_{i}^{(b)}\{1, M^{(b)}_i(0)\}$ and 
+    d. $Y_{i}^{(b)}\{1, M^{(b)}_i(1)\}$.
+3. Plug these quantities in the definitions of $\mathsf{ACME}(x)$, $\mathsf{ADE}(x)$ and $\mathsf{TE}$, averaging over the $nM$ replications, over both observations $i=1, \ldots, n$ and replications $b=1, \ldots, B$,  e.g.,
+\begin{align*}
+\mathsf{TE} = \frac{1}{nB} \sum_{b=1}^B \sum_{i=1}^n \left[ Y_{i}^{(b)}\{1, M^{(b)}_i(1)\} - Y_{i}^{(b)}\{0, M^{(b)}_i(0)\}\right]
+\end{align*}
+4.  **Estimation uncertainty**: Either use nonparametric bootstrap or a large-sample approximation to the distribution of model parameters $\boldsymbol{\theta}_M$ and $\boldsymbol{Y}$ to get $J$ copies of parameters, and repeat steps 2. and 3. to get $J$ copies of the causal estimates. Use the $J$ replications to compute a 95% percentile interval and return the sample means over $J$ for the average causal effects.
 
 The benefit of this method is that it naturally account for nonlinear effects, different natures of the mediator (binary, categorical, etc.) and the response, through suitable models, e.g., a logistic regression for a binary outcome. With repeated measures, one could also consider interactions between individuals and mediator using random effects, and still retrieve an effect. The framework easily handles interactions between $X:M$ added to the outcome model, in which case we get different values of average causal mediation effect and average direct effect for each value of $X$.
 

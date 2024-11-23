@@ -608,7 +608,7 @@ Y \mid X=x, M=m &amp;=  c_Y + \beta x + \gamma m  + \varepsilon_Y
 \mathsf{TE} &amp;= \mathsf{E}[Y\{1, M(1)\} -Y\{0, M(0)\}] = \beta + \alpha \gamma
 \end{align*}\]</span></p>
 <p>The parameters can be interpreted as the direct (<span class="math inline">\(\beta\)</span>), conditional mediation effect (<span class="math inline">\(\alpha \gamma\)</span>) and total (<span class="math inline">\(\beta + \alpha \gamma\)</span>) effects. These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression.</p>
-<p>The “sequential ignorability” assumption in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization if we can manipulate <span class="math inline">\(X\)</span>, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.7</span></a>. This means <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> must be independent of one another and, as a result, error terms should also be uncorrelated.</p>
+<p>The “sequential ignorability” assumption in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization if we can manipulate <span class="math inline">\(X\)</span>, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.8</span></a>. This means <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> must be independent of one another and, as a result, error terms should also be uncorrelated.</p>
 <p>In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients <span class="math inline">\(\alpha\gamma\)</span>. Absence of mediation implies the product is zero. <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> recommended using Sobel’s test statistic, of the form <span class="math display">\[\begin{align*}
 S  &amp;= \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} \\&amp;=  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}}
 \end{align*}\]</span> where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math inline">\(\widehat{\gamma}\)</span> and their variance <span class="math inline">\(\mathsf{Va}(\widehat{\alpha})\)</span> and <span class="math inline">\(\mathsf{Va}(\widehat{\gamma})\)</span> can be obtained from the estimated coefficients and standard errors.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The Sobel’s statistic <span class="math inline">\(S\)</span> is approximately standard normal in large samples, <span class="math inline">\(S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)\)</span>, but the approximation is sometimes poor in small samples. Other test statistics are listed in <span class="citation" data-cites="McKinnon:2002">MacKinnon et al. (<a href="references.html#ref-McKinnon:2002" role="doc-biblioref">2002</a>)</span>.</p>
@@ -657,13 +657,17 @@ Figure&nbsp;13.6: Null distribution of Sobel’s statistic against approximate a
 <li>compute the natural indirect effect <span class="math inline">\(\widehat{\alpha}\cdot\widehat{\gamma}\)</span> on each simulated sample</li>
 </ol>
 <p>There are different approaches to computing confidence intervals, but the simplest is the <strong>percentile method</strong>. For a two-sided test at level <span class="math inline">\(\alpha\)</span>, compute the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap statistics <span class="math inline">\(\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B\)</span>. For example, if the level is <span class="math inline">\(\alpha=5\)</span>% and we generate <span class="math inline">\(B=1000\)</span> bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.</p>
-<p>Nowadays, the asymptotic approximation (sometimes misnamed delta method<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.</p>
+<p>Nowadays, the asymptotic approximation (sometimes misnamed delta method<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>) has fallen out of fashion among practitioners for getting confidence intervals for the ACME (not Sobel’s statistic), who prefer the nonparametric bootstrap coupled with the percentile method. <a href="#fig-bootstrap" class="quarto-xref">Figure&nbsp;<span>13.7</span></a> shows that the sampling distribution of <span class="math inline">\(\widehat{\alpha}\widehat{\gamma}\)</span> (unstandardized) is indeed not symmetric, unlike the distribution of Sobel’s statistic.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="causal-inference_files/figure-html/bootstrap-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Bootstrap distribution of indirect effect with estimate and percentile 95% confidence intervals (vertical red lines).</figcaption>
+<div id="fig-bootstrap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bootstrap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="causal-inference_files/figure-html/fig-bootstrap-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bootstrap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.7: Bootstrap distribution of average conditional mediation effect (aka indirect effect) with estimate and percentile 95% confidence intervals (vertical red lines) for the simulated example.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -675,7 +679,7 @@ Figure&nbsp;13.6: Null distribution of Sobel’s statistic against approximate a
 <h2 data-number="13.4" class="anchored" data-anchor-id="model-assumptions"><span class="header-section-number">13.4</span> Model assumptions</h2>
 <p>We can unpack the model assumptions for the linear mediation model.</p>
 <ol type="1">
-<li>The <em>no unmeasured confounders</em> assumption. Plainly stated, there are no unobserved confounders and thus the error terms <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> are independent. Additionally, when we consider observational data, we must make sure there is hidden confounders affecting either the <span class="math inline">\(M \to X\)</span> and the <span class="math inline">\(X \to Y\)</span> relation, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.7</span></a>. We can include covariates in the regression models to palliate to this, but we must only include the minimal set of confounders (and no additional mediator or collider chain).</li>
+<li>The <em>no unmeasured confounders</em> assumption. Plainly stated, there are no unobserved confounders and thus the error terms <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> are independent. Additionally, when we consider observational data, we must make sure there is hidden confounders affecting either the <span class="math inline">\(M \to X\)</span> and the <span class="math inline">\(X \to Y\)</span> relation, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.8</span></a>. We can include covariates in the regression models to palliate to this, but we must only include the minimal set of confounders (and no additional mediator or collider chain).</li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
@@ -685,13 +689,13 @@ Figure&nbsp;13.6: Null distribution of Sobel’s statistic against approximate a
 <img src="figures/dag1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.7: Directed acyclic graph representing observational settings (left) and experimental settings in which assignment is random given covariates measured pre-treatments (right). The ‘no unmeasured confounder’ assumption postulates such confounders are included (with the correct parametric form) in the regression models.
+Figure&nbsp;13.8: Directed acyclic graph representing observational settings (left) and experimental settings in which assignment is random given covariates measured pre-treatments (right). The ‘no unmeasured confounder’ assumption postulates such confounders are included (with the correct parametric form) in the regression models.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Another problem would be to claim that variable <span class="math inline">\(M\)</span> is a mediator when in truth part of the effect on the outcome is due to change in another mediator. <a href="#fig-dag2" class="quarto-xref">Figure&nbsp;<span>13.8</span></a> shows an instance with no confounding, but multiple mediators, say <span class="math inline">\(M_1\)</span> and <span class="math inline">\(M_2\)</span>: the latter mediates the relation <span class="math inline">\(M_1 \to Y\)</span>. The linear mediation model would capture the total effect of <span class="math inline">\(M_1\)</span>, but it would be incorrect to claim that the mediation effect on <span class="math inline">\(X\)</span> is due to <span class="math inline">\(M_1\)</span>.</p>
+<p>Another problem would be to claim that variable <span class="math inline">\(M\)</span> is a mediator when in truth part of the effect on the outcome is due to change in another mediator. <a href="#fig-dag2" class="quarto-xref">Figure&nbsp;<span>13.9</span></a> shows an instance with no confounding, but multiple mediators, say <span class="math inline">\(M_1\)</span> and <span class="math inline">\(M_2\)</span>: the latter mediates the relation <span class="math inline">\(M_1 \to Y\)</span>. The linear mediation model would capture the total effect of <span class="math inline">\(M_1\)</span>, but it would be incorrect to claim that the mediation effect on <span class="math inline">\(X\)</span> is due to <span class="math inline">\(M_1\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dag2" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -700,7 +704,7 @@ Figure&nbsp;13.7: Directed acyclic graph representing observational settings (le
 <img src="figures/dag2.png" class="img-fluid figure-img" style="width:40.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dag2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.8: Directed acyclic graph showing multiple mediators.
+Figure&nbsp;13.9: Directed acyclic graph showing multiple mediators.
 </figcaption>
 </figure>
 </div>
@@ -728,22 +732,392 @@ Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \varepsilon_{Y,i}
 \mathsf{ACME}(x) = (\gamma + \kappa x)\{M(1)-M(0)\} = \alpha (\gamma + \kappa x).
 \end{align*}\]</span> and thus the value differs depending on experimental regime (treatment or control), due to the presence of the interaction. Both the average direct and total effects now depend on the theoretical average values of the covariates <span class="math inline">\(\boldsymbol{Z}\)</span> added to the model to control for confounding.</p>
 </div>
+<div id="exm-mediation1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.3 (Pain as a social glue)</strong></span> We consider an example from Experiment 1 of <span class="citation" data-cites="Bastian:2014">Bastian, Jetten, and Ferris (<a href="references.html#ref-Bastian:2014" role="doc-biblioref">2014</a>)</span>, who experienced the effect of the effect of shared pain (through a manipulation) on bonding.</p>
+<blockquote class="blockquote">
+<p>This effect of pain remained when controlling for age (<span class="math inline">\(p = .048\)</span>), gender (<span class="math inline">\(p = .052\)</span>), and group size (<span class="math inline">\(p = .050\)</span>). None of these variables were significantly correlated with experimental condition (<span class="math inline">\(ps &gt; .136\)</span>) or perceived bonding (<span class="math inline">\(ps &gt; .925\)</span>). To determine whether the marginal tendency for the pain tasks to be viewed as more threatening than the control tasks mediated the effect of pain on perceived bonding, we conducted a bootstrap analysis (Preacher &amp; Hayes, 2008) using 5,000 resamples. The results of this analysis revealed that threat was not a significant mediator, indirect effect = <span class="math inline">\(-0.11\)</span>, SE = <span class="math inline">\(0.09\)</span>, 95% CI = [<span class="math inline">\(-0.34, 0.03\)</span>].</p>
+</blockquote>
+<p>The response variable <span class="math inline">\(Y\)</span> is <code>bonding</code>, the experimental factor <code>condition</code> and <code>threat</code>, the average ALES subscale about the perception of the physical task, is the postulated mediator.</p>
+<p>We use the <code>mediation</code> package <span class="citation" data-cites="mediationR">(<a href="references.html#ref-mediationR" role="doc-biblioref">Tingley et al. 2014</a>)</span> for the model; the package certainly isn’t needed (nor the PROCESS macros) to run the bootstrap, which we could obtain with a single for-loop. However, it has utilities, notably for checking model assumptions, that are convenient.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mediation, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BJF14_S1, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Mediation and response models</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>MsX <span class="ot">&lt;-</span> <span class="fu">lm</span>(threat <span class="sc">~</span> condition <span class="sc">+</span> gender <span class="sc">+</span> groupsize <span class="sc">+</span> age, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> BJF14_S1)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>YsXM <span class="ot">&lt;-</span> <span class="fu">lm</span>(bonding <span class="sc">~</span> condition <span class="sc">+</span> threat <span class="sc">+</span> gender <span class="sc">+</span> groupsize <span class="sc">+</span> age,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> BJF14_S1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tbl-responsecoefs" class="quarto-layout-panel anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-responsecoefs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.2: Coefficients and standard errors of the linear regression model for <span class="citation" data-cites="Bastian:2014">Bastian, Jetten, and Ferris (<a href="references.html#ref-Bastian:2014" role="doc-biblioref">2014</a>)</span>
+</figcaption>
+<div aria-describedby="tbl-responsecoefs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-responsecoefs" style="flex-basis: 50.0%;justify-content: center;">
+<div id="tbl-responsecoefs-1" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-responsecoefs-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) mediation model
+</figcaption>
+<div aria-describedby="tbl-responsecoefs-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-responsecoefs-1" class="do-not-create-environment caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">coef.</th>
+<th style="text-align: right;">std. error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: right;">0.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">condition [pain]</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gender [female]</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">group size</td>
+<td style="text-align: right;">-0.07</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-responsecoefs" style="flex-basis: 50.0%;justify-content: center;">
+<div id="tbl-responsecoefs-2" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-responsecoefs-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) outcome model
+</figcaption>
+<div aria-describedby="tbl-responsecoefs-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-responsecoefs-2" class="do-not-create-environment caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">coef.</th>
+<th style="text-align: right;">std. error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">2.66</td>
+<td style="text-align: right;">1.47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">condition [pain]</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">threat</td>
+<td style="text-align: right;">-0.24</td>
+<td style="text-align: right;">0.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gender [female]</td>
+<td style="text-align: right;">-0.02</td>
+<td style="text-align: right;">0.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">group size</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>Both of the <code>threat</code> and <code>bonding</code> measures are average of Likert scales. We include the controls in the regression for the response to account for potential confounding between threat level and shared bonding: it is unclear whether the authors used the control covariates or whether these make sense.</p>
+<p>It is instructive to perform calculations by hand. We write a little function that takes as input the coefficients and variance of the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> from the linear mediation model and returns the Sobel statistic, and the <span class="math inline">\(p\)</span>-value and 95% confidence intervals based on the (large-sample) normal approximation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate Sobel's statistic for binary treatment</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sobel <span class="ot">&lt;-</span> <span class="cf">function</span>(alpha, gamma, alpha_var, gamma_var){</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute point estimate (product of alpha and gamma)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  pe_sob <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(alpha<span class="sc">*</span>gamma)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtain standard error of alpha_hat*gamma_hat</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  se_sob <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sqrt</span>(gamma<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> alpha_var <span class="sc">+</span> alpha<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> gamma_var  <span class="sc">+</span> gamma_var<span class="sc">*</span>alpha_var))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Wald statistic</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  stat <span class="ot">&lt;-</span> pe_sob<span class="sc">/</span>se_sob</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">estimate =</span> pe_sob,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">se =</span> se_sob,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">stat =</span> stat, <span class="co"># Sobel test statistic</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">pvalue =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="fu">abs</span>(stat), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>), <span class="co"># two-sided p-value</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">lowerCI =</span> pe_sob <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="at">p =</span> <span class="fl">0.025</span>)<span class="sc">*</span>se_sob,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">upperCI =</span> pe_sob <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="at">p =</span> <span class="fl">0.975</span>)<span class="sc">*</span>se_sob</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a function that returns the statistic for any given data</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># This way, we can pass a bootstrap sample and get the same quantity</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>stat <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">peOnly =</span> <span class="cn">TRUE</span>){</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit models</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>mod_med <span class="ot">&lt;-</span> <span class="fu">lm</span>(threat <span class="sc">~</span> condition <span class="sc">+</span> gender <span class="sc">+</span> groupsize <span class="sc">+</span> age,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> data) <span class="co"># mediator model</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>mod_resp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bonding <span class="sc">~</span> condition <span class="sc">+</span> threat <span class="sc">+</span> gender <span class="sc">+</span> groupsize <span class="sc">+</span> age,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> data) <span class="co"># response model</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Use 'coef' to extract estimated coefficients</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># and 'vcov' to get the estimated covariance matrix of coefficients</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>coef_alpha <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod_med)[<span class="st">'conditionPain'</span>]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>coef_gamma <span class="ot">&lt;-</span> <span class="fu">coef</span>(mod_resp)[<span class="st">'threat'</span>]</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>var_alpha <span class="ot">&lt;-</span> <span class="fu">vcov</span>(mod_med)[<span class="st">'conditionPain'</span>,<span class="st">'conditionPain'</span>]</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>var_gamma <span class="ot">&lt;-</span> <span class="fu">vcov</span>(mod_resp)[<span class="st">'threat'</span>,<span class="st">'threat'</span>]</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute Sobel's statistic</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  S <span class="ot">&lt;-</span> <span class="fu">sobel</span>(<span class="at">alpha =</span> coef_alpha,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha_var =</span> var_alpha,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>             <span class="at">gamma =</span> coef_gamma,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>             <span class="at">gamma_var =</span> var_gamma)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">isTRUE</span>(peOnly)){</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(S)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span>{</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">as.vector</span>(S[,<span class="st">'estimate'</span>]))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Values for the paper - using large-sample approximation</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>vals <span class="ot">&lt;-</span> <span class="fu">stat</span>(<span class="at">data =</span> BJF14_S1, <span class="at">peOnly =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we turn to the nonparametric bootstrap to get a comparison of how the results would differ. We fix the seed and provide data sampled with replacement, using a simple for-loop. The number of bootstrap samples should be large enough to avoid additional variability due to resampling.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nonparametric bootstrap analysis</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>) <span class="co"># set random seed for reproducibility</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span>L <span class="co">#number of bootstrap replications</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(BJF14_S1) <span class="co"># number of observations</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">numeric</span>(B) <span class="co"># create container</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(b <span class="cf">in</span> <span class="fu">seq_len</span>(B)){</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample row indices with replacement at random uniformly</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  bootdata <span class="ot">&lt;-</span> BJF14_S1[<span class="fu">sample.int</span>(n, n, <span class="at">replace =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the test statistic on the bootstrap sample</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  results[b] <span class="ot">&lt;-</span> <span class="fu">stat</span>(<span class="at">data =</span> bootdata, <span class="at">peOnly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentile confidence intervals</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>boot_perc_confint <span class="ot">&lt;-</span> <span class="fu">quantile</span>(results, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># If we have B a multiple of 40, then we can use the sorted observations</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># sort(results)[B*c(0.025,0.975)]</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap p-value for test alpha*gamma=0</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>M_over_B <span class="ot">&lt;-</span> <span class="fu">mean</span>(results <span class="sc">&lt;</span> <span class="dv">0</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>boot_pval <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">min</span>(<span class="fu">c</span>(M_over_B, <span class="dv">1</span><span class="sc">-</span>M_over_B))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-sobol-pain" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sobol-pain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.3: Average causal mediation effect for <span class="citation" data-cites="Bastian:2014">Bastian, Jetten, and Ferris (<a href="references.html#ref-Bastian:2014" role="doc-biblioref">2014</a>)</span>, with <span class="math inline">\(p\)</span>-values and 95% confidence intervals based on the normal approximation (top) and nonparametric bootstrap with percentile confidence intervals (bottom).
+</figcaption>
+<div aria-describedby="tbl-sobol-pain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std. error</th>
+<th style="text-align: right;">p-value</th>
+<th style="text-align: right;">lower CL</th>
+<th style="text-align: right;">upper CL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">0.119</td>
+<td style="text-align: right;">0.549</td>
+<td style="text-align: right;">-0.305</td>
+<td style="text-align: right;">0.162</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">0.126</td>
+<td style="text-align: right;">0.534</td>
+<td style="text-align: right;">-0.342</td>
+<td style="text-align: right;">0.132</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The differences between the large-sample approximation and the bootstrap, reported in <a href="#tbl-sobol-pain" class="quarto-xref">Table&nbsp;<span>13.3</span></a>, are negligible.</p>
+<p>We can also use software to perform the calculations without coding manually effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>linmed <span class="ot">&lt;-</span> <span class="fu">mediate</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.m =</span> MsX,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.y =</span> YsXM,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sims =</span> <span class="dv">1000</span>L, <span class="co"># number of bootstrap simulations</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">TRUE</span>, <span class="co"># use bootstrap</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.ci.type =</span> <span class="st">"perc"</span>, <span class="co"># type of bootstrap: percentile</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediator =</span> <span class="st">"threat"</span>, <span class="co"># name of mediator</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat =</span> <span class="st">"condition"</span>, <span class="co"># name of treatment</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">control.value =</span> <span class="st">"Control"</span>, <span class="co"># name of control (level of 'condition')</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat.value =</span> <span class="st">"Pain"</span>) <span class="co"># name of treatment (level of 'condition')</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linmed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-mediation1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mediation1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.4: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% confidence intervals and p-values with the percentile method based on 5000 bootstrap samples.
+</figcaption>
+<div aria-describedby="tbl-mediation1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">lower 95% CI</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upper 95% CI</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ACME</td>
+<td style="text-align: right;">-0.071</td>
+<td style="text-align: right;">-0.363</td>
+<td style="text-align: right;">0.146</td>
+<td style="text-align: right;">0.548</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ADE</td>
+<td style="text-align: right;">0.660</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">1.257</td>
+<td style="text-align: right;">0.056</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total effect</td>
+<td style="text-align: right;">0.588</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">1.145</td>
+<td style="text-align: right;">0.048</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">prop. mediated</td>
+<td style="text-align: right;">-0.121</td>
+<td style="text-align: right;">-1.501</td>
+<td style="text-align: right;">0.615</td>
+<td style="text-align: right;">0.564</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The first line of <a href="#tbl-mediation" class="quarto-xref">Table&nbsp;<span>13.6</span></a> gives the average conditional mediated effect (labelled ACME), the second the average direct effect (ADE) and the third the total effect (ADE + ACME). The point estimate for ACME, <span class="math inline">\(\alpha\gamma\)</span> is <span class="math inline">\(\widehat{\alpha}\widehat{\gamma} = -0.07\)</span>. The bootstrap sampling distribution is skewed to the left, a fact reflected by the asymmetric percentile confidence interval.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-densityACME" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-densityACME-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="causal-inference_files/figure-html/fig-densityACME-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-densityACME-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.10: Density of the 1000 nonparametric bootstrap estimates of the average conditional mediation effect <span class="math inline">\(\alpha\gamma\)</span>, with point estimate and 95% percentile bootstrap confidence intervals (vertical dashed lines).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The sequential ignorability assumption cannot be verified, but we can see what impacts violations would have on the coefficients: the expected value of the coefficient <span class="math inline">\(\widehat{\gamma}\)</span> is <span class="math inline">\(\gamma + \mathsf{Cov}(\varepsilon_M, \varepsilon_Y)/\mathsf{Va}(\varepsilon_M)\)</span>; the second component is a bias term that does not vanish, even when the sample size grows <span class="citation" data-cites="Bullock.Green.Ha:2010">(<a href="references.html#ref-Bullock.Green.Ha:2010" role="doc-biblioref">Bullock, Green, and Ha 2010</a>)</span>. The variance of the error of the mediation and response models can be estimated, and we can vary the correlation coefficient, <span class="math inline">\(\rho=\mathsf{Cor}(\varepsilon_M, \varepsilon_Y)\)</span>, to assess the sensitivity of our conclusions if there was confounding.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>linmed_sensitivity <span class="ot">&lt;-</span> <span class="fu">medsens</span>(linmed)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linmed_sensitivity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Mediation Sensitivity Analysis for Average Causal Mediation Effect
+
+Sensitivity Region
+
+      Rho    ACME 95% CI Lower 95% CI Upper R^2_M*R^2_Y* R^2_M~R^2_Y~
+[1,] -0.4  0.2533      -0.0236       0.5302         0.16       0.1144
+[2,] -0.3  0.1626      -0.0723       0.3975         0.09       0.0644
+[3,] -0.2  0.0805      -0.1288       0.2898         0.04       0.0286
+[4,] -0.1  0.0034      -0.1969       0.2037         0.01       0.0072
+[5,]  0.0 -0.0714      -0.2788       0.1360         0.00       0.0000
+[6,]  0.1 -0.1462      -0.3748       0.0825         0.01       0.0072
+[7,]  0.2 -0.2233      -0.4850       0.0385         0.04       0.0286
+
+Rho at which ACME = 0: -0.1
+R^2_M*R^2_Y* at which ACME = 0: 0.01
+R^2_M~R^2_Y~ at which ACME = 0: 0.0072 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(linmed_sensitivity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="causal-inference_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>medsens</code> function implements the sensitivity diagnostic presented in Section 5.1 of <span class="citation" data-cites="Imai.Keele.Yamamoto:2010">Imai, Keele, and Yamamoto (<a href="references.html#ref-Imai.Keele.Yamamoto:2010" role="doc-biblioref">2010</a>)</span> for the linear mediation model. By default, the correlation <span class="math inline">\(\rho\)</span> varies in 0.1 increments. We can see the wide range of the ACME if there was correlation between residuals from the mediation and the response model, highlighting the wide range of values that could be returned: the ACME could go from <span class="math inline">\(0.2\)</span> to <span class="math inline">\(-0.288\)</span> for correlations in the range <span class="math inline">\(\rho \in [-0.4, 0.4]\)</span>. In this example, nearly any correlation in this range would lead to “insignificant results”, mostly because of the small sample size. In a situation where we had found a significant (sic) result, we could observe how much correlation btween would be needed for this effect to be an artifact of correlation and vanish.</p>
+<p>According to the documentation of the <code>medsens</code> function (<code>?medsens</code>), there are two variants of the estimated effect size, either computing the proportion of the total (tilde, <code>R^2_M~R^2_Y</code>) or residual (starred, <code>R^2_M*R^2_Y*</code>) variance from the mediation and outcome models that are due to hypothetical unobserved confounders.</p>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pitfall
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are several problems with the description of <span class="citation" data-cites="Bastian:2014">Bastian, Jetten, and Ferris (<a href="references.html#ref-Bastian:2014" role="doc-biblioref">2014</a>)</span>: while it seems that some covariates (age, gender, group size) were added to regression models, it is unclear whether they could be confounders, whether their effect is linear and in which (if any) model they are included. Stating “bootstrap analysis” is the equivalent of “running a statistical test”, so vague it could mean anything, and the fact the output is random does not help with reproducibility.</p>
+</div>
+</div>
 <div id="exm-inconsistency" class="theorem example">
-<p><span class="theorem-title"><strong>Example 13.3 (Fluency as mediator of product evaluation)</strong></span> Study 2 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
+<p><span class="theorem-title"><strong>Example 13.4 (Fluency as mediator of product evaluation)</strong></span> Study 2 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
 <p>The experimental variable is the consistency of the product description and depiction, with <code>fluency</code> leading to “processing disfluency” that is expected to impact negatively judgment ratings. Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LC19_S2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>LC19_S2 <span class="ot">&lt;-</span> LC19_S2 <span class="sc">|&gt;</span> <span class="co"># transform consistency into </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">consistency =</span> <span class="fu">ifelse</span>(consistency <span class="sc">==</span> <span class="st">"inconsistent"</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>YsMX <span class="ot">&lt;-</span> <span class="fu">lm</span>(prodeval <span class="sc">~</span> fluency <span class="sc">+</span> consistency <span class="sc">+</span> familiarity,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>MsX <span class="ot">&lt;-</span> <span class="fu">lm</span>(fluency <span class="sc">~</span> consistency <span class="sc">+</span> familiarity,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LC19_S2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>LC19_S2 <span class="ot">&lt;-</span> LC19_S2 <span class="sc">|&gt;</span> <span class="co"># transform consistency into </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">consistency =</span> <span class="fu">ifelse</span>(consistency <span class="sc">==</span> <span class="st">"inconsistent"</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>YsMX <span class="ot">&lt;-</span> <span class="fu">lm</span>(prodeval <span class="sc">~</span> fluency <span class="sc">+</span> consistency <span class="sc">+</span> familiarity,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>MsX <span class="ot">&lt;-</span> <span class="fu">lm</span>(fluency <span class="sc">~</span> consistency <span class="sc">+</span> familiarity,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="tbl-coefsmediation" class="quarto-layout-panel anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coefsmediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.2: Model coefficients
+Table&nbsp;13.5: Model coefficients
 </figcaption>
 <div aria-describedby="tbl-coefsmediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -833,20 +1207,20 @@ Table&nbsp;13.2: Model coefficients
 <p>We can extract the effects directly from the outcome: the natural indirect effect estimate is <span class="math inline">\(\widehat{\alpha}\widehat{\gamma} = 0.48 \times 0.60\)</span> and the direct effect is <span class="math inline">\(\widehat{\beta} = 0.29\)</span>.</p>
 <p>To get confidence intervals, we can use the <code>mediate</code> package <span class="citation" data-cites="mediationR">(<a href="references.html#ref-mediationR" role="doc-biblioref">Tingley et al. 2014</a>)</span>. The function requires the parametric model for the mediation and outcome, as well as a series of specification (the number of bootstrap samples, the type of confidence interval, the names of the levels for categorical treatment, etc.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mediation, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>linmed <span class="ot">&lt;-</span> <span class="fu">mediate</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.m =</span> MsX,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.y =</span> YsMX,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat =</span> <span class="st">"consistency"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediator =</span> <span class="st">"fluency"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sims =</span> <span class="dv">5000</span>L,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.ci.type =</span> <span class="st">"perc"</span>, <span class="co"># percentile method</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">## with original factor, we could specify the levels for control and treatment</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  control.value = "inconsistent", </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  treat.value = "consistent"</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">80667</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mediation, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>linmed <span class="ot">&lt;-</span> <span class="fu">mediate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.m =</span> MsX,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.y =</span> YsMX,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat =</span> <span class="st">"consistency"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediator =</span> <span class="st">"fluency"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sims =</span> <span class="dv">5000</span>L,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.ci.type =</span> <span class="st">"perc"</span>, <span class="co"># percentile method</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">## with original factor, we could specify the levels for control and treatment</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  control.value = "inconsistent", </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  treat.value = "consistent"</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -856,7 +1230,7 @@ Table&nbsp;13.2: Model coefficients
 <img src="causal-inference_files/figure-html/fig-effect-LC19-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effect-LC19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.9: Causal effects and confidence intervals for the difference between inconsistency (control) and consistency (treatement).
+Figure&nbsp;13.11: Causal effects and confidence intervals for the difference between inconsistency (control) and consistency (treatement).
 </figcaption>
 </figure>
 </div>
@@ -866,7 +1240,7 @@ Figure&nbsp;13.9: Causal effects and confidence intervals for the difference bet
 <div id="tbl-mediation" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% percentile confidence intervals and p-values based on 5000 bootstrap samples.
+Table&nbsp;13.6: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% percentile confidence intervals and p-values based on 5000 nonparametric bootstrap samples.
 </figcaption>
 <div aria-describedby="tbl-mediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -920,7 +1294,7 @@ Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparam
 </div>
 <p>Using the <code>summary</code> method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article. We can also use the <code>medsens</code> function to perform the sensitivity analysis, but this only works for binary (numerical) treatments.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mediation<span class="sc">::</span><span class="fu">medsens</span>(<span class="at">x =</span> linmed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mediation<span class="sc">::</span><span class="fu">medsens</span>(<span class="at">x =</span> linmed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
@@ -928,7 +1302,7 @@ Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparam
 <img src="causal-inference_files/figure-html/fig-sensitivity-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.10: Sensitivity analysis showing the variation of the average causal mediation effect as a function of the correlation between outcome and mediation errors, with pointwise 95% confidence intervals.
+Figure&nbsp;13.12: Sensitivity analysis showing the variation of the average causal mediation effect as a function of the correlation between outcome and mediation errors, with pointwise 95% confidence intervals.
 </figcaption>
 </figure>
 </div>
@@ -947,16 +1321,17 @@ Figure&nbsp;13.10: Sensitivity analysis showing the variation of the average cau
 <li>a mediator model <span class="math inline">\(f_M(x, \boldsymbol{z}; \boldsymbol{\theta}_M)\)</span> that includes <span class="math inline">\(X\)</span> and potential confounders <span class="math inline">\(\boldsymbol{Z}\)</span></li>
 <li>an outcome model <span class="math inline">\(f_Y(x, m, \boldsymbol{z}; \boldsymbol{\theta}_Y)\)</span> with both treatment indicator <span class="math inline">\(X\)</span>, mediator <span class="math inline">\(M\)</span><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and potential confounders <span class="math inline">\(\boldsymbol{Z}\)</span>.</li>
 </ol></li>
-<li><strong>Estimation uncertainty</strong>: Either use nonparametric bootstrap or a large-sample approximation to the distribution of model parameters <span class="math inline">\(\boldsymbol{\theta}_M\)</span> and <span class="math inline">\(\boldsymbol{Y}\)</span> to get <span class="math inline">\(J\)</span> copies.</li>
-<li>For each copy of the parameters <span class="math inline">\(j=1, \ldots, J\)</span>, draw <span class="math inline">\(M\)</span> realizations of the mediation model for each observation <span class="math inline">\(i=1, \ldots, n\)</span>, giving <span class="math inline">\(M^{(jm)}_i(1)\)</span> and <span class="math inline">\(M^{(jm)}_i(0)\)</span>. Use these resulting to obtain one draw from the outcome model for each of
+<li>Draw <span class="math inline">\(B\)</span> realizations of the mediation model for each observation <span class="math inline">\(i=1, \ldots, n\)</span>, giving <span class="math inline">\(M^{(b)}_i(1)\)</span> and <span class="math inline">\(M^{(b)}_i(0)\)</span> for <span class="math inline">\(b=1, \ldots, B\)</span>. Use these resulting to obtain one draw from the outcome model for each of
 <ol type="a">
-<li><span class="math inline">\(Y_{i}^{(jm)}\{0, M^{(jm)}_i(0)\}\)</span>,</li>
-<li><span class="math inline">\(Y_{i}^{(jm)}\{0, M^{(jm)}_i(1)\}\)</span>,</li>
-<li><span class="math inline">\(Y_{i}^{(jm)}\{1, M^{(jm)}_i(0)\}\)</span> and</li>
-<li><span class="math inline">\(Y_{i}^{(jm)}\{1, M^{(jm)}_i(1)\}\)</span>.</li>
+<li><span class="math inline">\(Y_{i}^{(b)}\{0, M^{(b)}_i(0)\}\)</span>,</li>
+<li><span class="math inline">\(Y_{i}^{(b)}\{0, M^{(b)}_i(1)\}\)</span>,</li>
+<li><span class="math inline">\(Y_{i}^{(b)}\{1, M^{(b)}_i(0)\}\)</span> and</li>
+<li><span class="math inline">\(Y_{i}^{(b)}\{1, M^{(b)}_i(1)\}\)</span>.</li>
 </ol></li>
-<li>Plug these quantities in the definitions of <span class="math inline">\(\mathsf{ACME}(x)\)</span>, <span class="math inline">\(\mathsf{ADE}(x)\)</span> and <span class="math inline">\(\mathsf{TE}\)</span>, averaging over the <span class="math inline">\(nM\)</span> replications, over both observations <span class="math inline">\(i=1, \ldots, n\)</span> and replications <span class="math inline">\(m=1, \ldots, M\)</span>. This yields a collection of <span class="math inline">\(J\)</span> values <span class="math inline">\(\mathsf{ACME}_j(x)\)</span>, <span class="math inline">\(\mathsf{ADE}_j(x)\)</span> and <span class="math inline">\(\mathsf{TE}_j\)</span> for each parameter value.</li>
-<li>Use the <span class="math inline">\(J\)</span> replications to compute a 95% percentile interval and return the sample means over <span class="math inline">\(J\)</span> for the average causal effects.</li>
+<li>Plug these quantities in the definitions of <span class="math inline">\(\mathsf{ACME}(x)\)</span>, <span class="math inline">\(\mathsf{ADE}(x)\)</span> and <span class="math inline">\(\mathsf{TE}\)</span>, averaging over the <span class="math inline">\(nM\)</span> replications, over both observations <span class="math inline">\(i=1, \ldots, n\)</span> and replications <span class="math inline">\(b=1, \ldots, B\)</span>, e.g., <span class="math display">\[\begin{align*}
+\mathsf{TE} = \frac{1}{nB} \sum_{b=1}^B \sum_{i=1}^n \left[ Y_{i}^{(b)}\{1, M^{(b)}_i(1)\} - Y_{i}^{(b)}\{0, M^{(b)}_i(0)\}\right]
+\end{align*}\]</span></li>
+<li><strong>Estimation uncertainty</strong>: Either use nonparametric bootstrap or a large-sample approximation to the distribution of model parameters <span class="math inline">\(\boldsymbol{\theta}_M\)</span> and <span class="math inline">\(\boldsymbol{Y}\)</span> to get <span class="math inline">\(J\)</span> copies of parameters, and repeat steps 2. and 3. to get <span class="math inline">\(J\)</span> copies of the causal estimates. Use the <span class="math inline">\(J\)</span> replications to compute a 95% percentile interval and return the sample means over <span class="math inline">\(J\)</span> for the average causal effects.</li>
 </ol>
 <p>The benefit of this method is that it naturally account for nonlinear effects, different natures of the mediator (binary, categorical, etc.) and the response, through suitable models, e.g., a logistic regression for a binary outcome. With repeated measures, one could also consider interactions between individuals and mediator using random effects, and still retrieve an effect. The framework easily handles interactions between <span class="math inline">\(X:M\)</span> added to the outcome model, in which case we get different values of average causal mediation effect and average direct effect for each value of <span class="math inline">\(X\)</span>.</p>
 
@@ -964,6 +1339,9 @@ Figure&nbsp;13.10: Sensitivity analysis showing the variation of the average cau
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Baron.Kenny:1986" class="csl-entry" role="listitem">
 Baron, R. M., and D. A. Kenny. 1986. <span>“The Moderator-Mediator Variable Distinction in Social Psychological Research: Conceptual, Strategic, and Statistical Considerations.”</span> <em>Journal of Personality and Social Psychology</em> 51 (6): 1173–82. <a href="https://doi.org/10.1037/0022-3514.51.6.1173">https://doi.org/10.1037/0022-3514.51.6.1173</a>.
+</div>
+<div id="ref-Bastian:2014" class="csl-entry" role="listitem">
+Bastian, Brock, Jolanda Jetten, and Laura J. Ferris. 2014. <span>“Pain as Social Glue: Shared Pain Increases Cooperation.”</span> <em>Psychological Science</em> 25 (11): 2079–85. <a href="https://doi.org/10.1177/0956797614545886">https://doi.org/10.1177/0956797614545886</a>.
 </div>
 <div id="ref-Bullock.Green.Ha:2010" class="csl-entry" role="listitem">
 Bullock, J. G., Green D. P., and S. E. Ha. 2010. <span>“Yes, but What’s the Mechanism? (Don’t Expect an Easy Answer).”</span> 98 (4): 550–58. <a href="https://doi.org/10.1037/a0018933">https://doi.org/10.1037/a0018933</a>.
@@ -979,6 +1357,9 @@ Efron, B., and R. J. Tibshirani. 1993. <em>An Introduction to the Bootstrap</em>
 </div>
 <div id="ref-Imai:2010" class="csl-entry" role="listitem">
 Imai, Kosuke, Luke Keele, and Dustin Tingley. 2010. <span>“A General Approach to Causal Mediation Analysis.”</span> <em>Psychological Methods</em> 15 (4): 309–34. <a href="https://doi.org/10.1037/a0020761">https://doi.org/10.1037/a0020761</a>.
+</div>
+<div id="ref-Imai.Keele.Yamamoto:2010" class="csl-entry" role="listitem">
+Imai, Kosuke, Luke Keele, and Teppei Yamamoto. 2010. <span>“Identification, Inference and Sensitivity Analysis for Causal Mediation Effects.”</span> <em>Statistical Science</em> 25 (1): 51–71. <a href="https://doi.org/10.1214/10-STS321">https://doi.org/10.1214/10-STS321</a>.
 </div>
 <div id="ref-Imbens.Rubin:2015" class="csl-entry" role="listitem">
 Imbens, Guido W., and Donald B. Rubin. 2015. <em>Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction</em>. Cambridge, UK: Cambridge University Press. <a href="https://doi.org/10.1017/CBO9781139025751">https://doi.org/10.1017/CBO9781139025751</a>.
