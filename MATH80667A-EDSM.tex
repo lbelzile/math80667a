@@ -333,9 +333,9 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -367,7 +367,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-11-21}
+\date{2024-11-22}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -409,7 +409,7 @@ details.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on jeudi, novembre 21 2024.
+and were last compiled on vendredi, novembre 22 2024.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -447,7 +447,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -567,7 +567,7 @@ the teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-tip-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -608,7 +608,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -627,7 +627,7 @@ found no evidence of a negative impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -643,8 +643,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -798,7 +798,7 @@ limit theorem.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-note-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -865,7 +865,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-tip-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -909,7 +909,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-note-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -940,7 +940,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-note-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -997,7 +997,7 @@ for the stratified sample.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-note-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1377,7 +1377,7 @@ license}.}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-tip-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -1413,7 +1413,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \textbf{Learning objectives}:
 
@@ -2137,7 +2137,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2380,7 +2380,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2569,7 +2569,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-tip-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -3562,7 +3562,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \textbf{Learning objectives}:
 
@@ -5536,7 +5536,7 @@ of variance or unbalanced effects, the actual method employed is called
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -6279,7 +6279,7 @@ acuity levels.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -7765,7 +7765,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Stekelenburg et al. (2021) split their data to do pairwise comparisons
 two at the time (thus taking roughly two-third of the data to perform a
@@ -7784,7 +7784,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -7848,16 +7848,19 @@ parametrization, the linear model with mean \[
 \] includes different slopes for \(W\) in each experimental group, as
 well as different intercepts for each group.
 
-As an example, we consider data from a study on gender discrimination
-(Garcia et al. 2010). Participants were put with a file where a women
-was turned down promotion in favour of male colleague despite her being
-clearly more experimented and qualified. The authors manipulated the
-decision of the participant to this decision, either choosing not to
-challenge the decision (no protest), a request to reconsider based on
-individual qualities of the applicants (individual) and a request to
-reconsider based on abilities of women (collective). All items were
-measured using scales constructed using items measured using Likert
-scales ranging from strongly disagree (1) to strongly agree (7).
+\begin{example}[Gender
+discrimation]\protect\hypertarget{exm-moderation1}{}\label{exm-moderation1}
+
+We consider data from a study on gender discrimination (Garcia et al.
+2010). Participants were put with a file where a women was turned down
+promotion in favour of male colleague despite her being clearly more
+experimented and qualified. The authors manipulated the decision of the
+participant to this decision, either choosing not to challenge the
+decision (no protest), a request to reconsider based on individual
+qualities of the applicants (individual) and a request to reconsider
+based on abilities of women (collective). All items were measured using
+scales constructed using items measured using Likert scales ranging from
+strongly disagree (1) to strongly agree (7).
 
 The postulated mediator variable is \texttt{sexism}, the average of 6
 Likert scales for the Modern Sexism Scale assessing pervasiveness of
@@ -7880,7 +7883,7 @@ slopes
 \begin{longtable}[]{@{}lrrrl@{}}
 
 \caption{\label{tbl-testsmoder}Analysis of variance table for the linear
-moderation model.}
+moderation model of .}
 
 \tabularnewline
 
@@ -7905,6 +7908,8 @@ are not parallel) and won't necessarily be reliable outside of the range
 of observed values of sexism. We could look at quantiles and differences
 at the mean sexism,\footnote{This is the default with \texttt{emmeans}}
 or one standard deviation away.
+
+\end{example}
 
 We may be interested in the range of values of the predictor \(W\) for
 which the difference between treatments is not statistically significant
@@ -7957,7 +7962,178 @@ with external variables, leading to moderated mediation. Interactions
 can be considered for pretty much any statistical model, but the usual
 assumptions need to hold for inference to be approximately valid.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{example}[Ghosting]\protect\hypertarget{exm-moderation2}{}\label{exm-moderation2}
+
+Leckfor et al. (2023) consider the impact of ghosting someone (i.e., not
+responding to communications and cutting bridges with a person) on
+personal satisfaction, uncertainty and the need for closure
+(explanations). In their Study 3, they postulated that the type of
+rejection someone experienced. The study comprises 545 participants who
+were asked to reflect about a situation in their own life, in scenarios
+where
+
+\begin{quote}
+Participants in the included (control) condition were asked to write
+about a time when someone ``expressed that they wanted to continue
+and/or maintain a friendship, romantic relationship, or casual dating
+situation.'' Participants in the ghosted condition wrote about a time
+when someone ended a relationship by ``suddenly cutting off all
+communication without explanation.'' Participants in the directly
+rejected condition wrote about a time when someone ``directly
+communicate{[}d{]} that they wanted to end the relationship.'' Nearly
+half (49\%) of participants wrote about a friendship, followed by a
+romantic relationship (29\%), and then a casual dating situation (22\%).
+\end{quote}
+
+The moderator variable is \texttt{cond}, one of control, being ghosted
+or rejected. This should moderate the effect of the need for closure on
+need for satisfaction. The authors postulated that individuals would
+have lower needs of satisfaction after being ghosted.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Moderation analysis}
+\CommentTok{\# This time, the factor of interest is continuous}
+\CommentTok{\# and the moderator is categorical (K=3 levels)}
+\FunctionTok{data}\NormalTok{(LWSH23\_S3, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{data =}\NormalTok{ LWSH23\_S3, needsatis }\SpecialCharTok{\textasciitilde{}}\NormalTok{ needclosure }\SpecialCharTok{*}\NormalTok{ cond)}
+\FunctionTok{anova}\NormalTok{(mod) }\CommentTok{\# interaction is significant}
+\CommentTok{\# Compute estimated marginal means, but with global weights equal to relative weight of each variable}
+\NormalTok{emmeans}\SpecialCharTok{::}\FunctionTok{emmeans}\NormalTok{(mod, }\AttributeTok{specs =} \StringTok{"needclosure"}\NormalTok{, }
+                 \AttributeTok{by =} \StringTok{"cond"}\NormalTok{, }
+                 \AttributeTok{at =} \FunctionTok{list}\NormalTok{(}\AttributeTok{needclosure =} \DecValTok{2}\SpecialCharTok{:}\DecValTok{7}\NormalTok{), }
+                 \AttributeTok{weights =} \StringTok{"prop"}\NormalTok{)}
+\CommentTok{\# All values are reported for the average of needclosure by default without the at}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.4536}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1134}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1031}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1237}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1031}}
+  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1031}}@{}}
+
+\caption{\label{tbl-lmmoder2}Linear moderation model coefficients of
+Study 3 of Leckfor et al. (2023). Least square coefficients, standard
+errors, Wald tests and \(p\)-values for \(\beta=0\) and 95\% confidence
+intervals.}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+coef.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+estimate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+std. error
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+lower CL
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+upper CL
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & \(\beta_0\) & 5.0 & 0.37 & 4.29 & 5.74 \\
+need for closure & \(\beta_1\) & 0.2 & 0.07 & 0.04 & 0.33 \\
+directly rejected {[}cond{]} & \(\beta_2\) & -1.2 & 0.53 & -2.20 &
+-0.12 \\
+ghosted {[}cond{]} & \(\beta_3\) & -1.5 & 0.50 & -2.48 & -0.52 \\
+need for closure * directly rejected {[}cond{]} & \(\beta_4\) & -0.4 &
+0.11 & -0.61 & -0.19 \\
+need for closure * ghosted {[}cond{]} & \(\beta_5\) & -0.4 & 0.10 &
+-0.62 & -0.21 \\
+
+\end{longtable}
+
+\begin{longtable}[]{@{}lrrrl@{}}
+
+\caption{\label{tbl-testsmoder2}Analysis of variance table for the
+linear moderation model of Study 3 of Leckfor et al. (2023).}
+
+\tabularnewline
+
+\toprule\noalign{}
+term & df & sum of squares & stat & p-value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+needclosure & 1 & 3.9 & 4.26 & .039 \\
+cond & 2 & 1346.9 & 738.61 & \textless{} .001 \\
+needclosure:cond & 2 & 18.6 & 10.19 & \textless{} .001 \\
+Residuals & 539 & 491.5 & & \\
+
+\end{longtable}
+
+Since the interaction is significant, we focus on the different slopes.
+We can of course simply report the equations of the linear regression
+for each group. Alternative, \texttt{emmeans} can also return the
+predictions for different values of \texttt{needclosure} per condition
+along with standard errors. The estimates will have lower values of
+\texttt{needclosure} when close to the subgroup averages.
+
+The postulated theoretical mean equation is \begin{align*}
+\mathsf{E}(\texttt{needsatisf}) &= \beta_0 + \beta_1\texttt{needclosure} + \beta_2 \mathsf{1}_{\texttt{cond=directly rejected}} +\beta_3 \mathsf{1}_{\texttt{cond=directly rejected}} \\&+ \beta_4 \texttt{needclosure} \times \mathsf{1}_{\texttt{cond=directly rejected}} +\beta_5 \texttt{needclosure} \times\mathsf{1}_{\texttt{cond=directly rejected}}.
+\end{align*} The estimated model mean
+\(\widehat{\mathsf{E}}(\texttt{needsatisf} \mid \texttt{needclosure}=x)\)
+when \texttt{needclosure} is worth \(x \in [1,7]\) for each
+\texttt{cond} is thus \begin{align*}
+\widehat{Y} & = \begin{cases}
+\widehat{\beta}_0 + \widehat{\beta}_1x, & \texttt{control};\\
+(\widehat{\beta}_0 + \widehat{\beta}_3) + (\widehat{\beta}_1 + \beta_4)x , & \texttt{directly rejected};\\
+(\widehat{\beta}_0 + \widehat{\beta}_2) + (\widehat{\beta}_1 + \beta_5)x, & \texttt{ghosted}.
+\end{cases} \\&= \begin{cases}
+5.015 + 0.181 x, & \texttt{control};\\
+ 3.86 -0.222x, & \texttt{directly rejected};\\
+3.52 -0.234x, & \texttt{ghosted}.
+\end{cases}
+\end{align*}
+
+\begin{figure}[ht!]
+
+\centering{
+
+\includegraphics{ancova_files/figure-pdf/fig-moderation2-slopes-1.pdf}
+
+}
+
+\caption{\label{fig-moderation2-slopes}Scatterplot and linear regression
+slopes for the need for satisfaction as a function of the moderating
+situation and the need for closure.}
+
+\end{figure}%
+
+We can see clearly in Figure~\ref{fig-moderation2-slopes} that the
+impact of the need for closure depends on the situation, with downward
+trends for the ghosted and rejected groups.
+
+We can fit this toy model also with the PROCESS macro, which only
+understand numeric values for factors\ldots{} The output (omitted)
+includes model coefficients with confidence intervals, the \(F\) test
+statistic for the ANOVA, and output for the average need for closure.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{process}\NormalTok{(}\AttributeTok{data =}\NormalTok{ LWSH23\_S3 }\SpecialCharTok{|\textgreater{}}
+\NormalTok{          dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{condind =} \FunctionTok{as.integer}\NormalTok{(cond)), }\CommentTok{\# cast factor to numeric integer levels}
+        \AttributeTok{y =} \StringTok{"needsatis"}\NormalTok{,  }\CommentTok{\# response variable}
+        \AttributeTok{x =} \StringTok{"needclosure"}\NormalTok{, }\CommentTok{\# explanatory variable (not manipulated)}
+        \AttributeTok{w =} \StringTok{"condind"}\NormalTok{, }\CommentTok{\# postulated moderator}
+        \AttributeTok{mcw =} \DecValTok{1}\NormalTok{, }\CommentTok{\# dummy coding for moderator w (so compare to base level, here \textquotesingle{}included\textquotesingle{})}
+        \AttributeTok{model =} \DecValTok{1}\NormalTok{) }\CommentTok{\# number of model in Hayes (simple moderation)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -7987,7 +8163,10 @@ assumptions need to hold for inference to be approximately valid.
 \item
   Moderators are variables that interact with the experimental factor.
   We assess their presence by testing for an interaction in a linear
-  regresison model.
+  regression model.
+\item
+  In the presence of a moderator, we need to consider slopes or groups
+  separately for subgroups.
 \end{itemize}
 
 \end{tcolorbox}
@@ -8411,7 +8590,7 @@ again, the output matches the output of the package.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Measures of effect size are estimated based on data, but unlike summary
 statistics such as the mean and variance, tend to be very noisy in small
@@ -9371,7 +9550,7 @@ interface online for effect size calculations}.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -9406,7 +9585,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, coltitle=black, colframe=quarto-callout-important-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-important-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white]
 
 \begin{itemize}
 \tightlist
@@ -9694,7 +9873,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, coltitle=black, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-note-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -9753,7 +9932,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, coltitle=black, colframe=quarto-callout-tip-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-tip-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -10914,7 +11093,7 @@ implying that `'no other version or treatment assignment would lead to
 different potential outcome'\,' (Imbens and Rubin 2015), which also
 suggests the effect of treatment is constant.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Causal inference is possible in observational settings, but some of the
 assumptions are unverifiable and typically much stronger than for
@@ -11074,7 +11253,7 @@ Matching consists in creating paired samples (with similar
 characteristics for explanatories), and comparing the pairs.
 Stratification consists of analysing subpopulations separately.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 Controlling for a collider is counterproductive, as we would get
 erroneous conclusions: Kowal (2021) reportedly claimed married couples
@@ -11185,7 +11364,7 @@ mediator \(M\) is possible for any combination of covariates
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, opacitybacktitle=0.6, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toptitle=1mm, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, coltitle=black, colframe=quarto-callout-caution-color-frame, colback=white, left=2mm, toprule=.15mm, arc=.35mm, bottomtitle=1mm, titlerule=0mm, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
 
 When measuring effects in psychology and marketing, it will often be the
 case that the conceptual causal model includes variables that cannot be
@@ -11411,17 +11590,24 @@ samples, the percentile confidence intervals bounds are the 25th and
 Nowadays, the asymptotic approximation (sometimes misnamed delta
 method\footnote{The latter is the name of the method used to derive the
   denominator of Sobel's statistic.}) has fallen out of fashion among
-practitioners, who prefer the nonparametric bootstrap coupled with the
-percentile method.
+practitioners for getting confidence intervals for the ACME (not Sobel's
+statistic), who prefer the nonparametric bootstrap coupled with the
+percentile method. Figure~\ref{fig-bootstrap} shows that the sampling
+distribution of \(\widehat{\alpha}\widehat{\gamma}\) (unstandardized) is
+indeed not symmetric, unlike the distribution of Sobel's statistic.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{causal-inference_files/figure-pdf/bootstrap-1.pdf}
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{causal-inference_files/figure-pdf/fig-bootstrap-1.pdf}
 
 }
 
-\caption{Bootstrap distribution of indirect effect with estimate and
-percentile 95\% confidence intervals (vertical red lines).}
+\caption{\label{fig-bootstrap}Bootstrap distribution of average
+conditional mediation effect (aka indirect effect) with estimate and
+percentile 95\% confidence intervals (vertical red lines) for the
+simulated example.}
 
 \end{figure}%
 
@@ -11566,6 +11752,357 @@ control for confounding.
 
 \end{definition}
 
+\begin{example}[Pain as a social
+glue]\protect\hypertarget{exm-mediation1}{}\label{exm-mediation1}
+
+We consider an example from Experiment 1 of Bastian, Jetten, and Ferris
+(2014), who experienced the effect of the effect of shared pain (through
+a manipulation) on bonding.
+
+\begin{quote}
+This effect of pain remained when controlling for age (\(p = .048\)),
+gender (\(p = .052\)), and group size (\(p = .050\)). None of these
+variables were significantly correlated with experimental condition
+(\(ps > .136\)) or perceived bonding (\(ps > .925\)). To determine
+whether the marginal tendency for the pain tasks to be viewed as more
+threatening than the control tasks mediated the effect of pain on
+perceived bonding, we conducted a bootstrap analysis (Preacher \& Hayes,
+2008) using 5,000 resamples. The results of this analysis revealed that
+threat was not a significant mediator, indirect effect = \(-0.11\), SE =
+\(0.09\), 95\% CI = {[}\(-0.34, 0.03\){]}.
+\end{quote}
+
+The response variable \(Y\) is \texttt{bonding}, the experimental factor
+\texttt{condition} and \texttt{threat}, the average ALES subscale about
+the perception of the physical task, is the postulated mediator.
+
+We use the \texttt{mediation} package (Tingley et al. 2014) for the
+model; the package certainly isn't needed (nor the PROCESS macros) to
+run the bootstrap, which we could obtain with a single for-loop.
+However, it has utilities, notably for checking model assumptions, that
+are convenient.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mediation, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(BJF14\_S1, }\AttributeTok{package =} \StringTok{"hecedsm"}\NormalTok{)}
+\CommentTok{\# Mediation and response models}
+\NormalTok{MsX }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(threat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ condition }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ groupsize }\SpecialCharTok{+}\NormalTok{ age, }
+          \AttributeTok{data =}\NormalTok{ BJF14\_S1)}
+\NormalTok{YsXM }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(bonding }\SpecialCharTok{\textasciitilde{}}\NormalTok{ condition }\SpecialCharTok{+}\NormalTok{ threat }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ groupsize }\SpecialCharTok{+}\NormalTok{ age,}
+           \AttributeTok{data =}\NormalTok{ BJF14\_S1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tbl-responsecoefs}Coefficients and standard errors of
+the linear regression model for Bastian, Jetten, and Ferris (2014)}
+
+\begin{minipage}{0.50\linewidth}
+
+\subcaption{\label{tbl-responsecoefs-1}mediation model}
+
+\centering{
+
+\begin{tabular}{lrr}
+\toprule
+term & coef. & std. error\\
+\midrule
+(Intercept) & -0.16 & 0.59\\
+condition {[}pain{]} & 0.30 & 0.12\\
+gender {[}female{]} & -0.05 & 0.13\\
+group size & -0.07 & 0.05\\
+age & 0.07 & 0.02\\
+\bottomrule
+\end{tabular}
+
+}
+
+\end{minipage}%
+%
+\begin{minipage}{0.50\linewidth}
+
+\subcaption{\label{tbl-responsecoefs-2}outcome model}
+
+\centering{
+
+\begin{tabular}{lrr}
+\toprule
+term & coef. & std. error\\
+\midrule
+(Intercept) & 2.66 & 1.47\\
+condition {[}pain{]} & 0.66 & 0.32\\
+threat & -0.24 & 0.36\\
+gender {[}female{]} & -0.02 & 0.33\\
+group size & 0.02 & 0.13\\
+age & 0.03 & 0.07\\
+\bottomrule
+\end{tabular}
+
+}
+
+\end{minipage}%
+
+\end{table}%
+
+Both of the \texttt{threat} and \texttt{bonding} measures are average of
+Likert scales. We include the controls in the regression for the
+response to account for potential confounding between threat level and
+shared bonding: it is unclear whether the authors used the control
+covariates or whether these make sense.
+
+It is instructive to perform calculations by hand. We write a little
+function that takes as input the coefficients and variance of the
+parameters \(\alpha\) and \(\gamma\) from the linear mediation model and
+returns the Sobel statistic, and the \(p\)-value and 95\% confidence
+intervals based on the (large-sample) normal approximation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Function to calculate Sobel\textquotesingle{}s statistic for binary treatment}
+\NormalTok{sobel }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(alpha, gamma, alpha\_var, gamma\_var)\{}
+  \CommentTok{\# Compute point estimate (product of alpha and gamma)}
+\NormalTok{  pe\_sob }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(alpha}\SpecialCharTok{*}\NormalTok{gamma)}
+  \CommentTok{\# Obtain standard error of alpha\_hat*gamma\_hat}
+\NormalTok{  se\_sob }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(gamma}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ alpha\_var }\SpecialCharTok{+}\NormalTok{ alpha}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ gamma\_var  }\SpecialCharTok{+}\NormalTok{ gamma\_var}\SpecialCharTok{*}\NormalTok{alpha\_var))}
+  \CommentTok{\# Wald statistic}
+\NormalTok{  stat }\OtherTok{\textless{}{-}}\NormalTok{ pe\_sob}\SpecialCharTok{/}\NormalTok{se\_sob}
+  \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{estimate =}\NormalTok{ pe\_sob,}
+             \AttributeTok{se =}\NormalTok{ se\_sob,}
+             \AttributeTok{stat =}\NormalTok{ stat, }\CommentTok{\# Sobel test statistic}
+             \AttributeTok{pvalue =} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{pnorm}\NormalTok{(}\FunctionTok{abs}\NormalTok{(stat), }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{), }\CommentTok{\# two{-}sided p{-}value}
+             \AttributeTok{lowerCI =}\NormalTok{ pe\_sob }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(}\AttributeTok{p =} \FloatTok{0.025}\NormalTok{)}\SpecialCharTok{*}\NormalTok{se\_sob,}
+             \AttributeTok{upperCI =}\NormalTok{ pe\_sob }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(}\AttributeTok{p =} \FloatTok{0.975}\NormalTok{)}\SpecialCharTok{*}\NormalTok{se\_sob}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\CommentTok{\# Create a function that returns the statistic for any given data}
+\CommentTok{\# This way, we can pass a bootstrap sample and get the same quantity}
+\NormalTok{stat }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, }\AttributeTok{peOnly =} \ConstantTok{TRUE}\NormalTok{)\{}
+  \CommentTok{\# Fit models}
+\NormalTok{mod\_med }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(threat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ condition }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ groupsize }\SpecialCharTok{+}\NormalTok{ age,}
+          \AttributeTok{data =}\NormalTok{ data) }\CommentTok{\# mediator model}
+\NormalTok{mod\_resp }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(bonding }\SpecialCharTok{\textasciitilde{}}\NormalTok{ condition }\SpecialCharTok{+}\NormalTok{ threat }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ groupsize }\SpecialCharTok{+}\NormalTok{ age,}
+           \AttributeTok{data =}\NormalTok{ data) }\CommentTok{\# response model}
+\CommentTok{\# Use \textquotesingle{}coef\textquotesingle{} to extract estimated coefficients}
+\CommentTok{\# and \textquotesingle{}vcov\textquotesingle{} to get the estimated covariance matrix of coefficients}
+\NormalTok{coef\_alpha }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(mod\_med)[}\StringTok{\textquotesingle{}conditionPain\textquotesingle{}}\NormalTok{]}
+\NormalTok{coef\_gamma }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(mod\_resp)[}\StringTok{\textquotesingle{}threat\textquotesingle{}}\NormalTok{]}
+\NormalTok{var\_alpha }\OtherTok{\textless{}{-}} \FunctionTok{vcov}\NormalTok{(mod\_med)[}\StringTok{\textquotesingle{}conditionPain\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}conditionPain\textquotesingle{}}\NormalTok{]}
+\NormalTok{var\_gamma }\OtherTok{\textless{}{-}} \FunctionTok{vcov}\NormalTok{(mod\_resp)[}\StringTok{\textquotesingle{}threat\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}threat\textquotesingle{}}\NormalTok{]}
+  \CommentTok{\# Compute Sobel\textquotesingle{}s statistic}
+\NormalTok{  S }\OtherTok{\textless{}{-}} \FunctionTok{sobel}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ coef\_alpha,}
+             \AttributeTok{alpha\_var =}\NormalTok{ var\_alpha,}
+             \AttributeTok{gamma =}\NormalTok{ coef\_gamma,}
+             \AttributeTok{gamma\_var =}\NormalTok{ var\_gamma)}
+  \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{isTRUE}\NormalTok{(peOnly))\{}
+    \FunctionTok{return}\NormalTok{(S)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{as.vector}\NormalTok{(S[,}\StringTok{\textquotesingle{}estimate\textquotesingle{}}\NormalTok{]))}
+\NormalTok{  \}}
+\NormalTok{\}}
+\CommentTok{\# Values for the paper {-} using large{-}sample approximation}
+\NormalTok{vals }\OtherTok{\textless{}{-}} \FunctionTok{stat}\NormalTok{(}\AttributeTok{data =}\NormalTok{ BJF14\_S1, }\AttributeTok{peOnly =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we turn to the nonparametric bootstrap to get a comparison of how
+the results would differ. We fix the seed and provide data sampled with
+replacement, using a simple for-loop. The number of bootstrap samples
+should be large enough to avoid additional variability due to
+resampling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Nonparametric bootstrap analysis}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{80667}\NormalTok{) }\CommentTok{\# set random seed for reproducibility}
+\NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{1000}\NormalTok{L }\CommentTok{\#number of bootstrap replications}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(BJF14\_S1) }\CommentTok{\# number of observations}
+\NormalTok{results }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B) }\CommentTok{\# create container}
+\ControlFlowTok{for}\NormalTok{(b }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(B))\{}
+  \CommentTok{\# Sample row indices with replacement at random uniformly}
+\NormalTok{  bootdata }\OtherTok{\textless{}{-}}\NormalTok{ BJF14\_S1[}\FunctionTok{sample.int}\NormalTok{(n, n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{),]}
+  \CommentTok{\# Compute the test statistic on the bootstrap sample}
+\NormalTok{  results[b] }\OtherTok{\textless{}{-}} \FunctionTok{stat}\NormalTok{(}\AttributeTok{data =}\NormalTok{ bootdata, }\AttributeTok{peOnly =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{\# Percentile confidence intervals}
+\NormalTok{boot\_perc\_confint }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(results, }\AttributeTok{prob =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{, }\FloatTok{0.975}\NormalTok{))}
+\CommentTok{\# If we have B a multiple of 40, then we can use the sorted observations}
+\CommentTok{\# sort(results)[B*c(0.025,0.975)]}
+\CommentTok{\# Bootstrap p{-}value for test alpha*gamma=0}
+\NormalTok{M\_over\_B }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(results }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{)}
+\NormalTok{boot\_pval }\OtherTok{\textless{}{-}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{min}\NormalTok{(}\FunctionTok{c}\NormalTok{(M\_over\_B, }\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{M\_over\_B))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrrrr@{}}
+
+\caption{\label{tbl-sobol-pain}Average causal mediation effect for
+Bastian, Jetten, and Ferris (2014), with \(p\)-values and 95\%
+confidence intervals based on the normal approximation (top) and
+nonparametric bootstrap with percentile confidence intervals (bottom).}
+
+\tabularnewline
+
+\toprule\noalign{}
+estimate & std. error & p-value & lower CL & upper CL \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+-0.071 & 0.119 & 0.549 & -0.305 & 0.162 \\
+-0.071 & 0.126 & 0.534 & -0.342 & 0.132 \\
+
+\end{longtable}
+
+The differences between the large-sample approximation and the
+bootstrap, reported in Table~\ref{tbl-sobol-pain}, are negligible.
+
+We can also use software to perform the calculations without coding
+manually effects.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{80667}\NormalTok{)}
+\NormalTok{linmed }\OtherTok{\textless{}{-}} \FunctionTok{mediate}\NormalTok{(}
+  \AttributeTok{model.m =}\NormalTok{ MsX,}
+  \AttributeTok{model.y =}\NormalTok{ YsXM,}
+  \AttributeTok{sims =} \DecValTok{1000}\NormalTok{L, }\CommentTok{\# number of bootstrap simulations}
+  \AttributeTok{boot =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# use bootstrap}
+  \AttributeTok{boot.ci.type =} \StringTok{"perc"}\NormalTok{, }\CommentTok{\# type of bootstrap: percentile}
+  \AttributeTok{mediator =} \StringTok{"threat"}\NormalTok{, }\CommentTok{\# name of mediator}
+  \AttributeTok{treat =} \StringTok{"condition"}\NormalTok{, }\CommentTok{\# name of treatment}
+  \AttributeTok{control.value =} \StringTok{"Control"}\NormalTok{, }\CommentTok{\# name of control (level of \textquotesingle{}condition\textquotesingle{})}
+  \AttributeTok{treat.value =} \StringTok{"Pain"}\NormalTok{) }\CommentTok{\# name of treatment (level of \textquotesingle{}condition\textquotesingle{})}
+\FunctionTok{summary}\NormalTok{(linmed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrrr}
+
+\caption{\label{tbl-mediation1}Linear causal mediation analysis:
+parameter estimates, nonparametric bootstrap 95\% confidence intervals
+and p-values with the percentile method based on 5000 bootstrap
+samples.}
+
+\tabularnewline
+
+\toprule
+ & estimate & lower 95\% CI & upper 95\% CI & p-value\\
+\midrule
+ACME & -0.071 & -0.363 & 0.146 & 0.548\\
+ADE & 0.660 & -0.012 & 1.257 & 0.056\\
+total effect & 0.588 & 0.012 & 1.145 & 0.048\\
+prop. mediated & -0.121 & -1.501 & 0.615 & 0.564\\
+\bottomrule
+
+\end{longtable}
+
+The first line of Table~\ref{tbl-mediation} gives the average
+conditional mediated effect (labelled ACME), the second the average
+direct effect (ADE) and the third the total effect (ADE + ACME). The
+point estimate for ACME, \(\alpha\gamma\) is
+\(\widehat{\alpha}\widehat{\gamma} = -0.07\). The bootstrap sampling
+distribution is skewed to the left, a fact reflected by the asymmetric
+percentile confidence interval.
+
+\begin{figure}[ht!]
+
+\centering{
+
+\includegraphics{causal-inference_files/figure-pdf/fig-densityACME-1.pdf}
+
+}
+
+\caption{\label{fig-densityACME}Density of the 1000 nonparametric
+bootstrap estimates of the average conditional mediation effect
+\(\alpha\gamma\), with point estimate and 95\% percentile bootstrap
+confidence intervals (vertical dashed lines).}
+
+\end{figure}%
+
+The sequential ignorability assumption cannot be verified, but we can
+see what impacts violations would have on the coefficients: the expected
+value of the coefficient \(\widehat{\gamma}\) is
+\(\gamma + \mathsf{Cov}(\varepsilon_M, \varepsilon_Y)/\mathsf{Va}(\varepsilon_M)\);
+the second component is a bias term that does not vanish, even when the
+sample size grows (Bullock, Green, and Ha 2010). The variance of the
+error of the mediation and response models can be estimated, and we can
+vary the correlation coefficient,
+\(\rho=\mathsf{Cor}(\varepsilon_M, \varepsilon_Y)\), to assess the
+sensitivity of our conclusions if there was confounding.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linmed\_sensitivity }\OtherTok{\textless{}{-}} \FunctionTok{medsens}\NormalTok{(linmed)}
+\FunctionTok{summary}\NormalTok{(linmed\_sensitivity)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Mediation Sensitivity Analysis for Average Causal Mediation Effect
+
+Sensitivity Region
+
+      Rho    ACME 95% CI Lower 95% CI Upper R^2_M*R^2_Y* R^2_M~R^2_Y~
+[1,] -0.4  0.2533      -0.0236       0.5302         0.16       0.1144
+[2,] -0.3  0.1626      -0.0723       0.3975         0.09       0.0644
+[3,] -0.2  0.0805      -0.1288       0.2898         0.04       0.0286
+[4,] -0.1  0.0034      -0.1969       0.2037         0.01       0.0072
+[5,]  0.0 -0.0714      -0.2788       0.1360         0.00       0.0000
+[6,]  0.1 -0.1462      -0.3748       0.0825         0.01       0.0072
+[7,]  0.2 -0.2233      -0.4850       0.0385         0.04       0.0286
+
+Rho at which ACME = 0: -0.1
+R^2_M*R^2_Y* at which ACME = 0: 0.01
+R^2_M~R^2_Y~ at which ACME = 0: 0.0072 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(linmed\_sensitivity)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{causal-inference_files/figure-pdf/unnamed-chunk-21-1.pdf}
+
+The \texttt{medsens} function implements the sensitivity diagnostic
+presented in Section 5.1 of Imai, Keele, and Yamamoto (2010) for the
+linear mediation model. By default, the correlation \(\rho\) varies in
+0.1 increments. We can see the wide range of the ACME if there was
+correlation between residuals from the mediation and the response model,
+highlighting the wide range of values that could be returned: the ACME
+could go from \(0.2\) to \(-0.288\) for correlations in the range
+\(\rho \in [-0.4, 0.4]\). In this example, nearly any correlation in
+this range would lead to ``insignificant results'', mostly because of
+the small sample size. In a situation where we had found a significant
+(sic) result, we could observe how much correlation btween would be
+needed for this effect to be an artifact of correlation and vanish.
+
+According to the documentation of the \texttt{medsens} function
+(\texttt{?medsens}), there are two variants of the estimated effect
+size, either computing the proportion of the total (tilde,
+\texttt{R\^{}2\_M\textasciitilde{}R\^{}2\_Y}) or residual (starred,
+\texttt{R\^{}2\_M*R\^{}2\_Y*}) variance from the mediation and outcome
+models that are due to hypothetical unobserved confounders.
+
+\end{example}
+
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, colframe=quarto-callout-caution-color-frame, left=2mm, opacityback=0, breakable, opacitybacktitle=0.6, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, toptitle=1mm, leftrule=.75mm, titlerule=0mm, colback=white, arc=.35mm, bottomtitle=1mm, colbacktitle=quarto-callout-caution-color!10!white]
+
+There are several problems with the description of Bastian, Jetten, and
+Ferris (2014): while it seems that some covariates (age, gender, group
+size) were added to regression models, it is unclear whether they could
+be confounders, whether their effect is linear and in which (if any)
+model they are included. Stating ``bootstrap analysis'' is the
+equivalent of ``running a statistical test'', so vague it could mean
+anything, and the fact the output is random does not help with
+reproducibility.
+
+\end{tcolorbox}
+
 \begin{example}[Fluency as mediator of product
 evaluation]\protect\hypertarget{exm-inconsistency}{}\label{exm-inconsistency}
 
@@ -11686,7 +12223,7 @@ for the difference between inconsistency (control) and consistency
 
 \caption{\label{tbl-mediation}Linear causal mediation analysis:
 parameter estimates, nonparametric bootstrap 95\% percentile confidence
-intervals and p-values based on 5000 bootstrap samples.}
+intervals and p-values based on 5000 nonparametric bootstrap samples.}
 
 \tabularnewline
 
@@ -11764,38 +12301,38 @@ Using Definition~\ref{def-ate}, the method of Imai, Keele, and Tingley
     potential confounders \(\boldsymbol{Z}\).
   \end{enumerate}
 \item
-  \textbf{Estimation uncertainty}: Either use nonparametric bootstrap or
-  a large-sample approximation to the distribution of model parameters
-  \(\boldsymbol{\theta}_M\) and \(\boldsymbol{Y}\) to get \(J\) copies.
-\item
-  For each copy of the parameters \(j=1, \ldots, J\), draw \(M\)
-  realizations of the mediation model for each observation
-  \(i=1, \ldots, n\), giving \(M^{(jm)}_i(1)\) and \(M^{(jm)}_i(0)\).
-  Use these resulting to obtain one draw from the outcome model for each
-  of
+  Draw \(B\) realizations of the mediation model for each observation
+  \(i=1, \ldots, n\), giving \(M^{(b)}_i(1)\) and \(M^{(b)}_i(0)\) for
+  \(b=1, \ldots, B\). Use these resulting to obtain one draw from the
+  outcome model for each of
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \tightlist
   \item
-    \(Y_{i}^{(jm)}\{0, M^{(jm)}_i(0)\}\),
+    \(Y_{i}^{(b)}\{0, M^{(b)}_i(0)\}\),
   \item
-    \(Y_{i}^{(jm)}\{0, M^{(jm)}_i(1)\}\),
+    \(Y_{i}^{(b)}\{0, M^{(b)}_i(1)\}\),
   \item
-    \(Y_{i}^{(jm)}\{1, M^{(jm)}_i(0)\}\) and
+    \(Y_{i}^{(b)}\{1, M^{(b)}_i(0)\}\) and
   \item
-    \(Y_{i}^{(jm)}\{1, M^{(jm)}_i(1)\}\).
+    \(Y_{i}^{(b)}\{1, M^{(b)}_i(1)\}\).
   \end{enumerate}
 \item
   Plug these quantities in the definitions of \(\mathsf{ACME}(x)\),
   \(\mathsf{ADE}(x)\) and \(\mathsf{TE}\), averaging over the \(nM\)
   replications, over both observations \(i=1, \ldots, n\) and
-  replications \(m=1, \ldots, M\). This yields a collection of \(J\)
-  values \(\mathsf{ACME}_j(x)\), \(\mathsf{ADE}_j(x)\) and
-  \(\mathsf{TE}_j\) for each parameter value.
+  replications \(b=1, \ldots, B\), e.g., \begin{align*}
+  \mathsf{TE} = \frac{1}{nB} \sum_{b=1}^B \sum_{i=1}^n \left[ Y_{i}^{(b)}\{1, M^{(b)}_i(1)\} - Y_{i}^{(b)}\{0, M^{(b)}_i(0)\}\right]
+  \end{align*}
 \item
-  Use the \(J\) replications to compute a 95\% percentile interval and
-  return the sample means over \(J\) for the average causal effects.
+  \textbf{Estimation uncertainty}: Either use nonparametric bootstrap or
+  a large-sample approximation to the distribution of model parameters
+  \(\boldsymbol{\theta}_M\) and \(\boldsymbol{Y}\) to get \(J\) copies
+  of parameters, and repeat steps 2. and 3. to get \(J\) copies of the
+  causal estimates. Use the \(J\) replications to compute a 95\%
+  percentile interval and return the sample means over \(J\) for the
+  average causal effects.
 \end{enumerate}
 
 The benefit of this method is that it naturally account for nonlinear
@@ -12610,6 +13147,12 @@ Statistical Considerations.''} \emph{Journal of Personality and Social
 Psychology} 51 (6): 1173--82.
 \url{https://doi.org/10.1037/0022-3514.51.6.1173}.
 
+\bibitem[\citeproctext]{ref-Bastian:2014}
+Bastian, Brock, Jolanda Jetten, and Laura J. Ferris. 2014. {``Pain as
+Social Glue: Shared Pain Increases Cooperation.''} \emph{Psychological
+Science} 25 (11): 2079--85.
+\url{https://doi.org/10.1177/0956797614545886}.
+
 \bibitem[\citeproctext]{ref-Baumann:1992}
 Baumann, James F., Nancy Seifert-Kessell, and Leah A. Jones. 1992.
 {``Effect of Think-Aloud Instruction on Elementary Students'
@@ -12776,6 +13319,12 @@ Imai, Kosuke, Luke Keele, and Dustin Tingley. 2010. {``A General
 Approach to Causal Mediation Analysis.''} \emph{Psychological Methods}
 15 (4): 309--34. \url{https://doi.org/10.1037/a0020761}.
 
+\bibitem[\citeproctext]{ref-Imai.Keele.Yamamoto:2010}
+Imai, Kosuke, Luke Keele, and Teppei Yamamoto. 2010. {``Identification,
+Inference and Sensitivity Analysis for Causal Mediation Effects.''}
+\emph{Statistical Science} 25 (1): 51--71.
+\url{https://doi.org/10.1214/10-STS321}.
+
 \bibitem[\citeproctext]{ref-Imbens.Rubin:2015}
 Imbens, Guido W., and Donald B. Rubin. 2015. \emph{Causal Inference for
 Statistics, Social, and Biomedical Sciences: An Introduction}.
@@ -12848,6 +13397,13 @@ Läuter, J. 1978. {``Sample Size Requirements for the \(T^2\) Test of
 {MANOVA} (Tables for One-Way Classification).''} \emph{Biometrical
 Journal} 20 (4): 389--406.
 \url{https://doi.org/10.1002/bimj.4710200410}.
+
+\bibitem[\citeproctext]{ref-Leckfor:2023}
+Leckfor, Christina M., Natasha R. Wood, Richard B. Slatcher, and Andrew
+H. Hales. 2023. {``From Close to Ghost: Examining the Relationship
+Between the Need for Closure, Intentions to Ghost, and Reactions to
+Being Ghosted.''} \emph{Journal of Social and Personal Relationships} 40
+(8): 2422--44. \url{https://doi.org/10.1177/02654075221149955}.
 
 \bibitem[\citeproctext]{ref-Lee.Choi:2019}
 Lee, Kiljae, and Jungsil Choi. 2019. {``Image-Text Inconsistency Effect

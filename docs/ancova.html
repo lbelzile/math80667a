@@ -980,7 +980,8 @@ Figure&nbsp;9.5: Scatterplot of negated prior and posterior belief score.
 <p>If <span class="math inline">\(W\)</span> is a mean-centered continuous variable and <span class="math inline">\(X\)</span> a categorical variable with <span class="math inline">\(k=1, \ldots, K\)</span> levels using the sum-to-zero parametrization, the linear model with mean <span class="math display">\[
 \underset{\text{average response at $W$ in group $k$}}{\mathsf{E}\{Y \mid \mathsf{do}(X) = k, W\}} = \underset{\text{intercept for group $k$}}{\mu + \alpha_k} + \underset{\text{slope for group $k$}}{(\beta + \gamma_k)}W
 \]</span> includes different slopes for <span class="math inline">\(W\)</span> in each experimental group, as well as different intercepts for each group.</p>
-<p>As an example, we consider data from a study on gender discrimination <span class="citation" data-cites="Garcia:2010">(<a href="references.html#ref-Garcia:2010" role="doc-biblioref">Garcia et al. 2010</a>)</span>. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).</p>
+<div id="exm-moderation1" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.4 (Gender discrimation)</strong></span> We consider data from a study on gender discrimination <span class="citation" data-cites="Garcia:2010">(<a href="references.html#ref-Garcia:2010" role="doc-biblioref">Garcia et al. 2010</a>)</span>. Participants were put with a file where a women was turned down promotion in favour of male colleague despite her being clearly more experimented and qualified. The authors manipulated the decision of the participant to this decision, either choosing not to challenge the decision (no protest), a request to reconsider based on individual qualities of the applicants (individual) and a request to reconsider based on abilities of women (collective). All items were measured using scales constructed using items measured using Likert scales ranging from strongly disagree (1) to strongly agree (7).</p>
 <p>The postulated mediator variable is <code>sexism</code>, the average of 6 Likert scales for the Modern Sexism Scale assessing pervasiveness of gender discrimination. We consider participants’ evaluation of the appropriateness of the response of the fictional character.</p>
 <p>We fit the linear model with the interaction and display the observed slopes</p>
 <div class="cell">
@@ -994,7 +995,7 @@ Figure&nbsp;9.5: Scatterplot of negated prior and posterior belief score.
 <div id="tbl-testsmoder" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-testsmoder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.7: Analysis of variance table for the linear moderation model.
+Table&nbsp;9.7: Analysis of variance table for the linear moderation model of .
 </figcaption>
 <div aria-describedby="tbl-testsmoder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -1054,6 +1055,7 @@ Table&nbsp;9.7: Analysis of variance table for the linear moderation model.
 </div>
 </div>
 <p>Because of the interaction, comparing the levels of the experimental factor only makes sense if we fix the value of sexism (since the slopes are not parallel) and won’t necessarily be reliable outside of the range of observed values of sexism. We could look at quantiles and differences at the mean sexism,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> or one standard deviation away.</p>
+</div>
 <p>We may be interested in the range of values of the predictor <span class="math inline">\(W\)</span> for which the difference between treatments is not statistically significant if we only have a binary treatment. The Johnson–Neyman method <span class="citation" data-cites="Johnson.Neyman:1936">(<a href="references.html#ref-Johnson.Neyman:1936" role="doc-biblioref">Johnson and Neyman 1936</a>)</span> considers this range, but this leads to multiple testing problems since we probe the model repeatedly. <span class="citation" data-cites="Esarey.Sumner:2018">Esarey and Sumner (<a href="references.html#ref-Esarey.Sumner:2018" role="doc-biblioref">2018</a>)</span> offer a method that provides control for the false discovery rate.</p>
 <p>To illustrate the method, we dichotomize the manipulation pooling individual and collective protests, since these are the most similar.</p>
 <div class="cell">
@@ -1083,6 +1085,203 @@ Figure&nbsp;9.6: Johnson–Neyman plot for difference between protest and no pro
 </div>
 </div>
 <p>The cutoff value is 4.20 with control for the false discovery rate and 4.15 without. The interval is not extended beyond the range of value for sexism, as these are not possible given the Likert scale (which starts at 1). In this example, the moderator is not experimentally manipulated, but it could be. More complicated mediation models could include interactions between treatment effects or moderators and covariates, with external variables, leading to moderated mediation. Interactions can be considered for pretty much any statistical model, but the usual assumptions need to hold for inference to be approximately valid.</p>
+<div id="exm-moderation2" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.5 (Ghosting)</strong></span> <span class="citation" data-cites="Leckfor:2023">Leckfor et al. (<a href="references.html#ref-Leckfor:2023" role="doc-biblioref">2023</a>)</span> consider the impact of ghosting someone (i.e., not responding to communications and cutting bridges with a person) on personal satisfaction, uncertainty and the need for closure (explanations). In their Study 3, they postulated that the type of rejection someone experienced. The study comprises 545 participants who were asked to reflect about a situation in their own life, in scenarios where</p>
+<blockquote class="blockquote">
+<p>Participants in the included (control) condition were asked to write about a time when someone “expressed that they wanted to continue and/or maintain a friendship, romantic relationship, or casual dating situation.” Participants in the ghosted condition wrote about a time when someone ended a relationship by “suddenly cutting off all communication without explanation.” Participants in the directly rejected condition wrote about a time when someone “directly communicate[d] that they wanted to end the relationship.” Nearly half (49%) of participants wrote about a friendship, followed by a romantic relationship (29%), and then a casual dating situation (22%).</p>
+</blockquote>
+<p>The moderator variable is <code>cond</code>, one of control, being ghosted or rejected. This should moderate the effect of the need for closure on need for satisfaction. The authors postulated that individuals would have lower needs of satisfaction after being ghosted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Moderation analysis</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, the factor of interest is continuous</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and the moderator is categorical (K=3 levels)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LWSH23_S3, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> LWSH23_S3, needsatis <span class="sc">~</span> needclosure <span class="sc">*</span> cond)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod) <span class="co"># interaction is significant</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute estimated marginal means, but with global weights equal to relative weight of each variable</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">::</span><span class="fu">emmeans</span>(mod, <span class="at">specs =</span> <span class="st">"needclosure"</span>, </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="st">"cond"</span>, </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">at =</span> <span class="fu">list</span>(<span class="at">needclosure =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>), </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">weights =</span> <span class="st">"prop"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># All values are reported for the average of needclosure by default without the at</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-lmmoder2" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lmmoder2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.8: Linear moderation model coefficients of Study 3 of <span class="citation" data-cites="Leckfor:2023">Leckfor et al. (<a href="references.html#ref-Leckfor:2023" role="doc-biblioref">2023</a>)</span>. Least square coefficients, standard errors, Wald tests and <span class="math inline">\(p\)</span>-values for <span class="math inline">\(\beta=0\)</span> and 95% confidence intervals.
+</figcaption>
+<div aria-describedby="tbl-lmmoder2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: center;">coef.</th>
+<th style="text-align: center;">estimate</th>
+<th style="text-align: center;">std. error</th>
+<th style="text-align: center;">lower CL</th>
+<th style="text-align: center;">upper CL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_0\)</span></td>
+<td style="text-align: center;">5.0</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">4.29</td>
+<td style="text-align: center;">5.74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">need for closure</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_1\)</span></td>
+<td style="text-align: center;">0.2</td>
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">directly rejected [cond]</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_2\)</span></td>
+<td style="text-align: center;">-1.2</td>
+<td style="text-align: center;">0.53</td>
+<td style="text-align: center;">-2.20</td>
+<td style="text-align: center;">-0.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ghosted [cond]</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_3\)</span></td>
+<td style="text-align: center;">-1.5</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">-2.48</td>
+<td style="text-align: center;">-0.52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">need for closure * directly rejected [cond]</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_4\)</span></td>
+<td style="text-align: center;">-0.4</td>
+<td style="text-align: center;">0.11</td>
+<td style="text-align: center;">-0.61</td>
+<td style="text-align: center;">-0.19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">need for closure * ghosted [cond]</td>
+<td style="text-align: center;"><span class="math inline">\(\beta_5\)</span></td>
+<td style="text-align: center;">-0.4</td>
+<td style="text-align: center;">0.10</td>
+<td style="text-align: center;">-0.62</td>
+<td style="text-align: center;">-0.21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-testsmoder2" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-testsmoder2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.9: Analysis of variance table for the linear moderation model of Study 3 of <span class="citation" data-cites="Leckfor:2023">Leckfor et al. (<a href="references.html#ref-Leckfor:2023" role="doc-biblioref">2023</a>)</span>.
+</figcaption>
+<div aria-describedby="tbl-testsmoder2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">df</th>
+<th style="text-align: right;">sum of squares</th>
+<th style="text-align: right;">stat</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">needclosure</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">4.26</td>
+<td style="text-align: left;">.039</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cond</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1346.9</td>
+<td style="text-align: right;">738.61</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">needclosure:cond</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">10.19</td>
+<td style="text-align: left;">&lt; .001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Residuals</td>
+<td style="text-align: right;">539</td>
+<td style="text-align: right;">491.5</td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Since the interaction is significant, we focus on the different slopes. We can of course simply report the equations of the linear regression for each group. Alternative, <code>emmeans</code> can also return the predictions for different values of <code>needclosure</code> per condition along with standard errors. The estimates will have lower values of <code>needclosure</code> when close to the subgroup averages.</p>
+<p>The postulated theoretical mean equation is <span class="math display">\[\begin{align*}
+\mathsf{E}(\texttt{needsatisf}) &amp;= \beta_0 + \beta_1\texttt{needclosure} + \beta_2 \mathsf{1}_{\texttt{cond=directly rejected}} +\beta_3 \mathsf{1}_{\texttt{cond=directly rejected}} \\&amp;+ \beta_4 \texttt{needclosure} \times \mathsf{1}_{\texttt{cond=directly rejected}} +\beta_5 \texttt{needclosure} \times\mathsf{1}_{\texttt{cond=directly rejected}}.
+\end{align*}\]</span> The estimated model mean <span class="math inline">\(\widehat{\mathsf{E}}(\texttt{needsatisf} \mid \texttt{needclosure}=x)\)</span> when <code>needclosure</code> is worth <span class="math inline">\(x \in [1,7]\)</span> for each <code>cond</code> is thus <span class="math display">\[\begin{align*}
+\widehat{Y} &amp; = \begin{cases}
+\widehat{\beta}_0 + \widehat{\beta}_1x, &amp; \texttt{control};\\
+(\widehat{\beta}_0 + \widehat{\beta}_3) + (\widehat{\beta}_1 + \beta_4)x , &amp; \texttt{directly rejected};\\
+(\widehat{\beta}_0 + \widehat{\beta}_2) + (\widehat{\beta}_1 + \beta_5)x, &amp; \texttt{ghosted}.
+\end{cases} \\&amp;= \begin{cases}
+5.015 + 0.181 x, &amp; \texttt{control};\\
+3.86 -0.222x, &amp; \texttt{directly rejected};\\
+3.52 -0.234x, &amp; \texttt{ghosted}.
+\end{cases}
+\end{align*}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-moderation2-slopes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-moderation2-slopes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="ancova_files/figure-html/fig-moderation2-slopes-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-moderation2-slopes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: Scatterplot and linear regression slopes for the need for satisfaction as a function of the moderating situation and the need for closure.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see clearly in <a href="#fig-moderation2-slopes" class="quarto-xref">Figure&nbsp;<span>9.7</span></a> that the impact of the need for closure depends on the situation, with downward trends for the ghosted and rejected groups.</p>
+<p>We can fit this toy model also with the PROCESS macro, which only understand numeric values for factors… The output (omitted) includes model coefficients with confidence intervals, the <span class="math inline">\(F\)</span> test statistic for the ANOVA, and output for the average need for closure.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">process</span>(<span class="at">data =</span> LWSH23_S3 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>          dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">condind =</span> <span class="fu">as.integer</span>(cond)), <span class="co"># cast factor to numeric integer levels</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"needsatis"</span>,  <span class="co"># response variable</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"needclosure"</span>, <span class="co"># explanatory variable (not manipulated)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">w =</span> <span class="st">"condind"</span>, <span class="co"># postulated moderator</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">mcw =</span> <span class="dv">1</span>, <span class="co"># dummy coding for moderator w (so compare to base level, here 'included')</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">model =</span> <span class="dv">1</span>) <span class="co"># number of model in Hayes (simple moderation)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1101,7 +1300,8 @@ Figure&nbsp;9.6: Johnson–Neyman plot for difference between protest and no pro
 <li>We are only interested in differences due to experimental condition (marginal effects).</li>
 <li>In general, there should be no interaction between covariates/blocking factors and experimental conditions.</li>
 <li>This hypothesis can be assessed by comparing the models with and without interaction, if there are enough units (e.g., equality of slope for ANCOVA).</li>
-<li>Moderators are variables that interact with the experimental factor. We assess their presence by testing for an interaction in a linear regresison model.</li>
+<li>Moderators are variables that interact with the experimental factor. We assess their presence by testing for an interaction in a linear regression model.</li>
+<li>In the presence of a moderator, we need to consider slopes or groups separately for subgroups.</li>
 </ul>
 </div>
 </div>
@@ -1119,6 +1319,9 @@ Garcia, Donna M., Michael T. Schmitt, Nyla R. Branscombe, and Naomi Ellemers. 20
 </div>
 <div id="ref-Johnson.Neyman:1936" class="csl-entry" role="listitem">
 Johnson, P. O., and J. Neyman. 1936. <span>“Tests of Certain Linear Hypotheses and Their Application to Some Educational Problems.”</span> <em>Statistical Research Memoirs</em> 1: 57–93.
+</div>
+<div id="ref-Leckfor:2023" class="csl-entry" role="listitem">
+Leckfor, Christina M., Natasha R. Wood, Richard B. Slatcher, and Andrew H. Hales. 2023. <span>“From Close to Ghost: Examining the Relationship Between the Need for Closure, Intentions to Ghost, and Reactions to Being Ghosted.”</span> <em>Journal of Social and Personal Relationships</em> 40 (8): 2422–44. <a href="https://doi.org/10.1177/02654075221149955">https://doi.org/10.1177/02654075221149955</a>.
 </div>
 <div id="ref-Lee.Choi:2019" class="csl-entry" role="listitem">
 Lee, Kiljae, and Jungsil Choi. 2019. <span>“Image-Text Inconsistency Effect on Product Evaluation in Online Retailing.”</span> <em>Journal of Retailing and Consumer Services</em> 49: 279–88. <a href="https://doi.org/10.1016/j.jretconser.2019.03.015">https://doi.org/10.1016/j.jretconser.2019.03.015</a>.
