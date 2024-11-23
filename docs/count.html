@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -518,8 +518,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> contrast ratio     SE  df null z.ratio p.value
  0vs1     0.446 0.0933 Inf    1  -3.858  0.0001
- 0vs2     0.316 0.1479 Inf    1  -2.461  0.0138
- 1vs2     0.389 0.1732 Inf    1  -2.120  0.0340
+ 0vs2     0.316 0.1480 Inf    1  -2.461  0.0138
+ 1vs2     0.389 0.1730 Inf    1  -2.120  0.0340
 
 Tests are performed on the log scale </code></pre>
 </div>
@@ -527,7 +527,7 @@ Tests are performed on the log scale </code></pre>
 </div>
 <p>In more general regression models, we build a design matrix with explanatory variables <span class="math inline">\(\mathrm{X}_1, \ldots, \mathrm{X}_p\)</span>. The mean model then reads <span class="math display">\[\begin{align*}
 \mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
-\end{align*}\]</span> so the mean is multiplied by <span class="math inline">\(\exp(\beta_j)\)</span> for an increase of one unit of <span class="math inline">\(\mathrm{X}_{j}\)</span>, <em>ceteris paribus.</em> If <span class="math inline">\(\beta_j &lt; 0\)</span>, <span class="math inline">\(\exp(\beta_j) &lt; 1\)</span> and so we have a decrease of <span class="math inline">\(100\cdot(1-\exp(\beta_j))\)</span>% of the mean response. Likewise, if <span class="math inline">\(\beta_j&gt;0\)</span>, the mean number increases by <span class="math inline">\(100\cdot(\exp(\beta_j)-1)\)</span>%.</p>
+\end{align*}\]</span> so the mean is multiplied by <span class="math inline">\(\exp(\beta_j)\)</span> for an increase of one unit of <span class="math inline">\(\mathrm{X}_{j},\)</span> <em>ceteris paribus.</em> If <span class="math inline">\(\beta_j &lt; 0\)</span>, <span class="math inline">\(\exp(\beta_j) &lt; 1\)</span> and so we have a decrease of <span class="math inline">\(100\cdot(1-\exp(\beta_j))\)</span>% of the mean response. Likewise, if <span class="math inline">\(\beta_j&gt;0\)</span>, the mean number increases by <span class="math inline">\(100\cdot(\exp(\beta_j)-1)\)</span>%.</p>
 <div id="exm-roadsweden" class="theorem example">
 <p><span class="theorem-title"><strong>Example 15.4 (Road accidents and speed limits on the motorway in Sweden)</strong></span> Sweden is a worldwide leader in road safety and has a long history of countermeasures to increase road traffic safety, including the Vision Zero program. Back in the 1960s, a study was conducted by the authorities to investigate the potential of speed limits on motorways to reduce the number of accidents. The <code>sweden</code> data contains the number of accidents on 92 matching days in both 1961 and 1962 <span class="citation" data-cites="Svensson:1981">(<a href="references.html#ref-Svensson:1981" role="doc-biblioref">Svensson 1981</a>)</span>; speed limits were in place on selected days in either year.</p>
 <p>To study the impact of the restrictions we can fit a Poisson model. Let <span class="math inline">\(Y_{i1}\)</span> (respectively <span class="math inline">\(Y_{i2}\)</span>) denote the number of accidents in 1961 (1962) on day <span class="math inline">\(i\)</span> and let <span class="math inline">\(\texttt{limit}_{ij}\)</span> denote a binary indicator equal to one if speed limits were enforced on day <span class="math inline">\(i\)</span> of year <span class="math inline">\(j\)</span>. We set <span class="math display">\[\begin{align*}

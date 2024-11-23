@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -664,6 +664,8 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 <div id="exm-avc" class="theorem example">
 <p><span class="theorem-title"><strong>Example 8.3 (Disclosure formats for companies)</strong></span> The data presented in this example vignette is inspired by a study from <span class="citation" data-cites="Anandarajan:2002">Anandarajan, Viger, and Curatola (<a href="references.html#ref-Anandarajan:2002" role="doc-biblioref">2002</a>)</span>, who looked at the impact of communication means through different disclosure format on the perceived risk of organization on the brink of bankruptcy in accountancy. There is a single between-subject factor for the disclore format, and three measures of the performance, ratings for the interest rate premium assessed, for the ability to service debt and that to improve profitability. We first load the data from the package and inspect the content.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(AVC02, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(AVC02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [132 × 4] (S3: tbl_df/tbl/data.frame)
  $ format       : Factor w/ 3 levels "integrated note",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -671,6 +673,7 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
  $ debt         : int [1:132] 3 4 1 4 3 3 3 5 2 2 ...
  $ profitability: int [1:132] 3 2 2 5 2 2 2 3 2 3 ...</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xtabs</span>(<span class="sc">~</span> format, <span class="at">data =</span> AVC02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>format
         integrated note        stand-alone note modified auditor report 
@@ -678,9 +681,14 @@ Chi-Sq (approx.) = 15.325, df = 12, p-value = 0.2241</code></pre>
 </div>
 </div>
 <p>The data are unbalanced by condition. In general, we need them to be roughly balanced to maximize power. The <code>manova</code> function will not be usable unless data are balanced, and we need to enforce sum-to-zero constraints to get sensible outputs. After this is done, we can fit the multivariate linear model with <code>lm</code> by binding columns on the left of the <code>~</code> sign to gather the response vectors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">cbind</span>(prime, debt, profitability) <span class="sc">~</span> format, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> AVC02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>We can check the residual correlation matrix to see if there was a strong dependence between our measurements. The benefit of MANOVA is to be able to leverage this correlation, if any.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">resid</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">resid</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -692,6 +700,7 @@ profitability -0.54  0.65          1.00</code></pre>
 </div>
 <p>We can look at the global mean for each variable and the estimated mean differences for all groups, including the reference which is omitted. It’s easy to see that the mean differences sum to zero.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dummy.coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Full coefficients are 
                                                                
@@ -714,6 +723,7 @@ format:         modified auditor report
 </div>
 <p>Next, we compute the multivariate analysis of variance table and the follow-up with the univariate functions. By default, we can add a multiplicity correction for the tests, using Holm-Bonferonni with option <code>'holm'</code>. For the MANOVA test, there are multiple statistics to pick from, including <code>Pillai</code>, <code>Wilks</code>, <code>Hotelling-Lawley</code> and <code>Roy</code>. The default is <code>Pillai</code>, which is more robust to departures from the model hypothesis, but <code>Wilks</code> is also popular choice among practitioners.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Manova</span>(model, <span class="at">test =</span> <span class="st">"Pillai"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Type II MANOVA Tests: Pillai test statistic
@@ -723,6 +733,7 @@ format  2   0.02581  0.55782      6    256 0.7637</code></pre>
 </div>
 <p>We can compute effect sizes overall for the MANOVA statistic using the correspondance with the <span class="math inline">\(F\)</span> distribution, and also the individual effect size variable per variable. Here, the values returned are partial <span class="math inline">\(\widehat{\eta}^2\)</span> measures.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(car<span class="sc">::</span><span class="fu">Manova</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Effect Size for ANOVA (Type II)
 
@@ -732,6 +743,8 @@ format    |           0.01 | [0.00, 1.00]
 
 - One-sided CIs: upper bound fixed at [1.00].</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since it's a one-way between-subject MANOVA, no partial measure</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(model, <span class="at">partial =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Effect Size for ANOVA (Type I)
 
@@ -744,6 +757,8 @@ profitability |    format |     0.02 | [0.00, 1.00]</code></pre>
 </div>
 <p>We can continue with descriptive discriminant analysis for the post-hoc comparisons. To fit the model using the <code>lda</code> function from the <code>MASS</code> package, we swap the role of the experimental factor and responses in the formula. The output shows the weights for the linear combinations.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>MASS<span class="sc">::</span><span class="fu">lda</span>(format <span class="sc">~</span> prime <span class="sc">+</span> debt <span class="sc">+</span> profitability,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> AVC02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 lda(format ~ prime + debt + profitability, data = AVC02)
@@ -771,6 +786,9 @@ Proportion of trace:
 </div>
 <p>Interpretation of these is beyond the scope of the course, but you can find information about linear discriminant analysis in good textbooks <span class="citation" data-cites="Mardia.Kent.Taylor:2024">(e.g., Chapter 12 of <a href="references.html#ref-Mardia.Kent.Taylor:2024" role="doc-biblioref">Mardia, Kent, and Taylor 2024</a>)</span>. The next step before writing about any of our conclusions is to check the model assumptions. As before, we could check for each variable in turn whether the variance are the same in each group. Here, we rather check equality of covariance matrix. The test has typically limited power, but unfortunately is very sensitive to departure from the multivariate normality assumption, so sometimes rejections are simply due to false positive.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(AVC02,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>biotools<span class="sc">::</span><span class="fu">boxM</span>(<span class="fu">cbind</span>(prime, debt, profitability),</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">grouping =</span> format))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box's M-test for Homogeneity of Covariance Matrices
@@ -791,6 +809,7 @@ Chi-Sq (approx.) = 21.274, df = 12, p-value = 0.0465</code></pre>
 </div>
 <p>We see severe rounding impacts for debt and profitability. There is little to be done about this, but the sample size are large enough that this shouldn’t be too much a concern. We can also test the multivariate normality assumption. The latter supposes that observations in each group have the same mean. To get this, we detrend using multivariate linear model by subtracting the mean of each group. Thus, our input is the matrix of residuals, which must be transposed for the function to work.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mvnormtest<span class="sc">::</span><span class="fu">mshapiro.test</span>(<span class="at">U =</span> <span class="fu">t</span>(<span class="fu">resid</span>(model)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test

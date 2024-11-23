@@ -272,7 +272,7 @@ model.tables(mod, type = "means")
 # Analysis of variance reveals 
 # non-significant interaction
 # of purchase and type
-car::Anova(mod, type = 3)
+car::Anova(mod, type = 2)
 # Main effects
 emmeans::emmeans(mod, 
                  specs = "debttype",

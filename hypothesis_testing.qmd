@@ -73,7 +73,7 @@ We call numerical summaries of the data **statistics**. Its important to disting
 
 ```{r}
 #| label: fig-cake
-#| out-width: '33%'
+#| out-width: '100%'
 #| fig-cap: "[Estimand](https://www.flickr.com/photos/darkdwarf/16563489881) (left), estimator (middle) and [estimate](https://www.flickr.com/photos/bensutherland/14685548773) (right) illustrated with cakes and based on an original idea of Simon Grund. Cake photos shared under [CC BY-NC 2.0 license](https://creativecommons.org/licenses/by-nc/2.0/)."
 #| fig-subcap: 
 #|  - "Estimand"
@@ -790,7 +790,7 @@ The authors compared the number of creative ideas, a subset of the ideas generat
 \end{align*}
 where $\texttt{video}=0$ if the pair are in the same room and $\texttt{video}=1$ if they interact instead via videoconferencing.
 
-The mean number of ideas for videoconferencing is thus $\exp(\beta_1)$ times that of the face-to-face: the estimate of the multiplicative factor is $\exp(\beta_1)$ is $`r papaja::print_num(exp(coef(negbin)[2]))`$ `r papaja::print_confint(exp(confint(negbin)[2,]), ,enclose_math = TRUE)`. 
+The mean number of ideas for videoconferencing is thus $\exp(\beta_1)$ times that of the face-to-face: the estimate of the multiplicative factor is $\exp(\beta_1)$ is $`r papaja::print_num(exp(coef(negbin)[2]))`$ `r papaja::print_confint(exp(confint(negbin)[2,]),enclose_math = TRUE)`. 
 
 No difference between experimental conditions translates into the null hypothesis as $\mathscr{H}_0: \beta_1=0$ vs $\mathscr{H}_0: \beta_1 \neq 0$ or equivalently $\mathscr{H}_0: \exp(\beta_1)=1$.  The likelihood ratio test comparing the regression model with and without $\texttt{video}$ the statistic is $R=`r papaja::printnum(LRT_negbin)`$ ($p$-value based on $\chi^2_1$ of $`r papaja::print_p(pval_negbin)`$). We conclude the average number of ideas is different, with summary statistics suggesting that virtual pairs generate fewer ideas.
 

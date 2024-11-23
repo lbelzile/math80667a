@@ -251,6 +251,8 @@ kableExtra::kable_classic() |>
 The data presented in this example vignette is inspired by a study from @Anandarajan:2002, who looked at the impact of communication means through different disclosure format on the perceived risk of organization on the brink of bankruptcy in accountancy. There is a single between-subject factor for the disclore format, and three measures of the performance, ratings for the interest rate premium assessed, for the ability to service debt and that to improve profitability. We first load the data from the package and inspect the content.
 
 ```{r}
+#| eval: true
+#| echo: true
 data(AVC02, package = "hecedsm")
 str(AVC02)
 xtabs(~ format, data = AVC02)
@@ -258,6 +260,8 @@ xtabs(~ format, data = AVC02)
 
 The data are unbalanced by condition. In general, we need them to be roughly balanced to maximize power. The `manova` function will not be usable unless data are balanced, and we need to enforce sum-to-zero constraints to get sensible outputs. After this is done, we can fit the multivariate linear model with `lm` by binding columns on the left of the `~` sign to gather the response vectors.
 ```{r}
+#| eval: true
+#| echo: true
 options(contrasts = c("contr.sum", "contr.poly"))
 model <- lm(cbind(prime, debt, profitability) ~ format, 
             data = AVC02)
@@ -280,6 +284,8 @@ round(cor(resid(model)), 2)
 We can look at the global mean for each variable and the estimated mean differences for all groups, including the reference which is omitted. It's easy to see that the mean differences sum to zero.
 
 ```{r}
+#| eval: true
+#| echo: true
 dummy.coef(model)
 ```
 
@@ -287,11 +293,15 @@ dummy.coef(model)
 Next, we compute the multivariate analysis of variance table and the follow-up with the univariate functions. By default, we can add a multiplicity correction for the tests, using Holm-Bonferonni with option `'holm'`. For the MANOVA test, there are multiple statistics to pick from, including `Pillai`, `Wilks`, `Hotelling-Lawley` and `Roy`. The default is `Pillai`, which is more robust to departures from the model hypothesis, but `Wilks` is also popular choice among practitioners.
 
 ```{r}
+#| eval: true
+#| echo: true
 car::Manova(model, test = "Pillai")
 ```
 
 We can compute effect sizes overall for the MANOVA statistic using the correspondance with the $F$ distribution, and also the individual effect size variable per variable. Here, the values returned are partial $\widehat{\eta}^2$ measures.
 ```{r}
+#| eval: true
+#| echo: true
 effectsize::eta_squared(car::Manova(model))
 # Since it's a one-way between-subject MANOVA, no partial measure
 effectsize::eta_squared(model, partial = FALSE)
@@ -301,6 +311,8 @@ effectsize::eta_squared(model, partial = FALSE)
 We can continue with descriptive discriminant analysis for the post-hoc comparisons. To fit the model using the `lda` function from the `MASS` package, we swap the role of the experimental factor and responses in the formula. The output shows the weights for the linear combinations.
 
 ```{r}
+#| eval: true
+#| echo: true
 MASS::lda(format ~ prime + debt + profitability,
           data = AVC02)
 ```
@@ -308,6 +320,8 @@ MASS::lda(format ~ prime + debt + profitability,
 Interpretation of these is beyond the scope of the course, but you can find information about linear discriminant analysis in good textbooks [e.g., Chapter 12 of @Mardia.Kent.Taylor:2024]. The next step before writing about any of our conclusions is to check the model assumptions. As before, we could check for each variable in turn whether the variance are the same in each group. Here, we rather check equality of covariance matrix. The test has typically limited power, but unfortunately is very sensitive to departure from the multivariate normality assumption, so sometimes rejections are simply due to false positive.
 
 ```{r}
+#| eval: true
+#| echo: true
 with(AVC02,
 biotools::boxM(cbind(prime, debt, profitability),
                grouping = format))
@@ -331,6 +345,8 @@ car::qqPlot(rstudent(model)[,3],
 We see severe rounding impacts for debt and profitability. There is little to be done about this, but the sample size are large enough that this shouldn't be too much a concern. We can also test the multivariate normality assumption. The latter supposes that observations in each group have the same mean. To get this, we detrend using multivariate linear model by subtracting the mean of each group. Thus, our input is the matrix of residuals, which must be transposed for the function to work.
 
 ```{r}
+#| eval: true
+#| echo: true
 mvnormtest::mshapiro.test(U = t(resid(model)))
 ```
 There is (unsurprisingly) strong evidence against multivariate normality, but it matters less due to sample size. This is a consequence of the discrete univariate measurements, which explain rejection of the null (for data to be multivariate normal, each of the response must be univariate normal and the dependence structure must also match. Since model assumptions are doubtful, we recommend using Pilai's trace as test statistic for the MANOVA.

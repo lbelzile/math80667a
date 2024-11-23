@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -315,8 +315,13 @@ window.Quarto = {
   <li><a href="#mediation" id="toc-mediation" class="nav-link" data-scroll-target="#mediation"><span class="header-section-number">13.2</span> Mediation</a></li>
   <li><a href="#linear-mediation-model" id="toc-linear-mediation-model" class="nav-link" data-scroll-target="#linear-mediation-model"><span class="header-section-number">13.3</span> Linear mediation model</a>
   <ul class="collapse">
-  <li><a href="#model-assumptions" id="toc-model-assumptions" class="nav-link" data-scroll-target="#model-assumptions"><span class="header-section-number">13.3.1</span> Model assumptions</a></li>
+  <li><a href="#nonparametric-bootstrap" id="toc-nonparametric-bootstrap" class="nav-link" data-scroll-target="#nonparametric-bootstrap"><span class="header-section-number">13.3.1</span> Nonparametric bootstrap</a></li>
   </ul></li>
+  <li><a href="#model-assumptions" id="toc-model-assumptions" class="nav-link" data-scroll-target="#model-assumptions"><span class="header-section-number">13.4</span> Model assumptions</a>
+  <ul class="collapse">
+  <li><a href="#sensitivity-analysis" id="toc-sensitivity-analysis" class="nav-link" data-scroll-target="#sensitivity-analysis"><span class="header-section-number">13.4.1</span> Sensitivity analysis</a></li>
+  </ul></li>
+  <li><a href="#general-average-causal-mediation-effect-estimation" id="toc-general-average-causal-mediation-effect-estimation" class="nav-link" data-scroll-target="#general-average-causal-mediation-effect-estimation"><span class="header-section-number">13.5</span> General average causal mediation effect estimation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/causal-inference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -345,7 +350,7 @@ Figure&nbsp;13.1: xkcd comic <a href="https://xkcd.com/552/">552 (Correlation) b
 </div>
 </div>
 <p>The field of <strong>causal inference</strong> is concerned with inferring the effect of an action or manipulation (intervention, policy, or treatment) applied to an observational unit and identifying and quantifying the effect of one variable on other variables. Such action may be conceptual: we can imagine for example looking at student’s success (as measured by their grades) by comparing two policies: giving them timely feedback and encouragement, versus no feedback. In reality, only one of these two scenarios can be realized even if both can conceptually be envisioned as <strong>potential outcomes</strong>.</p>
-<p>The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span>. We focus on the hidden assumptions that can undermine causal claims in linear mediation models.</p>
+<p>The content of this chapter is divided as follows. First, we discuss the logical interrelation between variables using directed acyclic graphs and focus on relations between triples defining confounders, colliders and mediators. We then describe how we can retrieve causal effects (in an abstract setting). Finally, we present the linear mediation model popularized by <span class="citation" data-cites="Judd.Kenny:1981">Judd and Kenny (<a href="references.html#ref-Judd.Kenny:1981" role="doc-biblioref">1981</a>)</span> and <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span>. We focus on the hidden assumptions that can undermine causal claims in linear mediation models.</p>
 <section id="basics-of-causal-inference" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="basics-of-causal-inference"><span class="header-section-number">13.1</span> Basics of causal inference</h2>
 <p>In the first chapter, we stated that randomized experiments were the gold standard of science. This is mostly because, through careful control of conditions (keeping everything else constant) and manipulating experimental factors, we can determine whether the latter cause changes in the response. However, not everything can be studied using experiments and we need more general rules and definitions to study causal inference when randomization isn’t possible.</p>
@@ -358,54 +363,63 @@ Table&nbsp;13.1: Potential outcomes <span class="math inline">\(Y(0)\)</span>, <
 </figcaption>
 <div aria-describedby="tbl-missing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table class="table do-not-create-environment cell caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
-<th style="text-align: right;">i</th>
-<th style="text-align: right;">X</th>
-<th style="text-align: left;">Y(0)</th>
-<th style="text-align: left;">Y(1)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">\(i\)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">\(X_i\)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">\(Y_i(0)\)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">\(Y_i(1)\)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">\(Y_i(1)-Y_i(0)\)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">?</td>
-<td style="text-align: left;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">?</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">?</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">?</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">?</td>
-<td style="text-align: left;">6</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">?</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">?</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">?</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">?</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">?</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">?</td>
-<td style="text-align: left;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">?</td>
 </tr>
 </tbody>
 </table>
+
+
 </div>
 </div>
 </figure>
@@ -426,10 +440,10 @@ Figure&nbsp;13.2: Distribution of response on a seven point Likert scale for tre
 </div>
 </div>
 </div>
-<p>Rather than look at the individual treatment effect difference, we can focus on averages over the population. The most common measure of causation is the <strong>average treatment effect</strong>, which is the difference between the population averages of treatment group <span class="math inline">\(j\)</span> and the control group <span class="math inline">\(X=0\)</span>, <span class="math display">\[\begin{align*}
+<p>Rather than look at the individual treatment effect difference, we can focus on averages over the population. The most common measure of causation is the <strong>average treatment effect</strong>, which is the difference between the population averages of treatment group <span class="math inline">\(X=j\)</span> and the control group <span class="math inline">\(X=0\)</span>, <span class="math display">\[\begin{align*}
 \textsf{ATE}_j = \underset{\substack{\text{expected response among}\\\text{treatment group $j$}}}{\mathsf{E}(Y \mid X=j)} - \underset{\substack{\text{expected response among}\\\text{control group}}}{\mathsf{E}(Y \mid X=0)}
-\end{align*}\]</span> which is a valid estimator of <span class="math inline">\(\mathsf{E}\{Y(1) - Y(0)\}\)</span> provided that <span class="math inline">\(X\)</span> is randomly allocated.</p>
-<p>What assumptions are necessary to draw causal conclusion? In an experimental setting, we need</p>
+\end{align*}\]</span> which is a valid estimator of <span class="math inline">\(\mathsf{E}\{Y(j) - Y(0)\}\)</span> provided that <span class="math inline">\(X\)</span> is randomly allocated.</p>
+<p>What assumptions are necessary to draw causal conclusion? In an experimental setting, we need the following:</p>
 <ol type="1">
 <li>conditional <em>ignorability</em>, which states that potential outcomes are independent (denoted with the <span class="math inline">\({\perp\mkern-10mu\perp}\)</span> symbol) of assignment to treatment given a set of explanatories <span class="math inline">\(\boldsymbol{Z}.\)</span> In notation <span class="math inline">\(\{Y(0), \ldots, Y(J)\}\ {\perp\mkern-10mu\perp}\ X \mid \boldsymbol{Z}\)</span> (if the latter is an empty set, we talk about ignorability).</li>
 <li>lack of interference: the outcome is unaffected by the treatment assignment of other participants.</li>
@@ -449,7 +463,7 @@ Conditional ignorability for observational data
 <p>Causal inference is possible in observational settings, but some of the assumptions are unverifiable and typically much stronger than for randomized experiments. Notably, we need to identify a sufficient set of confounders <span class="math inline">\(\boldsymbol{Z}\)</span>, i.e., variables which cause both <span class="math inline">\(X\)</span> and the outcome <span class="math inline">\(Y\)</span> but are not of interest, to incorporate in the model to recover the effect due to <span class="math inline">\(X\)</span>. We can then look effect averaging over the distribution of <span class="math inline">\(\boldsymbol{Z}\)</span>. This method is valid as long as there is a positive probability of being assigned to each group of <span class="math inline">\(X\)</span> regardless of the value of the covariates <span class="math inline">\(\boldsymbol{Z}\)</span>, an assumption sometimes known as positivity. The model must also be correctly specified, and there must be no omitted confounders.</p>
 </div>
 </div>
-<p>In summary, we can target the average treatment effect in experimental designs if we randomize the effect <span class="math inline">\(X=j,\)</span> if our subjects comply with their treatment assignment, and more importantly if we use a random sample which is representative of the population.</p>
+<p>In summary, we can estimate the average treatment effect in experimental designs if we randomize the effect <span class="math inline">\(X=j,\)</span> if our subjects comply with their treatment assignment, and more importantly if we use a random sample which is representative of the population.</p>
 <div id="exm-nonrandomtreatment" class="theorem example">
 <p><span class="theorem-title"><strong>Example 13.1</strong></span> The <a href="https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html">Agir cohort</a> offers a comprehensive experience for the first three trimesters of the bachelor in administration program. These students take the same exams as regular students, but their class average are higher in the mandatory statistics course. However, since participation in the program is reserved for students who postulated to be part of the cohort, and who must be team players who are autonomous and with a keen liking for inverse pedagogical teaching methods, no conclusion can be drawn. Indeed, it may be that the teaching method is well suited to them but not to general students, or their better grades may be due to the fact that the Agir students are more motivated or stronger in statistics to being with.</p>
 <p>If we compared the outcome of regular bachelor cohort with Agir students, we may also have violation of “no interference”: if students from different programs share course material or study together, then this lack of compliance may induce differences in response relative to their group assignment.</p>
@@ -524,29 +538,35 @@ Caution about the kitchen sink approach
 </section>
 <section id="mediation" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="mediation"><span class="header-section-number">13.2</span> Mediation</h2>
-<p>In order to do inference and tests relations, we need to add to our logical causal model represented by a directed acyclic graph a data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won’t be verifiable.</p>
-<p>The following section is technical and may be omitted on a first reading.</p>
-<p>To define in full generality the treatment and mediation effect, we consider the potential outcome framework. Following <span class="citation" data-cites="Pearl:2014">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span>, we use the notation <span class="math inline">\(\text{do}(X=x)\)</span> is used to denote experimental manipulation of <span class="math inline">\(X\)</span>, to distinguish it from correlation in observational data. The potential outcome for individual <span class="math inline">\(i\)</span> is <span class="math inline">\(Y_i(x, m)\)</span>, with explanatory or experimental covariate/factor <span class="math inline">\(x\)</span> and mediator <span class="math inline">\(m\)</span>. Likewise, <span class="math inline">\(M_i(x)\)</span> is the potential mediator when applying treatment level <span class="math inline">\(x\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Value <span class="math inline">\(x_0\)</span> represents the baseline or control value for our experimental manipulation: typically, in binary treatments <span class="math inline">\(X \in \{0,1\}\)</span>, with <span class="math inline">\(X=x_0=0\)</span> the control and <span class="math inline">\(X=1\)</span> for treatment.</p>
-<p>The <strong>total effect</strong> measures the overall impact of changes in outcome <span class="math inline">\(Y\)</span> (both through <span class="math inline">\(M\)</span> and directly) when experimentally manipulating <span class="math inline">\(X\)</span>, <span class="math display">\[\begin{align*}\mathsf{TE}(x, x_0) = \mathsf{E}[ Y \mid \text{do}(X=x)] - \mathsf{E}[ Y \mid \text{do}(X=x_0)],
-\end{align*}\]</span> where <span class="math inline">\(x_0\)</span> is the factor level of the reference or control and <span class="math inline">\(x\)</span> is another treatment value. This is what we retrieve if we randomize treatment <span class="math inline">\(X\)</span> assignment and consider the average change in average response.</p>
-<p>The <strong>average controlled directed effect</strong> measures the flow along <span class="math inline">\(X \rightarrow Y\)</span>, disabling the pathway <span class="math inline">\(X \to M \to Y\)</span> by fixing the mediator value: it is <span class="math display">\[\begin{align*}
-\textsf{CDE}(m, x, x_0) &amp;=
-\mathsf{E}[Y \mid \text{do}(X=x, m=m)] - \mathsf{E}[Y \mid \text{do}(X=x_0, m=m)] \\&amp;= \mathsf{E}\{Y(x,m) -Y(x_0, m)\}
-\end{align*}\]</span> This measures the expected change in response when the experimental factor changes from <span class="math inline">\(x\)</span> to <span class="math inline">\(x_0\)</span> and the mediator is set to a fixed value <span class="math inline">\(m\)</span> uniformly over the population. The problem with this is that it requires manipulation of the mediator to a fixed value, but also gives us answers for a single value of the mediator.</p>
-<p>The <strong>natural direct effect</strong>, <span class="math display">\[\begin{align*}
-\textsf{NDE}(x, x_0) = \mathsf{E}[Y\{x, M(x_0)\} - Y\{x_0,  M(x_0)\}],
-\end{align*}\]</span> is the expected change in <span class="math inline">\(Y\)</span> under treatment <span class="math inline">\(x\)</span> if <span class="math inline">\(M\)</span> is set to whatever value it would take under control <span class="math inline">\(x_0\)</span>.</p>
-<p>The <strong>natural indirect effect</strong> (<span class="math inline">\(\mathsf{NIE}\)</span>) is the expected change in the response <span class="math inline">\(Y\)</span> if we set our experimental value <span class="math inline">\(X\)</span> to its control value <span class="math inline">\(x_0\)</span> and change the mediator value which it would attain under <span class="math inline">\(x\)</span>, <span class="math display">\[\begin{align*}
-\textsf{NIE}(x, x_0) = \mathsf{E}[Y\{x_0, M(x)\} - Y\{x_0,  M(x_0)\}]
+<p>We need to add to our logical causal model represented by a directed acyclic graph data generating mechanisms that prescribes how variables how interrelated. Our ability to establish mediation will depend on the model and a set of assumptions, some of which won’t be verifiable.</p>
+<p>To define in full generality the treatment and mediation effect, we consider the potential outcome framework. Following <span class="citation" data-cites="Pearl:2014">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span>, we use the notation <span class="math inline">\(\text{do}(X=x)\)</span> is used to denote experimental manipulation of <span class="math inline">\(X\)</span>, to distinguish it from correlation in observational data. The resulting potential outcome for individual <span class="math inline">\(i\)</span> is <span class="math inline">\(Y_i(x, m)\)</span>, with explanatory or experimental covariate/factor <span class="math inline">\(x\)</span> and mediator <span class="math inline">\(m\)</span>. Likewise, <span class="math inline">\(M_i(x)\)</span> is the potential mediator when applying treatment level <span class="math inline">\(x\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Value <span class="math inline">\(x_0\)</span> represents the baseline or control value for our experimental manipulation.</p>
+<div id="def-ate" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.1 (Average total, conditional mediation and direct effects)</strong></span> For simplicity, we focus on binary treatment with <span class="math inline">\(X_i \in \{0,1\}\)</span>, with <span class="math inline">\(X_i=x_0=0\)</span> the control and <span class="math inline">\(X=1\)</span> for treatment. Until now, we have considered experiments in which we randomly allocate participants to groups, so we recovered the overall effect of treatment abstracting from other variables. The following definitions are standard, e.g. <span class="citation" data-cites="Robins.Greenland:1992">Robins and Greenland (<a href="references.html#ref-Robins.Greenland:1992" role="doc-biblioref">1992</a>)</span>, <span class="citation" data-cites="Pearl:2014">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span>, <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span>.</p>
+<p>The <strong>average directed effect</strong> measures the flow along <span class="math inline">\(X \rightarrow Y\)</span>, disabling the pathway <span class="math inline">\(X \to M \to Y\)</span> by fixing the mediator value: it is <span class="math display">\[\begin{align*}
+\mathsf{ADE}(x) &amp;=
+\mathsf{E}[Y_i \mid \text{do}\{X=1, M=M_i(x)\}] - \mathsf{E}[Y_i \mid \text{do}\{X=0, M=M_i(x)\}] \\&amp;= \mathsf{E}[Y_i(1,M_i(x)) -Y_i(0, M_i(x))\}
+\end{align*}\]</span> This measures the expected change in response when the experimental factor changes from treatment to control, while the mediator is set to a fixed value <span class="math inline">\(M_i(x)\)</span> uniformly over the population. Fixing the mediator, which may or not be feasible experimentally.</p>
+<p>The <strong>average causal mediation effect</strong> (also called indirect effect), is the main quantity of interest in mediation analysis. It is obtained by looking at changes in the outcome for a fixed intervention due to changing the values of the mediator to those it would take under the treatment and control group, respectively <span class="math inline">\(M_i(1)\)</span> and <span class="math inline">\(M_i(0)\)</span>. <span class="math display">\[\begin{align*}
+\mathsf{ACME}(x) &amp;=
+\mathsf{E}[Y_i \mid \text{do}\{X=x, M=M_i(1)\}] - \mathsf{E}[Y_i \mid \text{do}\{X=x, M=M_i(0)\}] \\&amp;= \mathsf{E}[Y_i\{x, M_i(1)\} -Y_i\{x, M_i(0)\}]
 \end{align*}\]</span></p>
-<p>Armed with these definitions, we can consider the <strong>sequential ignorability assumption</strong> for mediation, which is decomposed into two components.</p>
-<p>The first component is: given pre-treatment covariates <span class="math inline">\(Z\)</span>, treatment assignment is independent of potential outcomes for mediation and outcome, <span class="math display">\[\begin{align*}
+<p>The <strong>total effect</strong> measures the average overall impact of changes in outcome <span class="math inline">\(Y\)</span> (both through <span class="math inline">\(M\)</span> and directly) when experimentally manipulating <span class="math inline">\(X\)</span>, <span class="math display">\[\begin{align*}
+\mathsf{TE}_i &amp;= \mathsf{E}[ Y_i \mid \text{do}(X=1)] - \mathsf{E}[ Y_i \mid \text{do}(X=0)]
+\\ &amp;= \mathsf{E}[Y_i\{1, M(1)\}] - \mathsf{E}[Y_i\{0, M(0)\}],
+\end{align*}\]</span> This is what we retrieve if we randomize treatment assignment and consider the average change in average response. The total effect is obtained as <span class="math inline">\(\mathsf{TE} = \mathsf{ACME}(X) + \mathsf{ADE}(1-X)\)</span> for <span class="math inline">\(X=0,1.\)</span> If there is no interaction between the treatment and the mediator, then the values of the average causal mediation effect and the average direct effect are the same regardless of the treatment assignment <span class="math inline">\(x\)</span>.</p>
+</div>
+<div id="def-sutva" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.2 (Sequential ignorability assumption for mediation)</strong></span> To draw valid conclusions and build suitable estimation procedures, we need an assumption which can be decomposed into two components. The first component is: given pre-treatment covariates <span class="math inline">\(Z\)</span>, treatment assignment is independent of potential outcomes for mediation and outcome, <span class="math display">\[\begin{align*}
 Y_i(x', m), M_i(x) {\perp\mkern-10mu\perp} X_i \mid \boldsymbol{Z}_i = \boldsymbol{z}.
 \end{align*}\]</span> In order words, the values taken by the mediator and by the response exist independently of the treatment assignment and don’t change.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>The second component of the sequential ignorability assumption is as follows: given pre-treatment covariates and observed treatment, mediation is independent of potential outcomes, <span class="math display">\[\begin{align*}
 Y_i(x', m) \perp\mkern-10mu\perp  M_i(x) \mid X_i =x, \boldsymbol{Z}_i = \boldsymbol{z}
 \end{align*}\]</span> The set of assumptions from <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="Pearl:2014">Pearl (<a href="references.html#ref-Pearl:2014" role="doc-biblioref">2014</a>)</span> are equivalent under randomization of treatment assignment, as we consider thereafter.</p>
-<p>The total effect can be written <span class="math display">\[\mathsf{TE}(x, x_0) = \mathsf{NDE}(x, x_0) - \mathsf{NIE}(x_0, x).\]</span> In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as <span class="math inline">\(\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}\)</span> <span class="citation" data-cites="Pearl:2014">(<a href="references.html#ref-Pearl:2014" role="doc-biblioref">Pearl 2014</a>)</span>.</p>
+<p>We assume also that any value of <span class="math inline">\(X\)</span> given covariates <span class="math inline">\(\boldsymbol{Z}\)</span> is possible (which is trivially satisfied when randomizing with equal probability), and that likewise any value of the mediator <span class="math inline">\(M\)</span> is possible for any combination of covariates <span class="math inline">\(\boldsymbol{Z}\)</span> and treatment assignement <span class="math inline">\(X\)</span>.</p>
+<!-- The total effect can be written  -->
+<!-- $$\mathsf{TE}(x, x_0) = \mathsf{NDE}(x, x_0) - \mathsf{NIE}(x_0, x).$$ -->
+<!-- In the linear mediation model, the reversal of argument amounts to changing the sign of the coefficient, giving an additive decomposition of the total effect as $\mathsf{TE} = \mathsf{NDE} + \mathsf{NIE}$ [@Pearl:2014].  -->
+</div>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -578,33 +598,22 @@ Figure&nbsp;13.5: xkcd comic <a href="https://xkcd.com/2652/">2652 (Proxy Variab
 <section id="linear-mediation-model" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="linear-mediation-model"><span class="header-section-number">13.3</span> Linear mediation model</h2>
 <p>One of the most popular model in social sciences is the linear mediation model, popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span>. Hayes’ <a href="https://www.processmacro.org/index.html">PROCESS macros for SAS, SPSS and <strong>R</strong></a> have lead to the widespread adoption by researchers <span class="citation" data-cites="Preacher.Hayes:2004">(<a href="references.html#ref-Preacher.Hayes:2004" role="doc-biblioref">Preacher and Hayes 2004</a>)</span>. <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="references.html#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span> list limitations of the approach and provide examples in which the model does not have a meaningful causal interpretation.</p>
-<p>The linear mediation model assumes that the effect of mediation and treatment is additive and that the response measurement is continuous. Consider an experimental factor <span class="math inline">\(X\)</span> corresponding to treatments with control or reference <span class="math inline">\(x_0\)</span> and postulated mediator variable <span class="math inline">\(M\)</span>, assumed continuous. Given <strong>uncorrelated</strong> unobserved noise variables <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> and assumine there are, we specify linear regression models, <span class="math display">\[\begin{align*}
+<p>The linear mediation model assumes that the effect of mediation and treatment is additive and that the response measurement is continuous. Consider an experimental factor <span class="math inline">\(X\)</span> corresponding to treatments with control or reference <span class="math inline">\(x_0\)</span> and postulated mediator variable <span class="math inline">\(M\)</span>, assumed continuous. Given <strong>uncorrelated</strong> unobserved noise variables <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span>, we specify linear regression models, <span class="math display">\[\begin{align*}
 M \mid X=x &amp;= c_M + \alpha x + \varepsilon_M,\\
 Y \mid X=x, M=m &amp;=  c_Y + \beta x + \gamma m  + \varepsilon_Y
 \end{align*}\]</span> where we use the contrasts parametrization, so that the reference category for the intercept corresponds to control (group <span class="math inline">\(x_0\)</span>) and <span class="math inline">\(x\)</span> the other category of interest, with <span class="math inline">\(\alpha\)</span> capturing the difference between <span class="math inline">\(x\)</span> and <span class="math inline">\(x_0\)</span>. The model for <span class="math inline">\(Y \mid X, M\)</span> should include additional covariates <span class="math inline">\(\mathbf{z}\)</span> to control for confounding between <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> if the latter is suspected.</p>
-<p>The parameters can be interpreted as the direct (<span class="math inline">\(\beta\)</span>), indirect (<span class="math inline">\(\alpha \gamma\)</span>) and total (<span class="math inline">\(\beta + \alpha \gamma\)</span>) effects. To see this, we plug the first equation in the second and obtain the marginal model for <span class="math inline">\(Y\)</span> given treatment <span class="math inline">\(X\)</span>, <span class="math display">\[\begin{align}
-Y \mid X=x &amp;= \underset{\text{intercept}}{(c_Y + \gamma c_M)} + \underset{\text{total effect}}{(\beta + \alpha\gamma)}\cdot x + \underset{\text{error}}{(\gamma \varepsilon_M + \varepsilon_Y)}\\
-&amp;= c_Y' + \tau x + \varepsilon_Y'
-\end{align}\]</span> These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression.</p>
-<p>The “sequential ignorability” assumption in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization if we can manipulate <span class="math inline">\(X\)</span>, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.7</span></a>. This means <span class="math inline">\(\varepsilon_M {\perp\mkern-10mu\perp} \varepsilon_Y\)</span> must be independent and, as a result, error terms should also be uncorrelated.</p>
+<p>The average value for <span class="math inline">\(M(1) = c_M + \alpha\)</span> and that of <span class="math inline">\(M(0)=c_M\)</span>. If we substitute the first equation in the second equation, we get that <span class="math display">\[\begin{align*}
+\mathsf{ACME}(x) &amp;= \mathsf{E}[Y\{x, M(1)\} -Y\{x, M(0)\}] = \alpha \gamma\\
+\mathsf{ADE}(x) &amp;= \mathsf{E}[Y\{1, M(x)\} -Y\{0, M(x)\}] = \beta \\
+\mathsf{TE} &amp;= \mathsf{E}[Y\{1, M(1)\} -Y\{0, M(0)\}] = \beta + \alpha \gamma
+\end{align*}\]</span></p>
+<p>The parameters can be interpreted as the direct (<span class="math inline">\(\beta\)</span>), conditional mediation effect (<span class="math inline">\(\alpha \gamma\)</span>) and total (<span class="math inline">\(\beta + \alpha \gamma\)</span>) effects. These parameters can be estimated using structural equation models (SEM), or more typically by running a series of linear regression.</p>
+<p>The “sequential ignorability” assumption in the linear mediation models boils down to “no unmeasured confounders” in the relations <span class="math inline">\(X \to Y\)</span>, <span class="math inline">\(X \to M\)</span> and <span class="math inline">\(M \to Y\)</span>: the first two are satisfied in experimental studies due to randomization if we can manipulate <span class="math inline">\(X\)</span>, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.7</span></a>. This means <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> must be independent of one another and, as a result, error terms should also be uncorrelated.</p>
 <p>In the linear mediation model, we can estimate the conditional direct effect corresponding to the product of coefficients <span class="math inline">\(\alpha\gamma\)</span>. Absence of mediation implies the product is zero. <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> recommended using Sobel’s test statistic, of the form <span class="math display">\[\begin{align*}
 S  &amp;= \frac{\widehat{\alpha}\widehat{\gamma} - 0}{\mathsf{se}(\widehat{\alpha}\widehat{\gamma})} \\&amp;=  \frac{\widehat{\alpha}\widehat{\gamma}}{\sqrt{\widehat{\gamma}^2\mathsf{Va}(\widehat{\alpha}) + \widehat{\alpha}^2\mathsf{Va}(\widehat{\gamma}) + \mathsf{Va}(\widehat{\gamma})\mathsf{Va}(\widehat{\alpha})}}
-\end{align*}\]</span> where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math inline">\(\widehat{\gamma}\)</span> and their variance <span class="math inline">\(\mathsf{Va}(\widehat{\alpha})\)</span> and <span class="math inline">\(\mathsf{Va}(\widehat{\gamma})\)</span> can be obtained from the estimated coefficients and standard errors.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The Sobel’s statistic <span class="math inline">\(S\)</span> is approximately standard normal in large samples, <span class="math inline">\(S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)\)</span>, but the approximation is sometimes poor in small samples.</p>
-<p>In the linear mediation causal model, we can estimate the total causal effect of <span class="math inline">\(X\)</span>, labelled <span class="math inline">\(\tau\)</span>, by running the linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> as there is no confounding affecting treatment <span class="math inline">\(X\)</span> in a completely randomized experimental design. This strategy isn’t valid with observational data unless we adjust for confounders. Assuming no unmeasured confounders and linearity, the product <span class="math inline">\(\alpha\gamma\)</span> is also equal to the difference between the total effect and the <strong>natural direct effect</strong>, <span class="math inline">\(\tau - \beta\)</span>.</p>
-<p><span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> suggested for <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> continuous breaking down the task in three separate steps:</p>
-<ol type="1">
-<li>fit a linear regression of <span class="math inline">\(M\)</span> on <span class="math inline">\(X\)</span> to estimate <span class="math inline">\(\alpha\)</span></li>
-<li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> to estimate <span class="math inline">\(\tau\)</span></li>
-<li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> to estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>.</li>
-</ol>
-<p>In the “<span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> approach”, we test <span class="math inline">\(\mathscr{H}_0: \alpha=0\)</span>, <span class="math inline">\(\mathscr{H}_0: \tau=0\)</span> and <span class="math inline">\(\mathscr{H}_0: \gamma=0\)</span> against the two-sided alternative. This approach has caveats since mediation refers to the relation <span class="math inline">\(X \to M \to Y\)</span>, so we only need to consider (joint tests of) <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> (the total effect could be zero because <span class="math inline">\(\beta = -\alpha\gamma\)</span> even if there is mediation). <span class="citation" data-cites="Zhao.Lynch.Chen:2010">Zhao, Lynch, and Chen (<a href="references.html#ref-Zhao.Lynch.Chen:2010" role="doc-biblioref">2010</a>)</span> review the typology of mediation.</p>
-<ol type="1">
-<li>complementary mediation when both direct and indirect effects are of the same sign and non-zero.</li>
-<li>competitive mediation when direct and indirect effects are of opposite signs.</li>
-<li>indirect-only mediation when the direct effect of <span class="math inline">\(X \to Y\)</span> is null, but the effect <span class="math inline">\(X \to M \to Y\)</span> isn’t.</li>
-</ol>
-<p>Previous definitions popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> still found in old papers include “full mediation” for instances where <span class="math inline">\(\beta=0\)</span> and partial mediation if the direct effect is less than the total effect, meaning <span class="math inline">\(\beta &lt; \tau\)</span>.</p>
-<p>To see this, let’s generate data with a binary treatment and normally distributed mediators and response with no confounding (so the data generating process matches exactly the formulation fo Baron–Kenny. We set <span class="math inline">\(\alpha=2\)</span>, <span class="math inline">\(\beta = 1/2\)</span> and <span class="math inline">\(\gamma=0\)</span>. This is an instance where the null is true (<span class="math inline">\(X\)</span> affects both <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>).</p>
+\end{align*}\]</span> where <span class="math inline">\(\widehat{\alpha}\)</span>, <span class="math inline">\(\widehat{\gamma}\)</span> and their variance <span class="math inline">\(\mathsf{Va}(\widehat{\alpha})\)</span> and <span class="math inline">\(\mathsf{Va}(\widehat{\gamma})\)</span> can be obtained from the estimated coefficients and standard errors.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The Sobel’s statistic <span class="math inline">\(S\)</span> is approximately standard normal in large samples, <span class="math inline">\(S \stackrel{\cdot}{\sim}\mathsf{Normal}(0,1)\)</span>, but the approximation is sometimes poor in small samples. Other test statistics are listed in <span class="citation" data-cites="McKinnon:2002">MacKinnon et al. (<a href="references.html#ref-McKinnon:2002" role="doc-biblioref">2002</a>)</span>.</p>
+<div id="exm-sobel" class="theorem example">
+<p><span class="theorem-title"><strong>Example 13.2 (Null distribution of Sobel statistic)</strong></span> To see this, let’s generate data with a binary treatment and normally distributed mediators and response with no confounding, so that the data generating process matches exactly the formulation of Baron–Kenny. We set <span class="math inline">\(\alpha=2\)</span>, <span class="math inline">\(\beta = 1/2\)</span> and <span class="math inline">\(\gamma=0\)</span>. This is an instance where the null hypothesis is true (<span class="math inline">\(X\)</span> affects both <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>, but there is no mediation effect).</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-sobelsimu" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -619,12 +628,35 @@ Figure&nbsp;13.6: Null distribution of Sobel’s statistic against approximate a
 </div>
 </div>
 </div>
-<p>If we knew exactly the model that generated <span class="math inline">\(X\)</span>, <span class="math inline">\(M\)</span>, <span class="math inline">\(Y\)</span> and the relations between them, we could simulate multiple datasets like in <a href="#fig-sobelsimu" class="quarto-xref">Figure&nbsp;<span>13.6</span></a> with <span class="math inline">\(n=20\)</span> observations and compare the test statistic we obtained with the simulation-based null distribution with <span class="math inline">\(\alpha\gamma=0\)</span>. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand. An alternative is the bootstrap, a form of simulation-based inference. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See <span class="citation" data-cites="Efron.Tibshirani:1993">Efron and Tibshirani (<a href="references.html#ref-Efron.Tibshirani:1993" role="doc-biblioref">1993</a>)</span> and <span class="citation" data-cites="Davison.Hinkley:1997">Davison and Hinkley (<a href="references.html#ref-Davison.Hinkley:1997" role="doc-biblioref">1997</a>)</span> for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by <span class="citation" data-cites="Preacher.Hayes:2004">Preacher and Hayes (<a href="references.html#ref-Preacher.Hayes:2004" role="doc-biblioref">2004</a>)</span> consists in repeating the following <span class="math inline">\(B\)</span> times:</p>
+<p>If we knew exactly the model that generated <span class="math inline">\(X\)</span>, <span class="math inline">\(M\)</span>, <span class="math inline">\(Y\)</span> and the relations between them, we could simulate multiple datasets like in <a href="#fig-sobelsimu" class="quarto-xref">Figure&nbsp;<span>13.6</span></a> with <span class="math inline">\(n=20\)</span> observations and compare the test statistic we obtained with the simulation-based null distribution with <span class="math inline">\(\alpha\gamma=0\)</span>. In practice we do not know the model that generated the data and furthermore we have a single dataset at hand.</p>
+</div>
+<p>In the linear mediation causal model, we can estimate the total causal effect of <span class="math inline">\(X\)</span>, labelled <span class="math inline">\(\tau\)</span>, by running the linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> as there is no confounding affecting treatment <span class="math inline">\(X\)</span> in a completely randomized experimental design. This strategy isn’t valid with observational data unless we adjust for confounders.</p>
+<div id="rem-histnote" class="proof remark">
+<p><span class="proof-title"><em>Remark 13.1</em> (Historical note on Baron and Kenny). </span><span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> suggested for <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span> continuous breaking down the task in three separate steps:</p>
+<ol type="1">
+<li>fit a linear regression of <span class="math inline">\(M\)</span> on <span class="math inline">\(X\)</span> to estimate <span class="math inline">\(\alpha\)</span></li>
+<li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> to estimate <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>.</li>
+<li>fit a linear regression of <span class="math inline">\(Y\)</span> on <span class="math inline">\(X\)</span> to estimate <span class="math inline">\(\tau\)</span></li>
+</ol>
+<p>In the “<span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> approach”, we test <span class="math inline">\(\mathscr{H}_0: \alpha=0\)</span>, <span class="math inline">\(\mathscr{H}_0: \tau=0\)</span> and <span class="math inline">\(\mathscr{H}_0: \gamma=0\)</span> against the two-sided alternative. This approach is somewhat flawed since mediation refers to the relation <span class="math inline">\(X \to M \to Y\)</span>, so we only need to consider (joint tests of) <span class="math inline">\(\alpha\gamma\)</span> (the total effect could be zero because <span class="math inline">\(\beta = -\alpha\gamma\)</span> even if there is mediation). In practice, thus, we only need steps 1) and 2) and the models should include potential confounders of the pair <span class="math inline">\((M, Y)\)</span>.</p>
+</div>
+<div id="def-typology" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.3 (Typology of mediation)</strong></span> The following characterization was proposed by <span class="citation" data-cites="Zhao.Lynch.Chen:2010">Zhao, Lynch, and Chen (<a href="references.html#ref-Zhao.Lynch.Chen:2010" role="doc-biblioref">2010</a>)</span>:</p>
+<ol type="1">
+<li>complementary mediation when both direct and indirect effects are of the same sign and non-zero.</li>
+<li>competitive mediation when direct and indirect effects are of opposite signs.</li>
+<li>indirect-only mediation when the direct effect of <span class="math inline">\(X \to Y\)</span> is null, but the effect <span class="math inline">\(X \to M \to Y\)</span> isn’t.</li>
+</ol>
+<p>Previous definitions popularized by <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> still found in old papers include “full mediation” for instances where <span class="math inline">\(\beta=0\)</span> and partial mediation if the direct effect is less than the total effect, meaning <span class="math inline">\(\beta &lt; \tau\)</span>.</p>
+</div>
+<section id="nonparametric-bootstrap" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="nonparametric-bootstrap"><span class="header-section-number">13.3.1</span> Nonparametric bootstrap</h3>
+<p>An alternative for inference to large-sample approximations to the null distribution used as benchmark to establish whether a test statistic is ‘large’ is the bootstrap, a form of simulation-based inference <span class="citation" data-cites="Efron:1979">(<a href="references.html#ref-Efron:1979" role="doc-biblioref">Efron 1979</a>)</span>. The latter is conceptually easy to understand: we generate new datasets by resampling from the ones observed (as if it was the population). Since we want the sample size to be identical and our objective is to get heterogeneity, we sample with replacement: from one bootstrap dataset to the next, we will have multiple copies, or none, of each observation. See <span class="citation" data-cites="Efron.Tibshirani:1993">Efron and Tibshirani (<a href="references.html#ref-Efron.Tibshirani:1993" role="doc-biblioref">1993</a>)</span> and <span class="citation" data-cites="Davison.Hinkley:1997">Davison and Hinkley (<a href="references.html#ref-Davison.Hinkley:1997" role="doc-biblioref">1997</a>)</span> for a more thorough treatment of the bootstrap and alternative sampling schemes for regression models. The nonparametric bootstrap procedure advocated by <span class="citation" data-cites="Preacher.Hayes:2004">Preacher and Hayes (<a href="references.html#ref-Preacher.Hayes:2004" role="doc-biblioref">2004</a>)</span> consists in repeating the following <span class="math inline">\(B\)</span> times:</p>
 <ol type="1">
 <li>sample <span class="math inline">\(n\)</span> observations <strong>with replacement</strong>, i.e., a tuple (<span class="math inline">\(X_i, M_i, Y_i)\)</span>, from the original data .</li>
 <li>compute the natural indirect effect <span class="math inline">\(\widehat{\alpha}\cdot\widehat{\gamma}\)</span> on each simulated sample</li>
 </ol>
-<p>For a two-sided test at level <span class="math inline">\(\alpha\)</span>, compute the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap statistics <span class="math inline">\(\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B\)</span>. For example, if the level is <span class="math inline">\(\alpha=5\)</span>% and we generate <span class="math inline">\(B=1000\)</span> bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.</p>
+<p>There are different approaches to computing confidence intervals, but the simplest is the <strong>percentile method</strong>. For a two-sided test at level <span class="math inline">\(\alpha\)</span>, compute the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap statistics <span class="math inline">\(\{\widehat{\alpha}_b\widehat{\gamma}_b\}_{b=1}^B\)</span>. For example, if the level is <span class="math inline">\(\alpha=5\)</span>% and we generate <span class="math inline">\(B=1000\)</span> bootstrap samples, the percentile confidence intervals bounds are the 25th and 975th ordered observations.</p>
 <p>Nowadays, the asymptotic approximation (sometimes misnamed delta method<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>) has fallen out of fashion among practitioners, who prefer the nonparametric bootstrap coupled with the percentile method.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -637,9 +669,10 @@ Figure&nbsp;13.6: Null distribution of Sobel’s statistic against approximate a
 </div>
 </div>
 <p>The nonparametric percentile bootstrap confidence interval for <span class="math inline">\(\alpha\gamma\)</span> is <span class="math inline">\([-0.08, 1.71]\)</span> and thus we fail to reject the null hypothesis <span class="math inline">\(\mathscr{H}_0: \alpha \gamma=0\)</span>.</p>
-<p>The inference scheme is popular, but we could also rely on different models and use the definitions of the causal effects to perform simulation-based inference; see Appendix D of <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span>. The latter fit two models for the mediator and the outcome, then estimate parameters. In large samples, the parameter estimators are approximately multivariate Gaussian and we can simulate parameters, use the parametric model to generate new data and potential outcomes. The average causal mediation effect can be estimated empirically based on the simulated potential outcomes.</p>
-<section id="model-assumptions" class="level3" data-number="13.3.1">
-<h3 data-number="13.3.1" class="anchored" data-anchor-id="model-assumptions"><span class="header-section-number">13.3.1</span> Model assumptions</h3>
+</section>
+</section>
+<section id="model-assumptions" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="model-assumptions"><span class="header-section-number">13.4</span> Model assumptions</h2>
 <p>We can unpack the model assumptions for the linear mediation model.</p>
 <ol type="1">
 <li>The <em>no unmeasured confounders</em> assumption. Plainly stated, there are no unobserved confounders and thus the error terms <span class="math inline">\(\varepsilon_M\)</span> and <span class="math inline">\(\varepsilon_Y\)</span> are independent. Additionally, when we consider observational data, we must make sure there is hidden confounders affecting either the <span class="math inline">\(M \to X\)</span> and the <span class="math inline">\(X \to Y\)</span> relation, as shown in <a href="#fig-dag1" class="quarto-xref">Figure&nbsp;<span>13.7</span></a>. We can include covariates in the regression models to palliate to this, but we must only include the minimal set of confounders (and no additional mediator or collider chain).</li>
@@ -674,38 +707,54 @@ Figure&nbsp;13.8: Directed acyclic graph showing multiple mediators.
 </div>
 </div>
 <ol start="2" type="1">
-<li>The <strong>linearity assumption</strong> implies that the linear models are correctly specified and that the effect of the covariates are linear. This means that, <em>ceteris paribus</em>, the effect of an increase of one unit of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> is the same regardless of the value of <span class="math inline">\(M\)</span>. It also doesn’t depend on the level of other variables (no interaction). If the model isn’t properly specified, the linear model coefficients will capture the best linear predictor given the design and the coefficients may not be meaningful.</li>
+<li>The <strong>linearity assumption</strong> implies that the linear models are correctly specified and that the effect of the covariates are linear. This means that, <em>ceteris paribus</em>, the effect of an increase of one unit of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> is the same regardless of the value of <span class="math inline">\(M\)</span>. It also doesn’t depend on the level of other variables (no interaction). If the model isn’t properly specified, the linear model coefficients will capture the best linear predictor given the design and the coefficients may not be meaningful. There must thus be no interaction between treatment and the mediator; see <a href="#def-moderated-mediation" class="quarto-xref">Definition&nbsp;<span>13.4</span></a> for the relaxation.</li>
 </ol>
 <p>The linearity assumption also implies that the effect is the same for every individual, so there is no treatment heterogeneity or measurement error which could lead to attenuation bias.</p>
 <p>Following <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="references.html#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span>, we index the regression equations by individual <span class="math inline">\(i\)</span> <span class="math display">\[\begin{align*}
 M_i\mid X_i=x &amp;= c_M + \alpha_i x + \varepsilon_{M,i},\\
 Y_i \mid X_i=x, M_i=m &amp;=  c_Y + \beta_i x + \gamma_i m + \varepsilon_{Y,i}
 \end{align*}\]</span> If <span class="math inline">\(\alpha_i\)</span> differ from one observation to the next, the average estimated by the regression could be positive, negative or null. Even in the latter case, we could have <span class="math inline">\(\gamma_i\)</span> and <span class="math inline">\(\alpha_i\)</span> positive for some observation, or both negatives so that they cancel out even if there is complementary mediation.</p>
-<p>We could easily expand the model to include nonlinear effects (not for the treatment or mediator) and potential interactions, but the linear model approach remains intrinsically of limited applicability. <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> details a more general approach for parametric models based on simulations, as well as a nonparametric approach. Both are less restrictive than the <span class="citation" data-cites="Baron.Kenny:1986">Baron and Kenny (<a href="references.html#ref-Baron.Kenny:1986" role="doc-biblioref">1986</a>)</span> model.</p>
 <p>The main benefit of experimental designs is that it remove confounding in the relationship between treatment and other variables. Adding spurious variables could create feedback (if some of those variables are colliders) and lead to inconsistent conclusions. It’s not clear that the mediator can be manipulated experimentally, and even if it could be to estimate the <span class="math inline">\(\gamma\)</span>, one must make sure the relation is the same absent of <span class="math inline">\(X\)</span>. For example, we could estimate the indirect effect term by manipulating jointly (if possible) (<span class="math inline">\(X, M\)</span>) but even then the linearity assumption must hold for the estimates to correspond to our linear causal mediation model.</p>
+<section id="sensitivity-analysis" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="sensitivity-analysis"><span class="header-section-number">13.4.1</span> Sensitivity analysis</h3>
+<p>The no-unmeasured confounders assumption should be challenged. One way to assess the robustness of the conclusions to this is to consider correlation between errors, as in <span class="citation" data-cites="Bullock.Green.Ha:2010">Bullock, Green, and Ha (<a href="references.html#ref-Bullock.Green.Ha:2010" role="doc-biblioref">2010</a>)</span>. Indeed, one can show that the average parameter in the equation for the response of the linear mediation model satisfies <span class="math display">\[\begin{align*}
+\mathsf{E}(\widehat{\gamma})= \gamma + \frac{\mathsf{Cov}(\varepsilon_m, \varepsilon_y)}{\mathsf{Va}(\varepsilon_m)},
+\end{align*}\]</span> which introduces bias in the <span class="math inline">\(\mathsf{ACME}(x)\)</span>. Even if the true covariance is unknown, we can vary <span class="math inline">\(\rho=\mathsf{Cor}(\varepsilon_m, \varepsilon_y)\)</span> to assess the sensitivity of our conclusions to confounding. The <code>medsens</code> function in the <strong>R</strong> package <code>mediation</code> implements the diagnostic of <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> for the linear mediation model.</p>
+<div id="def-moderated-mediation" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 13.4 (Moderated mediation)</strong></span> We consider a more complex setting where the effect of the experimental factor <span class="math inline">\(X\)</span> depends on the mediator, a case termed <strong>moderated mediator</strong> <span class="citation" data-cites="Judd.Kenny:1981">(<a href="references.html#ref-Judd.Kenny:1981" role="doc-biblioref">Judd and Kenny 1981</a>)</span>.</p>
+<p>In this case, the equation for the response variable becomes <span class="math display">\[\begin{align*}
+\mathsf{E}(Y \mid M=m, X=x, \boldsymbol{Z} = \boldsymbol{z}) = c_Y + \beta x + \gamma m + \kappa x m + \boldsymbol{z}\boldsymbol{\omega}
+\end{align*}\]</span> Upon substituting the equations for both inside the definition of average causal mediation effect, we find that the latter equals <span class="math display">\[\begin{align*}
+\mathsf{ACME}(x) = (\gamma + \kappa x)\{M(1)-M(0)\} = \alpha (\gamma + \kappa x).
+\end{align*}\]</span> and thus the value differs depending on experimental regime (treatment or control), due to the presence of the interaction. Both the average direct and total effects now depend on the theoretical average values of the covariates <span class="math inline">\(\boldsymbol{Z}\)</span> added to the model to control for confounding.</p>
+</div>
 <div id="exm-inconsistency" class="theorem example">
-<p><span class="theorem-title"><strong>Example 13.2 (Fluency as mediator of product evaluation)</strong></span> Study 2 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
+<p><span class="theorem-title"><strong>Example 13.3 (Fluency as mediator of product evaluation)</strong></span> Study 2 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span> focus on inconsistency of photos and text descriptions for online descriptions and how this impact the product evaluation.</p>
 <p>The experimental variable is the consistency of the product description and depiction, with <code>fluency</code> leading to “processing disfluency” that is expected to impact negatively judgment ratings. Familiarity with the product brand and product is included as covariate in both mediator and outcome model (see Table 1 of <span class="citation" data-cites="Lee.Choi:2019">Lee and Choi (<a href="references.html#ref-Lee.Choi:2019" role="doc-biblioref">2019</a>)</span>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(LC19_S2, <span class="at">package =</span> <span class="st">"hecedsm"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>YsMX <span class="ot">&lt;-</span> <span class="fu">lm</span>(prodeval <span class="sc">~</span> fluency <span class="sc">+</span> consistency <span class="sc">+</span> familiarity,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>MsX <span class="ot">&lt;-</span> <span class="fu">lm</span>(fluency <span class="sc">~</span> consistency <span class="sc">+</span> familiarity,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>LC19_S2 <span class="ot">&lt;-</span> LC19_S2 <span class="sc">|&gt;</span> <span class="co"># transform consistency into </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">consistency =</span> <span class="fu">ifelse</span>(consistency <span class="sc">==</span> <span class="st">"inconsistent"</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>YsMX <span class="ot">&lt;-</span> <span class="fu">lm</span>(prodeval <span class="sc">~</span> fluency <span class="sc">+</span> consistency <span class="sc">+</span> familiarity,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>MsX <span class="ot">&lt;-</span> <span class="fu">lm</span>(fluency <span class="sc">~</span> consistency <span class="sc">+</span> familiarity,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> LC19_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div id="tbl-coefsmediation" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div id="tbl-coefsmediation" class="quarto-layout-panel anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-coefsmediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.2: Coefficients of the mediation (left) and outcome (right) models.
+Table&nbsp;13.2: Model coefficients
 </figcaption>
 <div aria-describedby="tbl-coefsmediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="kable_wrapper">
-<tbody>
-<tr>
-<td>
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coefsmediation" style="flex-basis: 50.0%;justify-content: center;">
+<div id="tbl-coefsmediation-1" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coefsmediation-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) mediation
+</figcaption>
+<div aria-describedby="tbl-coefsmediation-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-coefsmediation-1" class="do-not-create-environment caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">term</th>
@@ -731,9 +780,18 @@ Table&nbsp;13.2: Coefficients of the mediation (left) and outcome (right) models
 </tr>
 </tbody>
 </table>
-</td>
-<td>
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="tbl-coefsmediation" style="flex-basis: 50.0%;justify-content: center;">
+<div id="tbl-coefsmediation-2" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="tbl-coefsmediation-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) outcome
+</figcaption>
+<div aria-describedby="tbl-coefsmediation-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="tbl-coefsmediation-2" class="do-not-create-environment caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;">term</th>
@@ -764,14 +822,13 @@ Table&nbsp;13.2: Coefficients of the mediation (left) and outcome (right) models
 </tr>
 </tbody>
 </table>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </figure>
 </div>
+</div>
+</div>
+</div>
+</figure>
 </div>
 <p>We can extract the effects directly from the outcome: the natural indirect effect estimate is <span class="math inline">\(\widehat{\alpha}\widehat{\gamma} = 0.48 \times 0.60\)</span> and the direct effect is <span class="math inline">\(\widehat{\beta} = 0.29\)</span>.</p>
 <p>To get confidence intervals, we can use the <code>mediate</code> package <span class="citation" data-cites="mediationR">(<a href="references.html#ref-mediationR" role="doc-biblioref">Tingley et al. 2014</a>)</span>. The function requires the parametric model for the mediation and outcome, as well as a series of specification (the number of bootstrap samples, the type of confidence interval, the names of the levels for categorical treatment, etc.)</p>
@@ -785,15 +842,31 @@ Table&nbsp;13.2: Coefficients of the mediation (left) and outcome (right) models
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">mediator =</span> <span class="st">"fluency"</span>,</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sims =</span> <span class="dv">5000</span>L,</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.ci.type =</span> <span class="st">"bca"</span>, <span class="co"># bias-corrected and accelerated intervals</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">control.value =</span> <span class="st">"inconsistent"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">treat.value =</span> <span class="st">"consistent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">boot.ci.type =</span> <span class="st">"perc"</span>, <span class="co"># percentile method</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">## with original factor, we could specify the levels for control and treatment</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  control.value = "inconsistent", </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  treat.value = "consistent"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-effect-LC19" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effect-LC19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="causal-inference_files/figure-html/fig-effect-LC19-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effect-LC19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.9: Causal effects and confidence intervals for the difference between inconsistency (control) and consistency (treatement).
+</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <div class="cell">
 <div id="tbl-mediation" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% confidence intervals and p-values with bias-corrected and accelerated confidence intervals based on 5000 bootstrap samples.
+Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparametric bootstrap 95% percentile confidence intervals and p-values based on 5000 bootstrap samples.
 </figcaption>
 <div aria-describedby="tbl-mediation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -811,29 +884,29 @@ Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparam
 <tr class="odd">
 <td style="text-align: left;">ACME</td>
 <td style="text-align: right;">0.286</td>
-<td style="text-align: right;">0.025</td>
-<td style="text-align: right;">0.615</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.595</td>
 <td style="text-align: right;">0.037</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ADE</td>
 <td style="text-align: right;">0.287</td>
-<td style="text-align: right;">-0.166</td>
-<td style="text-align: right;">0.732</td>
+<td style="text-align: right;">-0.165</td>
+<td style="text-align: right;">0.737</td>
 <td style="text-align: right;">0.218</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">total effect</td>
 <td style="text-align: right;">0.573</td>
-<td style="text-align: right;">0.037</td>
-<td style="text-align: right;">1.080</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">1.091</td>
 <td style="text-align: right;">0.030</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">prop. mediated</td>
 <td style="text-align: right;">0.499</td>
-<td style="text-align: right;">0.211</td>
-<td style="text-align: right;">5.956</td>
+<td style="text-align: right;">-0.051</td>
+<td style="text-align: right;">1.938</td>
 <td style="text-align: right;">0.057</td>
 </tr>
 </tbody>
@@ -845,8 +918,47 @@ Table&nbsp;13.3: Linear causal mediation analysis: parameter estimates, nonparam
 </figure>
 </div>
 </div>
-<p>Using the <code>summary</code> method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article.</p>
+<p>Using the <code>summary</code> method, we can print the table of estimates and confidence intervals. We can see that the results are consistent with those reported in the article. We can also use the <code>medsens</code> function to perform the sensitivity analysis, but this only works for binary (numerical) treatments.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mediation<span class="sc">::</span><span class="fu">medsens</span>(<span class="at">x =</span> linmed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="causal-inference_files/figure-html/fig-sensitivity-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.10: Sensitivity analysis showing the variation of the average causal mediation effect as a function of the correlation between outcome and mediation errors, with pointwise 95% confidence intervals.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="general-average-causal-mediation-effect-estimation" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="general-average-causal-mediation-effect-estimation"><span class="header-section-number">13.5</span> General average causal mediation effect estimation</h2>
+<p>The linear mediation model is popular, but is limited to the case with no interaction, continuous mediators, constant (i.e., linear) treatment effect, and continuous response. It also hides model assumptions.</p>
+<p>We could also rely on different models and use the definitions of the causal effects to perform simulation-based inference; see Appendix D of <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span>. The average causal mediation effect can be estimated empirically based on the simulated potential outcomes. Using <a href="#def-ate" class="quarto-xref">Definition&nbsp;<span>13.1</span></a>, the method of <span class="citation" data-cites="Imai:2010">Imai, Keele, and Tingley (<a href="references.html#ref-Imai:2010" role="doc-biblioref">2010</a>)</span> relies on Monte Carlo simulations.</p>
+<ol type="1">
+<li><strong>Modelling</strong>. Specify models to each relationship
+<ol type="a">
+<li>a mediator model <span class="math inline">\(f_M(x, \boldsymbol{z}; \boldsymbol{\theta}_M)\)</span> that includes <span class="math inline">\(X\)</span> and potential confounders <span class="math inline">\(\boldsymbol{Z}\)</span></li>
+<li>an outcome model <span class="math inline">\(f_Y(x, m, \boldsymbol{z}; \boldsymbol{\theta}_Y)\)</span> with both treatment indicator <span class="math inline">\(X\)</span>, mediator <span class="math inline">\(M\)</span><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and potential confounders <span class="math inline">\(\boldsymbol{Z}\)</span>.</li>
+</ol></li>
+<li><strong>Estimation uncertainty</strong>: Either use nonparametric bootstrap or a large-sample approximation to the distribution of model parameters <span class="math inline">\(\boldsymbol{\theta}_M\)</span> and <span class="math inline">\(\boldsymbol{Y}\)</span> to get <span class="math inline">\(J\)</span> copies.</li>
+<li>For each copy of the parameters <span class="math inline">\(j=1, \ldots, J\)</span>, draw <span class="math inline">\(M\)</span> realizations of the mediation model for each observation <span class="math inline">\(i=1, \ldots, n\)</span>, giving <span class="math inline">\(M^{(jm)}_i(1)\)</span> and <span class="math inline">\(M^{(jm)}_i(0)\)</span>. Use these resulting to obtain one draw from the outcome model for each of
+<ol type="a">
+<li><span class="math inline">\(Y_{i}^{(jm)}\{0, M^{(jm)}_i(0)\}\)</span>,</li>
+<li><span class="math inline">\(Y_{i}^{(jm)}\{0, M^{(jm)}_i(1)\}\)</span>,</li>
+<li><span class="math inline">\(Y_{i}^{(jm)}\{1, M^{(jm)}_i(0)\}\)</span> and</li>
+<li><span class="math inline">\(Y_{i}^{(jm)}\{1, M^{(jm)}_i(1)\}\)</span>.</li>
+</ol></li>
+<li>Plug these quantities in the definitions of <span class="math inline">\(\mathsf{ACME}(x)\)</span>, <span class="math inline">\(\mathsf{ADE}(x)\)</span> and <span class="math inline">\(\mathsf{TE}\)</span>, averaging over the <span class="math inline">\(nM\)</span> replications, over both observations <span class="math inline">\(i=1, \ldots, n\)</span> and replications <span class="math inline">\(m=1, \ldots, M\)</span>. This yields a collection of <span class="math inline">\(J\)</span> values <span class="math inline">\(\mathsf{ACME}_j(x)\)</span>, <span class="math inline">\(\mathsf{ADE}_j(x)\)</span> and <span class="math inline">\(\mathsf{TE}_j\)</span> for each parameter value.</li>
+<li>Use the <span class="math inline">\(J\)</span> replications to compute a 95% percentile interval and return the sample means over <span class="math inline">\(J\)</span> for the average causal effects.</li>
+</ol>
+<p>The benefit of this method is that it naturally account for nonlinear effects, different natures of the mediator (binary, categorical, etc.) and the response, through suitable models, e.g., a logistic regression for a binary outcome. With repeated measures, one could also consider interactions between individuals and mediator using random effects, and still retrieve an effect. The framework easily handles interactions between <span class="math inline">\(X:M\)</span> added to the outcome model, in which case we get different values of average causal mediation effect and average direct effect for each value of <span class="math inline">\(X\)</span>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -859,6 +971,9 @@ Bullock, J. G., Green D. P., and S. E. Ha. 2010. <span>“Yes, but What’s the 
 <div id="ref-Davison.Hinkley:1997" class="csl-entry" role="listitem">
 Davison, A. C., and D. V. Hinkley. 1997. <em>Bootstrap Methods and Their Application</em>. New York, NY: Cambridge University Press.
 </div>
+<div id="ref-Efron:1979" class="csl-entry" role="listitem">
+Efron, B. 1979. <span>“Bootstrap Methods: Another Look at the Jackknife.”</span> <em>The Annals of Statistics</em> 7 (1): 1–26. <a href="https://doi.org/10.1214/aos/1176344552">https://doi.org/10.1214/aos/1176344552</a>.
+</div>
 <div id="ref-Efron.Tibshirani:1993" class="csl-entry" role="listitem">
 Efron, B., and R. J. Tibshirani. 1993. <em>An Introduction to the Bootstrap</em>. Boca Raton, FL: CRC Press.
 </div>
@@ -868,11 +983,17 @@ Imai, Kosuke, Luke Keele, and Dustin Tingley. 2010. <span>“A General Approach 
 <div id="ref-Imbens.Rubin:2015" class="csl-entry" role="listitem">
 Imbens, Guido W., and Donald B. Rubin. 2015. <em>Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction</em>. Cambridge, UK: Cambridge University Press. <a href="https://doi.org/10.1017/CBO9781139025751">https://doi.org/10.1017/CBO9781139025751</a>.
 </div>
+<div id="ref-Judd.Kenny:1981" class="csl-entry" role="listitem">
+Judd, Charles M., and David A. Kenny. 1981. <span>“Process Analysis: Estimating Mediation in Treatment Evaluations.”</span> <em>Evaluation Review</em> 5 (5): 602–19. <a href="https://doi.org/10.1177/0193841X8100500502">https://doi.org/10.1177/0193841X8100500502</a>.
+</div>
 <div id="ref-Kowal:2021" class="csl-entry" role="listitem">
 Kowal, Agata AND Kochan-Wójcik, Marta AND Groyecka-Bernard. 2021. <span>“When and How Does the Number of Children Affect Marital Satisfaction? An International Survey.”</span> <em>PLOS ONE</em> 16 (4): 1–14. <a href="https://doi.org/10.1371/journal.pone.0249516">https://doi.org/10.1371/journal.pone.0249516</a>.
 </div>
 <div id="ref-Lee.Choi:2019" class="csl-entry" role="listitem">
 Lee, Kiljae, and Jungsil Choi. 2019. <span>“Image-Text Inconsistency Effect on Product Evaluation in Online Retailing.”</span> <em>Journal of Retailing and Consumer Services</em> 49: 279–88. <a href="https://doi.org/10.1016/j.jretconser.2019.03.015">https://doi.org/10.1016/j.jretconser.2019.03.015</a>.
+</div>
+<div id="ref-McKinnon:2002" class="csl-entry" role="listitem">
+MacKinnon, David P., Chondra M. Lockwood, Jeanne M. Hoffman, Stephen G. West, and Virgil Sheets. 2002. <span>“A Comparison of Methods to Test Mediation and Other Intervening Variable Effects.”</span> <em>Psychological Methods</em> 7 (1): 83–104. <a href="https://doi.org/10.1037/1082-989X.7.1.83">https://doi.org/10.1037/1082-989X.7.1.83</a>.
 </div>
 <div id="ref-McQuire:2020" class="csl-entry" role="listitem">
 McQuire, Cheryl, R. Daniel, L. Hurt, A. Kemp, and S. Paranjothy. 2020. <span>“The Causal Web of Foetal Alcohol Spectrum Disorders: A Review and Causal Diagram.”</span> <em>European Child <span>&amp;</span> Adolescent Psychiatry</em> 29 (5): 575–94. <a href="https://doi.org/10.1007/s00787-018-1264-3">https://doi.org/10.1007/s00787-018-1264-3</a>.
@@ -886,6 +1007,9 @@ Pearl, Judea, Maria Glymour, and Nicholas Jewell. 2016. <em>Causal Inference in 
 <div id="ref-Preacher.Hayes:2004" class="csl-entry" role="listitem">
 Preacher, Kristopher J., and Andrew F. Hayes. 2004. <span>“<span>SPSS</span> and <span>SAS</span> Procedures for Estimating Indirect Effects in Simple Mediation Models.”</span> <em>Behavior Research Methods, Instruments <span>&amp;</span> Computers</em> 36: 717–31. <a href="https://doi.org/10.3758/BF03206553">https://doi.org/10.3758/BF03206553</a>.
 </div>
+<div id="ref-Robins.Greenland:1992" class="csl-entry" role="listitem">
+Robins, James M., and Sander Greenland. 1992. <span>“Identifiability and Exchangeability for Direct and Indirect Effects.”</span> <em>Epidemiology</em> 3 (2). <a href="https://journals.lww.com/epidem/fulltext/1992/03000/identifiability_and_exchangeability_for_direct_and.13.aspx">https://journals.lww.com/epidem/fulltext/1992/03000/identifiability_and_exchangeability_for_direct_and.13.aspx</a>.
+</div>
 <div id="ref-mediationR" class="csl-entry" role="listitem">
 Tingley, Dustin, Teppei Yamamoto, Kentaro Hirose, Luke Keele, and Kosuke Imai. 2014. <span>“<code>mediation</code>: <span>R</span> Package for Causal Mediation Analysis.”</span> <em>Journal of Statistical Software</em> 59 (5): 1–38. <a href="https://doi.org/10.18637/jss.v059.i05">https://doi.org/10.18637/jss.v059.i05</a>.
 </div>
@@ -897,14 +1021,14 @@ Zhao, Xinshu, Jr. Lynch John G., and Qimei Chen. 2010. <span>“Reconsidering <s
 </div>
 </div>
 </section>
-</section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1"><p>The notation is important to distinguish between association <span class="math inline">\(Y \mid X\)</span> when observing <span class="math inline">\(X\)</span> from experimental manipulations or interventions, <span class="math inline">\(Y \mid \mathsf{do}(X)\)</span> and counterfactuals <span class="math inline">\(Y(X)\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>The dependence on <span class="math inline">\(\boldsymbol{Z}\)</span> is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known from each individual).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The dependence on <span class="math inline">\(\boldsymbol{Z}\)</span> is used for situations where we can perform randomization based on pre-treatment assignment (i.e., we specify a mechanisms that is not equal based, but the probability of assignment is known for each individual).<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Sobel derived the asymptotic variance using a first-order Taylor series expansion assuming both <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> are non-zero (hence the tests!)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>The latter is the name of the method used to derive the denominator of Sobel’s statistic.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Optionally, add their interaction <span class="math inline">\(X:M\)</span> in case of moderated mediation.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

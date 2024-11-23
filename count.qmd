@@ -205,7 +205,7 @@ In more general regression models, we build a design matrix with explanatory var
 \begin{align*}
 \mu = \exp(\beta_0 + \beta_1 \mathrm{X}_{1} + \cdots + \beta_p \mathrm{X}_{p}),
 \end{align*}
-so the mean is multiplied by $\exp(\beta_j)$ for an increase of one unit of $\mathrm{X}_{j}$, *ceteris  paribus.* If $\beta_j < 0$, $\exp(\beta_j) < 1$ and so we have a decrease of $100\cdot(1-\exp(\beta_j))$% of the mean response. Likewise, if $\beta_j>0$, the mean number increases by $100\cdot(\exp(\beta_j)-1)$%. 
+so the mean is multiplied by $\exp(\beta_j)$ for an increase of one unit of $\mathrm{X}_{j},$ *ceteris  paribus.* If $\beta_j < 0$, $\exp(\beta_j) < 1$ and so we have a decrease of $100\cdot(1-\exp(\beta_j))$% of the mean response. Likewise, if $\beta_j>0$, the mean number increases by $100\cdot(\exp(\beta_j)-1)$%. 
 
 :::{#exm-roadsweden}
 
