@@ -99,10 +99,10 @@ To gather intuition, we begin with the task of comparing the means of two groups
 \begin{align*}
 T =  \frac{\widehat{\mu}_2 - \widehat{\mu}_1}{\widehat{\sigma}} \left(\frac{1}{n_1}+\frac{1}{n_2}\right)^{-1/2}
 \end{align*}
-where $\widehat{\sigma}$ is the pooled sample size estimator. The first term, $\widehat{d}_s = (\widehat{\mu}_2 - \widehat{\mu}_1)/\widehat{\sigma}$, is termed Cohen's $d$ [@Cohen:1988] and it measures the standardized difference between groups, a form of signal-to-noise ratio. As the sample size gets larger and larger, the sample mean and pooled sample variance become closer and closer to the true population values $\mu_1$, $\mu_2$ and $\sigma$; at the same time, the statistic $T$ becomes bigger as $n$ becomes larger because of the second term.^[If we consider a balanced sample, $n_1 = n_2 = n/2$ we can rewrite the statistic as $T = \sqrt{n} \widehat{d}_s/2$ and the statement that $T$ increases with $n$ on average becomes more obvious.] 
+where $\widehat{\sigma}$ is the pooled sample size estimator. The first term, $\widehat{d}_s = (\widehat{\mu}_2 - \widehat{\mu}_1)/\widehat{\sigma},$ is termed Cohen's $d$ [@Cohen:1988] and it measures the standardized difference between groups, a form of signal-to-noise ratio. As the sample size gets larger and larger, the sample mean and pooled sample variance become closer and closer to the true population values $\mu_1$, $\mu_2$ and $\sigma;$ at the same time, the statistic $T$ becomes bigger as $n$ becomes larger because of the second term.^[If we consider a balanced sample, $n_1 = n_2 = n/2$ we can rewrite the statistic as $T = \sqrt{n} \widehat{d}_s/2$ and the statement that $T$ increases with $n$ on average becomes more obvious.] 
 
-The difference $d=(\mu_1-\mu_2)/\sigma$ has an obvious interpretation: a distance of $d=a$ indicates that the means of the two groups are $a$ standard deviation apart. Cohen's $d$ is sometimes loosely categorized in terms of weak ($d = 0.2$), medium ($d=0.5$) and large ($d=0.8$) effect size; these, much like arbitrary $p$-value cutoffs, are rules of thumbs. Alongside $d$, there are many commonly reported metrics that are simple transformations of $d$ describing the observed difference. This interactive  [applet](https://rpsychologist.com/cohend/) by Kristoffer Magnusson [@magnussonCohend] shows the visual impact of changing the value of $d$ along.
-There are different estimators of $d$ depending on whether or not the pooled variance estimator is used. Cohen's $d$, is upward biased, meaning it gives values that are on average larger than the truth. Hedge's $g$ [@Hedges:1981] offers a bias-correction and should always be preferred as an estimator.
+The difference $d=(\mu_1-\mu_2)/\sigma$ has an obvious interpretation: a distance of $d=a$ indicates that the means of the two groups are $a$ standard deviation apart. Cohen's $d$ is sometimes loosely categorized in terms of weak $(d = 0.2)$, medium $(d=0.5)$ and large $(d=0.8)$ effect size; these, much like arbitrary $p$-value cutoffs, are rules of thumbs. Alongside $d$, there are many commonly reported metrics that are simple transformations of $d$ describing the observed difference. This interactive  [applet](https://rpsychologist.com/cohend/) by Kristoffer Magnusson [@magnussonCohend] shows the visual impact of changing the value of $d$ along.
+There are different estimators of $d$ depending on whether or not the pooled variance estimator is used. Cohen's $d,$ is upward biased, meaning it gives values that are on average larger than the truth. Hedge's $g$ [@Hedges:1981] offers a bias-correction and should always be preferred as an estimator, but the bias is relatively small and vanishes quickly as the sample size increases.
 
 For these different estimators, it is possible to obtain (asymmetric) confidence intervals or tolerance intervals.^[By using the pivot method, e.g.,  @Steiger:2004, and relating the effect size to the noncentrality parameter of the null distribution, whether $\mathsf{St}$, $\mathsf{F}$ or $\chi^2$.]
 
@@ -151,17 +151,18 @@ effect <- effectsize::hedges_g(
 
 Another class of effect sizes are obtained by considering either the ratio of the variance due to an effect (say differences in means relative to the overall mean) relative to the background level of noise as measured by the variance.
 
-One common measure employed in software is Cohen's _f_ [@Cohen:1988], which for a one-way ANOVA (equal variance $\sigma^2$) with more than two groups, 
+One common measure employed in software is Cohen's _f_ [@Cohen:1988], the square of which for a one-way ANOVA with factor $A$ (equal variance $\sigma^2$) with more than two groups, 
 $$
-f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigma^2_{\text{effect}}}{\sigma^2},
+f^2 = \frac{1}{\sigma^2} \sum_{j=1}^k \frac{n_j}{n}(\mu_j - \mu)^2 = \frac{\sigma^2_{A}}{\sigma^2},
 $$
-a weighted sum of squared difference relative to the overall mean $\mu$. $\sigma^2_{\text{effect}}$ is a measure of the variability that is due to the difference in mean, so standardizing it by the measurement variance gives us a ratio of variance with values higher than one indicating that more variability is explainable, leading to higher effect sizes. If the means of every subgroup is the same, then $f=0$. For $k=2$ groups, Cohen's $f$ and Cohen's $d$ are related via $f=d/2$.
+a weighted sum of squared difference relative to the overall mean $\mu$. $\sigma^2_{A}$ is a measure of the variability that is due to the difference in mean, so standardizing it by the measurement variance gives us a ratio of variance with values higher than one indicating that more variability is explainable, leading to higher effect sizes. If the means of every subgroup is the same, then $f=0$. For $k=2$ groups, Cohen's $f$ and Cohen's $d$ are related via $f=d/2$.
 
 Cohen's $f$ can be directly related to the behaviour of the $F$ statistic under an alternative, as explained in @sec-power-oneway. However, since the interpretation isn't straightforward, we typically consider proportions of variance (rather than ratios of variance).
 
-To build such an effect size, we break down the variability that is explained by our experimental manipulation ($\sigma^2_\text{effect}$), here denoted by effect, from the leftover unexplained part, or residual ($\sigma^2_\text{resid}$). In a one-way analysis of variance, $$\sigma^2_{\text{total}} = \sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}$$ and the percentage of variability explained by the $\text{effect}$.
-$$\eta^2 = \frac{\text{explained variability}}{\text{total variability}}= \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{resid}} + \sigma^2_{\text{effect}}} = \frac{\sigma^2_{\text{effect}}}{\sigma^2_{\text{total}}}.$$
+To build such an effect size, we break down the variability that is explained by our experimental manipulation ($\sigma^2_A$), here denoted by effect, from the leftover unexplained part, or residual ($\sigma^2_\text{resid}$). In a one-way analysis of variance, $$\sigma^2_{\text{total}} = \sigma^2_{\text{resid}} + \sigma^2_{A}$$ and the percentage of variability explained by the factor $A$ is, so
+$$\eta^2 = \frac{\text{explained variability}}{\text{total variability}}= \frac{\sigma^2_{A}}{\sigma^2_{\text{resid}} + \sigma^2_{A}} = \frac{\sigma^2_{A}}{\sigma^2_{\text{total}}}.$$
 Simple arithmetic manipulations reveal that $f^2 = \eta^2/(1-\eta^2)$, so we can relate any proportion of variance in terms of ratio and vice-versa.
+
 
 Such an effect size depends on unknown population quantities (the true means of each subgroup, the overall mean and the variance). There are multiple alternative estimators to estimate $\eta^2$, and researchers are often carefree when reporting as to which is used. To disambiguate, I will put $\hat{\eta}^2$ to denote an estimator. To make an analogy, there are many different recipes (estimators) that can lead to a particular cake, but some may lead to a mixing that is on average too wet if they are not well calibrated.
 
@@ -169,11 +170,15 @@ The default estimator for $\eta^2$ is the coefficient of determination of the li
 $$
 \widehat{R}{}^2 = \frac{F\nu_1}{F\nu_1 + \nu_2}
 $$
-where for the one-way ANOVA $\nu_1 = K-1$ and $\nu_2 = n-K$ are the degrees of freedom of a design with $n$ observations and $K$ experimental conditions. 
+where for the one-way ANOVA $\nu_1 = K-1$ and $\nu_2 = n-K$ are the degrees of freedom of a design with $n$ observations and $K$ experimental conditions. From this, we can build an estimator of Cohen's $f$, 
+where for the omnibus test of the one-way ANOVA, we get
+$$
+\widehat{f} = \sqrt{F\nu_1/\nu_2}
+$$
 
 Unfortunately, $\widehat{R}{}^2$ is an upward biased estimator (too large on average), leading to optimistic measures. Another estimator of $\eta^2$ that is recommended in @Keppel/Wickens:2004 for power calculations is $\widehat{\omega}^2$, which is
 $$\widehat{\omega}^2 = \frac{\nu_1 (F-1)}{\nu_1(F-1)+n}.$$
-Since the $F$ statistic is approximately 1 on average, this measure removes the mode. Both $\widehat{\omega}^2$ and $\widehat{\epsilon}^2$ have been reported to be less biased and thus preferable as estimators of the true proportion of variance [@Lakens:2013].
+Since the $F$ statistic is approximately 1 on average, this measure removes the mode. Both $\widehat{\omega}^2$ and $\widehat{\epsilon}^2$ have been reported to be less biased and thus preferable as estimators of the true proportion of variance [@Lakens:2013]. We can as before get an estimator of Cohen's $f$ for the variance ratio as $\widetilde{f} = \sqrt{\nu_1(F-1)/n}$.
 
 :::{#exm-calculation-effect-anova}
 
@@ -220,7 +225,7 @@ emmeans::emmeans(mod_post, specs = "group") |>
 
 ### Partial effects and variance decomposition
 
-In a multiway design with several factors, we may want to estimate the effect of separate factors or interactions. In such cases, we can break down the variability explained by manipulations per effect. The effect size for such models are build by comparing the variance explained by the effect $\sigma^2_{\text{effect}}$. 
+In a multiway design with several factors, we may want to estimate the effect of separate factors or interactions. In such cases, we can break down the variability explained by manipulations per effect. The effect size for such models are build by comparing the variance explained by the effect. 
 
 For example, say we have a completely randomized balanced design with two factors $A$, $B$ and their interaction $AB$. We can decompose the total variance as
 $$\sigma^2_{\text{total}} = \sigma^2_A + \sigma^2_B + \sigma^2_{AB} + \sigma^2_{\text{resid}}.$$

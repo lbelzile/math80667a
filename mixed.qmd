@@ -67,6 +67,14 @@ We will analyse block designs in the same as we did for multi-way analysis of va
 
 We consider paired data from Study 3 of @Liu.Rim.Min.Min:2023, who looked at the appreciation of people reaching out to them in a unsolicited manner. The data includes the appreciation score of both responder and initiator, along with sociodemographic variables (age and gender).
 
+```{r}
+#| echo: false
+#| eval: true
+data(LRMM23_S3, package = "hecedsm")
+# Paired t-test
+ttest <- broom::tidy(with(LRMM23_S3, t.test(apprec_init, apprec_resp, paired = TRUE)))
+```
+
 While a paired $t$-test is the natural (and arguably simplest way) to compare the difference in appreciation scores, we reformat the data to long format (one response per line), with a categorical variable `role` indicating the role of the participant and `dyad`, a dummy number indicating which participants belong to which pair. We then fit an analysis of variance model to the scores with both `dyad` and `role`. The $F$-tests for the main effects indicate that the dyads (66 additional parameters, since there are 67 pairs) filter out significant part of the variability. If we consider estimated marginal means and look at the $p$-value and the pairwise difference between initiator and respondent, we find exactly the same statistic value `r round(as.numeric(ttest$statistic),2)`, with $`r as.integer(ttest$parameter)`$ degrees of freedom and $p$-value for the pairwise difference as the paired $t$-test.
 
 
@@ -74,8 +82,8 @@ While a paired $t$-test is the natural (and arguably simplest way) to compare th
 #| echo: true
 #| eval: true
 data(LRMM23_S3, package = "hecedsm")
-# Paired t-tests
-with(LRMM23_S3, t.test(apprec_init, apprec_resp, paired = TRUE))
+# Paired t-test
+ttest <- with(LRMM23_S3, t.test(apprec_init, apprec_resp, paired = TRUE))
 ```
 
 ```{r}
@@ -270,11 +278,11 @@ The global $F$ test of significance for stimulus is based on an approximation th
 We consider a replication study of @Elliot:2021,
 which studied verbalization and verbalization of kids aged 5, 6, 7 and 10. The replication was performed in 17 different school labs, adapting a protocol of @Flavell:1966, with an overall sample of 977 child partaking in the experiment.
 
-Each participant was assigned to three tasks (`timing`): `delayed` recall with 15 seconds wait, or `immediate`, and finally  a naming task (`point-and-name`). The `taskorder` variable records the order in which these were presented: the order of `delayed` and `immediate` was counterbalanced across individuals, with the naming task always occurring last. The response variable is the number of words correctly recalled out of five. The experimenters also recorded the frequency at which students spontaneously verbalized during the task (except the naming task, where they were instructed to do so).
+Each participant was assigned to three tasks (`timing`): `delayed` recall with 15 seconds wait, or `immediate`, and finally  a naming task (`point-and-name`). The `taskorder` variable records the order in which these were presented: the order of `delayed` and `immediate` was counterbalanced across individuals, with the naming task always occurring last. The response variable is the number of words correctly recalled out of five. The experimenters also recorded the frequency at which students spontaneously verbalized during the task (except the point-and-name task, where they were specifically instructed to do so). The latter would normally be treated as a binary or count response variable, but we treat it as an explanatory hereafter.
 
-The timing is a within-subject factor, whereas task order and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend).
+The timing is a within-subject factor, whereas task order and age are between-subject factors: we are particularly interested in the speech frequency and the improvement over time (pairwise differences and trend). 
 
-To fit the linear mixed model with a random effect for both children `id` and `lab`: since children are nested in lab, we must specify the random effects via `(1 | id:lab) + (1 | lab)` if `id` are not unique.
+To fit the linear mixed model with a random effect for both children `id` and `lab`: since children are nested in lab, we must specify the random effects via `(1 | id:lab) + (1 | lab)` if `id` are not unique; otherwise, the first term is equivalent to `(1|id)`.
 
 We modify the data to keep only 5 and 6 years old students, since most older kids verbalized during the task and we would have large disbalance (14 ten years old out of 235, and 19 out of 269 seven years old). We also exclude the point-and-name task, since verbalization was part of the instruction. This leaves us with 1419 observations and we can check that there are indeed enough children in each condition to get estimates.
 
@@ -321,7 +329,7 @@ We focus here on selected part of the output from `summary()` giving the estimat
 
 In this setting, the correlation between observations from the same individuals $i$ in lab $j$ for measurement $k$ and from different individuals in the same labs are, respectively
 \begin{align*}
-\mathsf{cor}(Y_{ijk}, Y_{ijk'}) = \frac{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}, \qquad \mathsf{cor}(Y_{ijk}, Y_{i'jk'}) = \frac{\sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}.
+\mathsf{cor}(Y_{ijk}, Y_{ijk'}) &= \frac{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}, \\\mathsf{cor}(Y_{ijk}, Y_{i'jk'}) &= \frac{\sigma^2_{\text{lab}}}{\sigma^2_{\text{id}} + \sigma^2_{\text{lab}} + \sigma^2_{\text{res}}}.
 \end{align*}
 We can interpret the results as follows: the total variance is the sum of the  `id`, `lab` and `residual` variances components give us an all but negligible effect of lab with `r round(100*(hmod@theta[2]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent of the total variance, versus `r round(100*(hmod@theta[1]^2/(hmod@sigma^2 + sum(hmod@theta^2))),1)` percent for the children-specific variability. Since there are only 17 labs, and most of the individual specific variability is at the children level, the random effect for lab doesn't add much to the correlation.
 
@@ -334,7 +342,8 @@ anova(hmod, ddf = "Kenward-Roger")
 # Check estimated marginal means for age
 emm <- emmeans::emmeans(hmod, specs = "age")
 # Pairwise differences
-pairdiff <- emm |> emmeans::pairs()
+pairdiff <- emm |> 
+    emmeans::contrast(method = "pairwise")
 ```
 
 ```{r}
@@ -385,7 +394,7 @@ The type III ANOVA table shows that there is no evidence of interaction between 
 
 The $t$-test for the pairwise difference of the marginal effect is `r round(-summary(pairdiff)$estimate,2)` words with standard error `r round(summary(pairdiff)$SE,2)`. Judging from the output, the degrees of freedom calculation for the pairwise $t$-test are erroneous --- they seem to be some average between the number of entries for the five years old (`r table(MULTI21_D2_sub$age)[1]`) and six years old (`r table(MULTI21_D2_sub$age)[2]`), but this fails to account for the fact that each kid is featured twice. Given the large magnitude of the ratio, this still amounts to strong result provided the standard error is correct.
 
-We can easily see the limited interaction and strong main effects from the interaction plot in @fig-interactionrecall. The confidence intervals are of different width because of the sample inbalance.
+We can easily see the limited interaction and strong main effects from the interaction plot in @fig-interactionrecall. The confidence intervals are of different width because of the sample imbalance.
 
 ```{r}
 #| label: fig-interactionrecall
@@ -423,6 +432,56 @@ ggplot(data = emm_full,
   theme_classic() + 
   theme(legend.position = "bottom")
 ```
+
+While we have added random effects (so our parameter of interest are the variance terms $\sigma^2_{\mathrm{id}}$ and $\sigma^2_{\mathrm{lab}}$, we can nevertheless use the model to get predictions of the lab or individual-specific effects, which are conditional means. These are assumed to be normally distributed, and we can draw a quantile-quantile plot to check this assumption. With `lme4`, we can get the random effect predictions using the `ranef` function, as follows:
+
+```{r}
+#| eval: false
+#| echo: true
+# Predictions of lab-specific
+# Difference in means relative to average
+library(lme4)
+ranef(hmod)$lab
+dotplot(lme4::ranef(hmod))[["lab"]] # catterpilar plot
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: tbl-predranef
+#| tbl-cap: "Predicted mean differences for the lab-specific normal random effects"
+#| layout-ncol: 2
+rantab <- lme4::ranef(hmod)$lab 
+rantab <- rantab |>
+  dplyr::rename(pred = `(Intercept)`) |>
+  dplyr::mutate(lab = rownames(rantab),
+                pred = paste0("$",round(pred,3),"$"))
+rownames(rantab) <- NULL
+knitr::kable(rantab[1:9,2:1],
+   booktabs = TRUE,
+  align = c("lr"),
+  row.names = FALSE,
+  col.names = c("lab","prediction"))
+knitr::kable(rantab[10:17,2:1],
+   booktabs = TRUE,
+  align = c("lr"),
+  row.names = FALSE,
+  col.names = c("lab","prediction"))
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| label: fig-pred-raneff
+#| fig-cap: "Catterpilar plot of predictions (conditional means and conditional variances) for the lab-specific random effects."
+#| fig-align: 'center'
+# par(mfrow = c(1,2), mar = c(4,4,1,1))
+# plot(lme4::ranef(hmod), main = FALSE)[["lab"]]
+dotplot.ranef.mer(lme4::ranef(hmod), main = FALSE)[["lab"]]
+# graphics.off()
+```
+
+
 
 :::
 

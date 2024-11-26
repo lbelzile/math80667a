@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -992,7 +992,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">specs =</span> <span class="fu">c</span>(<span class="st">"anchor"</span>, <span class="st">"magnitude"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> anchor  magnitude emmean     SE   df lower.CL upper.CL
- round   0         -0.185 0.0676 28.9  -0.3236  -0.0472
+ round   0         -0.185 0.0676 29.0  -0.3236  -0.0472
  precise 0         -0.354 0.0422 29.0  -0.4401  -0.2674
  round   1          0.349 0.0796 29.0   0.1859   0.5115
  precise 1          0.195 0.0618 28.9   0.0687   0.3215
@@ -1057,7 +1057,7 @@ magnitude = 1:
 <div class="cell-output cell-output-stdout">
 <pre><code>$emmeans
  magnitude anchor  emmean     SE   df lower.CL upper.CL
- 0         round   -0.185 0.0676 28.9  -0.3236  -0.0472
+ 0         round   -0.185 0.0676 29.0  -0.3236  -0.0472
  1         round    0.349 0.0796 29.0   0.1859   0.5115
  0         precise -0.354 0.0422 29.0  -0.4401  -0.2674
  1         precise  0.195 0.0618 28.9   0.0687   0.3215
@@ -1067,12 +1067,12 @@ Confidence level used: 0.95
 
 $contrasts
  contrast                                estimate     SE   df t.ratio p.value
- magnitude0 round - magnitude1 round       -0.534 0.1040 56.5  -5.115  &lt;.0001
- magnitude0 round - magnitude0 precise      0.168 0.0797 48.6   2.112  0.1636
+ magnitude0 round - magnitude1 round       -0.534 0.1044 56.4  -5.115  &lt;.0001
+ magnitude0 round - magnitude0 precise      0.168 0.0797 48.7   2.112  0.1636
  magnitude0 round - magnitude1 precise     -0.381 0.0916 57.5  -4.156  0.0006
  magnitude1 round - magnitude0 precise      0.702 0.0901 44.1   7.795  &lt;.0001
- magnitude1 round - magnitude1 precise      0.154 0.1010 54.6   1.524  0.4306
- magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.1  -7.333  &lt;.0001
+ magnitude1 round - magnitude1 precise      0.154 0.1008 54.7   1.524  0.4306
+ magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.0  -7.333  &lt;.0001
 
 Degrees-of-freedom method: satterthwaite 
 P value adjustment: tukey method for comparing a family of 4 estimates </code></pre>
