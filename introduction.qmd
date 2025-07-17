@@ -49,7 +49,7 @@ For example, an economist studying the impact of interest rates on the price of 
 knitr::include_graphics("figures/random_sample_assignment.png")
 ```
 
-@fig-openintrograph summarizes the two preceding sections. Random allocation of observational units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations. 
+@fig-openintrograph summarizes the two preceding sections. Random allocation of measurement units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations. 
 
 
 ## Terminology
@@ -58,14 +58,14 @@ knitr::include_graphics("figures/random_sample_assignment.png")
 In its simplest form, an **experimental design** is a comparison of two or more treatments (experimental conditions):
 
 - The subjects (or **experimental units**) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.
-- The **observational unit** is the smallest level (time point, individual) at which measurement are recorded.
+- The **measurement unit** is the smallest level (time point, individual) at which measurement are recorded; sometimes called observational unit in other textbooks.
 - Explanatories (independent variables) are variables that impact the response. They can be continuous (dose) or categorical variables; in the latter case, they are termed **factors**.
 - The **experimental treatments** or conditions are *manipulated and controlled* by the researcher. Oftentimes, there is a **control** or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).
 - After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject. 
 - Observed differences in the outcome variable between the experimental conditions (treatments) are called treatment effects. 
 
 ::: {#exm-experimentdefinitions name="Pedagogical experience"}
-Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observational units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom). 
+Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the measurement units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom). 
 
 <!--
 Potential confounders for this experiment include the strength of individuals, which reflects their prior exposure to the topic, knowledge, maturity, etc. This could be measured using a preliminary exam before assignment of students to class groups is completed. Additional factors worth controlling for include timing of the classroom (morning, afternoon, evening classes) and instructors.
@@ -80,7 +80,7 @@ The marketing department of a company wants to know the value of its brand by de
 As a researcher, how would you conduct this study? Identify a specific product. For the latter, define
 
 - an adequate response variable
-- the experimental and observational units
+- the experimental and measurement units
 - potential blocking factors
 
 :::
@@ -293,7 +293,7 @@ Because sampling is costly, we can only collect limited information about the va
 
 In general, *randomization* is necessary in order to obtain a **representative** sample^[Note this randomization is different from the one in assigning treatments to experimental units!], one that match the characteristics of the population. Failing to randomize leads to introduction of bias and generally the conclusions drawn from a study won't be generalizable. 
 
-Even when observational units are selected at random to participate, there may be **bias** introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.
+Even when measurement units are selected at random to participate, there may be **bias** introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.
 
 ::: {.callout-note}
 
@@ -395,7 +395,7 @@ The credibility of a study relies in large part on the quality of the data colle
 
 :::
 
-There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.
+There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of measurement units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these measurement units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.
 
 In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon's Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review [@Aguinis:2021]. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census. 
 
@@ -501,7 +501,7 @@ Randomization^[The percentage of participants need not be equiprobable, nor do w
 The second point listed by @Cox:1958 is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the difference in mean treatment is divided by its standard error, a form of effect size. The intuition should be that it's easier to detect something when the signal is large and the background noise is low. The latter is a function of 
 
 (a) the accuracy of the experimental work and measurements apparatus and the intrinsic variability of the phenomenon under study, 
-(b) the number of experimental and observational units (the sample size).
+(b) the number of experimental and measurement units (the sample size).
 (c) the choice of design and statistical procedures. 
 
 Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is usually standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.

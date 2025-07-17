@@ -17,7 +17,7 @@ library(tibble)
 theme_set(theme_classic())
 ```
 
-This chapter focuses on experiments where potentially multiple factors of interest are manipulated by the experimenter to study their impact. If the allocation of observational units to each treatment combination is completely random, the resulting experiment is a completely randomized design.
+This chapter focuses on experiments where potentially multiple factors of interest are manipulated by the experimenter to study their impact. If the allocation of measurement units to each treatment combination is completely random, the resulting experiment is a completely randomized design.
 
 The one-way analysis of variance describes the most simple experimental setup one can consider: completely randomized experiments with one factor, in which we are solely interested in the effect of a single treatment variable with multiple levels. 
 

@@ -119,15 +119,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 % definitions for citeproc citations
@@ -350,9 +352,6 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -367,7 +366,7 @@
 
 \title{Experimental design and statistical methods}
 \author{Léo Belzile}
-\date{2024-11-26}
+\date{2025-07-17}
 
 
 \definecolor{quarto-callout-color}{HTML}{909090}
@@ -409,7 +408,7 @@ details.
 These notes are licensed under a
 \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International License}
-and were last compiled on Tuesday, November 26 2024.
+and were last compiled on Thursday, July 17 2025.
 
 The objective of the course is to teach basic principles of experimental
 designs and statistical inference using the \textbf{R} programming
@@ -447,7 +446,7 @@ to the (often large) intrinsic variation of the measurements. We
 typically expect differences between treatments (and thus the effect) to
 be \emph{comparatively stable} relative to the measurement variation.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Learning objectives}:}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -501,7 +500,7 @@ experimental manipulation.\footnote{The preceding paragraph shouldn't be
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/random_sample_assignment.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/random_sample_assignment.png}
 
 }
 
@@ -514,7 +513,7 @@ license}.}
 \end{figure}%
 
 Figure~\ref{fig-openintrograph} summarizes the two preceding sections.
-Random allocation of observational units to treatment and random samples
+Random allocation of measurement units to treatment and random samples
 from the population lead to ideal studies, but may be impossible due to
 ethical considerations.
 
@@ -532,8 +531,9 @@ two or more treatments (experimental conditions):
   receiving. Formally, an experimental unit is the smallest division
   such that any two units may receive different treatments.
 \item
-  The \textbf{observational unit} is the smallest level (time point,
-  individual) at which measurement are recorded.
+  The \textbf{measurement unit} is the smallest level (time point,
+  individual) at which measurement are recorded; sometimes called
+  observational unit in other textbooks.
 \item
   Explanatories (independent variables) are variables that impact the
   response. They can be continuous (dose) or categorical variables; in
@@ -562,12 +562,12 @@ corroborate this research hypothesis, we can design an experiment in
 which different sections of a course are assigned to different teaching
 methods. In this example, each student in a class group receives the
 same teaching assignment, so the experimental units are the sections and
-the observational units are the individual students. The treatment is
-the teaching method (traditional teaching versus flipped classroom).
+the measurement units are the individual students. The treatment is the
+teaching method (traditional teaching versus flipped classroom).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 The marketing department of a company wants to know the value of its
 brand by determining how much more customers are willing to pay for
@@ -585,7 +585,7 @@ product. For the latter, define
 \item
   an adequate response variable
 \item
-  the experimental and observational units
+  the experimental and measurement units
 \item
   potential blocking factors
 \end{itemize}
@@ -608,7 +608,7 @@ randomisation eliminates much of the bias inherent with other study
 designs
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{\textbf{Quasi experiments}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Sometimes, it is impossible or unethical to conduct an experiment. This
 seemingly precludes study many social phenomena, such as the effect on
@@ -627,7 +627,7 @@ found no evidence of a negative impact on employment of this hike.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: internal and external validity}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 A study from which we can study causal relationships is said to have
 \textbf{internal validity}. By design, good experiments should have this
@@ -643,8 +643,8 @@ population
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
-designs}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Point of terminology: between-subjects and within-subjects
+designs}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 In between-subjects designs, subjects are randomly assigned to only one
 of the different experimental conditions. On the contrary, participants
@@ -749,7 +749,7 @@ resembles the density a normal distribution, which lead
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/hallgrimskirkja_reykjavik.jpg}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/hallgrimskirkja_reykjavik.jpg}
 
 }
 
@@ -782,7 +782,7 @@ mean and sample variance as key summary statistics.\footnote{The
 
 \centering{
 
-\includegraphics{introduction_files/figure-pdf/fig-normaldist-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{introduction_files/figure-pdf/fig-normaldist-1.pdf}}
 
 }
 
@@ -798,7 +798,7 @@ limit theorem.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 One key aspect, often neglected in studies, is the discussion of the
 metric used for measurement of the response. While previous research may
@@ -865,7 +865,7 @@ population. We won't focus on data collection, but keep in mind the
 following information: for a sample to be good, it must be
 representative of the population under study.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 The
 \href{https://www.hec.ca/programmes/baccalaureats/parcours-agir/index.html}{Parcours
@@ -909,7 +909,7 @@ the full story here.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 What are the considerations that could guide you in determining the
 population of interest for your study?
@@ -930,8 +930,8 @@ one that match the characteristics of the population. Failing to
 randomize leads to introduction of bias and generally the conclusions
 drawn from a study won't be generalizable.
 
-Even when observational units are selected at random to participate,
-there may be \textbf{bias} introduced due to non-response. In the 1950s,
+Even when measurement units are selected at random to participate, there
+may be \textbf{bias} introduced due to non-response. In the 1950s,
 conducting surveys was relatively easier because most people were listed
 in telephone books; nowadays, sampling firms rely on a mix of
 interactive voice response and live callers, with sampling frames mixing
@@ -940,7 +940,7 @@ to correct for non-response. Sampling is a difficult problem with which
 we engage only cursorily, but readers are urged to exercise scrutiny
 when reading papers.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Reflect on the choice of platform used to collect answers and think
 about how it could influence the composition of the sample returned or
@@ -978,7 +978,7 @@ clusters (e.g., villages or classrooms).
 
 \centering{
 
-\includegraphics{introduction_files/figure-pdf/fig-sampling-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{introduction_files/figure-pdf/fig-sampling-1.pdf}}
 
 }
 
@@ -997,7 +997,7 @@ for the stratified sample.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 The credibility of a study relies in large part on the quality of the
 data collection. Why is it customary to report descriptive statistics of
@@ -1007,9 +1007,9 @@ the sample and a description of the population?
 
 There are other instances of sampling, most of which are non-random and
 to be avoided whenever possible. These include convenience samples,
-consisting of observational units that are easy to access or include
+consisting of measurement units that are easy to access or include
 (e.g., friends, students from a university, passerby in the street).
-Much like for anecdotal reports, these observational units need not be
+Much like for anecdotal reports, these measurement units need not be
 representative of the whole population and it is very difficult to
 understand how they relate to the latter.
 
@@ -1048,7 +1048,7 @@ the field.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/HFL-A1958.jpg}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/HFL-A1958.jpg}
 
 }
 
@@ -1258,7 +1258,7 @@ noise is low. The latter is a function of
   the accuracy of the experimental work and measurements apparatus and
   the intrinsic variability of the phenomenon under study,
 \item
-  the number of experimental and observational units (the sample size).
+  the number of experimental and measurement units (the sample size).
 \item
   the choice of design and statistical procedures.
 \end{enumerate}
@@ -1297,7 +1297,7 @@ Figure~\ref{fig-xkcd605} is absurd, but makes this point.
 
 \centering{
 
-\includegraphics[width=0.5\textwidth,height=\textheight]{figures/xkcd605_extrapolating.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio]{figures/xkcd605_extrapolating.png}
 
 }
 
@@ -1364,7 +1364,7 @@ researchers.
 
 \centering{
 
-\includegraphics[width=0.4\textwidth,height=\textheight]{figures/xkcd2400_statistics.png}
+\includegraphics[width=0.4\linewidth,height=\textheight,keepaspectratio]{figures/xkcd2400_statistics.png}
 
 }
 
@@ -1377,7 +1377,7 @@ license}.}
 
 \end{figure}%
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -1413,7 +1413,7 @@ culinary analogy, users focus on learning recipes rather than trying to
 understand the basics of cookery. This chapter focuses on understanding
 of key ideas related to testing.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \textbf{Learning objectives}:
 
@@ -1455,7 +1455,7 @@ or data collection.
 
 \centering{
 
-\includegraphics[width=0.6\textwidth,height=\textheight]{figures/xkcd2569_hypothesis_generation.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{figures/xkcd2569_hypothesis_generation.png}
 
 }
 
@@ -1550,7 +1550,7 @@ In other words,
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/estimand.jpg}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/estimand.jpg}
 
 }
 
@@ -1562,7 +1562,7 @@ In other words,
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/estimator.jpg}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/estimator.jpg}
 
 }
 
@@ -1574,7 +1574,7 @@ In other words,
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/estimate.jpg}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/estimate.jpg}
 
 }
 
@@ -1607,7 +1607,7 @@ Figure~\ref{fig-xkcd605}.
 
 \centering{
 
-\includegraphics[width=0.7\textwidth,height=\textheight]{figures/xkcd2581_health_stats.png}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{figures/xkcd2581_health_stats.png}
 
 }
 
@@ -1634,7 +1634,7 @@ accounting for spurious results due to the background noise.
 
 \centering{
 
-\includegraphics{hypothesis_testing_files/figure-pdf/fig-samplevar-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{hypothesis_testing_files/figure-pdf/fig-samplevar-1.pdf}}
 
 }
 
@@ -1694,7 +1694,7 @@ to be sampled.
 
 \centering{
 
-\includegraphics{hypothesis_testing_files/figure-pdf/fig-unifsamp1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{hypothesis_testing_files/figure-pdf/fig-unifsamp1-1.pdf}}
 
 }
 
@@ -1738,7 +1738,7 @@ helps us disentangle the signal from the noise.
 
 \centering{
 
-\includegraphics{hypothesis_testing_files/figure-pdf/fig-uniformsamp2-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{hypothesis_testing_files/figure-pdf/fig-uniformsamp2-1.pdf}}
 
 }
 
@@ -1973,7 +1973,7 @@ more likely to be observed.
 
 \centering{
 
-\includegraphics{hypothesis_testing_files/figure-pdf/fig-power-plots-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{hypothesis_testing_files/figure-pdf/fig-power-plots-1.pdf}}
 
 }
 
@@ -2044,7 +2044,7 @@ sample.
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics{hypothesis_testing_files/figure-pdf/intconf-1.pdf}
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{hypothesis_testing_files/figure-pdf/intconf-1.pdf}}
 
 }
 
@@ -2137,7 +2137,7 @@ definition \(\alpha\) and does not depend on the \emph{p}-value. The
 latter is a conditional probability of observing a more extreme
 statistic given the null distribution \(\mathscr{H}_0\) is true.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 The \href{https://doi.org/10.1080/00031305.2016.1154108}{American
 Statistical Association (ASA) published a list of principles} guiding
@@ -2323,7 +2323,7 @@ being promoted) (why?)
 
 \centering{
 
-\includegraphics{hypothesis_testing_files/figure-pdf/fig-infer-odds-ratio-permutation-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{hypothesis_testing_files/figure-pdf/fig-infer-odds-ratio-permutation-1.pdf}}
 
 }
 
@@ -2380,7 +2380,7 @@ sample proportions.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 In the first experiment, managers were also asked to rank applications
 on their potential for both employee and customer relations using a
@@ -2569,7 +2569,7 @@ statistical procedures and be aware of their limitations. A
 whether the design is proper, whether the choice of measurement is
 adequate, etc.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Pick a journal paper (e.g., one of the dataset documented in the course
 webpage) and a particular study.
@@ -2589,9 +2589,9 @@ discussed later.
 
 This chapter focuses on experiments where potentially multiple factors
 of interest are manipulated by the experimenter to study their impact.
-If the allocation of observational units to each treatment combination
-is completely random, the resulting experiment is a completely
-randomized design.
+If the allocation of measurement units to each treatment combination is
+completely random, the resulting experiment is a completely randomized
+design.
 
 The one-way analysis of variance describes the most simple experimental
 setup one can consider: completely randomized experiments with one
@@ -2805,7 +2805,7 @@ the difference in length is much smaller relative to the colored arrows.
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-squareddistanova-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-squareddistanova-1.pdf}}
 
 }
 
@@ -2848,7 +2848,7 @@ setting.
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-Fdistpermut-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-Fdistpermut-1.pdf}}
 
 }
 
@@ -2878,7 +2878,7 @@ conclusions.
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-distributionFanova-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-distributionFanova-1.pdf}}
 
 }
 
@@ -2909,7 +2909,7 @@ distributions.
 
 \centering{
 
-\includegraphics[width=0.9\textwidth,height=\textheight]{completely_randomized_trials_files/figure-pdf/fig-dynamiteplot-1.pdf}
+\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-dynamiteplot-1.pdf}
 
 }
 
@@ -2980,7 +2980,7 @@ avoid artefacts.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/01-intro-boxplot.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/01-intro-boxplot.png}
 
 }
 
@@ -3034,7 +3034,7 @@ falling in the red area lead to rejection at level \(5\)\%.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{completely_randomized_trials_files/figure-pdf/fig-tcurve-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-tcurve-1.pdf}
 
 }
 
@@ -3137,7 +3137,7 @@ for violation of the assumptions.
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-assumptions-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-assumptions-1.pdf}}
 
 }
 
@@ -3240,7 +3240,7 @@ difference within each level).
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-omittedlinearity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-omittedlinearity-1.pdf}}
 
 }
 
@@ -3399,7 +3399,7 @@ variance]\protect\hypertarget{exm-heterogeneity}{}\label{exm-heterogeneity}
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-simuWelchnull-1.pdf}}
 
 }
 
@@ -3482,7 +3482,7 @@ off with \(n=50\) for heavy-tailed data.
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-clt-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-clt-1.pdf}}
 
 }
 
@@ -3534,7 +3534,7 @@ inflates the statistic and leads to more frequent rejections.
 
 \centering{
 
-\includegraphics{completely_randomized_trials_files/figure-pdf/fig-plotLevelIndep-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{completely_randomized_trials_files/figure-pdf/fig-plotLevelIndep-1.pdf}}
 
 }
 
@@ -3562,7 +3562,7 @@ measurements.
 \chapter{Contrasts and multiple
 testing}\label{contrasts-multiple-testing}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Key concept}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \textbf{Learning objectives}:
 
@@ -4036,7 +4036,7 @@ meaningless results.
 
 \centering{
 
-\includegraphics[width=1.8in,height=\textheight]{figures/xkcd882_significant.png}
+\includegraphics[width=1.8in,height=\textheight,keepaspectratio]{figures/xkcd882_significant.png}
 
 }
 
@@ -4190,7 +4190,7 @@ provide control.
 
 \centering{
 
-\includegraphics{contrasts_multipletesting_files/figure-pdf/fig-references-multtest-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{contrasts_multipletesting_files/figure-pdf/fig-references-multtest-1.pdf}}
 
 }
 
@@ -4460,11 +4460,11 @@ observations for each factor combination in a table, where
 \texttt{direction} is the row and \texttt{station} the column.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3077}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0256}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3077}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1795}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1795}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.3077}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0256}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.3077}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1795}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1795}}@{}}
 \caption{Conceptual depiction of cell average for the two by two design
 of Maglio and Polman (2014)}\label{tbl-cellmeansMP14}\tabularnewline
 \toprule\noalign{}
@@ -4593,7 +4593,7 @@ differ by station depending on direction.
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{twoway_files/figure-pdf/fig-2by2-1.pdf}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{twoway_files/figure-pdf/fig-2by2-1.pdf}
 
 }
 
@@ -4637,7 +4637,7 @@ intuition.
 
 \centering{
 
-\includegraphics{twoway_files/figure-pdf/fig-interactionplotMP-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{twoway_files/figure-pdf/fig-interactionplotMP-1.pdf}}
 
 }
 
@@ -4896,7 +4896,7 @@ same as two stations ahead (\texttt{stdist}\(=+2\)).
 
 \centering{
 
-\includegraphics[width=3.29in,height=\textheight]{figures/Toronto_subway.png}
+\includegraphics[width=3.29in,height=\textheight,keepaspectratio]{figures/Toronto_subway.png}
 
 }
 
@@ -4953,7 +4953,7 @@ and \(\mu_{-2} = \mu_{+2}\).
 
 \centering{
 
-\includegraphics{twoway_files/figure-pdf/fig-interactionMP-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{twoway_files/figure-pdf/fig-interactionMP-1.pdf}}
 
 }
 
@@ -5100,7 +5100,7 @@ a graph and add the experimental factors to other dimensions
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{twoway_files/figure-pdf/unnamed-chunk-15-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{twoway_files/figure-pdf/unnamed-chunk-6-1.pdf}}
 
 In our example, the interaction plot shows a large main effect for
 \texttt{magnitude}, a smaller one for \texttt{anchor} and no evidence of
@@ -5122,7 +5122,14 @@ with the interaction unless we invalidate our statistical inference. The
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{twoway_files/figure-pdf/unnamed-chunk-16-1.pdf}
+\begin{verbatim}
+Warning: `aes_()` was deprecated in ggplot2 3.0.0.
+i Please use tidy evaluation idioms with `aes()`
+i The deprecated feature was likely used in the emmeans package.
+  Please report the issue at <https://github.com/rvlenth/emmeans/issues>.
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{twoway_files/figure-pdf/unnamed-chunk-7-1.pdf}}
 
 Because our dataset is balanced, the marginal means (the summary
 statistics obtained by grouping the data for a single factor) and the
@@ -5278,7 +5285,7 @@ no cause for concern.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{twoway_files/figure-pdf/unnamed-chunk-19-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{twoway_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 With 30 observations per group and no appearance of outlier, we need
 rather to worry about additivity and possibly heterogeneity arising from
@@ -5305,7 +5312,7 @@ summary statistics of that group.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{twoway_files/figure-pdf/unnamed-chunk-20-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{twoway_files/figure-pdf/unnamed-chunk-11-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5371,10 +5378,10 @@ these changes.
 
 \begin{verbatim}
  anchor  magnitude emmean     SE   df lower.CL upper.CL
- round   0         -0.185 0.0676 29.0  -0.3236  -0.0472
+ round   0         -0.185 0.0676 29.1  -0.3236  -0.0473
  precise 0         -0.354 0.0422 29.0  -0.4401  -0.2674
  round   1          0.349 0.0796 29.0   0.1859   0.5115
- precise 1          0.195 0.0618 28.9   0.0687   0.3215
+ precise 1          0.195 0.0618 29.2   0.0688   0.3215
 
 Degrees-of-freedom method: satterthwaite 
 Confidence level used: 0.95 
@@ -5509,22 +5516,22 @@ means.
 \begin{verbatim}
 $emmeans
  magnitude anchor  emmean     SE   df lower.CL upper.CL
- 0         round   -0.185 0.0676 29.0  -0.3236  -0.0472
+ 0         round   -0.185 0.0676 29.1  -0.3236  -0.0473
  1         round    0.349 0.0796 29.0   0.1859   0.5115
  0         precise -0.354 0.0422 29.0  -0.4401  -0.2674
- 1         precise  0.195 0.0618 28.9   0.0687   0.3215
+ 1         precise  0.195 0.0618 29.2   0.0688   0.3215
 
 Degrees-of-freedom method: satterthwaite 
 Confidence level used: 0.95 
 
 $contrasts
  contrast                                estimate     SE   df t.ratio p.value
- magnitude0 round - magnitude1 round       -0.534 0.1044 56.4  -5.115  <.0001
+ magnitude0 round - magnitude1 round       -0.534 0.1040 56.7  -5.115  <.0001
  magnitude0 round - magnitude0 precise      0.168 0.0797 48.7   2.112  0.1636
- magnitude0 round - magnitude1 precise     -0.381 0.0916 57.5  -4.156  0.0006
- magnitude1 round - magnitude0 precise      0.702 0.0901 44.1   7.795  <.0001
- magnitude1 round - magnitude1 precise      0.154 0.1008 54.7   1.524  0.4306
- magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.0  -7.333  <.0001
+ magnitude0 round - magnitude1 precise     -0.381 0.0916 57.6  -4.156  0.0006
+ magnitude1 round - magnitude0 precise      0.702 0.0901 44.2   7.795  <.0001
+ magnitude1 round - magnitude1 precise      0.154 0.1010 54.6   1.524  0.4306
+ magnitude0 precise - magnitude1 precise   -0.549 0.0748 51.5  -7.333  <.0001
 
 Degrees-of-freedom method: satterthwaite 
 P value adjustment: tukey method for comparing a family of 4 estimates 
@@ -5536,7 +5543,7 @@ of variance or unbalanced effects, the actual method employed is called
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -5625,7 +5632,7 @@ in Figure~\ref{fig-xkcd2569}.
 
 \centering{
 
-\includegraphics[width=0.9\textwidth,height=\textheight]{figures/xkcd2533-slope_hypothesis_testing.png}
+\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{figures/xkcd2533-slope_hypothesis_testing.png}
 
 }
 
@@ -5694,7 +5701,7 @@ pairwise differences with the control.
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/face_real.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/face_real.png}
 
 }
 
@@ -5706,7 +5713,7 @@ pairwise differences with the control.
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/face_GAN_S.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/face_GAN_S.png}
 
 }
 
@@ -5718,7 +5725,7 @@ pairwise differences with the control.
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/face_GAN_E.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/face_GAN_E.png}
 
 }
 
@@ -6268,7 +6275,7 @@ different from the paper, seemingly because their \(y\)-axis is flipped.
 
 \centering{
 
-\includegraphics{multiway_files/figure-pdf/fig-LBJ-interactionplot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{multiway_files/figure-pdf/fig-LBJ-interactionplot-1.pdf}}
 
 }
 
@@ -6279,7 +6286,7 @@ acuity levels.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -6367,7 +6374,7 @@ formats.
 
 \centering{
 
-\includegraphics[width=0.5\textwidth,height=\textheight]{figures/original-dfs-tidy.png}
+\includegraphics[width=0.5\linewidth,height=\textheight,keepaspectratio]{figures/original-dfs-tidy.png}
 
 }
 
@@ -6668,7 +6675,7 @@ between groups. Figure~\ref{fig-lindiscrim} shows the new coordinates.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{manova_files/figure-pdf/fig-lindiscrim-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{manova_files/figure-pdf/fig-lindiscrim-1.pdf}
 
 }
 
@@ -7024,7 +7031,7 @@ rounding of the Likert scale. We can test the normality assumption using
 univariate quantile-quantile plots or tests of normality, including
 Shapiro-Wilks.
 
-\includegraphics{manova_files/figure-pdf/unnamed-chunk-19-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{manova_files/figure-pdf/unnamed-chunk-16-1.pdf}}
 
 We see severe rounding impacts for debt and profitability. There is
 little to be done about this, but the sample size are large enough that
@@ -7323,7 +7330,7 @@ experimental condition are the same.\footnote{If not, this implies that
 
 \centering{
 
-\includegraphics{ancova_files/figure-pdf/fig-ancovadifftrend-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{ancova_files/figure-pdf/fig-ancovadifftrend-1.pdf}}
 
 }
 
@@ -7356,7 +7363,7 @@ scales.
 
 \centering{
 
-\includegraphics{ancova_files/figure-pdf/fig-ancovaresid-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{ancova_files/figure-pdf/fig-ancovaresid-1.pdf}}
 
 }
 
@@ -7467,7 +7474,7 @@ Residuals & 203.24 & 93 & & \\
 
 \centering{
 
-\includegraphics[width=0.7\textwidth,height=\textheight]{ancova_files/figure-pdf/fig-ANCOVA-demo-1.pdf}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{ancova_files/figure-pdf/fig-ANCOVA-demo-1.pdf}
 
 }
 
@@ -7606,12 +7613,12 @@ as the previous study had shown large differences. What is more
 interesting here is quantifying the change between conditions.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3433}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1343}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1493}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1045}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1493}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1194}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3433}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1343}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1493}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1045}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1493}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1194}}@{}}
 
 \caption{\label{tbl-contraststabSSVB}Pairwise contrasts with
 \emph{p}-values adjusted using Holm--Bonferroni}
@@ -7662,12 +7669,12 @@ BoostPlus vs control & -28.29 & 4.4 & 505.44 & -6.489 & \textless{}
 \end{longtable}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3433}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1343}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1493}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1045}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1493}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1194}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3433}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1343}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1493}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1045}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1493}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1194}}@{}}
 
 \caption{\label{tbl-contraststabSSVB}Pairwise contrasts with
 \emph{p}-values adjusted using Holm--Bonferroni}
@@ -7754,7 +7761,7 @@ post & control & 30.91 & 2.56 \\
 
 \centering{
 
-\includegraphics{ancova_files/figure-pdf/fig-vanStekS3-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{ancova_files/figure-pdf/fig-vanStekS3-1.pdf}}
 
 }
 
@@ -7765,7 +7772,7 @@ experiment beliefs on genetically engineered food.}
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Stekelenburg et al. (2021) split their data to do pairwise comparisons
 two at the time (thus taking roughly two-third of the data to perform a
@@ -7784,7 +7791,7 @@ illustrates caveats of subsample analyses.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Figure~\ref{fig-vanStekS3f1} shows the relationship between prior and
 posterior score. The data show clear difference between individuals:
@@ -7803,7 +7810,7 @@ trust scientists, could explain some of the observed differences.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{ancova_files/figure-pdf/fig-vanStekS3f1-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{ancova_files/figure-pdf/fig-vanStekS3f1-1.pdf}
 
 }
 
@@ -7900,7 +7907,7 @@ Residuals & 159.22 & 123 & & \\
 
 \end{longtable}
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{ancova_files/figure-pdf/unnamed-chunk-21-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{ancova_files/figure-pdf/unnamed-chunk-5-1.pdf}
 
 Because of the interaction, comparing the levels of the experimental
 factor only makes sense if we fix the value of sexism (since the slopes
@@ -7943,7 +7950,7 @@ individual and collective protests, since these are the most similar.
 
 \centering{
 
-\includegraphics{ancova_files/figure-pdf/fig-jn-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{ancova_files/figure-pdf/fig-jn-1.pdf}}
 
 }
 
@@ -8008,12 +8015,12 @@ have lower needs of satisfaction after being ghosted.
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.4536}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1134}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1031}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1237}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1031}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1031}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.4536}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1134}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1031}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1237}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1031}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1031}}@{}}
 
 \caption{\label{tbl-lmmoder2}Linear moderation model coefficients of
 Study 3 of Leckfor et al. (2023). Least square coefficients, standard
@@ -8100,7 +8107,7 @@ when \texttt{needclosure} is worth \(x \in [1,7]\) for each
 
 \centering{
 
-\includegraphics{ancova_files/figure-pdf/fig-moderation2-slopes-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{ancova_files/figure-pdf/fig-moderation2-slopes-1.pdf}}
 
 }
 
@@ -8133,7 +8140,7 @@ statistic for the ANOVA, and output for the average need for closure.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -8200,7 +8207,7 @@ them unsuitable for describing differences.
 
 \centering{
 
-\includegraphics[width=0.9\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-effectsize-1.pdf}
+\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{power_effect_files/figure-pdf/fig-effectsize-1.pdf}
 
 }
 
@@ -8595,7 +8602,7 @@ again, the output matches the output of the package.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Measures of effect size are estimated based on data, but unlike summary
 statistics such as the mean and variance, tend to be very noisy in small
@@ -8618,7 +8625,7 @@ centered at the true value, most of them are severely inflated.
 
 \centering{
 
-\includegraphics{power_effect_files/figure-pdf/fig-effectsizedispersion-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{power_effect_files/figure-pdf/fig-effectsizedispersion-1.pdf}}
 
 }
 
@@ -8664,7 +8671,7 @@ hypothesis is false.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-power1-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{power_effect_files/figure-pdf/fig-power1-1.pdf}
 
 }
 
@@ -8679,7 +8686,7 @@ alternative distribution which is in the rejection area (in white).}
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-power2-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{power_effect_files/figure-pdf/fig-power2-1.pdf}
 
 }
 
@@ -8695,7 +8702,7 @@ to the null distribution (full line).}
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-power3-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{power_effect_files/figure-pdf/fig-power3-1.pdf}
 
 }
 
@@ -8865,7 +8872,7 @@ test, we need to single out a specific alternative hypothesis.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{power_effect_files/figure-pdf/fig-powercurve-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{power_effect_files/figure-pdf/fig-powercurve-1.pdf}
 
 }
 
@@ -9046,7 +9053,7 @@ there is a significant decrease in the sample size.
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/GPower.png}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/GPower.png}
 
 }
 
@@ -9060,7 +9067,7 @@ the sample size to replicate the interaction in a repeated measures
 
 \centering{
 
-\includegraphics{power_effect_files/figure-pdf/fig-rmanova-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{power_effect_files/figure-pdf/fig-rmanova-1.pdf}}
 
 }
 
@@ -9555,7 +9562,7 @@ interface online for effect size calculations}.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{\textbf{Summary}}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -9590,7 +9597,7 @@ findings. Perhaps unsurprisingly, many replications failed to yield
 anything like what authors used to claim, or found much weaker findings.
 This chapter examines some of the causes of this lack of replicability.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, colbacktitle=quarto-callout-important-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-important-color-frame, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Learning objectives}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 \begin{itemize}
 \tightlist
@@ -9623,7 +9630,7 @@ Turing Way} and presented in Figure~\ref{fig-turingrepdo}.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/turing_way.jpg}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/turing_way.jpg}
 
 }
 
@@ -9686,7 +9693,7 @@ and reporting selected results.
 
 \centering{
 
-\includegraphics[width=0.7\textwidth,height=\textheight]{figures/RPP_psycho_repro.png}
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{figures/RPP_psycho_repro.png}
 
 }
 
@@ -9715,7 +9722,7 @@ not published is called the \textbf{file-drawer} problem.
 
 \centering{
 
-\includegraphics[width=0.6\textwidth,height=\textheight]{figures/vanZwet_Cator-zvalues.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{figures/vanZwet_Cator-zvalues.png}
 
 }
 
@@ -9780,7 +9787,7 @@ retrieve former versions if you make mistakes at some point.
 
 \centering{
 
-\includegraphics[width=0.6\textwidth,height=\textheight]{figures/reproducibility.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{figures/reproducibility.png}
 
 }
 
@@ -9808,7 +9815,7 @@ require the following to be reported in all published papers:
 
 \begin{figure}[ht!]
 
-{\centering \includegraphics[width=0.8\textwidth,height=\textheight]{figures/Nature_reporting_statistics.png}
+{\centering \includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/Nature_reporting_statistics.png}
 
 }
 
@@ -9878,7 +9885,7 @@ writer prefers to set a low standard of significance at the 5 per cent
 point, and ignore entirely all results which fails to reach this level.
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Thinking outside the box}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Methods that pool together results, such as meta-analysis, are sensitive
 to selective reporting. Why does it matter?
@@ -9906,7 +9913,7 @@ exhibit different opinions, levels of skills, etc. than most.
 
 \centering{
 
-\includegraphics[width=0.65\textwidth,height=\textheight]{figures/samplingbias.jpg}
+\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{figures/samplingbias.jpg}
 
 }
 
@@ -9937,7 +9944,7 @@ There are many platforms for preregistering studies and sharing
 preanalysis plans, scripts and data, with different level of formality.
 One such is the \href{https://researchbox.org/}{Research Box}.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, colbacktitle=quarto-callout-tip-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-tip-color-frame, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Your turn}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Reflect on your workflow as applied researcher when designing and
 undertaking experiments. Which practical aspects could you improve upon
@@ -10372,7 +10379,7 @@ within-subject factor.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{mixed_files/figure-pdf/fig-aafulldat-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{mixed_files/figure-pdf/fig-aafulldat-1.pdf}
 
 }
 
@@ -10580,12 +10587,12 @@ effect for lab doesn't add much to the correlation.
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3788}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2273}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0758}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1061}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0909}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1212}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3788}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2273}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0758}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1061}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1212}}@{}}
 
 \caption{\label{tbl-elliot-anova}Type III analysis of variance table
 with Kenward-Roger's method for Elliott et al. (2021).}
@@ -10683,7 +10690,7 @@ imbalance.
 
 \centering{
 
-\includegraphics{mixed_files/figure-pdf/fig-interactionrecall-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{mixed_files/figure-pdf/fig-interactionrecall-1.pdf}}
 
 }
 
@@ -10765,7 +10772,7 @@ Witten & \(0.187\) \\
 
 \centering{
 
-\includegraphics{mixed_files/figure-pdf/fig-pred-raneff-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{mixed_files/figure-pdf/fig-pred-raneff-1.pdf}}
 
 }
 
@@ -10869,12 +10876,12 @@ part of the same models.
 \end{Shaded}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.4366}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2113}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0704}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0704}}
-  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0986}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1127}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.4366}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2113}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0704}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0704}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0986}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1127}}@{}}
 
 \caption{\label{tbl-labontelemoyne-anova}Type III analysis of variance
 table with Satterthwaite's method for Labonté-LeMoyne et al. (2020).}
@@ -10960,7 +10967,7 @@ participants improve over time.
 
 \centering{
 
-\includegraphics{mixed_files/figure-pdf/fig-residualsvscovariate-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{mixed_files/figure-pdf/fig-residualsvscovariate-1.pdf}}
 
 }
 
@@ -10991,7 +10998,7 @@ and strong evidence of heterogeneity.
 
 \centering{
 
-\includegraphics{mixed_files/figure-pdf/fig-residualsStanding-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{mixed_files/figure-pdf/fig-residualsStanding-1.pdf}}
 
 }
 
@@ -11030,7 +11037,7 @@ experiments, or via logical models.
 
 \centering{
 
-\includegraphics[width=0.65\textwidth,height=\textheight]{figures/xkcd552_correlation.png}
+\includegraphics[width=0.65\linewidth,height=\textheight,keepaspectratio]{figures/xkcd552_correlation.png}
 
 }
 
@@ -11045,13 +11052,13 @@ license}.}
 
 The field of \textbf{causal inference} is concerned with inferring the
 effect of an action or manipulation (intervention, policy, or treatment)
-applied to an observational unit and identifying and quantifying the
-effect of one variable on other variables. Such action may be
-conceptual: we can imagine for example looking at student's success (as
-measured by their grades) by comparing two policies: giving them timely
-feedback and encouragement, versus no feedback. In reality, only one of
-these two scenarios can be realized even if both can conceptually be
-envisioned as \textbf{potential outcomes}.
+applied to a measurement unit and identifying and quantifying the effect
+of one variable on other variables. Such action may be conceptual: we
+can imagine for example looking at student's success (as measured by
+their grades) by comparing two policies: giving them timely feedback and
+encouragement, versus no feedback. In reality, only one of these two
+scenarios can be realized even if both can conceptually be envisioned as
+\textbf{potential outcomes}.
 
 The content of this chapter is divided as follows. First, we discuss the
 logical interrelation between variables using directed acyclic graphs
@@ -11124,7 +11131,7 @@ to draw inferences.
 
 \centering{
 
-\includegraphics{causal-inference_files/figure-pdf/fig-dist-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{causal-inference_files/figure-pdf/fig-dist-1.pdf}}
 
 }
 
@@ -11171,7 +11178,7 @@ implying that `'no other version or treatment assignment would lead to
 different potential outcome'\,' (Imbens and Rubin 2015), which also
 suggests the effect of treatment is constant.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Conditional ignorability for observational data}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Causal inference is possible in observational settings, but some of the
 assumptions are unverifiable and typically much stronger than for
@@ -11260,7 +11267,7 @@ world view, but is rather complicated.
 
 \centering{
 
-\includegraphics[width=0.6\textwidth,height=\textheight]{figures/dagitty-model.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{figures/dagitty-model.png}
 
 }
 
@@ -11297,7 +11304,7 @@ mediator).
 
 \centering{
 
-\includegraphics[width=1\textwidth,height=\textheight]{figures/causal_dag_aheiss.jpg}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{figures/causal_dag_aheiss.jpg}
 
 }
 
@@ -11331,7 +11338,7 @@ Matching consists in creating paired samples (with similar
 characteristics for explanatories), and comparing the pairs.
 Stratification consists of analysing subpopulations separately.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Caution about the kitchen sink approach}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 Controlling for a collider is counterproductive, as we would get
 erroneous conclusions: Kowal (2021) reportedly claimed married couples
@@ -11442,7 +11449,7 @@ mediator \(M\) is possible for any combination of covariates
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Measurement error}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 When measuring effects in psychology and marketing, it will often be the
 case that the conceptual causal model includes variables that cannot be
@@ -11455,7 +11462,7 @@ additional layer of complexity and potential sources of confounding.
 
 \centering{
 
-\includegraphics[width=0.6\textwidth,height=\textheight]{figures/xkcd2652_proxy_variable.png}
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{figures/xkcd2652_proxy_variable.png}
 
 }
 
@@ -11547,7 +11554,7 @@ but there is no mediation effect).
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{causal-inference_files/figure-pdf/fig-sobelsimu-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{causal-inference_files/figure-pdf/fig-sobelsimu-1.pdf}
 
 }
 
@@ -11678,7 +11685,7 @@ indeed not symmetric, unlike the distribution of Sobel's statistic.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{causal-inference_files/figure-pdf/fig-bootstrap-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{causal-inference_files/figure-pdf/fig-bootstrap-1.pdf}
 
 }
 
@@ -11716,7 +11723,7 @@ We can unpack the model assumptions for the linear mediation model.
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{figures/dag1.png}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{figures/dag1.png}
 
 }
 
@@ -11741,7 +11748,7 @@ mediation effect on \(X\) is due to \(M_1\).
 
 \centering{
 
-\includegraphics[width=0.4\textwidth,height=\textheight]{figures/dag2.png}
+\includegraphics[width=0.4\linewidth,height=\textheight,keepaspectratio]{figures/dag2.png}
 
 }
 
@@ -12089,7 +12096,7 @@ percentile confidence interval.
 
 \centering{
 
-\includegraphics{causal-inference_files/figure-pdf/fig-densityACME-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{causal-inference_files/figure-pdf/fig-densityACME-1.pdf}}
 
 }
 
@@ -12144,7 +12151,7 @@ R^2_M~R^2_Y~ at which ACME = 0: 0.0072
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{causal-inference_files/figure-pdf/unnamed-chunk-21-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{causal-inference_files/figure-pdf/unnamed-chunk-6-1.pdf}}
 
 The \texttt{medsens} function implements the sensitivity diagnostic
 presented in Section 5.1 of Imai, Keele, and Yamamoto (2010) for the
@@ -12168,7 +12175,7 @@ models that are due to hypothetical unobserved confounders.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, bottomrule=.15mm, colback=white, toprule=.15mm, opacityback=0, coltitle=black, arc=.35mm, toptitle=1mm, leftrule=.75mm, rightrule=.15mm, bottomtitle=1mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, colbacktitle=quarto-callout-caution-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, leftrule=.75mm, coltitle=black, breakable, bottomrule=.15mm, colframe=quarto-callout-caution-color-frame, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, rightrule=.15mm, toprule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Pitfall}, opacityback=0, toptitle=1mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, colback=white]
 
 There are several problems with the description of Bastian, Jetten, and
 Ferris (2014): while it seems that some covariates (age, gender, group
@@ -12287,7 +12294,7 @@ of the levels for categorical treatment, etc.)
 
 \centering{
 
-\includegraphics{causal-inference_files/figure-pdf/fig-effect-LC19-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{causal-inference_files/figure-pdf/fig-effect-LC19-1.pdf}}
 
 }
 
@@ -12332,7 +12339,7 @@ binary (numerical) treatments.
 
 \centering{
 
-\includegraphics{causal-inference_files/figure-pdf/fig-sensitivity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{causal-inference_files/figure-pdf/fig-sensitivity-1.pdf}}
 
 }
 
@@ -13093,8 +13100,8 @@ on the log scale) are also reported.
 \begin{verbatim}
  contrast ratio     SE  df null z.ratio p.value
  0vs1     0.446 0.0933 Inf    1  -3.858  0.0001
- 0vs2     0.316 0.1479 Inf    1  -2.461  0.0138
- 1vs2     0.389 0.1732 Inf    1  -2.120  0.0340
+ 0vs2     0.316 0.1480 Inf    1  -2.461  0.0138
+ 1vs2     0.389 0.1730 Inf    1  -2.120  0.0340
 
 Tests are performed on the log scale 
 \end{verbatim}

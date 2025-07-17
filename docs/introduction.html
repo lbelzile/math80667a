@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.7.3">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,10 +57,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-81b5c3e63835cfde897ecd3d35a35a41.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6f9cce838f3eabccbf7e52d05b4212be.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -292,10 +292,10 @@ window.Quarto = {
 <div class="toc-actions"><ul><li><a href="https://github.com/lbelzile/math80667a/edit/main/introduction.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"><span id="introduction" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1></header>
 
 <header id="title-block-header">
-<h1 class="title display-7"><span id="introduction" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
+
 
 </header>
 
@@ -342,21 +342,21 @@ Figure&nbsp;1.1: Two by two classification matrix for experiments based on sampl
 </div>
 </div>
 </div>
-<p><a href="#fig-openintrograph" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> summarizes the two preceding sections. Random allocation of observational units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations.</p>
+<p><a href="#fig-openintrograph" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> summarizes the two preceding sections. Random allocation of measurement units to treatment and random samples from the population lead to ideal studies, but may be impossible due to ethical considerations.</p>
 </section>
 <section id="terminology" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="terminology"><span class="header-section-number">1.2</span> Terminology</h2>
 <p>In its simplest form, an <strong>experimental design</strong> is a comparison of two or more treatments (experimental conditions):</p>
 <ul>
 <li>The subjects (or <strong>experimental units</strong>) in the different groups of treatment have similar characteristics and are treated exactly the same way in the experimentation except for the treatment they are receiving. Formally, an experimental unit is the smallest division such that any two units may receive different treatments.</li>
-<li>The <strong>observational unit</strong> is the smallest level (time point, individual) at which measurement are recorded.</li>
+<li>The <strong>measurement unit</strong> is the smallest level (time point, individual) at which measurement are recorded; sometimes called observational unit in other textbooks.</li>
 <li>Explanatories (independent variables) are variables that impact the response. They can be continuous (dose) or categorical variables; in the latter case, they are termed <strong>factors</strong>.</li>
 <li>The <strong>experimental treatments</strong> or conditions are <em>manipulated and controlled</em> by the researcher. Oftentimes, there is a <strong>control</strong> or baseline treatment relative to which we measure improvement (e.g., a placebo for drugs).</li>
 <li>After the different treatments have been administered to subjects participating in a study, the researcher measures one or more outcomes (also called responses or dependent variables) on each subject.</li>
 <li>Observed differences in the outcome variable between the experimental conditions (treatments) are called treatment effects.</li>
 </ul>
 <div id="exm-experimentdefinitions" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1.1 (Pedagogical experience)</strong></span> Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the observational units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom).</p>
+<p><span class="theorem-title"><strong>Example 1.1 (Pedagogical experience)</strong></span> Suppose we want to study the effectiveness of different pedagogical approaches to learning. Evidence-based pedagogical researchs point out that active learning leads to higher retention of information. To corroborate this research hypothesis, we can design an experiment in which different sections of a course are assigned to different teaching methods. In this example, each student in a class group receives the same teaching assignment, so the experimental units are the sections and the measurement units are the individual students. The treatment is the teaching method (traditional teaching versus flipped classroom).</p>
 <!--
 Potential confounders for this experiment include the strength of individuals, which reflects their prior exposure to the topic, knowledge, maturity, etc. This could be measured using a preliminary exam before assignment of students to class groups is completed. Additional factors worth controlling for include timing of the classroom (morning, afternoon, evening classes) and instructors.
 -->
@@ -375,7 +375,7 @@ Your turn
 <p>As a researcher, how would you conduct this study? Identify a specific product. For the latter, define</p>
 <ul>
 <li>an adequate response variable</li>
-<li>the experimental and observational units</li>
+<li>the experimental and measurement units</li>
 <li>potential blocking factors</li>
 </ul>
 </div>
@@ -543,7 +543,7 @@ Thinking outside the box
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="sampling"><span class="header-section-number">1.3.3</span> Sampling</h3>
 <p>Because sampling is costly, we can only collect limited information about the variable of interest, drawing from the population through a sampling frame (phone books, population register, etc.) Good sampling frames can be purchased from sampling firms.</p>
 <p>In general, <em>randomization</em> is necessary in order to obtain a <strong>representative</strong> sample<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, one that match the characteristics of the population. Failing to randomize leads to introduction of bias and generally the conclusions drawn from a study won’t be generalizable.</p>
-<p>Even when observational units are selected at random to participate, there may be <strong>bias</strong> introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.</p>
+<p>Even when measurement units are selected at random to participate, there may be <strong>bias</strong> introduced due to non-response. In the 1950s, conducting surveys was relatively easier because most people were listed in telephone books; nowadays, sampling firms rely on a mix of interactive voice response and live callers, with sampling frames mixing landlines, cellphones and online panels together with (heavy) weighting to correct for non-response. Sampling is a difficult problem with which we engage only cursorily, but readers are urged to exercise scrutiny when reading papers.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -590,7 +590,7 @@ Thinking outside the box
 <p>The credibility of a study relies in large part on the quality of the data collection. Why is it customary to report descriptive statistics of the sample and a description of the population?</p>
 </div>
 </div>
-<p>There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of observational units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these observational units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.</p>
+<p>There are other instances of sampling, most of which are non-random and to be avoided whenever possible. These include convenience samples, consisting of measurement units that are easy to access or include (e.g., friends, students from a university, passerby in the street). Much like for anecdotal reports, these measurement units need not be representative of the whole population and it is very difficult to understand how they relate to the latter.</p>
 <p>In recent years, there has been a proliferation of studies employing data obtained from web experimentation plateforms such as Amazon’s Mechanical Turk (MTurk), to the point that the Journal of Management commissioned a review <span class="citation" data-cites="Aguinis:2021">(<a href="references.html#ref-Aguinis:2021" role="doc-biblioref">Aguinis, Villamor, and Ramani 2021</a>)</span>. These samples are subject to self-selection bias and articles using them should be read with a healthy dose of skepticism. Unless good manipulation checks are conducted (e.g., to ensure participants are faithful and answer in a reasonable amount of time), I would reserve these tools for paired samples (e.g., asking people to perform multiple tasks presented in random order) for which the composition of the population is less important. To make sure your sample matches the target population, you can use statistical tests and informal comparison and compare the distribution of individuals with the composition obtained from the census.</p>
 </section>
 </section>
@@ -668,7 +668,7 @@ Figure&nbsp;1.5: <a href="http://www.era.rothamsted.ac.uk/eradoc/article/PS-High
 <p>The second point listed by <span class="citation" data-cites="Cox:1958">Cox (<a href="references.html#ref-Cox:1958" role="doc-biblioref">1958</a>)</span> is that of the variability of estimator. Much of the precision can be captured by the signal-to-noise ratio, in which the difference in mean treatment is divided by its standard error, a form of effect size. The intuition should be that it’s easier to detect something when the signal is large and the background noise is low. The latter is a function of</p>
 <ol type="a">
 <li>the accuracy of the experimental work and measurements apparatus and the intrinsic variability of the phenomenon under study,</li>
-<li>the number of experimental and observational units (the sample size).</li>
+<li>the number of experimental and measurement units (the sample size).</li>
 <li>the choice of design and statistical procedures.</li>
 </ol>
 <p>Point (a) typically cannot be influenced by the experimenter outside of choosing the response variable to obtain more reliable measurements. Point (c) related to the method of analysis, is usually standard unless there are robustness considerations. Point (b) is at the core of the planning, notably in choosing the number of units to use and the allocation of treatment to the different (sub)-units.</p>
@@ -874,8 +874,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -986,7 +984,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
